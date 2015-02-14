@@ -10,7 +10,7 @@ import sys
 import traceback
 import os
 import shutil
-from CPP2CSharp.Core.Logger import Logger
+from Cpp2CSharp.Core.Logger import Logger
 
 
 class Utils(object):

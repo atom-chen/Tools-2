@@ -4,8 +4,8 @@ Created on 2015年2月13日
 @author: {Administrator}
 '''
 
-from CPP2CSharp.CPPParse import CppItemBase
-from CPP2CSharp.Core.Utils import Utils
+from Cpp2CSharp.CppParse import CppItemBase
+from Cpp2CSharp.Core.Utils import Utils
 
 class CppMultiComment(CppItemBase.CppItemBase):
     '''

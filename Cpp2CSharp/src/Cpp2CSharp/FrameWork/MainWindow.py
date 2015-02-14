@@ -9,13 +9,13 @@ Created on 2015-2-1
 #from PyQt5 import  QtWidgets, QtCore, QtGui
 from PyQt5 import  QtWidgets, QtCore
 
-import CPP2CSharp.UI.ui_mainwindow
-from CPP2CSharp.FrameWork import LoggerWin, LeftFnWin
-from CPP2CSharp.Core import Config, AppData
-from CPP2CSharp.Core.Logger import Logger
+import Cpp2CSharp.UI.ui_mainwindow
+from Cpp2CSharp.FrameWork import LoggerWin, LeftFnWin
+from Cpp2CSharp.Core import Config, AppData
+from Cpp2CSharp.Core.Logger import Logger
 
-from CPP2CSharp.Core.IAppData import IAppData
-from CPP2CSharp.Core import CodeConv
+from Cpp2CSharp.Core.IAppData import IAppData
+from Cpp2CSharp.Core import CodeConv
 
 class MainWindow(QtWidgets.QMainWindow):
     
@@ -30,7 +30,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.app = app
         
-        self.ui = CPP2CSharp.UI.ui_mainwindow.Ui_MainWindow()
+        self.ui = Cpp2CSharp.UI.ui_mainwindow.Ui_MainWindow()
         self.ui.setupUi(self)
         
         # 可停靠的窗口

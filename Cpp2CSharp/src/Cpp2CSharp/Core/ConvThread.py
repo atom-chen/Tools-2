@@ -6,13 +6,13 @@ Created on 2015-2-1
 '''
 
 
-from CPP2CSharp.Core.ThreadWrap import ThreadWrap
-from CPP2CSharp.Core.AppData import AppData
+from Cpp2CSharp.Core.ThreadWrap import ThreadWrap
+from Cpp2CSharp.Core.AppData import AppData
 
-from CPP2CSharp.Core.Config import Config
-from CPP2CSharp.Core.Logger import Logger
-from CPP2CSharp.Core.Utils import Utils
-from CPP2CSharp.Core.CodeConv import CodeConv
+from Cpp2CSharp.Core.Config import Config
+from Cpp2CSharp.Core.Logger import Logger
+from Cpp2CSharp.Core.Utils import Utils
+from Cpp2CSharp.Core.CodeConv import CodeConv
 
 class ConvThread(ThreadWrap):
     

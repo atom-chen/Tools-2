@@ -8,7 +8,7 @@ Created on 2015-2-1
 
 def main():
     import sys
-    from CPP2CSharp.FrameWork import AppFrame
+    from Cpp2CSharp.FrameWork import AppFrame
     app = AppFrame.AppFrame()
     sys.exit(app.exec_())
     

@@ -13,7 +13,7 @@ class AppFrame(QApplication):
     def __init__(self):
         super(AppFrame, self).__init__(sys.argv)
         
-        from CPP2CSharp.FrameWork import MainWindow
+        from Cpp2CSharp.FrameWork import MainWindow
 
         self.mainWindow = MainWindow.MainWindow(self)
         self.mainWindow.show()

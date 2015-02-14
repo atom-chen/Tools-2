@@ -4,9 +4,9 @@ Created on 2015年2月1日
 @author: luguhu
 '''
 
-from CPP2CSharp.Core.Config import Config
-from CPP2CSharp.Core.Logger import Logger
-from CPP2CSharp.CPPParse import CppFile
+from Cpp2CSharp.Core.Config import Config
+from Cpp2CSharp.Core.Logger import Logger
+from Cpp2CSharp.CppParse import CppFile
 
 class CodeConv(object):
     '''

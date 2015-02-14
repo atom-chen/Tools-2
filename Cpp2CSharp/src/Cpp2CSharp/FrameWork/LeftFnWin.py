@@ -7,17 +7,17 @@ Created on 2015-2-1
 
 from PyQt5 import QtWidgets
 
-import CPP2CSharp.UI.ui_leftfnwin
-from CPP2CSharp.Core.AppData import AppData
+import Cpp2CSharp.UI.ui_leftfnwin
+from Cpp2CSharp.Core.AppData import AppData
 #from CPP2CSharp.Core.fileversioninfo import BuildFileVersion
-from CPP2CSharp.Core.ConvThread import ConvThread
-from CPP2CSharp.Core.Logger import Logger
+from Cpp2CSharp.Core.ConvThread import ConvThread
+from Cpp2CSharp.Core.Logger import Logger
 
 class LeftFnWin(QtWidgets.QDockWidget):    
     def __init__(self):
         super(LeftFnWin, self).__init__()
 
-        self.ui = CPP2CSharp.UI.ui_leftfnwin.Ui_LeftFnWin()
+        self.ui = Cpp2CSharp.UI.ui_leftfnwin.Ui_LeftFnWin()
         self.ui.setupUi(self)
         
         # 注册事件处理函数

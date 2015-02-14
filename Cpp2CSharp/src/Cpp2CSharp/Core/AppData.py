@@ -8,7 +8,7 @@ Created on 2015-2-1
 #import os
 #import glob
 
-from CPP2CSharp.Core.IAppData import IAppData
+from Cpp2CSharp.Core.IAppData import IAppData
 
 # global data
 class AppData(IAppData):
