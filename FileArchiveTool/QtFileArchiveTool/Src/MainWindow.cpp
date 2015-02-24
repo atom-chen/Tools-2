@@ -37,15 +37,10 @@ void MainWindow::createDockWidget()
 	this->addDockWidget(Qt::LeftDockWidgetArea, m_projectWidget);
 
 	m_centerTabWidget = new CenterTabWidget(this);
-	//this->addDockWidget(Qt::RightDockWidgetArea, m_centerTabWidget);
 	setCentralWidget(m_centerTabWidget);
 
 	m_logWidget = new LogWidget(this);
 	this->addDockWidget(Qt::BottomDockWidgetArea, m_logWidget);
-
-	// 不停靠，直接显示框架窗口
-	//m_logWidget = new LogWidget();
-	//m_logWidget->show();
 }
 
 void MainWindow::createActions()
