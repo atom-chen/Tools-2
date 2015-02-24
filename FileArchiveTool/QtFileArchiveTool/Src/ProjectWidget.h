@@ -1,7 +1,7 @@
 #ifndef __PROJECTWIDGET_H
 #define __PROJECTWIDGET_H
 
-#include <QtWidgets/QDockWidget>
+#include <QtWidgets>
 
 namespace Ui
 {

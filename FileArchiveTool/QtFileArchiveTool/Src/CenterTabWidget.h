@@ -1,7 +1,7 @@
 #ifndef __CENTERTABWIDGET_H
 #define __CENTERTABWIDGET_H
 
-#include <QtWidgets/QTabWidget>
+#include <QtWidgets>
 
 namespace Ui
 {

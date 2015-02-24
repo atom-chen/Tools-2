@@ -10,7 +10,6 @@
 #include <QTextStream>
 #include <QToolBar>
 #include <QTextEdit>
-#include <QMainWindow>
 #include <QString>
 #include <QMenuBar>
 

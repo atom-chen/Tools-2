@@ -1,7 +1,7 @@
 #ifndef __LOGWIDGET_H
 #define __LOGWIDGET_H
 
-#include <QtWidgets/QDockWidget>
+#include <QtWidgets>
 
 namespace Ui
 {

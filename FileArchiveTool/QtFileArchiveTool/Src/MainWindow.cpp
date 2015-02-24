@@ -5,7 +5,7 @@
 #include "ProjectWidget.h"
 #include "CenterTabWidget.h"
 
-#include <QtCore/qnamespace.h>
+#include <QtCore>
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent, 0), m_ui(new Ui::MainWindow)
