@@ -43,7 +43,6 @@ public slots:
 	//void slotSaveFile();
 public Q_SLOTS:
 	void onTreeItemSelChange(bool isDir, std::string path);
-	void setValue(int);
 
 private:
 	QMenu *fileMenu;

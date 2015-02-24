@@ -27,7 +27,6 @@ ProjectWidget::ProjectWidget(QWidget *parent)
 	//设置 QTreeView 可以使用右键菜单
 	m_ui->mDirTreeView->setContextMenuPolicy(Qt::CustomContextMenu);
 	QObject::connect(m_ui->mDirTreeView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(on_treeView_customContextMenuRequested(QPoint)));
-	//QObject::connect(this, SIGNAL(valueChanged(int)), this, SLOT(setValue(int)));
 }
 
 ProjectWidget::~ProjectWidget()
@@ -67,11 +66,5 @@ void ProjectWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
 		menu->exec(QCursor::pos());
 	}
 
-	emit onTreeItemSelChangeaa(true, "nihao");
-	emit valueChanged(2);
-}
-
-void ProjectWidget::setValue(int v)
-{
-	int aaa = v;
+	emit onTreeItemSelChange(true, "nihao");
 }

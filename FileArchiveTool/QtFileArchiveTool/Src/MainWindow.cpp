@@ -15,15 +15,15 @@ MainWindow::MainWindow(QWidget *parent)
 	//设置主窗口标题
 	setWindowTitle(QStringLiteral("FileArchiveTool"));
 	setDockNestingEnabled(true);
-	//text = new QTextEdit(this);
-	//setCentralWidget(text);
 
-	//createActions();
-	//createMenus();
-	//createToolBars();
+	createActions();
+	createMenus();
+	createToolBars();
 
 	connectAction();
 	createDockWidget();
+
+	bool ret = QObject::connect(m_projectWidget, SIGNAL(valueChanged(int)), this, SLOT(setValue(int)));
 }
 
 MainWindow::~MainWindow()
@@ -36,6 +36,8 @@ void MainWindow::createDockWidget()
 	m_projectWidget = new ProjectWidget(this);
 	this->addDockWidget(Qt::LeftDockWidgetArea, m_projectWidget);
 
+	QObject::connect(m_projectWidget, SIGNAL(onTreeItemSelChange(bool, std::string)), this, SLOT(onTreeItemSelChange(bool, std::string)));
+
 	m_centerTabWidget = new CenterTabWidget(this);
 	setCentralWidget(m_centerTabWidget);
 
@@ -46,17 +48,17 @@ void MainWindow::createDockWidget()
 void MainWindow::createActions()
 {
 	//通过图片路径来实现添加Qt资源文件目的
-	fileOpenAction = new QAction(QIcon("C:/qt/Mwindow/open.png"),tr("Open"),this);
+	fileOpenAction = new QAction(QIcon(":/Icons/open.png"),tr("Open"),this);
 	fileOpenAction->setShortcut(tr("Ctrl+O"));
 	fileOpenAction->setStatusTip(tr("Open a file"));
 	QObject::connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(slotOpenFile()));
 
-	fileNewAction = new QAction(QIcon("C:/qt/Mwindow/new.png"),tr("New"),this);
+	fileNewAction = new QAction(QIcon(":/Icons/new.png"),tr("New"),this);
 	fileNewAction->setShortcut(tr("Ctrl+N"));
 	fileNewAction->setStatusTip(tr("new file"));
 	QObject::connect(fileNewAction, SIGNAL(triggered()), this, SLOT(slotNewFile()));
   
-	fileSaveAction = new QAction(QIcon("C:/qt/Mwindow/save.png"),tr("Save"),this);
+	fileSaveAction = new QAction(QIcon(":/Icons/save.png"),tr("Save"),this);
 	fileSaveAction->setShortcut(tr("Ctrl+S"));
 	fileNewAction->setStatusTip(tr("save file"));
 	QObject::connect(fileNewAction, SIGNAL(triggered()), this, SLOT(slotSaveFile()));
@@ -66,25 +68,23 @@ void MainWindow::createActions()
 	exitAction->setStatusTip(tr("exit"));
 	QObject::connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
 
-	cutAction = new QAction(QIcon("C:/qt/Mwindow/cut.png"),tr("Cut"),this);
+	cutAction = new QAction(QIcon(":/Icons/cut.png"),tr("Cut"),this);
 	cutAction->setShortcut(tr("Ctrl+X"));
 	cutAction->setStatusTip(tr("cut to clipboard"));
-	QObject::connect(cutAction, SIGNAL(triggered()), text, SLOT(cut()));
+	QObject::connect(cutAction, SIGNAL(triggered()), this, SLOT(cut()));
 
-	copyAction = new QAction(QIcon("C:/qt/Mwindow/copy.png"),tr("Copy"),this);
+	copyAction = new QAction(QIcon(":/Icons/copy.png"),tr("Copy"),this);
 	copyAction->setShortcut(tr("Ctrl+C"));
 	copyAction->setStatusTip(tr("copy to clipboard"));
 	QObject::connect(copyAction, SIGNAL(triggered()), this, SLOT(copy()));
 
-	pasteAction = new QAction(QIcon("C:/qt/Mwindow/paste.png"),tr("paste"),this);
+	pasteAction = new QAction(QIcon(":/Icons/paste.png"),tr("paste"),this);
 	pasteAction->setShortcut(tr("Ctrl+V"));
 	pasteAction->setStatusTip(tr("paste clipboard to selection"));
 	QObject::connect(pasteAction, SIGNAL(triggered()), this, SLOT(paste()));
 
 	aboutAction = new QAction(tr("About"),this);
 	QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(slotAbout()));
-	QObject::connect(m_projectWidget, SIGNAL(onTreeItemSelChangeaa(bool, std::string)), this, SLOT(onTreeItemSelChange(bool, std::string)));
-	QObject::connect(m_projectWidget, SIGNAL(valueChanged(int)), this, SLOT(setValue(int)));
 }
 
 void MainWindow::createMenus()
@@ -165,9 +165,4 @@ void MainWindow::connectAction()
 void MainWindow::onTreeItemSelChange(bool isDir, std::string path)
 {
 	int aaa = 10;
-}
-
-void MainWindow::setValue(int v)
-{
-	int aaa = v;
 }

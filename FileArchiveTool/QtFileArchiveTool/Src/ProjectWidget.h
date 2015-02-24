@@ -18,11 +18,9 @@ public:
 
 public Q_SLOTS:
 	void on_treeView_customContextMenuRequested(const QPoint& pos);
-	void setValue(int);
 
 Q_SIGNALS:
-	void onTreeItemSelChangeaa(bool isDir, std::string path);
-	void valueChanged(int);
+	void onTreeItemSelChange(bool isDir, std::string path);
 
 private:
 	Ui::ProjectWidget *m_ui;
