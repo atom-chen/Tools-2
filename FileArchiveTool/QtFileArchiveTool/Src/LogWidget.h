@@ -1,0 +1,23 @@
+#ifndef __LOGWIDGET_H
+#define __LOGWIDGET_H
+
+#include <QtWidgets/QDockWidget>
+
+namespace Ui
+{
+	class LogWidget;
+}
+
+class LogWidget : public QDockWidget
+{
+	Q_OBJECT
+
+public:
+	explicit LogWidget(QWidget *parent = 0);
+	~LogWidget();
+
+private:
+	Ui::LogWidget *m_ui;
+};
+
+#endif // LOGWIDGET_H
