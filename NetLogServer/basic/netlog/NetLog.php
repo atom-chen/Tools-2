@@ -4,8 +4,6 @@
  * @brief 将日志写入服务器
  * */
 
-<?php
-
 use yii\db\Connection;
 
 // 宕机存储
@@ -74,9 +72,6 @@ if($retset)	// 查询有数据
 							)->execute();
 			
 			// 更新计数
-			//$cursql = 'update `cpcount` set `cnt`=' . ($retset['cnt'] + 1) . ' where `id`=' . $platformid;
-			//$updatecmd = $connection->createCommand($cursql);
-			//$updatecmd->execute();
 			$condition = '`id`=' . $platformid;
 			$updatecmd = $connection->createCommand();
 			$updatecmd->update('cpcount',[
@@ -90,9 +85,6 @@ if($retset)	// 查询有数据
 else 	// 第一次没有数据
 {
 	// 执行插入操作
-	//$cursql = 'insert into `cpdata` values (' . $charid . ', "' . $name . '", ' . $type . ', ' . ' "' .$platform . '", ' . $version . ', "' . $error . '");';
-	//$insertcmd = $connection->createCommand($cursql);
-	//$insertcmd->execute();
 	$insertcmd = $connection->createCommand();
 	$insertcmd->insert($dataTableName, [
 			'charid' => $charid,
@@ -107,9 +99,6 @@ else 	// 第一次没有数据
 	)->execute();
 		
 	// 执行插入操作
-	//$cursql = 'insert into `cpcount` values (' . $platformid . ', ' . 1 . ');';
-	//$updatecmd = $connection->createCommand($cursql);
-	//$updatecmd->execute();
 	$updatecmd = $connection->createCommand();
 	$updatecmd->insert('cpcount', [
 			'id' => $platformid,
