@@ -2,6 +2,7 @@
 #include "ui_ProjectWidget.h"
 #include <QtWidgets>
 #include <QtCore>
+#include "FileSystemModel.h"
 
 ProjectWidget::ProjectWidget(QWidget *parent)
 	: QDockWidget(parent, 0), m_ui(new Ui::ProjectWidget)
@@ -10,11 +11,13 @@ ProjectWidget::ProjectWidget(QWidget *parent)
 
 	this->setWidget(m_ui->verticalLayoutWidget);
 
-	m_pModel = new QDirModel;
+	//m_pModel = new QDirModel;
+	m_pModel = new FileSystemModel;
 	m_pModel->setReadOnly(false);
 	m_pModel->setSorting(QDir::DirsFirst | QDir::IgnoreCase | QDir::Name);
 
 	m_ui->mDirTreeView->setModel(m_pModel);
+	//m_ui->mDirTreeView->setRootIndex(m_pModel->index("E:\\"));
 	m_ui->mDirTreeView->header()->setStretchLastSection(true);
 	m_ui->mDirTreeView->header()->setSortIndicator(0, Qt::AscendingOrder);
 	m_ui->mDirTreeView->header()->setSortIndicatorShown(true);

@@ -22,8 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 	connectAction();
 	createDockWidget();
-
-	bool ret = QObject::connect(m_projectWidget, SIGNAL(valueChanged(int)), this, SLOT(setValue(int)));
 }
 
 MainWindow::~MainWindow()
@@ -37,12 +35,37 @@ void MainWindow::createDockWidget()
 	this->addDockWidget(Qt::LeftDockWidgetArea, m_projectWidget);
 
 	QObject::connect(m_projectWidget, SIGNAL(onTreeItemSelChange(bool, std::string)), this, SLOT(onTreeItemSelChange(bool, std::string)));
+	QObject::connect(m_projectWidget, SIGNAL(visibilityChanged(bool)), this, SLOT(onProjectVisibilityChanged(bool)));
 
-	m_centerTabWidget = new CenterTabWidget(this);
-	setCentralWidget(m_centerTabWidget);
+	// BEGIN
+	// 放入主窗口中
+	//m_centerTabWidget = new CenterTabWidget(this);
+	//setCentralWidget(m_centerTabWidget);
 
-	m_logWidget = new LogWidget(this);
-	this->addDockWidget(Qt::BottomDockWidgetArea, m_logWidget);
+	//m_logWidget = new LogWidget(this);
+	//this->addDockWidget(Qt::BottomDockWidgetArea, m_logWidget);
+	// END
+
+	// BEGIN
+	// 放入 tab 子窗口中
+	//m_centerTabWidget = new CenterTabWidget(this);
+	//setCentralWidget(m_centerTabWidget);
+	//m_pSubMainWin = new QMainWindow(m_centerTabWidget);
+	//m_centerTabWidget->addTab(m_pSubMainWin, tr("Text Editor"));
+	// END
+
+	// BEGIN
+	// 放入子窗口中
+	m_pSubMainWin = new QMainWindow(this);
+	m_pSubMainWin->setWindowFlags(Qt::Widget);		// KBEN: 这行必须要，否则不能看到 QMainWindow 子窗口
+	this->setCentralWidget(m_pSubMainWin);
+
+	m_centerTabWidget = new CenterTabWidget(m_pSubMainWin);
+	m_pSubMainWin->setCentralWidget(m_centerTabWidget);
+
+	m_logWidget = new LogWidget(m_pSubMainWin);
+	m_pSubMainWin->addDockWidget(Qt::BottomDockWidgetArea, m_logWidget);
+	// END
 }
 
 void MainWindow::createActions()
@@ -83,7 +106,21 @@ void MainWindow::createActions()
 	pasteAction->setStatusTip(tr("paste clipboard to selection"));
 	QObject::connect(pasteAction, SIGNAL(triggered()), this, SLOT(paste()));
 
-	aboutAction = new QAction(tr("About"),this);
+	showProjectAction = new QAction(tr("showProject"), this);
+	showProjectAction->setCheckable(true);	// 必须要先调用 setCheckable ，然后调用 setChecked 才有效
+	showProjectAction->setChecked(true);	// 设置初始状态
+	showProjectAction->setShortcut(tr("Shift+V"));
+	showProjectAction->setStatusTip(tr("showProject"));
+	QObject::connect(showProjectAction, SIGNAL(triggered()), this, SLOT(showProject()));
+
+	showLogAction = new QAction(tr("showLog"), this);
+	showLogAction->setCheckable(true);
+	showLogAction->setChecked(true);
+	showLogAction->setShortcut(tr("Shift+C"));
+	showLogAction->setStatusTip(tr("showLog"));
+	QObject::connect(showLogAction, SIGNAL(triggered()), this, SLOT(showLog()));
+
+	aboutAction = new QAction(tr("About"), this);
 	QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(slotAbout()));
 }
 
@@ -99,6 +136,10 @@ void MainWindow::createMenus()
 	editMenu->addAction(copyAction);
 	editMenu->addAction(cutAction);
 	editMenu->addAction(pasteAction);
+
+	viewMenu = menuBar()->addMenu(tr("View"));
+	viewMenu->addAction(showProjectAction);
+	viewMenu->addAction(showLogAction);
 
 	aboutMenu = menuBar()->addMenu(tr("Help"));
 	aboutMenu->addAction(aboutAction);
@@ -165,4 +206,34 @@ void MainWindow::connectAction()
 void MainWindow::onTreeItemSelChange(bool isDir, std::string path)
 {
 	int aaa = 10;
+}
+
+void MainWindow::showProject()
+{
+	if (!m_projectWidget->isVisible())
+	{
+		m_projectWidget->show();
+		//showProjectAction->setChecked(true);	// 默认它会自动切换，除非自己更改某一个状态
+	}
+	else
+	{
+		m_projectWidget->hide();
+	}
+}
+
+void MainWindow::showLog()
+{
+	if (!m_logWidget->isVisible())
+	{
+		m_logWidget->show();
+	}
+	else
+	{
+		m_logWidget->hide();
+	}
+}
+
+void MainWindow::onProjectVisibilityChanged(bool bVisible)
+{
+
 }

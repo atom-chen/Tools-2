@@ -41,13 +41,19 @@ public slots:
 	void slotNewFile();
 	void slotOpenFile();
 	//void slotSaveFile();
+
 public Q_SLOTS:
 	void onTreeItemSelChange(bool isDir, std::string path);
+	void showProject();
+	void showLog();
+	void onProjectVisibilityChanged(bool bVisible);
 
 private:
 	QMenu *fileMenu;
 	QMenu *editMenu;
+	QMenu *viewMenu;
 	QMenu *aboutMenu;
+
 	QString fileName;
 
 	QToolBar *fileTool;
@@ -62,7 +68,11 @@ private:
 	QAction *pasteAction;
 	QAction *aboutAction;
 
+	QAction *showProjectAction;
+	QAction *showLogAction;
+
 	QTextEdit *text;
+	QMainWindow* m_pSubMainWin;
 
 private:
 	Ui::MainWindow *m_ui;

@@ -10,6 +10,9 @@
     <height>545</height>
    </rect>
   </property>
+  <property name="allowedAreas">
+   <set>Qt::AllDockWidgetAreas</set>
+  </property>
   <property name="windowTitle">
    <string>ProjectWidget</string>
   </property>
