@@ -13,7 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
 	m_ui->setupUi(this);
 
 	//设置主窗口标题
-	setWindowTitle(QStringLiteral("行为树编辑器"));
+	setWindowTitle(QStringLiteral("FileArchiveTool"));
+	setDockNestingEnabled(true);
 	//text = new QTextEdit(this);
 	//setCentralWidget(text);
 

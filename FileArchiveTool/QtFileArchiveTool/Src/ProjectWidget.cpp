@@ -7,6 +7,8 @@ ProjectWidget::ProjectWidget(QWidget *parent)
 {
 	m_ui->setupUi(this);
 
+	this->setWidget(m_ui->verticalLayoutWidget);
+
 	QDirModel* model = new QDirModel;
 	model->setReadOnly(false);
 	model->setSorting(QDir::DirsFirst | QDir::IgnoreCase | QDir::Name);
@@ -20,10 +22,6 @@ ProjectWidget::ProjectWidget(QWidget *parent)
 	m_ui->mDirTreeView->expand(index);
 	m_ui->mDirTreeView->scrollTo(index);
 	m_ui->mDirTreeView->resizeColumnToContents(0);
-
-	QVBoxLayout* mainLayout = new QVBoxLayout;
-	mainLayout->addWidget(m_ui->mDirTreeView);
-	setLayout(mainLayout);
 }
 
 ProjectWidget::~ProjectWidget()

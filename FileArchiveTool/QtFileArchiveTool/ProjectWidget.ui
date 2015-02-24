@@ -6,26 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>395</width>
-    <height>300</height>
+    <width>392</width>
+    <height>545</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>ProjectWidget</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <widget class="QTreeView" name="mDirTreeView">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>0</y>
       <width>371</width>
-      <height>271</height>
+      <height>511</height>
      </rect>
     </property>
-    <attribute name="headerShowSortIndicator" stdset="0">
-     <bool>true</bool>
-    </attribute>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QTreeView" name="mDirTreeView">
+       <attribute name="headerShowSortIndicator" stdset="0">
+        <bool>true</bool>
+       </attribute>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>
