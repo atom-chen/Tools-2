@@ -1,0 +1,13 @@
+#ifndef __Version_H
+#define __Version_H
+
+#include "Prerequisites.h"
+
+BEGIN_NAMESPACE_FILEARCHIVETOOL
+
+#define ARCHIVETOOL_VERSION 101100
+#define ARCHIVETOOL_LIB_VERSION "1_11"
+
+END_NAMESPACE_FILEARCHIVETOOL
+
+#endif

@@ -24,3 +24,20 @@ set(ALL_SRCS ${SRCS_FILES} ${INCS_FILES})
 ADD_LIBRARY(FileArchiveTool SHARED ${ALL_SRCS})
 
 set_target_properties(FileArchiveTool PROPERTIES DEBUG_POSTFIX _d)
+
+install(FILES 
+	${FileArchiveTool_BINARY_DIR}/Debug/FileArchiveTool_d.dll
+	DESTINATION "${FileArchiveTool_BINARY_DIR}/../QtFileArchiveTool/Debug" CONFIGURATIONS Debug
+)
+install(FILES 
+	${FileArchiveTool_BINARY_DIR}/Release/FileArchiveTool.dll
+	DESTINATION "${FileArchiveTool_BINARY_DIR}/../QtFileArchiveTool/Release" CONFIGURATIONS Release None ""
+)
+install(FILES 
+	${FileArchiveTool_BINARY_DIR}/RelWithDebInfo/FileArchiveTool.dll
+	DESTINATION "${FileArchiveTool_BINARY_DIR}/../QtFileArchiveTool/RelWithDebInfo" CONFIGURATIONS RelWithDebInfo
+)
+install(FILES 
+	${FileArchiveTool_BINARY_DIR}/MinSizeRel/FileArchiveTool.dll
+	DESTINATION "${FileArchiveTool_BINARY_DIR}/../QtFileArchiveTool/MinSizeRel" CONFIGURATIONS MinSizeRel
+)

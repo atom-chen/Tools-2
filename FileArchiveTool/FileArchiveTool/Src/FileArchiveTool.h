@@ -13,6 +13,7 @@
 #include "Singleton.h"
 #include "FileArchiveToolSys.h"
 #include "Config.h"
+#include "ArchiveData.h"
 
 USING_NAMESPACE_FILEARCHIVETOOL
 
