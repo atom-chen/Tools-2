@@ -1,0 +1,18 @@
+#ifndef __GlobalDefine_H_
+#define __GlobalDefine_H_
+
+//#define NO_NAMESPACE
+
+#ifndef NO_NAMESPACE_FILEARCHIVETOOL
+#define NSMESPACE_NAME_FILEARCHIVETOOL FileArchiveTool
+	#define BEGIN_NAMESPACE_FILEARCHIVETOOL namespace FileArchiveTool {
+	#define END_NAMESPACE_FILEARCHIVETOOL }
+	#define USING_NAMESPACE_FILEARCHIVETOOL using namespace FileArchiveTool;
+#else
+	#define NSMESPACE_NAME_FILEARCHIVETOOL
+	#define BEGIN_NAMESPACE_FILEARCHIVETOOL
+	#define END_NAMESPACE_FILEARCHIVETOOL
+	#define USING_NAMESPACE_FILEARCHIVETOOL
+#endif
+
+#endif
