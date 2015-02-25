@@ -24,7 +24,7 @@ void Util::walkDir(const char* walkPath)
 	strcat(tempdir, "\\*.*"); //连接字符串(搜索以RAR结尾的文件)
 	Handle = _findfirst(tempdir, &FileInfo); //开始查找文件
 
-	if ((Handle = _findfirst(walkPath, &FileInfo)) == -1L) //查找目录中符合条件的文件
+	if (Handle == -1L) //查找目录中符合条件的文件
 	{
 		//printf("没有找到\n");	// 一个文件都没有找到
 	}
