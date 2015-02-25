@@ -15,7 +15,7 @@ protected:
 public:
 	static T* getSingletonPtr()
 	{
-		if (m_sSingleton == NULL)
+		if (m_sSingleton == nullptr)
 		{
 			m_sSingleton = new T();
 		}

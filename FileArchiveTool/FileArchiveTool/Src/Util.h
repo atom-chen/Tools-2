@@ -12,10 +12,15 @@ class FILEARCHIVETOOL_EXPORT Util
 	typedef fastdelegate::FastDelegate1<_finddata_t*, bool> WalkDirDelegate;
 
 protected:
-	WalkDirDelegate m_walkDirDelegate;
+	WalkDirDelegate* m_walkDirDelegate;
 
 public:
-	void bindWalkDirDelegate(WalkDirDelegate dirDelegate);
+	Util();
+	~Util();
+
+public:
+	//void bindWalkDirDelegate(WalkDirDelegate dirDelegate);
+	WalkDirDelegate* getWalkDirDelegatePtr();
 	void walkDir(const char* walkPath);
 };
 

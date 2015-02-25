@@ -3,6 +3,16 @@
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
+Util::Util()
+{
+	m_walkDirDelegate = new WalkDirDelegate();
+}
+
+Util::~Util()
+{
+	delete m_walkDirDelegate;
+}
+
 //递归的列出文件夹下所有的子文件夹和文件
 //参数 path: 要进行查找的目录路径
 void Util::walkDir(const char* walkPath)
@@ -26,9 +36,9 @@ void Util::walkDir(const char* walkPath)
 			else if (!(FileInfo.attrib & _A_SUBDIR))				// 文件
 			{
 				//printf("文件:%s\n", FileInfo.name);
-				if (m_walkDirDelegate)
+				if (m_walkDirDelegate != nullptr && (*m_walkDirDelegate))
 				{
-					m_walkDirDelegate(&FileInfo);
+					(*m_walkDirDelegate)(&FileInfo);
 				}
 			}
 		}
@@ -36,9 +46,14 @@ void Util::walkDir(const char* walkPath)
 	}
 }
 
-void Util::bindWalkDirDelegate(WalkDirDelegate dirDelegate)
+//void Util::bindWalkDirDelegate(WalkDirDelegate dirDelegate)
+//{
+//	m_walkDirDelegate = dirDelegate;
+//}
+
+Util::WalkDirDelegate* Util::getWalkDirDelegatePtr()
 {
-	m_walkDirDelegate = dirDelegate;
+	return m_walkDirDelegate;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

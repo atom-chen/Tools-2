@@ -5,6 +5,7 @@
  * @brief 文件 Archive 数据结构
  */
 #include "Prerequisites.h"
+#include <io.h>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -20,9 +21,7 @@ public:
 
 public:
 	void ArchiveDir(const char* pDir);			// archive 某一个目录
-
-protected:
-	bool fileHandle(struct _finddata_t* FileInfo);
+	bool ArchiveData::fileHandle(struct _finddata_t* FileInfo);
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

@@ -53,8 +53,7 @@ else(NOT Qt5Widgets_FOUND)
 
     # if we don't include this CMake will not include ui headers properly:
     include_directories(${CMAKE_CURRENT_BINARY_DIR})
-    include_directories(./Src)
-	include_directories(../FileArchiveTool/Src)
+    include_directories(./Src ../FileArchiveTool/Src ../FastDelegate_src)
 	include_directories(${QT_BINARY_DIR}/../include)
 	
 	link_directories(${QT_BINARY_DIR}/../lib)
