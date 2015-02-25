@@ -2,6 +2,7 @@
 #define __PROJECTWIDGET_H
 
 #include <QtWidgets>
+#include <string>
 
 class FileSystemModel;
 
@@ -31,7 +32,7 @@ private:
 	QDirModel *m_pModel;
 	//FileSystemModel* m_pModel;
 	
-	const char* m_pPath;
+	std::string m_pPath;
 };
 
 #endif // PROJECTWIDGET_H

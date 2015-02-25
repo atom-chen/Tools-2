@@ -1,6 +1,7 @@
 #include "FileArchiveToolSys.h"
 #include "Config.h"
 #include "ArchiveData.h"
+#include "CharsetConv.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -26,6 +27,11 @@ Config* FileArchiveToolSys::getConfigPtr()
 ArchiveData* FileArchiveToolSys::getArchiveDataPtr()
 {
 	return m_pArchiveData;
+}
+
+CharsetConv* FileArchiveToolSys::getCharsetConvPtr()
+{
+	return m_pCharsetConv;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL
