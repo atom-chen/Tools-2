@@ -2,6 +2,7 @@
 #define __SINGLETON_H
 
 #include "GlobalDefine.h"
+#include "Platform.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -24,4 +25,4 @@ public:
 
 END_NAMESPACE_FILEARCHIVETOOL
 
-#endif				// SINGLETON_H
+#endif

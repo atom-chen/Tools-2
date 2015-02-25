@@ -7,6 +7,11 @@ QtFileArchiveToolSys::QtFileArchiveToolSys()
 	
 }
 
+QtFileArchiveToolSys::~QtFileArchiveToolSys()
+{
+
+}
+
 QtFileArchiveToolSys* QtFileArchiveToolSys::getSingletonPtr()
 {
 	if (m_sSingleton == nullptr)

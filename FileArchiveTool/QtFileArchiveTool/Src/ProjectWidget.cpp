@@ -3,6 +3,7 @@
 #include <QtWidgets>
 #include <QtCore>
 #include "FileSystemModel.h"
+#include "QtFileArchiveToolSys.h"
 
 ProjectWidget::ProjectWidget(QWidget *parent)
 	: QDockWidget(parent, 0), m_ui(new Ui::ProjectWidget)
@@ -18,6 +19,12 @@ ProjectWidget::ProjectWidget(QWidget *parent)
 
 	m_ui->mDirTreeView->setModel(m_pModel);
 	//m_ui->mDirTreeView->setRootIndex(m_pModel->index("E:\\"));
+	// 检查是否有设置 rootPath
+	if (QtFileArchiveToolSysDef->getConfigPtr()->getRootPath().length())
+	{
+		m_ui->mDirTreeView->setRootIndex(m_pModel->index(QtFileArchiveToolSysDef->getConfigPtr()->getRootPath().c_str()));
+	}
+
 	m_ui->mDirTreeView->header()->setStretchLastSection(true);
 	m_ui->mDirTreeView->header()->setSortIndicator(0, Qt::AscendingOrder);
 	m_ui->mDirTreeView->header()->setSortIndicatorShown(true);
