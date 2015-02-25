@@ -58,7 +58,7 @@ void ProjectWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
 	if (fileInfo.isDir())
 	{
 		QString fileName = m_ui->mDirTreeView->model()->data(index).toString();
-		m_pPath = QtFileArchiveToolSysDef->getCharsetConvPtr()->UTF8ToGBKStr(fileName.toUtf8().data());
+		m_pPath = QtFileArchiveToolSysDef->getCharsetConvPtr()->UTF8ToGBKStr(fileInfo.absoluteFilePath().toUtf8().data());
 
 		QMenu* menu = new QMenu(this);
 		//menu->addAction(QString(tr("%1-Import").arg(fileName)), this, SLOT(slotTest()));

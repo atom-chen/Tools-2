@@ -25,7 +25,7 @@ void ArchiveData::ArchiveDir(const char* pDir)
 	FileArchiveToolSysDef->getUtilPtr()->getWalkDirDelegatePtr()->bind(this, &ArchiveData::fileHandle);
 	FileArchiveToolSysDef->getUtilPtr()->walkDir(pDir);
 
-
+	writeFile();
 }
 
 bool ArchiveData::fileHandle(struct _finddata_t* FileInfo)
