@@ -15,8 +15,7 @@ file(GLOB SRCS_FILES Src/*.h Src/*.cpp)
 
 source_group("Source Files" FILES ${SRCS_FILES})
 
-include_directories(./Src)
-include_directories(../libiconv-1.9.2-1-lib/include)
+include_directories(./Src ../libiconv-1.9.2-1-lib/include ../FastDelegate_src)
 link_directories(../libiconv-1.9.2-1-lib/lib)
 
 ADD_DEFINITIONS(-DFILEARCHIVETOOL_DLL -DFILEARCHIVETOOL_DLL_EXPORT)

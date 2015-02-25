@@ -15,6 +15,7 @@
 #include "Config.h"
 #include "ArchiveData.h"
 #include "CharsetConv.h"
+#include "Util.h"
 
 USING_NAMESPACE_FILEARCHIVETOOL
 

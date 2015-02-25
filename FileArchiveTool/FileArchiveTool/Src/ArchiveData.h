@@ -20,6 +20,9 @@ public:
 
 public:
 	void ArchiveDir(const char* pDir);			// archive ĳһ��Ŀ¼
+
+protected:
+	bool fileHandle(struct _finddata_t* FileInfo);
 };
 
 END_NAMESPACE_FILEARCHIVETOOL
