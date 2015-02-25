@@ -16,6 +16,8 @@ file(GLOB SRCS_FILES Src/*.h Src/*.cpp)
 source_group("Source Files" FILES ${SRCS_FILES})
 
 include_directories(./Src)
+include_directories(../libiconv-1.9.2-1-lib/include)
+link_directories(../libiconv-1.9.2-1-lib/lib)
 
 ADD_DEFINITIONS(-DFILEARCHIVETOOL_DLL -DFILEARCHIVETOOL_DLL_EXPORT)
 
@@ -24,6 +26,8 @@ set(ALL_SRCS ${SRCS_FILES} ${INCS_FILES})
 ADD_LIBRARY(FileArchiveTool SHARED ${ALL_SRCS})
 
 set_target_properties(FileArchiveTool PROPERTIES DEBUG_POSTFIX _d)
+
+TARGET_LINK_LIBRARIES(FileArchiveTool libiconv)
 
 install(FILES 
 	${FileArchiveTool_BINARY_DIR}/Debug/FileArchiveTool_d.dll

@@ -58,23 +58,34 @@ void ProjectWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
 	if (fileInfo.isDir())
 	{
 		QString fileName = m_ui->mDirTreeView->model()->data(index).toString();
+		m_pPath = fileName.toUtf8().data();
+
 		QMenu* menu = new QMenu(this);
-		menu->addAction(QString(tr("%1-Import").arg(fileName)), this, SLOT(slotTest()));
-		menu->addAction(QString(tr("%1-Export").arg(fileName)), this, SLOT(slotTest()));
+		//menu->addAction(QString(tr("%1-Import").arg(fileName)), this, SLOT(slotTest()));
+		//menu->addAction(QString(tr("%1-Export").arg(fileName)), this, SLOT(slotTest()));
 
 		QAction* ac = nullptr;
-		ac = new QAction(QStringLiteral("构建"), this);
+		//ac = new QAction(QStringLiteral("构建"), this);
+		//menu->addAction(ac);
+
+		//QMenu* itemChildMenu = new QMenu(menu);
+		//itemChildMenu->setTitle(QStringLiteral("用…打开"));
+		//ac = new QAction(QStringLiteral("C++编辑器"), this);
+		//itemChildMenu->addAction(ac);
+
+		//menu->addAction(itemChildMenu->menuAction());
+
+		ac = new QAction(QStringLiteral("Archive Dir"), this);
 		menu->addAction(ac);
-
-		QMenu* itemChildMenu = new QMenu(menu);
-		itemChildMenu->setTitle(QStringLiteral("用…打开"));
-		ac = new QAction(QStringLiteral("C++编辑器"), this);
-		itemChildMenu->addAction(ac);
-
-		menu->addAction(itemChildMenu->menuAction());
+		QObject::connect(ac, SIGNAL(triggered()), this, SLOT(archiveDir()));
 
 		menu->exec(QCursor::pos());
 	}
 
 	emit onTreeItemSelChange(true, "nihao");
+}
+
+void ProjectWidget::archiveDir()
+{
+	QtFileArchiveToolSysDef->getArchiveDataPtr()->ArchiveDir(m_pPath);
 }

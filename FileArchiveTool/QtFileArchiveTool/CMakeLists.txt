@@ -58,6 +58,7 @@ else(NOT Qt5Widgets_FOUND)
 	include_directories(${QT_BINARY_DIR}/../include)
 	
 	link_directories(${QT_BINARY_DIR}/../lib)
+	link_directories(../libiconv-1.9.2-1-lib/lib)
 	
 	ADD_DEFINITIONS(-DFILEARCHIVETOOL_DLL)
 	
@@ -67,6 +68,6 @@ else(NOT Qt5Widgets_FOUND)
 
     set_target_properties(QtFileArchiveTool PROPERTIES DEBUG_POSTFIX _d LINK_FLAGS "/ENTRY:\"mainCRTStartup\"")
 	
-	TARGET_LINK_LIBRARIES(QtFileArchiveTool ${Qt5Widgets_LIBRARIES} FileArchiveTool)
+	TARGET_LINK_LIBRARIES(QtFileArchiveTool ${Qt5Widgets_LIBRARIES} FileArchiveTool libiconv)
 	
 endif(NOT Qt5Widgets_FOUND)
