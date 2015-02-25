@@ -28,15 +28,19 @@ void ArchiveData::ArchiveDir(const char* pDir)
 	writeFile();
 }
 
-bool ArchiveData::fileHandle(struct _finddata_t* FileInfo)
+bool ArchiveData::fileHandle(const char* walkPath, struct _finddata_t* FileInfo)
 {
 	FileHeader* pFileHeader = new FileHeader();
 	m_pFileVec->push_back(pFileHeader);
 
-	(*(pFileHeader->m_fileNamePath)) = FileInfo->name;
+	strcat(pFileHeader->m_pFullPath, walkPath);
+	strcat(pFileHeader->m_pFullPath, "/");
+	strcat(pFileHeader->m_pFullPath, FileInfo->name);
+
+	strcpy(pFileHeader->m_fileNamePath, FileInfo->name);
 	pFileHeader->m_fileSize = FileInfo->size;
 	pFileHeader->m_fileOffset = m_fileSize;
-	pFileHeader->m_pathLen = pFileHeader->m_fileNamePath->length();
+	pFileHeader->m_pathLen = strlen(pFileHeader->m_fileNamePath);
 
 	++m_fileCount;
 	m_fileSize += FileInfo->size;
@@ -83,6 +87,7 @@ void ArchiveData::writeFile()
 			(*itBegin)->writeFile2File(fileHandle);
 		}
 
+		fflush(fileHandle);
 		fclose(fileHandle);
 	}
 }

@@ -9,7 +9,7 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 class FILEARCHIVETOOL_EXPORT Util
 {
-	typedef fastdelegate::FastDelegate1<_finddata_t*, bool> WalkDirDelegate;
+	typedef fastdelegate::FastDelegate2<const char*, _finddata_t*, bool> WalkDirDelegate;
 
 protected:
 	WalkDirDelegate* m_walkDirDelegate;

@@ -19,9 +19,9 @@ void Util::walkDir(const char* walkPath)
 {
 	struct _finddata_t FileInfo; //_finddata_t是文件信息结构体    
 	long Handle;
-	char tempdir[256] = { 0 }; //定义一个临时字符数组
+	char tempdir[MAX_PATH] = { 0 }; //定义一个临时字符数组
 	strcat(tempdir, walkPath); //连接字符串
-	strcat(tempdir, "\\*.*"); //连接字符串(搜索以RAR结尾的文件)
+	strcat(tempdir, "/*.*"); //连接字符串(搜索以RAR结尾的文件)
 	Handle = _findfirst(tempdir, &FileInfo); //开始查找文件
 
 	if (Handle == -1L) //查找目录中符合条件的文件
@@ -39,7 +39,11 @@ void Util::walkDir(const char* walkPath)
 				strcmp(FileInfo.name, "..") != 0 && 
 				strcmp(FileInfo.name, ".") != 0)	// 子目录
 			{
-				walkDir(FileInfo.name);
+				memset(tempdir, 0, MAX_PATH);
+				strcat(tempdir, walkPath); //连接字符串
+				strcat(tempdir, "/"); //连接字符串
+				strcat(tempdir, FileInfo.name); //连接字符串(搜索以RAR结尾的文件)
+				walkDir(tempdir);
 			}
 			else if (!(FileInfo.attrib & _A_SUBDIR) &&
 				strcmp(FileInfo.name, "...") != 0 &&
@@ -48,7 +52,7 @@ void Util::walkDir(const char* walkPath)
 			{
 				if (m_walkDirDelegate != nullptr && (*m_walkDirDelegate))
 				{
-					(*m_walkDirDelegate)(&FileInfo);
+					(*m_walkDirDelegate)(walkPath, &FileInfo);
 				}
 			}
 			ret = _findnext(Handle, &FileInfo);

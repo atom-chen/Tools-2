@@ -36,7 +36,7 @@ typedef signed char int8;
 #ifdef MAX_PATH
 #undef MAX_PATH
 #endif
-#define MAX_PATH 256;			// 最大路径长度
+#define MAX_PATH 256			// 最大路径长度
 
 END_NAMESPACE_FILEARCHIVETOOL
 

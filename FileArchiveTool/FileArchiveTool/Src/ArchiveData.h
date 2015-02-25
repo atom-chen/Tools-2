@@ -30,7 +30,7 @@ public:
 
 public:
 	void ArchiveDir(const char* pDir);			// archive 某一个目录
-	bool ArchiveData::fileHandle(struct _finddata_t* FileInfo);
+	bool ArchiveData::fileHandle(const char* walkPath, struct _finddata_t* FileInfo);
 
 protected:
 	void clearFileVec();			// 清理 m_pFileVec 中的内容
