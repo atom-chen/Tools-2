@@ -11,8 +11,8 @@ ProjectWidget::ProjectWidget(QWidget *parent)
 
 	this->setWidget(m_ui->verticalLayoutWidget);
 
-	//m_pModel = new QDirModel;
-	m_pModel = new FileSystemModel;
+	m_pModel = new QDirModel;
+	//m_pModel = new FileSystemModel;
 	m_pModel->setReadOnly(false);
 	m_pModel->setSorting(QDir::DirsFirst | QDir::IgnoreCase | QDir::Name);
 
