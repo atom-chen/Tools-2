@@ -19,28 +19,39 @@ void Util::walkDir(const char* walkPath)
 {
 	struct _finddata_t FileInfo; //_finddata_t是文件信息结构体    
 	long Handle;
+	char tempdir[256] = { 0 }; //定义一个临时字符数组
+	strcat(tempdir, walkPath); //连接字符串
+	strcat(tempdir, "\\*.*"); //连接字符串(搜索以RAR结尾的文件)
+	Handle = _findfirst(tempdir, &FileInfo); //开始查找文件
+
 	if ((Handle = _findfirst(walkPath, &FileInfo)) == -1L) //查找目录中符合条件的文件
 	{
 		//printf("没有找到\n");	// 一个文件都没有找到
 	}
 	else
 	{
-		// 最先找到的是当前文件夹"."，所以不用处理    
-		while (!_findnext(Handle, &FileInfo))
+		// 最先找到的是当前文件夹"."，所以不用处理
+		int ret = _findnext(Handle, &FileInfo);
+		while (ret != -1)
 		{
-			if ((FileInfo.attrib & _A_SUBDIR) == 16 && strcmp(FileInfo.name, ".."))	// 子目录
+			if ((FileInfo.attrib & _A_SUBDIR) == 16 && 
+				strcmp(FileInfo.name, "...") != 0 && 
+				strcmp(FileInfo.name, "..") != 0 && 
+				strcmp(FileInfo.name, ".") != 0)	// 子目录
 			{
-				//printf("子文件夹：%s\n", FileInfo.name);
 				walkDir(FileInfo.name);
 			}
-			else if (!(FileInfo.attrib & _A_SUBDIR))				// 文件
+			else if (!(FileInfo.attrib & _A_SUBDIR) &&
+				strcmp(FileInfo.name, "...") != 0 &&
+				strcmp(FileInfo.name, "..") != 0 &&
+				strcmp(FileInfo.name, ".") != 0)				// 文件
 			{
-				//printf("文件:%s\n", FileInfo.name);
 				if (m_walkDirDelegate != nullptr && (*m_walkDirDelegate))
 				{
 					(*m_walkDirDelegate)(&FileInfo);
 				}
 			}
+			ret = _findnext(Handle, &FileInfo);
 		}
 		_findclose(Handle);
 	}

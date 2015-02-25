@@ -1,9 +1,9 @@
 #ifndef __Util_H
 #define __Util_H
 
+#include <io.h>
 #include "Prerequisites.h"
 #include "FastDelegate.h"
-#include <io.h>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
