@@ -32,6 +32,7 @@ void TaskThread::run()
 			}
 			else
 			{
+				boost::mutex::scoped_lock sl(*m_NotifyLock);
 				m_pNotifyCond->wait(*m_NotifyLock);	// ื่ศ๛
 			}
 		}

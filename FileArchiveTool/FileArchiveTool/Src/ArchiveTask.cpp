@@ -8,6 +8,7 @@ ArchiveTask::ArchiveTask(const char* pPath)
 {
 	m_pPath = new char[strlen(pPath) + 1];
 	m_pPath[strlen(pPath)] = 0;
+	strncpy(m_pPath, pPath, strlen(pPath));
 }
 
 ArchiveTask::~ArchiveTask()
