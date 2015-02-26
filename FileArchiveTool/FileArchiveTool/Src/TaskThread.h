@@ -5,13 +5,15 @@
 #include <boost/thread/condition.hpp>
 #include <set>
 
+#include "Thread.h"
+
 #include "Prerequisites.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 class ITaskQueue;
 
-class TaskThread : public boost::noncopyable
+class TaskThread : public Thread
 {
 protected:
 	ITaskQueue* m_pTaskQueue;
@@ -22,19 +24,11 @@ public:
 	TaskThread(ITaskQueue* pTaskQueue);
 	virtual ~TaskThread();
 
-    void Stop();
-    void Start();
-    void Wait();
-
-	void setExitFlag(bool exit);
 	void setTaskQueue(ITaskQueue* pTaskQueue);
-
 	void notifyNotEmpty();
 
 private:
-    virtual void loop();
-    std::auto_ptr<boost::thread> m_thread;
-	bool m_exitFlag;
+    virtual void run();
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

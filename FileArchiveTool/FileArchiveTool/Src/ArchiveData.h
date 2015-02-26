@@ -34,15 +34,17 @@ public:
 
 public:
 	void adjustHeaderOffset();					// 修正每一个头文件的偏移
-	uint32 calcHeaderSize(uint32& headerSize);
+	void calcHeaderSize(uint32& headerSize);
 	void ArchiveDir(const char* pDir);			// archive 某一个目录
 	void unArchiveFile(const char* pFileName);
 	bool fileHandle(const char* walkPath, struct _finddata_t* FileInfo);
 
 protected:
 	void clearFileVec();			// 清理 m_pFileVec 中的内容
-	void writeFile(const char* pFileName);
-	void readFile(const char* pFileName);
+	void writeFile2ArchiveFile(const char* pFileName);
+	void readArchiveFileHeader(const char* pFileName);
+	void readArchiveFileHeader(FILE* fileHandle);
+	void writeArchiveFile2File(const char* pFileName);
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

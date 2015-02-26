@@ -35,13 +35,13 @@ void ArchiveData::ArchiveDir(const char* pDir)
 	FileArchiveToolSysDef->getUtilPtr()->getWalkDirDelegatePtr()->bind(this, &ArchiveData::fileHandle);
 	FileArchiveToolSysDef->getUtilPtr()->walkDir(pDir);
 	adjustHeaderOffset();
-	writeFile("E:\\aaa.abc");
+	writeFile2ArchiveFile("E:\\aaa.abc");
 }
 
 void ArchiveData::unArchiveFile(const char* pFileName)
 {
 	clearFileVec();
-	readFile(pFileName);
+	writeArchiveFile2File(pFileName);
 }
 
 bool ArchiveData::fileHandle(const char* walkPath, struct _finddata_t* FileInfo)
@@ -79,7 +79,7 @@ void ArchiveData::adjustHeaderOffset()
 	}
 }
 
-uint32 ArchiveData::calcHeaderSize(uint32& headerSize)
+void ArchiveData::calcHeaderSize(uint32& headerSize)
 {
 	headerSize = sizeof(m_magic) + sizeof(m_version) + sizeof(m_endian) + sizeof(m_fileCount) + sizeof(m_headerSize);
 
@@ -112,7 +112,7 @@ void ArchiveData::clearFileVec()
 }
 
 // 写入文件
-void ArchiveData::writeFile(const char* pFileName)
+void ArchiveData::writeFile2ArchiveFile(const char* pFileName)
 {
 	FILE* fileHandle = fopen(pFileName, "wb");
 
@@ -135,64 +135,104 @@ void ArchiveData::writeFile(const char* pFileName)
 		FileHeaderVecIt itBegin;
 		FileHeaderVecIt itEnd;
 
+		itEnd = m_pFileVec->end();
 		// 写入头部
 		itBegin = m_pFileVec->begin();
 		
 		for (; itBegin != itEnd; ++itBegin)
 		{
-			(*itBegin)->writeHeader2File(fileHandle);
+			(*itBegin)->writeHeader2ArchiveFile(fileHandle);
 		}
+
+		uint32 sizePerOne = 1 * 1024 * 1024;	// 一次读取
+		char* pchar;
+		pchar = new char[sizePerOne];
 		// 写文件内容
 		itBegin = m_pFileVec->begin();
 		for (; itBegin != itEnd; ++itBegin)
 		{
-			(*itBegin)->writeFile2File(fileHandle);
+			(*itBegin)->writeFile2ArchiveFile(fileHandle, sizePerOne, pchar);
 		}
+
+		delete pchar;
 
 		fflush(fileHandle);
 		fclose(fileHandle);
 	}
 }
 
-void ArchiveData::readFile(const char* pFileName)
+void ArchiveData::readArchiveFileHeader(const char* pFileName)
 {
 	FILE* fileHandle = fopen(pFileName, "rb");
 
 	if (fileHandle != nullptr)
 	{
-		MByteBuffer* pMByteBuffer = new MByteBuffer(INIT_CAPACITY);
+		readArchiveFileHeader(fileHandle);
+		fclose(fileHandle);
+	}
+}
 
-		// 读取 magic 
-		fread(m_magic, sizeof(m_magic), 1, fileHandle);
-		if (strncmp(m_magic, "asdf", sizeof(m_magic)) == 0)		// 检查 magic
+void ArchiveData::readArchiveFileHeader(FILE* fileHandle)
+{
+	MByteBuffer* pMByteBuffer = new MByteBuffer(INIT_CAPACITY);
+
+	// 读取 magic 
+	fread(m_magic, sizeof(m_magic), 1, fileHandle);
+	if (strncmp(m_magic, "asdf", sizeof(m_magic)) == 0)		// 检查 magic
+	{
+		// 读取 endian 
+		fread(&m_endian, sizeof(m_endian), 1, fileHandle);
+		pMByteBuffer->setEndian((SysEndian)m_endian);
+
+		// 读取头部大小
+		pMByteBuffer->setSize(sizeof(m_headerSize));		// 必然够 sizeof(m_headerSize) 个字节
+		fread((void*)(pMByteBuffer->getStorage()), sizeof(m_headerSize), 1, fileHandle);
+		pMByteBuffer->readUnsignedInt32(m_headerSize);
+		pMByteBuffer->clear();
+
+		pMByteBuffer->setSize(m_headerSize - sizeof(m_magic) - sizeof(m_endian) - sizeof(m_headerSize));
+		fread((void*)(pMByteBuffer->getStorage()), m_headerSize - sizeof(m_magic) - sizeof(m_endian) - sizeof(m_headerSize), 1, fileHandle);
+
+		// 读取版本
+		pMByteBuffer->readUnsignedInt32(m_version);
+		// 读取文件数量
+		pMByteBuffer->readUnsignedInt32(m_fileCount);
+
+		FileHeader* pFileHeader;
+		for (uint32 idx = 0; idx < m_fileCount; ++idx)
 		{
-			// 读取 endian 
-			fread(&m_endian, sizeof(m_endian), 1, fileHandle);
-			pMByteBuffer->setEndian((SysEndian)m_endian);
-
-			// 读取头部大小
-			pMByteBuffer->setSize(sizeof(m_headerSize));		// 必然够 sizeof(m_headerSize) 个字节
-			fread((void*)(pMByteBuffer->getStorage()), sizeof(m_headerSize), 1, fileHandle);
-			pMByteBuffer->readUnsignedInt32(m_headerSize);
-			pMByteBuffer->clear();
-			
-			//fseek(fileHandle, 0, SEEK_SET);		// 移动文件指针到头部
-			pMByteBuffer->setSize(m_headerSize - sizeof(m_magic) - sizeof(m_endian) - sizeof(m_headerSize));
-			fread((void*)(pMByteBuffer->getStorage()), m_headerSize - sizeof(m_magic) - sizeof(m_endian) - sizeof(m_headerSize), 1, fileHandle);
-
-			// 读取版本
-			pMByteBuffer->readUnsignedInt32(m_version);
-			// 读取文件数量
-			pMByteBuffer->readUnsignedInt32(m_fileCount);
-
-			FileHeader* pFileHeader;
-			for (uint32 idx = 0; idx < m_fileCount; ++idx)
-			{
-				pFileHeader = new FileHeader();
-				m_pFileVec->push_back(pFileHeader);
-				pFileHeader->readHeaderFromFile(pMByteBuffer);
-			}
+			pFileHeader = new FileHeader();
+			m_pFileVec->push_back(pFileHeader);
+			pFileHeader->readHeaderFromArchiveFile(pMByteBuffer);
 		}
+	}
+}
+
+void ArchiveData::writeArchiveFile2File(const char* pFileName)
+{
+	FILE* fileHandle = fopen(pFileName, "rb");
+
+	if (fileHandle != nullptr)
+	{
+		readArchiveFileHeader(fileHandle);
+
+		FileHeaderVecIt itBegin;
+		FileHeaderVecIt itEnd;
+
+		uint32 sizePerOne = 1 * 1024 * 1024;	// 一次读取
+		char* pchar;
+		pchar = new char[sizePerOne];
+
+		// 写入头部
+		itBegin = m_pFileVec->begin();
+		itEnd = m_pFileVec->end();
+
+		for (; itBegin != itEnd; ++itBegin)
+		{
+			(*itBegin)->writeArchiveFile2File(fileHandle, sizePerOne, pchar);
+		}
+
+		delete pchar;
 	}
 }
 

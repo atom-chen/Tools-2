@@ -5,7 +5,6 @@
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 TaskThread::TaskThread(ITaskQueue* pTaskQueue)
- : m_exitFlag(false)
 {
 	m_pTaskQueue = pTaskQueue;
 
@@ -15,30 +14,10 @@ TaskThread::TaskThread(ITaskQueue* pTaskQueue)
 
 TaskThread::~TaskThread()
 {
-    Stop();
-    Wait();
+
 }
 
-void TaskThread::Stop()
-{
-    Wait();
-}
-
-void TaskThread::Start()
-{
-	m_thread.reset(new boost::thread(boost::bind(&TaskThread::loop, this)));
-}
-
-void TaskThread::Wait()
-{
-    if(m_thread.get())
-    {
-        m_thread->join();
-        m_thread.reset();
-    }
-}
-
-void TaskThread::loop()
+void TaskThread::run()
 {
 	ITask* task;
 	while (!m_exitFlag)
@@ -57,11 +36,6 @@ void TaskThread::loop()
 			}
 		}
 	}
-}
-
-void TaskThread::setExitFlag(bool exit)
-{
-	m_exitFlag = exit;
 }
 
 void TaskThread::setTaskQueue(ITaskQueue* pTaskQueue)
