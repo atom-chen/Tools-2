@@ -102,9 +102,9 @@ void ProjectWidget::archiveDir()
 {
 	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveDir(m_pPath.c_str());
 	std::string filePath = m_pPath;
-	filePath += '/';
+	filePath += "/";
 	filePath += QtFileArchiveToolSysDef->getUtilPtr()->getLastPathName(m_pPath.c_str());
-	filePath += '.abc';
+	filePath += ".abc";
 	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveFilePath(filePath.c_str());
 	QtFileArchiveToolSysDef->getArchiveDataPtr()->ArchiveDir();
 }
