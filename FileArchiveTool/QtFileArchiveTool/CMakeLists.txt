@@ -51,13 +51,18 @@ else(NOT Qt5Widgets_FOUND)
 	
     source_group("Source Files" FILES ${SRCS_FILES})
 
+	set(BOOST_ROOT $ENV{BOOST_ROOT})
+	set(Boost_USE_STATIC_LIBS   ON)
+	set(Boost_USE_MULTITHREADED ON)
+	find_package(Boost
+             1.57.0
+             COMPONENTS thread
+             REQUIRED)
+
     # if we don't include this CMake will not include ui headers properly:
-    include_directories(${CMAKE_CURRENT_BINARY_DIR})
-    include_directories(./Src ../FileArchiveTool/Src ../FastDelegate_src)
-	include_directories(${QT_BINARY_DIR}/../include)
+    include_directories(${CMAKE_CURRENT_BINARY_DIR} ./Src ../FileArchiveTool/Src ../FastDelegate_src ${QT_BINARY_DIR}/../include ${Boost_INCLUDE_DIRS})
 	
-	link_directories(${QT_BINARY_DIR}/../lib)
-	link_directories(../libiconv-1.9.2-1-lib/lib)
+	link_directories(${QT_BINARY_DIR}/../lib ../libiconv-1.9.2-1-lib/lib ${Boost_LIBRARY_DIRS})
 	
 	ADD_DEFINITIONS(-DFILEARCHIVETOOL_DLL)
 	
