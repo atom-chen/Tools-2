@@ -101,11 +101,17 @@ void ProjectWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
 void ProjectWidget::archiveDir()
 {
 	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveDir(m_pPath.c_str());
+	std::string filePath = m_pPath;
+	filePath += '/';
+	filePath += QtFileArchiveToolSysDef->getUtilPtr()->getLastPathName(m_pPath.c_str());
+	filePath += '.abc';
+	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveFilePath(filePath.c_str());
 	QtFileArchiveToolSysDef->getArchiveDataPtr()->ArchiveDir();
 }
 
 void ProjectWidget::unArchiveFile()
 {
 	QtFileArchiveToolSysDef->getUnArchiveParamPtr()->setUnArchiveFilePath(m_pPath.c_str());
+	QtFileArchiveToolSysDef->getUnArchiveParamPtr()->setUnArchiveOutDir(QtFileArchiveToolSysDef->getUtilPtr()->getFullPathNoFileName(m_pPath.c_str()));
 	QtFileArchiveToolSysDef->getArchiveDataPtr()->unArchiveFile();
 }

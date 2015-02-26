@@ -1,6 +1,8 @@
 #include "FileInfo.h"
 #include "MByteBuffer.h"
 #include "UnArchiveParam.h"
+#include "FileArchiveToolSys.h"
+#include "Util.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -74,7 +76,11 @@ void FileHeader::adjustHeaderOffset(uint32 offset)
 void FileHeader::writeArchiveFile2File(FILE* fileHandle, uint32 sizePerOne, char* pchar, UnArchiveParam* pUnArchiveParam)
 {
 	strcat(m_pFullPath, pUnArchiveParam->getUnArchiveOutDir());
+	strcat(m_pFullPath, "/");
 	strcat(m_pFullPath, m_fileNamePath);
+
+	std::string strPath = FileArchiveToolSysDef->getUtilPtr()->getFullPathNoFileName(m_pFullPath);
+	FileArchiveToolSysDef->getUtilPtr()->mkDir(strPath.c_str());		// 创建目录
 
 	fseek(fileHandle, 0, SEEK_SET);		// 移动文件指针到头部
 	fseek(fileHandle, m_fileOffset, SEEK_SET);	// 移动到文件开始位置

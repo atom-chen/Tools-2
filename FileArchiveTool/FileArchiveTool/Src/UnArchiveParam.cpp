@@ -7,8 +7,6 @@ UnArchiveParam::UnArchiveParam()
 {
 	m_punArchiveFilePath = new char[MAX_PATH];
 	m_punArchiveOutDir = new char[MAX_PATH];
-
-	setUnArchiveOutDir("E:\\");
 }
 
 UnArchiveParam::~UnArchiveParam()
