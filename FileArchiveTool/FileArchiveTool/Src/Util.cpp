@@ -77,19 +77,25 @@ Util::WalkDirDelegate* Util::getWalkDirDelegatePtr()
 
 const char* Util::getFullPathNoFileName(const char* filePath)
 {
+	normPath((char*)filePath);
 	memset(m_pPath, 0, MAX_PATH);
 	const char * pPos = strrchr(filePath, '/');
 	if (pPos != nullptr)
 	{
 		strncpy(m_pPath, filePath, (pPos - filePath));
 	}
-	else
+
+	return m_pPath;
+}
+
+const char* Util::getFullPathNoExtName(const char* filePath)
+{
+	normPath((char*)filePath);
+	memset(m_pPath, 0, MAX_PATH);
+	const char * pPos = strrchr(filePath, '.');
+	if (pPos != nullptr)
 	{
-		const char * pPos = strrchr(filePath, '\\');
-		if (pPos != nullptr)
-		{
-			strncpy(m_pPath, filePath, (pPos - filePath));
-		}
+		strncpy(m_pPath, filePath, (pPos - filePath));
 	}
 
 	return m_pPath;
@@ -97,21 +103,13 @@ const char* Util::getFullPathNoFileName(const char* filePath)
 
 const char* Util::getLastPathName(const char* filePath)
 {
+	normPath((char*)filePath);
 	memset(m_pPath, 0, MAX_PATH);
 	const char * pPos = strrchr(filePath, '/');
 	if (pPos != nullptr)
 	{
 		pPos += 1;
 		strncpy(m_pPath, pPos, strlen(filePath) - (pPos - filePath));
-	}
-	else
-	{
-		const char * pPos = strrchr(filePath, '\\');
-		if (pPos != nullptr)
-		{
-			pPos += 1;
-			strncpy(m_pPath, pPos, strlen(filePath) - (pPos - filePath));
-		}
 	}
 
 	return m_pPath;
@@ -152,8 +150,8 @@ void Util::mkDir(const char* dir)
 //
 void Util::Substitute(char *pInput, char *pOutput, char *pSrc, char *pDst)
 {
-	char    *pi, *po, *p;
-	int     nSrcLen, nDstLen, nLen;
+	char *pi, *po, *p;
+	int nSrcLen, nDstLen, nLen;
 
 	// 指向输入字符串的游动指针.
 	pi = pInput;
@@ -189,6 +187,18 @@ void Util::Substitute(char *pInput, char *pOutput, char *pSrc, char *pDst)
 	{
 		// 没有找到则原样复制.
 		strcpy(po, pi);
+	}
+}
+
+void Util::normPath(char *pPath)
+{
+	int idx = 0;
+	for (; idx < strlen(pPath); ++idx)
+	{
+		if (pPath[idx] == '\\')
+		{
+			pPath[idx] = '/';
+		}
 	}
 }
 

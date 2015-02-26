@@ -5,9 +5,9 @@
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-ArchiveTask::ArchiveTask(ArchiveParam* m_pArchiveParam)
+ArchiveTask::ArchiveTask(ArchiveParam* pArchiveParam)
 {
-	m_pArchiveParam = m_pArchiveParam;
+	m_pArchiveParam = pArchiveParam;
 }
 
 ArchiveTask::~ArchiveTask()

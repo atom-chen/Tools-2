@@ -10,6 +10,7 @@
 #include "TaskQueue.h"
 #include "ArchiveParam.h"
 #include "UnArchiveParam.h"
+#include "UnArchiveTask.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -50,7 +51,8 @@ void ArchiveData::asyncArchiveDir(ArchiveParam* pArchiveParam)
 
 void ArchiveData::unArchiveFile()
 {
-	
+	UnArchiveTask* pUnArchiveTask = new UnArchiveTask(FileArchiveToolSysDef->getUnArchiveParamPtr());
+	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pUnArchiveTask);
 }
 
 void ArchiveData::asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam)
