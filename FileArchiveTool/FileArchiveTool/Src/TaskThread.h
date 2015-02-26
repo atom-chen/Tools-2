@@ -19,9 +19,12 @@ public:
     void Start();
     void Wait();
 
+	void setExitFlag(bool exit);
+
 private:
     virtual void loop();
     std::auto_ptr<boost::thread> m_thread;
+	bool m_exitFlag;
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

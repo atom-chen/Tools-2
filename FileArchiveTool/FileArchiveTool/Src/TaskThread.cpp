@@ -3,6 +3,7 @@
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 TaskThread::TaskThread()
+ : m_exitFlag(false)
 {
 	
 }
@@ -34,7 +35,15 @@ void TaskThread::Wait()
 
 void TaskThread::loop()
 {
-	
+	while (!m_exitFlag)
+	{
+
+	}
+}
+
+void TaskThread::setExitFlag(bool exit)
+{
+	m_exitFlag = exit;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

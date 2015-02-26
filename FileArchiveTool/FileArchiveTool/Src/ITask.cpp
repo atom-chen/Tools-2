@@ -1,0 +1,15 @@
+#include "ITask.h"
+
+BEGIN_NAMESPACE_FILEARCHIVETOOL
+
+ITask::ITask()
+{
+	
+}
+
+ITask::~ITask()
+{
+	
+}
+
+END_NAMESPACE_FILEARCHIVETOOL
