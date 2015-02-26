@@ -34,6 +34,7 @@ public:
 	ITask* removeResult();
 
 	void endTask();
+	void onTick();
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

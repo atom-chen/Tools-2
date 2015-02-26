@@ -11,6 +11,7 @@ public:
 	ITask();
 	virtual ~ITask();
 	virtual bool exeTask() = 0;
+	virtual bool exeResult() = 0;
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

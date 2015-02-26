@@ -17,6 +17,7 @@ FileArchiveToolSys::FileArchiveToolSys()
 	m_pCharsetConv = new CharsetConv();
 	m_pUtil = new Util();
 	m_pTaskQueue = new TaskQueue();
+	m_pLogSys = new LogSys();
 }
 
 FileArchiveToolSys::~FileArchiveToolSys()

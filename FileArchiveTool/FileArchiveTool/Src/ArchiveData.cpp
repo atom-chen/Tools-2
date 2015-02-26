@@ -6,6 +6,8 @@
 #include "SystemEndian.h"
 #include "MByteBuffer.h"
 #include "BufferDefaultValue.h"
+#include "ArchiveTask.h"
+#include "TaskQueue.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -29,6 +31,12 @@ ArchiveData::~ArchiveData()
 }
 
 void ArchiveData::ArchiveDir(const char* pDir)
+{
+	ArchiveTask* pArchiveTask = new ArchiveTask(pDir);
+	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pArchiveTask);
+}
+
+void ArchiveData::asyncArchiveDir(const char* pDir)
 {
 	clearFileVec();
 	//FileArchiveToolSysDef->getUtilPtr()->bindWalkDirDelegate(fastdelegate::MakeDelegate(this, &ArchiveData::fileHandle));

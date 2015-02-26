@@ -39,6 +39,8 @@ public:
 	void unArchiveFile(const char* pFileName);
 	bool fileHandle(const char* walkPath, struct _finddata_t* FileInfo);
 
+	void asyncArchiveDir(const char* pDir);
+
 protected:
 	void clearFileVec();			// 清理 m_pFileVec 中的内容
 	void writeFile2ArchiveFile(const char* pFileName);
