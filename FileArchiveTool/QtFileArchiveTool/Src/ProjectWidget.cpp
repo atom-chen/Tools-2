@@ -54,17 +54,19 @@ void ProjectWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
 	}
 
 	QFileInfo fileInfo = m_pModel->fileInfo(index);
+	QMenu* menu = nullptr;
+	menu = new QMenu(this);
+
+	QAction* ac = nullptr;
+
+	QString fileName = m_ui->mDirTreeView->model()->data(index).toString();
+	m_pPath = QtFileArchiveToolSysDef->getCharsetConvPtr()->UTF8ToGBKStr(fileInfo.absoluteFilePath().toUtf8().data());
 
 	if (fileInfo.isDir())
 	{
-		QString fileName = m_ui->mDirTreeView->model()->data(index).toString();
-		m_pPath = QtFileArchiveToolSysDef->getCharsetConvPtr()->UTF8ToGBKStr(fileInfo.absoluteFilePath().toUtf8().data());
-
-		QMenu* menu = new QMenu(this);
 		//menu->addAction(QString(tr("%1-Import").arg(fileName)), this, SLOT(slotTest()));
 		//menu->addAction(QString(tr("%1-Export").arg(fileName)), this, SLOT(slotTest()));
 
-		QAction* ac = nullptr;
 		//ac = new QAction(QStringLiteral("¹¹½¨"), this);
 		//menu->addAction(ac);
 
@@ -78,9 +80,20 @@ void ProjectWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
 		ac = new QAction(QStringLiteral("Archive Dir"), this);
 		menu->addAction(ac);
 		QObject::connect(ac, SIGNAL(triggered()), this, SLOT(archiveDir()));
-
-		menu->exec(QCursor::pos());
 	}
+	else if (fileInfo.isFile())
+	{
+		ac = new QAction(QStringLiteral("UNArchive Dir"), this);
+		menu->addAction(ac);
+		QObject::connect(ac, SIGNAL(triggered()), this, SLOT(unArchiveFile()));
+	}
+	else
+	{
+		ac = new QAction(QStringLiteral("No Operator"), this);
+		menu->addAction(ac);
+	}
+
+	menu->exec(QCursor::pos());
 
 	emit onTreeItemSelChange(true, "nihao");
 }
@@ -88,4 +101,9 @@ void ProjectWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
 void ProjectWidget::archiveDir()
 {
 	QtFileArchiveToolSysDef->getArchiveDataPtr()->ArchiveDir(m_pPath.c_str());
+}
+
+void ProjectWidget::unArchiveFile()
+{
+	QtFileArchiveToolSysDef->getArchiveDataPtr()->unArchiveFile(m_pPath.c_str());
 }

@@ -1,4 +1,5 @@
 #include "FileInfo.h"
+#include "MByteBuffer.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -49,7 +50,7 @@ void FileHeader::writeFile2File(FILE* fileHandle)
 
 uint32 FileHeader::calcHeaderSize()
 {
-	return m_pathLen + sizeof(m_fileSize) + sizeof(m_fileOffset);
+	return sizeof(m_pathLen) + m_pathLen + sizeof(m_fileSize) + sizeof(m_fileOffset);
 }
 
 void FileHeader::writeHeader2File(FILE* fileHandle)
@@ -58,6 +59,20 @@ void FileHeader::writeHeader2File(FILE* fileHandle)
 	fwrite(m_fileNamePath, strlen(m_fileNamePath), 1, fileHandle);
 	fwrite(&m_fileOffset, sizeof(m_fileOffset), 1, fileHandle);
 	fwrite(&m_fileSize, sizeof(m_fileSize), 1, fileHandle);
+}
+
+void FileHeader::readHeaderFromFile(MByteBuffer* ba)
+{
+	ba->readUnsignedInt8(m_pathLen);
+	memset(m_fileNamePath, 0, MAX_PATH);
+	ba->readMultiByte(m_fileNamePath, m_pathLen);
+	ba->readUnsignedInt32(m_fileOffset);
+	ba->readUnsignedInt32(m_fileSize);
+}
+
+void FileHeader::adjustHeaderOffset(uint32 offset)
+{
+	m_fileOffset += offset;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

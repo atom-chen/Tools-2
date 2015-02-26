@@ -22,6 +22,7 @@ public:
 public Q_SLOTS:
 	void on_treeView_customContextMenuRequested(const QPoint& pos);
 	void archiveDir();
+	void unArchiveFile();
 
 Q_SIGNALS:
 	void onTreeItemSelChange(bool isDir, std::string path);

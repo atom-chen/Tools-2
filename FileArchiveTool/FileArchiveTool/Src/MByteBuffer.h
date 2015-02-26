@@ -10,6 +10,7 @@
 #include "SystemEndian.h"
 #include "DynBufResizePolicy.h"
 #include "StorageBuffer.h"
+#include "BufferDefaultValue.h"
 
 #include "Prerequisites.h"
 
@@ -47,6 +48,7 @@ public:
     // constructor
 	MByteBuffer(size_t len) : m_pos(0)
     {
+		m_pStorageBuffer = new StorageBuffer(INIT_CAPACITY);
 		m_sysEndian = eSys_LITTLE_ENDIAN;		// 默认是小端
 		m_pStorageBuffer->m_storage = new char[len];
 		m_pStorageBuffer->m_size = 0;
@@ -59,6 +61,11 @@ public:
 		{
 			delete m_pStorageBuffer;
 		}
+	}
+
+	void setEndian(SysEndian endian)
+	{
+		m_sysEndian = endian;
 	}
 
     void clear()
@@ -186,13 +193,13 @@ public:
         return *this;
     }
 
-	MByteBuffer& readUnsigneduint8(uint8& value)
+	MByteBuffer& readUnsignedInt8(uint8& value)
     {
         value = read<uint8>();
         return *this;
     }
 
-	MByteBuffer& readUnsigneduint16(uint16& value)
+	MByteBuffer& readUnsignedInt16(uint16& value)
     {
         value = read<uint16>();
         return *this;
@@ -249,15 +256,6 @@ public:
 
 	MByteBuffer& readMultiByte(std::string& value, size_t len)
     {
-        //value.clear();
-        //while (rpos() < size())                         // prevent crash at wrong string format in packet
-        //{
-        //    char c = read<char>();
-        //    if (c == 0)
-        //        break;
-        //    value += c;
-        //}
-
 		value.clear();
 		if (len)		// 如果不为 0 ，就读取指定数量
 		{
@@ -282,6 +280,36 @@ public:
 
         return *this;
     }
+
+	MByteBuffer& readMultiByte(char* value, size_t len)
+	{
+		size_t readNum = 0;	// 已经读取的数量
+		char c = 0;
+		if (len)		// 如果不为 0 ，就读取指定数量
+		{
+			while (pos() < size() && readNum < len)                         // prevent crash at wrong string format in packet
+			{
+				c = read<char>();
+				value[readNum] = c;
+				++readNum;
+			}
+		}
+		else				// 如果为 0 ，就一直读取，直到遇到第一个 '\0'
+		{
+			while (pos() < size())                         // prevent crash at wrong string format in packet
+			{
+				c = read<char>();
+				if (c == 0)
+				{
+					break;
+				}
+				value[readNum] = c;
+				++readNum;
+			}
+		}
+
+		return *this;
+	}
 
     template<class T>
 	MByteBuffer& readUnused(MUnused<T> const&)

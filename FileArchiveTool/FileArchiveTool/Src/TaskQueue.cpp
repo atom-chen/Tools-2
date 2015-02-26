@@ -13,6 +13,10 @@ TaskQueue::TaskQueue()
 
 	m_pTaskThread = new TaskThread(this);
 	m_pTaskThread->Start();
+
+	m_pTaskThread->notifyNotEmpty();
+	m_pTaskThread->notifyNotEmpty();
+	m_pTaskThread->notifyNotEmpty();
 }
 
 TaskQueue::~TaskQueue()
