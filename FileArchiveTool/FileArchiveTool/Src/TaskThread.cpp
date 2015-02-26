@@ -1,11 +1,16 @@
 #include "TaskThread.h"
+#include "ITaskQueue.h"
+#include "ITask.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-TaskThread::TaskThread()
+TaskThread::TaskThread(ITaskQueue* pTaskQueue)
  : m_exitFlag(false)
 {
-	
+	m_pTaskQueue = pTaskQueue;
+
+	m_NotifyLock = new boost::mutex;
+	m_pNotifyCond = new boost::condition;
 }
 
 TaskThread::~TaskThread()
@@ -35,15 +40,38 @@ void TaskThread::Wait()
 
 void TaskThread::loop()
 {
+	ITask* task;
 	while (!m_exitFlag)
 	{
-
+		if (m_pTaskQueue)
+		{
+			task = m_pTaskQueue->removeTask();
+			if (task)
+			{
+				task->exeTask();
+				m_pTaskQueue->addResult(task);
+			}
+			else
+			{
+				m_pNotifyCond->wait(*m_NotifyLock);	// ×èÈû
+			}
+		}
 	}
 }
 
 void TaskThread::setExitFlag(bool exit)
 {
 	m_exitFlag = exit;
+}
+
+void TaskThread::setTaskQueue(ITaskQueue* pTaskQueue)
+{
+	m_pTaskQueue = pTaskQueue;
+}
+
+void TaskThread::notifyNotEmpty()
+{
+	m_pNotifyCond->notify_all();
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

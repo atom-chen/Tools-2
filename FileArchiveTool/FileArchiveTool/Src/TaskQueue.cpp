@@ -1,4 +1,5 @@
 #include "TaskQueue.h"
+#include "TaskThread.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -9,6 +10,9 @@ TaskQueue::TaskQueue()
 
 	m_taskLock = new boost::mutex;
 	m_resultLock = new boost::mutex;
+
+	m_pTaskThread = new TaskThread(this);
+	m_pTaskThread->Start();
 }
 
 TaskQueue::~TaskQueue()
@@ -56,6 +60,13 @@ ITask* TaskQueue::removeResult()
 	}
 
 	return ret;
+}
+
+void TaskQueue::endTask()
+{
+	m_pTaskThread->setExitFlag(true);		// 设置结束标识
+	m_pTaskThread->notifyNotEmpty();		// 通知一次，防止线程在等待中
+	m_pTaskThread->Wait();					// 等待线程结束
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

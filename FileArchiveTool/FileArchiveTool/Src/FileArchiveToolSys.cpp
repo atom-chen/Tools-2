@@ -3,6 +3,7 @@
 #include "ArchiveData.h"
 #include "CharsetConv.h"
 #include "Util.h"
+#include "TaskQueue.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -14,6 +15,7 @@ FileArchiveToolSys::FileArchiveToolSys()
 	m_pArchiveData = new ArchiveData();
 	m_pCharsetConv = new CharsetConv();
 	m_pUtil = new Util();
+	m_pTaskQueue = new TaskQueue();
 }
 
 FileArchiveToolSys::~FileArchiveToolSys()
@@ -40,6 +42,11 @@ CharsetConv* FileArchiveToolSys::getCharsetConvPtr()
 Util* FileArchiveToolSys::getUtilPtr()
 {
 	return m_pUtil;
+}
+
+TaskQueue* FileArchiveToolSys::getTaskQueuePtr()
+{
+	return m_pTaskQueue;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

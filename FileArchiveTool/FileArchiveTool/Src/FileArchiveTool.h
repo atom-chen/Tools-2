@@ -16,6 +16,8 @@
 #include "ArchiveData.h"
 #include "CharsetConv.h"
 #include "Util.h"
+#include "TaskQueue.h"
+#include "ITask.h"
 
 USING_NAMESPACE_FILEARCHIVETOOL
 

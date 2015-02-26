@@ -3,13 +3,16 @@
 
 #include <boost/thread.hpp>
 #include <queue>
-class ITask;
+#include "ITaskQueue.h"
 
 #include "Prerequisites.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-class FILEARCHIVETOOL_EXPORT TaskQueue
+class ITask;
+class TaskThread;
+
+class FILEARCHIVETOOL_EXPORT TaskQueue : ITaskQueue
 {
 protected:
 	std::queue<ITask*>* m_pTaskQueue;
@@ -18,15 +21,19 @@ protected:
 	boost::mutex* m_taskLock;
 	boost::mutex* m_resultLock;
 
+	TaskThread* m_pTaskThread;
+
 public:
 	TaskQueue();
 	~TaskQueue();
 
 	void addTask(ITask* task);
-	ITask* removeTask();
+	virtual ITask* removeTask();
 
-	void addResult(ITask* task);
+	virtual void addResult(ITask* task);
 	ITask* removeResult();
+
+	void endTask();
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

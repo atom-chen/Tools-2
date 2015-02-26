@@ -10,6 +10,7 @@ class Config;
 class ArchiveData;
 class CharsetConv;
 class Util;
+class TaskQueue;
 
 class FILEARCHIVETOOL_EXPORT FileArchiveToolSys : public Singleton<FileArchiveToolSys>
 {
@@ -18,6 +19,7 @@ protected:
 	ArchiveData* m_pArchiveData;
 	CharsetConv* m_pCharsetConv;
 	Util* m_pUtil;
+	TaskQueue* m_pTaskQueue;
 
 public:
 	FileArchiveToolSys();
@@ -28,6 +30,7 @@ public:
 	ArchiveData* getArchiveDataPtr();
 	CharsetConv* getCharsetConvPtr();
 	Util* getUtilPtr();
+	TaskQueue* getTaskQueuePtr();
 };
 
 #define FileArchiveToolSysDef FileArchiveToolSys::getSingletonPtr()
