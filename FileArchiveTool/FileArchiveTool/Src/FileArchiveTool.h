@@ -20,6 +20,8 @@
 #include "ITask.h"
 #include "LogSys.h"
 #include "LogDeviceBase.h"
+#include "ArchiveParam.h"
+#include "UnArchiveParam.h"
 
 USING_NAMESPACE_FILEARCHIVETOOL
 

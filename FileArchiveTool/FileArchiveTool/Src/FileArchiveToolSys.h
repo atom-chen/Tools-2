@@ -12,6 +12,8 @@ class CharsetConv;
 class Util;
 class TaskQueue;
 class LogSys;
+class ArchiveParam;
+class UnArchiveParam;
 
 class FILEARCHIVETOOL_EXPORT FileArchiveToolSys : public Singleton<FileArchiveToolSys>
 {
@@ -22,19 +24,24 @@ protected:
 	Util* m_pUtil;
 	TaskQueue* m_pTaskQueue;
 	LogSys* m_pLogSys;
+	ArchiveParam* m_pArchiveParam;
+	UnArchiveParam* m_pUnArchiveParam;
 
 public:
 	FileArchiveToolSys();
 	virtual ~FileArchiveToolSys();
 
 public:
+	virtual void onTick();
+
 	Config* getConfigPtr();
 	ArchiveData* getArchiveDataPtr();
 	CharsetConv* getCharsetConvPtr();
 	Util* getUtilPtr();
 	TaskQueue* getTaskQueuePtr();
 	LogSys* getLogSysPtr();
-	virtual void onTick();
+	ArchiveParam* getArchiveParamPtr();
+	UnArchiveParam* getUnArchiveParamPtr();
 };
 
 #define FileArchiveToolSysDef FileArchiveToolSys::getSingletonPtr()

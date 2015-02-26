@@ -1,5 +1,6 @@
 #include "FileInfo.h"
 #include "MByteBuffer.h"
+#include "UnArchiveParam.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -63,9 +64,6 @@ void FileHeader::readHeaderFromArchiveFile(MByteBuffer* ba)
 	ba->readMultiByte(m_fileNamePath, m_pathLen);
 	ba->readUnsignedInt32(m_fileOffset);
 	ba->readUnsignedInt32(m_fileSize);
-
-	strcat(m_pFullPath, "E:\\");
-	strcat(m_pFullPath, m_fileNamePath);
 }
 
 void FileHeader::adjustHeaderOffset(uint32 offset)
@@ -73,8 +71,11 @@ void FileHeader::adjustHeaderOffset(uint32 offset)
 	m_fileOffset += offset;
 }
 
-void FileHeader::writeArchiveFile2File(FILE* fileHandle, uint32 sizePerOne, char* pchar)
+void FileHeader::writeArchiveFile2File(FILE* fileHandle, uint32 sizePerOne, char* pchar, UnArchiveParam* pUnArchiveParam)
 {
+	strcat(m_pFullPath, pUnArchiveParam->getUnArchiveOutDir());
+	strcat(m_pFullPath, m_fileNamePath);
+
 	fseek(fileHandle, 0, SEEK_SET);		// 移动文件指针到头部
 	fseek(fileHandle, m_fileOffset, SEEK_SET);	// 移动到文件开始位置
 

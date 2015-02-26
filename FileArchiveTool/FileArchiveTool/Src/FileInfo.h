@@ -9,6 +9,7 @@
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 class MByteBuffer;
+class UnArchiveParam;
 
 /**
 * @brief 文件 Archive 文件的头信息
@@ -32,7 +33,7 @@ public:
 	void writeHeader2ArchiveFile(FILE* fileHandle);	// 写文件头
 	void writeFile2ArchiveFile(FILE* fileHandle, uint32 sizePerOne, char* pchar);		// 写入文件
 	void readHeaderFromArchiveFile(MByteBuffer* ba);	// 读取文件头部
-	void writeArchiveFile2File(FILE* fileHandle, uint32 sizePerOne, char* pchar);
+	void writeArchiveFile2File(FILE* fileHandle, uint32 sizePerOne, char* pchar, UnArchiveParam* pUnArchiveParam);
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

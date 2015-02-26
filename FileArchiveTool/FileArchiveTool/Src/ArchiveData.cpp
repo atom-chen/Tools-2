@@ -8,6 +8,8 @@
 #include "BufferDefaultValue.h"
 #include "ArchiveTask.h"
 #include "TaskQueue.h"
+#include "ArchiveParam.h"
+#include "UnArchiveParam.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -30,26 +32,31 @@ ArchiveData::~ArchiveData()
 	delete m_pFileVec;
 }
 
-void ArchiveData::ArchiveDir(const char* pDir)
+void ArchiveData::ArchiveDir()
 {
-	ArchiveTask* pArchiveTask = new ArchiveTask(pDir);
+	ArchiveTask* pArchiveTask = new ArchiveTask(FileArchiveToolSysDef->getArchiveParamPtr());
 	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pArchiveTask);
 }
 
-void ArchiveData::asyncArchiveDir(const char* pDir)
+void ArchiveData::asyncArchiveDir(ArchiveParam* pArchiveParam)
 {
 	clearFileVec();
 	//FileArchiveToolSysDef->getUtilPtr()->bindWalkDirDelegate(fastdelegate::MakeDelegate(this, &ArchiveData::fileHandle));
 	FileArchiveToolSysDef->getUtilPtr()->getWalkDirDelegatePtr()->bind(this, &ArchiveData::fileHandle);
-	FileArchiveToolSysDef->getUtilPtr()->walkDir(pDir);
+	FileArchiveToolSysDef->getUtilPtr()->walkDir(pArchiveParam->getArchiveDir());
 	adjustHeaderOffset();
-	writeFile2ArchiveFile("E:\\aaa.abc");
+	writeFile2ArchiveFile(pArchiveParam);
 }
 
-void ArchiveData::unArchiveFile(const char* pFileName)
+void ArchiveData::unArchiveFile()
+{
+	
+}
+
+void ArchiveData::asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam)
 {
 	clearFileVec();
-	writeArchiveFile2File(pFileName);
+	writeArchiveFile2File(pUnArchiveParam);
 }
 
 bool ArchiveData::fileHandle(const char* walkPath, struct _finddata_t* FileInfo)
@@ -120,9 +127,9 @@ void ArchiveData::clearFileVec()
 }
 
 // Ð´ÈëÎÄ¼þ
-void ArchiveData::writeFile2ArchiveFile(const char* pFileName)
+void ArchiveData::writeFile2ArchiveFile(ArchiveParam* pArchiveParam)
 {
-	FILE* fileHandle = fopen(pFileName, "wb");
+	FILE* fileHandle = fopen(pArchiveParam->getArchiveFilePath(), "wb");
 
 	if (fileHandle != nullptr)
 	{
@@ -216,9 +223,9 @@ void ArchiveData::readArchiveFileHeader(FILE* fileHandle)
 	}
 }
 
-void ArchiveData::writeArchiveFile2File(const char* pFileName)
+void ArchiveData::writeArchiveFile2File(UnArchiveParam* pUnArchiveParam)
 {
-	FILE* fileHandle = fopen(pFileName, "rb");
+	FILE* fileHandle = fopen(pUnArchiveParam->getUnArchiveFilePath(), "rb");
 
 	if (fileHandle != nullptr)
 	{
@@ -237,7 +244,7 @@ void ArchiveData::writeArchiveFile2File(const char* pFileName)
 
 		for (; itBegin != itEnd; ++itBegin)
 		{
-			(*itBegin)->writeArchiveFile2File(fileHandle, sizePerOne, pchar);
+			(*itBegin)->writeArchiveFile2File(fileHandle, sizePerOne, pchar, pUnArchiveParam);
 		}
 
 		delete pchar;

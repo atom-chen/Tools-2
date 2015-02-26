@@ -11,6 +11,8 @@
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 class FileHeader;
+class ArchiveParam;
+class UnArchiveParam;
 
 class FILEARCHIVETOOL_EXPORT ArchiveData
 {
@@ -35,18 +37,19 @@ public:
 public:
 	void adjustHeaderOffset();					// 修正每一个头文件的偏移
 	void calcHeaderSize(uint32& headerSize);
-	void ArchiveDir(const char* pDir);			// archive 某一个目录
-	void unArchiveFile(const char* pFileName);
+	void ArchiveDir();			// archive 某一个目录
+	void unArchiveFile();
 	bool fileHandle(const char* walkPath, struct _finddata_t* FileInfo);
 
-	void asyncArchiveDir(const char* pDir);
+	void asyncArchiveDir(ArchiveParam* m_pArchiveParam);
+	void asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam);
 
 protected:
 	void clearFileVec();			// 清理 m_pFileVec 中的内容
-	void writeFile2ArchiveFile(const char* pFileName);
+	void writeFile2ArchiveFile(ArchiveParam* pArchiveParam);
 	void readArchiveFileHeader(const char* pFileName);
 	void readArchiveFileHeader(FILE* fileHandle);
-	void writeArchiveFile2File(const char* pFileName);
+	void writeArchiveFile2File(UnArchiveParam* pUnArchiveParam);
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

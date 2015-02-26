@@ -7,13 +7,15 @@
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
+class ArchiveParam;
+
 class FILEARCHIVETOOL_EXPORT ArchiveTask : public ITask
 {
 protected:
-	char* m_pPath;
+	ArchiveParam* m_pArchiveParam;
 
 public:
-	ArchiveTask(const char* pPath);
+	ArchiveTask(ArchiveParam* m_pArchiveParam);
 	~ArchiveTask();
 
 	virtual bool exeTask();

@@ -1,24 +1,23 @@
 #include "ArchiveTask.h"
 #include "FileArchiveToolSys.h"
 #include "ArchiveData.h"
+#include "ArchiveParam.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-ArchiveTask::ArchiveTask(const char* pPath)
+ArchiveTask::ArchiveTask(ArchiveParam* m_pArchiveParam)
 {
-	m_pPath = new char[strlen(pPath) + 1];
-	m_pPath[strlen(pPath)] = 0;
-	strncpy(m_pPath, pPath, strlen(pPath));
+	m_pArchiveParam = m_pArchiveParam;
 }
 
 ArchiveTask::~ArchiveTask()
 {
-	delete[]m_pPath;
+	
 }
 
 bool ArchiveTask::exeTask()
 {
-	FileArchiveToolSysDef->getArchiveDataPtr()->asyncArchiveDir(m_pPath);
+	FileArchiveToolSysDef->getArchiveDataPtr()->asyncArchiveDir(m_pArchiveParam);
 	return true;
 }
 
