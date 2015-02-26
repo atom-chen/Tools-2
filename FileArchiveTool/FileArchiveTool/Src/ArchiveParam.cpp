@@ -7,8 +7,6 @@ ArchiveParam::ArchiveParam()
 {
 	m_pArchiveDir = new char[MAX_PATH];
 	m_pArchiveFilePath = new char[MAX_PATH];
-
-	setArchiveFilePath("E:\\aaa.abc");
 }
 
 ArchiveParam::~ArchiveParam()
