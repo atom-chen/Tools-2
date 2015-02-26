@@ -15,8 +15,19 @@ file(GLOB SRCS_FILES Src/*.h Src/*.cpp)
 
 source_group("Source Files" FILES ${SRCS_FILES})
 
-include_directories(./Src ../libiconv-1.9.2-1-lib/include ../FastDelegate_src)
-link_directories(../libiconv-1.9.2-1-lib/lib)
+set(BOOST_ROOT $ENV{BOOST_ROOT})
+set(Boost_USE_STATIC_LIBS   ON)
+set(Boost_USE_MULTITHREADED ON)
+find_package(Boost
+             1.57.0
+             COMPONENTS thread
+             REQUIRED)
+
+include_directories(./Src ../libiconv-1.9.2-1-lib/include ../FastDelegate_src ${Boost_INCLUDE_DIRS})
+link_directories(../libiconv-1.9.2-1-lib/lib ${Boost_LIBRARY_DIRS})
+
+include_directories()
+
 
 ADD_DEFINITIONS(-DFILEARCHIVETOOL_DLL -DFILEARCHIVETOOL_DLL_EXPORT)
 
