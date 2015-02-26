@@ -13,3 +13,8 @@ LogWidget::~LogWidget()
 {
 
 }
+
+void LogWidget::log(const char* msg)
+{
+	m_ui->textBrowser->append(msg);
+}

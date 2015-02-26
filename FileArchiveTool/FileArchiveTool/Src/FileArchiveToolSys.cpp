@@ -4,6 +4,7 @@
 #include "CharsetConv.h"
 #include "Util.h"
 #include "TaskQueue.h"
+#include "LogSys.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -47,6 +48,16 @@ Util* FileArchiveToolSys::getUtilPtr()
 TaskQueue* FileArchiveToolSys::getTaskQueuePtr()
 {
 	return m_pTaskQueue;
+}
+
+LogSys* FileArchiveToolSys::getLogSysPtr()
+{
+	return m_pLogSys;
+}
+
+void FileArchiveToolSys::onTick()
+{
+	m_pLogSys->onTick();
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

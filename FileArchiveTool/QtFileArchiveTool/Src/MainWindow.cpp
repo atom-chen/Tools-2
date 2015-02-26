@@ -4,6 +4,7 @@
 #include "LogWidget.h"
 #include "ProjectWidget.h"
 #include "CenterTabWidget.h"
+#include "QtFileArchiveToolSys.h"
 
 #include <QtCore>
 
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 	connectAction();
 	createDockWidget();
+	createTimer();
 }
 
 MainWindow::~MainWindow()
@@ -66,6 +68,9 @@ void MainWindow::createDockWidget()
 	m_logWidget = new LogWidget(m_pSubMainWin);
 	m_pSubMainWin->addDockWidget(Qt::BottomDockWidgetArea, m_logWidget);
 	// END
+
+	QtFileArchiveToolSysDef->getLogSysPtr()->regLogDevice(m_logWidget);
+	QtFileArchiveToolSysDef->getLogSysPtr()->log("你好");
 }
 
 void MainWindow::createActions()
@@ -236,4 +241,16 @@ void MainWindow::showLog()
 void MainWindow::onProjectVisibilityChanged(bool bVisible)
 {
 
+}
+
+void MainWindow::createTimer()
+{
+	m_timer = new QTimer(this);
+	connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));	// timeoutslot() 为自定义槽
+	m_timer->start(1000);
+}
+
+void MainWindow::update()
+{
+	QtFileArchiveToolSysDef->onTick();
 }

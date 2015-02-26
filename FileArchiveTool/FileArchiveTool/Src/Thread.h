@@ -3,7 +3,6 @@
 
 #include <boost/atomic.hpp>
 #include <boost/thread.hpp>
-#include <boost/thread/tss.hpp>
 
 #include "Prerequisites.h"
 

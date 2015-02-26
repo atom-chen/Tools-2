@@ -47,6 +47,7 @@ public Q_SLOTS:
 	void showProject();
 	void showLog();
 	void onProjectVisibilityChanged(bool bVisible);
+	void update();
 
 private:
 	QMenu *fileMenu;
@@ -73,6 +74,7 @@ private:
 
 	QTextEdit *text;
 	QMainWindow* m_pSubMainWin;
+	QTimer *m_timer;
 
 private:
 	Ui::MainWindow *m_ui;
@@ -84,6 +86,7 @@ private:
 private:
 	void connectAction();
 	void createDockWidget();
+	void createTimer();
 };
 
 #endif // MAINWINDOW_H

@@ -18,6 +18,8 @@
 #include "Util.h"
 #include "TaskQueue.h"
 #include "ITask.h"
+#include "LogSys.h"
+#include "LogDeviceBase.h"
 
 USING_NAMESPACE_FILEARCHIVETOOL
 
