@@ -46,7 +46,6 @@ void ArchiveData::asyncArchiveDir(ArchiveParam* pArchiveParam)
 	//FileArchiveToolSysDef->getUtilPtr()->bindWalkDirDelegate(fastdelegate::MakeDelegate(this, &ArchiveData::fileHandle));
 	FileArchiveToolSysDef->getUtilPtr()->getWalkDirDelegatePtr()->bind(this, &ArchiveData::fileHandle);
 	FileArchiveToolSysDef->getUtilPtr()->walkDir(pArchiveParam->getArchiveDir());
-	//adjustHeaderOffset();
 	writeFile2ArchiveFile(pArchiveParam);
 }
 
@@ -74,6 +73,7 @@ bool ArchiveData::fileHandle(const char* walkPath, struct _finddata_t* FileInfo)
 	strcpy(pFileHeader->m_fileNamePath, FileInfo->name);
 	//pFileHeader->m_fileSize = FileInfo->size;
 	//pFileHeader->m_fileOffset = m_fileSize;
+	pFileHeader->modifyArchiveFileName(FileArchiveToolSysDef->getArchiveParamPtr());
 	pFileHeader->m_pathLen = strlen(pFileHeader->m_fileNamePath);
 
 	++m_fileCount;

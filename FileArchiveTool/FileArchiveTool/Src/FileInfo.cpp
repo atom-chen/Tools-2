@@ -1,6 +1,7 @@
 #include "FileInfo.h"
 #include "MByteBuffer.h"
 #include "UnArchiveParam.h"
+#include "ArchiveParam.h"
 #include "FileArchiveToolSys.h"
 #include "Util.h"
 #include "Config.h"
@@ -164,6 +165,17 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 
 		//fflush(localFile);
 		fclose(localFile);
+	}
+}
+
+void FileHeader::modifyArchiveFileName(ArchiveParam* pArchiveParam)
+{
+	if (strlen(m_pFullPath) != strlen(pArchiveParam->getArchiveDir()) + strlen(m_fileNamePath) + 1)
+	{
+		uint32 len = strlen(m_pFullPath) - strlen(pArchiveParam->getArchiveDir());
+		memmove(m_fileNamePath + len, m_fileNamePath, strlen(m_fileNamePath));		// 因为内不能可能重叠，因此使用这个函数
+		strcpy(m_fileNamePath, m_pFullPath + strlen(pArchiveParam->getArchiveDir()) + 1);
+		strcpy(m_fileNamePath + len - 1, "/");
 	}
 }
 

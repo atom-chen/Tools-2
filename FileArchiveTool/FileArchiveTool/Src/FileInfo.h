@@ -10,6 +10,7 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 class MByteBuffer;
 class UnArchiveParam;
+class ArchiveParam;
 
 /**
 * @brief 文件 Archive 文件的头信息
@@ -36,6 +37,7 @@ public:
 	void writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArchiveParam);
 
 	uint32 getFileSize();
+	void modifyArchiveFileName(ArchiveParam* pArchiveParam);		// 修改文件名字为写入 Archive 的文件名字
 };
 
 END_NAMESPACE_FILEARCHIVETOOL
