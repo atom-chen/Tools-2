@@ -20,8 +20,16 @@ public:
 public:
 	virtual void log(const char* msg);
 
+public Q_SLOTS:
+	void clearText();
+
+protected:
+	void createToolBar();
+	void createAction();
+
 private:
 	Ui::LogWidget *m_ui;
+	QAction* m_actClear;
 };
 
 #endif // LOGWIDGET_H

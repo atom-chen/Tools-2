@@ -19,10 +19,15 @@ public:
 	explicit ProjectWidget(QWidget *parent = 0);
 	~ProjectWidget();
 
+protected:
+	void createToolBar();
+	void createAction();
+
 public Q_SLOTS:
 	void on_treeView_customContextMenuRequested(const QPoint& pos);
 	void archiveDir();
 	void unArchiveFile();
+	void refreshList();
 
 Q_SIGNALS:
 	void onTreeItemSelChange(bool isDir, std::string path);
@@ -34,6 +39,7 @@ private:
 	//FileSystemModel* m_pModel;
 	
 	std::string m_pPath;
+	QAction* m_actRefresh;
 };
 
 #endif // PROJECTWIDGET_H

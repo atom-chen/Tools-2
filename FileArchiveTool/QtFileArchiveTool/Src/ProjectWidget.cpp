@@ -10,7 +10,7 @@ ProjectWidget::ProjectWidget(QWidget *parent)
 {
 	m_ui->setupUi(this);
 
-	this->setWidget(m_ui->verticalLayoutWidget);
+	this->setWidget(m_ui->verticalLayoutWidget);	// 调整窗口的父窗口
 
 	m_pModel = new QDirModel;
 	//m_pModel = new FileSystemModel;
@@ -37,6 +37,9 @@ ProjectWidget::ProjectWidget(QWidget *parent)
 	//设置 QTreeView 可以使用右键菜单
 	m_ui->mDirTreeView->setContextMenuPolicy(Qt::CustomContextMenu);
 	QObject::connect(m_ui->mDirTreeView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(on_treeView_customContextMenuRequested(QPoint)));
+
+	createAction();
+	createToolBar();
 }
 
 ProjectWidget::~ProjectWidget()
@@ -114,4 +117,28 @@ void ProjectWidget::unArchiveFile()
 	QtFileArchiveToolSysDef->getUnArchiveParamPtr()->setUnArchiveFilePath(m_pPath.c_str());
 	QtFileArchiveToolSysDef->getUnArchiveParamPtr()->setUnArchiveOutDir(QtFileArchiveToolSysDef->getUtilPtr()->getFullPathNoExtName(m_pPath.c_str()));
 	QtFileArchiveToolSysDef->getArchiveDataPtr()->unArchiveFile();
+}
+
+void ProjectWidget::createToolBar()
+{
+	QToolBar *projectToolBar = new QToolBar(m_ui->verticalLayoutWidget);
+	projectToolBar->setObjectName("projectToolBar");
+	projectToolBar->setIconSize(QSize(20, 20));
+	projectToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+	projectToolBar->addAction(m_actRefresh);
+
+	m_ui->verticalLayout->addWidget(projectToolBar, 1);
+}
+
+void ProjectWidget::createAction()
+{
+	m_actRefresh = new QAction(tr("Refresh"), this);
+	m_actRefresh->setStatusTip(tr("Refresh List"));
+	m_actRefresh->setIcon(QIcon(":/Icons/new.png"));
+	connect(m_actRefresh, SIGNAL(triggered()), this, SLOT(refreshList()));
+}
+
+void ProjectWidget::refreshList()
+{
+	m_pModel->refresh();
 }
