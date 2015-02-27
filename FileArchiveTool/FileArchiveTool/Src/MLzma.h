@@ -5,6 +5,8 @@
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
+#define LZMA_HEADER_LEN 13
+
 /**
  * @brief 执行 LZMA 压缩
  */
@@ -14,11 +16,11 @@ public:
 	MLzma();
 	~MLzma();
 
-	bool LzmaFileCompress(const char*scrfilename, const char*desfilename);			// 文件压缩
-	bool LzmaFileUncompress(const char*scrfilename, const char*desfilename);		// 文件解压缩
+	static bool LzmaFileCompress(const char* scrfilename, const char* desfilename);			// 文件压缩
+	static bool LzmaFileUncompress(const char* scrfilename, const char* desfilename);		// 文件解压缩
 
-	bool LzmaStrCompress(const char*scrStr, char*desStr);					// 字符串压缩
-	bool LzmaStrUncompress(const char*scrStr, char*desStr);				// 字符串解压缩
+	static bool LzmaStrCompress(const char* scrStr, char** desStr, uint32* len = nullptr);					// 字符串压缩
+	static bool LzmaStrUncompress(const char* scrStr, char** desStr, uint32* len = nullptr);				// 字符串解压缩
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

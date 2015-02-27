@@ -44,6 +44,8 @@ public:
 	void asyncArchiveDir(ArchiveParam* m_pArchiveParam);
 	void asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam);
 
+	uint32 calcArchiveHeaderSizeNoFileHeader();
+
 protected:
 	void clearFileVec();			// 清理 m_pFileVec 中的内容
 	void writeFile2ArchiveFile(ArchiveParam* pArchiveParam);

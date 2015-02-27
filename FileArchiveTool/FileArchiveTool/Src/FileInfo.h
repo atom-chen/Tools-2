@@ -31,9 +31,11 @@ public:
 	uint32 calcHeaderSize();
 	void adjustHeaderOffset(uint32 offset);
 	void writeHeader2ArchiveFile(FILE* fileHandle);	// 写文件头
-	void writeFile2ArchiveFile(FILE* fileHandle, uint32 sizePerOne, char* pchar);		// 写入文件
+	void writeFile2ArchiveFile(FILE* fileHandle);		// 写入文件
 	void readHeaderFromArchiveFile(MByteBuffer* ba);	// 读取文件头部
-	void writeArchiveFile2File(FILE* fileHandle, uint32 sizePerOne, char* pchar, UnArchiveParam* pUnArchiveParam);
+	void writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArchiveParam);
+
+	uint32 getFileSize();
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

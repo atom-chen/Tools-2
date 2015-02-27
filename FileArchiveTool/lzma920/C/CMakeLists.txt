@@ -45,3 +45,20 @@ set(ALL_SRCS ${DEF_FILES} ${SRCS_FILES})
 ADD_LIBRARY(LzmaLib SHARED ${ALL_SRCS})
 
 set_target_properties(LzmaLib PROPERTIES DEBUG_POSTFIX _d)
+
+install(FILES 
+	${PROJECT_BINARY_DIR}/Debug/LzmaLib_d.dll
+	DESTINATION "${PROJECT_BINARY_DIR}/../../QtFileArchiveTool/Debug" CONFIGURATIONS Debug
+)
+install(FILES 
+	${PROJECT_BINARY_DIR}/Release/LzmaLib.dll
+	DESTINATION "${PROJECT_BINARY_DIR}/../../QtFileArchiveTool/Release" CONFIGURATIONS Release None ""
+)
+install(FILES 
+	${PROJECT_BINARY_DIR}/RelWithDebInfo/LzmaLib.dll
+	DESTINATION "${PROJECT_BINARY_DIR}/../../QtFileArchiveTool/RelWithDebInfo" CONFIGURATIONS RelWithDebInfo
+)
+install(FILES 
+	${PROJECT_BINARY_DIR}/MinSizeRel/LzmaLib.dll
+	DESTINATION "${PROJECT_BINARY_DIR}/../../QtFileArchiveTool/MinSizeRel" CONFIGURATIONS MinSizeRel
+)

@@ -3,6 +3,9 @@
 #include "UnArchiveParam.h"
 #include "FileArchiveToolSys.h"
 #include "Util.h"
+#include "Config.h"
+#include "MLzma.h"
+#include <stdlib.h>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -20,27 +23,56 @@ FileHeader::~FileHeader()
 	delete m_fileNamePath;
 }
 
-void FileHeader::writeFile2ArchiveFile(FILE* fileHandle, uint32 sizePerOne, char* pchar)
+void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 {
 	FILE* localFile = fopen(m_pFullPath, "rb");
-	uint32 leftSize = m_fileSize;
+
+	char* pchar;
+
 	if (localFile != nullptr)
 	{
-		while (leftSize > 0)
+		// 计算文件大小
+		fseek(localFile, 0, SEEK_END); //定位到文件末
+		m_fileSize = ftell(localFile); //文件长度
+
+		fseek(localFile, 0, SEEK_SET);	// 移动到文件头
+
+		// 一次性读取进来，可能需要压缩
+		pchar = new char[m_fileSize + 1];
+		memset(pchar, 0, m_fileSize + 1);
+
+		size_t readlength = fread(pchar, 1, m_fileSize, localFile);
+		size_t writeLength;
+		if (readlength == m_fileSize)
 		{
-			if (leftSize > sizePerOne)
+			if (!FileArchiveToolSysDef->getConfigPtr()->bCompress())
 			{
-				fread(pchar, sizePerOne, 1, localFile);
-				fwrite(pchar, sizePerOne, 1, fileHandle);
-				leftSize -= sizePerOne;
+				writeLength = fwrite(pchar, 1, m_fileSize, fileHandle);
+				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
+				{
+
+				}
 			}
-			else
+			else	// 需要压缩
 			{
-				fread(pchar, leftSize, 1, localFile);
-				fwrite(pchar, leftSize, 1, fileHandle);
-				leftSize = 0;
+				char* pComprStr = nullptr;		// 压缩的字符串指针
+				MLzma::LzmaStrCompress(pchar, &pComprStr, &m_fileSize);
+
+				writeLength = fwrite(pComprStr, 1, m_fileSize, fileHandle);
+				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
+				{
+
+				}
+
+				free(pComprStr);		// 记得释放这个内存
 			}
 		}
+		else			// 读取可能有问题，读取不了完整文件
+		{
+
+		}
+
+		delete []pchar;
 
 		fclose(localFile);
 	}
@@ -70,10 +102,15 @@ void FileHeader::readHeaderFromArchiveFile(MByteBuffer* ba)
 
 void FileHeader::adjustHeaderOffset(uint32 offset)
 {
-	m_fileOffset += offset;
+	m_fileOffset = offset;
 }
 
-void FileHeader::writeArchiveFile2File(FILE* fileHandle, uint32 sizePerOne, char* pchar, UnArchiveParam* pUnArchiveParam)
+uint32 FileHeader::getFileSize()
+{
+	return m_fileSize;
+}
+
+void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArchiveParam)
 {
 	strcat(m_pFullPath, pUnArchiveParam->getUnArchiveOutDir());
 	strcat(m_pFullPath, "/");
@@ -82,30 +119,50 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, uint32 sizePerOne, char
 	std::string strPath = FileArchiveToolSysDef->getUtilPtr()->getFullPathNoFileName(m_pFullPath);
 	FileArchiveToolSysDef->getUtilPtr()->mkDir(strPath.c_str());		// 创建目录
 
-	fseek(fileHandle, 0, SEEK_SET);		// 移动文件指针到头部
+	//fseek(fileHandle, 0, SEEK_SET);		// 移动文件指针到头部
 	fseek(fileHandle, m_fileOffset, SEEK_SET);	// 移动到文件开始位置
 
 	FILE* localFile = fopen(m_pFullPath, "wb");
-	uint32 leftSize = m_fileSize;
+	char* pchar;
+
 	if (localFile != nullptr)
 	{
-		while (leftSize > 0)
+		// 一次性读取进来，可能需要压缩
+		pchar = new char[m_fileSize + 1];
+		memset(pchar, 0, m_fileSize + 1);
+
+		size_t readlength = fread(pchar, 1, m_fileSize, fileHandle);
+		size_t writeLength;
+		if (readlength == m_fileSize)
 		{
-			if (leftSize > sizePerOne)
+			if (!FileArchiveToolSysDef->getConfigPtr()->bCompress())		// 如果不压缩
 			{
-				fread(pchar, sizePerOne, 1, fileHandle);
-				fwrite(pchar, sizePerOne, 1, localFile);
-				leftSize -= sizePerOne;
+				writeLength = fwrite(pchar, 1, m_fileSize, localFile);
+				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
+				{
+
+				}
 			}
-			else
+			else	// 需要解压
 			{
-				fread(pchar, leftSize, 1, fileHandle);
-				fwrite(pchar, leftSize, 1, localFile);
-				leftSize = 0;
+				char* pComprStr = nullptr;		// 压缩的字符串指针
+				MLzma::LzmaStrUncompress(pchar, &pComprStr, &m_fileSize);
+
+				writeLength = fwrite(pComprStr, 1, m_fileSize, fileHandle);
+				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
+				{
+
+				}
+
+				free(pComprStr);		// 记得释放这个内存
 			}
 		}
+		else							// 读取可能有问题，读取不了完整文件
+		{
 
-		fflush(localFile);
+		}
+
+		//fflush(localFile);
 		fclose(localFile);
 	}
 }

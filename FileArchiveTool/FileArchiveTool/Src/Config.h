@@ -18,6 +18,7 @@ protected:
 public:
 	Config();
 	~Config();
+	bool bCompress();	//  «∑Ò π”√—πÀı
 
 public:
 	std::string& getRootPath();

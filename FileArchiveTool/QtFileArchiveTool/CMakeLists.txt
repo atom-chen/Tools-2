@@ -72,7 +72,7 @@ else(NOT Qt5Widgets_FOUND)
 
     set_target_properties(QtFileArchiveTool PROPERTIES DEBUG_POSTFIX _d LINK_FLAGS "/ENTRY:\"mainCRTStartup\"")
 	
-	TARGET_LINK_LIBRARIES(QtFileArchiveTool ${Qt5Widgets_LIBRARIES} libiconv LzmaLib)
+	TARGET_LINK_LIBRARIES(QtFileArchiveTool ${Qt5Widgets_LIBRARIES} libiconv LzmaLib FileArchiveTool)
 
 	add_dependencies(QtFileArchiveTool FileArchiveTool LzmaLib)
 	

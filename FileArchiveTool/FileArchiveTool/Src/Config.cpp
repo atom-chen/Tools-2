@@ -17,4 +17,9 @@ std::string& Config::getRootPath()
 	return *m_pRootPath;
 }
 
+bool Config::bCompress()
+{
+	return true;
+}
+
 END_NAMESPACE_FILEARCHIVETOOL

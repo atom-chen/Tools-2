@@ -19,7 +19,7 @@ MLzma::~MLzma()
 
 }
 
-bool MLzma::LzmaFileCompress(const char*scrfilename, const char*desfilename)
+bool MLzma::LzmaFileCompress(const char* scrfilename, const char* desfilename)
 {
 	FILE*fin = fopen(scrfilename, "rb");
 	if (fin == NULL)
@@ -39,10 +39,13 @@ bool MLzma::LzmaFileCompress(const char*scrfilename, const char*desfilename)
 	fseek(fin, 0, SEEK_END);
 	size_t saveinsize = ftell(fin);
 	fseek(fin, 0, SEEK_SET);
-	size_t saveoutsize = saveinsize*1.1 + 1026 * 16;
+	size_t saveoutsize = saveinsize * 1.1 + 1026 * 16;
 
 	unsigned char* inbuff = (unsigned char*)malloc(saveinsize);
+	memset(inbuff, 0, saveinsize);
 	unsigned char* outbuff = (unsigned char*)malloc(saveoutsize);
+	memset(outbuff, 0, saveoutsize);
+
 	unsigned char props[5] = { 0 };
 	size_t propsSize = 5;
 	size_t readlength = fread(inbuff, 1, saveinsize, fin);
@@ -83,7 +86,7 @@ bool MLzma::LzmaFileCompress(const char*scrfilename, const char*desfilename)
 	return true;
 }
 
-bool MLzma::LzmaFileUncompress(const char*scrfilename, const char*desfilename)
+bool MLzma::LzmaFileUncompress(const char* scrfilename, const char* desfilename)
 {
 	FILE*fin = fopen(scrfilename, "rb");
 	if (fin == NULL)
@@ -103,8 +106,10 @@ bool MLzma::LzmaFileUncompress(const char*scrfilename, const char*desfilename)
 	fseek(fin, 0, SEEK_END);
 	size_t saveinsize = ftell(fin);
 	fseek(fin, 0, SEEK_SET);
-	size_t saveoutsize = saveinsize*1.1 + 1026 * 16;
+	size_t saveoutsize = saveinsize * 1.1 + 1026 * 16;
 	unsigned char* inbuff = (unsigned char*)malloc(saveinsize);
+	memset(inbuff, 0, saveinsize);
+
 	unsigned char props[5] = { 0 };
 	size_t propsSize = 5;
 
@@ -138,7 +143,7 @@ bool MLzma::LzmaFileUncompress(const char*scrfilename, const char*desfilename)
 	return true;
 }
 
-bool MLzma::LzmaStrCompress(const char*scrStr, char*desStr)
+bool MLzma::LzmaStrCompress(const char* scrStr, char** desStr, uint32* len)
 {
 	if (scrStr == nullptr || desStr == nullptr)
 	{
@@ -146,15 +151,20 @@ bool MLzma::LzmaStrCompress(const char*scrStr, char*desStr)
 	}
 
 	size_t saveinsize = strlen(scrStr);
-	size_t saveoutsize = saveinsize * 1.1 + 1026 * 16 + 13;
+	size_t saveoutsize = saveinsize * 1.1 + 1026 * 16 + LZMA_HEADER_LEN;
 
 	unsigned char* inbuff = (unsigned char*)malloc(saveinsize);
-	unsigned char* outbuff = (unsigned char*)malloc(saveoutsize);
-	desStr = (char*)outbuff;
+	memset(inbuff, 0, saveinsize);
+	unsigned char* outbuff = (unsigned char*)malloc(saveoutsize);		// saveoutsize 这个是申请的空间大小
+	memset(outbuff, 0, saveoutsize);
+
+	*desStr = (char*)outbuff;
+	unsigned char* startbuff = outbuff;
 	outbuff += 13;			// 头部信息空间
 	unsigned char props[5] = { 0 };
 	size_t propsSize = 5;
 
+	// LzmaCompress 执行完成后， saveoutsize 变成真正的大小
 	int	res = LzmaCompress(outbuff, &saveoutsize, inbuff, saveinsize,
 		props, &propsSize,
 		5,
@@ -172,17 +182,23 @@ bool MLzma::LzmaStrCompress(const char*scrStr, char*desStr)
 	}
 
 	int zero = 0;
-	outbuff = (unsigned char*)desStr;
-	strncpy((char*)outbuff, (char*)props, propsSize);
-	outbuff += propsSize;
-	strncpy((char*)outbuff, (char*)&saveinsize, 4);
-	outbuff += 4;
-	strncpy((char*)outbuff, (char*)zero, 4);
+	strncpy((char*)startbuff, (char*)props, propsSize);
+	startbuff += propsSize;
+	strncpy((char*)startbuff, (char*)&saveinsize, 4);
+	//startbuff += 4;
+	//strncpy((char*)startbuff, (char*)zero, 4);
+
+	// 注意 outbuff 这个字符串中间有 '\0' 内容
+
+	if (len)
+	{
+		*len = saveoutsize + LZMA_HEADER_LEN;
+	}
 
 	return true;
 }
 
-bool MLzma::LzmaStrUncompress(const char*scrStr, char*desStr)
+bool MLzma::LzmaStrUncompress(const char* scrStr, char** desStr, uint32* len)
 {
 	if (scrStr == nullptr || desStr == nullptr)
 	{
@@ -190,8 +206,10 @@ bool MLzma::LzmaStrUncompress(const char*scrStr, char*desStr)
 	}
 
 	size_t saveinsize = strlen(scrStr);
-	size_t saveoutsize = saveinsize*1.1 + 1026 * 16;
+	size_t saveoutsize = saveinsize * 1.1 + 1026 * 16;
 	unsigned char* inbuff = (unsigned char*)malloc(saveinsize);
+	memset(inbuff, 0, saveinsize);
+
 	unsigned char props[5] = { 0 };
 	size_t propsSize = 5;
 
@@ -201,7 +219,7 @@ bool MLzma::LzmaStrUncompress(const char*scrStr, char*desStr)
 	scrStr += 4;
 	scrStr += 4;		// zero
 	unsigned char* outbuff = (unsigned char*)malloc(saveoutsize);
-	desStr = (char*)outbuff;
+	*desStr = (char*)outbuff;
 	size_t readlength = saveinsize - 13;
 
 	int	res = LzmaUncompress(outbuff, &saveoutsize, inbuff, &readlength,
@@ -209,6 +227,11 @@ bool MLzma::LzmaStrUncompress(const char*scrStr, char*desStr)
 	if (res != 0)
 	{
 		return true;
+	}
+
+	if (len)
+	{
+		*len = saveoutsize;
 	}
 
 	return true;
