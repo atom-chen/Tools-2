@@ -34,7 +34,7 @@ ADD_LIBRARY(FileArchiveTool SHARED ${ALL_SRCS})
 
 set_target_properties(FileArchiveTool PROPERTIES DEBUG_POSTFIX _d)
 
-TARGET_LINK_LIBRARIES(FileArchiveTool libiconv)
+TARGET_LINK_LIBRARIES(FileArchiveTool libiconv LzmaLib)
 
 add_dependencies(FileArchiveTool LzmaLib)
 
