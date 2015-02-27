@@ -56,7 +56,7 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 			else	// 需要压缩
 			{
 				char* pComprStr = nullptr;		// 压缩的字符串指针
-				MLzma::LzmaStrCompress(pchar, &pComprStr, &m_fileSize);
+				MLzma::LzmaStrCompress(pchar, m_fileSize, &pComprStr, &m_fileSize);
 
 				writeLength = fwrite(pComprStr, 1, m_fileSize, fileHandle);
 				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
@@ -146,9 +146,9 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 			else	// 需要解压
 			{
 				char* pComprStr = nullptr;		// 压缩的字符串指针
-				MLzma::LzmaStrUncompress(pchar, &pComprStr, &m_fileSize);
+				MLzma::LzmaStrUncompress(pchar, m_fileSize, &pComprStr, &m_fileSize);
 
-				writeLength = fwrite(pComprStr, 1, m_fileSize, fileHandle);
+				writeLength = fwrite(pComprStr, 1, m_fileSize, localFile);
 				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
 				{
 

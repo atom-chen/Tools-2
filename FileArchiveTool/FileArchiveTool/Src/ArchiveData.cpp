@@ -96,13 +96,13 @@ void ArchiveData::adjustHeaderOffset()
 	for (; itBegin != itEnd; ++itBegin)
 	{
 		(*itBegin)->adjustHeaderOffset(curFileOffset);
-		curFileOffset + (*itBegin)->getFileSize();
+		curFileOffset += (*itBegin)->getFileSize();
 	}
 }
 
 void ArchiveData::calcHeaderSize(uint32& headerSize)
 {
-	headerSize = sizeof(m_magic) + sizeof(m_version) + sizeof(m_endian) + sizeof(m_fileCount) + sizeof(m_headerSize);
+	headerSize = calcArchiveHeaderSizeNoFileHeader();
 
 	FileHeaderVecIt itBegin;
 	FileHeaderVecIt itEnd;
@@ -152,6 +152,9 @@ void ArchiveData::writeFile2ArchiveFile(ArchiveParam* pArchiveParam)
 		fwrite(&m_version, sizeof(m_version), 1, fileHandle);
 		// 写入文件数量
 		fwrite(&m_fileCount, sizeof(m_fileCount), 1, fileHandle);
+
+		// 移动文件指针
+		fseek(fileHandle, m_headerSize, SEEK_SET);	// 移动到文件开始位置
 
 		FileHeaderVecIt itBegin;
 		FileHeaderVecIt itEnd;
@@ -242,10 +245,6 @@ void ArchiveData::writeArchiveFile2File(UnArchiveParam* pUnArchiveParam)
 		FileHeaderVecIt itBegin;
 		FileHeaderVecIt itEnd;
 
-		uint32 sizePerOne = 1 * 1024 * 1024;	// 一次读取
-		char* pchar;
-		pchar = new char[sizePerOne];
-
 		// 写入头部
 		itBegin = m_pFileVec->begin();
 		itEnd = m_pFileVec->end();
@@ -254,8 +253,6 @@ void ArchiveData::writeArchiveFile2File(UnArchiveParam* pUnArchiveParam)
 		{
 			(*itBegin)->writeArchiveFile2File(fileHandle, pUnArchiveParam);
 		}
-
-		delete pchar;
 	}
 }
 
