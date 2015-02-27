@@ -12,24 +12,19 @@
 #include "UnArchiveParam.h"
 #include "UnArchiveTask.h"
 #include "Config.h"
+#include "ArchiveHeader.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-ArchiveData::ArchiveData() : 
-	m_version(ARCHIVETOOL_VERSION)
+ArchiveData::ArchiveData()
 {
-	m_magic[0] = 'a';
-	m_magic[1] = 's';
-	m_magic[2] = 'd';
-	m_magic[3] = 'f';
-
-	m_endian = sSysEndian;		// 0 大端 1 小端
-
+	m_pArchiveHeader = new ArchiveHeader();
 	m_pFileVec = new FileHeaderVec();
 }
 
 ArchiveData::~ArchiveData()
 {
+	delete m_pArchiveHeader;
 	clearFileVec();
 	delete m_pFileVec;
 }
@@ -76,14 +71,14 @@ bool ArchiveData::fileHandle(const char* walkPath, struct _finddata_t* FileInfo)
 	pFileHeader->modifyArchiveFileName(FileArchiveToolSysDef->getArchiveParamPtr());
 	pFileHeader->m_pathLen = strlen(pFileHeader->m_fileNamePath);
 
-	++m_fileCount;
+	++m_pArchiveHeader->m_fileCount;
 	m_fileSize += FileInfo->size;
 	return true;
 }
 
 void ArchiveData::adjustHeaderOffset()
 {
-	calcHeaderSize(m_headerSize);
+	calcHeaderSize(m_pArchiveHeader->m_headerSize);
 
 	FileHeaderVecIt itBegin;
 	FileHeaderVecIt itEnd;
@@ -91,7 +86,7 @@ void ArchiveData::adjustHeaderOffset()
 	itBegin = m_pFileVec->begin();
 	itEnd = m_pFileVec->end();
 
-	uint32 curFileOffset = m_headerSize;
+	uint32 curFileOffset = m_pArchiveHeader->m_headerSize;
 
 	for (; itBegin != itEnd; ++itBegin)
 	{
@@ -102,7 +97,7 @@ void ArchiveData::adjustHeaderOffset()
 
 void ArchiveData::calcHeaderSize(uint32& headerSize)
 {
-	headerSize = calcArchiveHeaderSizeNoFileHeader();
+	headerSize = m_pArchiveHeader->calcArchiveHeaderSizeNoFileHeader();
 
 	FileHeaderVecIt itBegin;
 	FileHeaderVecIt itEnd;
@@ -118,9 +113,8 @@ void ArchiveData::calcHeaderSize(uint32& headerSize)
 
 void ArchiveData::clearFileVec()
 {
-	m_fileCount = 0;
 	m_fileSize = 0;
-	m_headerSize = 0;
+	m_pArchiveHeader->clear();
 
 	FileHeaderVecIt itBegin = m_pFileVec->begin();
 	FileHeaderVecIt itEnd = m_pFileVec->end();
@@ -139,22 +133,11 @@ void ArchiveData::writeFile2ArchiveFile(ArchiveParam* pArchiveParam)
 
 	if (fileHandle != nullptr)
 	{
-		// 写入 magic 
-		fwrite(m_magic, sizeof(m_magic), 1, fileHandle);
-		// 写入 endian 
-		fwrite(&m_endian, sizeof(m_endian), 1, fileHandle);
-
-		// 写入头部总共大小
-		calcHeaderSize(m_headerSize);
-		fwrite(&m_headerSize, sizeof(m_headerSize), 1, fileHandle);
-
-		// 写入版本
-		fwrite(&m_version, sizeof(m_version), 1, fileHandle);
-		// 写入文件数量
-		fwrite(&m_fileCount, sizeof(m_fileCount), 1, fileHandle);
+		calcHeaderSize(m_pArchiveHeader->m_headerSize);
+		m_pArchiveHeader->writeArchiveFileHeader(fileHandle);
 
 		// 移动文件指针
-		fseek(fileHandle, m_headerSize, SEEK_SET);	// 移动到文件开始位置
+		fseek(fileHandle, m_pArchiveHeader->m_headerSize, SEEK_SET);	// 移动到文件开始位置
 
 		FileHeaderVecIt itBegin;
 		FileHeaderVecIt itEnd;
@@ -169,7 +152,7 @@ void ArchiveData::writeFile2ArchiveFile(ArchiveParam* pArchiveParam)
 		}
 
 		// 移动文件指针
-		fseek(fileHandle, calcArchiveHeaderSizeNoFileHeader(), SEEK_SET);	// 移动到文件开始位置
+		fseek(fileHandle, m_pArchiveHeader->calcArchiveHeaderSizeNoFileHeader(), SEEK_SET);	// 移动到文件开始位置
 
 		// 修正文件偏移
 		adjustHeaderOffset();
@@ -202,30 +185,10 @@ void ArchiveData::readArchiveFileHeader(FILE* fileHandle)
 {
 	MByteBuffer* pMByteBuffer = new MByteBuffer(INIT_CAPACITY);
 
-	// 读取 magic 
-	fread(m_magic, sizeof(m_magic), 1, fileHandle);
-	if (strncmp(m_magic, "asdf", sizeof(m_magic)) == 0)		// 检查 magic
+	if (m_pArchiveHeader->readArchiveFileHeader(fileHandle, pMByteBuffer))		// 检查 magic
 	{
-		// 读取 endian 
-		fread(&m_endian, sizeof(m_endian), 1, fileHandle);
-		pMByteBuffer->setEndian((SysEndian)m_endian);
-
-		// 读取头部大小
-		pMByteBuffer->setSize(sizeof(m_headerSize));		// 必然够 sizeof(m_headerSize) 个字节
-		fread((void*)(pMByteBuffer->getStorage()), sizeof(m_headerSize), 1, fileHandle);
-		pMByteBuffer->readUnsignedInt32(m_headerSize);
-		pMByteBuffer->clear();
-
-		pMByteBuffer->setSize(m_headerSize - sizeof(m_magic) - sizeof(m_endian) - sizeof(m_headerSize));
-		fread((void*)(pMByteBuffer->getStorage()), m_headerSize - sizeof(m_magic) - sizeof(m_endian) - sizeof(m_headerSize), 1, fileHandle);
-
-		// 读取版本
-		pMByteBuffer->readUnsignedInt32(m_version);
-		// 读取文件数量
-		pMByteBuffer->readUnsignedInt32(m_fileCount);
-
 		FileHeader* pFileHeader;
-		for (uint32 idx = 0; idx < m_fileCount; ++idx)
+		for (uint32 idx = 0; idx < m_pArchiveHeader->m_fileCount; ++idx)
 		{
 			pFileHeader = new FileHeader();
 			m_pFileVec->push_back(pFileHeader);
@@ -254,16 +217,6 @@ void ArchiveData::writeArchiveFile2File(UnArchiveParam* pUnArchiveParam)
 			(*itBegin)->writeArchiveFile2File(fileHandle, pUnArchiveParam);
 		}
 	}
-}
-
-uint32 ArchiveData::calcArchiveHeaderSizeNoFileHeader()
-{
-	// 写入 magic 
-	// 写入 endian 
-	// 写入头部总共大小
-	// 写入版本
-	// 写入文件数量
-	return sizeof(m_magic) + sizeof(m_endian) + sizeof(m_headerSize) + sizeof(m_version) + sizeof(m_fileCount);
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

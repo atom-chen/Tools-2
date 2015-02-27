@@ -13,6 +13,7 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 class FileHeader;
 class ArchiveParam;
 class UnArchiveParam;
+class ArchiveHeader;
 
 class FILEARCHIVETOOL_EXPORT ArchiveData
 {
@@ -21,12 +22,7 @@ protected:
 	typedef std::vector<FileHeader*>::iterator FileHeaderVecIt;
 
 protected:
-	char m_magic[4];			// 幻数
-	uint8 m_endian;				// 大小端
-	uint32 m_headerSize;		// 头部大小
-	uint32 m_version;			// 版本
-	uint32 m_fileCount;			// 文件总共数量
-
+	ArchiveHeader* m_pArchiveHeader;
 	uint32 m_fileSize;			// 文件总共大小
 	FileHeaderVec* m_pFileVec;		// 整个文件列表
 
@@ -43,8 +39,6 @@ public:
 
 	void asyncArchiveDir(ArchiveParam* m_pArchiveParam);
 	void asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam);
-
-	uint32 calcArchiveHeaderSizeNoFileHeader();
 
 protected:
 	void clearFileVec();			// 清理 m_pFileVec 中的内容
