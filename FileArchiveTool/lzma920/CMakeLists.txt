@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.6)
 cmake_policy(SET CMP0003 NEW)
 cmake_policy(SET CMP0005 NEW)
 
-project(FileArchiveTool)
+project(LzmaLib)
 
 message(STATUS "builder main start")
 
@@ -19,6 +19,4 @@ if(MSVC)
 	add_definitions(-DNOMINMAX)
 endif(MSVC)
 
-add_subdirectory(FileArchiveTool)
-add_subdirectory(QtFileArchiveTool)
-add_subdirectory(lzma920)
+add_subdirectory(C)

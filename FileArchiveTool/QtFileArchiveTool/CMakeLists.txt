@@ -60,7 +60,7 @@ else(NOT Qt5Widgets_FOUND)
              REQUIRED)
 
     # if we don't include this CMake will not include ui headers properly:
-    include_directories(${CMAKE_CURRENT_BINARY_DIR} ./Src ../FileArchiveTool/Src ../FastDelegate_src ${QT_BINARY_DIR}/../include ${Boost_INCLUDE_DIRS})
+    include_directories(${CMAKE_CURRENT_BINARY_DIR} ./Src ../FileArchiveTool/Src ../FastDelegate_src ${QT_BINARY_DIR}/../include ${Boost_INCLUDE_DIRS}  ../lzma920/C)
 	
 	link_directories(${QT_BINARY_DIR}/../lib ../libiconv-1.9.2-1-lib/lib ${Boost_LIBRARY_DIRS})
 	
@@ -72,6 +72,8 @@ else(NOT Qt5Widgets_FOUND)
 
     set_target_properties(QtFileArchiveTool PROPERTIES DEBUG_POSTFIX _d LINK_FLAGS "/ENTRY:\"mainCRTStartup\"")
 	
-	TARGET_LINK_LIBRARIES(QtFileArchiveTool ${Qt5Widgets_LIBRARIES} FileArchiveTool libiconv)
+	TARGET_LINK_LIBRARIES(QtFileArchiveTool ${Qt5Widgets_LIBRARIES} libiconv)
+
+	add_dependencies(QtFileArchiveTool FileArchiveTool LzmaLib)
 	
 endif(NOT Qt5Widgets_FOUND)
