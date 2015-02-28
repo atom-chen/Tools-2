@@ -3,8 +3,10 @@
 #endif
 
 #include "CharsetConv.h"
-#include "iconv.h"
+//#include "iconv.h"
 #include <string.h>
+
+#include <unicode/ucnv.h> 
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -18,8 +20,9 @@ CharsetConv::~CharsetConv()
 	delete[]m_bytes;
 }
 
-int CharsetConv::convert(char *from_charset, char *to_charset, char *inbuf, int inlen, char *outbuf, int outlen)
-{
+//int CharsetConv::convert(char *from_charset, char *to_charset, char *inbuf, int inlen, char *outbuf, int outlen)
+//{
+	// Iconv Begin
 	//iconv_t cd;
 	//const char **pin = (const char **)&inbuf;
 	//char **pout = &outbuf;
@@ -29,7 +32,16 @@ int CharsetConv::convert(char *from_charset, char *to_charset, char *inbuf, int 
 	//memset(outbuf, 0, outlen);
 	//if (iconv(cd, pin, (size_t*)&inlen, pout, (size_t*)&outlen) == -1) return -1;
 	//iconv_close(cd);
-	return 0;
+	//return 0;
+	// Iconv End
+//}
+
+//返回0为成功，错误代码定义见后面  
+int CharsetConv::convert(const char* toConverterName, const char* fromConverterName, char* target, int32 targetCapacity, const char* source, int32 sourceLength)
+{
+	UErrorCode  error = U_ZERO_ERROR;
+	ucnv_convert(toConverterName, fromConverterName, target, targetCapacity, source, sourceLength, &error);
+	return error;
 }
 
 // utf-8 码转为本地 GB2312 编码

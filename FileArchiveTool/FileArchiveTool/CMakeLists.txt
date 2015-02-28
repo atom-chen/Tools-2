@@ -23,8 +23,8 @@ find_package(Boost
              COMPONENTS thread
              REQUIRED)
 
-include_directories(./Src ../libiconv-1.9.2-1-lib/include ../FastDelegate_src ${Boost_INCLUDE_DIRS} ../lzma920/C)
-link_directories(../libiconv-1.9.2-1-lib/lib ${Boost_LIBRARY_DIRS})
+include_directories(./Src ../libiconv-1.9.2-1-lib/include ../FastDelegate_src ${Boost_INCLUDE_DIRS} ../lzma920/C ../icu4c-50_1-src/include)
+link_directories(../libiconv-1.9.2-1-lib/lib ${Boost_LIBRARY_DIRS} ../icu4c-50_1-src/lib64)
 
 ADD_DEFINITIONS(-DFILEARCHIVETOOL_DLL -DFILEARCHIVETOOL_DLL_EXPORT)
 
@@ -34,7 +34,7 @@ ADD_LIBRARY(FileArchiveTool SHARED ${ALL_SRCS})
 
 set_target_properties(FileArchiveTool PROPERTIES DEBUG_POSTFIX _d)
 
-TARGET_LINK_LIBRARIES(FileArchiveTool libiconv LzmaLib)
+TARGET_LINK_LIBRARIES(FileArchiveTool libiconv LzmaLib icuucd)
 
 add_dependencies(FileArchiveTool LzmaLib)
 

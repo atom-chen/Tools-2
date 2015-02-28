@@ -93,7 +93,6 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Src\" />
-    <Folder Include="FileArchiveToolTest\" />
     <Folder Include="7zip\" />
   </ItemGroup>
   <ProjectExtensions>
