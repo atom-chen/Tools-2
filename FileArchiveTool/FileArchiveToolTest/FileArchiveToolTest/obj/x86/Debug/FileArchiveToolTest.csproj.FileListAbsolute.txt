@@ -1,0 +1,4 @@
+E:\Self\Self\Tools\Tools\FileArchiveTool\FileArchiveToolTest\FileArchiveToolTest\bin\Debug\FileArchiveToolTest.exe
+E:\Self\Self\Tools\Tools\FileArchiveTool\FileArchiveToolTest\FileArchiveToolTest\bin\Debug\FileArchiveToolTest.pdb
+E:\Self\Self\Tools\Tools\FileArchiveTool\FileArchiveToolTest\FileArchiveToolTest\obj\x86\Debug\FileArchiveToolTest.exe
+E:\Self\Self\Tools\Tools\FileArchiveTool\FileArchiveToolTest\FileArchiveToolTest\obj\x86\Debug\FileArchiveToolTest.pdb

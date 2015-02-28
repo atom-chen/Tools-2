@@ -1,16 +1,23 @@
 ﻿using System;
 using Gtk;
 
-public partial class MainWindow: Gtk.Window
+namespace FileArchiveToolTest
 {
-	public MainWindow () : base (Gtk.WindowType.Toplevel)
+	public partial class MainWindow: Gtk.Window
 	{
-		Build ();
-	}
+		public MainWindow () : base (Gtk.WindowType.Toplevel)
+		{
+			Build ();
 
-	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
-	{
-		Application.Quit ();
-		a.RetVal = true;
+			ArchiveData pArchiveData = new ArchiveData ();
+			UnArchiveParam pUnArchiveParam = new UnArchiveParam ();
+			pUnArchiveParam.setUnArchiveFilePath ();
+		}
+
+		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
+		{
+			Application.Quit ();
+			a.RetVal = true;
+		}
 	}
 }

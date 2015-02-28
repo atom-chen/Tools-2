@@ -58,7 +58,6 @@
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="MainWindow.cs" />
-    <Compile Include="gtk-gui\MainWindow.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\MLzma.cs" />
@@ -77,6 +76,16 @@
     <Compile Include="7zip\Compress\RangeCoder\RangeCoder.cs" />
     <Compile Include="7zip\Compress\RangeCoder\RangeCoderBit.cs" />
     <Compile Include="7zip\Compress\RangeCoder\RangeCoderBitTree.cs" />
+    <Compile Include="Src\ArchiveData.cs" />
+    <Compile Include="Src\ArchiveHeader.cs" />
+    <Compile Include="Src\FileInfo.cs" />
+    <Compile Include="Src\UnArchiveParam.cs" />
+    <Compile Include="Src\MByteBuffer.cs" />
+    <Compile Include="Src\DynamicBuffer.cs" />
+    <Compile Include="Src\Endian.cs" />
+    <Compile Include="Src\ByteUtil.cs" />
+    <Compile Include="Src\UtilMath.cs" />
+    <Compile Include="gtk-gui\FileArchiveToolTest.MainWindow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
