@@ -6,19 +6,30 @@
         <State expanded="True">
           <Node name="FileArchiveToolTest" expanded="True">
             <Node name="7zip" expanded="True">
-              <Node name="Compress" expanded="True" />
+              <Node name="Compress" expanded="True">
+                <Node name="LZMA" expanded="True" />
+              </Node>
             </Node>
             <Node name="Properties" expanded="True" />
             <Node name="Src" expanded="True">
-              <Node name="MLzma.cs" selected="True" />
+              <Node name="Endian.cs" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint traceExpression="{saveinsize}" file="e:\Self\Self\Tools\Tools\FileArchiveTool\FileArchiveToolTest\FileArchiveToolTest\Src\MLzma.cs" line="100" column="1" />
+      <Breakpoint file="e:\Self\Self\Tools\Tools\FileArchiveTool\FileArchiveToolTest\FileArchiveToolTest\Src\MLzma.cs" line="63" column="21" />
+      <Breakpoint file="E:\Self\Self\Tools\Tools\FileArchiveTool\FileArchiveToolTest\FileArchiveToolTest\Src\FileInfo.cs" line="32" column="12" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="e:\Self\Self\Tools\Tools\FileArchiveTool\FileArchiveToolTest\FileArchiveToolTest\Src\ArchiveHeader.cs" line="38" offsetX="682" offsetY="851" expression="fileHandle" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
 </Properties>

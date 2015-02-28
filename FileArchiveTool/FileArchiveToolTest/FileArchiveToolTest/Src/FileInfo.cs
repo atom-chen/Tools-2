@@ -39,7 +39,7 @@ namespace FileArchiveToolTest
 			if (localFile != null)
 			{
 				// 一次性读取进来，可能需要压缩
-				pchar = new byte[m_fileSize + 1];
+				pchar = new byte[m_fileSize];
 
 				uint readlength = (uint)fileHandle.Read(pchar, 0, (int)m_fileSize);
 				if (readlength == m_fileSize)
@@ -51,8 +51,8 @@ namespace FileArchiveToolTest
 					else	// 需要解压
 					{
 						byte[] retChar = null;
-						m_fileSize = MLzma.DecompressStrLZMA(pchar, retChar);
-						localFile.Write(pchar, 0, (int)m_fileSize);
+						MLzma.DecompressStrLZMA(pchar, m_fileSize, ref retChar, ref m_fileSize);
+						localFile.Write(retChar, 0, (int)m_fileSize);
 					}
 				}
 				else							// 读取可能有问题，读取不了完整文件

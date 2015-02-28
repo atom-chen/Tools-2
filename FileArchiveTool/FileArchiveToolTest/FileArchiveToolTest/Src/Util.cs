@@ -45,7 +45,7 @@ namespace FileArchiveToolTest
 			dir = normPath (dir);
 			int startPos = 0;
 			string curPath;
-			while ((startPos = dir.IndexOf('/')) != -1)
+			while ((startPos = dir.IndexOf('/', startPos)) != -1)
 			{
 				curPath = dir.Substring (0, startPos);
 				if (!Directory.Exists(curPath))                    // 判断是否存在

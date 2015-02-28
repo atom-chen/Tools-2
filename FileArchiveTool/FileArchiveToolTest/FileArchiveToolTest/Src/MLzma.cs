@@ -55,11 +55,12 @@ namespace FileArchiveToolTest
 			input.Close ();
 		}
 
-		public static uint CompressStrLZMA (byte[] inBytes, byte[] outBytes)
+		public static uint CompressStrLZMA (byte[] inBytes, uint inLen, ref byte[] outBytes, ref uint outLen)
 		{
 			SevenZip.Compression.LZMA.Encoder coder = new SevenZip.Compression.LZMA.Encoder ();
-			MemoryStream inputStream = new MemoryStream (inBytes);
-			int saveinsize = inBytes.Length;
+			MemoryStream inStream = new MemoryStream (inBytes);
+
+			int saveinsize = (int)inLen;
 			int saveoutsize = (int)(saveinsize * 1.1 + 1026 * 16 + LZMA_HEADER_LEN);
 
 			outBytes = new byte[saveoutsize];
@@ -68,23 +69,23 @@ namespace FileArchiveToolTest
 			// Write the encoder properties
 			coder.WriteCoderProperties (outStream);
 			// Write the decompressed file size.
-			outStream.Write (BitConverter.GetBytes (inputStream.Length), 0, 8);
+			outStream.Write (BitConverter.GetBytes (inStream.Length), 0, 8);
 
 			// Encode the file.
-			coder.Code (inputStream, outStream, saveinsize, saveoutsize, null);
+			coder.Code (inStream, outStream, inStream.Length, saveoutsize, null);
 			outStream.Flush ();
 			outStream.Close ();
-			inputStream.Close ();
+			inStream.Close ();
 
 			return (uint)saveoutsize;
 		}
 
-		public static uint DecompressStrLZMA (byte[] inBytes, byte[] outBytes)
+		public static void DecompressStrLZMA (byte[] inBytes, uint inLen, ref byte[] outBytes, ref uint outLen)
 		{
 			SevenZip.Compression.LZMA.Decoder coder = new SevenZip.Compression.LZMA.Decoder ();
 			MemoryStream inStream = new MemoryStream(inBytes);
 
-			uint saveinsize = (uint)inBytes.Length;
+			uint saveinsize = inLen;
 			uint saveoutsize = (uint)(saveinsize * 1.1 + 1026 * 16);
 			outBytes = new byte[saveoutsize];
 			MemoryStream outStream = new MemoryStream (outBytes);
@@ -95,17 +96,17 @@ namespace FileArchiveToolTest
 
 			// Read in the decompress file size.
 			byte[ ] fileLengthBytes = new byte [ 8 ];
-			inStream.Read (fileLengthBytes, 0, 8);
+			inStream.Read (fileLengthBytes, 0, 8);				// 仅仅是读取出来就行了，这个目前用不着
 			long fileLength = BitConverter.ToInt64 (fileLengthBytes, 0);
 
 			// Decompress the file.
 			coder.SetDecoderProperties (properties);
-			coder.Code (inStream, outStream, fileLength, saveoutsize, null);
+			coder.Code (inStream, outStream, inStream.Length, fileLength, null);		// 输入长度是 inStream.Length ，不是 inStream.Length - LZMA_HEADER_LEN, outSize 要填未压缩后的字符串的长度，inSize，outSize 这两个参数都要填写，否则会报错
 			outStream.Flush ();
 			outStream.Close ();
 			inStream.Close ();
 
-			return saveoutsize;
+			outLen = (uint)fileLength;		// 返回解压后的长度，就是压缩的时候保存的数据长度
 		}
 	}
 }
