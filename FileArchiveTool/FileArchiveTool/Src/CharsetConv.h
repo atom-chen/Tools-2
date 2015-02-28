@@ -17,8 +17,6 @@ public:
 public:
 	//int convert(char *from_charset, char *to_charset, char *inbuf, int inlen, char *outbuf, int outlen);
 	int convert(const char* toConverterName, const char* fromConverterName, char* target, int32 targetCapacity, const char* source, int32 sourceLength);
-	int utf2Local(char *inbuf, int inlen, char *outbuf, int outlen);
-	int local2Utf(char *inbuf, size_t inlen, char *outbuf, size_t outlen);
 	char* Utf8ToLocalStr(char * lpUTF8Str);
 	char* LocalToUtf8Str(char * lpGBKStr);
 

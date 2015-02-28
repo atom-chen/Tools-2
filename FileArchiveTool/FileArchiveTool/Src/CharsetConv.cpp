@@ -44,21 +44,11 @@ int CharsetConv::convert(const char* toConverterName, const char* fromConverterN
 	return error;
 }
 
-// utf-8 码转为本地 GB2312 编码
-int CharsetConv::utf2Local(char *inbuf, int inlen, char *outbuf, int outlen)
-{
-	return convert("utf-8", "gb2312", inbuf, inlen, outbuf, outlen);
-}
-// 本地 GB2312 编码转为 utf-8 编码
-int CharsetConv::local2Utf(char *inbuf, size_t inlen, char *outbuf, size_t outlen)
-{
-	return convert("gb2312", "utf-8", inbuf, inlen, outbuf, outlen);
-}
-
 // 全局函数，使用 windows 编码解码
 // GBK 编码转换到UTF8编码
 int CharsetConv::LocalToUtf8(char * lpGBKStr, char * lpUTF8Str, int nUTF8StrLen)
 {
+#if 0
 	wchar_t * lpUnicodeStr = NULL;
 	int nRetLen = 0;
 
@@ -92,12 +82,17 @@ int CharsetConv::LocalToUtf8(char * lpGBKStr, char * lpUTF8Str, int nUTF8StrLen)
 	if (lpUnicodeStr)
 		delete[]lpUnicodeStr;
 
-	return nRetLen;
+	return nRetLen - 1;
+#else
+	convert("utf-8", "gb2312", lpUTF8Str, nUTF8StrLen, lpGBKStr, strlen(lpGBKStr));
+	return strlen(lpUTF8Str);
+#endif
 }
 
 // UTF8编码转换到GBK编码
 int CharsetConv::Utf8ToLocal(char * lpUTF8Str, char * lpGBKStr, int nGBKStrLen)
 {
+#if 0
 	wchar_t * lpUnicodeStr = NULL;
 	int nRetLen = 0;
 
@@ -131,7 +126,11 @@ int CharsetConv::Utf8ToLocal(char * lpUTF8Str, char * lpGBKStr, int nGBKStrLen)
 	if (lpUnicodeStr)
 		delete[]lpUnicodeStr;
 
-	return nRetLen;
+	return nRetLen - 1;		// 如果使用 WideCharToMultiByte 函数，返回的长度需要 - 1，如果使用 ICU ，就不用
+#else
+	convert("gb2312", "utf-8", lpGBKStr, nGBKStrLen, lpUTF8Str, strlen(lpUTF8Str));
+	return strlen(lpGBKStr);
+#endif
 }
 
 char* CharsetConv::Utf8ToLocalStr(char * lpUTF8Str)
@@ -152,12 +151,14 @@ char* CharsetConv::LocalToUtf8Str(char * lpGBKStr)
 
 int CharsetConv::Utf8ToLocalStrLen(char * lpUTF8Str)
 {
-	return Utf8ToLocal(lpUTF8Str, nullptr, 4096);
+	memset(m_bytes, 0, 4096);
+	return Utf8ToLocal(lpUTF8Str, m_bytes, 4096);
 }
 
 int CharsetConv::LocalToUtf8StrLen(char * lpGBKStr)
 {
-	return LocalToUtf8(lpGBKStr, nullptr, 4096);
+	memset(m_bytes, 0, 4096);
+	return LocalToUtf8(lpGBKStr, m_bytes, 4096);
 }
 
 END_NAMESPACE_FILEARCHIVETOOL
