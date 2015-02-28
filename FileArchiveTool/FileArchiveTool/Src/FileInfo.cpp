@@ -197,6 +197,7 @@ void FileHeader::modifyArchiveFileName(ArchiveParam* pArchiveParam)
 	// 计算目录长度， utf-8 编码目录长度
 	// m_pathLen = strlen(m_fileNamePath);
 	m_pathLen = (uint8)(FileArchiveToolSysDef->getCharsetConvPtr()->LocalToUtf8StrLen(m_fileNamePath));
+	m_pathLen -= 1;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

@@ -225,6 +225,7 @@ bool MLzma::LzmaStrUncompress(const char* scrStr, uint32 srcLen, char** desStr, 
 
 	size_t readlength = saveinsize - 13;
 
+	// 即使没有区分大端小端也没有关系， saveoutsize 会在 LzmaUncompress 重新赋值的
 	int	res = LzmaUncompress(outbuff, &saveoutsize, inbuff, &readlength,
 		props, propsSize);
 	if (res != 0)

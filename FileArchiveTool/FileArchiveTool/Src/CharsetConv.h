@@ -21,8 +21,8 @@ public:
 	char* Utf8ToLocalStr(char * lpUTF8Str);
 	char* LocalToUtf8Str(char * lpGBKStr);
 
-	int Utf8ToLocalStrLen(char * lpUTF8Str);		// 仅仅是获取转换后的字符串的长度
-	int LocalToUtf8StrLen(char * lpGBKStr);			// 仅仅是获取转换后的字符串的长度
+	int Utf8ToLocalStrLen(char * lpUTF8Str);		// 仅仅是获取转换后的字符串的长度，返回的长度是需要的长度 + 1，注意是 + 1
+	int LocalToUtf8StrLen(char * lpGBKStr);
 
 protected:
 	int LocalToUtf8(char * lpGBKStr, char * lpUTF8Str, int nUTF8StrLen);
