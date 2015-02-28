@@ -208,20 +208,21 @@ bool MLzma::LzmaStrUncompress(const char* scrStr, uint32 srcLen, char** desStr, 
 
 	size_t saveinsize = srcLen;
 	size_t saveoutsize = saveinsize * 1.1 + 1026 * 16;
+
 	unsigned char* inbuff;
+	unsigned char* outbuff = (unsigned char*)malloc(saveoutsize);
+	*desStr = (char*)outbuff;
 
 	unsigned char props[5] = { 0 };
 	size_t propsSize = 5;
 
 	memcpy((char*)props, (char*)scrStr, propsSize);
 	scrStr += propsSize;
-	memcpy((char*)&saveoutsize, (char*)scrStr, 4);
-	scrStr += 4;
+	memcpy((char*)&saveoutsize, (char*)scrStr, 4);		// 压缩的字符串的长度，这个就是压缩的时候，原始字符串的长度，就是解压缩后的长度
+	scrStr += 4;		// 压缩的字符串长度
 	scrStr += 4;		// zero
 	inbuff = (unsigned char*)scrStr;
 
-	unsigned char* outbuff = (unsigned char*)malloc(saveoutsize);
-	*desStr = (char*)outbuff;
 	size_t readlength = saveinsize - 13;
 
 	int	res = LzmaUncompress(outbuff, &saveoutsize, inbuff, &readlength,

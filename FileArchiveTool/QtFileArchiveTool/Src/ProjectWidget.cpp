@@ -63,7 +63,7 @@ void ProjectWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
 	QAction* ac = nullptr;
 
 	QString fileName = m_ui->mDirTreeView->model()->data(index).toString();
-	m_pPath = QtFileArchiveToolSysDef->getCharsetConvPtr()->UTF8ToGBKStr(fileInfo.absoluteFilePath().toUtf8().data());
+	m_pPath = QtFileArchiveToolSysDef->getCharsetConvPtr()->Utf8ToLocalStr(fileInfo.absoluteFilePath().toUtf8().data());
 
 	if (fileInfo.isDir())
 	{

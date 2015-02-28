@@ -6,6 +6,7 @@
 #include "Util.h"
 #include "Config.h"
 #include "MLzma.h"
+#include "CharsetConv.h"
 #include <stdlib.h>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
@@ -22,6 +23,18 @@ FileHeader::~FileHeader()
 {
 	delete m_pFullPath;
 	delete m_fileNamePath;
+}
+
+void FileHeader::setFullPath(const char* dir, const char* fileName)
+{
+	strcat(m_pFullPath, dir);
+	strcat(m_pFullPath, "/");
+	strcat(m_pFullPath, fileName);
+}
+
+void FileHeader::setFileName(const char* fileName)
+{
+	strcpy(m_fileNamePath, fileName);
 }
 
 void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
@@ -87,7 +100,10 @@ uint32 FileHeader::calcHeaderSize()
 void FileHeader::writeHeader2ArchiveFile(FILE* fileHandle)
 {
 	fwrite(&m_pathLen, sizeof(m_pathLen), 1, fileHandle);
-	fwrite(m_fileNamePath, strlen(m_fileNamePath), 1, fileHandle);
+	// Ð´Èë Utf8 ±àÂëµÄ×Ö·û´®
+	//fwrite(m_fileNamePath, strlen(m_fileNamePath), 1, fileHandle);
+	char* pUtf8Path = (FileArchiveToolSysDef->getCharsetConvPtr()->LocalToUtf8Str(m_fileNamePath));
+	fwrite(pUtf8Path, m_pathLen, 1, fileHandle);
 	fwrite(&m_fileOffset, sizeof(m_fileOffset), 1, fileHandle);
 	fwrite(&m_fileSize, sizeof(m_fileSize), 1, fileHandle);
 }
@@ -96,7 +112,10 @@ void FileHeader::readHeaderFromArchiveFile(MByteBuffer* ba)
 {
 	ba->readUnsignedInt8(m_pathLen);
 	memset(m_fileNamePath, 0, MAX_PATH);
+	// ×ª»»³É Local ±àÂë×Ö·û´®
 	ba->readMultiByte(m_fileNamePath, m_pathLen);
+	char* pUtf8Path = (FileArchiveToolSysDef->getCharsetConvPtr()->Utf8ToLocalStr(m_fileNamePath));
+	memcpy(m_fileNamePath, pUtf8Path, m_pathLen);
 	ba->readUnsignedInt32(m_fileOffset);
 	ba->readUnsignedInt32(m_fileSize);
 }
@@ -174,6 +193,10 @@ void FileHeader::modifyArchiveFileName(ArchiveParam* pArchiveParam)
 	{
 		strcpy(m_fileNamePath, m_pFullPath + strlen(pArchiveParam->getArchiveDir()) + 1);
 	}
+
+	// ¼ÆËãÄ¿Â¼³¤¶È£¬ utf-8 ±àÂëÄ¿Â¼³¤¶È
+	// m_pathLen = strlen(m_fileNamePath);
+	m_pathLen = (uint8)(FileArchiveToolSysDef->getCharsetConvPtr()->LocalToUtf8StrLen(m_fileNamePath));
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

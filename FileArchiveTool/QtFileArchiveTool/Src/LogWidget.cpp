@@ -20,7 +20,7 @@ LogWidget::~LogWidget()
 
 void LogWidget::log(const char* msg)
 {
-	m_ui->textBrowser->append(QtFileArchiveToolSysDef->getCharsetConvPtr()->GBKToUTF8Str((char*)msg));
+	m_ui->textBrowser->append(QtFileArchiveToolSysDef->getCharsetConvPtr()->LocalToUtf8Str((char*)msg));
 }
 
 void LogWidget::createToolBar()

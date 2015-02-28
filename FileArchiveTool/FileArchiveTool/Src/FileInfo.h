@@ -17,10 +17,10 @@ class ArchiveParam;
 */
 class FILEARCHIVETOOL_EXPORT FileHeader
 {
-public:
-	uint8 m_pathLen;					// 目录长度，不包括 '\0'
+protected:
+	uint8 m_pathLen;					// 目录长度，不包括 '\0'，都是 Utf-8 编码目录长度，如果不是，需要计算 Utf-8 编码长度，不是字符串的长度，是存储空间的长度
 	char* m_pFullPath;
-	char* m_fileNamePath;		// 文件路径名字
+	char* m_fileNamePath;				// 文件路径名字
 	uint32 m_fileOffset;				// 文件在整个 Archive 中的偏移
 	uint32 m_fileSize;					// 文件大小
 
@@ -29,6 +29,9 @@ public:
 	~FileHeader();
 
 public:
+	void setFullPath(const char* dir, const char* fileName);
+	void setFileName(const char* fileName);
+
 	uint32 calcHeaderSize();
 	void adjustHeaderOffset(uint32 offset);
 	void writeHeader2ArchiveFile(FILE* fileHandle);	// 写文件头

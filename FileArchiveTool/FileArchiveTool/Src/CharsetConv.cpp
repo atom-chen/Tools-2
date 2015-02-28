@@ -1,4 +1,6 @@
+#ifdef WIN32
 #include <windows.h>		// 暂时先用 windows 自己的转换函数
+#endif
 
 #include "CharsetConv.h"
 #include "iconv.h"
@@ -43,7 +45,7 @@ int CharsetConv::local2Utf(char *inbuf, size_t inlen, char *outbuf, size_t outle
 
 // 全局函数，使用 windows 编码解码
 // GBK 编码转换到UTF8编码
-int CharsetConv::GBKToUTF8(char * lpGBKStr, char * lpUTF8Str, int nUTF8StrLen)
+int CharsetConv::LocalToUtf8(char * lpGBKStr, char * lpUTF8Str, int nUTF8StrLen)
 {
 	wchar_t * lpUnicodeStr = NULL;
 	int nRetLen = 0;
@@ -82,7 +84,7 @@ int CharsetConv::GBKToUTF8(char * lpGBKStr, char * lpUTF8Str, int nUTF8StrLen)
 }
 
 // UTF8编码转换到GBK编码
-int CharsetConv::UTF8ToGBK(char * lpUTF8Str, char * lpGBKStr, int nGBKStrLen)
+int CharsetConv::Utf8ToLocal(char * lpUTF8Str, char * lpGBKStr, int nGBKStrLen)
 {
 	wchar_t * lpUnicodeStr = NULL;
 	int nRetLen = 0;
@@ -120,20 +122,30 @@ int CharsetConv::UTF8ToGBK(char * lpUTF8Str, char * lpGBKStr, int nGBKStrLen)
 	return nRetLen;
 }
 
-char* CharsetConv::UTF8ToGBKStr(char * lpUTF8Str)
+char* CharsetConv::Utf8ToLocalStr(char * lpUTF8Str)
 {
 	memset(m_bytes, 0, 4096);
-	UTF8ToGBK(lpUTF8Str, m_bytes, 4096);
+	Utf8ToLocal(lpUTF8Str, m_bytes, 4096);
 
 	return m_bytes;
 }
 
-char* CharsetConv::GBKToUTF8Str(char * lpGBKStr)
+char* CharsetConv::LocalToUtf8Str(char * lpGBKStr)
 {
 	memset(m_bytes, 0, 4096);
-	GBKToUTF8(lpGBKStr, m_bytes, 4096);
+	LocalToUtf8(lpGBKStr, m_bytes, 4096);
 
 	return m_bytes;
+}
+
+int CharsetConv::Utf8ToLocalStrLen(char * lpUTF8Str)
+{
+	return Utf8ToLocal(lpUTF8Str, nullptr, 4096);
+}
+
+int CharsetConv::LocalToUtf8StrLen(char * lpGBKStr)
+{
+	return LocalToUtf8(lpGBKStr, nullptr, 4096);
 }
 
 END_NAMESPACE_FILEARCHIVETOOL
