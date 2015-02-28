@@ -86,6 +86,9 @@
     <Compile Include="Src\ByteUtil.cs" />
     <Compile Include="Src\UtilMath.cs" />
     <Compile Include="gtk-gui\FileArchiveToolTest.MainWindow.cs" />
+    <Compile Include="Src\Config.cs" />
+    <Compile Include="Src\FileArchiveToolSys.cs" />
+    <Compile Include="Src\Util.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -55,7 +55,7 @@ namespace FileArchiveToolTest
 			input.Close ();
 		}
 
-		public static uint CompressStrLZMA (byte[] outBytes, params byte[] inBytes)
+		public static uint CompressStrLZMA (byte[] inBytes, byte[] outBytes)
 		{
 			SevenZip.Compression.LZMA.Encoder coder = new SevenZip.Compression.LZMA.Encoder ();
 			MemoryStream inputStream = new MemoryStream (inBytes);
@@ -79,7 +79,7 @@ namespace FileArchiveToolTest
 			return (uint)saveoutsize;
 		}
 
-		public static uint DecompressStrLZMA (byte[] outBytes, params byte[] inBytes)
+		public static uint DecompressStrLZMA (byte[] inBytes, byte[] outBytes)
 		{
 			SevenZip.Compression.LZMA.Decoder coder = new SevenZip.Compression.LZMA.Decoder ();
 			MemoryStream inStream = new MemoryStream(inBytes);

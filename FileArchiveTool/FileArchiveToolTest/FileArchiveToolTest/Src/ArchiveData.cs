@@ -15,20 +15,20 @@ namespace FileArchiveToolTest
 			m_pFileVec = new List<FileHeader>();
 		}
 
-		void unArchiveFile(UnArchiveParam pUnArchiveParam)
+		public void unArchiveFile(UnArchiveParam pUnArchiveParam)
 		{
 			clearFileVec();
 			writeArchiveFile2File(pUnArchiveParam);
 		}
 
-		void clearFileVec()
+		public void clearFileVec()
 		{
 			m_fileSize = 0;
 			m_pArchiveHeader.clear();
 			m_pFileVec.Clear();
 		}
 
-		void readArchiveFileHeader(FileStream fileHandle)
+		public void readArchiveFileHeader(FileStream fileHandle)
 		{
 			MByteBuffer pMByteBuffer = new MByteBuffer();
 
@@ -44,7 +44,7 @@ namespace FileArchiveToolTest
 			}
 		}
 
-		void writeArchiveFile2File(UnArchiveParam pUnArchiveParam)
+		public void writeArchiveFile2File(UnArchiveParam pUnArchiveParam)
 		{
 			FileStream fileHandle = new FileStream(pUnArchiveParam.getUnArchiveFilePath(), FileMode.Open);
 

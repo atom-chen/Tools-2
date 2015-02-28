@@ -11,7 +11,10 @@ namespace FileArchiveToolTest
 
 			ArchiveData pArchiveData = new ArchiveData ();
 			UnArchiveParam pUnArchiveParam = new UnArchiveParam ();
-			pUnArchiveParam.setUnArchiveFilePath ();
+			string path = "E:\\新建文件夹.abc";
+			pUnArchiveParam.setUnArchiveFilePath (path);
+			pUnArchiveParam.setUnArchiveOutDir (Util.getFullPathNoFileName (path));
+			pArchiveData.unArchiveFile (pUnArchiveParam);
 		}
 
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)

@@ -36,6 +36,7 @@ namespace FileArchiveToolTest
 		{
 			pMByteBuffer.clear ();
 			fileHandle.Read(pMByteBuffer.dynBuff.buff, 0, 4);
+			pMByteBuffer.length = 4;
 			string magic = pMByteBuffer.readMultiByte(4, Encoding.UTF8);
 			if (magic != "asdf")		// 检查 magic
 			{
@@ -44,7 +45,7 @@ namespace FileArchiveToolTest
 
 			pMByteBuffer.clear ();
 			fileHandle.Read(pMByteBuffer.dynBuff.buff, 0, (int)calcArchiveHeaderSizeNoFileHeader() - 4);
-
+			pMByteBuffer.length = calcArchiveHeaderSizeNoFileHeader() - 4;
 			// 读取 endian 
 			m_endian = pMByteBuffer.readByte ();
 			pMByteBuffer.setEndian((Endian)m_endian);
@@ -56,6 +57,11 @@ namespace FileArchiveToolTest
 			m_version = pMByteBuffer.readUnsignedInt();
 			// 读取文件数量
 			m_fileCount = pMByteBuffer.readUnsignedInt();
+
+			// 读取整个头
+			pMByteBuffer.clear ();
+			fileHandle.Read(pMByteBuffer.dynBuff.buff, 0, (int)(m_headerSize - calcArchiveHeaderSizeNoFileHeader()));
+			pMByteBuffer.length = m_headerSize - calcArchiveHeaderSizeNoFileHeader ();
 
 			return true;
 		}

@@ -28,6 +28,9 @@ namespace FileArchiveToolTest
 		{
 			m_pFullPath = pUnArchiveParam.getUnArchiveOutDir() + "/" + m_fileNamePath;
 
+			string strPath = Util.getFullPathNoFileName(m_pFullPath);
+			Util.mkDir(strPath);		// 创建目录
+
 			fileHandle.Seek(m_fileOffset, SeekOrigin.Begin);	// 移动到文件开始位置
 
 			FileStream localFile = new FileStream(m_pFullPath, FileMode.Create);
@@ -41,7 +44,7 @@ namespace FileArchiveToolTest
 				uint readlength = (uint)fileHandle.Read(pchar, 0, (int)m_fileSize);
 				if (readlength == m_fileSize)
 				{
-					if (false)		// 如果不压缩
+					if (!FileArchiveToolSys.g_pFileArchiveToolSys.getConfigPtr().bCompress())		// 如果不压缩
 					{
 						localFile.Write(pchar, 0, (int)m_fileSize);
 					}
