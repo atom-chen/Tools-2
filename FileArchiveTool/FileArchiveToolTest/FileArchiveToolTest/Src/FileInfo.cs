@@ -1,5 +1,6 @@
 using System.Text;
 using System.IO;
+using System;
 
 namespace FileArchiveToolTest
 {
@@ -33,7 +34,16 @@ namespace FileArchiveToolTest
 
 			fileHandle.Seek(m_fileOffset, SeekOrigin.Begin);	// 移动到文件开始位置
 
-			FileStream localFile = new FileStream(m_pFullPath, FileMode.Create);
+			FileStream localFile;
+			try
+			{
+				localFile = new FileStream(m_pFullPath, FileMode.Create);
+			}
+			catch(Exception error)
+			{
+				return;
+			}
+
 			byte[] pchar;
 
 			if (localFile != null)
@@ -60,7 +70,7 @@ namespace FileArchiveToolTest
 
 				}
 
-				fileHandle.Close();
+				localFile.Close();
 			}
 		}
 	}

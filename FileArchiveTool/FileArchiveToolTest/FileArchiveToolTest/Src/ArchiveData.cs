@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System;
 
 namespace FileArchiveToolTest
 {
@@ -46,7 +47,16 @@ namespace FileArchiveToolTest
 
 		public void writeArchiveFile2File(UnArchiveParam pUnArchiveParam)
 		{
-			FileStream fileHandle = new FileStream(pUnArchiveParam.getUnArchiveFilePath(), FileMode.Open);
+			FileStream fileHandle;
+
+			try
+			{
+				fileHandle = new FileStream(pUnArchiveParam.getUnArchiveFilePath(), FileMode.Open);
+			}
+			catch(Exception error)
+			{
+				return;
+			}
 
 			if (fileHandle != null)
 			{
@@ -57,6 +67,8 @@ namespace FileArchiveToolTest
 				{
 					item.writeArchiveFile2File(fileHandle, pUnArchiveParam);
 				}
+
+				fileHandle.Close ();
 			}
 		}
 	}
