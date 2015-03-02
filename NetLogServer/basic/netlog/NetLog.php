@@ -22,24 +22,55 @@ if(!isset($_REQUEST['error']))
 	exit();
 }
 
-$platformid = $_REQUEST['id'];
+if(gettype($_REQUEST['id'] == 'string'))
+{
+	$platformid = intval($_REQUEST['id']);
+}
+else
+{
+	$platformid = $_REQUEST['id'];
+}
 
-$charid = $_REQUEST['charid'];
+if(gettype($_REQUEST['charid'] == 'string'))
+{
+	$charid = intval($_REQUEST['charid']);
+}
+else
+{
+	$charid = $_REQUEST['charid'];
+}
+
 $name = $_REQUEST['name'];
-$type = $_REQUEST['type'];
+if(gettype($_REQUEST['type'] == 'string'))
+{
+	$type = intval($_REQUEST['type']);
+}
+else
+{
+	$type = $_REQUEST['type'];
+}
+
 $platform = $_REQUEST['platform'];
-$version = $_REQUEST['version'];
+if(gettype($_REQUEST['version'] == 'string'))
+{
+	$version = intval($_REQUEST['version']);
+}
+else
+{
+	$version = $_REQUEST['version'];
+}
+
 $error = $_REQUEST['error'];
 $curtime = date("Y-m-d H:i:m");
 
-$platformid = 1000;
-$charid = 1000;
-$name = "aaaa";
-$type = 1000;
-$platform = "aaa";
-$version = 10000;
+//$platformid = 1000;
+//$charid = 1000;
+//$name = "aaaa";
+//$type = 1000;
+//$platform = "aaa";
+//$version = 10000;
 //$error = "您好";
-$curtime = "18:45:52";
+//$curtime = "18:45:52";
 
 $cursql = 'SELECT `cnt` FROM `netlogcount` WHERE `id`=' . $platformid . ';';
 //$dataTableName = date("Y-m") . "-netlogdata";
