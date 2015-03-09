@@ -43,15 +43,16 @@ add_library(${LIBRARY_NAME_maxawdexporter} SHARED
 
 add_dependencies(${LIBRARY_NAME_maxawdexporter} libawd)
 target_link_libraries(${LIBRARY_NAME_maxawdexporter}
-	core.lib
-	geom.lib
-	gfx.lib
-	mesh.lib
-	maxutil.lib
-	maxscrpt.lib
-	paramblk2.lib
-	bmm.lib
-	iGame.lib
+	core
+	geom
+	gfx
+	mesh
+	maxutil
+	maxscrpt
+	paramblk2
+	bmm
+	iGame
+	libawd
 )
 
 ##############################################################
@@ -94,13 +95,14 @@ add_library(${LIBRARY_NAME_maxawdimporter} SHARED
 
 add_dependencies(${LIBRARY_NAME_maxawdimporter} libawd)
 target_link_libraries(${LIBRARY_NAME_maxawdimporter}
-	core.lib
-	geom.lib
-	gfx.lib
-	mesh.lib
-	maxutil.lib
-	maxscrpt.lib
-	paramblk2.lib
-	bmm.lib
-	iGame.lib
+	core
+	geom
+	gfx
+	mesh
+	maxutil
+	maxscrpt
+	paramblk2
+	bmm
+	iGame
+	libawd
 )
