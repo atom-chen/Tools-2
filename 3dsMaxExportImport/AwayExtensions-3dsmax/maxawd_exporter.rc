@@ -1,0 +1,249 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "src\resourceexporter.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+//#include "afxres.h"
+#include "WinResrc.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_AWD_OPTIONS DIALOGEX 0, 0, 304, 244
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Away3D AWD options"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDC_OK,193,223,50,14
+    PUSHBUTTON      "Cancel",IDC_CANCEL,247,223,50,14
+    CONTROL         "Custom1",IDC_ROLLUP,"RollupWindow",WS_TABSTOP,7,7,290,212
+END
+
+IDD_AWD_SCENE_OPTS DIALOGEX 0, 15, 280, 181
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Include geometry",IDC_INC_GEOM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,25,72,10
+    CONTROL         "Include scenegraph hierarchy",IDC_INC_SCENE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,7,111,10
+    CONTROL         "Include skinning data",IDC_INC_SKIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,73,83,10
+    CONTROL         "Include texture co-ordinates (UVs)",IDC_INC_UVS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,41,127,10
+    CONTROL         "Include explicit vertex normals",IDC_INC_NORMALS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,57,113,10
+    CONTROL         "Create Subgeos for all mat-IDs used by faces",IDC_SPLITBYMATID,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,89,161,10
+    CONTROL         "Include Cameras",IDC_INC_CAMERAS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,123,69,10
+    CONTROL         "Include Skyboxes",IDC_INC_SKYBOXES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,140,72,10
+    CONTROL         "Exclude empty container",IDC_INC_EXC_EMPTY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,157,95,10
+    CONTROL         "Export as primitives if possible",IDC_INC_PRIMS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,105,112,10
+    CONTROL         "Selected layer only",IDC_EXCL_SELECT_LAYER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,164,124,87,10
+    CONTROL         "Visible layers only",IDC_EXL_INVIS_LAYERS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,164,140,72,10
+END
+
+IDD_AWD_MTL_OPTS DIALOGEX 0, 15, 280, 157
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Include materials",IDC_INC_MTL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,7,70,10
+    COMBOBOX        IDC_COMBOTEXTURES,63,24,189,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Textures",IDC_STATICTEXTURES,16,28,36,8
+    CONTROL         "Include effect-methods",IDC_INC_EFFECT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,59,91,10
+    CONTROL         "Include shading-methods",IDC_INC_SHADING,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,45,96,10
+    CONTROL         "Include lights",IDC_INC_LIGHTS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,82,58,10
+    CONTROL         "Apply darklight to materials that are not lit by any light",IDC_INC_DARKLIGHT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,102,209,10
+    CONTROL         "Include shadow-methods",IDC_INC_SHADOWS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,116,209,10
+    CONTROL         "Set material-multipass based on number of lights applied to the material",IDC_INC_MULTIPASS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,131,241,10
+END
+
+IDD_AWD_VIEWER_OPTS DIALOGEX 0, 15, 280, 66
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    COMBOBOX        IDC_SWF_LAUNCH,56,9,208,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Action:",IDC_STATIC,18,12,23,8
+    CONTROL         "",IDC_SWF_COLOR,"ColorSwatch",WS_TABSTOP,212,36,50,14
+    LTEXT           "Viewer-Background-Color:",IDC_BGCOLOR_STATIC,117,40,87,8
+END
+
+IDD_AWD_ANIM_OPTS DIALOGEX 0, 15, 280, 72
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Include skeletons",IDC_INC_SKEL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,7,71,10
+    CONTROL         "Include skeleton animation",IDC_INC_SKELANIM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,28,101,10
+    LTEXT           "See geometry panel for skinning options.",IDC_STATIC,128,16,145,10
+    CONTROL         "Include vertex-animation",IDC_INC_VERTEXANIM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,50,96,10
+END
+
+IDD_AWD_GENERAL_OPTS DIALOGEX 0, 15, 280, 130
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    COMBOBOX        IDC_COMP_COMBO,63,29,48,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Compression:",IDC_STATIC,9,31,44,8
+    CONTROL         "",IDC_SCALE_SPINNER,"SpinnerControl",WS_TABSTOP,101,49,10,10
+    CONTROL         "",IDC_SCALE_EDIT,"CustEdit",WS_TABSTOP,63,49,38,10
+    LTEXT           "Scale:",IDC_SCALE_STATIC,9,71,33,8
+    CONTROL         "Export custom attributes",IDC_INC_ATTR,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,9,69,95,10
+    EDITTEXT        IDC_ATTRNS_TEXT,6,95,156,12,ES_AUTOHSCROLL
+    LTEXT           "Use namespace:",IDC_ATTRNS_STATIC,7,85,54,8
+    COMBOBOX        IDC_COMBO_MTX,216,40,45,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Matrix",IDC_STATIC,177,43,21,8
+    COMBOBOX        IDC_COMBO_GEOM,216,58,45,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Geometry",IDC_STATIC,177,61,32,8
+    COMBOBOX        IDC_COMBO_PROPS,216,77,45,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Properties",IDC_STATIC,177,80,34,8
+    COMBOBOX        IDC_COMBO_ATTR,216,95,45,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Attributes",IDC_STATIC,176,98,33,8
+    GROUPBOX        "Storage Precision",IDC_STATIC,168,28,102,90
+    PUSHBUTTON      "Save Settings",IDC_SAVE,7,7,50,14
+    PUSHBUTTON      "Load Settings",IDC_LOAD,66,7,50,14
+    PUSHBUTTON      "Set Default",IDC_SET_DEFAULTS,125,7,50,14
+    CONTROL         "create AWD-Preset-File",IDC_CBX_SAVEFORFILE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,184,10,90,10
+    LTEXT           "Scale:",IDC_STATIC,7,50,20,8
+    CONTROL         "Export MetaData",IDC_EXPORTMETA,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,113,71,10
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_AWD_OPTIONS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 297
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 237
+    END
+
+    IDD_AWD_SCENE_OPTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 273
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 174
+    END
+
+    IDD_AWD_MTL_OPTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 273
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 150
+    END
+
+    IDD_AWD_VIEWER_OPTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 273
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+
+    IDD_AWD_ANIM_OPTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 273
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 65
+    END
+
+    IDD_AWD_GENERAL_OPTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 273
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 64
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE
+BEGIN
+    "src\\resource.h\0"
+END
+
+2 TEXTINCLUDE
+BEGIN
+    "//#include ""afxres.h""\r\n"
+    "#include ""WinResrc.h""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_LIBDESCRIPTION      "Away3D AWD2.1 exporter. https://github.com/awaytools/AwayExtensions-3dsmax"
+    IDS_CLASS_NAME          "MaxAWDExporter"
+    IDS_PARAMS              "Parameters"
+    IDS_SPIN                "Spin"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+// Swedish (Sweden) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_SVE)
+LANGUAGE LANG_SWEDISH, SUBLANG_SWEDISH
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+3 TEXTINCLUDE
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Swedish (Sweden) resources
+/////////////////////////////////////////////////////////////////////////////
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
