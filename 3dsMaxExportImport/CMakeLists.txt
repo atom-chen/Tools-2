@@ -9,7 +9,7 @@ set(CMAKE_MODULE_PATH
 )
 
 set(MAX_SDK_INCLUDE_PATH "F:/ProgramFiles/Autodesk/3ds Max 2015 SDK/maxsdk/include" "F:/ProgramFiles/Autodesk/3ds Max 2015 SDK/maxsdk/include/IGame")
-set(MAX_SDK_LIB_PATH "F:/ProgramFiles/Autodesk3ds Max 2015 SDK/maxsdk/lib/x64/Release")
+set(MAX_SDK_LIB_PATH "F:/ProgramFiles/Autodesk/3ds Max 2015 SDK/maxsdk/lib/x64/Release")
 
 # Force out-of-source build
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})

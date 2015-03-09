@@ -81,8 +81,10 @@ set(LIBRARY_SRCS_maxawdimporter
 
 include_directories(
 	${CMAKE_SOURCE_DIR}/awd-sdk/cpp-libawd/include
+	${CMAKE_SOURCE_DIR}/awd-sdk/cpp-libawd/lib/zlib
 	${CMAKE_CURRENT_SOURCE_DIR}/src
 	${MAX_SDK_INCLUDE_PATH}
+	
 )
 link_directories(${MAX_SDK_LIB_PATH})
 
@@ -91,7 +93,7 @@ add_library(${LIBRARY_NAME_maxawdimporter} SHARED
 )
 
 add_dependencies(${LIBRARY_NAME_maxawdimporter} libawd)
-target_link_libraries(${LIBRARY_NAME_maxawdexporter}
+target_link_libraries(${LIBRARY_NAME_maxawdimporter}
 	core.lib
 	geom.lib
 	gfx.lib
