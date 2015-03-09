@@ -1,7 +1,7 @@
 <?php
 
-$params = require(__DIR__ . '/params.php');
-$db = require(__DIR__ . '/cpdb.php');
+$params = require(__DIR__ . '/NetLogParams.php');
+$db = require(__DIR__ . '/NetLogDB.php');
 
 $config = [
     'id' => 'basic',
