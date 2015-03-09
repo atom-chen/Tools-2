@@ -155,7 +155,8 @@ AWDPrimitive * MaxAWDExporter::ExportPrimitiveGeom(Object * obj, char * name){
     if (classId == GSPHERE_CLASS_ID){}
     if (classId == Class_ID( TUBE_CLASS_ID, 0 )){}
     if (classId == Class_ID( HEDRA_CLASS_ID, 0 )){}
-    if (classId == Class_ID( BOOLOBJ_CLASS_ID, 0 )){}
+	// KBEN:
+    //if (classId == Class_ID( BOOLOBJ_CLASS_ID, 0 )){}
     if (isPrimitve!=AWD_PRIMITIVE_UNDEFINED){
         AWDPrimitive *awdGeom = (AWDPrimitive *)primGeocache->Get(obj);
         if (awdGeom == NULL) {
