@@ -1,24 +1,24 @@
 @echo off
 echo.
-set programmname=3dsmax 2014 64 bit
+set programmname=3dsmax 2015 64 bit
 echo AwayExtensions-3dsmax Installer for %programmname%
 echo.
 echo.
 echo Detected pathes:
 echo.
-set programmpath=%ProgramFiles%\Autodesk\3ds Max 2014\
+set programmpath=%ProgramFiles%\Autodesk\3ds Max 2015\
 if %PROCESSOR_ARCHITECTURE%==x86 (goto exitWrongProcessor)
 
-IF DEFINED ADSK_3DSMAX_x64_2014 (set programmpath=%ADSK_3DSMAX_x64_2014%)
-set exportername=maxawdexporter_2014_64.dle
-set toolbarname=AWDToolBar_2013_2014.cuix
-set uninstallername=uninstall_awayextensions3dsmax_2014_x64.cmd
+IF DEFINED ADSK_3DSMAX_x64_2015 (set programmpath=%ADSK_3DSMAX_x64_2015%)
+set exportername=maxawdexporter_2015_64.dle
+set toolbarname=AWDToolBar_2013_2015.cuix
+set uninstallername=uninstall_awayextensions3dsmax_2015_x64.cmd
 
 if EXIST "%programmpath%" (echo  - programm:  "%programmpath%") ELSE (goto exitNo3dspath)
 if not EXIST "%programmpath%3dsmax.exe" (goto exitNo3dsexe)
 set pluginsPath=%programmpath%plugins\
 if EXIST "%pluginsPath%" (echo  - plugins:  "%pluginsPath%") ELSE (goto exitNoPluginsPath)
-set localuserpath=%LOCALAPPDATA%\Autodesk\3dsMax\2014 - 64bit\enu\
+set localuserpath=%LOCALAPPDATA%\Autodesk\3dsMax\2015 - 64bit\enu\
 if EXIST "%localuserpath%" (echo  - local-user-path: "%localuserpath%") ELSE (goto exitNoLocalUI)
 set macrosPath=%localuserpath%usermacros\
 if EXIST "%macrosPath%" (echo  - usermacros: local-user-path + "\usermacros") ELSE (goto exitNoUserMacros)
