@@ -88,7 +88,7 @@ target_link_libraries(${LIBRARY_NAME_maxawdexporter}
 	libawd
 )
 
-set_target_properties(${LIBRARY_NAME_maxawdimporter} PROPERTIES OUTPUT_NAME "maxawdexporter_2015_64" SUFFIX ".dle")
+set_target_properties(${LIBRARY_NAME_maxawdexporter} PROPERTIES OUTPUT_NAME "maxawdexporter_2015_64" SUFFIX ".dle")
 
 ##############################################################
 set(LIBRARY_NAME_maxawdimporter maxawdimporter)
