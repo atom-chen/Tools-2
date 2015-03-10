@@ -88,6 +88,8 @@ target_link_libraries(${LIBRARY_NAME_maxawdexporter}
 	libawd
 )
 
+set_target_properties(${LIBRARY_NAME_maxawdimporter} PROPERTIES OUTPUT_NAME "maxawdexporter_2015_64" SUFFIX ".dle")
+
 ##############################################################
 set(LIBRARY_NAME_maxawdimporter maxawdimporter)
 
@@ -162,3 +164,9 @@ target_link_libraries(${LIBRARY_NAME_maxawdimporter}
 	ViewSystem
 	libawd
 )
+
+set_target_properties(${LIBRARY_NAME_maxawdimporter} PROPERTIES OUTPUT_NAME "maxawdimporter_2015_64" SUFFIX ".dle")
+
+#set_target_properties(${LIBRARY_NAME_maxawdimporter} PROPERTIES
+#     IMPORTED_LOCATION_RELEASE ${CMAKE_CURRRENT_BINARY_DIR}/Debug/maxawdimporter.dle
+#     IMPORTED_LOCATION_DEBUG   ${CMAKE_CURRRENT_BINARY_DIR}/Release/maxawdimporter.dle)

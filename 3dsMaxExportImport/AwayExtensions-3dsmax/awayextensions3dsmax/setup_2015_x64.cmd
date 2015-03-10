@@ -6,6 +6,7 @@ echo.
 echo.
 echo Detected pathes:
 echo.
+set programroot=D:\Program Files
 set programmpath=%ProgramFiles%\Autodesk\3ds Max 2015\
 if %PROCESSOR_ARCHITECTURE%==x86 (goto exitWrongProcessor)
 

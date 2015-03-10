@@ -1,4 +1,4 @@
-LIBRARY maxawd.dle
+;LIBRARY maxawd.dle
 EXPORTS
    LibDescription       @1       PRIVATE
    LibNumberClasses     @2       PRIVATE
