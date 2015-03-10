@@ -159,7 +159,14 @@ awdutil_mktmp(char **path)
     tmp_path = (char*)malloc(TMPPATH_MAXLEN);
 
     tpl_len = (int) strlen(TMPFILE_TEMPLATE);
-    path_len = GetTempPath(TMPPATH_MAXLEN, tmp_path);
+#ifdef UNICODE
+	size_t size = (strlen(tmp_path) + 1) * sizeof(TCHAR);
+	TCHAR *out = (TCHAR*)malloc(size);
+	mbstowcs(out, tmp_path, size);
+	path_len = GetTempPath(TMPPATH_MAXLEN, out);
+#else
+	path_len = GetTempPath(TMPPATH_MAXLEN, tmp_path);
+#endif
     if (path_len==0 || (path_len+tpl_len) > TMPPATH_MAXLEN)
         return -1;
 

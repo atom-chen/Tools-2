@@ -38,7 +38,7 @@ if(MSVC)
   endif()
 endif()
 
-#add_definitions(-DUNICODE -D_UNICODE)
+add_definitions(-DUNICODE -D_UNICODE)
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 add_subdirectory(AwayExtensions-3dsmax)
 add_subdirectory(awd-sdk)
