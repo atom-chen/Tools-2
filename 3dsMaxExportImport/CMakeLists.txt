@@ -8,10 +8,21 @@ set(CMAKE_MODULE_PATH
   ${CMAKE_SOURCE_DIR}/cmake
 )
 
-set(MAX_SDK_INCLUDE_PATH "C:/Program Files/Autodesk/3ds Max 2015 SDK/maxsdk/include" "C:/Program Files/Autodesk/3ds Max 2015 SDK/maxsdk/include/IGame")
-set(MAX_SDK_LIB_PATH "C:/Program Files/Autodesk/3ds Max 2015 SDK/maxsdk/lib/x64/Release")
-set(MAX_SDK_PLUGIN_PATH "D:/Program Files/Autodesk/3ds Max 2015/plugins")
-set(MAX_SDK_EXE_PATH "D:/Program FilesAutodesk/3ds Max 2015/3dsmax.exe")
+if (WIN32 OR APPLE)
+  if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    # We don't want to install in default system location, install is really for the SDK, so call it that
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}" CACHE PATH "install prefix" FORCE)
+  endif (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+endif(WIN32 OR APPLE)
+
+option(DEBUG                "Debug mode"                            OFF)
+set(MAX_SDK_ROOT "C:/Program Files/Autodesk" CACHE PATH "MAX_SDK_ROOT")
+set(MAX_EDITOR_ROOT "D:/Program Files/Autodesk" CACHE PATH "MAX_EDITOR_ROOT")
+
+set(MAX_SDK_INCLUDE_PATH "${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/include" "${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/include/IGame")
+set(MAX_SDK_LIB_PATH "${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/lib/x64/Release")
+set(MAX_SDK_PLUGIN_PATH "${MAX_SDK_ROOT}/3ds Max 2015/plugins")
+set(MAX_SDK_EXE_PATH "${MAX_SDK_ROOT}/Autodesk/3ds Max 2015/3dsmax.exe")
 
 # Force out-of-source build
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
