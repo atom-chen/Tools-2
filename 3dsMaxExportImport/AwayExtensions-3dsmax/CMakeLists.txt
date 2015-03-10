@@ -38,6 +38,8 @@ include_directories(
 )
 link_directories(${MAX_SDK_LIB_PATH})
 
+#SET(LIBRARY_OUTPUT_PATH ${MAX_SDK_PLUGIN_PATH})
+
 add_library(${LIBRARY_NAME_maxawdexporter} SHARED
 	${LIBRARY_SRCS_maxawdexporter}
 )
@@ -45,50 +47,29 @@ add_library(${LIBRARY_NAME_maxawdexporter} SHARED
 add_dependencies(${LIBRARY_NAME_maxawdexporter} libawd)
 target_link_libraries(${LIBRARY_NAME_maxawdexporter}
 	assetmanagement
-	ATSCore
-	biped
-	bmm
 	core
-	crowd
-	CustDlg
-	DataBridge
-	DefaultRenderItems
-	edmodel
-	expr
-	flt
-	FragmentGraph
 	geom
 	gfx
-	GraphicsDriver
-	GraphicsUtility
-	gup
-	IGame
-	imageViewers
-	ManipSys
-	maxnet
-	Maxscrpt
-	maxutil
-	MenuMan
-	menus
 	mesh
-	MNMath
-	Paramblk2
-	particle
-	particleflow
-	ParticleFlowTools
-	physique
-	Poly
-	PolyPaint
-	RenderUtil
-	rtmax
-	spring
-	tessint
-	viewfile
-	ViewSystem
+	maxutil
+	maxscrpt
+	paramblk2
+	bmm
+	iGame
 	libawd
 )
 
 set_target_properties(${LIBRARY_NAME_maxawdexporter} PROPERTIES OUTPUT_NAME "maxawdexporter_2015_64" SUFFIX ".dle")
+EXEC_PROGRAM(${MAX_SDK_EXE_PATH} ARGS ${MAX_SDK_PLUGIN_PATH}/maxawdexporter_2015_64.dle)
+
+install(FILES 
+		${CMAKE_CURRENT_BINARY_DIR}/Debug/maxawdexporter_2015_64.dle
+		DESTINATION "${MAX_SDK_PLUGIN_PATH}" CONFIGURATIONS Debug
+	)
+	install(FILES 
+		${CMAKE_CURRENT_BINARY_DIR}/Release/maxawdexporter_2015_64.dle
+		DESTINATION "${MAX_SDK_PLUGIN_PATH}" CONFIGURATIONS Release None ""
+	)
 
 ##############################################################
 set(LIBRARY_NAME_maxawdimporter maxawdimporter)
@@ -122,46 +103,15 @@ add_library(${LIBRARY_NAME_maxawdimporter} SHARED
 add_dependencies(${LIBRARY_NAME_maxawdimporter} libawd)
 target_link_libraries(${LIBRARY_NAME_maxawdimporter}
 	assetmanagement
-	ATSCore
-	biped
-	bmm
 	core
-	crowd
-	CustDlg
-	DataBridge
-	DefaultRenderItems
-	edmodel
-	expr
-	flt
-	FragmentGraph
 	geom
 	gfx
-	GraphicsDriver
-	GraphicsUtility
-	gup
-	IGame
-	imageViewers
-	ManipSys
-	maxnet
-	Maxscrpt
-	maxutil
-	MenuMan
-	menus
 	mesh
-	MNMath
-	Paramblk2
-	particle
-	particleflow
-	ParticleFlowTools
-	physique
-	Poly
-	PolyPaint
-	RenderUtil
-	rtmax
-	spring
-	tessint
-	viewfile
-	ViewSystem
+	maxutil
+	maxscrpt
+	paramblk2
+	bmm
+	iGame
 	libawd
 )
 

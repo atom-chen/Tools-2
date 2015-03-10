@@ -10,6 +10,8 @@ set(CMAKE_MODULE_PATH
 
 set(MAX_SDK_INCLUDE_PATH "C:/Program Files/Autodesk/3ds Max 2015 SDK/maxsdk/include" "C:/Program Files/Autodesk/3ds Max 2015 SDK/maxsdk/include/IGame")
 set(MAX_SDK_LIB_PATH "C:/Program Files/Autodesk/3ds Max 2015 SDK/maxsdk/lib/x64/Release")
+set(MAX_SDK_PLUGIN_PATH "D:/Program Files/Autodesk/3ds Max 2015/plugins")
+set(MAX_SDK_EXE_PATH "D:/Program FilesAutodesk/3ds Max 2015/3dsmax.exe")
 
 # Force out-of-source build
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
@@ -40,5 +42,7 @@ endif()
 
 add_definitions(-DUNICODE -D_UNICODE)
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+
 add_subdirectory(AwayExtensions-3dsmax)
 add_subdirectory(awd-sdk)
+
