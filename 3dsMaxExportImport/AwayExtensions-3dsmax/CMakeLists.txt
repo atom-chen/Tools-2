@@ -32,6 +32,7 @@ set(LIBRARY_SRCS_maxawdexporter
 
 include_directories(
 	${CMAKE_SOURCE_DIR}/awd-sdk/cpp-libawd/include
+	${CMAKE_SOURCE_DIR}/awd-sdk/cpp-libawd/lib/zlib
 	${CMAKE_CURRENT_SOURCE_DIR}/src
 	${MAX_SDK_INCLUDE_PATH}
 )
@@ -43,15 +44,47 @@ add_library(${LIBRARY_NAME_maxawdexporter} SHARED
 
 add_dependencies(${LIBRARY_NAME_maxawdexporter} libawd)
 target_link_libraries(${LIBRARY_NAME_maxawdexporter}
+	assetmanagement
+	ATSCore
+	biped
+	bmm
 	core
+	crowd
+	CustDlg
+	DataBridge
+	DefaultRenderItems
+	edmodel
+	expr
+	flt
+	FragmentGraph
 	geom
 	gfx
-	mesh
+	GraphicsDriver
+	GraphicsUtility
+	gup
+	IGame
+	imageViewers
+	ManipSys
+	maxnet
+	Maxscrpt
 	maxutil
-	maxscrpt
-	paramblk2
-	bmm
-	iGame
+	MenuMan
+	menus
+	mesh
+	MNMath
+	Paramblk2
+	particle
+	particleflow
+	ParticleFlowTools
+	physique
+	Poly
+	PolyPaint
+	RenderUtil
+	rtmax
+	spring
+	tessint
+	viewfile
+	ViewSystem
 	libawd
 )
 
@@ -80,29 +113,52 @@ set(LIBRARY_SRCS_maxawdimporter
 	${CMAKE_CURRENT_SOURCE_DIR}/maxawd.def
 )
 
-include_directories(
-	${CMAKE_SOURCE_DIR}/awd-sdk/cpp-libawd/include
-	${CMAKE_SOURCE_DIR}/awd-sdk/cpp-libawd/lib/zlib
-	${CMAKE_CURRENT_SOURCE_DIR}/src
-	${MAX_SDK_INCLUDE_PATH}
-	
-)
-link_directories(${MAX_SDK_LIB_PATH})
-
 add_library(${LIBRARY_NAME_maxawdimporter} SHARED
 	${LIBRARY_SRCS_maxawdimporter}
 )
 
 add_dependencies(${LIBRARY_NAME_maxawdimporter} libawd)
 target_link_libraries(${LIBRARY_NAME_maxawdimporter}
+	assetmanagement
+	ATSCore
+	biped
+	bmm
 	core
+	crowd
+	CustDlg
+	DataBridge
+	DefaultRenderItems
+	edmodel
+	expr
+	flt
+	FragmentGraph
 	geom
 	gfx
-	mesh
+	GraphicsDriver
+	GraphicsUtility
+	gup
+	IGame
+	imageViewers
+	ManipSys
+	maxnet
+	Maxscrpt
 	maxutil
-	maxscrpt
-	paramblk2
-	bmm
-	iGame
+	MenuMan
+	menus
+	mesh
+	MNMath
+	Paramblk2
+	particle
+	particleflow
+	ParticleFlowTools
+	physique
+	Poly
+	PolyPaint
+	RenderUtil
+	rtmax
+	spring
+	tessint
+	viewfile
+	ViewSystem
 	libawd
 )
