@@ -11,7 +11,7 @@ if %PROCESSOR_ARCHITECTURE%==x86 (goto exitWrongProcessor)
 
 IF DEFINED ADSK_3DSMAX_x64_2015 (set programmpath=%ADSK_3DSMAX_x64_2015%)
 set exportername=maxawdexporter_2015_64.dle
-set toolbarname=AWDToolBar_2013_2015.cuix
+set toolbarname=AWDToolBar_2015.cuix
 set uninstallername=uninstall_awayextensions3dsmax_2015_x64.cmd
 
 if EXIST "%programmpath%" (echo  - programm:  "%programmpath%") ELSE (goto exitNo3dspath)
