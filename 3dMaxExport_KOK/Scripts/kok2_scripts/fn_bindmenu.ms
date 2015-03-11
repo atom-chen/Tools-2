@@ -29,15 +29,13 @@ function kok2_AddMenu =
 		
 		local ItemsTemp = #()
 		append ItemsTemp (menuMan.createActionItem "macro_floaterKok2Exporter" "Kok2Exporter")
-		ItemsTemp[1].setTitle "Exporter"
-		ItemsTemp[1].setUseCustomTitle true
 		
 		append ItemsTemp (menuMan.createActionItem "macro_Kok2MeshCustomAttribute" "Kok2MeshCustomAttribute")
-		ItemsTemp[2].setTitle "MeshCustomAttribute"
-		ItemsTemp[2].setUseCustomTitle true
 		
 		for i=1 to ItemsTemp.count do
+		(
 			kok2Menu.addItem ItemsTemp[i] -1
+		)
 
 		local subMenuItem = menuMan.createSubMenuItem "KingOfKongsII" kok2Menu
 		local subMenuIndex = mainMenu.numItems() - 1

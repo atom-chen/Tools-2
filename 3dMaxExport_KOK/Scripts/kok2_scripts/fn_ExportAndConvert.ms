@@ -2,57 +2,79 @@ fn getFilesRecursive root pattern =
 (
 	dir_array = GetDirectories (root+"/*")
 	for d in dir_array do
+	(
 		join dir_array (GetDirectories (d+"/*"))
+	)
 		
 	my_files = getFiles (root + "\\" + pattern)
 	for f in dir_array do
+	(
 		join my_files (getFiles (f + pattern))
+	)
 		
 	return my_files
 )
 
 fn IsHavAnimTable node = 
 (
-	if (node.modifiers == undefined) then return undefined
+	if (node.modifiers == undefined) then 
+	(
+		return undefined
+	)
 	
-	if (node.modifiers.count == 0) then return undefined
+	if (node.modifiers.count == 0) then 
+	(
+		return undefined
+	)
 	
 	for j=1 to node.modifiers.count do
 	(
 		if node.modifiers[j].classid[1] == 0x5ffb3ef5 and node.modifiers[j].classid[2] == 0x5a6a3550 then
+		(
 			return node.modifiers[j];
+		)
 	)
 	return undefined
 )
 
 fn IsPhysique node = 
 (
-	if (node.modifiers.count == 0) then return false
+	if (node.modifiers.count == 0) then 
+	(
+		return false
+	)
 	
 	for i = 1 to node.modifiers.count do 
 	(
 		if node.modifiers[i].classid[1] == 0x00100 and node.modifiers[i].classid[2] == 0x00000 then
+		(
 			return true;
+		)
 	)
 	return false
 )
 
 fn IsKK2Modifiers node = 
 (
-	if (node.modifiers.count == 0) then return false
+	if (node.modifiers.count == 0) then 
+	(
+		return false
+	)
 	
 	for i = 1 to node.modifiers.count do
 	(
 		if node.modifiers.count do
 		(
 			if node.modifiers[i].classid[1] == 0x5ffb3ef5 and node.modifiers[i].classid[2] == 0x5a6a3550 then
+			(
 				return true;
+			)
 		)
 		return false
 	)
 )
 
-fn ExportAndConvertModel strConverter strCopuPath strTexCopyPath = 
+fn ExportAndConvertModel strConverter strCopyPath strTexCopyPath = 
 (
 	bPhysique = false
 	bKK2Modifier = false

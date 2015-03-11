@@ -1,7 +1,7 @@
 plugin material Kok2ExtMaterial
-name:"Kok2 Extended Material"
-classID:#(0x1710b1c7, 0x176f2737)
-extends:Standard replaceUI:false version:1
+	name:"Kok2 Extended Material"
+	classID:#(0x1710b1c7, 0x176f2737)
+	extends:Standard replaceUI:false version:1
 (
 	parameters Kok2ExtMaterial rollout:Kok2ExtMaterialRollout
 	(

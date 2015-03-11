@@ -119,9 +119,13 @@ macroScript macro_floaterKok2Exporter
 			on btn_export_kk2model pressed do
 			(
 				if(edt2.text == undefined) or (edt2.text == "") then 
+				(
 					ExportAndConvertModel edt1.text edt2.text maxfilename
+				)
 				else
+				(
 					ExportAndConvertModel edt1.text edt2.text edt2.text
+				)
 			)
 			
 			on rolloutKok2exporter open do
@@ -132,7 +136,10 @@ macroScript macro_floaterKok2Exporter
 				edt1.text = getIniSetting configFile "settings" "kk2converter"
 				edt2.text = getIniSetting configFile "settings" "copypath"
 				
-				if(edt1.text == undefined) or (edt1.text == "") then edt1.text = "C:\\3dmax7\\SwitchModel_console.exe"
+				if(edt1.text == undefined) or (edt1.text == "") then 
+				(
+					edt1.text = "C:\\3dmax7\\SwitchModel_console.exe"
+				)
 				
 				strConverter = edt1.text;
 				strCopyPath = edt2.text;

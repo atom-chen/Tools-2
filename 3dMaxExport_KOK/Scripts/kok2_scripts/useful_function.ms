@@ -1,7 +1,13 @@
 function numMatchName strNodeName = 
 (
 	match_count = 0;
-	for i in objects dp if (i.name == strNodeName) then match_count = match_count + 1;
+	for i in objects do 
+	(
+		if (i.name == strNodeName) then 
+		(
+			match_count = match_count + 1;
+		)
+	)
 	return match_count
 )
 
@@ -10,13 +16,16 @@ function CheckAllNamesUnique =
 	bonearray = #()
 	for i in objects do 
 	(
-		append bonearray
+		append bonearray i
 	)
 	
 	repeatarray = #()
 	for i in bonearray  do
 	(
-		if (numMatchName i.name) > 1 then append repeatarray i;
+		if (numMatchName i.name) > 1 then 
+		(
+			append repeatarray i;
+		)
 	)
 	
 	if (repeatarray.count > 0) then
@@ -32,8 +41,17 @@ function CheckAllNamesUnique =
 function deleteParticleViewNodes = 
 (
 	particleview_nodes = #();
-	for i in objects do if classof i == Particle_View then append particleview_nodes i;
-	if particleview_nodes.count > 0 then delete particleview_nodes;
+	for i in objects do 
+	(
+		if classof i == Particle_View then 
+		(
+			append particleview_nodes i;
+		)
+	)
+	if particleview_nodes.count > 0 then 
+	(
+		delete particleview_nodes;
+	)
 )
 
 function hasNodeProperties = 
@@ -72,7 +90,9 @@ function exportNodeProperties filename =
 			
 			BillboardType = getUserProp i "Billboard";
 			if(BillboardType != undefined) and (BillboardType != 0) then
+			(
 				format "Billboard = %\n" (BillboardType as integer) to:fstream;
+			)
 				
 			format "\n" to:fstream;
 			count += 1;
