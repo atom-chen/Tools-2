@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
+cmake_policy(SET CMP0054 OLD)
+
 project(maxawd)
 set(MAXAWD_VERSION 0.17)
 
@@ -21,8 +23,8 @@ set(MAX_EDITOR_ROOT "D:/Program Files/Autodesk" CACHE PATH "MAX_EDITOR_ROOT")
 
 set(MAX_SDK_INCLUDE_PATH "${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/include" "${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/include/IGame")
 set(MAX_SDK_LIB_PATH "${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/lib/x64/Release")
-set(MAX_SDK_PLUGIN_PATH "${MAX_SDK_ROOT}/3ds Max 2015/plugins")
-set(MAX_SDK_EXE_PATH "${MAX_SDK_ROOT}/Autodesk/3ds Max 2015/3dsmax.exe")
+set(MAX_SDK_PLUGIN_PATH "${MAX_EDITOR_ROOT}/3ds Max 2015/plugins")
+set(MAX_SDK_EXE_PATH "${MAX_EDITOR_ROOT}/Autodesk/3ds Max 2015/3dsmax.exe")
 
 # Force out-of-source build
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
@@ -56,4 +58,4 @@ add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 
 add_subdirectory(AwayExtensions-3dsmax)
 add_subdirectory(awd-sdk)
-
+#add_subdirectory(glm-0.9.6.3)

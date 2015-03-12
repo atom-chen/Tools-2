@@ -2,6 +2,8 @@ set(LIBRARY_NAME_maxawdexporter maxawdexporter)
 
 cmake_policy(SET CMP0043 NEW)
 
+file(GLOB_RECURSE GLM_INCS ${CMAKE_SOURCE_DIR}/glm-0.9.6.3/glm/*.hpp ${CMAKE_SOURCE_DIR}/glm-0.9.6.3/glm/*.inl)
+
 set(LIBRARY_SRCS_maxawdexporter
 	${CMAKE_CURRENT_SOURCE_DIR}/src/3dsmaxsdk_preinclude.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/cache.h
@@ -28,13 +30,18 @@ set(LIBRARY_SRCS_maxawdexporter
 	
 	${CMAKE_CURRENT_SOURCE_DIR}/maxawd_exporter.rc
 	${CMAKE_CURRENT_SOURCE_DIR}/maxawd.def
+	
+	${GLM_INCS}
 )
+
+source_group("GLM" FILES ${GLM_INCS})
 
 include_directories(
 	${CMAKE_SOURCE_DIR}/awd-sdk/cpp-libawd/include
 	${CMAKE_SOURCE_DIR}/awd-sdk/cpp-libawd/lib/zlib
 	${CMAKE_CURRENT_SOURCE_DIR}/src
 	${MAX_SDK_INCLUDE_PATH}
+	${CMAKE_SOURCE_DIR}/glm-0.9.6.3
 )
 link_directories(${MAX_SDK_LIB_PATH})
 
@@ -72,50 +79,50 @@ install(FILES
 	)
 
 ##############################################################
-set(LIBRARY_NAME_maxawdimporter maxawdimporter)
+#set(LIBRARY_NAME_maxawdimporter maxawdimporter)
 
-cmake_policy(SET CMP0043 NEW)
+#cmake_policy(SET CMP0043 NEW)
 
-set(LIBRARY_SRCS_maxawdimporter
-	${CMAKE_CURRENT_SOURCE_DIR}/src/3dsmaxsdk_preinclude.h
-	${CMAKE_CURRENT_SOURCE_DIR}/src/cacheimporter.h
-	${CMAKE_CURRENT_SOURCE_DIR}/src/maxawdimporter.h
-	${CMAKE_CURRENT_SOURCE_DIR}/src/maxawdimporterblocks.h
-	${CMAKE_CURRENT_SOURCE_DIR}/src/maxawdimporteropts.h
-	${CMAKE_CURRENT_SOURCE_DIR}/src/resourceimporter.h
-	${CMAKE_CURRENT_SOURCE_DIR}/src/utils.h
-	
-	${CMAKE_CURRENT_SOURCE_DIR}/src/cacheimporter.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/src/DllEntryimporter.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/src/maxawdimporter.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/src/maxawdimporterblocks.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/src/maxawdimporteropts.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/src/utils.cpp
-	
-	${CMAKE_CURRENT_SOURCE_DIR}/maxawd_importer.rc
-	${CMAKE_CURRENT_SOURCE_DIR}/maxawd.def
-)
+#set(LIBRARY_SRCS_maxawdimporter
+#	${CMAKE_CURRENT_SOURCE_DIR}/src/3dsmaxsdk_preinclude.h
+#	${CMAKE_CURRENT_SOURCE_DIR}/src/cacheimporter.h
+#	${CMAKE_CURRENT_SOURCE_DIR}/src/maxawdimporter.h
+#	${CMAKE_CURRENT_SOURCE_DIR}/src/maxawdimporterblocks.h
+#	${CMAKE_CURRENT_SOURCE_DIR}/src/maxawdimporteropts.h
+#	${CMAKE_CURRENT_SOURCE_DIR}/src/resourceimporter.h
+#	${CMAKE_CURRENT_SOURCE_DIR}/src/utils.h
+#	
+#	${CMAKE_CURRENT_SOURCE_DIR}/src/cacheimporter.cpp
+#	${CMAKE_CURRENT_SOURCE_DIR}/src/DllEntryimporter.cpp
+#	${CMAKE_CURRENT_SOURCE_DIR}/src/maxawdimporter.cpp
+#	${CMAKE_CURRENT_SOURCE_DIR}/src/maxawdimporterblocks.cpp
+#	${CMAKE_CURRENT_SOURCE_DIR}/src/maxawdimporteropts.cpp
+#	${CMAKE_CURRENT_SOURCE_DIR}/src/utils.cpp
+#	
+#	${CMAKE_CURRENT_SOURCE_DIR}/maxawd_importer.rc
+#	${CMAKE_CURRENT_SOURCE_DIR}/maxawd.def
+#)
 
-add_library(${LIBRARY_NAME_maxawdimporter} SHARED
-	${LIBRARY_SRCS_maxawdimporter}
-)
+#add_library(${LIBRARY_NAME_maxawdimporter} SHARED
+#	${LIBRARY_SRCS_maxawdimporter}
+#)
 
-add_dependencies(${LIBRARY_NAME_maxawdimporter} libawd)
-target_link_libraries(${LIBRARY_NAME_maxawdimporter}
-	assetmanagement
-	core
-	geom
-	gfx
-	mesh
-	maxutil
-	maxscrpt
-	paramblk2
-	bmm
-	iGame
-	libawd
-)
+#add_dependencies(${LIBRARY_NAME_maxawdimporter} libawd)
+#target_link_libraries(${LIBRARY_NAME_maxawdimporter}
+#	assetmanagement
+#	core
+#	geom
+#	gfx
+#	mesh
+#	maxutil
+#	maxscrpt
+#	paramblk2
+#	bmm
+#	iGame
+#	libawd
+#)
 
-set_target_properties(${LIBRARY_NAME_maxawdimporter} PROPERTIES OUTPUT_NAME "maxawdimporter_2015_64" SUFFIX ".dle")
+#set_target_properties(${LIBRARY_NAME_maxawdimporter} PROPERTIES OUTPUT_NAME "maxawdimporter_2015_64" SUFFIX ".dle")
 
 #set_target_properties(${LIBRARY_NAME_maxawdimporter} PROPERTIES
 #     IMPORTED_LOCATION_RELEASE ${CMAKE_CURRRENT_BINARY_DIR}/Debug/maxawdimporter.dle
