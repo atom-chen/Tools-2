@@ -1,0 +1,1 @@
+add_subdirectory(assimp-3.1.1)
