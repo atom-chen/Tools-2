@@ -17,12 +17,12 @@ AppFrame::~AppFrame()
 
 void AppFrame::init(int argc, char *argv[])
 {
-	
+	m_ProgOptions->parseParam(argc, argv);
 }
 
 void AppFrame::run()
 {
-	m_pMImport3dMax->import("");
+	m_pMImport3dMax->import(m_ProgOptions->m_inFileFullPath);
 }
 
 void AppFrame::stop()

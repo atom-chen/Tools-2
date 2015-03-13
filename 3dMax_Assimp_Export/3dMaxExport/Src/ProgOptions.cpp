@@ -18,6 +18,7 @@ void ProgOptions::parseParam(int argc, char *argv[])
 			if (idx + 1 < argc)
 			{
 				m_inFileFullPath = argv[idx + 1];
+				++idx;
 			}
 		}
 	}
