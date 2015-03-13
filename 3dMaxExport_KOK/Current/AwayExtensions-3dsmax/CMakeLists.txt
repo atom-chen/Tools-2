@@ -7,12 +7,12 @@ file(GLOB_RECURSE GLM_INCS ${CMAKE_SOURCE_DIR}/glm-0.9.6.3/glm/*.hpp ${CMAKE_SOU
 # 自己的逻辑代码
 #set(GLOB_RECURSE EXPORT_XML ${CMAKE_SOURCE_DIR}/ExportXml/*.h ${CMAKE_SOURCE_DIR}/ExportXml/*.cpp)
 set(EXPORT_XML
-	${CMAKE_SOURCE_DIR}/ExportXml/ExportAnimation.h
-	${CMAKE_SOURCE_DIR}/ExportXml/ExportAnimation.cpp
-	${CMAKE_SOURCE_DIR}/ExportXml/ExportSkeleton.h
-	${CMAKE_SOURCE_DIR}/ExportXml/ExportSkeleton.cpp
-	${CMAKE_SOURCE_DIR}/ExportXml/ExportSkinMesh.h
-	${CMAKE_SOURCE_DIR}/ExportXml/ExportSkinMesh.cpp 
+	${CMAKE_SOURCE_DIR}/ExportXml/MExportAnimation.h
+	${CMAKE_SOURCE_DIR}/ExportXml/MExportAnimation.cpp
+	${CMAKE_SOURCE_DIR}/ExportXml/MExportSkeleton.h
+	${CMAKE_SOURCE_DIR}/ExportXml/MExportSkeleton.cpp
+	${CMAKE_SOURCE_DIR}/ExportXml/MExportSkinMesh.h
+	${CMAKE_SOURCE_DIR}/ExportXml/MExportSkinMesh.cpp 
 	)
 
 set(LIBRARY_SRCS_maxawdexporter

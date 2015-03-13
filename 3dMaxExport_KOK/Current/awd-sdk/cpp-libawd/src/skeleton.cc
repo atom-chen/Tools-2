@@ -202,6 +202,16 @@ AWDSkeletonJoint::write_joint(int fd, awd_uint32 id, BlockSettings * curBlockSet
     return num_written;
 }
 
+AWDSkeletonJoint *AWDSkeletonJoint::get_first_child()
+{
+	return first_child;
+}
+
+AWDSkeletonJoint *AWDSkeletonJoint::get_last_child()
+{
+	return last_child;
+}
+
 AWDSkeleton::AWDSkeleton(const char *name, awd_uint16 name_len, int neutralTime) :
     AWDBlock(SKELETON),
     AWDNamedElement(name, name_len),

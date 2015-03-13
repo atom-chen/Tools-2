@@ -34,6 +34,9 @@ class AWDSkeletonJoint :
         void set_parent(AWDSkeletonJoint *);
         AWDSkeletonJoint *get_parent();
         AWDSkeletonJoint *add_child_joint(AWDSkeletonJoint *);
+
+		AWDSkeletonJoint *get_first_child();
+		AWDSkeletonJoint *get_last_child();
 };
 
 class AWDSkeleton :
