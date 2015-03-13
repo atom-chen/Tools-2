@@ -50,9 +50,14 @@ if(MSVC)
   endif()
 endif()
 
-add_definitions(-DUNICODE -D_UNICODE)
+install(FILES 
+	${CMAKE_BINARY_DIR}/Extern/assimp-3.1.1/code/Debug/assimpd.dll
+	DESTINATION "${CMAKE_BINARY_DIR}/3dMaxExport/Debug" CONFIGURATIONS Debug
+)
+
+#add_definitions(-DUNICODE -D_UNICODE)
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 
-#add_subdirectory(Extern)
+add_subdirectory(Extern/assimp-3.1.1)
 add_subdirectory(3dMaxExport)
 

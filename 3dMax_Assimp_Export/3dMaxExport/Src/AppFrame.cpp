@@ -1,5 +1,8 @@
 #include "AppFrame.h"
 #include "MImport3dMax.h"
+#include "ProgOptions.h"
+
+AppFrame* g_pAppFrame;
 
 AppFrame::AppFrame()
 {

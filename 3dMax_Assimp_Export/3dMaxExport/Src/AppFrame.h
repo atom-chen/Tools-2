@@ -19,6 +19,6 @@ public:
 	void stop();
 };
 
-AppFrame* g_pAppFrame;
+extern AppFrame* g_pAppFrame;
 
 #endif
