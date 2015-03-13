@@ -14,5 +14,5 @@ if(WIN32)
 	add_executable(${LIBRARY_NAME} WIN32 ${LIBRARY_SRCS})
 endif()
 
-target_link_libraries(${LIBRARY_NAME}  Assimp)
-add_dependencies(${LIBRARY_NAME} Assimp)
+#target_link_libraries(${LIBRARY_NAME}  Assimp)
+#add_dependencies(${LIBRARY_NAME} Assimp)
