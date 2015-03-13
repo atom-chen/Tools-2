@@ -219,4 +219,6 @@ class MaxAWDExporter : public SceneExport {
         void                GetCustomAWDMaterialSettings(StdMat *, AWDMaterial * );
         void CopyViewer(bool);
         void CopyViewerHTML(char *, char *, char *);
+
+		void exportXml(AWD* pAwd);
 };

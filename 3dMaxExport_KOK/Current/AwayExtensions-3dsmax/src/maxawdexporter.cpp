@@ -9,6 +9,7 @@
 #endif*/
 
 #include "maxawdexporter.h"
+#include "MExportSkeleton.h"
 
 #define MaxAWDExporter_CLASS_ID    Class_ID(0xa8e047f2, 0x81e112c0)
 
@@ -436,6 +437,7 @@ int MaxAWDExporter::ExecuteExport()
         UpdateProgressBar(MAXAWD_PHASE_FLUSH, 0);
         output_debug_string("-> Start flush (Step5)");
         awd->flush(fd);
+		exportXml(awd);
         output_debug_string("-> End flush (Step5)");
         close(fd);
         UpdateProgressBar(MAXAWD_PHASE_FLUSH, 1);
@@ -570,4 +572,10 @@ void MaxAWDExporter::CleanUp()
     delete animClipsNamesCache;
     delete sourceModsIDsCache;
     delete geomsForVertexAnim;
+}
+
+void MaxAWDExporter::exportXml(AWD* pAwd)
+{
+	MExportSkeleton* pMExportSkeleton = new MExportSkeleton();
+	pMExportSkeleton->exportSkeleton("aaaa.xml", pAwd);
 }

@@ -4,6 +4,17 @@ cmake_policy(SET CMP0043 NEW)
 
 file(GLOB_RECURSE GLM_INCS ${CMAKE_SOURCE_DIR}/glm-0.9.6.3/glm/*.hpp ${CMAKE_SOURCE_DIR}/glm-0.9.6.3/glm/*.inl)
 
+# 自己的逻辑代码
+#set(GLOB_RECURSE EXPORT_XML ${CMAKE_SOURCE_DIR}/ExportXml/*.h ${CMAKE_SOURCE_DIR}/ExportXml/*.cpp)
+set(EXPORT_XML
+	${CMAKE_SOURCE_DIR}/ExportXml/ExportAnimation.h
+	${CMAKE_SOURCE_DIR}/ExportXml/ExportAnimation.cpp
+	${CMAKE_SOURCE_DIR}/ExportXml/ExportSkeleton.h
+	${CMAKE_SOURCE_DIR}/ExportXml/ExportSkeleton.cpp
+	${CMAKE_SOURCE_DIR}/ExportXml/ExportSkinMesh.h
+	${CMAKE_SOURCE_DIR}/ExportXml/ExportSkinMesh.cpp 
+	)
+
 set(LIBRARY_SRCS_maxawdexporter
 	${CMAKE_CURRENT_SOURCE_DIR}/src/3dsmaxsdk_preinclude.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/cache.h
@@ -32,9 +43,11 @@ set(LIBRARY_SRCS_maxawdexporter
 	${CMAKE_CURRENT_SOURCE_DIR}/maxawd.def
 	
 	${GLM_INCS}
+	${EXPORT_XML}
 )
 
 source_group("GLM" FILES ${GLM_INCS})
+source_group("ExportXml" FILES ${EXPORT_XML})
 
 include_directories(
 	${CMAKE_SOURCE_DIR}/awd-sdk/cpp-libawd/include
@@ -42,6 +55,8 @@ include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/src
 	${MAX_SDK_INCLUDE_PATH}
 	${CMAKE_SOURCE_DIR}/glm-0.9.6.3
+	${CMAKE_SOURCE_DIR}/tinyxml2-master
+	${CMAKE_SOURCE_DIR}/ExportXml
 )
 link_directories(${MAX_SDK_LIB_PATH})
 
@@ -51,7 +66,7 @@ add_library(${LIBRARY_NAME_maxawdexporter} SHARED
 	${LIBRARY_SRCS_maxawdexporter}
 )
 
-add_dependencies(${LIBRARY_NAME_maxawdexporter} libawd)
+add_dependencies(${LIBRARY_NAME_maxawdexporter} libawd tinyxml2)
 target_link_libraries(${LIBRARY_NAME_maxawdexporter}
 	assetmanagement
 	core
@@ -64,6 +79,7 @@ target_link_libraries(${LIBRARY_NAME_maxawdexporter}
 	bmm
 	iGame
 	libawd
+	tinyxml2
 )
 
 set_target_properties(${LIBRARY_NAME_maxawdexporter} PROPERTIES OUTPUT_NAME "maxawdexporter_2015_64" SUFFIX ".dle")
