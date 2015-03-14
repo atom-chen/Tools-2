@@ -577,5 +577,5 @@ void MaxAWDExporter::CleanUp()
 void MaxAWDExporter::exportXml(AWD* pAwd)
 {
 	MExportSkeleton* pMExportSkeleton = new MExportSkeleton();
-	pMExportSkeleton->exportSkeleton("aaaa.xml", pAwd);
+	pMExportSkeleton->exportSkeleton(pAwd);
 }

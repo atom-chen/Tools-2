@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "MTypeDefine.h"
+#include "tinyxml2.h"
 
 class AWDSkeletonJoint;
 
@@ -19,8 +20,9 @@ public:
 	MSkeletonJoint(AWDSkeletonJoint* pAWDSkeleton, MSkeletonJoint* pParent);
 	void buildJointChildList();
 	void buildMatrix();
+	void buildboneXml(tinyxml2::XMLElement* bonesElem, tinyxml2::XMLDocument* pXMLDocument, int boneIdx);
 
-	MMVec3& getPosOffset();
+	MMVec3& getPos();
 	MQuat getRot();
 };
 
@@ -35,6 +37,7 @@ protected:
 public:
 	MSkeleton(AWDSkeleton* pAWDSkeleton);
 	void buildBoneList();
+	void buildboneXmlList(tinyxml2::XMLElement* bonesElem, tinyxml2::XMLDocument* pXMLDocument);
 };
 
 

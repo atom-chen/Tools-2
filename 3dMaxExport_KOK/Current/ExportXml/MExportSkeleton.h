@@ -6,7 +6,7 @@ class AWD;
 class MExportSkeleton
 {
 public:
-	void exportSkeleton(char*  fullPath, AWD* pAwd);
+	void exportSkeleton(AWD* pAwd);
 };
 
 #endif

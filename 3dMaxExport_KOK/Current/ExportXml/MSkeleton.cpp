@@ -53,7 +53,7 @@ void MSkeletonJoint::buildMatrix()
 }
 
 // Î»ÖÃÆ«ÒÆ
-MMVec3& MSkeletonJoint::getPosOffset()
+MMVec3& MSkeletonJoint::getPos()
 {
 	return (*m_pTVec);
 }
@@ -61,6 +61,41 @@ MMVec3& MSkeletonJoint::getPosOffset()
 MQuat MSkeletonJoint::getRot()
 {
 	return glm::toQuat<float, glm::mediump>(*m_pRSMat);
+}
+
+void MSkeletonJoint::buildboneXml(tinyxml2::XMLElement* bonesElem, tinyxml2::XMLDocument* pXMLDocument, int boneIdx)
+{
+	tinyxml2::XMLElement* boneElem = pXMLDocument->NewElement("bone");
+	bonesElem->InsertEndChild(boneElem);
+	boneElem->SetAttribute("id", boneIdx);
+	boneElem->SetAttribute("name", m_pAWDSkeletonJoint->get_name());
+
+	tinyxml2::XMLElement* posElem = pXMLDocument->NewElement("position");
+	boneElem->InsertEndChild(posElem);
+	posElem->SetAttribute("x", (*m_pTVec)[0]);
+	posElem->SetAttribute("y", (*m_pTVec)[1]);
+	posElem->SetAttribute("z", (*m_pTVec)[2]);
+
+	tinyxml2::XMLElement* rotElem = pXMLDocument->NewElement("rotation");
+	boneElem->InsertEndChild(rotElem);
+	MQuat pMQuat = getRot();
+	rotElem->SetAttribute("angle", pMQuat.w);
+
+	tinyxml2::XMLElement* axisElem = pXMLDocument->NewElement("axis");
+	rotElem->InsertEndChild(axisElem);
+	axisElem->SetAttribute("x", pMQuat.x);
+	axisElem->SetAttribute("y", pMQuat.y);
+	axisElem->SetAttribute("z", pMQuat.z);
+
+	++boneIdx;
+
+	AWDSkeletonJoint* child = m_pAWDSkeletonJoint->get_first_child();
+	while (child)
+	{
+		MSkeletonJoint* pMSkeletonJoint = new MSkeletonJoint(child, this);
+		pMSkeletonJoint->buildboneXml(bonesElem, pXMLDocument, boneIdx);
+		child = child->next;
+	}
 }
 
 MSkeleton::MSkeleton(AWDSkeleton* pAWDSkeleton)
@@ -72,4 +107,9 @@ void MSkeleton::buildBoneList()
 {
 	m_pRootMSkeletonJoint = new MSkeletonJoint(m_pAWDSkeleton->get_root_joint(), nullptr);
 	m_pRootMSkeletonJoint->buildJointChildList();
+}
+
+void MSkeleton::buildboneXmlList(tinyxml2::XMLElement* bonesElem, tinyxml2::XMLDocument* pXMLDocument)
+{
+	m_pRootMSkeletonJoint->buildboneXml(bonesElem, pXMLDocument, 0);
 }

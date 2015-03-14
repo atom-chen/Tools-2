@@ -2,12 +2,18 @@
 #include "AWD.h"
 #include "tinyxml2.h"
 #include "MSkeleton.h"
+#include "AppFrame.h"
+#include "ProgOptions.h"
 
-void MExportSkeleton::exportSkeleton(char* fullPath, AWD* pAwd)
+void MExportSkeleton::exportSkeleton(AWD* pAwd)
 {
+	const char* fullPath = g_pAppFrame->getpProgOptions()->getinFileFullPath().c_str();
 	tinyxml2::XMLDocument* pXMLDocument = new tinyxml2::XMLDocument;
 	tinyxml2::XMLElement* pSkeletonElement = pXMLDocument->NewElement("skeleton");
 	pXMLDocument->InsertFirstChild(pSkeletonElement);
+
+	tinyxml2::XMLElement* bones = pXMLDocument->NewElement("bones");
+	pSkeletonElement->InsertFirstChild(bones);
 
 	AWDBlockList * skeletonBlocks = pAwd->get_skeleton_blocks();
 	AWDSkeleton *skelBlock;
@@ -17,5 +23,16 @@ void MExportSkeleton::exportSkeleton(char* fullPath, AWD* pAwd)
 	{
 		MSkeleton* pMSkeleton = new MSkeleton(skelBlock);
 		pMSkeleton->buildBoneList();
+		pMSkeleton->buildboneXmlList(bones, pXMLDocument);
+	}
+
+	tinyxml2::XMLError ret = pXMLDocument->SaveFile(fullPath);
+	if (tinyxml2::XML_NO_ERROR == ret)
+	{
+		// ³É¹¦
+	}
+	else
+	{
+		// Ê§°Ü
 	}
 }
