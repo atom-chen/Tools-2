@@ -71,7 +71,7 @@ private:
 
   void initIGameConf(std::string path);
   void saveExportConf(std::string path);
-  bool exportNode(IGameNode* pGameNode, tinyxml2::TiXmlElement* parent);
+  bool exportNode(IGameNode* pGameNode, tinyxml2::XMLElement* parent);
   void LoadSkinBones(IGameNode* pGameNode);
   bool IsSkinnedBone(IGameNode* pGameNode);
   bool IsNodeToExport(IGameNode* pGameNode);

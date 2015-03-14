@@ -620,11 +620,11 @@ int	OgreSceneExporter::DoExport(const TCHAR* name, ExpInterface* pExpInterface, 
 
 void OgreSceneExporter::loadExportConf(std::string path, ParamList &param)
 {
-	tinyxml2::XmlDocument xmlDoc;
+	tinyxml2::XMLDocument xmlDoc;
   if(xmlDoc.LoadFile(path.c_str()))
   {
-	  tinyxml2::XmlElement* rootElem = xmlDoc.RootElement();
-	  tinyxml2::XmlElement* child = rootElem->FirstChildElement("IDC_OGREVERSION");
+	  tinyxml2::XMLElement* rootElem = xmlDoc.RootElement();
+	  tinyxml2::XMLElement* child = rootElem->FirstChildElement("IDC_OGREVERSION");
     if(child)
     {
       if(child->GetText())
@@ -771,122 +771,122 @@ OgreExporter::~OgreExporter()
 
 void OgreExporter::saveExportConf(std::string path)
 {
-  TiXmlDocument xmlDoc;
-  TiXmlElement* contProperties = new TiXmlElement("Config");
+	tinyxml2::XMLDocument xmlDoc;
+	tinyxml2::XMLElement* contProperties = xmlDoc.NewElement("Config");
   xmlDoc.LinkEndChild(contProperties);
 
   std::stringstream oVersionVal;
   oVersionVal << m_params.meshVersion;
-  TiXmlElement* child = new TiXmlElement("IDC_OGREVERSION");
-  TiXmlText* childText = new TiXmlText(oVersionVal.str().c_str());
+  tinyxml2::XMLElement* child = xmlDoc.NewElement("IDC_OGREVERSION");
+  tinyxml2::XMLText* childText = xmlDoc.NewText(oVersionVal.str().c_str());
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_RESPREFIX");
-  childText = new TiXmlText(m_params.resPrefix.c_str());
+  child = xmlDoc.NewElement("IDC_RESPREFIX");
+  childText = xmlDoc.NewText(m_params.resPrefix.c_str());
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_MATDIR");
-  childText = new TiXmlText(m_params.materialOutputDir.c_str());
+  child = xmlDoc.NewElement("IDC_MATDIR");
+  childText = xmlDoc.NewText(m_params.materialOutputDir.c_str());
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_TEXDIR");
-  childText = new TiXmlText(m_params.texOutputDir.c_str());
+  child = xmlDoc.NewElement("IDC_TEXDIR");
+  childText = xmlDoc.NewText(m_params.texOutputDir.c_str());
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
     
-  child = new TiXmlElement("IDC_MESHDIR");
-  childText = new TiXmlText(m_params.meshOutputDir.c_str());
+  child = xmlDoc.NewElement("IDC_MESHDIR");
+  childText = xmlDoc.NewText(m_params.meshOutputDir.c_str());
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_PROGDIR");
-  childText = new TiXmlText(m_params.programOutputDir.c_str());
+  child = xmlDoc.NewElement("IDC_PROGDIR");
+  childText = xmlDoc.NewText(m_params.programOutputDir.c_str());
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_YUPAXIS");
-  childText = new TiXmlText(m_params.yUpAxis ? "1" : "0");
+  child = xmlDoc.NewElement("IDC_YUPAXIS");
+  childText = xmlDoc.NewText(m_params.yUpAxis ? "1" : "0");
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_SHAREDGEOM");
-  childText = new TiXmlText(m_params.useSharedGeom ? "1" : "0");
+  child = xmlDoc.NewElement("IDC_SHAREDGEOM");
+  childText = xmlDoc.NewText(m_params.useSharedGeom ? "1" : "0");
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_GENLOD");
-  childText = new TiXmlText(m_params.generateLOD ? "1" : "0");
+  child = xmlDoc.NewElement("IDC_GENLOD");
+  childText = xmlDoc.NewText(m_params.generateLOD ? "1" : "0");
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_EDGELIST");
-  childText = new TiXmlText(m_params.buildEdges ? "1" : "0");
+  child = xmlDoc.NewElement("IDC_EDGELIST");
+  childText = xmlDoc.NewText(m_params.buildEdges ? "1" : "0");
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_TANGENT");
-  childText = new TiXmlText(m_params.buildTangents ? "1" : "0");
+  child = xmlDoc.NewElement("IDC_TANGENT");
+  childText = xmlDoc.NewText(m_params.buildTangents ? "1" : "0");
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_SPLITMIRROR");
-  childText = new TiXmlText(m_params.tangentsSplitMirrored ? "1" : "0");
+  child = xmlDoc.NewElement("IDC_SPLITMIRROR");
+  childText = xmlDoc.NewText(m_params.tangentsSplitMirrored ? "1" : "0");
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_SPLITROT");
-  childText = new TiXmlText(m_params.tangentsSplitRotated ? "1" : "0");
+  child = xmlDoc.NewElement("IDC_SPLITROT");
+  childText = xmlDoc.NewText(m_params.tangentsSplitRotated ? "1" : "0");
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_STOREPARITY");
-  childText = new TiXmlText(m_params.tangentsUseParity ? "1" : "0");
+  child = xmlDoc.NewElement("IDC_STOREPARITY");
+  childText = xmlDoc.NewText(m_params.tangentsUseParity ? "1" : "0");
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_RESAMPLE_ANIMS");
-  childText = new TiXmlText(m_params.resampleAnims ? "1" : "0");
+  child = xmlDoc.NewElement("IDC_RESAMPLE_ANIMS");
+  childText = xmlDoc.NewText(m_params.resampleAnims ? "1" : "0");
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_RESAMPLE_STEP");
+  child = xmlDoc.NewElement("IDC_RESAMPLE_STEP");
   char tmpbuf[10] = {0};
   sprintf(tmpbuf, "%d", m_params.resampleStep);
-  childText = new TiXmlText(tmpbuf);
+  childText = xmlDoc.NewText(tmpbuf);
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_LOGS");
-  childText = new TiXmlText(m_params.enableLogs ? "1" : "0");
+  child = xmlDoc.NewElement("IDC_LOGS");
+  childText = xmlDoc.NewText(m_params.enableLogs ? "1" : "0");
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
-  child = new TiXmlElement("IDC_CONVDDS");
-  childText = new TiXmlText(m_params.convertToDDS ? "1" : "0");
+  child = xmlDoc.NewElement("IDC_CONVDDS");
+  childText = xmlDoc.NewText(m_params.convertToDDS ? "1" : "0");
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
   std::stringstream oShaderVal;
   oShaderVal << m_params.exportProgram;
-  child = new TiXmlElement("IDC_SHADERMODE");
-  childText = new TiXmlText(oShaderVal.str().c_str());
+  child = xmlDoc.NewElement("IDC_SHADERMODE");
+  childText = xmlDoc.NewText(oShaderVal.str().c_str());
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
   std::stringstream oTexVal;
   oTexVal << m_params.maxTextureSize;
-  child = new TiXmlElement("IDC_TEXSIZE");
-  childText = new TiXmlText(oTexVal.str().c_str());
+  child = xmlDoc.NewElement("IDC_TEXSIZE");
+  childText = xmlDoc.NewText(oTexVal.str().c_str());
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
   std::stringstream oMipsVal;
   oMipsVal << m_params.maxMipmaps;
-  child = new TiXmlElement("IDC_NUMMIPS");
-  childText = new TiXmlText(oMipsVal.str().c_str());
+  child = xmlDoc.NewElement("IDC_NUMMIPS");
+  childText = xmlDoc.NewText(oMipsVal.str().c_str());
   child->LinkEndChild(childText);
   contProperties->LinkEndChild(child);
 
@@ -895,79 +895,79 @@ void OgreExporter::saveExportConf(std::string path)
 
 void OgreExporter::initIGameConf(std::string path)
 {
-  TiXmlDocument xmlDoc;
-  TiXmlElement* igameProperties = new TiXmlElement("IGameProperties");
+	tinyxml2::XMLDocument xmlDoc;
+	tinyxml2::XMLElement* igameProperties = xmlDoc.NewElement("IGameProperties");
   xmlDoc.LinkEndChild(igameProperties);
-  TiXmlElement* igameUserData = new TiXmlElement("ExportUserData");
+  tinyxml2::XMLElement* igameUserData = xmlDoc.NewElement("ExportUserData");
   igameProperties->LinkEndChild(igameUserData);
 
   // renderingDistance
-  TiXmlElement* renderDist = new TiXmlElement("UserProperty");
-  TiXmlElement* renderDistId = new TiXmlElement("id");
-  TiXmlText* renderDistIdText = new TiXmlText("102");
+  tinyxml2::XMLElement* renderDist = xmlDoc.NewElement("UserProperty");
+  tinyxml2::XMLElement* renderDistId = xmlDoc.NewElement("id");
+  tinyxml2::XMLText* renderDistIdText = xmlDoc.NewText("102");
   renderDistId->LinkEndChild(renderDistIdText);
   renderDist->LinkEndChild(renderDistId);
   
-  TiXmlElement* renderDistSName = new TiXmlElement("simplename");
-  TiXmlText* renderDistSNameText = new TiXmlText("renderingDistance");
+  tinyxml2::XMLElement* renderDistSName = xmlDoc.NewElement("simplename");
+  tinyxml2::XMLText* renderDistSNameText = xmlDoc.NewText("renderingDistance");
   renderDistSName->LinkEndChild(renderDistSNameText);
   renderDist->LinkEndChild(renderDistSName);
 
-  TiXmlElement* renderDistName = new TiXmlElement("keyName");
-  TiXmlText* renderDistNameText = new TiXmlText("renderingDistance");
+  tinyxml2::XMLElement* renderDistName = xmlDoc.NewElement("keyName");
+  tinyxml2::XMLText* renderDistNameText = xmlDoc.NewText("renderingDistance");
   renderDistName->LinkEndChild(renderDistNameText);
   renderDist->LinkEndChild(renderDistName);
 
-  TiXmlElement* renderDistType = new TiXmlElement("type");
-  TiXmlText* renderDistTypeText = new TiXmlText("float");
+  tinyxml2::XMLElement* renderDistType = xmlDoc.NewElement("type");
+  tinyxml2::XMLText* renderDistTypeText = xmlDoc.NewText("float");
   renderDistType->LinkEndChild(renderDistTypeText);
   renderDist->LinkEndChild(renderDistType);
 
   igameUserData->LinkEndChild(renderDist);
 
   // noLOD
-  TiXmlElement* noLod = new TiXmlElement("UserProperty");
-  TiXmlElement* noLodId = new TiXmlElement("id");
-  TiXmlText* noLodIdText = new TiXmlText("103");
+  tinyxml2::XMLElement* noLod = xmlDoc.NewElement("UserProperty");
+  tinyxml2::XMLElement* noLodId = xmlDoc.NewElement("id");
+  tinyxml2::XMLText* noLodIdText = xmlDoc.NewText("103");
   noLodId->LinkEndChild(noLodIdText);
   noLod->LinkEndChild(noLodId);
   
-  TiXmlElement* noLodSName = new TiXmlElement("simplename");
-  TiXmlText* noLodSNameText = new TiXmlText("noLOD");
+  tinyxml2::XMLElement* noLodSName = xmlDoc.NewElement("simplename");
+  tinyxml2::XMLText* noLodSNameText = xmlDoc.NewText("noLOD");
   noLodSName->LinkEndChild(noLodSNameText);
   noLod->LinkEndChild(noLodSName);
 
-  TiXmlElement* noLodName = new TiXmlElement("keyName");
-  TiXmlText* noLodNameText = new TiXmlText("noLOD");
+  tinyxml2::XMLElement* noLodName = xmlDoc.NewElement("keyName");
+  tinyxml2::XMLText* noLodNameText = xmlDoc.NewText("noLOD");
   noLodName->LinkEndChild(noLodNameText);
   noLod->LinkEndChild(noLodName);
 
-  TiXmlElement* noLodType = new TiXmlElement("type");
-  TiXmlText* noLodTypeText = new TiXmlText("bool");
+  tinyxml2::XMLElement* noLodType = xmlDoc.NewElement("type");
+  tinyxml2::XMLText* noLodTypeText = xmlDoc.NewText("bool");
   noLodType->LinkEndChild(noLodTypeText);
   noLod->LinkEndChild(noLodType);
 
   igameUserData->LinkEndChild(noLod);
 
   // userData
-  TiXmlElement* userData = new TiXmlElement("UserProperty");
-  TiXmlElement* userDataId = new TiXmlElement("id");
-  TiXmlText* userDataIdText = new TiXmlText("104");
+  tinyxml2::XMLElement* userData = xmlDoc.NewElement("UserProperty");
+  tinyxml2::XMLElement* userDataId = xmlDoc.NewElement("id");
+  tinyxml2::XMLText* userDataIdText = xmlDoc.NewText("104");
   userDataId->LinkEndChild(userDataIdText);
   userData->LinkEndChild(userDataId);
   
-  TiXmlElement* userDataSName = new TiXmlElement("simplename");
-  TiXmlText* userDataSNameText = new TiXmlText("userData");
+  tinyxml2::XMLElement* userDataSName = xmlDoc.NewElement("simplename");
+  tinyxml2::XMLText* userDataSNameText = xmlDoc.NewText("userData");
   userDataSName->LinkEndChild(userDataSNameText);
   userData->LinkEndChild(userDataSName);
 
-  TiXmlElement* userDataName = new TiXmlElement("keyName");
-  TiXmlText* userDataNameText = new TiXmlText("userData");
+  tinyxml2::XMLElement* userDataName = xmlDoc.NewElement("keyName");
+  tinyxml2::XMLText* userDataNameText = xmlDoc.NewText("userData");
   userDataName->LinkEndChild(userDataNameText);
   userData->LinkEndChild(userDataName);
 
-  TiXmlElement* userDataType = new TiXmlElement("type");
-  TiXmlText* userDataTypeText = new TiXmlText("string");
+  tinyxml2::XMLElement* userDataType = xmlDoc.NewElement("type");
+  tinyxml2::XMLText* userDataTypeText = xmlDoc.NewText("string");
   userDataType->LinkEndChild(userDataTypeText);
   userData->LinkEndChild(userDataType);
 
@@ -1010,14 +1010,14 @@ bool OgreExporter::exportScene()
   // Create Ogre Root
   // Ogre::Root ogreRoot;
   // Create singletons
-  Ogre::LogManager logMgr;
-  Ogre::LogManager::getSingleton().createLog("Ogre.log", true);
-  Ogre::ResourceGroupManager rgm;
-  Ogre::MeshManager meshMgr;
-  Ogre::SkeletonManager skelMgr;
-  Ogre::MaterialManager matMgr;
-  Ogre::DefaultHardwareBufferManager hardwareBufMgr;
-  Ogre::LodStrategyManager lodstrategymanager;  
+  //Ogre::LogManager logMgr;
+  //Ogre::LogManager::getSingleton().createLog("Ogre.log", true);
+  //Ogre::ResourceGroupManager rgm;
+  //Ogre::MeshManager meshMgr;
+  //Ogre::SkeletonManager skelMgr;
+  //Ogre::MaterialManager matMgr;
+  //Ogre::DefaultHardwareBufferManager hardwareBufMgr;
+  //Ogre::LodStrategyManager lodstrategymanager;  
 
   m_params.currentRootJoints.clear();
 
@@ -1246,7 +1246,7 @@ bool OgreExporter::IsNodeToExport(IGameNode* pGameNode)
   return bShouldExport;
 }
 
-bool OgreExporter::exportNode(IGameNode* pGameNode, TiXmlElement* parent)
+bool OgreExporter::exportNode(IGameNode* pGameNode, tinyxml2::XMLElement* parent)
 {
   GetCOREInterface()->ProgressUpdate((int)(((float)nodeCount / (float)pIGame->GetTotalNodeCount()) * 90.0f), TRUE); 
 

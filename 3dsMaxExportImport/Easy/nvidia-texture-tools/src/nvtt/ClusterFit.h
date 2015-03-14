@@ -43,9 +43,10 @@ namespace nv {
     public:
         ClusterFit();
 
-        void setColourSet(const ColorSet * set);
+        void setColorSet(const ColorSet * set);
+        void setColorSet(const Vector3 * colors, const float * weights, int count);
 
-        void setMetric(const Vector4 & w);
+        void setColorWeights(const Vector4 & w);
         float bestError() const;
 
         bool compress3(Vector3 * start, Vector3 * end);

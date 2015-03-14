@@ -10,7 +10,8 @@ include_directories(
 	"${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/samples/modifiers/morpher"
 	"${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/include/CS"
 	${CMAKE_SOURCE_DIR}/tinyxml2
-	${CMAKE_SOURCE_DIR}/nvidia-texture-tools/src
+	#${CMAKE_SOURCE_DIR}/nvidia-texture-tools/src
+	#${CMAKE_SOURCE_DIR}/nvidia-texture-tools/extern/poshlib
 )
 link_directories(${MAX_SDK_LIB_PATH})
 

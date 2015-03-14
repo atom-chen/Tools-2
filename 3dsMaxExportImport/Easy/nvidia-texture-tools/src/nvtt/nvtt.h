@@ -73,8 +73,9 @@ namespace nvtt
 
     // Supported compression formats.
     // @@ I wish I had distinguished between "formats" and compressors.
-    // That is, 'DXT1' is a format 'DXT1a' and 'DXT1n' are DXT1 compressors.
-    // That is, 'DXT3' is a format 'DXT3n' is a DXT3 compressor.
+    // That is:
+    // - 'DXT1' is a format 'DXT1a' and 'DXT1n' are DXT1 compressors.
+    // - 'DXT3' is a format 'DXT3n' is a DXT3 compressor.
     // Having multiple enums for the same ids only creates confusion. Clean this up.
     enum Format
     {
@@ -98,13 +99,16 @@ namespace nvtt
         Format_BC4,     // ATI1
         Format_BC5,     // 3DC, ATI2
 
-        Format_DXT1n,   // Not supported on CPU yet.
-        Format_CTX1,    // Not supported on CPU yet.
+        Format_DXT1n,   // Not supported.
+        Format_CTX1,    // Not supported.
 
-        Format_BC6,
-        Format_BC7,
+        Format_BC6,     // Not supported yet.
+        Format_BC7,     // Not supported yet.
 
-        Format_DXT1_Luma,
+        Format_BC5_Luma,    // Two DXT alpha blocks encoding a single float.
+        Format_BC3_RGBM,    // 
+
+        Format_Count
     };
 
     // Pixel types. These basically indicate how the output should be interpreted, but do not have any influence over the input. They are only relevant in RGBA mode.
@@ -162,7 +166,8 @@ namespace nvtt
 
         NVTT_API void setPitchAlignment(int pitchAlignment);
 
-        // @@ I wish this wasn't part of the compression options. Quantization is applied before compression. We don't have compressors with error diffusion.
+        // @@ I wish this wasn't part of the compression options. Quantization is applied before compression. We don't have compressors with error diffusion. 
+        // @@ These options are only taken into account when using the InputOptions API.
         NVTT_API void setQuantization(bool colorDithering, bool alphaDithering, bool binaryAlpha, int alphaThreshold = 127);
 
         NVTT_API void setTargetDecoder(Decoder decoder);
@@ -207,6 +212,7 @@ namespace nvtt
         InputFormat_BGRA_8UB,   // Normalized [0, 1] 8 bit fixed point.
         InputFormat_RGBA_16F,   // 16 bit floating point.
         InputFormat_RGBA_32F,   // 32 bit floating point.
+        InputFormat_R_32F,      // Single channel 32 bit floating point.
     };
 
     // Mipmap downsampling filters.
@@ -243,7 +249,7 @@ namespace nvtt
         AlphaMode_Premultiplied,
     };
 
-    // Input options. Specify format and layout of the input texture.
+    // Input options. Specify format and layout of the input texture. (Deprecated in NVTT 2.1)
     struct InputOptions
     {
         NVTT_FORBID_COPY(InputOptions);
@@ -303,7 +309,7 @@ namespace nvtt
         // Output data. Compressed data is output as soon as it's generated to minimize memory allocations.
         virtual bool writeData(const void * data, int size) = 0;
 
-        // Indicate the end of a the compressed image.
+        // Indicate the end of a the compressed image. (New in NVTT 2.1)
         virtual void endImage() = 0;
     };
 
@@ -363,8 +369,10 @@ namespace nvtt
         NVTT_API void setSrgbFlag(bool b);
     };
 
+    // (New in NVTT 2.1)
     typedef void Task(void * context, int id);
 
+    // (New in NVTT 2.1)
     struct TaskDispatcher
     {
         virtual void dispatch(Task * task, void * context, int count) = 0;
@@ -382,23 +390,23 @@ namespace nvtt
         // Context settings.
         NVTT_API void enableCudaAcceleration(bool enable);
         NVTT_API bool isCudaAccelerationEnabled() const;
-        NVTT_API void setTaskDispatcher(TaskDispatcher * disp);
+        NVTT_API void setTaskDispatcher(TaskDispatcher * disp); // (New in NVTT 2.1)
 
         // InputOptions API.
         NVTT_API bool process(const InputOptions & inputOptions, const CompressionOptions & compressionOptions, const OutputOptions & outputOptions) const;
         NVTT_API int estimateSize(const InputOptions & inputOptions, const CompressionOptions & compressionOptions) const;
 
-        // Surface API.
+        // Surface API. (New in NVTT 2.1)
         NVTT_API bool outputHeader(const Surface & img, int mipmapCount, const CompressionOptions & compressionOptions, const OutputOptions & outputOptions) const;
         NVTT_API bool compress(const Surface & img, int face, int mipmap, const CompressionOptions & compressionOptions, const OutputOptions & outputOptions) const;
         NVTT_API int estimateSize(const Surface & img, int mipmapCount, const CompressionOptions & compressionOptions) const;
 
-        // CubeSurface API.
+        // CubeSurface API. (New in NVTT 2.1)
         NVTT_API bool outputHeader(const CubeSurface & cube, int mipmapCount, const CompressionOptions & compressionOptions, const OutputOptions & outputOptions) const;
         NVTT_API bool compress(const CubeSurface & cube, int mipmap, const CompressionOptions & compressionOptions, const OutputOptions & outputOptions) const;
         NVTT_API int estimateSize(const CubeSurface & cube, int mipmapCount, const CompressionOptions & compressionOptions) const;
 
-        // Raw API.
+        // Raw API. (New in NVTT 2.1)
         NVTT_API bool outputHeader(TextureType type, int w, int h, int d, int mipmapCount, bool isNormalMap, const CompressionOptions & compressionOptions, const OutputOptions & outputOptions) const;
         NVTT_API bool compress(int w, int h, int d, int face, int mipmap, const float * rgba, const CompressionOptions & compressionOptions, const OutputOptions & outputOptions) const;
         NVTT_API int estimateSize(int w, int h, int d, int mipmapCount, const CompressionOptions & compressionOptions) const;
@@ -407,6 +415,7 @@ namespace nvtt
     // "Compressor" is deprecated. This should have been called "Context"
     typedef Compressor Context;
 
+    // (New in NVTT 2.1)
     enum NormalTransform {
         NormalTransform_Orthographic,
         NormalTransform_Stereographic,
@@ -415,6 +424,7 @@ namespace nvtt
         //NormalTransform_DualParaboloid,
     };
 
+    // (New in NVTT 2.1)
     enum ToneMapper {
         ToneMapper_Linear,
         ToneMapper_Reindhart,
@@ -422,14 +432,8 @@ namespace nvtt
         ToneMapper_Lightmap,
     };
 
-    /*enum ChannelMask {
-        R = 0x70000001,
-        G = 0x70000002,
-        B = 0x70000004,
-        A = 0x70000008,
-    };*/
 
-    // A surface is one level of a 2D or 3D texture.
+    // A surface is one level of a 2D or 3D texture. (New in NVTT 2.1)
     // @@ It would be nice to add support for texture borders for correct resizing of tiled textures and constrained DXT compression.
     struct Surface
     {
@@ -455,7 +459,7 @@ namespace nvtt
         NVTT_API bool isNormalMap() const;
         NVTT_API int countMipmaps() const;
         NVTT_API int countMipmaps(int min_size) const;
-        NVTT_API float alphaTestCoverage(float alphaRef = 0.5) const;
+        NVTT_API float alphaTestCoverage(float alphaRef = 0.5, int alpha_channel = 3) const;
         NVTT_API float average(int channel, int alpha_channel = -1, float gamma = 2.2f) const;
         NVTT_API const float * data() const;
         NVTT_API const float * channel(int i) const;
@@ -501,9 +505,9 @@ namespace nvtt
         NVTT_API void toGreyScale(float redScale, float greenScale, float blueScale, float alphaScale);
         NVTT_API void setBorder(float r, float g, float b, float a);
         NVTT_API void fill(float r, float g, float b, float a);
-        NVTT_API void scaleAlphaToCoverage(float coverage, float alphaRef = 0.5f);
-        NVTT_API void toRGBM(float range = 1.0f, float threshold = 0.0f);
-        NVTT_API void fromRGBM(float range = 1.0f, float threshold = 0.0f);
+        NVTT_API void scaleAlphaToCoverage(float coverage, float alphaRef = 0.5f, int alpha_channel = 3);
+        NVTT_API void toRGBM(float range = 1.0f, float threshold = 0.25f);
+        NVTT_API void fromRGBM(float range = 1.0f, float threshold = 0.25f);
         NVTT_API void toLM(float range = 1.0f, float threshold = 0.0f);
         NVTT_API void toRGBE(int mantissaBits, int exponentBits);
         NVTT_API void fromRGBE(int mantissaBits, int exponentBits);
@@ -516,6 +520,7 @@ namespace nvtt
         NVTT_API void convolve(int channel, int kernelSize, float * kernelData);
         NVTT_API void toLogScale(int channel, float base);
         NVTT_API void fromLogScale(int channel, float base);
+        NVTT_API void setAtlasBorder(int w, int h, float r, float g, float b, float a);
 
         NVTT_API void toneMap(ToneMapper tm, float * parameters);
 
@@ -559,7 +564,7 @@ namespace nvtt
     };
 
 
-    // Cube layout formats.
+    // Cube layout formats. (New in NVTT 2.1)
     enum CubeLayout {
         CubeLayout_VerticalCross,
         CubeLayout_HorizontalCross,
@@ -568,6 +573,7 @@ namespace nvtt
         CubeLayout_LatitudeLongitude
     };
 
+    // (New in NVTT 2.1)
     enum EdgeFixup {
         EdgeFixup_None,
         EdgeFixup_Stretch,
@@ -575,7 +581,7 @@ namespace nvtt
         EdgeFixup_Average,
     };
 
-    // A CubeSurface is one level of a cube map texture.
+    // A CubeSurface is one level of a cube map texture. (New in NVTT 2.1)
     struct CubeSurface
     {
         NVTT_API CubeSurface();
@@ -645,12 +651,14 @@ namespace nvtt
     // Return NVTT version.
     NVTT_API unsigned int version();
 
+    // Image comparison and error measurement functions. (New in NVTT 2.1)
     NVTT_API float rmsError(const Surface & reference, const Surface & img);
     NVTT_API float rmsAlphaError(const Surface & reference, const Surface & img);
     NVTT_API float cieLabError(const Surface & reference, const Surface & img);
     NVTT_API float angularError(const Surface & reference, const Surface & img);
     NVTT_API Surface diff(const Surface & reference, const Surface & img, float scale);
 
+    NVTT_API float rmsToneMappedError(const Surface & reference, const Surface & img, float exposure);
 
 } // nvtt namespace
 

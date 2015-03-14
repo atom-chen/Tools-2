@@ -45,8 +45,8 @@ namespace EasyOgreExporter
   {
     ParamList mParams = m_converter->getParams();
 
-    xmlDoc = new TiXmlDocument();
-    sceneElement = new TiXmlElement("scene");
+	xmlDoc = new tinyxml2::XMLDocument();
+	sceneElement = xmlDoc->NewElement("scene");
     xmlDoc->LinkEndChild(sceneElement);
 
     //TODO Ogre version, App Name, units
@@ -54,28 +54,28 @@ namespace EasyOgreExporter
     sceneElement->SetAttribute("unitsPerMeter", "1");
     sceneElement->SetAttribute("unitType", "meters");
     sceneElement->SetAttribute("formatVersion", "1.0");
-    sceneElement->SetAttribute("minOgreVersion", mParams.getOgreVersionName().c_str());
+    //sceneElement->SetAttribute("minOgreVersion", mParams.getOgreVersionName().c_str());
 		sceneElement->SetAttribute("author", "EasyOgreExporter");
 
     //Environment setting
-    TiXmlElement* envElement = new TiXmlElement("environment");
+		tinyxml2::XMLElement* envElement = xmlDoc->NewElement("environment");
     sceneElement->LinkEndChild(envElement);
 
     Point3 ambColor = GetCOREInterface()->GetAmbient(0, FOREVER);
-    TiXmlElement* ambElement = new TiXmlElement("colourAmbient");
-    ambElement->SetDoubleAttribute("r", ambColor.x);
-	  ambElement->SetDoubleAttribute("g", ambColor.y);
-	  ambElement->SetDoubleAttribute("b", ambColor.z);
+	tinyxml2::XMLElement* ambElement = xmlDoc->NewElement("colourAmbient");
+	ambElement->SetAttribute("r", ambColor.x);
+	ambElement->SetAttribute("g", ambColor.y);
+	ambElement->SetAttribute("b", ambColor.z);
     envElement->LinkEndChild(ambElement);
     
     Point3 bgColor = GetCOREInterface()->GetBackGround(0, FOREVER);
-    TiXmlElement* bgElement = new TiXmlElement("colourBackground");
-    bgElement->SetDoubleAttribute("r", bgColor.x);
-	  bgElement->SetDoubleAttribute("g", bgColor.y);
-	  bgElement->SetDoubleAttribute("b", bgColor.z);
+	tinyxml2::XMLElement* bgElement = xmlDoc->NewElement("colourBackground");
+	bgElement->SetAttribute("r", bgColor.x);
+	bgElement->SetAttribute("g", bgColor.y);
+	bgElement->SetAttribute("b", bgColor.z);
     envElement->LinkEndChild(bgElement);
 
-		nodesElement = new TiXmlElement("nodes");
+	nodesElement = xmlDoc->NewElement("nodes");
 		sceneElement->LinkEndChild(nodesElement);
   }
 
@@ -101,7 +101,7 @@ namespace EasyOgreExporter
 		return("point");
 	}
 
-  bool ExScene::exportNodeAnimation(TiXmlElement* pAnimsElement, IGameNode* pGameNode, Interval animRange, std::string name, bool resample, IGameObject::ObjectTypes type)
+	bool ExScene::exportNodeAnimation(tinyxml2::XMLElement* pAnimsElement, IGameNode* pGameNode, Interval animRange, std::string name, bool resample, IGameObject::ObjectTypes type)
   {
     ParamList mParams = m_converter->getParams();
     std::vector<int> animKeys = GetAnimationsKeysTime(pGameNode, animRange, resample, mParams.resampleStep);
@@ -134,13 +134,13 @@ namespace EasyOgreExporter
       TimeValue length = animRange.End() - animRange.Start();
       float ogreAnimLength = (static_cast<float>(length) / static_cast<float>(GetTicksPerFrame())) / GetFrameRate();
 
-      TiXmlElement* pAnimElement = new TiXmlElement("animation");
+	  tinyxml2::XMLElement* pAnimElement = xmlDoc->NewElement("animation");
       pAnimElement->SetAttribute("name", name.c_str());
       pAnimElement->SetAttribute("enable", "false");
       pAnimElement->SetAttribute("loop", "false");
       pAnimElement->SetAttribute("interpolationMode", "linear");
       pAnimElement->SetAttribute("rotationInterpolationMode", "linear");
-      pAnimElement->SetDoubleAttribute("length", ogreAnimLength);
+	  pAnimElement->SetAttribute("length", ogreAnimLength);
       pAnimsElement->LinkEndChild(pAnimElement);
       
       for(int i = 0; i < animKeys.size(); i++)
@@ -189,27 +189,27 @@ namespace EasyOgreExporter
         // Notice that in Max we flip the w-component of the quaternion;
         rot.w = -rot.w;
 
-        TiXmlElement* pKeyElement = new TiXmlElement("keyframe");
-        pKeyElement->SetDoubleAttribute("time", ogreTime);
+		tinyxml2::XMLElement* pKeyElement = xmlDoc->NewElement("keyframe");
+		pKeyElement->SetAttribute("time", ogreTime);
         pAnimElement->LinkEndChild(pKeyElement);
 
-        TiXmlElement* pKeyTransElement = new TiXmlElement("translation");
-        pKeyTransElement->SetDoubleAttribute("x", trans.x);
-        pKeyTransElement->SetDoubleAttribute("y", trans.y);
-        pKeyTransElement->SetDoubleAttribute("z", trans.z);
+		tinyxml2::XMLElement* pKeyTransElement = xmlDoc->NewElement("translation");
+		pKeyTransElement->SetAttribute("x", trans.x);
+		pKeyTransElement->SetAttribute("y", trans.y);
+		pKeyTransElement->SetAttribute("z", trans.z);
         pKeyElement->LinkEndChild(pKeyTransElement);
 
-        TiXmlElement* pKeyRotElement = new TiXmlElement("rotation");
-        pKeyRotElement->SetDoubleAttribute("qx", rot.x);
-        pKeyRotElement->SetDoubleAttribute("qy", rot.y);
-        pKeyRotElement->SetDoubleAttribute("qz", rot.z);
-        pKeyRotElement->SetDoubleAttribute("qw", rot.w);
+		tinyxml2::XMLElement* pKeyRotElement = xmlDoc->NewElement("rotation");
+		pKeyRotElement->SetAttribute("qx", rot.x);
+		pKeyRotElement->SetAttribute("qy", rot.y);
+		pKeyRotElement->SetAttribute("qz", rot.z);
+		pKeyRotElement->SetAttribute("qw", rot.w);
         pKeyElement->LinkEndChild(pKeyRotElement);
 
-        TiXmlElement* pKeyScaleElement = new TiXmlElement("scale");
-        pKeyScaleElement->SetDoubleAttribute("x", scale.x);
-        pKeyScaleElement->SetDoubleAttribute("y", scale.y);
-        pKeyScaleElement->SetDoubleAttribute("z", scale.z);
+		tinyxml2::XMLElement* pKeyScaleElement = xmlDoc->NewElement("scale");
+		pKeyScaleElement->SetAttribute("x", scale.x);
+		pKeyScaleElement->SetAttribute("y", scale.y);
+		pKeyScaleElement->SetAttribute("z", scale.z);
         pKeyElement->LinkEndChild(pKeyScaleElement);
       }
 
@@ -220,7 +220,7 @@ namespace EasyOgreExporter
     return false;
   }
 
-	TiXmlElement* ExScene::writeNodeData(TiXmlElement* parent, IGameNode* pGameNode, IGameObject::ObjectTypes type)
+  tinyxml2::XMLElement* ExScene::writeNodeData(tinyxml2::XMLElement* parent, IGameNode* pGameNode, IGameObject::ObjectTypes type)
 	{
     ParamList mParams = m_converter->getParams();
 
@@ -256,7 +256,7 @@ namespace EasyOgreExporter
     // Notice that in Max we flip the w-component of the quaternion;
     rot.w = -rot.w;
 
-		TiXmlElement* pNodeElement = new TiXmlElement("node");
+	tinyxml2::XMLElement* pNodeElement = xmlDoc->NewElement("node");
 #ifdef UNICODE
 		std::wstring name_w = pGameNode->GetName();
 		std::string name_s = mParams.resPrefix;
@@ -271,24 +271,24 @@ namespace EasyOgreExporter
 		pNodeElement->SetAttribute("isTarget", "false");
 		parent->LinkEndChild(pNodeElement);
  
-		TiXmlElement* pPositionElement = new TiXmlElement("position");
-    pPositionElement->SetDoubleAttribute("x", trans.x);
-		pPositionElement->SetDoubleAttribute("y", trans.y);
-		pPositionElement->SetDoubleAttribute("z", trans.z);
+		tinyxml2::XMLElement* pPositionElement = xmlDoc->NewElement("position");
+		pPositionElement->SetAttribute("x", trans.x);
+		pPositionElement->SetAttribute("y", trans.y);
+		pPositionElement->SetAttribute("z", trans.z);
 		pNodeElement->LinkEndChild(pPositionElement);
 
-		TiXmlElement* pRotationElement = new TiXmlElement("rotation");
-		pRotationElement->SetDoubleAttribute("qx", rot.x);
-		pRotationElement->SetDoubleAttribute("qy", rot.y);
-		pRotationElement->SetDoubleAttribute("qz", rot.z);
+		tinyxml2::XMLElement* pRotationElement = xmlDoc->NewElement("rotation");
+		pRotationElement->SetAttribute("qx", rot.x);
+		pRotationElement->SetAttribute("qy", rot.y);
+		pRotationElement->SetAttribute("qz", rot.z);
 		// Notice that in Max we flip the w-component of the quaternion;
-		pRotationElement->SetDoubleAttribute("qw", rot.w);
+		pRotationElement->SetAttribute("qw", rot.w);
 		pNodeElement->LinkEndChild(pRotationElement);
 
-		TiXmlElement* pScaleElement = new TiXmlElement("scale");
-		pScaleElement->SetDoubleAttribute("x", scale.x);
-		pScaleElement->SetDoubleAttribute("y", scale.y);
-		pScaleElement->SetDoubleAttribute("z", scale.z);
+		tinyxml2::XMLElement* pScaleElement = xmlDoc->NewElement("scale");
+		pScaleElement->SetAttribute("x", scale.x);
+		pScaleElement->SetAttribute("y", scale.y);
+		pScaleElement->SetAttribute("z", scale.z);
 		pNodeElement->LinkEndChild(pScaleElement);
 
     //node animations
@@ -300,7 +300,7 @@ namespace EasyOgreExporter
     if(mixer || nodeControl->IsAnimated(IGAME_POS) || nodeControl->IsAnimated(IGAME_ROT) || nodeControl->IsAnimated(IGAME_SCALE))
     {
       //Add the default animation and the track
-      TiXmlElement* pAnimsElement = new TiXmlElement("animations");
+		tinyxml2::XMLElement* pAnimsElement = xmlDoc->NewElement("animations");
       pNodeElement->LinkEndChild(pAnimsElement);
 
       if(mixer)
@@ -412,7 +412,7 @@ namespace EasyOgreExporter
 		return pNodeElement;
 	}
 
-	TiXmlElement* ExScene::writeEntityData(TiXmlElement* parent, IGameNode* pGameNode, IGameMesh* pGameMesh, std::vector<ExMaterial*> lmat)
+	tinyxml2::XMLElement* ExScene::writeEntityData(tinyxml2::XMLElement* parent, IGameNode* pGameNode, IGameMesh* pGameMesh, std::vector<ExMaterial*> lmat)
 	{
     ParamList mParams = m_converter->getParams();
     
@@ -440,7 +440,7 @@ namespace EasyOgreExporter
 
     std::string entityName = optimizeResourceName(parent->Attribute("name"));
 
-    TiXmlElement* pEntityElement = new TiXmlElement("entity");
+	tinyxml2::XMLElement* pEntityElement = xmlDoc->NewElement("entity");
     pEntityElement->SetAttribute("name", entityName.c_str());
     pEntityElement->SetAttribute("id", id_counter);
 
@@ -453,7 +453,7 @@ namespace EasyOgreExporter
     pEntityElement->SetAttribute("meshFile", meshPath.c_str());
     pEntityElement->SetAttribute("castShadows", getBoolString(pGameMesh->CastShadows()).c_str());
     if(renderDistance != 0.0f)
-      pEntityElement->SetDoubleAttribute("renderingDistance", renderDistance);
+      pEntityElement->SetAttribute("renderingDistance", renderDistance);
 
     parent->LinkEndChild(pEntityElement);
 
@@ -462,8 +462,8 @@ namespace EasyOgreExporter
     IGameProperty* pUserData = upc->QueryProperty(_T("userData"));
     if(pUserData)
     {
-      TiXmlElement* pUserDataElement = new TiXmlElement("userData");
-      TiXmlText* pUserDataText = 0;
+		tinyxml2::XMLElement* pUserDataElement = xmlDoc->NewElement("userData");
+		tinyxml2::XMLText* pUserDataText = 0;
 
 #ifdef UNICODE
       const MCHAR* userData = 0;
@@ -472,7 +472,7 @@ namespace EasyOgreExporter
 
       std::string userData_s;
 		  userData_s.assign(userData_w.begin(), userData_w.end());
-      pUserDataText = new TiXmlText(userData_s.c_str());
+		  pUserDataText = xmlDoc->NewText(userData_s.c_str());
 #else
       #ifdef PRE_MAX_2010
       char* userData = 0;
@@ -487,12 +487,12 @@ namespace EasyOgreExporter
       pEntityElement->LinkEndChild(pUserDataElement);
     }
 
-    TiXmlElement* pSubEntities = new TiXmlElement("subentities");
+	tinyxml2::XMLElement* pSubEntities = xmlDoc->NewElement("subentities");
     pEntityElement->LinkEndChild(pSubEntities);
 
     for (int i = 0; i < lmat.size(); i++)
     {
-      TiXmlElement* pSubElement = new TiXmlElement("subentity");
+		tinyxml2::XMLElement* pSubElement = xmlDoc->NewElement("subentity");
       pSubElement->SetAttribute("index", i);
       pSubElement->SetAttribute("materialName", lmat[i]->getName().c_str());
       pSubEntities->LinkEndChild(pSubElement);
@@ -502,7 +502,7 @@ namespace EasyOgreExporter
 		return pEntityElement;
 	}
 
-  TiXmlElement* ExScene::writeCameraData(TiXmlElement* parent, IGameCamera* pGameCamera)
+	tinyxml2::XMLElement* ExScene::writeCameraData(tinyxml2::XMLElement* parent, IGameCamera* pGameCamera)
   {
     ParamList mParams = m_converter->getParams();
 
@@ -515,18 +515,18 @@ namespace EasyOgreExporter
       return 0;
     }
 
-    TiXmlElement* pCameraElement = new TiXmlElement("camera");
+	tinyxml2::XMLElement* pCameraElement = xmlDoc->NewElement("camera");
 		pCameraElement->SetAttribute("name", parent->Attribute("name"));
 		pCameraElement->SetAttribute("id", id_counter);
 
-    //default 45°
+    //default 45?
     float camFov = 0.785398163f;
     IGameProperty* pGameProperty = pGameCamera->GetCameraFOV();
     if(pGameProperty)
     {
       pGameProperty->GetPropertyValue(camFov);
     }
-    pCameraElement->SetDoubleAttribute("fov", camFov);
+    pCameraElement->SetAttribute("fov", camFov);
     parent->LinkEndChild(pCameraElement);
 
     float neerClip = 0.01f;
@@ -545,16 +545,16 @@ namespace EasyOgreExporter
     }
     farClip = farClip * mParams.lum;
 
-		TiXmlElement* pClippingElement = new TiXmlElement("clipping");
-		pClippingElement->SetDoubleAttribute("near", neerClip);
-		pClippingElement->SetDoubleAttribute("far", farClip);
+	tinyxml2::XMLElement* pClippingElement = xmlDoc->NewElement("clipping");
+	pClippingElement->SetAttribute("near", neerClip);
+	pClippingElement->SetAttribute("far", farClip);
 		pCameraElement->LinkEndChild(pClippingElement);
 
     id_counter++;
 		return pCameraElement;
   }
 
-  TiXmlElement* ExScene::writeLightData(TiXmlElement* parent, IGameLight* pGameLight)
+	tinyxml2::XMLElement* ExScene::writeLightData(tinyxml2::XMLElement* parent, IGameLight* pGameLight)
   {
     ParamList mParams = m_converter->getParams();
 
@@ -606,7 +606,7 @@ namespace EasyOgreExporter
         return 0;
     }
 
-    TiXmlElement* pLightElement = new TiXmlElement("light");
+	tinyxml2::XMLElement* pLightElement = xmlDoc->NewElement("light");
 		pLightElement->SetAttribute("name", parent->Attribute("name"));
 		pLightElement->SetAttribute("id", id_counter);
 		pLightElement->SetAttribute("type", getLightTypeString(lightType).c_str());
@@ -621,16 +621,16 @@ namespace EasyOgreExporter
       pGameProperty->GetPropertyValue(lightColor);
     }
 
-		TiXmlElement* pColourElement = new TiXmlElement("colourDiffuse");
-		pColourElement->SetDoubleAttribute("r", lightColor.x);
-		pColourElement->SetDoubleAttribute("g", lightColor.y);
-		pColourElement->SetDoubleAttribute("b", lightColor.z);
+	tinyxml2::XMLElement* pColourElement = xmlDoc->NewElement("colourDiffuse");
+	pColourElement->SetAttribute("r", lightColor.x);
+		pColourElement->SetAttribute("g", lightColor.y);
+		pColourElement->SetAttribute("b", lightColor.z);
 		pLightElement->LinkEndChild(pColourElement);
     
-    TiXmlElement* pSpecColourElement = new TiXmlElement("colourSpecular");
-		pSpecColourElement->SetDoubleAttribute("r", lightColor.x);
-		pSpecColourElement->SetDoubleAttribute("g", lightColor.y);
-		pSpecColourElement->SetDoubleAttribute("b", lightColor.z);
+		tinyxml2::XMLElement* pSpecColourElement = xmlDoc->NewElement("colourSpecular");
+		pSpecColourElement->SetAttribute("r", lightColor.x);
+		pSpecColourElement->SetAttribute("g", lightColor.y);
+		pSpecColourElement->SetAttribute("b", lightColor.z);
 		pLightElement->LinkEndChild(pSpecColourElement);
 		
 		if(lightType == OGRE_LIGHT_POINT || lightType == OGRE_LIGHT_SPOT)
@@ -663,11 +663,11 @@ namespace EasyOgreExporter
         attQuad = 1.0f;
       }
 
-			TiXmlElement* pAttenuationElement = new TiXmlElement("lightAttenuation");
-			pAttenuationElement->SetDoubleAttribute("range", attRange);
-			pAttenuationElement->SetDoubleAttribute("constant", attConst);
-			pAttenuationElement->SetDoubleAttribute("linear", attLinear);
-			pAttenuationElement->SetDoubleAttribute("quadratic", attQuad);
+	  tinyxml2::XMLElement* pAttenuationElement = xmlDoc->NewElement("lightAttenuation");
+	  pAttenuationElement->SetAttribute("range", attRange);
+	  pAttenuationElement->SetAttribute("constant", attConst);
+	  pAttenuationElement->SetAttribute("linear", attLinear);
+	  pAttenuationElement->SetAttribute("quadratic", attQuad);
 			pLightElement->LinkEndChild(pAttenuationElement);
 		}
 
@@ -691,10 +691,10 @@ namespace EasyOgreExporter
         rangeInner = propertyValue * PI / 180.0f;
       }
 
-			TiXmlElement* pAttenuationElement = new TiXmlElement("lightRange");
-			pAttenuationElement->SetDoubleAttribute("inner", rangeInner);
-			pAttenuationElement->SetDoubleAttribute("outer", rangeOuter);
-			pAttenuationElement->SetDoubleAttribute("falloff", rangeFalloff);
+	  tinyxml2::XMLElement* pAttenuationElement = xmlDoc->NewElement("lightRange");
+	  pAttenuationElement->SetAttribute("inner", rangeInner);
+	  pAttenuationElement->SetAttribute("outer", rangeOuter);
+	  pAttenuationElement->SetAttribute("falloff", rangeFalloff);
 			pLightElement->LinkEndChild(pAttenuationElement);
 		}
 

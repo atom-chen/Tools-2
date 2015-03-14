@@ -76,25 +76,25 @@ namespace EasyOgreExporter
 		  //destructor
 		  ~ExScene();
 
-		  tinyxml2::XmlElement* writeNodeData(tinyxml2::XmlElement* parent, IGameNode* pGameNode, IGameObject::ObjectTypes type);
-		  tinyxml2::XmlElement* writeEntityData(tinyxml2::XmlElement* parent, IGameNode* pGameNode, IGameMesh* pGameMesh, std::vector<ExMaterial*> lmat);
-		  tinyxml2::XmlElement* writeCameraData(tinyxml2::XmlElement* parent, IGameCamera* pGameCamera);
-		  tinyxml2::XmlElement* writeLightData(tinyxml2::XmlElement* parent, IGameLight* pGameLight);
+		  tinyxml2::XMLElement* writeNodeData(tinyxml2::XMLElement* parent, IGameNode* pGameNode, IGameObject::ObjectTypes type);
+		  tinyxml2::XMLElement* writeEntityData(tinyxml2::XMLElement* parent, IGameNode* pGameNode, IGameMesh* pGameMesh, std::vector<ExMaterial*> lmat);
+		  tinyxml2::XMLElement* writeCameraData(tinyxml2::XMLElement* parent, IGameCamera* pGameCamera);
+		  tinyxml2::XMLElement* writeLightData(tinyxml2::XMLElement* parent, IGameLight* pGameLight);
       
    	  bool writeSceneFile();
 	  protected:
 		  int id_counter;
       ExOgreConverter* m_converter;
       std::string scenePath;
-	  tinyxml2::XmlDocument* xmlDoc;
-	  tinyxml2::XmlElement *sceneElement;
-	  tinyxml2::XmlElement *nodesElement;
+	  tinyxml2::XMLDocument* xmlDoc;
+	  tinyxml2::XMLElement *sceneElement;
+	  tinyxml2::XMLElement *nodesElement;
       
       void initXmlDocument();
 
 		  std::string getLightTypeString(ExOgreLightType type);
       std::string getBoolString(bool value);
-	  bool exportNodeAnimation(tinyxml2::XmlElement* pAnimsElement, IGameNode* pGameNode, Interval animRange, std::string name, bool resample, IGameObject::ObjectTypes type);
+	  bool exportNodeAnimation(tinyxml2::XMLElement* pAnimsElement, IGameNode* pGameNode, Interval animRange, std::string name, bool resample, IGameObject::ObjectTypes type);
 	};
 
 }; // end of namespace

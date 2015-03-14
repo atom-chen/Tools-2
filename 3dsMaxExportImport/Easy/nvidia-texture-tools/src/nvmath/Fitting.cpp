@@ -4,10 +4,12 @@
 #include "Vector.inl"
 #include "Plane.inl"
 
+#include "nvcore/Array.inl"
 #include "nvcore/Utils.h" // max, swap
 
 #include <float.h> // FLT_MAX
-#include <vector>
+//#include <vector>
+#include <string.h>
 
 using namespace nv;
 
@@ -328,7 +330,7 @@ void ArvoSVD(int rows, int cols, float * Q, float * diag, float * R);
 Vector3 nv::Fit::computePrincipalComponent_SVD(int n, const Vector3 *__restrict points)
 {
 	// Store the points in an n x n matrix
-	std::vector<float> Q(n*n, 0.0f);
+    Array<float> Q; Q.resize(n*n, 0.0f);
 	for (int i = 0; i < n; ++i)
 	{
 		Q[i*n+0] = points[i].x;
@@ -337,8 +339,8 @@ Vector3 nv::Fit::computePrincipalComponent_SVD(int n, const Vector3 *__restrict 
 	}
 
 	// Alloc space for the SVD outputs
-	std::vector<float> diag(n, 0.0f);
-	std::vector<float> R(n*n, 0.0f);
+    Array<float> diag; diag.resize(n, 0.0f);
+    Array<float> R; R.resize(n*n, 0.0f);
 
 	ArvoSVD(n, n, &Q[0], &diag[0], &R[0]);
 
@@ -349,7 +351,7 @@ Vector3 nv::Fit::computePrincipalComponent_SVD(int n, const Vector3 *__restrict 
 Vector4 nv::Fit::computePrincipalComponent_SVD(int n, const Vector4 *__restrict points)
 {
 	// Store the points in an n x n matrix
-	std::vector<float> Q(n*n, 0.0f);
+    Array<float> Q; Q.resize(n*n, 0.0f);
 	for (int i = 0; i < n; ++i)
 	{
 		Q[i*n+0] = points[i].x;
@@ -359,8 +361,8 @@ Vector4 nv::Fit::computePrincipalComponent_SVD(int n, const Vector4 *__restrict 
 	}
 
 	// Alloc space for the SVD outputs
-	std::vector<float> diag(n, 0.0f);
-	std::vector<float> R(n*n, 0.0f);
+    Array<float> diag; diag.resize(n, 0.0f);
+    Array<float> R; R.resize(n*n, 0.0f);
 
 	ArvoSVD(n, n, &Q[0], &diag[0], &R[0]);
 
@@ -498,7 +500,7 @@ static void EigenSolver3_Tridiagonal(float mat[3][3], float * diag, float * subd
 
     diag[0] = a;
     subd[2] = 0.f;
-    if ( fabs(c) >= epsilon )
+    if (fabsf(c) >= epsilon)
     {
         const float ell = sqrtf(b*b+c*c);
         b /= ell;
@@ -538,8 +540,8 @@ static bool EigenSolver3_QLAlgorithm(float mat[3][3], float * diag, float * subd
             int m;
             for (m = ell; m <= 1; m++)
             {
-                float dd = fabs(diag[m]) + fabs(diag[m+1]);
-                if ( fabs(subd[m]) + dd == dd )
+                float dd = fabsf(diag[m]) + fabsf(diag[m+1]);
+                if ( fabsf(subd[m]) + dd == dd )
                     break;
             }
             if ( m == ell )
@@ -555,7 +557,7 @@ static bool EigenSolver3_QLAlgorithm(float mat[3][3], float * diag, float * subd
             for (int i = m-1; i >= ell; i--)
             {
                 float f = s*subd[i], b = c*subd[i];
-                if ( fabs(f) >= fabs(g) )
+                if ( fabsf(f) >= fabsf(g) )
                 {
                     c = g/f;
                     r = sqrtf(c*c+1);
@@ -690,7 +692,7 @@ static void EigenSolver4_Tridiagonal(float mat[4][4], float * diag, float * subd
 	float maxElement = FLT_MAX;
 	for (int i = 0; i < n; ++i)
 		for (int j = 0; j < n; ++j)
-			maxElement = max(maxElement, fabs(mat[i][j]));
+			maxElement = max(maxElement, fabsf(mat[i][j]));
 	float epsilon = relEpsilon * maxElement;
 
 	// Iterative algorithm, works for any size of matrix but might be slower than
@@ -711,7 +713,7 @@ static void EigenSolver4_Tridiagonal(float mat[4][4], float * diag, float * subd
 		float r = sqrtf(0.5f * (alpha*alpha - A(k+1,k)*alpha));
 
 		// If r is zero, skip this column - already in tridiagonal form
-		if (fabs(r) < epsilon)
+		if (fabsf(r) < epsilon)
 			continue;
 
 		float v[n] = {};
@@ -728,12 +730,12 @@ static void EigenSolver4_Tridiagonal(float mat[4][4], float * diag, float * subd
 		Q = mul(Q, P);
 	}
 
-	nvDebugCheck(fabs(A(2,0)) < epsilon);
-	nvDebugCheck(fabs(A(0,2)) < epsilon);
-	nvDebugCheck(fabs(A(3,0)) < epsilon);
-	nvDebugCheck(fabs(A(0,3)) < epsilon);
-	nvDebugCheck(fabs(A(3,1)) < epsilon);
-	nvDebugCheck(fabs(A(1,3)) < epsilon);
+	nvDebugCheck(fabsf(A(2,0)) < epsilon);
+	nvDebugCheck(fabsf(A(0,2)) < epsilon);
+	nvDebugCheck(fabsf(A(3,0)) < epsilon);
+	nvDebugCheck(fabsf(A(0,3)) < epsilon);
+	nvDebugCheck(fabsf(A(3,1)) < epsilon);
+	nvDebugCheck(fabsf(A(1,3)) < epsilon);
 
 	for (int i = 0; i < n; ++i)
 		diag[i] = A(i,i);
@@ -758,8 +760,8 @@ static bool EigenSolver4_QLAlgorithm(float mat[4][4], float * diag, float * subd
             int m;
             for (m = ell; m < 3; m++)
             {
-                float dd = fabs(diag[m]) + fabs(diag[m+1]);
-                if ( fabs(subd[m]) + dd == dd )
+                float dd = fabsf(diag[m]) + fabsf(diag[m+1]);
+                if ( fabsf(subd[m]) + dd == dd )
                     break;
             }
             if ( m == ell )
@@ -775,7 +777,7 @@ static bool EigenSolver4_QLAlgorithm(float mat[4][4], float * diag, float * subd
             for (int i = m-1; i >= ell; i--)
             {
                 float f = s*subd[i], b = c*subd[i];
-                if ( fabs(f) >= fabs(g) )
+                if ( fabsf(f) >= fabsf(g) )
                 {
                     c = g/f;
                     r = sqrtf(c*c+1);
@@ -939,7 +941,7 @@ void ArvoSVD(int rows, int cols, float * Q, float * diag, float * R)
 	float  g     = 0.0f;
 	float  scale = 0.0f;
 
-	std::vector<float> temp(cols, 0.0f);
+    Array<float> temp; temp.resize(cols, 0.0f);
 
 	for( i = 0; i < cols; i++ ) 
 	{

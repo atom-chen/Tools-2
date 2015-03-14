@@ -32,18 +32,31 @@ namespace Nvidia.TextureTools
 		BC4,
 		BC5,
 
-        DXT1n,   // Not supported on CPU yet.
-        CTX1,    // Not supported on CPU yet.
+        DXT1n,   // Not supported.
+        CTX1,    // Not supported.
 
         BC6,
-        BC7,     // Not supported yet.
-
-        DXT1_Luma,
+        BC7,
     }
 	#endregion
 
-	#region public enum Quality
-	/// <summary>
+    #region public enum PixelType
+    /// <summary>
+    /// Pixel types. These basically indicate how the output should be interpreted, but do not have any influence over the input. They are only relevant in RGBA mode.
+    /// </summary>
+    enum PixelType
+    {
+        UnsignedNorm = 0,
+        SignedNorm = 1,   // Not supported yet.
+        UnsignedInt = 2,  // Not supported yet.
+        SignedInt = 3,    // Not supported yet.
+        Float = 4,
+        UnsignedFloat = 5,
+    }
+    #endregion
+
+    #region public enum Quality
+    /// <summary>
 	/// Quality modes.
 	/// </summary>
 	public enum Quality
@@ -55,8 +68,20 @@ namespace Nvidia.TextureTools
 	}
 	#endregion
 
-	#region public enum WrapMode
-	/// <summary>
+    #region public enum Decoder
+    /// <summary>
+    /// DXT decoder.
+    /// </summary>
+    enum Decoder
+    {
+        Decoder_D3D10,
+        Decoder_D3D9,
+        Decoder_NV5x,
+    };
+    #endregion
+
+    #region public enum WrapMode
+    /// <summary>
 	/// Wrap modes.
 	/// </summary>
 	public enum WrapMode
@@ -75,6 +100,7 @@ namespace Nvidia.TextureTools
 	{
 		Texture2D,
 		TextureCube,
+        Texture3D,
 	}
 	#endregion
 
@@ -84,7 +110,9 @@ namespace Nvidia.TextureTools
 	/// </summary>
 	public enum InputFormat
 	{
-		BGRA_8UB
+        BGRA_8UB,   // Normalized [0, 1] 8 bit fixed point.
+        RGBA_16F,   // 16 bit floating point.
+        RGBA_32F,   // 32 bit floating point.
 	}
 	#endregion
 
@@ -100,15 +128,17 @@ namespace Nvidia.TextureTools
 	}
 	#endregion
 
-	#region public enum ColorTransform
+	#region public enum ResizeFilter
 	/// <summary>
-	/// Color transformation.
+    /// Texture resize filters.
 	/// </summary>
-	public enum ColorTransform
+    public enum ResizeFilter
 	{
-		None,
-		Linear
-	}
+        Box,
+        Triangle,
+        Kaiser,
+        Mitchell
+    }
 	#endregion
 
 	#region public enum RoundMode
@@ -136,8 +166,33 @@ namespace Nvidia.TextureTools
 	}
 	#endregion
 
-	#region public enum Error
-	/// <summary>
+    #region public enum CubeLayout
+    /// <summary>Cube layout formats.</summary>
+    /// (New in NVTT 2.1)
+    public enum CubeLayout
+    {
+        VerticalCross,
+        HorizontalCross,
+        Column,
+        Row,
+        LatitudeLongitude
+    };
+    #endregion
+
+    #region public enum EdgeFixup
+    /// <summary>Cube map edge fixup methods.</summary> 
+    /// (New in NVTT 2.1)
+    public enum EdgeFixup
+    {
+        None,
+        Stretch,
+        Warp,
+        Average,
+    };
+    #endregion
+
+    #region public enum Error
+    /// <summary>
 	/// Error codes.
 	/// </summary>
 	public enum Error
@@ -211,12 +266,6 @@ namespace Nvidia.TextureTools
 
 		[DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
 		private extern static void nvttSetInputOptionsNormalizeMipmaps(IntPtr inputOptions, bool b);
-
-		[DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
-		private extern static void nvttSetInputOptionsColorTransform(IntPtr inputOptions, ColorTransform t);
-
-		[DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
-		private extern static void nvttSetInputOptionsLinearTransfrom(IntPtr inputOptions, int channel, float w0, float w1, float w2, float w3);
 
 		[DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
 		private extern static void nvttSetInputOptionsMaxExtents(IntPtr inputOptions, int d);
@@ -315,16 +364,6 @@ namespace Nvidia.TextureTools
 			nvttSetInputOptionsNormalizeMipmaps(options, b);
 		}
 
-		public void SetColorTransform(ColorTransform t)
-		{
-			nvttSetInputOptionsColorTransform(options, t);
-		}
-
-		public void SetLinearTransfrom(int channel, float w0, float w1, float w2, float w3)
-		{
-			nvttSetInputOptionsLinearTransfrom(options, channel, w0, w1, w2, w3);
-		}
-
 		public void SetMaxExtents(int dim)
 		{
 			nvttSetInputOptionsMaxExtents(options, dim);
@@ -421,9 +460,19 @@ namespace Nvidia.TextureTools
 	public class OutputOptions
 	{
 		#region Delegates
-		public delegate void ErrorHandler(Error error);
-		private delegate void WriteDataDelegate(IntPtr data, int size);
-		private delegate void ImageDelegate(int size, int width, int height, int depth, int face, int miplevel);
+        public delegate void ErrorHandler(Error error);
+
+        //[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        //public delegate void InternalErrorHandlerDelegate(Error error);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void BeginImageDelegate(int size, int width, int height, int depth, int face, int miplevel);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate bool WriteDataDelegate(IntPtr data, int size);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void EndImageDelegate();
 		#endregion
 
 		#region Bindings
@@ -447,8 +496,8 @@ namespace Nvidia.TextureTools
 		[DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
 		private extern static void nvttSetOutputOptionsOutputHeader(IntPtr outputOptions, bool b);
 
-		//[DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
-		//private extern static void nvttSetOutputOptionsOutputHandler(IntPtr outputOptions, WriteDataDelegate writeData, ImageDelegate image);
+        [DllImport("nvtt", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private extern static void nvttSetOutputOptionsOutputHandler(IntPtr outputOptions, IntPtr beginImage, IntPtr writeData, IntPtr endImage);
 
 		#endregion
 
@@ -476,7 +525,21 @@ namespace Nvidia.TextureTools
 			nvttSetOutputOptionsOutputHeader(options, b);
 		}
 
-		// @@ Add OutputHandler interface.
+        public void SetOutputHandler(BeginImageDelegate beginImage, WriteDataDelegate writeImage, EndImageDelegate endImage)
+        {
+            IntPtr ptrBeginImage = IntPtr.Zero;
+            IntPtr ptrWriteData = IntPtr.Zero;
+            IntPtr ptrEndImage = IntPtr.Zero;
+            
+            if (beginImage != null || writeImage != null || endImage != null)
+            {
+                ptrBeginImage = Marshal.GetFunctionPointerForDelegate(beginImage);
+                ptrWriteData = Marshal.GetFunctionPointerForDelegate(writeImage);
+                ptrEndImage = Marshal.GetFunctionPointerForDelegate(endImage);
+            }
+
+            nvttSetOutputOptionsOutputHandler(options, ptrBeginImage, ptrWriteData, ptrEndImage);
+        }
 	}
 	#endregion
 
@@ -530,5 +593,159 @@ namespace Nvidia.TextureTools
 
 	}
 	#endregion
+
+    #region public static class Surface
+    public class Surface
+    {
+        #region Bindings
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static IntPtr nvttCreateSurface();
+
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static IntPtr nvttCreateSurface(IntPtr surface);
+
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static void nvttDestroySurface(IntPtr surface);
+
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static void nvttSurfaceSetWrapMode(IntPtr surface, WrapMode wrapMode);
+
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static WrapMode nvttSurfaceGetWrapMode(IntPtr surface);
+        
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static void nvttSurfaceSetAlphaMode(IntPtr surface, AlphaMode alphaMode);
+
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static AlphaMode nvttSurfaceGetAlphaMode(IntPtr surface);
+
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static void nvttSurfaceSetNormalMap(IntPtr surface, bool isNormalMap);
+
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static bool nvttSurfaceGetNormalMap(IntPtr surface);
+
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static int nvttSurfaceGetWidth(IntPtr surface);
+
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static int nvttSurfaceGetHeight(IntPtr surface);
+
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static int nvttSurfaceGetDepth(IntPtr surface);
+        #endregion
+
+        internal IntPtr surface;
+
+        public Surface()
+        {
+            surface = nvttCreateSurface();
+        }
+
+        public Surface(Surface s)
+        {
+            surface = nvttCreateSurface(surface);
+        }
+
+        ~Surface()
+        {
+            nvttDestroySurface(surface);
+        }
+
+        #region Properties
+        public WrapMode WrapMode {
+            set { nvttSurfaceSetWrapMode(surface, value); }
+            get { return nvttSurfaceGetWrapMode(surface); }
+        }
+
+        public AlphaMode AlphaMode {
+            set { nvttSurfaceSetAlphaMode(surface, value); }
+            get { return nvttSurfaceGetAlphaMode(surface); }
+        }
+
+        public bool IsNormalMap
+        {
+            set { nvttSurfaceSetNormalMap(surface, value); }
+            get { return nvttSurfaceGetNormalMap(surface); }
+        }
+
+        //public bool isNull();
+
+        public int Width
+        {
+            get { return nvttSurfaceGetWidth(surface); }
+        }
+
+        public int Height
+        {
+            get { return nvttSurfaceGetHeight(surface); }
+        }
+
+        public int Depth
+        {
+            get { return nvttSurfaceGetDepth(surface); }
+        }
+        #endregion
+
+        //public TextureType type();
+        //public int countMipmaps();
+        //public int countMipmaps(int min_size);
+        //public float alphaTestCoverage(float alphaRef = 0.5);
+        //public float average(int channel, int alpha_channel = -1, float gamma = 2.2f);
+        //public IntPtr data();
+        //public IntPtr channel(int i);
+        //public void histogram(int channel, float rangeMin, float rangeMax, int binCount, int binPtr[]);
+        //public void range(int channel, out float rangeMin, out float rangeMax, int alpha_channel = -1, float alpha_ref = 0.f);
+
+        // @@ TODO
+    }
+    #endregion
+
+    #region public static class CubeSurface
+    public class CubeSurface
+    {
+        #region Bindings
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static IntPtr nvttCreateCubeSurface();
+
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static IntPtr nvttCreateCubeSurface(IntPtr surface);
+
+        [DllImport("nvtt"), SuppressUnmanagedCodeSecurity]
+        private extern static void nvttDestroyCubeSurface(IntPtr surface);
+        #endregion
+
+        internal IntPtr cubeSurface;
+
+        public CubeSurface()
+        {
+            cubeSurface = nvttCreateCubeSurface();
+        }
+
+        public CubeSurface(CubeSurface cs)
+        {
+            cubeSurface = nvttCreateCubeSurface(cs.cubeSurface);
+        }
+
+        ~CubeSurface()
+        {
+            nvttDestroyCubeSurface(cubeSurface);
+        }
+
+
+        //public bool IsNull();         // @@ Use properties?
+        //public int EdgeLength();      // @@ Use properties?
+        //public int CountMipmaps();    // @@ Use properties?
+
+        //public bool Load(String fileName, int mipmap);
+        //public bool Save(String fileName) const;
+
+        //public Surface & Face(int face);
+        //public const Surface & Face(int face) const;
+
+
+        // @@ TODO
+    }
+    #endregion
 
 } // Nvidia.TextureTools namespace
