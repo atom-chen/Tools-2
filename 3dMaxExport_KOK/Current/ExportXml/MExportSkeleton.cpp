@@ -10,10 +10,10 @@ void MExportSkeleton::exportSkeleton(AWD* pAwd)
 	const char* fullPath = g_pAppFrame->getpProgOptions()->getinFileFullPath().c_str();
 	tinyxml2::XMLDocument* pXMLDocument = new tinyxml2::XMLDocument;
 	tinyxml2::XMLElement* pSkeletonElement = pXMLDocument->NewElement("skeleton");
-	pXMLDocument->InsertFirstChild(pSkeletonElement);
+	pXMLDocument->InsertEndChild(pSkeletonElement);
 
 	tinyxml2::XMLElement* bones = pXMLDocument->NewElement("bones");
-	pSkeletonElement->InsertFirstChild(bones);
+	pSkeletonElement->InsertEndChild(bones);
 
 	AWDBlockList * skeletonBlocks = pAwd->get_skeleton_blocks();
 	AWDSkeleton *skelBlock;

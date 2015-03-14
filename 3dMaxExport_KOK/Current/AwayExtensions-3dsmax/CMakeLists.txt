@@ -13,6 +13,8 @@ set(EXPORT_XML
 	${CMAKE_SOURCE_DIR}/ExportXml/MExportSkeleton.cpp
 	${CMAKE_SOURCE_DIR}/ExportXml/MExportSkinMesh.h
 	${CMAKE_SOURCE_DIR}/ExportXml/MExportSkinMesh.cpp
+	${CMAKE_SOURCE_DIR}/ExportXml/MSkeleton.h
+	${CMAKE_SOURCE_DIR}/ExportXml/MSkeleton.cpp
 	${CMAKE_SOURCE_DIR}/ExportXml/AppFrame.h
 	${CMAKE_SOURCE_DIR}/ExportXml/AppFrame.cpp
 	${CMAKE_SOURCE_DIR}/ExportXml/AutoDefine.h
