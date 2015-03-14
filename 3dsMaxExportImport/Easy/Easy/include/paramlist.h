@@ -180,77 +180,77 @@ namespace EasyOgreExporter
     {
 		}
 
-    std::string getOgreVersionName()
-    {
-      switch(meshVersion)
-      {
-        case TOGRE_LASTEST:
-          return "Latest version";
+    //std::string getOgreVersionName()
+    //{
+    //  switch(meshVersion)
+    //  {
+    //    case TOGRE_LASTEST:
+    //      return "Latest version";
 
-		    case TOGRE_1_8:
-          return "1.8";
+		  //  case TOGRE_1_8:
+    //      return "1.8";
 
-        case TOGRE_1_7:
-          return "1.7";
+    //    case TOGRE_1_7:
+    //      return "1.7";
 
-        case TOGRE_1_4:
-          return "1.4";
+    //    case TOGRE_1_4:
+    //      return "1.4";
 
-        case TOGRE_1_0:
-          return "1.0";
+    //    case TOGRE_1_0:
+    //      return "1.0";
 
-        default:
-          return "1.8";
-      }
-    }
+    //    default:
+    //      return "1.8";
+    //  }
+    //}
 
-    Ogre::MeshVersion getOgreVersion()
-    {
-      switch(meshVersion)
-      {
-        case TOGRE_LASTEST:
-          return Ogre::MESH_VERSION_LATEST;
+    //Ogre::MeshVersion getOgreVersion()
+    //{
+    //  switch(meshVersion)
+    //  {
+    //    case TOGRE_LASTEST:
+    //      return Ogre::MESH_VERSION_LATEST;
 
-		    case TOGRE_1_8:
-          return Ogre::MESH_VERSION_1_8;
+		  //  case TOGRE_1_8:
+    //      return Ogre::MESH_VERSION_1_8;
 
-        case TOGRE_1_7:
-          return Ogre::MESH_VERSION_1_7;
+    //    case TOGRE_1_7:
+    //      return Ogre::MESH_VERSION_1_7;
 
-        case TOGRE_1_4:
-          return Ogre::MESH_VERSION_1_4;
+    //    case TOGRE_1_4:
+    //      return Ogre::MESH_VERSION_1_4;
 
-        case TOGRE_1_0:
-          return Ogre::MESH_VERSION_1_0;
+    //    case TOGRE_1_0:
+    //      return Ogre::MESH_VERSION_1_0;
 
-        default:
-          return Ogre::MESH_VERSION_LATEST;
-      }
-    }
+    //    default:
+    //      return Ogre::MESH_VERSION_LATEST;
+    //  }
+    //}
 
-    Ogre::SkeletonVersion getSkeletonVersion()
-    {
-      switch(meshVersion)
-      {
-        case TOGRE_LASTEST:
-          return Ogre::SKELETON_VERSION_LATEST;
+    //Ogre::SkeletonVersion getSkeletonVersion()
+    //{
+    //  switch(meshVersion)
+    //  {
+    //    case TOGRE_LASTEST:
+    //      return Ogre::SKELETON_VERSION_LATEST;
 
-		    case TOGRE_1_8:
-          return Ogre::SKELETON_VERSION_1_8;
+		  //  case TOGRE_1_8:
+    //      return Ogre::SKELETON_VERSION_1_8;
 
-        case TOGRE_1_7:
-          return Ogre::SKELETON_VERSION_1_0;
+    //    case TOGRE_1_7:
+    //      return Ogre::SKELETON_VERSION_1_0;
 
-        case TOGRE_1_4:
-          return Ogre::SKELETON_VERSION_1_0;
+    //    case TOGRE_1_4:
+    //      return Ogre::SKELETON_VERSION_1_0;
 
-        case TOGRE_1_0:
-          return Ogre::SKELETON_VERSION_1_0;
+    //    case TOGRE_1_0:
+    //      return Ogre::SKELETON_VERSION_1_0;
 
-        default:
-          return Ogre::SKELETON_VERSION_LATEST;
-      }
-    }
+    //    default:
+    //      return Ogre::SKELETON_VERSION_LATEST;
+    //  }
+    //}
 
 	};
 

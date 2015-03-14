@@ -17,7 +17,7 @@
 
 
 #include "ExOgreConverter.h"
-#include "tinyxml.h"
+#include "tinyxml2.h"
 
 
 namespace EasyOgreExporter
@@ -76,25 +76,25 @@ namespace EasyOgreExporter
 		  //destructor
 		  ~ExScene();
 
-      TiXmlElement* writeNodeData(TiXmlElement* parent, IGameNode* pGameNode, IGameObject::ObjectTypes type);
-      TiXmlElement* writeEntityData(TiXmlElement* parent, IGameNode* pGameNode, IGameMesh* pGameMesh, std::vector<ExMaterial*> lmat);
-      TiXmlElement* writeCameraData(TiXmlElement* parent, IGameCamera* pGameCamera);
-      TiXmlElement* writeLightData(TiXmlElement* parent, IGameLight* pGameLight);
+		  tinyxml2::XmlElement* writeNodeData(tinyxml2::XmlElement* parent, IGameNode* pGameNode, IGameObject::ObjectTypes type);
+		  tinyxml2::XmlElement* writeEntityData(tinyxml2::XmlElement* parent, IGameNode* pGameNode, IGameMesh* pGameMesh, std::vector<ExMaterial*> lmat);
+		  tinyxml2::XmlElement* writeCameraData(tinyxml2::XmlElement* parent, IGameCamera* pGameCamera);
+		  tinyxml2::XmlElement* writeLightData(tinyxml2::XmlElement* parent, IGameLight* pGameLight);
       
    	  bool writeSceneFile();
 	  protected:
 		  int id_counter;
       ExOgreConverter* m_converter;
       std::string scenePath;
-      TiXmlDocument* xmlDoc;
-      TiXmlElement *sceneElement;
-      TiXmlElement *nodesElement;
+	  tinyxml2::XmlDocument* xmlDoc;
+	  tinyxml2::XmlElement *sceneElement;
+	  tinyxml2::XmlElement *nodesElement;
       
       void initXmlDocument();
 
 		  std::string getLightTypeString(ExOgreLightType type);
       std::string getBoolString(bool value);
-      bool exportNodeAnimation(TiXmlElement* pAnimsElement, IGameNode* pGameNode, Interval animRange, std::string name, bool resample, IGameObject::ObjectTypes type);
+	  bool exportNodeAnimation(tinyxml2::XmlElement* pAnimsElement, IGameNode* pGameNode, Interval animRange, std::string name, bool resample, IGameObject::ObjectTypes type);
 	};
 
 }; // end of namespace

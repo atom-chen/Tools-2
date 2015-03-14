@@ -757,155 +757,155 @@ namespace EasyOgreExporter
 		return m_animations;
 	}
 
-	// Write to an OGRE binary skeleton
-	bool ExSkeleton::writeOgreBinary()
-	{
-		// Construct skeleton
-		Ogre::SkeletonPtr pSkeleton = Ogre::SkeletonManager::getSingleton().create(m_name.c_str(), Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-		
-    // Create skeleton bones
-		if (!createOgreBones(pSkeleton))
-		{
-			EasyOgreExporterLog("Error on bone creation\n");
-		}
+	//// Write to an OGRE binary skeleton
+	//bool ExSkeleton::writeOgreBinary()
+	//{
+	//	// Construct skeleton
+	//	Ogre::SkeletonPtr pSkeleton = Ogre::SkeletonManager::getSingleton().create(m_name.c_str(), Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	//	
+ //   // Create skeleton bones
+	//	if (!createOgreBones(pSkeleton))
+	//	{
+	//		EasyOgreExporterLog("Error on bone creation\n");
+	//	}
 
-    // skeleton empty
-    if (pSkeleton->getNumBones() == 0)
-      return false;
+ //   // skeleton empty
+ //   if (pSkeleton->getNumBones() == 0)
+ //     return false;
 
-    pSkeleton->setBindingPose();
+ //   pSkeleton->setBindingPose();
 
-		// Create skeleton animation
-		if (m_params.exportSkelAnims)
-		{
-			if (!createOgreSkeletonAnimations(pSkeleton))
-			{
-				EasyOgreExporterLog("Error writing ogre skeleton animations\n");
-			}
-      else
-      {
-        // Optimise animations
-		    pSkeleton->optimiseAllAnimations();
-      }
-		}
+	//	// Create skeleton animation
+	//	if (m_params.exportSkelAnims)
+	//	{
+	//		if (!createOgreSkeletonAnimations(pSkeleton))
+	//		{
+	//			EasyOgreExporterLog("Error writing ogre skeleton animations\n");
+	//		}
+ //     else
+ //     {
+ //       // Optimise animations
+	//	    pSkeleton->optimiseAllAnimations();
+ //     }
+	//	}
 
-		// Export skeleton binary
-		Ogre::SkeletonSerializer serializer;
+	//	// Export skeleton binary
+	//	Ogre::SkeletonSerializer serializer;
 
-    std::string filePath = makeOutputPath(m_params.outputDir, m_params.meshOutputDir, m_name, "skeleton");
-		serializer.exportSkeleton(pSkeleton.getPointer(), filePath.c_str(), m_params.getSkeletonVersion());
-		pSkeleton.setNull();
+ //   std::string filePath = makeOutputPath(m_params.outputDir, m_params.meshOutputDir, m_name, "skeleton");
+	//	serializer.exportSkeleton(pSkeleton.getPointer(), filePath.c_str(), m_params.getSkeletonVersion());
+	//	pSkeleton.setNull();
 
-		// Skeleton successfully exported
-		return true;
-	}
+	//	// Skeleton successfully exported
+	//	return true;
+	//}
 
-	// Write joints to an Ogre skeleton
-	bool ExSkeleton::createOgreBones(Ogre::SkeletonPtr pSkeleton)
-	{
-		// Doug Perkowski
-		// 5/25/2010
-		// To prevent a crash on content with more than  (256) bones, we need to check
-		// to make sure there aren't more than OGRE_MAX_NUM_BONES bones.
-		if(m_joints.size() > OGRE_MAX_NUM_BONES)
-		{
-      MessageBox(NULL, _T("Failure: Skeleton has more than OGRE_MAX_NUM_BONES.  No bones will be exported."), _T("EasyOgre Export Error"), MB_OK | MB_ICONWARNING);
-			EasyOgreExporterLog("Failure: Skeleton has more than OGRE_MAX_NUM_BONES.  No bones will be exported.\n");
-			return false;
-		}
-		
-		// Create the bones
-		for (size_t i = 0; i < m_joints.size(); i++)
-		{
-			ExBone j = m_joints[i];
-      //if (!m_converter->isExportedRootBone(j))
-      //{
-       //m_converter->addExportedRootBone(j);
+	//// Write joints to an Ogre skeleton
+	//bool ExSkeleton::createOgreBones(Ogre::SkeletonPtr pSkeleton)
+	//{
+	//	// Doug Perkowski
+	//	// 5/25/2010
+	//	// To prevent a crash on content with more than  (256) bones, we need to check
+	//	// to make sure there aren't more than OGRE_MAX_NUM_BONES bones.
+	//	if(m_joints.size() > OGRE_MAX_NUM_BONES)
+	//	{
+ //     MessageBox(NULL, _T("Failure: Skeleton has more than OGRE_MAX_NUM_BONES.  No bones will be exported."), _T("EasyOgre Export Error"), MB_OK | MB_ICONWARNING);
+	//		EasyOgreExporterLog("Failure: Skeleton has more than OGRE_MAX_NUM_BONES.  No bones will be exported.\n");
+	//		return false;
+	//	}
+	//	
+	//	// Create the bones
+	//	for (size_t i = 0; i < m_joints.size(); i++)
+	//	{
+	//		ExBone j = m_joints[i];
+ //     //if (!m_converter->isExportedRootBone(j))
+ //     //{
+ //      //m_converter->addExportedRootBone(j);
 
-			  // Create a new bone
-			  Ogre::Bone* pBone = pSkeleton->createBone(m_joints[i].name.c_str(), m_joints[i].id);
+	//		  // Create a new bone
+	//		  Ogre::Bone* pBone = pSkeleton->createBone(m_joints[i].name.c_str(), m_joints[i].id);
 
-			  // Set bone position (relative to it's parent)
-        pBone->setPosition(j.trans.x, j.trans.y, j.trans.z);
+	//		  // Set bone position (relative to it's parent)
+ //       pBone->setPosition(j.trans.x, j.trans.y, j.trans.z);
 
-			  // Set bone orientation (relative to it's parent)
-        Ogre::Quaternion orient(j.rot.w, j.rot.x, j.rot.y, j.rot.z);
-			  pBone->setOrientation(orient);
+	//		  // Set bone orientation (relative to it's parent)
+ //       Ogre::Quaternion orient(j.rot.w, j.rot.x, j.rot.y, j.rot.z);
+	//		  pBone->setOrientation(orient);
 
-			  // Set bone scale (relative to it's parent
-			  pBone->setScale(j.scale.x, j.scale.y, j.scale.z);
-      //}
-		}
+	//		  // Set bone scale (relative to it's parent
+	//		  pBone->setScale(j.scale.x, j.scale.y, j.scale.z);
+ //     //}
+	//	}
 
-		// Create the hierarchy
-		for (size_t i = 0; i < m_joints.size(); i++)
-		{
-			int parentIdx = m_joints[i].parentIndex;
-			if (parentIdx >= 0)
-			{
-				// Get current joint from skeleton
-        Ogre::Bone* pParent = 0;
-        Ogre::Bone* pBone = 0;
-        try
-        {
-          pParent = pSkeleton->getBone(m_joints[parentIdx].id);
-          pBone = pSkeleton->getBone(m_joints[i].id);
-        }
-        catch (Ogre::Exception &)
-        {
-          0;
-        }
+	//	// Create the hierarchy
+	//	for (size_t i = 0; i < m_joints.size(); i++)
+	//	{
+	//		int parentIdx = m_joints[i].parentIndex;
+	//		if (parentIdx >= 0)
+	//		{
+	//			// Get current joint from skeleton
+ //       Ogre::Bone* pParent = 0;
+ //       Ogre::Bone* pBone = 0;
+ //       try
+ //       {
+ //         pParent = pSkeleton->getBone(m_joints[parentIdx].id);
+ //         pBone = pSkeleton->getBone(m_joints[i].id);
+ //       }
+ //       catch (Ogre::Exception &)
+ //       {
+ //         0;
+ //       }
 
-				// Place current bone in the parent's child list
-        if (pParent && pBone)
-				  pParent->addChild(pBone);
-			}
-		}
-		return true;
-	}
+	//			// Place current bone in the parent's child list
+ //       if (pParent && pBone)
+	//			  pParent->addChild(pBone);
+	//		}
+	//	}
+	//	return true;
+	//}
 
-	// Write skeleton animations to an Ogre skeleton
-	bool ExSkeleton::createOgreSkeletonAnimations(Ogre::SkeletonPtr pSkeleton)
-	{
-		// Read loaded skeleton animations
-    // parse the list reversed for good anims order
-		for (size_t i = 0; i < m_animations.size(); i++)
-		{
-			// Create a new animation
-			Ogre::Animation* pAnimation = pSkeleton->createAnimation(m_animations[i].m_name.c_str(), m_animations[i].m_length);
+	//// Write skeleton animations to an Ogre skeleton
+	//bool ExSkeleton::createOgreSkeletonAnimations(Ogre::SkeletonPtr pSkeleton)
+	//{
+	//	// Read loaded skeleton animations
+ //   // parse the list reversed for good anims order
+	//	for (size_t i = 0; i < m_animations.size(); i++)
+	//	{
+	//		// Create a new animation
+	//		Ogre::Animation* pAnimation = pSkeleton->createAnimation(m_animations[i].m_name.c_str(), m_animations[i].m_length);
 
-      // Create tracks for current animation
-			for (size_t j = 0; j < m_animations[i].m_tracks.size(); j++)
-			{
-				ExTrack* t = &m_animations[i].m_tracks[j];
-				
-        // Create a new track
-        Ogre::Bone* oBone = pSkeleton->getBone(t->m_bone.c_str());
-        if (!oBone)
-          continue;
+ //     // Create tracks for current animation
+	//		for (size_t j = 0; j < m_animations[i].m_tracks.size(); j++)
+	//		{
+	//			ExTrack* t = &m_animations[i].m_tracks[j];
+	//			
+ //       // Create a new track
+ //       Ogre::Bone* oBone = pSkeleton->getBone(t->m_bone.c_str());
+ //       if (!oBone)
+ //         continue;
 
-				Ogre::NodeAnimationTrack* pTrack = pAnimation->createNodeTrack(j,	oBone);
+	//			Ogre::NodeAnimationTrack* pTrack = pAnimation->createNodeTrack(j,	oBone);
 
-				// Create keyframes for current track
-				for (size_t k = 0; k < t->m_skeletonKeyframes.size(); k++)
-				{
-					skeletonKeyframe* keyframe = &t->m_skeletonKeyframes[k];
+	//			// Create keyframes for current track
+	//			for (size_t k = 0; k < t->m_skeletonKeyframes.size(); k++)
+	//			{
+	//				skeletonKeyframe* keyframe = &t->m_skeletonKeyframes[k];
 
-					// Create a new keyframe
-					Ogre::TransformKeyFrame* pKeyframe = pTrack->createNodeKeyFrame(keyframe->time);
+	//				// Create a new keyframe
+	//				Ogre::TransformKeyFrame* pKeyframe = pTrack->createNodeKeyFrame(keyframe->time);
 
-					// Set translation
-					pKeyframe->setTranslate(Ogre::Vector3(keyframe->trans.x, keyframe->trans.y ,keyframe->trans.z));
+	//				// Set translation
+	//				pKeyframe->setTranslate(Ogre::Vector3(keyframe->trans.x, keyframe->trans.y ,keyframe->trans.z));
 
-					// Set rotation
-          pKeyframe->setRotation(Ogre::Quaternion(keyframe->rot.w, keyframe->rot.x, keyframe->rot.y, keyframe->rot.z));
+	//				// Set rotation
+ //         pKeyframe->setRotation(Ogre::Quaternion(keyframe->rot.w, keyframe->rot.x, keyframe->rot.y, keyframe->rot.z));
 
-					// Set scale
-					pKeyframe->setScale(Ogre::Vector3(keyframe->scale.x, keyframe->scale.y, keyframe->scale.z));
-				}
-			}
-		}
-		return true;
-	}
+	//				// Set scale
+	//				pKeyframe->setScale(Ogre::Vector3(keyframe->scale.x, keyframe->scale.y, keyframe->scale.z));
+	//			}
+	//		}
+	//	}
+	//	return true;
+	//}
 
 };	//end namespace

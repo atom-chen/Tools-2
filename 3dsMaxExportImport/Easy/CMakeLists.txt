@@ -54,3 +54,5 @@ add_definitions(-DUNICODE -D_UNICODE)
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 
 add_subdirectory(Easy)
+add_subdirectory(tinyxml2)
+#add_subdirectory(nvidia-texture-tools)

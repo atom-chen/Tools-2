@@ -23,6 +23,9 @@
 #include "iInstanceMgr.h"
 #include "MeshNormalSpec.h"
 #include <iostream>
+#include <algorithm>
+#include <sstream>
+#include <fstream>
 
 #ifdef PRE_MAX_2010
 #include "IPathConfigMgr.h"

@@ -6,6 +6,11 @@ file(GLOB_RECURSE LIBRARY_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/*.h ${CMAKE_CURRENT_S
 
 include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/include
+	${MAX_SDK_INCLUDE_PATH}
+	"${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/samples/modifiers/morpher"
+	"${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/include/CS"
+	${CMAKE_SOURCE_DIR}/tinyxml2
+	${CMAKE_SOURCE_DIR}/nvidia-texture-tools/src
 )
 link_directories(${MAX_SDK_LIB_PATH})
 

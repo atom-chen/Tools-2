@@ -22,7 +22,7 @@
 #include "ExData.h"
 #include "EasyOgreExporterLog.h"
 #include "ExTools.h"
-#include "tinyxml.h"
+#include "tinyxml2.h"
 
 #include "../resources/resource.h"
 #include "3dsmaxport.h"
@@ -620,11 +620,11 @@ int	OgreSceneExporter::DoExport(const TCHAR* name, ExpInterface* pExpInterface, 
 
 void OgreSceneExporter::loadExportConf(std::string path, ParamList &param)
 {
-  TiXmlDocument xmlDoc;
+	tinyxml2::XmlDocument xmlDoc;
   if(xmlDoc.LoadFile(path.c_str()))
   {
-    TiXmlElement* rootElem = xmlDoc.RootElement();
-    TiXmlElement* child = rootElem->FirstChildElement("IDC_OGREVERSION");
+	  tinyxml2::XmlElement* rootElem = xmlDoc.RootElement();
+	  tinyxml2::XmlElement* child = rootElem->FirstChildElement("IDC_OGREVERSION");
     if(child)
     {
       if(child->GetText())
