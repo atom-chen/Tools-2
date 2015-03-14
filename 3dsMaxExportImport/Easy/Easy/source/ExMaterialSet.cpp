@@ -19,7 +19,7 @@
 
 #include "ExMaterial.h"
 #include "ExMaterialSet.h"
-//#include <nvtt/nvtt.h>
+#include <nvtt/nvtt.h>
 
 namespace EasyOgreExporter
 {

@@ -236,7 +236,10 @@ namespace EasyOgreExporter
 		~ExMesh();
 	
 		//write to a OGRE binary mesh
-		bool writeOgreBinary();
+		bool writeOgreBinary()
+		{
+			return true;
+		}
     std::vector<ExMaterial*> getMaterials();
     
     // get pointer to linked skeleton
@@ -251,8 +254,11 @@ namespace EasyOgreExporter
 		ExMaterial* loadMaterial(IGameMaterial* pGameMaterial);
     void getModifiers();
     void createPoses();
-    bool exportPosesAnimation(Interval animRange, std::string name, std::vector<morphChannel*> validChan, std::vector<std::vector<int>> poseIndexList, bool bDefault);
-    bool exportMorphAnimation(Interval animRange, std::string name);
+    //bool exportPosesAnimation(Interval animRange, std::string name, std::vector<morphChannel*> validChan, std::vector<std::vector<int>> poseIndexList, bool bDefault);
+	bool exportMorphAnimation(Interval animRange, std::string name)
+	{
+		return true;
+	}
     void createMorphAnimations();
     void updateBounds(Point3);
     bool haveVertexColor;

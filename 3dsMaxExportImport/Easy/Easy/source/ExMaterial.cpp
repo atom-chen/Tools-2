@@ -24,7 +24,7 @@
 #include "EasyOgreExporterLog.h"
 #include <imtl.h>
 
-//#include <nvimage/DirectDrawSurface.h>
+#include <nvimage/DirectDrawSurface.h>
 
 #ifdef PRE_MAX_2010
 #include "IPathConfigMgr.h"

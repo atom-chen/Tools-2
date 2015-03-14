@@ -10,26 +10,44 @@ include_directories(
 	"${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/samples/modifiers/morpher"
 	"${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/include/CS"
 	${CMAKE_SOURCE_DIR}/tinyxml2
-	#${CMAKE_SOURCE_DIR}/nvidia-texture-tools/src
-	#${CMAKE_SOURCE_DIR}/nvidia-texture-tools/extern/poshlib
+	${CMAKE_SOURCE_DIR}/nvidia-texture-tools/src
+	${CMAKE_SOURCE_DIR}/nvidia-texture-tools/extern/poshlib
+	${CMAKE_SOURCE_DIR}/nvidia-texture-tools/build/src
+	${CMAKE_SOURCE_DIR}/nvidia-texture-tools/build/include
 )
-link_directories(${MAX_SDK_LIB_PATH})
+link_directories(${MAX_SDK_LIB_PATH} ${CMAKE_SOURCE_DIR}/nvidia-texture-tools/build/lib/static "${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/samples/modifiers/morpher/Lib/x64/Release")
 
 add_library(${LIBRARY_NAME} SHARED
 	${LIBRARY_SRCS}
 )
 
+add_dependencies(${LIBRARY_NAME} tinyxml2)
+
 target_link_libraries(${LIBRARY_NAME}
-	assetmanagement
 	core
 	geom
 	gfx
+	bmm
 	mesh
 	maxutil
 	maxscrpt
 	paramblk2
-	bmm
-	iGame
+	IGame
+	biped
+	assetmanagement
+		
+	Morpher
+
+	nvcore
+	nvimage
+	nvmath
+	nvthread
+	nvtt
+	squish
+	bc6h
+	bc7
+	
+	tinyxml2
 )
 
 set_target_properties(${LIBRARY_NAME} PROPERTIES OUTPUT_NAME "easy_2015_64" SUFFIX ".dle")

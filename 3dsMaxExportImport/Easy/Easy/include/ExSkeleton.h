@@ -80,7 +80,10 @@ namespace EasyOgreExporter
 		//restore skeleton pose
 		void restorePose();
 		//write to an OGRE binary skeleton
-		bool writeOgreBinary();
+		bool writeOgreBinary()
+		{
+			return true;
+		}
 
     const std::vector<float> getWeightList(int index);
     const std::vector<int> getJointList(int index);
