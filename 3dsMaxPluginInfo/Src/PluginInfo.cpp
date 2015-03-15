@@ -22,7 +22,8 @@ typedef ULONG(*MYPROC)(void);
 int main()
 {
 	// 加载的 dll 完整目录
-	TCHAR* dllName = "D:\\file\\opensource\\EasyOgreMaxExporter-svn\\output\\x64\\vs12\\Release Max 2015\\EasyOgreExporter.dle";
+	//TCHAR* dllName = "D:\\file\\opensource\\EasyOgreMaxExporter-svn\\output\\x64\\vs12\\Release Max 2015\\EasyOgreExporter.dle";
+	TCHAR* dllName = "D:\\file\\opensource\\unity-game-git\\unitygame\\Tools\\3dMaxExport_KOK\\CurEasy\\build\\Easy\\Debug\\EasyOgreExporter_2015_64.dle";
 
 	// 需要额外添加的 path 环境变量
 	TCHAR* extPath = "F:\\ProgramFiles\\Autodesk\\3ds Max 2015;F:\\ProgramFiles\\Autodesk\\3ds Max 2015\\stdplugs";
