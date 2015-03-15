@@ -3,6 +3,7 @@
 #include "EasyOgreExporterLog.h"
 #include "ExTools.h"
 #include "tinyxml2.h"
+#include "UtilWrap.h"
 
 #include "../resources/resource.h"
 #include "3dsmaxport.h"
@@ -600,7 +601,7 @@ namespace EasyOgreExporter
 	void OgreSceneExporter::loadExportConf(std::string path, ParamList &param)
 	{
 		tinyxml2::XMLDocument xmlDoc;
-		if (xmlDoc.LoadFile(path.c_str()))
+		if (UtilWrap::isTinyXmlSuccess(xmlDoc.LoadFile(path.c_str())))
 		{
 			tinyxml2::XMLElement* rootElem = xmlDoc.RootElement();
 			tinyxml2::XMLElement* child = rootElem->FirstChildElement("IDC_OGREVERSION");

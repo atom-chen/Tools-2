@@ -96,7 +96,7 @@ namespace EasyOgreExporter
 
 		virtual void constructShader(ExMaterial* mat);
 		virtual std::string& getUniformParams(ExMaterial* mat);
-		virtual std::string& getProgram(std::string baseName);:
+		virtual std::string& getProgram(std::string baseName);
 	};
 
 	class ExFpLightShader : public ExShader

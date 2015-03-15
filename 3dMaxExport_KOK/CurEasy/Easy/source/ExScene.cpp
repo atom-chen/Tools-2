@@ -5,6 +5,8 @@
 #include "decomp.h"
 #include "IFrameTagManager.h"
 
+#include "UtilWrap.h"
+
 namespace EasyOgreExporter
 {
 	// constructor
@@ -690,6 +692,6 @@ namespace EasyOgreExporter
 
 	bool ExScene::writeSceneFile()
 	{
-		return xmlDoc->SaveFile(scenePath.c_str());
+		return UtilWrap::isTinyXmlSuccess(xmlDoc->SaveFile(scenePath.c_str()));
 	}
 }; //end of namespace
