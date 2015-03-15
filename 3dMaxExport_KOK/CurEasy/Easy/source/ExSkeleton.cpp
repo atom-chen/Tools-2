@@ -1,23 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////
-// ExSkeleton.cpp
-// Author   : Bastien BOURINEAU
-// Start Date : January 21, 2012
-////////////////////////////////////////////////////////////////////////////////
-/*********************************************************************************
-*                                                                                *
-*   This program is free software; you can redistribute it and/or modify         *
-*   it under the terms of the GNU Lesser General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or            *
-*   (at your option) any later version.                                          *
-*                                                                                *
-**********************************************************************************/
-////////////////////////////////////////////////////////////////////////////////
-// Port to 3D Studio Max - Modified original version
-// Author	      : Doug Perkowski - OC3 Entertainment, Inc.
-// From work of : Francesco Giordana
-// Start Date   : December 10th, 2007
-////////////////////////////////////////////////////////////////////////////////
-
 #include "ExTools.h"
 #include "ExSkeleton.h"
 #include "EasyOgreExporterLog.h"
@@ -1030,6 +1010,18 @@ namespace EasyOgreExporter
 				boneparentElem->SetAttribute("bone", curBone.name.c_str());
 				boneparentElem->SetAttribute("parent", parentBone.name.c_str());
 			}
+		}
+
+		// animations µ¼³ö
+		tinyxml2::XMLElement* animationsElem = pXMLDocument->NewElement("animations");
+		pXMLDocument->InsertEndChild(animationsElem);
+
+		std::vector<ExAnimation>::iterator aniBeginIte, aniEndIte;
+		aniBeginIte = m_animations.begin();
+		aniEndIte = m_animations.end();
+		for (; aniBeginIte != aniEndIte; ++aniBeginIte)
+		{
+			aniBeginIte->exportAnimationXml(animationsElem, pXMLDocument);
 		}
 
 		if (pXMLDocument->SaveFile(pFileName) != tinyxml2::XML_SUCCESS &&

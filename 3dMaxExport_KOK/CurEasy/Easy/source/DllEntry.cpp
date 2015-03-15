@@ -1,17 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////
-// ExData.h
-// Author	  : Jamie Redmond - OC3 Entertainment, Inc.
-// Copyright  : (C) 2007 OC3 Entertainment, Inc.
-////////////////////////////////////////////////////////////////////////////////
-/*********************************************************************************
-*                                                                                *
-*   This program is free software; you can redistribute it and/or modify         *
-*   it under the terms of the GNU Lesser General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or            *
-*   (at your option) any later version.                                          *
-*                                                                                *
-**********************************************************************************/
-
 #include "ExPrerequisites.h"
 #include "iparamb2.h"
 
@@ -23,15 +9,15 @@ HINSTANCE hInstance;
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, ULONG fdwReason, LPVOID lpvReserved)
 {
-   //needed for xml format
-   setlocale(LC_ALL, "English");
+	//needed for xml format
+	setlocale(LC_ALL, "English");
 
-   if(fdwReason == DLL_PROCESS_ATTACH)
-   {
-	   // Hang on to this DLL's instance handle.
-      hInstance = hinstDLL;        
-      DisableThreadLibraryCalls(hInstance);
-   }
+	if (fdwReason == DLL_PROCESS_ATTACH)
+	{
+		// Hang on to this DLL's instance handle.
+		hInstance = hinstDLL;
+		DisableThreadLibraryCalls(hInstance);
+	}
 	return TRUE;
 }
 
@@ -47,11 +33,11 @@ __declspec(dllexport) int LibNumberClasses(void)
 
 __declspec(dllexport) ClassDesc* LibClassDesc(int i)
 {
-	switch(i) 
+	switch (i)
 	{
-		case 0: return GetEasyOgreExporterDesc();
+	case 0: return GetEasyOgreExporterDesc();
 		//case 1 : return GetEasyOgreMaxScriptInterfaceClassDesc();
-		default: return 0;
+	default: return 0;
 	}
 }
 
@@ -69,7 +55,7 @@ TCHAR* GetString(int id)
 {
 	static TCHAR buf[256];
 
-	if(hInstance)
+	if (hInstance)
 	{
 		return LoadString(hInstance, id, buf, sizeof(buf)) ? buf : NULL;
 	}

@@ -1,23 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////
-// ExPrerequisites.h
-// Author   : Bastien BOURINEAU
-// Start Date : January 21, 2012
-////////////////////////////////////////////////////////////////////////////////
-/*********************************************************************************
-*                                        *
-*   This program is free software; you can redistribute it and/or modify     *
-*   it under the terms of the GNU Lesser General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or      *
-*   (at your option) any later version.                      *
-*                                        *
-**********************************************************************************/
-////////////////////////////////////////////////////////////////////////////////
-// Port to 3D Studio Max - Modified original version
-// Author	      : Doug Perkowski - OC3 Entertainment, Inc.
-// From work of : Francesco Giordana
-// Start Date   : December 10th, 2007
-////////////////////////////////////////////////////////////////////////////////
-
 #ifndef _EXPREREQUISITES_H
 #define _EXPREREQUISITES_H
 
@@ -90,11 +70,11 @@ extern HINSTANCE hInstance;
 
 namespace EasyOgreExporter
 {
-  class ExOgreConverter;
-  class ExMaterialSet;
-  class ExMaterial;
-  class ExBone;
-  class ExVertex;
+	class ExOgreConverter;
+	class ExMaterialSet;
+	class ExMaterial;
+	class ExBone;
+	class ExVertex;
 }
 
 #endif

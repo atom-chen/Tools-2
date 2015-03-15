@@ -3,21 +3,6 @@
 // Author   : Bastien BOURINEAU
 // Start Date : January 21, 2012
 ////////////////////////////////////////////////////////////////////////////////
-/*********************************************************************************
-*                                        *
-*   This program is free software; you can redistribute it and/or modify     *
-*   it under the terms of the GNU Lesser General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or      *
-*   (at your option) any later version.                      *
-*                                        *
-**********************************************************************************/
-////////////////////////////////////////////////////////////////////////////////
-// Port to 3D Studio Max - Modified original version
-// Author	      : Doug Perkowski - OC3 Entertainment, Inc.
-// From work of : Francesco Giordana
-// Start Date   : December 10th, 2007
-////////////////////////////////////////////////////////////////////////////////
-
 #ifndef _EXSKELETON_H
 #define _EXSKELETON_H
 
@@ -68,7 +53,7 @@ namespace EasyOgreExporter
 		//clear skeleton data
 		void clear();
 		//load skeleton data
-		//		bool load(IGameNode* pGameNode, IGameObject* pGameObject, IGameSkin* pGameSkin);
+		//bool load(IGameNode* pGameNode, IGameObject* pGameObject, IGameSkin* pGameSkin);
 
 		bool getVertexBoneWeights(int numVertices);
 

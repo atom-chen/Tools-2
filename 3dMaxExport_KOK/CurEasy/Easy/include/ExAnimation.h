@@ -1,27 +1,8 @@
-////////////////////////////////////////////////////////////////////////////////
-// ExAnimation.h
-// Author   : Bastien BOURINEAU
-// Start Date : January 21, 2012
-////////////////////////////////////////////////////////////////////////////////
-/*********************************************************************************
-*                                        *
-*   This program is free software; you can redistribute it and/or modify     *
-*   it under the terms of the GNU Lesser General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or      *
-*   (at your option) any later version.                      *
-*                                        *
-**********************************************************************************/
-////////////////////////////////////////////////////////////////////////////////
-// Port to 3D Studio Max - Modified original version
-// Author	      : Doug Perkowski - OC3 Entertainment, Inc.
-// From work of : Francesco Giordana
-// Start Date   : December 10th, 2007
-////////////////////////////////////////////////////////////////////////////////
-
 #ifndef EXANIMATION_H
 #define EXANIMATION_H
 
 #include "ExPrerequisites.h"
+#include "tinyxml2.h"
 
 namespace EasyOgreExporter
 {
@@ -35,6 +16,8 @@ namespace EasyOgreExporter
 		Point3 trans;						//translation
 		Quat rot;		            //rotation
 		Point3 scale;					  //scale
+
+		void exportKeyFrameXml(tinyxml2::XMLElement* keyframesElem, tinyxml2::XMLDocument* pXMLDocument);
 	} skeletonKeyframe;
 
 	// A class for storing an animation track
@@ -44,19 +27,19 @@ namespace EasyOgreExporter
 	public:
 		//constructor
 		ExTrack()
-    {
+		{
 			clear();
 		}
 
 		//destructor
 		~ExTrack()
-    {
+		{
 			clear();
 		}
 
 		//clear track data
 		void clear()
-    {
+		{
 			m_type = TT_SKELETON;
 			m_index = 0;
 			m_bone = "";
@@ -65,37 +48,39 @@ namespace EasyOgreExporter
 
 		//add skeleton animation keyframe
 		void addSkeletonKeyframe(skeletonKeyframe& k)
-    {
+		{
 			m_skeletonKeyframes.push_back(k);
 		}
 
-    void optimize()
-    {
-      if (m_skeletonKeyframes.size() > 2)
-      {
-        skeletonKeyframe prevKey;
-        skeletonKeyframe nextKey;
-        skeletonKeyframe key;
-        for (int i = 0; i < m_skeletonKeyframes.size(); i++)
-        {
-          if (m_skeletonKeyframes.size() > i + 2)
-          {
-            prevKey = m_skeletonKeyframes[i];
-            nextKey = m_skeletonKeyframes[i + 1];
-            key = m_skeletonKeyframes[i + 2];
+		void optimize()
+		{
+			if (m_skeletonKeyframes.size() > 2)
+			{
+				skeletonKeyframe prevKey;
+				skeletonKeyframe nextKey;
+				skeletonKeyframe key;
+				for (int i = 0; i < m_skeletonKeyframes.size(); i++)
+				{
+					if (m_skeletonKeyframes.size() > i + 2)
+					{
+						prevKey = m_skeletonKeyframes[i];
+						nextKey = m_skeletonKeyframes[i + 1];
+						key = m_skeletonKeyframes[i + 2];
 
-            if(key.rot.Equals(prevKey.rot) != 0 && key.rot.Equals(nextKey.rot) != 0 &&
-               key.trans.Equals(prevKey.trans) != 0 && key.trans.Equals(nextKey.trans) != 0 &&
-               key.scale.Equals(prevKey.scale) != 0 && key.scale.Equals(nextKey.scale) != 0)
-            {
-              //remove the key
-              m_skeletonKeyframes.erase(m_skeletonKeyframes.begin() + (i + 1));
-              i--;
-            }
-          }
-        }
-      }
-    }
+						if (key.rot.Equals(prevKey.rot) != 0 && key.rot.Equals(nextKey.rot) != 0 &&
+							key.trans.Equals(prevKey.trans) != 0 && key.trans.Equals(nextKey.trans) != 0 &&
+							key.scale.Equals(prevKey.scale) != 0 && key.scale.Equals(nextKey.scale) != 0)
+						{
+							//remove the key
+							m_skeletonKeyframes.erase(m_skeletonKeyframes.begin() + (i + 1));
+							i--;
+						}
+					}
+				}
+			}
+		}
+
+		void exportTrackXml(tinyxml2::XMLElement* tracksElem, tinyxml2::XMLDocument* pXMLDocument);
 
 		//public members
 		trackType m_type;
@@ -103,7 +88,7 @@ namespace EasyOgreExporter
 		std::string m_bone;
 		std::vector<skeletonKeyframe> m_skeletonKeyframes;
 	};
-	
+
 
 	// A class for storing animation information
 	// an animation is a collection of different tracks
@@ -112,19 +97,19 @@ namespace EasyOgreExporter
 	public:
 		//constructor
 		ExAnimation()
-    {
+		{
 			clear();
 		}
 
 		//destructor
 		~ExAnimation()
-    { 
-			clear(); 
+		{
+			clear();
 		}
 
 		//clear animation data
 		void clear()
-    {
+		{
 			m_name = "";
 			m_length = 0;
 			m_tracks.clear();
@@ -132,9 +117,11 @@ namespace EasyOgreExporter
 
 		//add track
 		void addTrack(ExTrack& t)
-    {
+		{
 			m_tracks.push_back(t);
 		}
+
+		void exportAnimationXml(tinyxml2::XMLElement* animationsElem, tinyxml2::XMLDocument* pXMLDocument);
 
 		//public memebers
 		std::string m_name;
