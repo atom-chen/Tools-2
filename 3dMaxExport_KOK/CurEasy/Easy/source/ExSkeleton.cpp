@@ -1032,5 +1032,4 @@ namespace EasyOgreExporter
 
 		return true;
 	}
-
 };	//end namespace

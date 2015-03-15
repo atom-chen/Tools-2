@@ -1728,5 +1728,4 @@ namespace EasyOgreExporter
 		//End render pass description
 		outMaterial << "\t\t}\n";
 	}
-
 };	//end namespace

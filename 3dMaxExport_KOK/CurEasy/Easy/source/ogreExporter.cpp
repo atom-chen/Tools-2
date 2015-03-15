@@ -1160,7 +1160,7 @@ namespace EasyOgreExporter
 						}
 					}
 				}
-		}
+			}
 
 			pGameNode->ReleaseIGameObject();
 		}
@@ -1306,7 +1306,7 @@ namespace EasyOgreExporter
 #else
 						EasyOgreExporterLog("Warning, Mesh node: %s skipped, no faces found\n", pGameNode->GetName());
 #endif
-				}
+					}
 				}
 				break;
 				case IGameObject::IGAME_LIGHT:
@@ -1326,10 +1326,10 @@ namespace EasyOgreExporter
 							{
 								parent = sceneData->writeNodeData(parent, pGameNode, IGameObject::IGAME_LIGHT);
 								sceneData->writeLightData(parent, pGameLight);
+							}
 						}
 					}
 				}
-			}
 				break;
 				case IGameObject::IGAME_CAMERA:
 				{
@@ -1382,9 +1382,8 @@ namespace EasyOgreExporter
 		nodeCount++;
 
 		return true;
-		}
-
-	} // end namespace
+	}
+} // end namespace
 
 
 class EasyOgreExporterClassDesc :public ClassDesc2
@@ -1399,6 +1398,7 @@ public:
 	const TCHAR*	InternalName() { return _T("OgreExporter"); }
 	HINSTANCE		HInstance() { return hInstance; }
 };
+
 
 static EasyOgreExporterClassDesc EasyOgreExporterDesc;
 ClassDesc2* GetEasyOgreExporterDesc() { return &EasyOgreExporterDesc; }

@@ -165,5 +165,4 @@ namespace EasyOgreExporter
 			}
 		}
 	}
-
 }; //end of namespace

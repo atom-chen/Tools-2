@@ -557,5 +557,4 @@ namespace EasyOgreExporter
 		//textures copy
 		return true;
 	};
-
 };	//end namespace

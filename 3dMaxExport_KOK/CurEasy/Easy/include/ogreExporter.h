@@ -8,11 +8,9 @@
 
 namespace EasyOgreExporter
 {
-
 	class OgreSceneExporter : public SceneExport
 	{
 	public:
-
 		// public methods
 		OgreSceneExporter();
 		virtual ~OgreSceneExporter();

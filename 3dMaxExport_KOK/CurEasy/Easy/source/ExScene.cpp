@@ -692,5 +692,4 @@ namespace EasyOgreExporter
 	{
 		return xmlDoc->SaveFile(scenePath.c_str());
 	}
-
 }; //end of namespace

@@ -1997,5 +1997,4 @@ namespace EasyOgreExporter
 
 		return true;
 	}
-
 }; //end of namespace

@@ -1,7 +1,6 @@
 #ifndef _EXOGRECONVERTER_H
 #define _EXOGRECONVERTER_H
 
-
 #include "paramList.h"
 #include "ExMaterialSet.h"
 

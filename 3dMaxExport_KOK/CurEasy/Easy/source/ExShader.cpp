@@ -1294,5 +1294,4 @@ namespace EasyOgreExporter
 		m_program = out.str();
 		return m_program;
 	}
-
 };

@@ -1,7 +1,6 @@
 #ifndef _EXTOOLS_H
 #define _EXTOOLS_H
 
-
 #include "ExPrerequisites.h"
 #include "decomp.h"
 #include "iskin.h"

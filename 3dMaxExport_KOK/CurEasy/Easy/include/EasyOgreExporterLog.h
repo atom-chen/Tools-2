@@ -5,8 +5,7 @@
 
 namespace EasyOgreExporter
 {
-
-#define EasyOgreExporterLog ::EasyOgreExporter::EasyOgreExporterLogFile::Log
+	#define EasyOgreExporterLog ::EasyOgreExporter::EasyOgreExporterLogFile::Log
 
 	class EasyOgreExporterLogFile
 	{

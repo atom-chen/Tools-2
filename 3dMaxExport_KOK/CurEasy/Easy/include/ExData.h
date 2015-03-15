@@ -5,12 +5,10 @@
 
 namespace EasyOgreExporter
 {
-
 	class ExData
 	{
 	public:
 		static OgreExporter maxInterface;
 	};
-
 }
 #endif

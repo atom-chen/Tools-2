@@ -79,7 +79,6 @@ namespace EasyOgreExporter
 		bool exportSkeletonAndAnimation2Xml();
 
 	private:
-
 		//load a clip
 		bool loadClip(std::string clipName, int start, int stop, int rate);
 		//load a keyframe for a particular joint at current time

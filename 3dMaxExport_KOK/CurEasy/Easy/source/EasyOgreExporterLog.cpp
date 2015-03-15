@@ -12,7 +12,6 @@
 
 namespace EasyOgreExporter
 {
-
 	// The full path to the log file.
 	std::string EasyOgreExporterLogFile::_logPath;
 
@@ -60,8 +59,6 @@ namespace EasyOgreExporter
 	{
 		Log(str);
 	}
-
-
 } // namespace
 
 

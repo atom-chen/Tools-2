@@ -90,7 +90,6 @@ namespace EasyOgreExporter
 	private:
 		ExOgreConverter* m_converter;
 		unsigned int texUnitId;
-	protected:
 
 	public:
 		//constructor
@@ -123,7 +122,6 @@ namespace EasyOgreExporter
 		bool exportColor(Point4& color, IGameProperty* pGameProperty);
 		bool exportSpecular(IGameMaterial* pGameMaterial);
 		std::string getMaterialName(std::string prefix);
-	protected:
 	};
 
 };	//end of namespace

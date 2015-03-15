@@ -10,13 +10,11 @@ namespace EasyOgreExporter
 {
 	class ExMaterialSet
 	{
-	public:
 	private:
 		std::vector<ExMaterial*> m_materials;
 		std::vector<std::string> m_textures;
 		std::vector<ExShader*> m_Shaders;
 		ExMaterial* m_default;
-	protected:
 
 	public:
 		//constructor
@@ -46,7 +44,6 @@ namespace EasyOgreExporter
 		ExShader* getShader(std::string& name);
 		void addShader(ExShader* shader);
 		ExShader* createShader(ExMaterial* mat, ExShader::ShaderType type, ParamList &params);
-	protected:
 	};
 
 };	//end namespace

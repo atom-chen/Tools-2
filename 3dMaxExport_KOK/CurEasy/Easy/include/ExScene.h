@@ -1,10 +1,8 @@
 #ifndef _EXSCENE_H
 #define _EXSCENE_H
 
-
 #include "ExOgreConverter.h"
 #include "tinyxml2.h"
-
 
 namespace EasyOgreExporter
 {
