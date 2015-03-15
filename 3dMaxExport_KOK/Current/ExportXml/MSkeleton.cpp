@@ -36,9 +36,9 @@ void MSkeletonJoint::buildMatrix()
 	int oneIdx = 0;
 
 	// 由于矩阵是按照列存储的，因此这里也先访问列，前 3 列是 3 个坐标轴，第 4 列是偏移
-	for (; col < 3; ++row)
+	for (col = 0; col < 3; ++col)
 	{
-		for (; row < 3; ++col)
+		for (row = 0; row < 3; ++row)
 		{
 			oneIdx = col * 3 + row;
 			

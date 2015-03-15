@@ -1,7 +1,7 @@
 #include "AppFrame.h"
 #include "ProgOptions.h"
 
-AppFrame* g_pAppFrame;
+AppFrame* g_pAppFrame = new AppFrame;
 
 DEFINE_SET_GET_PFUNC(AppFrame,ProgOptions,pProgOptions);
 

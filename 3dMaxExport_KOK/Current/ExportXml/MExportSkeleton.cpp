@@ -5,9 +5,11 @@
 #include "AppFrame.h"
 #include "ProgOptions.h"
 
+#include <string>
+
 void MExportSkeleton::exportSkeleton(AWD* pAwd)
 {
-	const char* fullPath = g_pAppFrame->getpProgOptions()->getinFileFullPath().c_str();
+	std::string fullPath = g_pAppFrame->getpProgOptions()->getinFileFullPath().c_str();
 	tinyxml2::XMLDocument* pXMLDocument = new tinyxml2::XMLDocument;
 	tinyxml2::XMLElement* pSkeletonElement = pXMLDocument->NewElement("skeleton");
 	pXMLDocument->InsertEndChild(pSkeletonElement);
@@ -26,7 +28,7 @@ void MExportSkeleton::exportSkeleton(AWD* pAwd)
 		pMSkeleton->buildboneXmlList(bones, pXMLDocument);
 	}
 
-	tinyxml2::XMLError ret = pXMLDocument->SaveFile(fullPath);
+	tinyxml2::XMLError ret = pXMLDocument->SaveFile(fullPath.c_str());
 	if (tinyxml2::XML_NO_ERROR == ret)
 	{
 		// ³É¹¦
