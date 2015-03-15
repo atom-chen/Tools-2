@@ -20,7 +20,6 @@ float EXVERSION = 2.2f;
 
 namespace EasyOgreExporter
 {
-
 	/**
 	* Configuration interface
 	**/
@@ -547,7 +546,7 @@ namespace EasyOgreExporter
 		else
 		{
 			folderIndex = folderIndexBackward > folderIndexForward ? folderIndexBackward : folderIndexForward;
-	}
+		}
 
 		if (sceneIndex == std::string::npos || folderIndex == std::string::npos)
 		{
@@ -596,7 +595,7 @@ namespace EasyOgreExporter
 		}
 
 		return ExData::maxInterface.exportScene();
-}
+	}
 
 	void OgreSceneExporter::loadExportConf(std::string path, ParamList &param)
 	{
@@ -728,8 +727,8 @@ namespace EasyOgreExporter
 			child = rootElem->FirstChildElement("IDC_NUMMIPS");
 			if (child && child->GetText())
 				param.maxMipmaps = atoi(child->GetText());
+		}
 	}
-}
 
 	// Dummy function for progress bar.
 	DWORD WINAPI fn(LPVOID arg)
@@ -1045,7 +1044,7 @@ namespace EasyOgreExporter
 		if(m_params.yUpAxis)
 		{
 			pConversionManager->SetCoordSystem(IGameConversionManager::IGAME_OGL);
-	}
+		}
 		else
 		{
 			pConversionManager->SetCoordSystem(IGameConversionManager::IGAME_MAX);
@@ -1126,7 +1125,7 @@ namespace EasyOgreExporter
 
 		MessageBox(GetCOREInterface()->GetMAXHWnd(), _T("Export done successfully."), _T("Info"), MB_OK);
 		return true;
-		}
+	}
 
 	void OgreExporter::LoadSkinBones(IGameNode* pGameNode)
 	{
@@ -1164,7 +1163,7 @@ namespace EasyOgreExporter
 		}
 
 			pGameNode->ReleaseIGameObject();
-	}
+		}
 
 		for (int i = 0; i < pGameNode->GetChildCount(); ++i)
 		{
@@ -1174,7 +1173,7 @@ namespace EasyOgreExporter
 				LoadSkinBones(pChildGameNode);
 			}
 		}
-}
+	}
 
 	bool OgreExporter::IsSkinnedBone(IGameNode* pGameNode)
 	{
@@ -1388,7 +1387,6 @@ namespace EasyOgreExporter
 	} // end namespace
 
 
-
 class EasyOgreExporterClassDesc :public ClassDesc2
 {
 public:
@@ -1401,6 +1399,7 @@ public:
 	const TCHAR*	InternalName() { return _T("OgreExporter"); }
 	HINSTANCE		HInstance() { return hInstance; }
 };
+
 static EasyOgreExporterClassDesc EasyOgreExporterDesc;
 ClassDesc2* GetEasyOgreExporterDesc() { return &EasyOgreExporterDesc; }
 

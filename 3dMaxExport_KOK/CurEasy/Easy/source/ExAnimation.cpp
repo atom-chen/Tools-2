@@ -66,7 +66,7 @@ namespace EasyOgreExporter
 
 		for (; trackBeginIte != trackEndIte; ++trackBeginIte)
 		{
-			trackBeginIte->exportTrackXml(tracksElem, pXMLDocument)
+			trackBeginIte->exportTrackXml(tracksElem, pXMLDocument);
 		}
 	}
 }
