@@ -10,6 +10,8 @@
 #include "ProtoDefine.h"
 #include "AppFrame.h"
 #include "ProgOptions.h"
+#include "SkeletonAnimationModify.h"
+#include "UtilWrap.h"
 
 namespace EasyOgreExporter
 {
@@ -565,7 +567,9 @@ namespace EasyOgreExporter
 
 			if (!cnt)
 			{
-				loadClip("default_skl", animRange.Start(), animRange.End(), GetTicksPerFrame());
+				// loadClip("default_skl", animRange.Start(), animRange.End(), GetTicksPerFrame());
+				// KBEN: 读取设置的动画范围，然后导出
+				loadSelfModifyClip(pGameNode);
 			}
 			else
 			{
@@ -963,10 +967,31 @@ namespace EasyOgreExporter
 	//	return true;
 	//}
 
+	void ExSkeleton::loadSelfModifyClip(IGameNode* pGameNode)
+	{
+		if (m_SkeletonAnimationModify)
+		{
+			delete m_SkeletonAnimationModify;
+		}
+
+		IGameModifier* pIGameModifier = UtilWrap::getGameModifierByGameNode(pGameNode, "KOKIII");
+		if (pIGameModifier)
+		{
+			m_SkeletonAnimationModify = new SkeletonAnimationModify(pIGameModifier);
+			std::vector<Modify_ClipFrameItem>::iterator frameItemBeginIte, frameiemEndIte;
+			frameItemBeginIte = m_SkeletonAnimationModify->getclipFrameItemVec()->begin();
+			frameiemEndIte = m_SkeletonAnimationModify->getclipFrameItemVec()->end();
+			for (; frameItemBeginIte != frameiemEndIte; ++frameItemBeginIte)
+			{
+				loadClip(frameItemBeginIte->m_name, frameItemBeginIte->m_startFrame, frameItemBeginIte->m_endFrame, GetTicksPerFrame());
+			}
+		}
+	}
+
 	// 导出骨骼到 xml 
 	bool ExSkeleton::exportSkeletonAndAnimation2Xml()
 	{
-		const char* pFileName = g_pAppFrame->getpProgOptions()->getinFileFullPath().c_str();
+		const char* pFileName = g_pAppFrame->getpProgOptions()->getoutSkeletonXmlFullPath().c_str();
 		// xml 文档
 		tinyxml2::XMLDocument* pXMLDocument = new tinyxml2::XMLDocument;
 		// bones 节点

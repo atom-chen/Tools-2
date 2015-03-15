@@ -1,8 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////
-// ExSkeleton.h
-// Author   : Bastien BOURINEAU
-// Start Date : January 21, 2012
-////////////////////////////////////////////////////////////////////////////////
 #ifndef _EXSKELETON_H
 #define _EXSKELETON_H
 
@@ -42,6 +37,7 @@ namespace EasyOgreExporter
 		Quat rot;
 	};
 
+	class SkeletonAnimationModify;
 
 	class ExSkeleton
 	{
@@ -89,6 +85,7 @@ namespace EasyOgreExporter
 		//bool createOgreSkeletonAnimations(Ogre::SkeletonPtr pSkeleton);
 		//load a joint
 		bool loadJoint(INode* pNode);
+		void loadSelfModifyClip(IGameNode* pGameNode);			// export animation by self modify settings
 
 		Matrix3 offsetTM;
 		IGameNode* m_pGameNode;
@@ -103,6 +100,8 @@ namespace EasyOgreExporter
 		ParamList m_params;
 		ExOgreConverter* m_converter;
 		bool m_isBiped;
+
+		SkeletonAnimationModify* m_SkeletonAnimationModify;
 	};
 
 }	//end namespace

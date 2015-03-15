@@ -3,10 +3,14 @@
 #include <string.h>
 
 DEFINE_SET_GET_FUNC(ProgOptions,std::string,inFileFullPath);
+DEFINE_SET_GET_FUNC(ProgOptions, std::string, outMeshXmlFullPath);
+DEFINE_SET_GET_FUNC(ProgOptions, std::string, outSkeletonXmlFullPath);
 
 ProgOptions::ProgOptions()
 {
 	m_inFileFullPath = "E:\\aaaa.xml";
+	m_outMeshXmlFullPath = "E:\\mesh.xml";
+	m_outSkeletonXmlFullPath = "E:\\skeleton.xml";
 }
 
 void ProgOptions::parseParam(int argc, char *argv[])

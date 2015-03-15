@@ -1976,7 +1976,7 @@ namespace EasyOgreExporter
 
 	bool ExMesh::exportMeshAndSkin2Xml()
 	{
-		const char* pFileName = g_pAppFrame->getpProgOptions()->getinFileFullPath().c_str();
+		const char* pFileName = g_pAppFrame->getpProgOptions()->getoutMeshXmlFullPath().c_str();
 		// xml ÎÄµµ
 		tinyxml2::XMLDocument* pXMLDocument = new tinyxml2::XMLDocument;
 		// bones ½Úµã

@@ -71,8 +71,14 @@ namespace EasyOgreExporter
 				{
 					EasyOgreExporterLog("Warning : Mesh skipped, see previous log to know why.\n");
 				}
+				// д mesh xml
+				EasyOgreExporterLog("Writing mesh XMl...\n");
+				if (!(ret = mesh->exportMeshAndSkin2Xml()))
+				{
+					EasyOgreExporterLog("Warning : Writing mesh XMl failed, see previous log to know why.\n");
+				}
 			}
-	}
+		}
 
 		// Write skeleton binary
 		if (mParams.exportSkeleton && mesh->getSkeleton() && isFirstInstance(pGameNode))
@@ -85,11 +91,16 @@ namespace EasyOgreExporter
 			{
 				EasyOgreExporterLog("Error writing skeleton binary file\n");
 			}
+			EasyOgreExporterLog("Writing skeleton XMl...\n");
+			if (!mesh->getSkeleton()->exportSkeletonAndAnimation2Xml())
+			{
+				EasyOgreExporterLog("Error writing skeleton XML file\n");
+			}
 		}
 
 		delete mesh;
 		return ret;
-}
+	}
 
 	bool ExOgreConverter::writeMaterialFile()
 	{
