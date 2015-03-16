@@ -37,7 +37,7 @@ namespace EasyOgreExporter
 		int numofProps = pIPropertyContainer->GetNumberOfProperties();	// 参数属性数量
 		// Modify 参数在 第 0 个，总共就 1 个
 		int idx = 0;
-		//for (idx = 0; idx < numofProps; ++idx)
+		//for (idx = 0; idx < numofProps; ++idx)	// numofProps 竟然是 5 ，5 次遍历，内容都是一样的
 		//{
 			//pIGameProperty = pIPropertyContainer->GetProperty(idx);	// 遍历参数属性
 			pIGameProperty = pIPropertyContainer->GetProperty(0);	// 遍历参数属性，直接获取第 1 个就行了，因为就一个参数区域
