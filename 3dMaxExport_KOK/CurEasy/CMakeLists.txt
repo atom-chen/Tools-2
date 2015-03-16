@@ -15,7 +15,7 @@ if (WIN32 OR APPLE)
 endif(WIN32 OR APPLE)
 
 option(DEBUG                "Debug mode"                            OFF)
-set(MAX_SDK_ROOT "C:/Program Files/Autodesk" CACHE PATH "MAX_SDK_ROOT")
+set(MAX_SDK_ROOT "D:/Program Files/Autodesk" CACHE PATH "MAX_SDK_ROOT")
 set(MAX_EDITOR_ROOT "D:/Program Files/Autodesk" CACHE PATH "MAX_EDITOR_ROOT")
 
 set(MAX_SDK_INCLUDE_PATH "${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/include" "${MAX_SDK_ROOT}/3ds Max 2015 SDK/maxsdk/include/IGame")

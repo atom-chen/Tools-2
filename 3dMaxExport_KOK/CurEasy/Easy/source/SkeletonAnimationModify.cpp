@@ -3,7 +3,7 @@
 
 namespace EasyOgreExporter
 {
-	DEFINE_SET_GET_RETPFUNC(SkeletonAnimationModify, std::vector<Modify_ClipFrameItem>, clipFrameItemVec);
+	DEFINE_SET_GET_RETPFUNC(SkeletonAnimationModify, std::vector<Modify_ClipFrameItem*>, clipFrameItemVec);
 
 	SkeletonAnimationModify::SkeletonAnimationModify(IGameModifier* pGameModifier)
 	{
@@ -16,53 +16,100 @@ namespace EasyOgreExporter
 
 	}
 
+	void SkeletonAnimationModify::cleanClipItemVec()
+	{
+		int idx = 0;
+		for (idx = 0; idx < m_clipFrameItemVec.size(); ++idx)
+		{
+			delete m_clipFrameItemVec[idx];
+		}
+	}
+
 	void SkeletonAnimationModify::initModifyData()
 	{
-		int numBlockparams;
+		cleanClipItemVec();
+
 		IPropertyContainer* pIPropertyContainer;
-		IGameProperty* pBeginIGameProperty;
-		IGameProperty* pEndIGameProperty;
-		IParamBlock2* pBeginIParamBlock2;
-		IParamBlock2* pEndIParamBlock2;
+		IGameProperty* pIGameProperty;
+		IParamBlock2* pIParamBlock2;
 
-		pIPropertyContainer = m_pGameModifie->GetIPropertyContainer();
-		pIPropertyContainer->GetNumberOfProperties();
-		pIPropertyContainer->GetProperty(0);
-
-		MCHAR* paramName;
-		paramName = UtilWrap::A2W("afframes");
-		pBeginIGameProperty = pIPropertyContainer->QueryProperty(paramName);
-		pBeginIGameProperty->GetName();
-		if (pBeginIGameProperty->IsPBlock2())
+		pIPropertyContainer = m_pGameModifie->GetIPropertyContainer();	// 所有参数容器
+		int numofProps = pIPropertyContainer->GetNumberOfProperties();	// 参数属性数量
+		// Modify 参数在 第 0 个，总共就 1 个
+		int idx = 0;
+		for (idx = 0; idx < numofProps; ++idx)
 		{
-			pBeginIParamBlock2 = pBeginIGameProperty->GetMaxParamBlock2();
-			int numBlockparams = pBeginIParamBlock2->NumParams();
-			int p = 0;
-			ParamID pid_names = NULL;
-			ParamID pid_starts = NULL;
-			ParamID pid_ends = NULL;
-
-			for (p = 0; p < numBlockparams; p++)
+			pIGameProperty = pIPropertyContainer->GetProperty(0);	// 遍历参数属性
+			if (pIGameProperty->IsPBlock2())
 			{
-				ParamID pid = pBeginIParamBlock2->IndextoID(p);
-				ParamDef def = pBeginIParamBlock2->GetParamDef(pid);
-				char * paramName = UtilWrap::W2A(def.int_name);
-				if (UtilWrap::isStrEqual(paramName, "saveAnimClipNames")){
-					pid_names = pid;
-					if (pBeginIGameProperty->Count(pid)<minCount){ minCount = pBeginIGameProperty->Count(pid); }
-				}
-				if (UtilWrap::isStrEqual(paramName, "saveStartFrames")){
-					pid_starts = pid;
-					if (pBeginIGameProperty->Count(pid)<minCount){ minCount = pBeginIGameProperty->Count(pid); }
-				}
-				if (UtilWrap::isStrEqual(paramName, "saveEndFrames")){
-					pid_ends = pid;
-					if (pBeginIGameProperty->Count(pid)<minCount){ minCount = pBeginIGameProperty->Count(pid); }
-				}
+				pIParamBlock2 = pIGameProperty->GetMaxParamBlock2();
+				ReadAnimationClipsBlock(pIParamBlock2);
 			}
 		}
+	}
 
-		paramName = UtilWrap::A2W("alframes");
-		pEndIGameProperty = pIPropertyContainer->QueryProperty(paramName);
+	void SkeletonAnimationModify::ReadAnimationClipsBlock(IParamBlock2 *pb)
+	{
+		int numBlockparams = pb->NumParams();
+		int p = 0;
+		ParamID pid_names = NULL;
+		ParamID pid_starts = NULL;
+		ParamID pid_ends = NULL;
+		int minCount = 100000;
+		for (p = 0; p < numBlockparams; p++) 
+		{
+			ParamID pid = pb->IndextoID(p);
+			ParamDef def = pb->GetParamDef(pid);
+			char * paramName = UtilWrap::W2A(def.int_name);
+			if (UtilWrap::isStrEqual(paramName, "anames"))
+			{
+				pid_names = pid;
+				if (pb->Count(pid) < minCount)
+				{ 
+					minCount = pb->Count(pid); 
+				}
+			}
+			if (UtilWrap::isStrEqual(paramName, "afframes"))
+			{
+				pid_starts = pid;
+				if (pb->Count(pid) < minCount)
+				{ 
+					minCount = pb->Count(pid); 
+				}
+			}
+			if (UtilWrap::isStrEqual(paramName, "alframes"))
+			{
+				pid_ends = pid;
+				if (pb->Count(pid) < minCount)
+				{ 
+					minCount = pb->Count(pid); 
+				}
+			}
+			free(paramName);
+		}
+		if ((pid_names == NULL) || (pid_starts == NULL) || (pid_ends == NULL)){
+			minCount = 0;
+		}
+		if (minCount != 0)
+		{
+			int clipCnt = 0;
+			for (clipCnt = 0; clipCnt < minCount; clipCnt++)
+			{
+				char * thisName_ptr = UtilWrap::W2A(pb->GetStr(pid_names, 0, clipCnt));
+				int startFrame = pb->GetInt(pid_starts, 0, clipCnt);
+				int endFrame = pb->GetInt(pid_ends, 0, clipCnt);
+				//checking if name is unique
+				Modify_ClipFrameItem * clipItem = new Modify_ClipFrameItem;
+				m_clipFrameItemVec.push_back(clipItem);
+				clipItem->m_name = thisName_ptr;
+				clipItem->m_startFrame = startFrame * GetTicksPerFrame();		// 输出的是 tick ，不是 Frame ，里面使用的都是 tick
+				clipItem->m_endFrame = endFrame * GetTicksPerFrame();
+
+				free(thisName_ptr);
+			}
+		}
+		pid_names = NULL;
+		pid_starts = NULL;
+		pid_ends = NULL;
 	}
 }

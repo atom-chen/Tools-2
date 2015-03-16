@@ -24,16 +24,18 @@ namespace EasyOgreExporter
 	{
 	protected:
 		IGameModifier* m_pGameModifie;
-		std::vector<Modify_ClipFrameItem> m_clipFrameItemVec;
+		std::vector<Modify_ClipFrameItem*> m_clipFrameItemVec;
 
 	protected:
 		void initModifyData();		// 获取 Modify 中的数据
+		void cleanClipItemVec();	// 释放 Vector 资源
 
 	public:
 		SkeletonAnimationModify(IGameModifier* pGameModifier);
 		~SkeletonAnimationModify();
 
-		DECLARE_SET_GET_RETPFUNC(std::vector<Modify_ClipFrameItem>, clipFrameItemVec);
+		DECLARE_SET_GET_RETPFUNC(std::vector<Modify_ClipFrameItem*>, clipFrameItemVec);
+		void ReadAnimationClipsBlock(IParamBlock2 *pb);
 	};
 }	//end namespace
 

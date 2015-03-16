@@ -44,7 +44,7 @@ namespace EasyOgreExporter
 		if (lTexCoords.size() > 0)
 		{
 			texcoordElem->SetAttribute("u", lTexCoords[0].x);
-			texcoordElem->SetAttribute("v", lTexCoords[1].y);
+			texcoordElem->SetAttribute("v", lTexCoords[0].y);
 		}
 		else
 		{

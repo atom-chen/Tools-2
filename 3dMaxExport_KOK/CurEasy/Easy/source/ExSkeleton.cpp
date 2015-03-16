@@ -56,6 +56,7 @@ namespace EasyOgreExporter
 		m_params = converter->getParams();
 		m_isBiped = false;
 		offsetTM = offset;
+		m_SkeletonAnimationModify = nullptr;
 	}
 
 	ExSkeleton::~ExSkeleton()
@@ -978,12 +979,12 @@ namespace EasyOgreExporter
 		if (pIGameModifier)
 		{
 			m_SkeletonAnimationModify = new SkeletonAnimationModify(pIGameModifier);
-			std::vector<Modify_ClipFrameItem>::iterator frameItemBeginIte, frameiemEndIte;
+			std::vector<Modify_ClipFrameItem*>::iterator frameItemBeginIte, frameiemEndIte;
 			frameItemBeginIte = m_SkeletonAnimationModify->getclipFrameItemVec()->begin();
 			frameiemEndIte = m_SkeletonAnimationModify->getclipFrameItemVec()->end();
 			for (; frameItemBeginIte != frameiemEndIte; ++frameItemBeginIte)
 			{
-				loadClip(frameItemBeginIte->m_name, frameItemBeginIte->m_startFrame, frameItemBeginIte->m_endFrame, GetTicksPerFrame());
+				loadClip((*frameItemBeginIte)->m_name, (*frameItemBeginIte)->m_startFrame, (*frameItemBeginIte)->m_endFrame, GetTicksPerFrame());
 			}
 		}
 	}
