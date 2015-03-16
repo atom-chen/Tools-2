@@ -1,0 +1,12 @@
+(1) 
+Magic Header
+3 个字节
+"ATF"
+(2) 
+版本
+sizeof(int) 4 个字节
+(3)
+骨骼名字长度
+sizeof(int) 4 个字节
+(4)
+骨骼名字字符串
