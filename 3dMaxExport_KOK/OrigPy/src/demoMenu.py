@@ -39,3 +39,4 @@ def kok2_LoadMenu():
 	Kok2_RemoveMenu()
 	kok2_AddMenu()
 
+kok2_LoadMenu()
