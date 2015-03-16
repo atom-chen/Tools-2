@@ -43,19 +43,17 @@ namespace EasyOgreExporter
 		if (pGameObject)
 		{
 			int numModifiers = pGameObject->GetNumModifiers();
+			for (int i = 0; i < numModifiers; ++i)
 			{
-				for (int i = 0; i < numModifiers; ++i)
+				IGameModifier* pGameModifier = pGameObject->GetIGameModifier(i);
 				{
-					IGameModifier* pGameModifier = pGameObject->GetIGameModifier(i);
+					if (pGameModifier)
 					{
-						if (pGameModifier)
+						MSTR className = pGameModifier->GetClassName();
+						char * className_ptr = W2A(className);
+						if (isStrEqual(className_ptr, modifierName))
 						{
-							MSTR className = pGameModifier->GetClassName();
-							char * className_ptr = W2A(className);
-							if (isStrEqual(className_ptr, modifierName))
-							{
-								return pGameModifier;
-							}
+							return pGameModifier;
 						}
 					}
 				}

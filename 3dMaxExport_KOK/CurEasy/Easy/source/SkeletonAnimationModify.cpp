@@ -87,7 +87,8 @@ namespace EasyOgreExporter
 			}
 			free(paramName);
 		}
-		if ((pid_names == NULL) || (pid_starts == NULL) || (pid_ends == NULL)){
+		if ((pid_names == NULL) || (pid_starts == NULL) || (pid_ends == NULL))
+		{
 			minCount = 0;
 		}
 		if (minCount != 0)
