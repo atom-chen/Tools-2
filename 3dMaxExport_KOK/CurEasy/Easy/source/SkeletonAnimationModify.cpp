@@ -37,24 +37,25 @@ namespace EasyOgreExporter
 		int numofProps = pIPropertyContainer->GetNumberOfProperties();	// 参数属性数量
 		// Modify 参数在 第 0 个，总共就 1 个
 		int idx = 0;
-		for (idx = 0; idx < numofProps; ++idx)
-		{
-			pIGameProperty = pIPropertyContainer->GetProperty(0);	// 遍历参数属性
+		//for (idx = 0; idx < numofProps; ++idx)
+		//{
+			//pIGameProperty = pIPropertyContainer->GetProperty(idx);	// 遍历参数属性
+			pIGameProperty = pIPropertyContainer->GetProperty(0);	// 遍历参数属性，直接获取第 1 个就行了，因为就一个参数区域
 			if (pIGameProperty->IsPBlock2())
 			{
 				pIParamBlock2 = pIGameProperty->GetMaxParamBlock2();
 				ReadAnimationClipsBlock(pIParamBlock2);
 			}
-		}
+		//}
 	}
 
 	void SkeletonAnimationModify::ReadAnimationClipsBlock(IParamBlock2 *pb)
 	{
 		int numBlockparams = pb->NumParams();
 		int p = 0;
-		ParamID pid_names = NULL;
-		ParamID pid_starts = NULL;
-		ParamID pid_ends = NULL;
+		ParamID pid_names = -1;
+		ParamID pid_starts = -1;
+		ParamID pid_ends = -1;
 		int minCount = 100000;
 		for (p = 0; p < numBlockparams; p++) 
 		{
@@ -87,7 +88,7 @@ namespace EasyOgreExporter
 			}
 			free(paramName);
 		}
-		if ((pid_names == NULL) || (pid_starts == NULL) || (pid_ends == NULL))
+		if ((pid_names == -1) || (pid_starts == -1) || (pid_ends == -1))
 		{
 			minCount = 0;
 		}

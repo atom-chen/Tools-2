@@ -15,9 +15,9 @@ public:
 	ProgOptions();
 	void parseParam(int argc, char *argv[]);
 
-	DECLARE_SET_GET_FUNC(std::string, inFileFullPath);
-	DECLARE_SET_GET_FUNC(std::string, outMeshXmlFullPath);
-	DECLARE_SET_GET_FUNC(std::string, outSkeletonXmlFullPath);
+	DECLARE_SET_GET_REF_FUNC(std::string, inFileFullPath);
+	DECLARE_SET_GET_REF_FUNC(std::string, outMeshXmlFullPath);
+	DECLARE_SET_GET_REF_FUNC(std::string, outSkeletonXmlFullPath);
 };
 
 #endif

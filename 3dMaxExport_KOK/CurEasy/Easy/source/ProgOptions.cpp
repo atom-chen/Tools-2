@@ -2,9 +2,9 @@
 #include <iostream>
 #include <string.h>
 
-DEFINE_SET_GET_FUNC(ProgOptions,std::string,inFileFullPath);
-DEFINE_SET_GET_FUNC(ProgOptions, std::string, outMeshXmlFullPath);
-DEFINE_SET_GET_FUNC(ProgOptions, std::string, outSkeletonXmlFullPath);
+DEFINE_SET_GET_REF_FUNC(ProgOptions, std::string, inFileFullPath);
+DEFINE_SET_GET_REF_FUNC(ProgOptions, std::string, outMeshXmlFullPath);
+DEFINE_SET_GET_REF_FUNC(ProgOptions, std::string, outSkeletonXmlFullPath);
 
 ProgOptions::ProgOptions()
 {

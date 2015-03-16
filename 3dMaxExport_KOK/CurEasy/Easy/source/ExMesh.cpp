@@ -11,6 +11,7 @@
 #include <map>
 #include "AppFrame.h"
 #include "ProgOptions.h"
+#include "UtilWrap.h"
 
 //TODO bounding on skeleton
 
@@ -1995,6 +1996,11 @@ namespace EasyOgreExporter
 			beginIte->export_Face_Geometry_BoneAssignments_Xml(submeshesElem, pXMLDocument);
 		}
 
-		return true;
+		if (UtilWrap::isTinyXmlSuccess(pXMLDocument->SaveFile(pFileName)))
+		{
+			return true;
+		}
+
+		return false;
 	}
 }; //end of namespace

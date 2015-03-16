@@ -975,7 +975,7 @@ namespace EasyOgreExporter
 			delete m_SkeletonAnimationModify;
 		}
 
-		IGameModifier* pIGameModifier = UtilWrap::getGameModifierByGameNode(pGameNode, "KOKIII");
+		IGameModifier* pIGameModifier = UtilWrap::getGameModifierByGameNode(pGameNode, "ExportableDataModifier");
 		if (pIGameModifier)
 		{
 			m_SkeletonAnimationModify = new SkeletonAnimationModify(pIGameModifier);
@@ -1050,12 +1050,11 @@ namespace EasyOgreExporter
 			aniBeginIte->exportAnimationXml(animationsElem, pXMLDocument);
 		}
 
-		if (pXMLDocument->SaveFile(pFileName) != tinyxml2::XML_SUCCESS &&
-			pXMLDocument->SaveFile(pFileName) != tinyxml2::XML_NO_ERROR)
+		if (UtilWrap::isTinyXmlSuccess(pXMLDocument->SaveFile(pFileName)))
 		{
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 };	//end namespace
