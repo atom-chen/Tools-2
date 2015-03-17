@@ -1,0 +1,180 @@
+(1) 
+Magic Header
+3 个字节
+"ATM "
+(2) 
+版本
+sizeof(int) 4 个字节
+(3)
+submesh 数量
+sizeof(int) 4 个字节
+(4)
+写入包围盒
+min
+3 * sizeof(float)
+max
+3 * sizeof(float)
+
+保存每一个 submesh
+{
+	(1)
+	写入 mesh 名称长度
+	sizeof(int)
+	(2)
+	写入 mesh 名称
+	sizeof(string)
+	(3)
+	写入包围盒
+	min
+	3 * sizeof(float)
+	max
+	3 * sizeof(float)
+	(4)
+	写入是否有多纹理坐标 1 有 0 没有
+	sizeof(char)
+	(5)
+	写入物件本身的矩阵
+	4 * 4  sizeof(float)
+	(6)
+	写入定点的数量
+	sizeof(DWORD)
+	(7)
+	循环写入定点信息
+	{
+		写入定点位置
+		3 * sizeof(float)
+		写入定点法向量
+		3 * sizeof(float)
+		写入定点纹理坐标
+		3 * sizeof(float)
+		
+		如果有多纹理坐标，再写入下一个纹理坐标就行了，只多写入一个
+		{
+			写入定点纹理坐标
+			3 * sizeof(float)
+		}
+	}
+	(8)
+	写入 Index 资料的长度
+	sizeof(DWORD)
+	(9)
+	循环写入 Index 资料
+	{
+		写入一个索引
+		sizeof(WORD)
+	}
+	(10)
+	写入 skinweight 资料
+	{
+		写入 skin 名称长度
+		sizeof(int)
+		写入 skin 名称
+		sizeof(string)
+		写入 skin weight 的资料大小
+		sizeof(DWORD)
+		循环写入skin weight -- 感觉应该是骨头索引
+		{
+			sizeof(DWORD)
+		}
+		循环写入权重
+		{
+			sizeof(DWORD)
+		}
+		写入 matrix offset -- 感觉是定点自己的局部偏移
+		4 * 4 sizeof(float)
+		
+		写入下一个 skinweight 资料
+	}
+	(11)
+	如果版本大于某一个版本
+	{
+		写入 meshtype
+		sizeof(DWORD)
+		写入 ribbonwidth
+		sizeof(DWORD)
+		写入 ribbonlength
+		sizeof(DWORD)
+	}
+	(12)
+	写入 AttribTable 资料的长度
+	sizeof(DWORD)
+	(13)
+	循环写入 AttribTable -- 不知道做什么使用的
+	{
+		写入 AttribId
+		sizeof(DWORD)
+		写入 FaceStart
+		sizeof(DWORD)
+		写入 FaceCount
+		sizeof(DWORD)
+		写入 VertexStart
+		sizeof(DWORD)
+		写入 VertexCount
+		sizeof(DWORD)
+	}
+	(14)
+	写入体贴图材质数量
+	sizeof(DWORD)
+	(15)
+	循环写入材质
+	{
+		写入贴图材质名称长度
+		sizeof(int)
+		写入贴图材质名称
+		sizeof(string)
+		写入材质
+		写入 diffuse
+		r   sizeof(float)
+		g   sizeof(float)
+		b   sizeof(float)
+		a   sizeof(float)
+		写入 power
+		power   sizeof(float)
+		写入 Specular
+		r   sizeof(float)
+		g   sizeof(float)
+		b   sizeof(float)
+		a   sizeof(float)
+		写入 Emissive
+		r   sizeof(float)
+		g   sizeof(float)
+		b   sizeof(float)
+		a   sizeof(float)
+		如果版本新的
+		{
+			写入 AlphaBlendType
+			sizeof(DWORD)
+			写入 TextureAniRows
+			sizeof(DWORD)
+			写入 TextureAniCols
+			sizeof(DWORD)
+			写入 TextureAniRepeat
+			sizeof(DWORD)
+			写入材质纹理动画--目前还没有实现
+		}
+	}
+	(16)
+	保存下一个 submesh
+}
+
+(5)
+写入结束 "@"
+sizeof(char)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

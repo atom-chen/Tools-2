@@ -1,0 +1,115 @@
+(1) 
+Magic Header
+3 个字节
+"ACT"
+(2) 
+版本
+sizeof(int) 4 个字节
+(3)
+写入一格 Frame 的时间
+sizeof(DWORD) 4 个字节
+(4)
+写入动作骨头数
+sizeof(WORD)
+(5)
+写入动作骨头资料
+
+{
+	动画是一根骨骼一个骨骼信息，整个都写入一个序列中，然后根据 actiontable 划分动画
+	(1)
+	写入对应的骨头名称长度
+	sizeof(DWORD)
+	(2)
+	写入对应的骨头名称长度
+	sizeof(string)
+	(3)
+	写入整个动画局部空间矩阵
+	4 * 4   sizeof(float)
+	(4)
+	写入 pos 关键帧的数量
+	sizeof(DWORD)
+	(5)
+	写入所有 pos 的信息
+	{
+		写入 pos 关键帧时间
+		sizeof(DWORD)
+		写入 pos x
+		sizeof(float)
+		写入 pos y
+		sizeof(float)
+		写入 pos z
+		sizeof(float)
+	}
+	(6)
+	写入 rotate 关键帧的数量
+	sizeof(DWORD)
+	(7)
+	写入所有 rotate 的信息
+	{
+		写入 rotate 关键帧时间
+		sizeof(DWORD)
+		写入 rotate x
+		sizeof(float)
+		写入 rotate y
+		sizeof(float)
+		写入 rotate z
+		sizeof(float)
+		写入 rotate w
+		sizeof(float)
+	}
+	(8)
+	写入 rotate 关键帧的数量
+	sizeof(DWORD)
+	(9)
+	写入所有 scale 的信息
+	{
+		写入 scale 关键帧时间
+		sizeof(DWORD)
+		写入 scale x
+		sizeof(float)
+		写入 scale y
+		sizeof(float)
+		写入 scale z
+		sizeof(float)
+	}
+}
+
+(6)
+写入动作表的数量
+sizeof(int)
+(7)
+遍历动作表，每一个动作表
+{
+	写入对应当声音档名长度
+	sizeof(int)
+	写入对应的声音档名
+	sizeof(string)
+	写入动作起始时间
+	sizeof(DWORD)
+	写入动作结束时间
+	sizeof(DWORD)
+	写入动作起始帧
+	sizeof(DWORD)
+	写入动作结束帧
+	sizeof(DWORD)
+}
+(8)
+写入结束 "@"
+sizeof(char)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

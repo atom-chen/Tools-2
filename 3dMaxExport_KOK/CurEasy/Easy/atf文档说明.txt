@@ -10,3 +10,35 @@ sizeof(int) 4 个字节
 sizeof(int) 4 个字节
 (4)
 骨骼名字字符串
+(5)
+写入平移向量
+TX sizeof(float)
+TY sizeof(float)
+TZ sizeof(float)
+(6)
+写入是否存在 sibling 兄弟节点
+sizeof(bool)
+写入是否存在 child 兄弟节点
+sizeof(bool)
+(7)
+深度优先遍历
+递归保存 sibling 兄弟节点
+递归保存 child 节点
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
