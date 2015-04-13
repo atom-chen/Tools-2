@@ -4,6 +4,7 @@
 #include <string>
 #include "Prerequisites.h"
 #include "FileArchiveToolSys.h"
+#include <stddef.h>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -14,6 +15,7 @@ public:
 
 protected:
 	std::string* m_pRootPath;		// 如果这个设置了，就说明浏览这个目录，否则全盘浏览
+	std::size_t m_maxSizePerPak;		// 每一个包的最大大小，再大需要进行拆分
 
 public:
 	Config();
