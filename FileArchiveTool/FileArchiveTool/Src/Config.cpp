@@ -1,4 +1,5 @@
 #include "Config.h"
+#include "boost/filesystem.hpp"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -20,6 +21,12 @@ std::string& Config::getRootPath()
 bool Config::bCompress()
 {
 	return true;
+}
+
+void Config::loadConfig()
+{
+	namespace bf = boost::filesystem;			//简单别名
+	bf::path old_cpath = bf::current_path();	//取得当前目录 
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

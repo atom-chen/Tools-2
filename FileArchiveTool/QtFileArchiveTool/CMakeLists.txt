@@ -60,9 +60,9 @@ else(NOT Qt5Widgets_FOUND)
              REQUIRED)
 
     # if we don't include this CMake will not include ui headers properly:
-    include_directories(${CMAKE_CURRENT_BINARY_DIR} ./Src ../FileArchiveTool/Src ../FastDelegate_src ${QT_BINARY_DIR}/../include ${Boost_INCLUDE_DIRS}  ../lzma920/C ../icu4c-50_1-src/include)
+    include_directories(${CMAKE_CURRENT_BINARY_DIR} ./Src ../FileArchiveTool/Src ../FastDelegate_src ${QT_BINARY_DIR}/../include ${Boost_INCLUDE_DIRS}  ../lzma920/C ../icu4c-54_1-src/include)
 	
-	link_directories(${QT_BINARY_DIR}/../lib ${Boost_LIBRARY_DIRS} ../icu4c-50_1-src/lib64)
+	link_directories(${QT_BINARY_DIR}/../lib ${Boost_LIBRARY_DIRS} ../icu4c-54_1-src/lib64)
 	
 	ADD_DEFINITIONS(-DFILEARCHIVETOOL_DLL)
 	

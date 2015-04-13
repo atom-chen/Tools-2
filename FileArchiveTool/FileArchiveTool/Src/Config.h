@@ -22,6 +22,7 @@ public:
 
 public:
 	std::string& getRootPath();
+	void loadConfig();
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

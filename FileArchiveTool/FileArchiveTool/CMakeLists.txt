@@ -20,11 +20,11 @@ set(Boost_USE_STATIC_LIBS   ON)
 set(Boost_USE_MULTITHREADED ON)
 find_package(Boost
              1.57.0
-             COMPONENTS thread
+             COMPONENTS thread filesystem
              REQUIRED)
 
-include_directories(./Src ../FastDelegate_src ${Boost_INCLUDE_DIRS} ../lzma920/C ../icu4c-50_1-src/include)
-link_directories(../libiconv-1.9.2-1-lib/lib ${Boost_LIBRARY_DIRS} ../icu4c-50_1-src/lib64)
+include_directories(./Src ../FastDelegate_src ${Boost_INCLUDE_DIRS} ../lzma920/C ../icu4c-54_1-src/include)
+link_directories(../libiconv-1.9.2-1-lib/lib ${Boost_LIBRARY_DIRS} ../icu4c-54_1-src/lib64)
 
 ADD_DEFINITIONS(-DFILEARCHIVETOOL_DLL -DFILEARCHIVETOOL_DLL_EXPORT)
 
