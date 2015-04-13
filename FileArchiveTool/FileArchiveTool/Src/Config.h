@@ -15,7 +15,7 @@ public:
 
 protected:
 	std::string* m_pRootPath;		// 如果这个设置了，就说明浏览这个目录，否则全盘浏览
-	std::size_t m_maxSizePerPak;		// 每一个包的最大大小，再大需要进行拆分
+	std::size_t m_maxSizePerPak;		// 每一个包的最大大小，再大需要进行拆分，单位是字节
 
 public:
 	Config();
@@ -25,6 +25,9 @@ public:
 public:
 	std::string& getRootPath();
 	void loadConfig();
+
+protected:
+	void parseEqualTokens(std::vector<std::string>& equalTokens);
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

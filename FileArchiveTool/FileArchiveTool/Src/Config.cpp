@@ -2,6 +2,7 @@
 #include "boost/filesystem.hpp"
 #include <string>
 #include <stdio.h>
+#include <stdlib.h>
 #include <vector>
 #include "boost/algorithm/string.hpp"
 
@@ -59,7 +60,18 @@ void Config::loadConfig()
 	for (auto line : linetokens)
 	{
 		equalTokens.clear();
-		boost::split(linetokens, line, boost::is_any_of("="));
+		boost::split(equalTokens, line, boost::is_any_of("="));
+
+		// Ω‚Œˆ≈‰÷√
+		parseEqualTokens(equalTokens);
+	}
+}
+
+void Config::parseEqualTokens(std::vector<std::string>& equalTokens)
+{
+	if (equalTokens[0] == "maxSizePerPak")
+	{
+		m_maxSizePerPak = strtol(equalTokens[0].c_str(), nullptr, 10);
 	}
 }
 
