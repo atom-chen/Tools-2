@@ -13,13 +13,18 @@
 #include "UnArchiveTask.h"
 #include "Config.h"
 #include "ArchiveHeader.h"
+#include "PakPathSplitInfo.h"
+#include "PakTask.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 PakItem::PakItem()
+	:m_fileSize(0)
 {
-	m_pArchiveHeader = new ArchiveHeader();
+	m_pArchiveHeader = new ArchiveHeader;
 	m_pFileVec = new FileHeaderVec();
+	m_pakName = new std::string;
+	m_fullPath = new std::string;
 }
 
 PakItem::~PakItem()
@@ -27,20 +32,18 @@ PakItem::~PakItem()
 	delete m_pArchiveHeader;
 	clearFileVec();
 	delete m_pFileVec;
+	delete m_pakName;
+	delete m_fullPath;
 }
 
 void PakItem::ArchiveDir()
 {
-	ArchiveTask* pArchiveTask = new ArchiveTask(FileArchiveToolSysDef->getArchiveParamPtr());
-	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pArchiveTask);
+	PakTask* pPakTask = new PakTask(this);
+	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pPakTask);
 }
 
 void PakItem::asyncArchiveDir(ArchiveParam* pArchiveParam)
 {
-	clearFileVec();
-	//FileArchiveToolSysDef->getUtilPtr()->bindWalkDirDelegate(fastdelegate::MakeDelegate(this, &ArchiveData::fileHandle));
-	FileArchiveToolSysDef->getUtilPtr()->getWalkDirDelegatePtr()->bind(this, &ArchiveData::fileHandle);
-	FileArchiveToolSysDef->getUtilPtr()->walkDir(pArchiveParam->getArchiveDir());
 	writeFile2ArchiveFile(pArchiveParam);
 }
 
@@ -54,20 +57,6 @@ void PakItem::asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam)
 {
 	clearFileVec();
 	writeArchiveFile2File(pUnArchiveParam);
-}
-
-bool PakItem::fileHandle(const char* walkPath, struct _finddata_t* FileInfo)
-{
-	FileHeader* pFileHeader = new FileHeader();
-	m_pFileVec->push_back(pFileHeader);
-
-	pFileHeader->setFullPath(walkPath, FileInfo->name);
-	pFileHeader->setFileName(FileInfo->name);
-	pFileHeader->modifyArchiveFileName(FileArchiveToolSysDef->getArchiveParamPtr());
-
-	++m_pArchiveHeader->m_fileCount;
-	m_fileSize += FileInfo->size;
-	return true;
 }
 
 void PakItem::adjustHeaderOffset()
@@ -123,7 +112,7 @@ void PakItem::clearFileVec()
 // 写入文件
 void PakItem::writeFile2ArchiveFile(ArchiveParam* pArchiveParam)
 {
-	FILE* fileHandle = fopen(pArchiveParam->getArchiveFilePath(), "wb");
+	FILE* fileHandle = fopen(m_fullPath->c_str(), "wb");
 
 	if (fileHandle != nullptr)
 	{
@@ -213,6 +202,39 @@ void PakItem::writeArchiveFile2File(UnArchiveParam* pUnArchiveParam)
 
 		fclose(fileHandle);
 	}
+}
+
+bool PakItem::canAddFile(PakPathSplitInfo* pPakPathSplitInfo)
+{
+	// 检查包名字是否相同
+	if (pPakPathSplitInfo->getPakName() == *m_pakName)
+	{
+		// 如果没有超过最大大小
+		if (m_fileSize + pPakPathSplitInfo->getFileOrigSize() <= FileArchiveToolSysDef->getConfigPtr()->getMaxSizePerPak())
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void PakItem::addFileHeader(FileHeader* pFileHeader)
+{
+	m_pFileVec->push_back(pFileHeader);
+}
+
+void PakItem::initByPakPathSplitInfo(PakPathSplitInfo* m_pPakPathSplitInfo, uint32 packIdx)
+{
+	*m_pakName = m_pPakPathSplitInfo->getPakName();
+	m_pakIdx = packIdx;
+
+	*m_fullPath += FileArchiveToolSysDef->getConfigPtr()->getOutputRootPath();
+	*m_fullPath += "/";
+	*m_fullPath += *m_pakName;
+	*m_fullPath += "_";
+	*m_fullPath += m_pakIdx;
+	*m_fullPath += ".unity3d";
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

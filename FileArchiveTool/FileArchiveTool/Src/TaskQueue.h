@@ -12,7 +12,7 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 class ITask;
 class TaskThread;
 
-class FILEARCHIVETOOL_EXPORT TaskQueue : ITaskQueue
+class FILEARCHIVETOOL_EXPORT TaskQueue : public ITaskQueue
 {
 protected:
 	std::queue<ITask*>* m_pTaskQueue;
@@ -21,7 +21,7 @@ protected:
 	boost::mutex* m_taskLock;
 	boost::mutex* m_resultLock;
 
-	TaskThread* m_pTaskThread;
+	//TaskThread* m_pTaskThread;
 
 public:
 	TaskQueue();

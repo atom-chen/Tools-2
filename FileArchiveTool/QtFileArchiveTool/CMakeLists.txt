@@ -77,3 +77,9 @@ else(NOT Qt5Widgets_FOUND)
 	add_dependencies(QtFileArchiveTool FileArchiveTool LzmaLib)
 	
 endif(NOT Qt5Widgets_FOUND)
+
+# 删除 Config 并且创建文件目录
+file(REMOVE_RECURSE ${QtFileArchiveTool_BINARY_DIR}/Debug/Config)
+file(MAKE_DIRECTORY ${QtFileArchiveTool_BINARY_DIR}/Debug/Config)
+# 拷贝 Config 配置
+file(INSTALL ${QtFileArchiveTool_SOURCE_DIR}/Config/Config.txt DESTINATION ${QtFileArchiveTool_BINARY_DIR}/Debug/Config)

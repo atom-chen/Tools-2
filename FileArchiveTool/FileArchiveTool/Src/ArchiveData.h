@@ -13,18 +13,22 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 class FileHeader;
 class ArchiveParam;
 class UnArchiveParam;
-class ArchiveHeader;
+class PakItem;
+class PakPathSplitInfo;
+class PakStatInfo;
 
 class FILEARCHIVETOOL_EXPORT ArchiveData
 {
 protected:
-	typedef std::vector<FileHeader*> FileHeaderVec;
-	typedef std::vector<FileHeader*>::iterator FileHeaderVecIt;
+	typedef std::vector<PakItem*> PakItemVec;
+	typedef std::vector<PakItem*>::iterator PakItemVecIt;
 
 protected:
-	ArchiveHeader* m_pArchiveHeader;
-	uint32 m_fileSize;			// 文件总共大小
-	FileHeaderVec* m_pFileVec;		// 整个文件列表
+	PakItemVec* m_pPakItemVec;		// 整个文件包
+	PakItem* m_curPak;				// 当前的包
+
+	PakPathSplitInfo* m_pPakPathSplitInfo;		// 解析的文件信息，内部使用这个处理
+	PakStatInfo* m_pPakStatInfo;				// 包的统计信息
 
 public:
 	ArchiveData();
@@ -42,10 +46,10 @@ public:
 
 protected:
 	void clearFileVec();			// 清理 m_pFileVec 中的内容
-	void writeFile2ArchiveFile(ArchiveParam* pArchiveParam);
 	void readArchiveFileHeader(const char* pFileName);
 	void readArchiveFileHeader(FILE* fileHandle);
-	void writeArchiveFile2File(UnArchiveParam* pUnArchiveParam);
+
+	void newPakItem();		// 新建一个 PakItem
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

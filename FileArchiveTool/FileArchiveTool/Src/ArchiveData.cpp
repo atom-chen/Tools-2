@@ -12,21 +12,25 @@
 #include "UnArchiveParam.h"
 #include "UnArchiveTask.h"
 #include "Config.h"
-#include "ArchiveHeader.h"
+#include "PakPathSplitInfo.h"
+#include "PakItem.h"
+#include "PakStatInfo.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 ArchiveData::ArchiveData()
 {
-	m_pArchiveHeader = new ArchiveHeader();
-	m_pFileVec = new FileHeaderVec();
+	m_pPakItemVec = new PakItemVec;
+	m_pPakPathSplitInfo = new PakPathSplitInfo;
+	m_pPakStatInfo = new PakStatInfo;
 }
 
 ArchiveData::~ArchiveData()
 {
-	delete m_pArchiveHeader;
 	clearFileVec();
-	delete m_pFileVec;
+	delete m_pPakItemVec;
+	delete m_pPakPathSplitInfo;
+	delete m_pPakStatInfo;
 }
 
 void ArchiveData::ArchiveDir()
@@ -41,7 +45,6 @@ void ArchiveData::asyncArchiveDir(ArchiveParam* pArchiveParam)
 	//FileArchiveToolSysDef->getUtilPtr()->bindWalkDirDelegate(fastdelegate::MakeDelegate(this, &ArchiveData::fileHandle));
 	FileArchiveToolSysDef->getUtilPtr()->getWalkDirDelegatePtr()->bind(this, &ArchiveData::fileHandle);
 	FileArchiveToolSysDef->getUtilPtr()->walkDir(pArchiveParam->getArchiveDir());
-	writeFile2ArchiveFile(pArchiveParam);
 }
 
 void ArchiveData::unArchiveFile()
@@ -53,166 +56,63 @@ void ArchiveData::unArchiveFile()
 void ArchiveData::asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam)
 {
 	clearFileVec();
-	writeArchiveFile2File(pUnArchiveParam);
 }
 
+// 这个是将目录分成几个包
 bool ArchiveData::fileHandle(const char* walkPath, struct _finddata_t* FileInfo)
 {
+	// 基本信息初始化
+	std::string pathStr = walkPath;
+	m_pPakPathSplitInfo->initInfo(pathStr, FileInfo);
+
+	if (m_curPak == nullptr && !m_curPak->canAddFile(m_pPakPathSplitInfo))
+	{
+		newPakItem();
+	}
+	
 	FileHeader* pFileHeader = new FileHeader();
-	m_pFileVec->push_back(pFileHeader);
+	pFileHeader->initFileHeader(m_pPakPathSplitInfo);
+	m_curPak->addFileHeader(pFileHeader);
 
-	pFileHeader->setFullPath(walkPath, FileInfo->name);
-	pFileHeader->setFileName(FileInfo->name);
-	pFileHeader->modifyArchiveFileName(FileArchiveToolSysDef->getArchiveParamPtr());
-
-	++m_pArchiveHeader->m_fileCount;
-	m_fileSize += FileInfo->size;
+	m_pPakStatInfo->addOneFile();
+	m_pPakStatInfo->addOneFileSize(FileInfo->size);
 	return true;
 }
 
 void ArchiveData::adjustHeaderOffset()
 {
-	calcHeaderSize(m_pArchiveHeader->m_headerSize);
-
-	FileHeaderVecIt itBegin;
-	FileHeaderVecIt itEnd;
-
-	itBegin = m_pFileVec->begin();
-	itEnd = m_pFileVec->end();
-
-	uint32 curFileOffset = m_pArchiveHeader->m_headerSize;
-
-	for (; itBegin != itEnd; ++itBegin)
+	for (auto pakItem : *m_pPakItemVec)
 	{
-		(*itBegin)->adjustHeaderOffset(curFileOffset);
-		curFileOffset += (*itBegin)->getFileSize();
-	}
-}
-
-void ArchiveData::calcHeaderSize(uint32& headerSize)
-{
-	headerSize = m_pArchiveHeader->calcArchiveHeaderSizeNoFileHeader();
-
-	FileHeaderVecIt itBegin;
-	FileHeaderVecIt itEnd;
-
-	itBegin = m_pFileVec->begin();
-	itEnd = m_pFileVec->end();
-
-	for (; itBegin != itEnd; ++itBegin)
-	{
-		headerSize += (*itBegin)->calcHeaderSize();
+		pakItem->adjustHeaderOffset();
 	}
 }
 
 void ArchiveData::clearFileVec()
 {
-	m_fileSize = 0;
-	m_pArchiveHeader->clear();
+	m_pPakStatInfo->clear();
 
-	FileHeaderVecIt itBegin = m_pFileVec->begin();
-	FileHeaderVecIt itEnd = m_pFileVec->end();
+	PakItemVecIt itBegin = m_pPakItemVec->begin();
+	PakItemVecIt itEnd = m_pPakItemVec->end();
 	for (; itBegin != itEnd; ++itBegin)
 	{
 		delete (*itBegin);
 	}
 
-	m_pFileVec->clear();
-}
-
-// 写入文件
-void ArchiveData::writeFile2ArchiveFile(ArchiveParam* pArchiveParam)
-{
-	FILE* fileHandle = fopen(pArchiveParam->getArchiveFilePath(), "wb");
-
-	if (fileHandle != nullptr)
-	{
-		calcHeaderSize(m_pArchiveHeader->m_headerSize);
-		m_pArchiveHeader->writeArchiveFileHeader(fileHandle);
-
-		// 移动文件指针
-		fseek(fileHandle, m_pArchiveHeader->m_headerSize, SEEK_SET);	// 移动到文件开始位置
-
-		FileHeaderVecIt itBegin;
-		FileHeaderVecIt itEnd;
-
-		itEnd = m_pFileVec->end();
-
-		// 写文件内容
-		itBegin = m_pFileVec->begin();
-		for (; itBegin != itEnd; ++itBegin)
-		{
-			(*itBegin)->writeFile2ArchiveFile(fileHandle);
-		}
-
-		// 移动文件指针
-		fseek(fileHandle, m_pArchiveHeader->calcArchiveHeaderSizeNoFileHeader(), SEEK_SET);	// 移动到文件开始位置
-
-		// 修正文件偏移
-		adjustHeaderOffset();
-
-		// 写入头部
-		itBegin = m_pFileVec->begin();
-
-		for (; itBegin != itEnd; ++itBegin)
-		{
-			(*itBegin)->writeHeader2ArchiveFile(fileHandle);
-		}
-
-		fflush(fileHandle);
-		fclose(fileHandle);
-	}
+	m_pPakItemVec->clear();
 }
 
 void ArchiveData::readArchiveFileHeader(const char* pFileName)
 {
-	FILE* fileHandle = fopen(pFileName, "rb");
-
-	if (fileHandle != nullptr)
-	{
-		readArchiveFileHeader(fileHandle);
-		fclose(fileHandle);
-	}
+	PakItem* pak = new PakItem;
+	pak->readArchiveFileHeader(pFileName);
 }
 
-void ArchiveData::readArchiveFileHeader(FILE* fileHandle)
+void ArchiveData::newPakItem()
 {
-	MByteBuffer* pMByteBuffer = new MByteBuffer(INIT_CAPACITY);
-
-	if (m_pArchiveHeader->readArchiveFileHeader(fileHandle, pMByteBuffer))		// 检查 magic
-	{
-		FileHeader* pFileHeader;
-		for (uint32 idx = 0; idx < m_pArchiveHeader->m_fileCount; ++idx)
-		{
-			pFileHeader = new FileHeader();
-			m_pFileVec->push_back(pFileHeader);
-			pFileHeader->readHeaderFromArchiveFile(pMByteBuffer);
-		}
-	}
-}
-
-void ArchiveData::writeArchiveFile2File(UnArchiveParam* pUnArchiveParam)
-{
-	FILE* fileHandle = fopen(pUnArchiveParam->getUnArchiveFilePath(), "rb");
-
-	if (fileHandle != nullptr)
-	{
-		readArchiveFileHeader(fileHandle);
-
-		FileHeaderVecIt itBegin;
-		FileHeaderVecIt itEnd;
-
-		// 写入头部
-		itBegin = m_pFileVec->begin();
-		itEnd = m_pFileVec->end();
-
-		for (; itBegin != itEnd; ++itBegin)
-		{
-			(*itBegin)->writeArchiveFile2File(fileHandle, pUnArchiveParam);
-		}
-
-		fclose(fileHandle);
-	}
+	m_curPak = new PakItem;
+	m_curPak->initByPakPathSplitInfo(m_pPakPathSplitInfo, m_pPakStatInfo->getCurPakIdx());
+	m_pPakStatInfo->addCurPakIdx();
+	m_pPakItemVec->push_back(m_curPak);
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

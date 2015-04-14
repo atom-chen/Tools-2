@@ -7,6 +7,7 @@
 #include "Config.h"
 #include "MLzma.h"
 #include "CharsetConv.h"
+#include "PakPathSplitInfo.h"
 #include <stdlib.h>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
@@ -196,6 +197,13 @@ void FileHeader::modifyArchiveFileName(ArchiveParam* pArchiveParam)
 	// 计算目录长度， utf-8 编码目录长度
 	// m_pathLen = strlen(m_fileNamePath);
 	m_pathLen = (uint8)(FileArchiveToolSysDef->getCharsetConvPtr()->LocalToUtf8StrLen(m_fileNamePath));
+}
+
+void FileHeader::initFileHeader(PakPathSplitInfo* pPakPathSplitInfo)
+{
+	setFullPath(pPakPathSplitInfo->getOrigPath().c_str(), pPakPathSplitInfo->getOrigFileName().c_str());
+	setFileName(pPakPathSplitInfo->getOrigFileName().c_str());
+	modifyArchiveFileName(FileArchiveToolSysDef->getArchiveParamPtr());
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

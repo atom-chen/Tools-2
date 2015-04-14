@@ -12,8 +12,8 @@ TaskQueue::TaskQueue()
 	m_taskLock = new boost::mutex;
 	m_resultLock = new boost::mutex;
 
-	m_pTaskThread = new TaskThread(this);
-	m_pTaskThread->Start();
+	//m_pTaskThread = new TaskThread(this);
+	//m_pTaskThread->Start();
 }
 
 TaskQueue::~TaskQueue()

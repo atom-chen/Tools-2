@@ -1,1 +1,2 @@
 maxSizePerPak=50
+outputRootPath=E:/Work/Code20150402/client/trunk/Tools/FileArchiveTool/build/output
