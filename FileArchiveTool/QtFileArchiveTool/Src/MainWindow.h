@@ -87,6 +87,11 @@ private:
 	void connectAction();
 	void createDockWidget();
 	void createTimer();
+
+	void insGlobal();
+
+protected:
+	void closeEvent(QCloseEvent *event);		// ¹Ø±ÕÊÂ¼þ
 };
 
 #endif // MAINWINDOW_H

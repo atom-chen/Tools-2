@@ -2,7 +2,6 @@
 #define __TASK_THREAD_H
 
 #include <boost/thread.hpp>
-#include <boost/thread/condition.hpp>
 #include <set>
 
 #include "Thread.h"
@@ -12,13 +11,13 @@
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 class ITaskQueue;
+class MCondition;
 
 class TaskThread : public Thread
 {
 protected:
 	ITaskQueue* m_pTaskQueue;
-	boost::mutex* m_NotifyLock;
-	boost::condition* m_pNotifyCond;
+	MCondition* m_pMCondition;
 
 public:
 	TaskThread(ITaskQueue* pTaskQueue);
@@ -26,6 +25,7 @@ public:
 
 	void setTaskQueue(ITaskQueue* pTaskQueue);
 	void notifyNotEmpty();
+	bool notifySelf();
 
 private:
     virtual void run();

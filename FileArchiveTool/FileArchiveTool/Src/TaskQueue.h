@@ -21,8 +21,6 @@ protected:
 	boost::mutex* m_taskLock;
 	boost::mutex* m_resultLock;
 
-	//TaskThread* m_pTaskThread;
-
 public:
 	TaskQueue();
 	~TaskQueue();

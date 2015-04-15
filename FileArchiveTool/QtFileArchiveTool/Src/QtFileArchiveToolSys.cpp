@@ -9,3 +9,8 @@ QtFileArchiveToolSys::~QtFileArchiveToolSys()
 {
 
 }
+
+void QtFileArchiveToolSys::init()
+{
+	FileArchiveToolSys::init();
+}

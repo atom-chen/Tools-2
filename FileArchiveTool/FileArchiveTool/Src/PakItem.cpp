@@ -16,6 +16,8 @@
 #include "PakPathSplitInfo.h"
 #include "PakTask.h"
 
+#include <sstream>
+
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 PakItem::PakItem()
@@ -233,8 +235,15 @@ void PakItem::initByPakPathSplitInfo(PakPathSplitInfo* m_pPakPathSplitInfo, uint
 	*m_fullPath += "/";
 	*m_fullPath += *m_pakName;
 	*m_fullPath += "_";
-	*m_fullPath += m_pakIdx;
-	*m_fullPath += ".unity3d";
+
+	std::stringstream ss;//创建一个流
+	ss.clear();
+	ss.str("");
+
+	ss << m_pakIdx;
+
+	*m_fullPath += ss.str();
+	*m_fullPath += PAKEXT;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

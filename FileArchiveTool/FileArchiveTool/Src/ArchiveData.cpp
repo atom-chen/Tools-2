@@ -15,10 +15,14 @@
 #include "PakPathSplitInfo.h"
 #include "PakItem.h"
 #include "PakStatInfo.h"
+#include "PakTask.h"
+
+#include <algorithm>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-ArchiveData::ArchiveData()
+ArchiveData::ArchiveData():
+	m_curPak(nullptr)
 {
 	m_pPakItemVec = new PakItemVec;
 	m_pPakPathSplitInfo = new PakPathSplitInfo;
@@ -45,6 +49,8 @@ void ArchiveData::asyncArchiveDir(ArchiveParam* pArchiveParam)
 	//FileArchiveToolSysDef->getUtilPtr()->bindWalkDirDelegate(fastdelegate::MakeDelegate(this, &ArchiveData::fileHandle));
 	FileArchiveToolSysDef->getUtilPtr()->getWalkDirDelegatePtr()->bind(this, &ArchiveData::fileHandle);
 	FileArchiveToolSysDef->getUtilPtr()->walkDir(pArchiveParam->getArchiveDir());
+
+	addPakTask();	// 最后一个打包任务
 }
 
 void ArchiveData::unArchiveFile()
@@ -65,8 +71,9 @@ bool ArchiveData::fileHandle(const char* walkPath, struct _finddata_t* FileInfo)
 	std::string pathStr = walkPath;
 	m_pPakPathSplitInfo->initInfo(pathStr, FileInfo);
 
-	if (m_curPak == nullptr && !m_curPak->canAddFile(m_pPakPathSplitInfo))
+	if (m_curPak == nullptr || !m_curPak->canAddFile(m_pPakPathSplitInfo))
 	{
+		addPakTask();
 		newPakItem();
 	}
 	
@@ -76,6 +83,7 @@ bool ArchiveData::fileHandle(const char* walkPath, struct _finddata_t* FileInfo)
 
 	m_pPakStatInfo->addOneFile();
 	m_pPakStatInfo->addOneFileSize(FileInfo->size);
+
 	return true;
 }
 
@@ -113,6 +121,35 @@ void ArchiveData::newPakItem()
 	m_curPak->initByPakPathSplitInfo(m_pPakPathSplitInfo, m_pPakStatInfo->getCurPakIdx());
 	m_pPakStatInfo->addCurPakIdx();
 	m_pPakItemVec->push_back(m_curPak);
+}
+
+void ArchiveData::addPakTask()
+{
+	if (m_curPak != nullptr)		// 如果当前有 Pak ，就开始打包
+	{
+		m_curPak->ArchiveDir();
+	}
+}
+
+void ArchiveData::removePakItem(PakItem* pPakItem)
+{
+	int idx = 0;
+	for (auto item : *m_pPakItemVec)
+	{
+		if (item == pPakItem)
+		{
+			PakItemVecIt ite = m_pPakItemVec->begin();
+			std::advance(ite, idx);
+			m_pPakItemVec->erase(ite);
+		}
+
+		++idx;
+	}
+}
+
+uint32 ArchiveData::getPakItemCount()
+{
+	return m_pPakItemVec->size();
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

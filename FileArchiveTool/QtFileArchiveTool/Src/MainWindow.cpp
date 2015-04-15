@@ -5,6 +5,8 @@
 #include "ProjectWidget.h"
 #include "CenterTabWidget.h"
 #include "QtFileArchiveToolSys.h"
+#include "ArchiveData.h"
+#include "ThreadPool.h"
 
 #include <QtCore>
 
@@ -17,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 	setWindowTitle(QStringLiteral("FileArchiveTool"));
 	setDockNestingEnabled(true);
 
+	insGlobal();
 	createActions();
 	createMenus();
 	createToolBars();
@@ -29,6 +32,13 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 
+}
+
+// 实例化全局变量
+void MainWindow::insGlobal()
+{
+	QtFileArchiveToolSysDef;
+	QtFileArchiveToolSysDef->init();
 }
 
 void MainWindow::createDockWidget()
@@ -253,4 +263,18 @@ void MainWindow::createTimer()
 void MainWindow::update()
 {
 	QtFileArchiveToolSysDef->onTick();
+}
+
+// 关闭事件
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+	if (QtFileArchiveToolSysDef->getArchiveDataPtr()->getPakItemCount())	// 如果还有 PakItem 没有完成
+	{
+		// 给个提示
+		event->ignore();
+		return;
+	}
+
+	QtFileArchiveToolSysDef->getThreadPoolPtr()->wait();
+	event->accept();
 }

@@ -44,12 +44,16 @@ public:
 	void asyncArchiveDir(ArchiveParam* m_pArchiveParam);
 	void asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam);
 
+	void removePakItem(PakItem* pPakItem);
+	uint32 getPakItemCount();
+
 protected:
 	void clearFileVec();			// 清理 m_pFileVec 中的内容
 	void readArchiveFileHeader(const char* pFileName);
 	void readArchiveFileHeader(FILE* fileHandle);
 
 	void newPakItem();		// 新建一个 PakItem
+	void addPakTask();	// 添加一打包任务
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

@@ -2,6 +2,10 @@
 #define __Util_H
 
 #include <io.h>
+#include <string>
+#include <vector>
+
+#include "boost/algorithm/string.hpp"	
 #include "Prerequisites.h"
 #include "FastDelegate.h"
 
@@ -30,6 +34,9 @@ public:
 	void mkDir(const char* dir);		// 创建这个目录
 	void Substitute(char *pInput, char *pOutput, char *pSrc, char *pDst);
 	void normPath(char *pPath);
+
+	void trim_right(std::string& str);		// 去掉字符串右边的空格
+	void split(std::string& s, std::string& delim, std::vector< std::string >& ret);
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

@@ -7,6 +7,8 @@
 #include "LogSys.h"
 #include "ArchiveParam.h"
 #include "UnArchiveParam.h"
+#include "ThreadPool.h"
+#include <Thread>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -22,6 +24,7 @@ FileArchiveToolSys::FileArchiveToolSys()
 	m_pLogSys = new LogSys;
 	m_pArchiveParam = new ArchiveParam;
 	m_pUnArchiveParam = new UnArchiveParam;
+	m_pThreadPool = new ThreadPool(std::thread::hardware_concurrency() * 2);
 }
 
 FileArchiveToolSys::~FileArchiveToolSys()
@@ -34,6 +37,7 @@ FileArchiveToolSys::~FileArchiveToolSys()
 	delete m_pLogSys;
 	delete m_pArchiveParam;
 	delete m_pUnArchiveParam;
+	delete m_pThreadPool;
 }
 
 Config* FileArchiveToolSys::getConfigPtr()
@@ -76,9 +80,21 @@ UnArchiveParam* FileArchiveToolSys::getUnArchiveParamPtr()
 	return m_pUnArchiveParam;
 }
 
+ThreadPool* FileArchiveToolSys::getThreadPoolPtr()
+{
+	return m_pThreadPool;
+}
+
 void FileArchiveToolSys::onTick()
 {
 	m_pLogSys->onTick();
+	m_pTaskQueue->onTick();
+}
+
+void FileArchiveToolSys::init()
+{
+	m_pThreadPool->instanceThread();
+	m_pConfig->loadConfig();
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

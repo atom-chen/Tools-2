@@ -20,6 +20,8 @@ public:
 	~ThreadPool();
 
 	void wait();
+	void notifyIdleThread();
+	void instanceThread();
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

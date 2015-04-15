@@ -1,6 +1,8 @@
 #include "TaskQueue.h"
 #include "TaskThread.h"
 #include "ITask.h"
+#include "FileArchiveToolSys.h"
+#include "ThreadPool.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -11,9 +13,6 @@ TaskQueue::TaskQueue()
 
 	m_taskLock = new boost::mutex;
 	m_resultLock = new boost::mutex;
-
-	//m_pTaskThread = new TaskThread(this);
-	//m_pTaskThread->Start();
 }
 
 TaskQueue::~TaskQueue()
@@ -29,10 +28,7 @@ void TaskQueue::addTask(ITask* task)
 {
 	boost::lock_guard<boost::mutex> lock(*m_taskLock);
 	m_pTaskQueue->push(task);
-	if (m_pTaskQueue->size() == 1)	// 如果只有一个，可能任务线程处于阻塞状态，需要唤醒
-	{
-		m_pTaskThread->notifyNotEmpty();
-	}
+	FileArchiveToolSysDef->getThreadPoolPtr()->notifyIdleThread();
 }
 
 ITask* TaskQueue::removeTask()
@@ -69,16 +65,17 @@ ITask* TaskQueue::removeResult()
 
 void TaskQueue::endTask()
 {
-	m_pTaskThread->setExitFlag(true);		// 设置结束标识
-	m_pTaskThread->notifyNotEmpty();		// 通知一次，防止线程在等待中
-	m_pTaskThread->Wait();					// 等待线程结束
+	FileArchiveToolSysDef->getThreadPoolPtr()->wait();
 }
 
 void TaskQueue::onTick()
 {
 	ITask* task = removeResult();
-	task->exeResult();
-	delete task;
+	if (task != nullptr)
+	{
+		task->exeResult();
+		delete task;
+	}
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

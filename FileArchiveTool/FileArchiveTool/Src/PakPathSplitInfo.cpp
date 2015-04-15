@@ -1,8 +1,11 @@
 #include "PakPathSplitInfo.h"
+#include "FileArchiveToolSys.h"
+#include "ArchiveParam.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-PakPathSplitInfo::PakPathSplitInfo()
+PakPathSplitInfo::PakPathSplitInfo() :
+	m_bNeedPak(true)
 {
 	m_origPath = new std::string;
 	m_pakName = new std::string;
@@ -22,6 +25,22 @@ void PakPathSplitInfo::initInfo(std::string& path, struct _finddata_t* FileInfo)
 {
 	*m_origPath = path;
 	*m_origFileName = FileInfo->name;
+
+	if (FileArchiveToolSysDef->getArchiveParamPtr()->isEqualArchiveDir(path))		// 如果是打包根目录
+	{
+		if (FileArchiveToolSysDef->getArchiveParamPtr()->getArchiveMode() == eArchiveMode_SubDir)		// 如果是打包子目录
+		{
+			m_bNeedPak = false;		// 子目录打包，根目录下的一级文件直接拷贝过去，不打包
+			return;
+		}
+	}
+
+	*m_pakFilePath = m_origPath->substr(strlen(FileArchiveToolSysDef->getArchiveParamPtr()->getArchiveDir()) + 1);
+	*m_pakFilePath += "/";
+	*m_pakFilePath += *m_origFileName;
+
+	size_t findIdx = m_pakFilePath->find_first_of('/');
+	*m_pakName = m_pakFilePath->substr(0, findIdx);
 }
 
 std::string& PakPathSplitInfo::getOrigPath()

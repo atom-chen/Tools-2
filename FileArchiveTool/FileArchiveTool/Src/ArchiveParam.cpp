@@ -37,4 +37,27 @@ const char* ArchiveParam::getArchiveFilePath()
 	return m_pArchiveFilePath;
 }
 
+bool ArchiveParam::isEqualArchiveDir(std::string& path)
+{
+	if (path.length() == strlen(m_pArchiveDir))
+	{
+		if (strcmp(path.c_str(), m_pArchiveDir) == 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void ArchiveParam::setArchiveMode(ArchiveMode mode)
+{
+	m_eArchiveMode = mode;
+}
+
+ArchiveMode ArchiveParam::getArchiveMode()
+{
+	return m_eArchiveMode;
+}
+
 END_NAMESPACE_FILEARCHIVETOOL

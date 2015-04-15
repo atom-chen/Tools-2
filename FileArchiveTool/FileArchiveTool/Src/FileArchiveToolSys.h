@@ -14,6 +14,7 @@ class TaskQueue;
 class LogSys;
 class ArchiveParam;
 class UnArchiveParam;
+class ThreadPool;
 
 class FILEARCHIVETOOL_EXPORT FileArchiveToolSys : public Singleton<FileArchiveToolSys>
 {
@@ -26,6 +27,7 @@ protected:
 	LogSys* m_pLogSys;
 	ArchiveParam* m_pArchiveParam;
 	UnArchiveParam* m_pUnArchiveParam;
+	ThreadPool* m_pThreadPool;
 
 public:
 	FileArchiveToolSys();
@@ -33,6 +35,7 @@ public:
 
 public:
 	virtual void onTick();
+	virtual void init();	// 构造函数调用完成立马调用这个
 
 	Config* getConfigPtr();
 	ArchiveData* getArchiveDataPtr();
@@ -42,6 +45,7 @@ public:
 	LogSys* getLogSysPtr();
 	ArchiveParam* getArchiveParamPtr();
 	UnArchiveParam* getUnArchiveParamPtr();
+	ThreadPool* getThreadPoolPtr();
 };
 
 #define FileArchiveToolSysDef FileArchiveToolSys::getSingletonPtr()

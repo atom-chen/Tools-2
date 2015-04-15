@@ -16,7 +16,7 @@ public:
 	friend FileArchiveToolSys;
 
 protected:
-	std::string* m_pRootPath;			// 如果这个设置了，就说明浏览这个目录，否则全盘浏览
+	std::string* m_pBrowseRootPath;		// 如果这个设置了，就说明浏览这个目录，否则全盘浏览
 	std::size_t m_maxSizePerPak;		// 每一个包的最大大小，再大需要进行拆分，单位是字节
 	std::string* m_outputRootPath;		// 输出根目录
 
@@ -26,7 +26,7 @@ public:
 	bool bCompress();	// 是否使用压缩
 
 public:
-	std::string& getRootPath();
+	std::string& getBrowseRootPath();
 	std::string& getOutputRootPath();
 	std::size_t getMaxSizePerPak();
 

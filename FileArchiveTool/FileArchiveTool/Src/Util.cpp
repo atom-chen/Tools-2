@@ -202,4 +202,26 @@ void Util::normPath(char *pPath)
 	}
 }
 
+void Util::trim_right(std::string& str)
+{
+	boost::trim_right(str);
+}
+
+//注意：当字符串为空时，也会返回一个空字符串  
+void Util::split(std::string& s, std::string& delim, std::vector< std::string >& ret)
+{
+	size_t last = 0;
+	size_t index = std::string::npos;
+	while ((index = s.find_first_of(delim, last)) != std::string::npos)
+	{
+		ret.push_back(s.substr(last, index - last));
+		last = index + delim.length();
+	}
+
+	if (s.length() > last)
+	{
+		ret.push_back(s.substr(last, s.length() - last));
+	}
+}
+
 END_NAMESPACE_FILEARCHIVETOOL

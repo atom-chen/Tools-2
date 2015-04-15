@@ -25,7 +25,8 @@ protected:
 
 public Q_SLOTS:
 	void on_treeView_customContextMenuRequested(const QPoint& pos);
-	void archiveDir();
+	void archiveDir();		// 打包当前目录
+	void archiveSubDir();	// 打包当前目录下的子目录，当前目录下的一级文件直接拷贝过去，不打包
 	void unArchiveFile();
 	void refreshList();
 

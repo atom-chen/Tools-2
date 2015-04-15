@@ -16,11 +16,13 @@ class FILEARCHIVETOOL_EXPORT PakPathSplitInfo
 {
 protected:
 	std::string* m_origPath;	// 原始的目录
+	std::string* m_origFileName;	// 原始文件的名字
+	std::size_t m_fileOrigSize;		// 文件原始大小
+	std::size_t m_fileCompressSize;	// 文件压缩后的大小
+
 	std::string* m_pakName;		// 包的名字，这个是导出的包的名字，最后可能加上序号
 	std::string* m_pakFilePath;	// 这个是包中文件的目录，保存在包中，加载的时候使用
-	std::string* m_origFileName;	// 原始文件的名字
-	std::size_t m_fileOrigSize;			// 文件原始大小
-	std::size_t m_fileCompressSize;		// 文件压缩后的大小
+	bool m_bNeedPak;			// 当前包是否需要打包
 
 public:
 	PakPathSplitInfo();

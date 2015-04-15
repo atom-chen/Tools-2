@@ -20,9 +20,9 @@ ProjectWidget::ProjectWidget(QWidget *parent)
 	m_ui->mDirTreeView->setModel(m_pModel);
 	//m_ui->mDirTreeView->setRootIndex(m_pModel->index("E:\\"));
 	// 检查是否有设置 rootPath
-	if (QtFileArchiveToolSysDef->getConfigPtr()->getRootPath().length())
+	if (QtFileArchiveToolSysDef->getConfigPtr()->getBrowseRootPath().length())
 	{
-		m_ui->mDirTreeView->setRootIndex(m_pModel->index(QtFileArchiveToolSysDef->getConfigPtr()->getRootPath().c_str()));
+		m_ui->mDirTreeView->setRootIndex(m_pModel->index(QtFileArchiveToolSysDef->getConfigPtr()->getBrowseRootPath().c_str()));
 	}
 
 	m_ui->mDirTreeView->header()->setStretchLastSection(true);
@@ -103,13 +103,19 @@ void ProjectWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
 
 void ProjectWidget::archiveDir()
 {
+	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveMode(eArchiveMode_Dir);
 	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveDir(m_pPath.c_str());
 	std::string filePath = QtFileArchiveToolSysDef->getUtilPtr()->getFullPathNoFileName(m_pPath.c_str());
 	filePath += "/";
 	filePath += QtFileArchiveToolSysDef->getUtilPtr()->getLastPathName(m_pPath.c_str());
-	filePath += ".abc";
+	filePath += PAKEXT;
 	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveFilePath(filePath.c_str());
 	QtFileArchiveToolSysDef->getArchiveDataPtr()->ArchiveDir();
+}
+
+void ProjectWidget::archiveSubDir()
+{
+	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveMode(eArchiveMode_SubDir);
 }
 
 void ProjectWidget::unArchiveFile()

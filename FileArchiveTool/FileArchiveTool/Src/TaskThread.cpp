@@ -1,20 +1,19 @@
 #include "TaskThread.h"
 #include "ITaskQueue.h"
 #include "ITask.h"
+#include "MCondition.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 TaskThread::TaskThread(ITaskQueue* pTaskQueue)
 {
 	m_pTaskQueue = pTaskQueue;
-
-	m_NotifyLock = new boost::mutex;
-	m_pNotifyCond = new boost::condition;
+	m_pMCondition = new MCondition;
 }
 
 TaskThread::~TaskThread()
 {
-
+	delete m_pMCondition;
 }
 
 void TaskThread::run()
@@ -32,8 +31,7 @@ void TaskThread::run()
 			}
 			else
 			{
-				boost::mutex::scoped_lock sl(*m_NotifyLock);
-				m_pNotifyCond->wait(*m_NotifyLock);	// ×èÈû
+				m_pMCondition->wait();
 			}
 		}
 	}
@@ -46,7 +44,18 @@ void TaskThread::setTaskQueue(ITaskQueue* pTaskQueue)
 
 void TaskThread::notifyNotEmpty()
 {
-	m_pNotifyCond->notify_all();
+	m_pMCondition->notifyOne();
+}
+
+bool TaskThread::notifySelf()
+{
+	if (m_pMCondition->canEnterWait())
+	{
+		m_pMCondition->notifyOne();
+		return true;
+	}
+
+	return false;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL
