@@ -141,6 +141,7 @@ void ArchiveData::removePakItem(PakItem* pPakItem)
 			PakItemVecIt ite = m_pPakItemVec->begin();
 			std::advance(ite, idx);
 			m_pPakItemVec->erase(ite);
+			return;
 		}
 
 		++idx;

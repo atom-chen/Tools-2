@@ -9,6 +9,7 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 ThreadPool::ThreadPool(uint32 numThread)
 {
 	m_numThread = numThread;
+	m_numThread = 1;
 	m_pThreadVec = new std::vector<TaskThread*>(m_numThread);
 	//for (uint32 idx = 0; idx < m_numThread; ++idx)
 	//{

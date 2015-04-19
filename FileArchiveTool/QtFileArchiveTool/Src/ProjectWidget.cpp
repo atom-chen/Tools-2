@@ -83,6 +83,10 @@ void ProjectWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
 		ac = new QAction(QStringLiteral("Archive Dir"), this);
 		menu->addAction(ac);
 		QObject::connect(ac, SIGNAL(triggered()), this, SLOT(archiveDir()));
+
+		ac = new QAction(QStringLiteral("Archive Sub Dir"), this);
+		menu->addAction(ac);
+		QObject::connect(ac, SIGNAL(triggered()), this, SLOT(archiveSubDir()));
 	}
 	else if (fileInfo.isFile())
 	{
@@ -104,6 +108,17 @@ void ProjectWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
 void ProjectWidget::archiveDir()
 {
 	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveMode(eArchiveMode_Dir);
+	archive();
+}
+
+void ProjectWidget::archiveSubDir()
+{
+	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveMode(eArchiveMode_SubDir);
+	archive();
+}
+
+void ProjectWidget::archive()
+{
 	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveDir(m_pPath.c_str());
 	std::string filePath = QtFileArchiveToolSysDef->getUtilPtr()->getFullPathNoFileName(m_pPath.c_str());
 	filePath += "/";
@@ -111,11 +126,6 @@ void ProjectWidget::archiveDir()
 	filePath += PAKEXT;
 	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveFilePath(filePath.c_str());
 	QtFileArchiveToolSysDef->getArchiveDataPtr()->ArchiveDir();
-}
-
-void ProjectWidget::archiveSubDir()
-{
-	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveMode(eArchiveMode_SubDir);
 }
 
 void ProjectWidget::unArchiveFile()

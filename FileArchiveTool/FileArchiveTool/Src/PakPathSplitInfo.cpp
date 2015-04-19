@@ -35,7 +35,9 @@ void PakPathSplitInfo::initInfo(std::string& path, struct _finddata_t* FileInfo)
 		}
 	}
 
-	*m_pakFilePath = m_origPath->substr(strlen(FileArchiveToolSysDef->getArchiveParamPtr()->getArchiveDir()) + 1);
+	const char* archiveDir = FileArchiveToolSysDef->getArchiveParamPtr()->getArchiveDir();
+	size_t dirLen = strlen(archiveDir);
+	*m_pakFilePath = m_origPath->substr(dirLen + 1);
 	*m_pakFilePath += "/";
 	*m_pakFilePath += *m_origFileName;
 

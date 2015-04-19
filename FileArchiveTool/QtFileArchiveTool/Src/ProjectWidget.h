@@ -22,6 +22,7 @@ public:
 protected:
 	void createToolBar();
 	void createAction();
+	void archive();
 
 public Q_SLOTS:
 	void on_treeView_customContextMenuRequested(const QPoint& pos);
