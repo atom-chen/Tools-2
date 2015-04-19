@@ -39,6 +39,7 @@ public:
 	std::string& getOrigFileName();
 	std::size_t getFileOrigSize();
 	std::size_t getFileCompressSize();
+	bool getNeedPak();
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

@@ -38,21 +38,9 @@ PakItemDir::~PakItemDir()
 	delete m_fullPath;
 }
 
-void PakItemDir::ArchiveDir()
-{
-	PakTask* pPakTask = new PakTask(this);
-	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pPakTask);
-}
-
 void PakItemDir::asyncArchiveDir(ArchiveParam* pArchiveParam)
 {
 	writeFile2ArchiveFile(pArchiveParam);
-}
-
-void PakItemDir::unArchiveFile()
-{
-	UnArchiveTask* pUnArchiveTask = new UnArchiveTask(FileArchiveToolSysDef->getUnArchiveParamPtr());
-	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pUnArchiveTask);
 }
 
 void PakItemDir::asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam)

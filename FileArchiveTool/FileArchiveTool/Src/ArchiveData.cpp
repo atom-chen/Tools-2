@@ -16,6 +16,8 @@
 #include "PakItemBase.h"
 #include "PakStatInfo.h"
 #include "PakTask.h"
+#include "PakItemDir.h"
+#include "PakItemFileCopy.h"
 
 #include <algorithm>
 
@@ -111,13 +113,20 @@ void ArchiveData::clearFileVec()
 
 void ArchiveData::readArchiveFileHeader(const char* pFileName)
 {
-	PakItemBase* pak = new PakItemBase;
+	PakItemBase* pak = new PakItemDir;
 	pak->readArchiveFileHeader(pFileName);
 }
 
 void ArchiveData::newPakItem()
 {
-	m_curPak = new PakItemBase;
+	if (m_pPakPathSplitInfo->getNeedPak())
+	{
+		m_curPak = new PakItemDir;
+	}
+	else
+	{
+		m_curPak = new PakItemFileCopy;
+	}
 	m_curPak->initByPakPathSplitInfo(m_pPakPathSplitInfo, m_pPakStatInfo->getCurPakIdx());
 	m_pPakStatInfo->addCurPakIdx();
 	m_pPakItemVec->push_back(m_curPak);

@@ -31,7 +31,9 @@ public:
 
 public:
 	void setFullPath(const char* dir, const char* fileName);
+	char* getFullPath();
 	void setFileName(const char* fileName);
+	char* getFileName();
 
 	uint32 calcHeaderSize();
 	void adjustHeaderOffset(uint32 offset);

@@ -35,13 +35,23 @@ void PakPathSplitInfo::initInfo(std::string& path, struct _finddata_t* FileInfo)
 		}
 	}
 
+	m_bNeedPak = true;
 	const char* archiveDir = FileArchiveToolSysDef->getArchiveParamPtr()->getArchiveDir();
+	size_t findIdx;
 	size_t dirLen = strlen(archiveDir);
-	*m_pakFilePath = m_origPath->substr(dirLen + 1);
-	*m_pakFilePath += "/";
+	if (!FileArchiveToolSysDef->getArchiveParamPtr()->isEqualArchiveDir(path))
+	{
+		*m_pakFilePath = m_origPath->substr(dirLen + 1);
+		*m_pakFilePath += "/";
+	}
+	else
+	{
+		*m_pakFilePath = "";
+	}
+	
 	*m_pakFilePath += *m_origFileName;
 
-	size_t findIdx = m_pakFilePath->find_first_of('/');
+	findIdx = m_pakFilePath->find_first_of('/');
 	*m_pakName = m_pakFilePath->substr(0, findIdx);
 }
 
@@ -73,6 +83,11 @@ std::size_t PakPathSplitInfo::getFileCompressSize()
 std::string& PakPathSplitInfo::getOrigFileName()
 {
 	return *m_origFileName;
+}
+
+bool PakPathSplitInfo::getNeedPak()
+{
+	return m_bNeedPak;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

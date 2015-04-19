@@ -33,9 +33,19 @@ void FileHeader::setFullPath(const char* dir, const char* fileName)
 	strcat(m_pFullPath, fileName);
 }
 
+char* FileHeader::getFullPath()
+{
+	return m_pFullPath;
+}
+
 void FileHeader::setFileName(const char* fileName)
 {
 	strcpy(m_fileNamePath, fileName);
+}
+
+char* FileHeader::getFileName()
+{
+	return m_fileNamePath;
 }
 
 void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
