@@ -1,4 +1,6 @@
 #include "ArchiveParam.h"
+#include "FileArchiveToolSys.h"
+#include "Config.h"
 #include <string.h>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
@@ -50,14 +52,19 @@ bool ArchiveParam::isEqualArchiveDir(std::string& path)
 	return false;
 }
 
-void ArchiveParam::setArchiveMode(ArchiveMode mode)
-{
-	m_eArchiveMode = mode;
-}
+//void ArchiveParam::setArchiveMode(ArchiveMode mode)
+//{
+//	m_eArchiveMode = mode;
+//}
 
 ArchiveMode ArchiveParam::getArchiveMode()
 {
-	return m_eArchiveMode;
+	if (strncmp(m_pArchiveDir, FileArchiveToolSysDef->getConfigPtr()->getInRootPath().c_str(), strlen(m_pArchiveDir) != 0))
+	{
+		return eArchiveMode_SubDir;
+	}
+
+	return eArchiveMode_RootDir;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

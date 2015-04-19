@@ -84,9 +84,9 @@ void ProjectWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
 		menu->addAction(ac);
 		QObject::connect(ac, SIGNAL(triggered()), this, SLOT(archiveDir()));
 
-		ac = new QAction(QStringLiteral("Archive Sub Dir"), this);
-		menu->addAction(ac);
-		QObject::connect(ac, SIGNAL(triggered()), this, SLOT(archiveSubDir()));
+		//ac = new QAction(QStringLiteral("Archive Sub Dir"), this);
+		//menu->addAction(ac);
+		//QObject::connect(ac, SIGNAL(triggered()), this, SLOT(archiveSubDir()));
 	}
 	else if (fileInfo.isFile())
 	{
@@ -107,13 +107,13 @@ void ProjectWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
 
 void ProjectWidget::archiveDir()
 {
-	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveMode(eArchiveMode_Dir);
+	//QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveMode(eArchiveMode_Dir);
 	archive();
 }
 
 void ProjectWidget::archiveSubDir()
 {
-	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveMode(eArchiveMode_SubDir);
+	//QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveMode(eArchiveMode_SubDir);
 	archive();
 }
 

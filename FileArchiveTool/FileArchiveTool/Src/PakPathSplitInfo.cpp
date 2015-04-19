@@ -1,6 +1,7 @@
 #include "PakPathSplitInfo.h"
 #include "FileArchiveToolSys.h"
 #include "ArchiveParam.h"
+#include "Config.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -26,28 +27,22 @@ void PakPathSplitInfo::initInfo(std::string& path, struct _finddata_t* FileInfo)
 	*m_origPath = path;
 	*m_origFileName = FileInfo->name;
 
-	if (FileArchiveToolSysDef->getArchiveParamPtr()->isEqualArchiveDir(path))		// 如果是打包根目录
+	if (FileArchiveToolSysDef->getConfigPtr()->isEqualInRootPath(path))		// 如果是根目录下的文件
 	{
-		if (FileArchiveToolSysDef->getArchiveParamPtr()->getArchiveMode() == eArchiveMode_SubDir)		// 如果是打包子目录
-		{
-			m_bNeedPak = false;		// 子目录打包，根目录下的一级文件直接拷贝过去，不打包
+		//if (FileArchiveToolSysDef->getArchiveParamPtr()->getArchiveMode() == eArchiveMode_RootDir)		// 如果是打包子目录
+		//{
+			m_bNeedPak = false;		// 根目录打包，根目录下的一级文件直接拷贝过去，不打包
 			return;
-		}
+		//}
 	}
 
 	m_bNeedPak = true;
-	const char* archiveDir = FileArchiveToolSysDef->getArchiveParamPtr()->getArchiveDir();
+	const char* inRootPath = FileArchiveToolSysDef->getConfigPtr()->getInRootPath().c_str();
 	size_t findIdx;
-	size_t dirLen = strlen(archiveDir);
-	if (!FileArchiveToolSysDef->getArchiveParamPtr()->isEqualArchiveDir(path))
-	{
-		*m_pakFilePath = m_origPath->substr(dirLen + 1);
-		*m_pakFilePath += "/";
-	}
-	else
-	{
-		*m_pakFilePath = "";
-	}
+	size_t dirLen = strlen(inRootPath);
+
+	*m_pakFilePath = m_origPath->substr(dirLen + 1);
+	*m_pakFilePath += "/";
 	
 	*m_pakFilePath += *m_origFileName;
 

@@ -13,17 +13,25 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 Config::Config()
 {
 	m_pBrowseRootPath = new std::string("E:\\");
+	m_inRootPath = new std::string;
 	m_outputRootPath = new std::string;
 }
 
 Config::~Config()
 {
 	delete m_pBrowseRootPath;
+	delete m_inRootPath;
+	delete m_outputRootPath;
 }
 
 std::string& Config::getBrowseRootPath()
 {
 	return *m_pBrowseRootPath;
+}
+
+std::string& Config::getInRootPath()
+{
+	return *m_inRootPath;
 }
 
 std::string& Config::getOutputRootPath()
@@ -90,6 +98,11 @@ void Config::parseEqualTokens(std::vector<std::string>& equalTokens)
 	{
 		m_maxSizePerPak = strtol(equalTokens[0].c_str(), nullptr, 10);
 	}
+	else if (equalTokens[0] == "inputRootPath")
+	{
+		*m_inRootPath = equalTokens[1];
+		FileArchiveToolSysDef->getUtilPtr()->trim_right(*m_outputRootPath);
+	}
 	else if (equalTokens[0] == "outputRootPath")
 	{
 		*m_outputRootPath = equalTokens[1];
@@ -100,6 +113,16 @@ void Config::parseEqualTokens(std::vector<std::string>& equalTokens)
 std::size_t Config::getMaxSizePerPak()
 {
 	return m_maxSizePerPak;
+}
+
+bool Config::isEqualInRootPath(std::string& path)
+{
+	if (path == *m_inRootPath)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL
