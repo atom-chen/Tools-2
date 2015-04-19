@@ -1,4 +1,4 @@
-project(QtExcel)
+project(QtExcelExport)
 #set(QT_MIN_VERSION "4.8.0")
 
 cmake_minimum_required(VERSION 2.8.10)
@@ -119,10 +119,10 @@ else(NOT Qt5Widgets_FOUND)
 	
     set(SRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${INCS_FILES} ${QRC_SRCS} ${RC_FILES})
 
-    ADD_EXECUTABLE(qtExcel WIN32 ${SRCS})
+    ADD_EXECUTABLE(QtExcelExport WIN32 ${SRCS})
 
-    set_target_properties(qtExcel PROPERTIES DEBUG_POSTFIX _d LINK_FLAGS "/ENTRY:\"mainCRTStartup\"")
-	#TARGET_LINK_LIBRARIES(qtExcel QtCore4 QtGui4 tinyxml)
-	TARGET_LINK_LIBRARIES(qtExcel ${Qt5Widgets_LIBRARIES} tinyxml vld)
-	add_dependencies(qtExcel tinyxml)
+    set_target_properties(QtExcelExport PROPERTIES DEBUG_POSTFIX _d LINK_FLAGS "/ENTRY:\"mainCRTStartup\"")
+	#TARGET_LINK_LIBRARIES(QtExcelExport QtCore4 QtGui4 tinyxml)
+	TARGET_LINK_LIBRARIES(QtExcelExport ${Qt5Widgets_LIBRARIES} tinyxml vld)
+	add_dependencies(QtExcelExport tinyxml)
 endif(NOT Qt5Widgets_FOUND)

@@ -7,6 +7,13 @@ project(ExcelExport)
 
 message(STATUS "builder main start")
 
+if (WIN32 OR APPLE)
+  if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    # We don't want to install in default system location, install is really for the SDK, so call it that
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}" CACHE PATH "install prefix" FORCE)
+  endif (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+endif(WIN32 OR APPLE)
+
 set(CMAKE_DEBUG_POSTFIX "_d")
 
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR})
@@ -19,7 +26,7 @@ if(MSVC11 OR MSVC12)
 endif(MSVC11 OR MSVC12)
 
 add_subdirectory(tinyxml)
-add_subdirectory(qtexcel)
+add_subdirectory(QtExcelExport)
 #add_subdirectory(Extern)
 
 install(FILES 
