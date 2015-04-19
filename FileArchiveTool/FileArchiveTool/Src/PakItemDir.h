@@ -1,10 +1,12 @@
-#ifndef __PakItem_H
-#define __PakItem_H
+#ifndef __PakItemDir_H
+#define __PakItemDir_H
 
 /**
 * @brief 一个数据包数据结构
 */
 #include "Prerequisites.h"
+#include "PakItemBase.h"
+
 #include <io.h>
 #include <vector>
 #include <string>
@@ -17,7 +19,7 @@ class ArchiveHeader;
 class PakPathSplitInfo;
 class FileHeader;
 
-class FILEARCHIVETOOL_EXPORT PakItem
+class FILEARCHIVETOOL_EXPORT PakItemDir : public PakItemBase
 {
 protected:
 	typedef std::vector<FileHeader*> FileHeaderVec;
@@ -33,8 +35,8 @@ protected:
 	std::string* m_fullPath;
 
 public:
-	PakItem();
-	~PakItem();
+	PakItemDir();
+	~PakItemDir();
 
 public:
 	void adjustHeaderOffset();					// 修正每一个头文件的偏移

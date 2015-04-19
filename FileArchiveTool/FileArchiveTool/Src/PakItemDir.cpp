@@ -1,4 +1,4 @@
-#include "PakItem.h"
+#include "PakItemDir.h"
 #include "FileArchiveToolSys.h"
 #include "Util.h"
 #include "FileInfo.h"
@@ -20,7 +20,7 @@
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-PakItem::PakItem()
+PakItemDir::PakItemDir()
 	:m_fileSize(0)
 {
 	m_pArchiveHeader = new ArchiveHeader;
@@ -29,7 +29,7 @@ PakItem::PakItem()
 	m_fullPath = new std::string;
 }
 
-PakItem::~PakItem()
+PakItemDir::~PakItemDir()
 {
 	delete m_pArchiveHeader;
 	clearFileVec();
@@ -38,30 +38,30 @@ PakItem::~PakItem()
 	delete m_fullPath;
 }
 
-void PakItem::ArchiveDir()
+void PakItemDir::ArchiveDir()
 {
 	PakTask* pPakTask = new PakTask(this);
 	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pPakTask);
 }
 
-void PakItem::asyncArchiveDir(ArchiveParam* pArchiveParam)
+void PakItemDir::asyncArchiveDir(ArchiveParam* pArchiveParam)
 {
 	writeFile2ArchiveFile(pArchiveParam);
 }
 
-void PakItem::unArchiveFile()
+void PakItemDir::unArchiveFile()
 {
 	UnArchiveTask* pUnArchiveTask = new UnArchiveTask(FileArchiveToolSysDef->getUnArchiveParamPtr());
 	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pUnArchiveTask);
 }
 
-void PakItem::asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam)
+void PakItemDir::asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam)
 {
 	clearFileVec();
 	writeArchiveFile2File(pUnArchiveParam);
 }
 
-void PakItem::adjustHeaderOffset()
+void PakItemDir::adjustHeaderOffset()
 {
 	calcHeaderSize(m_pArchiveHeader->m_headerSize);
 
@@ -80,7 +80,7 @@ void PakItem::adjustHeaderOffset()
 	}
 }
 
-void PakItem::calcHeaderSize(uint32& headerSize)
+void PakItemDir::calcHeaderSize(uint32& headerSize)
 {
 	headerSize = m_pArchiveHeader->calcArchiveHeaderSizeNoFileHeader();
 
@@ -96,7 +96,7 @@ void PakItem::calcHeaderSize(uint32& headerSize)
 	}
 }
 
-void PakItem::clearFileVec()
+void PakItemDir::clearFileVec()
 {
 	m_fileSize = 0;
 	m_pArchiveHeader->clear();
@@ -112,7 +112,7 @@ void PakItem::clearFileVec()
 }
 
 // 写入文件
-void PakItem::writeFile2ArchiveFile(ArchiveParam* pArchiveParam)
+void PakItemDir::writeFile2ArchiveFile(ArchiveParam* pArchiveParam)
 {
 	FILE* fileHandle = fopen(m_fullPath->c_str(), "wb");
 
@@ -155,7 +155,7 @@ void PakItem::writeFile2ArchiveFile(ArchiveParam* pArchiveParam)
 	}
 }
 
-void PakItem::readArchiveFileHeader(const char* pFileName)
+void PakItemDir::readArchiveFileHeader(const char* pFileName)
 {
 	FILE* fileHandle = fopen(pFileName, "rb");
 
@@ -166,7 +166,7 @@ void PakItem::readArchiveFileHeader(const char* pFileName)
 	}
 }
 
-void PakItem::readArchiveFileHeader(FILE* fileHandle)
+void PakItemDir::readArchiveFileHeader(FILE* fileHandle)
 {
 	MByteBuffer* pMByteBuffer = new MByteBuffer(INIT_CAPACITY);
 
@@ -182,7 +182,7 @@ void PakItem::readArchiveFileHeader(FILE* fileHandle)
 	}
 }
 
-void PakItem::writeArchiveFile2File(UnArchiveParam* pUnArchiveParam)
+void PakItemDir::writeArchiveFile2File(UnArchiveParam* pUnArchiveParam)
 {
 	FILE* fileHandle = fopen(pUnArchiveParam->getUnArchiveFilePath(), "rb");
 
@@ -206,7 +206,7 @@ void PakItem::writeArchiveFile2File(UnArchiveParam* pUnArchiveParam)
 	}
 }
 
-bool PakItem::canAddFile(PakPathSplitInfo* pPakPathSplitInfo)
+bool PakItemDir::canAddFile(PakPathSplitInfo* pPakPathSplitInfo)
 {
 	// 检查包名字是否相同
 	if (pPakPathSplitInfo->getPakName() == *m_pakName)
@@ -221,12 +221,12 @@ bool PakItem::canAddFile(PakPathSplitInfo* pPakPathSplitInfo)
 	return false;
 }
 
-void PakItem::addFileHeader(FileHeader* pFileHeader)
+void PakItemDir::addFileHeader(FileHeader* pFileHeader)
 {
 	m_pFileVec->push_back(pFileHeader);
 }
 
-void PakItem::initByPakPathSplitInfo(PakPathSplitInfo* m_pPakPathSplitInfo, uint32 packIdx)
+void PakItemDir::initByPakPathSplitInfo(PakPathSplitInfo* m_pPakPathSplitInfo, uint32 packIdx)
 {
 	*m_pakName = m_pPakPathSplitInfo->getPakName();
 	m_pakIdx = packIdx;

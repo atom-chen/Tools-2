@@ -1,11 +1,11 @@
 #include "PakTask.h"
-#include "PakItem.h"
+#include "PakItemBase.h"
 #include "FileArchiveToolSys.h"
 #include "ArchiveData.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-PakTask::PakTask(PakItem* pPakItem)
+PakTask::PakTask(PakItemBase* pPakItem)
 {
 	m_pPakItem = pPakItem;
 }

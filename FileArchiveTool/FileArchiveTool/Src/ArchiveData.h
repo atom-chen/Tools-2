@@ -13,19 +13,19 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 class FileHeader;
 class ArchiveParam;
 class UnArchiveParam;
-class PakItem;
+class PakItemBase;
 class PakPathSplitInfo;
 class PakStatInfo;
 
 class FILEARCHIVETOOL_EXPORT ArchiveData
 {
 protected:
-	typedef std::vector<PakItem*> PakItemVec;
-	typedef std::vector<PakItem*>::iterator PakItemVecIt;
+	typedef std::vector<PakItemBase*> PakItemVec;
+	typedef std::vector<PakItemBase*>::iterator PakItemVecIt;
 
 protected:
 	PakItemVec* m_pPakItemVec;		// 整个文件包
-	PakItem* m_curPak;				// 当前的包
+	PakItemBase* m_curPak;				// 当前的包
 
 	PakPathSplitInfo* m_pPakPathSplitInfo;		// 解析的文件信息，内部使用这个处理
 	PakStatInfo* m_pPakStatInfo;				// 包的统计信息
@@ -44,7 +44,7 @@ public:
 	void asyncArchiveDir(ArchiveParam* m_pArchiveParam);
 	void asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam);
 
-	void removePakItem(PakItem* pPakItem);
+	void removePakItem(PakItemBase* pPakItem);
 	uint32 getPakItemCount();
 
 protected:

@@ -7,15 +7,15 @@
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-class PakItem;
+class PakItemBase;
 
 class FILEARCHIVETOOL_EXPORT PakTask : public ITask
 {
 protected:
-	PakItem* m_pPakItem;
+	PakItemBase* m_pPakItem;
 
 public:
-	PakTask(PakItem* pPakItem);
+	PakTask(PakItemBase* pPakItem);
 	~PakTask();
 
 	virtual bool exeTask();

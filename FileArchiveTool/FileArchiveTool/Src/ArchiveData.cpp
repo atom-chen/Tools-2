@@ -13,7 +13,7 @@
 #include "UnArchiveTask.h"
 #include "Config.h"
 #include "PakPathSplitInfo.h"
-#include "PakItem.h"
+#include "PakItemBase.h"
 #include "PakStatInfo.h"
 #include "PakTask.h"
 
@@ -111,13 +111,13 @@ void ArchiveData::clearFileVec()
 
 void ArchiveData::readArchiveFileHeader(const char* pFileName)
 {
-	PakItem* pak = new PakItem;
+	PakItemBase* pak = new PakItemBase;
 	pak->readArchiveFileHeader(pFileName);
 }
 
 void ArchiveData::newPakItem()
 {
-	m_curPak = new PakItem;
+	m_curPak = new PakItemBase;
 	m_curPak->initByPakPathSplitInfo(m_pPakPathSplitInfo, m_pPakStatInfo->getCurPakIdx());
 	m_pPakStatInfo->addCurPakIdx();
 	m_pPakItemVec->push_back(m_curPak);
@@ -131,7 +131,7 @@ void ArchiveData::addPakTask()
 	}
 }
 
-void ArchiveData::removePakItem(PakItem* pPakItem)
+void ArchiveData::removePakItem(PakItemBase* pPakItem)
 {
 	int idx = 0;
 	for (auto item : *m_pPakItemVec)
