@@ -87,8 +87,8 @@ ThreadPool* FileArchiveToolSys::getThreadPoolPtr()
 
 void FileArchiveToolSys::onTick()
 {
-	m_pLogSys->onTick();
 	m_pTaskQueue->onTick();
+	m_pLogSys->onTick();
 }
 
 void FileArchiveToolSys::init()

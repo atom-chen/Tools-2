@@ -82,4 +82,9 @@ void PakItemBase::readArchiveFileHeader(const char* pFileName)
 
 }
 
+bool PakItemBase::isPakNameEqual(std::string& pakName)
+{
+	return false;
+}
+
 END_NAMESPACE_FILEARCHIVETOOL

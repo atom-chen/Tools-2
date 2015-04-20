@@ -15,6 +15,7 @@
 #include "ArchiveHeader.h"
 #include "PakPathSplitInfo.h"
 #include "PakTask.h"
+#include "LogSys.h"
 
 #include <sstream>
 
@@ -40,6 +41,19 @@ PakItemDir::~PakItemDir()
 
 void PakItemDir::asyncArchiveDir(ArchiveParam* pArchiveParam)
 {
+	std::stringstream ss;//创建一个流
+	ss.clear();
+	ss.str("");
+
+	ss << "开始输出包[" << *m_pakName << "]\n";
+	ss << "包中文件列表:\n";
+	for (auto item : *m_pFileVec)
+	{
+		ss << "[" << item->getFullPath() << "]\n";
+	}
+	ss << "结束输出包\n";
+	FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
+
 	writeFile2ArchiveFile(pArchiveParam);
 }
 
@@ -211,6 +225,13 @@ bool PakItemDir::canAddFile(PakPathSplitInfo* pPakPathSplitInfo)
 
 void PakItemDir::addFileHeader(FileHeader* pFileHeader)
 {
+	std::stringstream ss;//创建一个流
+	ss.clear();
+	ss.str("");
+
+	ss << "添加文件[" << pFileHeader->getFullPath() << "]到包[" << *m_pakName <<  "]";
+	FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
+
 	m_fileSize += pFileHeader->getFileSize();
 	m_pFileVec->push_back(pFileHeader);
 }
@@ -233,6 +254,11 @@ void PakItemDir::initByPakPathSplitInfo(PakPathSplitInfo* m_pPakPathSplitInfo, u
 
 	*m_fullPath += ss.str();
 	*m_fullPath += PAKEXT;
+}
+
+bool PakItemDir::isPakNameEqual(std::string& pakName)
+{
+	return *m_pakName == pakName;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

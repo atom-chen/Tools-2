@@ -36,6 +36,7 @@ public:
 	virtual void addFileHeader(FileHeader* pFileHeader);				// 向包中添加一个文件
 	virtual void initByPakPathSplitInfo(PakPathSplitInfo* m_pPakPathSplitInfo, uint32 packIdx);
 	virtual void readArchiveFileHeader(const char* pFileName);
+	virtual bool isPakNameEqual(std::string& pakName);
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

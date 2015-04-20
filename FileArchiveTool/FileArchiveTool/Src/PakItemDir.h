@@ -51,6 +51,7 @@ public:
 
 	virtual void writeFile2ArchiveFile(ArchiveParam* pArchiveParam);
 	virtual void readArchiveFileHeader(const char* pFileName);
+	virtual bool isPakNameEqual(std::string& pakName);
 
 protected:
 	virtual void clearFileVec();			// 清理 m_pFileVec 中的内容

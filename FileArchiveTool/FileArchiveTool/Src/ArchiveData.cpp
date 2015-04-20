@@ -18,6 +18,8 @@
 #include "PakTask.h"
 #include "PakItemDir.h"
 #include "PakItemFileCopy.h"
+#include "LogSys.h"
+#include "LogStr.h"
 
 #include <algorithm>
 
@@ -47,6 +49,8 @@ void ArchiveData::ArchiveDir()
 
 void ArchiveData::asyncArchiveDir(ArchiveParam* pArchiveParam)
 {
+	FileArchiveToolSysDef->getLogSysPtr()->log(LS_START_SPLITPAK);
+
 	clearFileVec();
 	//FileArchiveToolSysDef->getUtilPtr()->bindWalkDirDelegate(fastdelegate::MakeDelegate(this, &ArchiveData::fileHandle));
 	FileArchiveToolSysDef->getUtilPtr()->getWalkDirDelegatePtr()->bind(this, &ArchiveData::fileHandle);
@@ -121,6 +125,17 @@ void ArchiveData::newPakItem()
 {
 	if (m_pPakPathSplitInfo->getNeedPak())
 	{
+		if (m_curPak != nullptr)
+		{
+			if (m_curPak->isPakNameEqual(m_pPakPathSplitInfo->getPakName()))
+			{
+				m_pPakStatInfo->addCurPakIdx();
+			}
+			else
+			{
+				m_pPakStatInfo->clearCurPakIdx();
+			}
+		}
 		m_curPak = new PakItemDir;
 	}
 	else
@@ -128,7 +143,6 @@ void ArchiveData::newPakItem()
 		m_curPak = new PakItemFileCopy;
 	}
 	m_curPak->initByPakPathSplitInfo(m_pPakPathSplitInfo, m_pPakStatInfo->getCurPakIdx());
-	m_pPakStatInfo->addCurPakIdx();
 	m_pPakItemVec->push_back(m_curPak);
 }
 
@@ -154,6 +168,11 @@ void ArchiveData::removePakItem(PakItemBase* pPakItem)
 		}
 
 		++idx;
+	}
+
+	if (m_pPakItemVec->size() == 0)
+	{
+		FileArchiveToolSysDef->getLogSysPtr()->log(LS_PAK_END);
 	}
 }
 

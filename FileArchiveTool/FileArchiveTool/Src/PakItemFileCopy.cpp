@@ -15,6 +15,7 @@
 #include "ArchiveHeader.h"
 #include "PakPathSplitInfo.h"
 #include "PakTask.h"
+#include "LogSys.h"
 
 #include <sstream>
 
@@ -31,6 +32,16 @@ PakItemFileCopy::~PakItemFileCopy()
 
 void PakItemFileCopy::asyncArchiveDir(ArchiveParam* pArchiveParam)
 {
+	std::stringstream ss;//创建一个流
+	ss.clear();
+	ss.str("");
+
+	ss << "开始输出文件\n";
+	ss << "文件名字:\n";
+	ss << m_pFileHeader->getFullPath() << "\n";
+	ss << "结束输出文件\n";
+	FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
+
 	PakItemBase::asyncArchiveDir(pArchiveParam);
 	writeFile2ArchiveFile(pArchiveParam);
 }
@@ -82,6 +93,13 @@ bool PakItemFileCopy::canAddFile(PakPathSplitInfo* pPakPathSplitInfo)
 
 void PakItemFileCopy::addFileHeader(FileHeader* pFileHeader)
 {
+	std::stringstream ss;//创建一个流
+	ss.clear();
+	ss.str("");
+
+	ss << "添加单独文件[" << pFileHeader->getFullPath();
+	FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
+
 	m_pFileHeader = pFileHeader;
 }
 
