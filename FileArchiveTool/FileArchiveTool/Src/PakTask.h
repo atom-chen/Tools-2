@@ -22,6 +22,19 @@ public:
 	virtual bool exeResult();
 };
 
+class FILEARCHIVETOOL_EXPORT UnPakTask : public ITask
+{
+protected:
+	PakItemBase* m_pPakItem;
+
+public:
+	UnPakTask(PakItemBase* pPakItem);
+	~UnPakTask();
+
+	virtual bool exeTask();
+	virtual bool exeResult();
+};
+
 END_NAMESPACE_FILEARCHIVETOOL
 
 #endif

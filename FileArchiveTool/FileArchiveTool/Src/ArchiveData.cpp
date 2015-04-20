@@ -73,6 +73,8 @@ void ArchiveData::unArchiveFile()
 void ArchiveData::asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam)
 {
 	clearFileVec();
+	m_curPak = new PakItemDir;
+	addUnPakTask();
 }
 
 // 这个是将目录分成几个包
@@ -98,14 +100,6 @@ bool ArchiveData::fileHandle(const char* walkPath, struct _finddata_t* FileInfo)
 	return true;
 }
 
-void ArchiveData::adjustHeaderOffset()
-{
-	for (auto pakItem : *m_pPakItemVec)
-	{
-		pakItem->adjustHeaderOffset();
-	}
-}
-
 void ArchiveData::clearFileVec()
 {
 	m_pPakStatInfo->clear();
@@ -118,12 +112,6 @@ void ArchiveData::clearFileVec()
 	}
 
 	m_pPakItemVec->clear();
-}
-
-void ArchiveData::readArchiveFileHeader(const char* pFileName)
-{
-	PakItemBase* pak = new PakItemDir;
-	pak->readArchiveFileHeader(pFileName);
 }
 
 void ArchiveData::newPakItem()
@@ -159,6 +147,14 @@ void ArchiveData::addPakTask()
 	}
 }
 
+void ArchiveData::addUnPakTask()
+{
+	if (m_curPak != nullptr)		// 如果当前有 Pak ，就开始打包
+	{
+		m_curPak->unArchiveFile();
+	}
+}
+
 void ArchiveData::removePakItem(PakItemBase* pPakItem)
 {
 	int idx = 0;
@@ -182,6 +178,12 @@ void ArchiveData::removePakItem(PakItemBase* pPakItem)
 		FileArchiveToolSysDef->getLogSysPtr()->log("======================\n");
 		FileArchiveToolSysDef->getPakStatePtr()->toggleState(ePS_PAKEND);
 	}
+}
+
+void ArchiveData::removeUnPakItem(PakItemBase* pPakItem)
+{
+	delete m_curPak;
+	m_curPak = nullptr;
 }
 
 size_t ArchiveData::getPakItemCount()

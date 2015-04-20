@@ -43,7 +43,7 @@ void PakItemBase::asyncArchiveDir(ArchiveParam* pArchiveParam)
 
 void PakItemBase::unArchiveFile()
 {
-	UnArchiveTask* pUnArchiveTask = new UnArchiveTask(FileArchiveToolSysDef->getUnArchiveParamPtr());
+	UnPakTask* pUnArchiveTask = new UnPakTask(this);
 	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pUnArchiveTask);
 }
 

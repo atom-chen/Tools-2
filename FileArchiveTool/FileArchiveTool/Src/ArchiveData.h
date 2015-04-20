@@ -45,6 +45,7 @@ public:
 	void asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam);
 
 	void removePakItem(PakItemBase* pPakItem);
+	void removeUnPakItem(PakItemBase* pPakItem);
 	size_t getPakItemCount();
 
 protected:
@@ -54,6 +55,7 @@ protected:
 
 	void newPakItem();		// 新建一个 PakItem
 	void addPakTask();	// 添加一打包任务
+	void addUnPakTask();
 };
 
 END_NAMESPACE_FILEARCHIVETOOL
