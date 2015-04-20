@@ -211,6 +211,7 @@ bool PakItemDir::canAddFile(PakPathSplitInfo* pPakPathSplitInfo)
 
 void PakItemDir::addFileHeader(FileHeader* pFileHeader)
 {
+	m_fileSize += pFileHeader->getFileSize();
 	m_pFileVec->push_back(pFileHeader);
 }
 

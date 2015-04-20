@@ -96,7 +96,7 @@ void Config::parseEqualTokens(std::vector<std::string>& equalTokens)
 {
 	if (equalTokens[0] == "maxSizePerPak")
 	{
-		m_maxSizePerPak = strtol(equalTokens[0].c_str(), nullptr, 10);
+		m_maxSizePerPak = strtol(equalTokens[1].c_str(), nullptr, 10);
 	}
 	else if (equalTokens[0] == "inputRootPath")
 	{

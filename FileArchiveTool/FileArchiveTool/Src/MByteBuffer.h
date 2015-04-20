@@ -401,12 +401,12 @@ public:
 		return m_pStorageBuffer->m_iCapacity;
 	}
 
-	void readAddPos(int delta)
+	void readAddPos(size_t delta)
 	{
 		m_pos += delta;
 	}
 
-	void writeAddPos(int delta)
+	void writeAddPos(size_t delta)
 	{
 		m_pos += delta;
 		m_pStorageBuffer->m_size += delta;
@@ -420,7 +420,7 @@ public:
 	/**
 	*@brief 能否添加 num 长度的数据
 	*/
-	bool canAddData(uint32 num)
+	bool canAddData(size_t num)
 	{
 		return m_pStorageBuffer->canAddData(num);
 	}
@@ -451,7 +451,7 @@ public:
 
 		if (!canAddData(cnt))
 		{
-			uint32 closeSize = DynBufResizePolicy::getCloseSize(cnt + size(), capacity());
+			size_t closeSize = DynBufResizePolicy::getCloseSize(cnt + size(), capacity());
 			setCapacity(closeSize);
 		}
 		memcpy(&m_pStorageBuffer->m_storage[m_pos], src, cnt);

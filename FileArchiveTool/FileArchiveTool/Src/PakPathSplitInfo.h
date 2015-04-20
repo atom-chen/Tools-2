@@ -15,7 +15,7 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 class FILEARCHIVETOOL_EXPORT PakPathSplitInfo
 {
 protected:
-	std::string* m_origPath;	// 原始的目录
+	std::string* m_origPath;		// 原始的目录
 	std::string* m_origFileName;	// 原始文件的名字
 	std::size_t m_fileOrigSize;		// 文件原始大小
 	std::size_t m_fileCompressSize;	// 文件压缩后的大小

@@ -12,7 +12,8 @@
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-FileHeader::FileHeader()
+FileHeader::FileHeader():
+	m_fileOffset(0), m_fileSize(0)
 {
 	m_pFullPath = new char[MAX_PATH];
 	memset(m_pFullPath, 0, MAX_PATH);
@@ -211,6 +212,7 @@ void FileHeader::modifyArchiveFileName(ArchiveParam* pArchiveParam)
 
 void FileHeader::initFileHeader(PakPathSplitInfo* pPakPathSplitInfo)
 {
+	m_fileSize = pPakPathSplitInfo->getFileOrigSize();
 	setFullPath(pPakPathSplitInfo->getOrigPath().c_str(), pPakPathSplitInfo->getOrigFileName().c_str());
 	setFileName(pPakPathSplitInfo->getOrigFileName().c_str());
 	modifyArchiveFileName(FileArchiveToolSysDef->getArchiveParamPtr());

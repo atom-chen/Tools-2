@@ -6,7 +6,7 @@
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 ArchiveHeader::ArchiveHeader() :
-	m_version(ARCHIVETOOL_VERSION)
+	m_version(ARCHIVETOOL_VERSION), m_headerSize(0), m_fileCount(0)
 {
 	m_magic[0] = 'a';
 	m_magic[1] = 's';

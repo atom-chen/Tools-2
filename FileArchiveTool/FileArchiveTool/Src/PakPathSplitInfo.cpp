@@ -26,6 +26,8 @@ void PakPathSplitInfo::initInfo(std::string& path, struct _finddata_t* FileInfo)
 {
 	*m_origPath = path;
 	*m_origFileName = FileInfo->name;
+	m_fileOrigSize = FileInfo->size;
+	m_fileCompressSize = FileInfo->size;
 
 	if (FileArchiveToolSysDef->getConfigPtr()->isEqualInRootPath(path))		// 如果是根目录下的文件
 	{

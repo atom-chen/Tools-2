@@ -17,7 +17,7 @@ public:
 
 protected:
 	std::string* m_pBrowseRootPath;		// 如果这个设置了，就说明浏览这个目录，否则全盘浏览
-	std::size_t m_maxSizePerPak;		// 每一个包的最大大小，再大需要进行拆分，单位是字节
+	std::size_t m_maxSizePerPak;		// 每一个包的最大大小，再大需要进行拆分，单位是字节，初始大小定为 30M
 	std::string* m_inRootPath;			// 输入根目录
 	std::string* m_outputRootPath;		// 输出根目录
 

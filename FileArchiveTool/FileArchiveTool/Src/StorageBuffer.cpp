@@ -48,7 +48,7 @@ void StorageBuffer::setCapacity(std::size_t newCapacity)
 /**
 *@brief 能否添加 num 长度的数据
 */
-bool StorageBuffer::canAddData(uint32 num)
+bool StorageBuffer::canAddData(size_t num)
 {
 	if (m_iCapacity - m_size >= num)
 	{

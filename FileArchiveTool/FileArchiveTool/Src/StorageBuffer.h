@@ -18,7 +18,7 @@ public:
 	~StorageBuffer();
 	void setCapacity(std::size_t newCapacity);
 	void setSize(std::size_t len);
-	bool canAddData(uint32 num);
+	bool canAddData(size_t num);
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

@@ -157,7 +157,7 @@ void ArchiveData::removePakItem(PakItemBase* pPakItem)
 	}
 }
 
-uint32 ArchiveData::getPakItemCount()
+size_t ArchiveData::getPakItemCount()
 {
 	return m_pPakItemVec->size();
 }

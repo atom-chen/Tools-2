@@ -8,7 +8,7 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 class DynBufResizePolicy
 {
 public:
-	static uint32 getCloseSize(uint32 needSize, uint32 capacity);
+	static uint32 getCloseSize(size_t needSize, size_t capacity);
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

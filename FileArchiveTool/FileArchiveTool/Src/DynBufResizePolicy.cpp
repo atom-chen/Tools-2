@@ -4,7 +4,7 @@
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 // 获取一个最近的大小
-uint32 DynBufResizePolicy::getCloseSize(uint32 needSize, uint32 capacity)
+uint32 DynBufResizePolicy::getCloseSize(size_t needSize, size_t capacity)
 {
 	uint32 ret = 0;
 

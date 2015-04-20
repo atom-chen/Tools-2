@@ -45,7 +45,7 @@ public:
 	void asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam);
 
 	void removePakItem(PakItemBase* pPakItem);
-	uint32 getPakItemCount();
+	size_t getPakItemCount();
 
 protected:
 	void clearFileVec();			// 清理 m_pFileVec 中的内容
