@@ -45,7 +45,7 @@ void PakItemDir::asyncArchiveDir(ArchiveParam* pArchiveParam)
 	ss.clear();
 	ss.str("");
 
-	ss << "开始输出包[" << *m_pakName << "]\n";
+	ss << "开始输出包[" << *m_pakName << "_" << m_pakIdx << "]\n";
 	ss << "包中文件列表:\n";
 	for (auto item : *m_pFileVec)
 	{
@@ -229,7 +229,7 @@ void PakItemDir::addFileHeader(FileHeader* pFileHeader)
 	ss.clear();
 	ss.str("");
 
-	ss << "添加文件[" << pFileHeader->getFullPath() << "]到包[" << *m_pakName <<  "]";
+	ss << "添加文件[" << pFileHeader->getFullPath() << "]到包[" << *m_pakName << "_" << m_pakIdx << "]\n";
 	FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 
 	m_fileSize += pFileHeader->getFileSize();

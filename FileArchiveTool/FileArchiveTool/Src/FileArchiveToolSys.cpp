@@ -8,6 +8,7 @@
 #include "ArchiveParam.h"
 #include "UnArchiveParam.h"
 #include "ThreadPool.h"
+#include "PakState.h"
 #include <Thread>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
@@ -25,6 +26,7 @@ FileArchiveToolSys::FileArchiveToolSys()
 	m_pArchiveParam = new ArchiveParam;
 	m_pUnArchiveParam = new UnArchiveParam;
 	m_pThreadPool = new ThreadPool(std::thread::hardware_concurrency() * 2);
+	m_pPakState = new PakState;
 }
 
 FileArchiveToolSys::~FileArchiveToolSys()
@@ -38,6 +40,7 @@ FileArchiveToolSys::~FileArchiveToolSys()
 	delete m_pArchiveParam;
 	delete m_pUnArchiveParam;
 	delete m_pThreadPool;
+	delete m_pPakState;
 }
 
 Config* FileArchiveToolSys::getConfigPtr()
@@ -83,6 +86,11 @@ UnArchiveParam* FileArchiveToolSys::getUnArchiveParamPtr()
 ThreadPool* FileArchiveToolSys::getThreadPoolPtr()
 {
 	return m_pThreadPool;
+}
+
+PakState* FileArchiveToolSys::getPakStatePtr()
+{
+	return m_pPakState;
 }
 
 void FileArchiveToolSys::onTick()

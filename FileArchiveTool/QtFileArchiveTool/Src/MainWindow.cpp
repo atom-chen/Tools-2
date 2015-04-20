@@ -80,7 +80,7 @@ void MainWindow::createDockWidget()
 	// END
 
 	QtFileArchiveToolSysDef->getLogSysPtr()->regLogDevice(m_logWidget);
-	QtFileArchiveToolSysDef->getLogSysPtr()->log("ÄãºÃ");
+	//QtFileArchiveToolSysDef->getLogSysPtr()->log("ÄãºÃ");
 }
 
 void MainWindow::createActions()

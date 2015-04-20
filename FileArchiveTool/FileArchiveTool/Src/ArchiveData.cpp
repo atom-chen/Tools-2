@@ -20,6 +20,7 @@
 #include "PakItemFileCopy.h"
 #include "LogSys.h"
 #include "LogStr.h"
+#include "PakState.h"
 
 #include <algorithm>
 
@@ -43,12 +44,15 @@ ArchiveData::~ArchiveData()
 
 void ArchiveData::ArchiveDir()
 {
+	FileArchiveToolSysDef->getPakStatePtr()->toggleState(ePS_PAKING);
+
 	ArchiveTask* pArchiveTask = new ArchiveTask(FileArchiveToolSysDef->getArchiveParamPtr());
 	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pArchiveTask);
 }
 
 void ArchiveData::asyncArchiveDir(ArchiveParam* pArchiveParam)
 {
+	FileArchiveToolSysDef->getLogSysPtr()->log("======================\n");
 	FileArchiveToolSysDef->getLogSysPtr()->log(LS_START_SPLITPAK);
 
 	clearFileVec();
@@ -57,6 +61,7 @@ void ArchiveData::asyncArchiveDir(ArchiveParam* pArchiveParam)
 	FileArchiveToolSysDef->getUtilPtr()->walkDir(pArchiveParam->getArchiveDir());
 
 	addPakTask();	// 最后一个打包任务
+	m_curPak = nullptr;
 }
 
 void ArchiveData::unArchiveFile()
@@ -163,8 +168,9 @@ void ArchiveData::removePakItem(PakItemBase* pPakItem)
 		{
 			PakItemVecIt ite = m_pPakItemVec->begin();
 			std::advance(ite, idx);
+			delete *ite;
 			m_pPakItemVec->erase(ite);
-			return;
+			break;
 		}
 
 		++idx;
@@ -173,6 +179,8 @@ void ArchiveData::removePakItem(PakItemBase* pPakItem)
 	if (m_pPakItemVec->size() == 0)
 	{
 		FileArchiveToolSysDef->getLogSysPtr()->log(LS_PAK_END);
+		FileArchiveToolSysDef->getLogSysPtr()->log("======================\n");
+		FileArchiveToolSysDef->getPakStatePtr()->toggleState(ePS_PAKEND);
 	}
 }
 

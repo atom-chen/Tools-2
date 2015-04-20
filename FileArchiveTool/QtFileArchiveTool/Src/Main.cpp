@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	// 因为 boost 在调试环境中没有获取 exe 目录的接口，都是获取当前目录，而当前目录又是工程所在的目录，在工程中设置调试目录也不行，只能挂载进程调试
 	// _asm INT 3; //调用断点中断
 #if WIN32
-	__debugbreak();
+	//__debugbreak();
 #endif
 	setlocale(LC_ALL, "chs");		// c 中文目录文件操作
 

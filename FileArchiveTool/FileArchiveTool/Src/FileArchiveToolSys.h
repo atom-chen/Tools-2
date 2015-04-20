@@ -15,6 +15,7 @@ class LogSys;
 class ArchiveParam;
 class UnArchiveParam;
 class ThreadPool;
+class PakState;
 
 class FILEARCHIVETOOL_EXPORT FileArchiveToolSys : public Singleton<FileArchiveToolSys>
 {
@@ -28,6 +29,7 @@ protected:
 	ArchiveParam* m_pArchiveParam;
 	UnArchiveParam* m_pUnArchiveParam;
 	ThreadPool* m_pThreadPool;
+	PakState* m_pPakState;
 
 public:
 	FileArchiveToolSys();
@@ -46,6 +48,7 @@ public:
 	ArchiveParam* getArchiveParamPtr();
 	UnArchiveParam* getUnArchiveParamPtr();
 	ThreadPool* getThreadPoolPtr();
+	PakState* getPakStatePtr();
 };
 
 #define FileArchiveToolSysDef FileArchiveToolSys::getSingletonPtr()

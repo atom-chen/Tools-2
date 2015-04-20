@@ -97,7 +97,7 @@ void PakItemFileCopy::addFileHeader(FileHeader* pFileHeader)
 	ss.clear();
 	ss.str("");
 
-	ss << "添加单独文件[" << pFileHeader->getFullPath();
+	ss << "添加单独文件[" << pFileHeader->getFullPath() << "]\n";
 	FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 
 	m_pFileHeader = pFileHeader;

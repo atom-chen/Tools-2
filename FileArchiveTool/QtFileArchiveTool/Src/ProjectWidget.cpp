@@ -4,6 +4,7 @@
 #include <QtCore>
 #include "FileSystemModel.h"
 #include "QtFileArchiveToolSys.h"
+#include "PakState.h"
 
 ProjectWidget::ProjectWidget(QWidget *parent)
 	: QDockWidget(parent, 0), m_ui(new Ui::ProjectWidget)
@@ -119,6 +120,11 @@ void ProjectWidget::archiveSubDir()
 
 void ProjectWidget::archive()
 {
+	if (QtFileArchiveToolSysDef->getPakStatePtr()->isEqualState(ePS_PAKING))
+	{
+		QtFileArchiveToolSysDef->getLogSysPtr()->log("当前正在打包中\n");
+		return;
+	}
 	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveDir(m_pPath.c_str());
 	std::string filePath = QtFileArchiveToolSysDef->getUtilPtr()->getFullPathNoFileName(m_pPath.c_str());
 	filePath += "/";
