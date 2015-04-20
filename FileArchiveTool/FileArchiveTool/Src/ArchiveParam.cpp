@@ -59,7 +59,7 @@ bool ArchiveParam::isEqualArchiveDir(std::string& path)
 
 ArchiveMode ArchiveParam::getArchiveMode()
 {
-	if (strncmp(m_pArchiveDir, FileArchiveToolSysDef->getConfigPtr()->getInRootPath().c_str(), strlen(m_pArchiveDir) != 0))
+	if (strncmp(m_pArchiveDir, FileArchiveToolSysDef->getConfigPtr()->getPakInRootPath().c_str(), strlen(m_pArchiveDir) != 0))
 	{
 		return eArchiveMode_SubDir;
 	}

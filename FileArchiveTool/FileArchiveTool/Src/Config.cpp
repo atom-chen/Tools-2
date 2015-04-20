@@ -13,15 +13,17 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 Config::Config()
 {
 	m_pBrowseRootPath = new std::string("E:\\");
-	m_inRootPath = new std::string;
-	m_outputRootPath = new std::string;
+	m_pakInRootPath = new std::string;
+	m_pakOutputRootPath = new std::string;
+	m_unpakOutputRootPath = new std::string;
 }
 
 Config::~Config()
 {
 	delete m_pBrowseRootPath;
-	delete m_inRootPath;
-	delete m_outputRootPath;
+	delete m_pakInRootPath;
+	delete m_pakOutputRootPath;
+	delete m_unpakOutputRootPath;
 }
 
 std::string& Config::getBrowseRootPath()
@@ -29,14 +31,19 @@ std::string& Config::getBrowseRootPath()
 	return *m_pBrowseRootPath;
 }
 
-std::string& Config::getInRootPath()
+std::string& Config::getPakInRootPath()
 {
-	return *m_inRootPath;
+	return *m_pakInRootPath;
 }
 
-std::string& Config::getOutputRootPath()
+std::string& Config::getPakOutputRootPath()
 {
-	return *m_outputRootPath;
+	return *m_pakOutputRootPath;
+}
+
+std::string& Config::getUnpakOutputRootPath()
+{
+	return *m_unpakOutputRootPath;
 }
 
 bool Config::bCompress()
@@ -98,15 +105,20 @@ void Config::parseEqualTokens(std::vector<std::string>& equalTokens)
 	{
 		m_maxSizePerPak = strtol(equalTokens[1].c_str(), nullptr, 10);
 	}
-	else if (equalTokens[0] == "inputRootPath")
+	else if (equalTokens[0] == "pakInputRootPath")
 	{
-		*m_inRootPath = equalTokens[1];
-		FileArchiveToolSysDef->getUtilPtr()->trim_right(*m_outputRootPath);
+		*m_pakInRootPath = equalTokens[1];
+		FileArchiveToolSysDef->getUtilPtr()->trim_right(*m_pakOutputRootPath);
 	}
-	else if (equalTokens[0] == "outputRootPath")
+	else if (equalTokens[0] == "pakOutputRootPath")
 	{
-		*m_outputRootPath = equalTokens[1];
-		FileArchiveToolSysDef->getUtilPtr()->trim_right(*m_outputRootPath);
+		*m_pakOutputRootPath = equalTokens[1];
+		FileArchiveToolSysDef->getUtilPtr()->trim_right(*m_pakOutputRootPath);
+	}
+	else if (equalTokens[0] == "unpakOutputRootPath")
+	{
+		*m_unpakOutputRootPath = equalTokens[1];
+		FileArchiveToolSysDef->getUtilPtr()->trim_right(*m_unpakOutputRootPath);
 	}
 }
 
@@ -117,7 +129,7 @@ std::size_t Config::getMaxSizePerPak()
 
 bool Config::isEqualInRootPath(std::string& path)
 {
-	if (path == *m_inRootPath)
+	if (path == *m_pakInRootPath)
 	{
 		return true;
 	}

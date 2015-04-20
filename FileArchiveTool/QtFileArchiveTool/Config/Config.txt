@@ -1,3 +1,4 @@
 maxSizePerPak=31457280
-inputRootPath=E:/你好
-outputRootPath=E:/Work/Code20150402/client/trunk/Tools/FileArchiveTool/build/output
+pakInputRootPath=E:/ninhao
+pakOutputRootPath=E:/Work/Code20150402/client/trunk/Tools/FileArchiveTool/build/output
+unpakOutputRootPath=E:/Work/Code20150402/client/trunk/Tools/FileArchiveTool/build/output

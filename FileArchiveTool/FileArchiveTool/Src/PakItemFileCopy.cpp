@@ -56,7 +56,7 @@ void PakItemFileCopy::asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam)
 // Ð´ÈëÎÄ¼þ
 void PakItemFileCopy::writeFile2ArchiveFile(ArchiveParam* pArchiveParam)
 {
-	std::string outPath = FileArchiveToolSysDef->getConfigPtr()->getOutputRootPath() + "/" + m_pFileHeader->getFileName();
+	std::string outPath = FileArchiveToolSysDef->getConfigPtr()->getPakOutputRootPath() + "/" + m_pFileHeader->getFileName();
 	std::string inPath = m_pFileHeader->getFullPath();
 
 	FILE* outFileHandle = fopen(outPath.c_str(), "wb");

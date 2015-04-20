@@ -241,7 +241,7 @@ void PakItemDir::initByPakPathSplitInfo(PakPathSplitInfo* m_pPakPathSplitInfo, u
 	*m_pakName = m_pPakPathSplitInfo->getPakName();
 	m_pakIdx = packIdx;
 
-	*m_fullPath += FileArchiveToolSysDef->getConfigPtr()->getOutputRootPath();
+	*m_fullPath += FileArchiveToolSysDef->getConfigPtr()->getPakOutputRootPath();
 	*m_fullPath += "/";
 	*m_fullPath += *m_pakName;
 	*m_fullPath += "_";

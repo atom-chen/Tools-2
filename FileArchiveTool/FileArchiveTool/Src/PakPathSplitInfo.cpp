@@ -39,7 +39,7 @@ void PakPathSplitInfo::initInfo(std::string& path, struct _finddata_t* FileInfo)
 	}
 
 	m_bNeedPak = true;
-	const char* inRootPath = FileArchiveToolSysDef->getConfigPtr()->getInRootPath().c_str();
+	const char* inRootPath = FileArchiveToolSysDef->getConfigPtr()->getPakInRootPath().c_str();
 	size_t findIdx;
 	size_t dirLen = strlen(inRootPath);
 
