@@ -5,12 +5,12 @@
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="FileArchiveToolTest" expanded="True">
-            <Node name="UserInterface" expanded="True">
-              <Node name="FileArchiveToolTest.MainWindow" selected="True" />
-            </Node>
+            <Node name="UserInterface" expanded="True" />
             <Node name="7zip" expanded="True" />
             <Node name="Properties" expanded="True" />
-            <Node name="Src" expanded="True" />
+            <Node name="Src" expanded="True">
+              <Node name="DynamicBuffer.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
@@ -20,6 +20,7 @@
     <BreakpointStore>
       <Breakpoint file="e:\Self\Self\Tools\Tools\FileArchiveTool\FileArchiveToolTest\FileArchiveToolTest\Src\MLzma.cs" line="63" column="21" />
       <Breakpoint file="e:\Self\Self\Tools\Tools\FileArchiveTool\FileArchiveToolTest\FileArchiveToolTest\Src\FileInfo.cs" line="30" column="10" />
+      <Breakpoint file="D:\file\opensource\unity-game-git\unitygame\Tools\FileArchiveTool\FileArchiveToolTest\FileArchiveToolTest\MainWindow.cs" line="15" column="21" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
