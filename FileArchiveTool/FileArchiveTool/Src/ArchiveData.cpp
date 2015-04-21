@@ -22,6 +22,7 @@
 #include "LogStr.h"
 #include "PakState.h"
 #include "ManiFestData.h"
+#include "PtrDefine.h"
 
 #include <algorithm>
 
@@ -39,10 +40,10 @@ ArchiveData::ArchiveData():
 ArchiveData::~ArchiveData()
 {
 	clearFileVec();
-	delete m_pPakItemVec;
-	delete m_pPakPathSplitInfo;
-	delete m_pPakStatInfo;
-	delete m_pPakParamVec;
+	SAFE_DELETE(m_pPakItemVec);
+	SAFE_DELETE(m_pPakPathSplitInfo);
+	SAFE_DELETE(m_pPakStatInfo);
+	SAFE_DELETE(m_pPakParamVec);
 }
 
 void ArchiveData::ArchiveDir()

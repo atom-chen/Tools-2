@@ -7,6 +7,7 @@
 #include "LogSys.h"
 #include "TaskQueue.h"
 #include "ArchiveData.h"
+#include  "CharsetConv.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -55,7 +56,8 @@ ManiFestFileItem::~ManiFestFileItem()
 
 void ManiFestFileItem::serialManiFestInfo(std::stringstream& ss)
 {
-	ss << *m_inPakPath << "=" << *m_inPakPath << "\n";
+	char* pUtf8Path = FileArchiveToolSysDef->getCharsetConvPtr()->LocalToUtf8Str((char*)(m_inPakPath->c_str()));
+	ss << pUtf8Path << "=" << pUtf8Path;
 }
 
 /*********************************************************/
@@ -82,7 +84,10 @@ void ManiFestDirItem::setPakName(std::string& name_)
 
 void ManiFestDirItem::serialManiFestInfo(std::stringstream& ss)
 {
-	ss << *m_inPakPath << "=" << *m_pakName << "\n";
+	char* pUtf8Path = FileArchiveToolSysDef->getCharsetConvPtr()->LocalToUtf8Str((char*)(m_inPakPath->c_str()));
+	ss << pUtf8Path << "=";
+	pUtf8Path = FileArchiveToolSysDef->getCharsetConvPtr()->LocalToUtf8Str((char*)(m_pakName->c_str()));
+	ss << pUtf8Path;
 }
 
 /*********************************************************/
@@ -120,18 +125,24 @@ void ManiFestData::exportManiFest()
 	if (localFile != nullptr)
 	{
 		FileArchiveToolSysDef->getLogSysPtr()->log("打开清单文件成功\n");
-
+		size_t curIdx = 0;
 		for (auto item : *(m_pLockList->getVec()))
 		{
 			ss.clear();
 			ss.str("");
 			item->serialManiFestInfo(ss);
+			if (curIdx != m_pLockList->size() - 1)		// 不是最后一个，就需要添加换行
+			{
+				ss << "\n";
+			}
 
 			writeLen = fwrite(ss.str().c_str(), 1, ss.str().length(), localFile);
 			if (writeLen != ss.str().length())
 			{
 				FileArchiveToolSysDef->getLogSysPtr()->log("输出一项清单失败\n");
 			}
+
+			++curIdx;
 		}
 	}
 	else
@@ -147,7 +158,7 @@ void ManiFestData::buildManiFestItem(FileHeader* pFileHeader, PakItemBase* pPakI
 {
 	ManiFestItem* pManiFestItem;
 
-	std::string fullPath = pFileHeader->getFullPath();
+	std::string fullPath = pFileHeader->getPakFileName();
 	if (pPakItemBase->getPakItemType() == ePI_FILE)
 	{
 		pManiFestItem = new ManiFestFileItem;
@@ -164,24 +175,37 @@ void ManiFestData::buildManiFestItem(FileHeader* pFileHeader, PakItemBase* pPakI
 	addItem(pManiFestItem);
 }
 
-bool ManiFestData::exeTask()
+void ManiFestData::addSelf2TaskQueue()
+{
+	FileArchiveToolSysDef->getLogSysPtr()->log("开始添加清单任务");
+	ManiFestDataTask* pManiFestDataTask = new ManiFestDataTask(this);
+	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pManiFestDataTask);
+}
+
+/*********************************************/
+
+ManiFestDataTask::ManiFestDataTask(ManiFestData* pManiFestData)
+{
+	m_pManiFestData = pManiFestData;
+}
+
+ManiFestDataTask::~ManiFestDataTask()
+{
+
+}
+
+bool ManiFestDataTask::exeTask()
 {
 	FileArchiveToolSysDef->getLogSysPtr()->log("开始执行清单任务");
-	exportManiFest();
+	m_pManiFestData->exportManiFest();
 	return true;
 }
 
-bool ManiFestData::exeResult()
+bool ManiFestDataTask::exeResult()
 {
 	FileArchiveToolSysDef->getLogSysPtr()->log("输出清单文件任务完成");
 	FileArchiveToolSysDef->getArchiveDataPtr()->onManiFestEnd();
 	return true;
-}
-
-void ManiFestData::addSelf2TaskQueue()
-{
-	FileArchiveToolSysDef->getLogSysPtr()->log("开始添加清单任务");
-	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(this);
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

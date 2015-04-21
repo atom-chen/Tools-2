@@ -12,8 +12,6 @@ class CharsetConv;
 class Util;
 class TaskQueue;
 class LogSys;
-//class ArchiveParam;
-//class UnArchiveParam;
 class ThreadPool;
 class PakState;
 class ManiFestData;
@@ -27,8 +25,6 @@ protected:
 	Util* m_pUtil;
 	TaskQueue* m_pTaskQueue;
 	LogSys* m_pLogSys;
-	//ArchiveParam* m_pArchiveParam;
-	//UnArchiveParam* m_pUnArchiveParam;
 	ThreadPool* m_pThreadPool;
 	PakState* m_pPakState;
 	ManiFestData* m_pManiFestData;
@@ -48,8 +44,6 @@ public:
 	Util* getUtilPtr();
 	TaskQueue* getTaskQueuePtr();
 	LogSys* getLogSysPtr();
-	//ArchiveParam* getArchiveParamPtr();
-	//UnArchiveParam* getUnArchiveParamPtr();
 	ThreadPool* getThreadPoolPtr();
 	PakState* getPakStatePtr();
 	ManiFestData* getManiFestDataPtr();

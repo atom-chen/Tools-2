@@ -23,12 +23,15 @@ FileHeader::FileHeader():
 	memset(m_pFullPath, 0, MAX_PATH);
 	m_fileNamePath = new char[MAX_PATH];
 	memset(m_fileNamePath, 0, MAX_PATH);
+	m_pakFileNamePath = new char[MAX_PATH];
+	memset(m_pakFileNamePath, 0, MAX_PATH);
 }
 
 FileHeader::~FileHeader()
 {
 	delete m_pFullPath;
 	delete m_fileNamePath;
+	delete m_pakFileNamePath;
 }
 
 void FileHeader::setFullPath(const char* dir, const char* fileName)
@@ -51,6 +54,11 @@ void FileHeader::setFileName(const char* fileName)
 char* FileHeader::getFileName()
 {
 	return m_fileNamePath;
+}
+
+char* FileHeader::getPakFileName()
+{
+	return m_pakFileNamePath;
 }
 
 void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
@@ -167,7 +175,7 @@ void FileHeader::writeHeader2ArchiveFile(FILE* fileHandle)
 	fwrite(&m_pathLen, sizeof(m_pathLen), 1, fileHandle);
 	// 写入 Utf8 编码的字符串
 	//fwrite(m_fileNamePath, strlen(m_fileNamePath), 1, fileHandle);
-	char* pUtf8Path = (FileArchiveToolSysDef->getCharsetConvPtr()->LocalToUtf8Str(m_fileNamePath));
+	char* pUtf8Path = FileArchiveToolSysDef->getCharsetConvPtr()->LocalToUtf8Str(m_pakFileNamePath);
 	fwrite(pUtf8Path, m_pathLen, 1, fileHandle);
 	fwrite(&m_fileOffset, sizeof(m_fileOffset), 1, fileHandle);
 	fwrite(&m_fileSize, sizeof(m_fileSize), 1, fileHandle);
@@ -176,11 +184,11 @@ void FileHeader::writeHeader2ArchiveFile(FILE* fileHandle)
 void FileHeader::readHeaderFromArchiveFile(MByteBuffer* ba)
 {
 	ba->readUnsignedInt8(m_pathLen);
-	memset(m_fileNamePath, 0, MAX_PATH);
+	memset(m_pakFileNamePath, 0, MAX_PATH);
 	// 转换成 Local 编码字符串
-	ba->readMultiByte(m_fileNamePath, m_pathLen);
-	char* pUtf8Path = (FileArchiveToolSysDef->getCharsetConvPtr()->Utf8ToLocalStr(m_fileNamePath));
-	memcpy(m_fileNamePath, pUtf8Path, m_pathLen);
+	ba->readMultiByte(m_pakFileNamePath, m_pathLen);
+	char* pUtf8Path = (FileArchiveToolSysDef->getCharsetConvPtr()->Utf8ToLocalStr(m_pakFileNamePath));
+	memcpy(m_pakFileNamePath, pUtf8Path, m_pathLen);
 	ba->readUnsignedInt32(m_fileOffset);
 	ba->readUnsignedInt32(m_fileSize);
 }
@@ -199,7 +207,7 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 {
 	strcat(m_pFullPath, FileArchiveToolSysDef->getConfigPtr()->getUnpakOutputRootPath().c_str());
 	strcat(m_pFullPath, "/");
-	strcat(m_pFullPath, m_fileNamePath);
+	strcat(m_pFullPath, m_pakFileNamePath);
 
 	std::string strPath = FileArchiveToolSysDef->getUtilPtr()->getFullPathNoFileName(m_pFullPath);
 	FileArchiveToolSysDef->getUtilPtr()->mkDir(strPath.c_str());		// 创建目录
@@ -300,16 +308,19 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 	}
 }
 
+// 计算打包输出的文件
 void FileHeader::modifyArchiveFileName(ArchiveParam* pArchiveParam)
 {
-	if (strlen(m_pFullPath) != strlen(pArchiveParam->getArchiveDir()) + strlen(m_fileNamePath) + 1)
+	memcpy(m_pakFileNamePath, m_fileNamePath, strlen(m_fileNamePath));
+	std::string tmpPath = FileArchiveToolSysDef->getConfigPtr()->getPakInRootPath() + "/" + m_pakFileNamePath;
+	if (m_pFullPath != tmpPath)			// 如果不是在根目录下的文件
 	{
-		strcpy(m_fileNamePath, m_pFullPath + strlen(pArchiveParam->getArchiveDir()) + 1);
+		strcpy(m_pakFileNamePath, m_pFullPath + strlen(FileArchiveToolSysDef->getConfigPtr()->getPakInRootPath().c_str()) + 1);
 	}
 
 	// 计算目录长度， utf-8 编码目录长度
 	// m_pathLen = strlen(m_fileNamePath);
-	m_pathLen = (uint8)(FileArchiveToolSysDef->getCharsetConvPtr()->LocalToUtf8StrLen(m_fileNamePath));
+	m_pathLen = (uint8)(FileArchiveToolSysDef->getCharsetConvPtr()->LocalToUtf8StrLen(m_pakFileNamePath));
 }
 
 void FileHeader::initFileHeader(PakPathSplitInfo* pPakPathSplitInfo)

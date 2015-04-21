@@ -29,10 +29,10 @@ typedef signed char int8;
     typedef __int64 int64;
 #else
     typedef unsigned long long uint64;
-    typedef long long int64;
+	typedef long long int64;
 #endif
 
-// c:\Program Files(x86)\Windows Kits\8.1\Include\shared\minwindef.h		#define MAX_PATH          260
+	// c:\Program Files(x86)\Windows Kits\8.1\Include\shared\minwindef.h		#define MAX_PATH          260
 #ifdef MAX_PATH
 #undef MAX_PATH
 #endif

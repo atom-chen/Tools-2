@@ -5,8 +5,6 @@
 #include "Util.h"
 #include "TaskQueue.h"
 #include "LogSys.h"
-//#include "ArchiveParam.h"
-//#include "UnArchiveParam.h"
 #include "ThreadPool.h"
 #include "PakState.h"
 #include "ManiFestData.h"
@@ -25,10 +23,9 @@ FileArchiveToolSys::FileArchiveToolSys()
 	m_pUtil = new Util;
 	m_pTaskQueue = new TaskQueue;
 	m_pLogSys = new LogSys;
-	//m_pArchiveParam = new ArchiveParam;
-	//m_pUnArchiveParam = new UnArchiveParam;
 	m_pThreadPool = new ThreadPool(std::thread::hardware_concurrency()/* * 2*/);		// 几个 CPU 就几个线程，如果乘以 2 机器太卡了
 	m_pPakState = new PakState;
+	m_pManiFestData = new ManiFestData;
 }
 
 FileArchiveToolSys::~FileArchiveToolSys()
@@ -39,10 +36,9 @@ FileArchiveToolSys::~FileArchiveToolSys()
 	delete m_pUtil;
 	delete m_pTaskQueue;
 	delete m_pLogSys;
-	//delete m_pArchiveParam;
-	//delete m_pUnArchiveParam;
 	delete m_pThreadPool;
 	delete m_pPakState;
+	delete m_pManiFestData;
 }
 
 Config* FileArchiveToolSys::getConfigPtr()

@@ -102,7 +102,7 @@ void PakItemFileCopy::addFileHeader(FileHeader* pFileHeader)
 	FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 
 	m_pFileHeader = pFileHeader;
-	FileArchiveToolSysDef->getManiFestDataPtr()->buildManiFestItem(m_pFileHeader, nullptr);
+	FileArchiveToolSysDef->getManiFestDataPtr()->buildManiFestItem(m_pFileHeader, this);
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

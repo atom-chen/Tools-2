@@ -120,11 +120,11 @@ void ProjectWidget::archiveSubDir()
 
 void ProjectWidget::archive()
 {
-	if (QtFileArchiveToolSysDef->getPakStatePtr()->isEqualState(ePS_PAKING))
-	{
-		QtFileArchiveToolSysDef->getLogSysPtr()->log("当前正在打包中\n");
-		return;
-	}
+	//if (QtFileArchiveToolSysDef->getPakStatePtr()->isEqualState(ePS_PAKING))
+	//{
+	//	QtFileArchiveToolSysDef->getLogSysPtr()->log("当前正在打包中\n");
+	//	return;
+	//}
 
 	ArchiveParam* pArchiveParam = new ArchiveParam;
 	pArchiveParam->setArchiveDir(m_pPath.c_str());

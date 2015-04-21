@@ -69,7 +69,7 @@ class PakItemBase;
 /**
  *@brief 清单数据
  */
-class FILEARCHIVETOOL_EXPORT ManiFestData : public ITask
+class FILEARCHIVETOOL_EXPORT ManiFestData
 {
 protected:
 	LockList<ManiFestItem*>* m_pLockList;
@@ -84,6 +84,18 @@ public:
 	void buildManiFestItem(FileHeader* pFileHeader, PakItemBase* pPakItemBase);
 
 	void addSelf2TaskQueue();
+};
+
+/*********************************************/
+
+class FILEARCHIVETOOL_EXPORT ManiFestDataTask : public ITask
+{
+protected:
+	ManiFestData* m_pManiFestData;
+
+public:
+	ManiFestDataTask(ManiFestData* pManiFestData);
+	~ManiFestDataTask();
 	virtual bool exeTask();
 	virtual bool exeResult();
 };
