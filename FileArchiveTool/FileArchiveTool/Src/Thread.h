@@ -19,12 +19,12 @@ enum Priority
     Priority_Realtime,
 };
 
-class Thread : public boost::noncopyable
+class FILEARCHIVETOOL_EXPORT Thread : public boost::noncopyable
 {
 protected:
 	bool m_exitFlag;
-	boost::thread::id m_iThreadId;
-	std::auto_ptr<boost::thread> m_ThreadImp;
+	boost::thread::id* m_iThreadId;
+	std::auto_ptr<boost::thread>* m_ThreadImp;
 
 public:
     Thread();

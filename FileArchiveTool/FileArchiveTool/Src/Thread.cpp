@@ -9,53 +9,55 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 Thread::Thread()
 	: m_exitFlag(false)
 {
-    
+	m_iThreadId = new boost::thread::id;
+	m_ThreadImp = new std::auto_ptr<boost::thread>;
 }
 
 Thread::~Thread()
 {
-	
+	delete m_iThreadId;
+	delete m_ThreadImp;
 }
 
 void Thread::Start()
 {
-	m_ThreadImp.reset(new boost::thread(boost::bind(&Thread::ThreadTask, this)));
-	m_iThreadId = m_ThreadImp->get_id();
+	m_ThreadImp->reset(new boost::thread(boost::bind(&Thread::ThreadTask, this)));
+	*m_iThreadId = (*m_ThreadImp)->get_id();
 }
 
 bool Thread::Wait()
 {
-    if (m_iThreadId == boost::thread::id())
+    if (*m_iThreadId == boost::thread::id())
         return false;
 
     bool res = true;
 
-	if (m_ThreadImp.get())
+	if (m_ThreadImp->get())
 	{
 		try
 		{
-			m_ThreadImp->join();
+			(*m_ThreadImp)->join();
 		}
 		catch (boost::thread_interrupted&)
 		{
 			res = false;
 		}
 
-		m_ThreadImp.reset();
+		m_ThreadImp->reset();
 	}
 
-    m_iThreadId = boost::thread::id();
+    *m_iThreadId = boost::thread::id();
 
     return res;
 }
 
 void Thread::destroy()
 {
-    if (m_iThreadId == boost::thread::id())
+    if (*m_iThreadId == boost::thread::id())
         return;
 
-    m_ThreadImp->interrupt();
-    m_iThreadId = boost::thread::id();
+    (*m_ThreadImp)->interrupt();
+    *m_iThreadId = boost::thread::id();
 }
 
 void Thread::ThreadTask(void* param)
@@ -71,7 +73,7 @@ boost::thread::id Thread::currentId()
 
 void Thread::setPriority(Priority priority)
 {
-    boost::thread::native_handle_type handle = m_ThreadImp->native_handle();
+    boost::thread::native_handle_type handle = (*m_ThreadImp)->native_handle();
     bool _ok = true;
 
 #ifdef WIN32

@@ -13,7 +13,7 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 class ITaskQueue;
 class MCondition;
 
-class TaskThread : public Thread
+class FILEARCHIVETOOL_EXPORT TaskThread : public Thread
 {
 protected:
 	ITaskQueue* m_pTaskQueue;

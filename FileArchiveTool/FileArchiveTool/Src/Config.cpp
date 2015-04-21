@@ -16,6 +16,7 @@ Config::Config()
 	m_pakInRootPath = new std::string;
 	m_pakOutputRootPath = new std::string;
 	m_unpakOutputRootPath = new std::string;
+	m_maniFestFullPath = new std::string;
 }
 
 Config::~Config()
@@ -24,6 +25,7 @@ Config::~Config()
 	delete m_pakInRootPath;
 	delete m_pakOutputRootPath;
 	delete m_unpakOutputRootPath;
+	delete m_maniFestFullPath;
 }
 
 std::string& Config::getBrowseRootPath()
@@ -44,6 +46,11 @@ std::string& Config::getPakOutputRootPath()
 std::string& Config::getUnpakOutputRootPath()
 {
 	return *m_unpakOutputRootPath;
+}
+
+std::string& Config::getManiFestFullPath()
+{
+	return *m_maniFestFullPath;
 }
 
 bool Config::bCompress()
@@ -119,6 +126,11 @@ void Config::parseEqualTokens(std::vector<std::string>& equalTokens)
 	{
 		*m_unpakOutputRootPath = equalTokens[1];
 		FileArchiveToolSysDef->getUtilPtr()->trim_right(*m_unpakOutputRootPath);
+	}
+	else if (equalTokens[0] == "maniFestFullPath")
+	{
+		*m_maniFestFullPath = equalTokens[1];
+		FileArchiveToolSysDef->getUtilPtr()->trim_right(*m_maniFestFullPath);
 	}
 }
 

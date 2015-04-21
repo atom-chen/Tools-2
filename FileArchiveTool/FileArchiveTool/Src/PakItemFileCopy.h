@@ -25,7 +25,7 @@ protected:
 	FileHeader* m_pFileHeader;
 
 public:
-	PakItemFileCopy();
+	PakItemFileCopy(EPakItem ePakItem = ePI_FILE);
 	virtual ~PakItemFileCopy();
 
 public:

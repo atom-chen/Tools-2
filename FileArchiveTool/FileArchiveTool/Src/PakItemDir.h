@@ -28,6 +28,7 @@ protected:
 protected:
 	std::string* m_pakName;				// 生成的包的名字
 	uint32 m_pakIdx;					// 同类型的包的索引
+	std::string* m_pakFullName;			// 有扩展名字
 	ArchiveHeader* m_pArchiveHeader;	// 这个是总的文件头部信息
 
 	uint32 m_fileSize;				// 文件总共大小
@@ -35,7 +36,7 @@ protected:
 	std::string* m_fullPath;
 
 public:
-	PakItemDir();
+	PakItemDir(EPakItem ePakItem = ePI_DIR);
 	virtual ~PakItemDir();
 
 public:
@@ -53,6 +54,8 @@ public:
 	virtual void readArchiveFileHeader(const char* pFileName);
 	virtual bool isPakNameEqual(std::string& pakName);
 	virtual void endOnePak();			// 结束当前的一个包
+
+	std::string& getPakFullName();
 
 protected:
 	virtual void clearFileVec();			// 清理 m_pFileVec 中的内容

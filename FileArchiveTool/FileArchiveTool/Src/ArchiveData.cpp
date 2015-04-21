@@ -21,6 +21,7 @@
 #include "LogSys.h"
 #include "LogStr.h"
 #include "PakState.h"
+#include "ManiFestData.h"
 
 #include <algorithm>
 
@@ -185,15 +186,8 @@ void ArchiveData::removePakItem(PakItemBase* pPakItem)
 
 	if (m_pPakItemVec->size() == 0)
 	{
-		FileArchiveToolSysDef->getLogSysPtr()->log(LS_PAK_END);
-		FileArchiveToolSysDef->getLogSysPtr()->log(LS_SPLIT_LINE);
-		FileArchiveToolSysDef->getPakStatePtr()->toggleState(ePS_PAKEND);
-
-		removeArchiveParamPtr();
-		if (hasNextPakParam())
-		{
-			handleNextPakParam();
-		}
+		FileArchiveToolSysDef->getLogSysPtr()->log("文件打包完成，开启启动输出清单文件");
+		FileArchiveToolSysDef->getManiFestDataPtr()->addSelf2TaskQueue();
 	}
 }
 
@@ -206,6 +200,19 @@ void ArchiveData::removeUnPakItem(PakItemBase* pPakItem)
 	m_curPak = nullptr;
 
 	removeUnArchiveParamPtr();
+	if (hasNextPakParam())
+	{
+		handleNextPakParam();
+	}
+}
+
+void ArchiveData::onManiFestEnd()
+{
+	FileArchiveToolSysDef->getLogSysPtr()->log(LS_PAK_END);
+	FileArchiveToolSysDef->getLogSysPtr()->log(LS_SPLIT_LINE);
+	FileArchiveToolSysDef->getPakStatePtr()->toggleState(ePS_PAKEND);
+
+	removeArchiveParamPtr();
 	if (hasNextPakParam())
 	{
 		handleNextPakParam();

@@ -16,19 +16,21 @@
 #include "PakPathSplitInfo.h"
 #include "PakTask.h"
 #include "LogSys.h"
+#include "ManiFestData.h"
 
 #include <sstream>
 #include <iostream>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-PakItemDir::PakItemDir()
-	:m_fileSize(0)
+PakItemDir::PakItemDir(EPakItem ePakItem) :
+	PakItemBase(ePakItem), m_fileSize(0)
 {
 	m_pArchiveHeader = new ArchiveHeader;
 	m_pFileVec = new FileHeaderVec();
 	m_pakName = new std::string;
 	m_fullPath = new std::string;
+	m_pakFullName = new std::string;
 }
 
 PakItemDir::~PakItemDir()
@@ -38,6 +40,7 @@ PakItemDir::~PakItemDir()
 	delete m_pFileVec;
 	delete m_pakName;
 	delete m_fullPath;
+	delete m_pakFullName;
 }
 
 void PakItemDir::asyncArchiveDir(ArchiveParam* pArchiveParam)
@@ -247,6 +250,8 @@ void PakItemDir::addFileHeader(FileHeader* pFileHeader)
 
 	m_fileSize += pFileHeader->getFileSize();
 	m_pFileVec->push_back(pFileHeader);
+
+	FileArchiveToolSysDef->getManiFestDataPtr()->buildManiFestItem(pFileHeader, this);
 }
 
 void PakItemDir::initByPakPathSplitInfo(PakPathSplitInfo* m_pPakPathSplitInfo, uint32 packIdx)
@@ -267,6 +272,11 @@ void PakItemDir::initByPakPathSplitInfo(PakPathSplitInfo* m_pPakPathSplitInfo, u
 
 	*m_fullPath += ss.str();
 	*m_fullPath += PAKEXT;
+
+	ss.clear();
+	ss.str("");
+	ss << *m_pakName << "_" << m_pakIdx << PAKEXT;
+	*m_pakFullName = ss.str();
 }
 
 bool PakItemDir::isPakNameEqual(std::string& pakName)
@@ -277,6 +287,11 @@ bool PakItemDir::isPakNameEqual(std::string& pakName)
 void PakItemDir::endOnePak()
 {
 	m_pArchiveHeader->m_fileCount = m_pFileVec->size();
+}
+
+std::string& PakItemDir::getPakFullName()
+{
+	return *m_pakFullName;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

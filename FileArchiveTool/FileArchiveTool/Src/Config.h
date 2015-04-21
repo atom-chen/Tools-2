@@ -21,6 +21,7 @@ protected:
 	std::string* m_pakInRootPath;			// 输入根目录
 	std::string* m_pakOutputRootPath;		// 输出根目录
 	std::string* m_unpakOutputRootPath;		// 输出根目录
+	std::string* m_maniFestFullPath;		// 清单文件输出完整目录和文件名字
 
 public:
 	Config();
@@ -32,6 +33,7 @@ public:
 	std::string& getPakInRootPath();
 	std::string& getPakOutputRootPath();
 	std::string& getUnpakOutputRootPath();
+	std::string& getManiFestFullPath();
 	std::size_t getMaxSizePerPak();
 
 	void loadConfig();

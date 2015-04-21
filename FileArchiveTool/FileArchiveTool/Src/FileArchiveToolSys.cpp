@@ -9,6 +9,8 @@
 //#include "UnArchiveParam.h"
 #include "ThreadPool.h"
 #include "PakState.h"
+#include "ManiFestData.h"
+
 #include <Thread>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
@@ -91,6 +93,11 @@ ThreadPool* FileArchiveToolSys::getThreadPoolPtr()
 PakState* FileArchiveToolSys::getPakStatePtr()
 {
 	return m_pPakState;
+}
+
+ManiFestData* FileArchiveToolSys::getManiFestDataPtr()
+{
+	return m_pManiFestData;
 }
 
 void FileArchiveToolSys::onTick()

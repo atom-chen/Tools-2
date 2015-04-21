@@ -1,11 +1,10 @@
 #ifndef __TaskQueue_H
 #define __TaskQueue_H
 
-#include <boost/thread.hpp>
-#include <queue>
-#include "ITaskQueue.h"
-
 #include "Prerequisites.h"
+
+#include "LockQueue.h"
+#include "ITaskQueue.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -15,11 +14,8 @@ class TaskThread;
 class FILEARCHIVETOOL_EXPORT TaskQueue : public ITaskQueue
 {
 protected:
-	std::queue<ITask*>* m_pTaskQueue;
-	std::queue<ITask*>* m_pResultQueue;
-
-	boost::mutex* m_taskLock;
-	boost::mutex* m_resultLock;
+	LockQueue<ITask*>* m_pTaskQueue;
+	LockQueue<ITask*>* m_pResultQueue;
 
 public:
 	TaskQueue();

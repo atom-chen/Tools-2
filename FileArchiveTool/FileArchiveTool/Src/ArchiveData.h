@@ -62,6 +62,7 @@ public:
 
 	void addArchiveParamPtr(ArchiveParam* pArchiveParam);
 	void addUnArchiveParamPtr(UnArchiveParam* pUnArchiveParam);
+	void onManiFestEnd();			// 清单输出结束，说明一个打包真正的结束了
 
 protected:
 	void clearFileVec();			// 清理 m_pFileVec 中的内容

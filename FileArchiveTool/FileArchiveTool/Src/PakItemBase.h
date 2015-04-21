@@ -11,6 +11,12 @@
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
+enum FILEARCHIVETOOL_EXPORT EPakItem
+{
+	ePI_FILE,			// нд╪Ч
+	ePI_DIR,			// д©б╪
+};
+
 class ArchiveParam;
 class UnArchiveParam;
 class ArchiveHeader;
@@ -19,8 +25,11 @@ class FileHeader;
 
 class FILEARCHIVETOOL_EXPORT PakItemBase
 {
+protected:
+	EPakItem m_ePakItem;
+
 public:
-	PakItemBase();
+	PakItemBase(EPakItem ePakItem);
 	virtual ~PakItemBase();
 
 public:
@@ -38,6 +47,8 @@ public:
 	virtual void readArchiveFileHeader(const char* pFileName);
 	virtual bool isPakNameEqual(std::string& pakName);
 	virtual void endOnePak();
+
+	EPakItem getPakItemType();
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

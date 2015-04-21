@@ -21,9 +21,9 @@
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-PakItemBase::PakItemBase()
+PakItemBase::PakItemBase(EPakItem ePakItem)
 {
-
+	m_ePakItem = ePakItem;
 }
 
 PakItemBase::~PakItemBase()
@@ -91,6 +91,11 @@ bool PakItemBase::isPakNameEqual(std::string& pakName)
 void PakItemBase::endOnePak()
 {
 
+}
+
+EPakItem PakItemBase::getPakItemType()
+{
+	return m_ePakItem;
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

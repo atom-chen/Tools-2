@@ -16,13 +16,14 @@
 #include "PakPathSplitInfo.h"
 #include "PakTask.h"
 #include "LogSys.h"
+#include "ManiFestData.h"
 
 #include <sstream>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-PakItemFileCopy::PakItemFileCopy():
-	m_pFileHeader(nullptr)
+PakItemFileCopy::PakItemFileCopy(EPakItem ePakItem) :
+	PakItemBase(ePakItem), m_pFileHeader(nullptr)
 {
 }
 
@@ -101,6 +102,7 @@ void PakItemFileCopy::addFileHeader(FileHeader* pFileHeader)
 	FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 
 	m_pFileHeader = pFileHeader;
+	FileArchiveToolSysDef->getManiFestDataPtr()->buildManiFestItem(m_pFileHeader, nullptr);
 }
 
 END_NAMESPACE_FILEARCHIVETOOL
