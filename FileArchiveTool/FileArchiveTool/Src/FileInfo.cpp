@@ -168,30 +168,40 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 
 uint32 FileHeader::calcHeaderSize()
 {
-	return sizeof(m_pathLen) + m_pathLen + sizeof(m_fileSize) + sizeof(m_fileOffset);
+	return sizeof(m_pathLen) + m_pathLen + sizeof(m_fileSize) + sizeof(m_fileOffset) + sizeof(m_flags);
 }
 
 void FileHeader::writeHeader2ArchiveFile(FILE* fileHandle)
 {
+	// 写入路径
 	fwrite(&m_pathLen, sizeof(m_pathLen), 1, fileHandle);
 	// 写入 Utf8 编码的字符串
 	//fwrite(m_fileNamePath, strlen(m_fileNamePath), 1, fileHandle);
 	char* pUtf8Path = FileArchiveToolSysDef->getCharsetConvPtr()->LocalToUtf8Str(m_pakFileNamePath);
 	fwrite(pUtf8Path, m_pathLen, 1, fileHandle);
+	// 写入文件偏移
 	fwrite(&m_fileOffset, sizeof(m_fileOffset), 1, fileHandle);
+	// 写入大小
 	fwrite(&m_fileSize, sizeof(m_fileSize), 1, fileHandle);
+	// 写入标识字段
+	fwrite(&m_flags, sizeof(m_flags), 1, fileHandle);
 }
 
 void FileHeader::readHeaderFromArchiveFile(MByteBuffer* ba)
 {
+	// 读取文件路径
 	ba->readUnsignedInt8(m_pathLen);
 	memset(m_pakFileNamePath, 0, MAX_PATH);
 	// 转换成 Local 编码字符串
 	ba->readMultiByte(m_pakFileNamePath, m_pathLen);
 	char* pUtf8Path = (FileArchiveToolSysDef->getCharsetConvPtr()->Utf8ToLocalStr(m_pakFileNamePath));
 	memcpy(m_pakFileNamePath, pUtf8Path, m_pathLen);
+	// 读取文件偏移
 	ba->readUnsignedInt32(m_fileOffset);
+	// 读取文件大小
 	ba->readUnsignedInt32(m_fileSize);
+	// 读取文件标识
+	ba->readUnsignedInt32(m_flags);
 }
 
 void FileHeader::adjustHeaderOffset(uint32 offset)

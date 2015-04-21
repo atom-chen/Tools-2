@@ -8,6 +8,15 @@
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
+/**
+ *@brief 文件头标识
+ */
+enum FILEARCHIVETOOL_EXPORT FileHeaderFlag
+{
+	eFHF_CPS = 1 << 0,		// 压缩位
+};
+
+
 class MByteBuffer;
 class UnArchiveParam;
 class ArchiveParam;
@@ -26,6 +35,7 @@ protected:
 
 	uint32 m_fileOffset;				// 文件在整个 Archive 中的偏移
 	uint32 m_fileSize;					// 文件大小
+	uint32 m_flags;						// 标识字段
 
 public:
 	FileHeader();
