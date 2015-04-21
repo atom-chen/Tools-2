@@ -15,6 +15,7 @@
 #include "ArchiveHeader.h"
 #include "PakPathSplitInfo.h"
 #include "PakTask.h"
+#include "ArchiveData.h"
 
 #include <sstream>
 
@@ -32,7 +33,7 @@ PakItemBase::~PakItemBase()
 
 void PakItemBase::ArchiveDir()
 {
-	PakTask* pPakTask = new PakTask(this);
+	PakTask* pPakTask = new PakTask(this, FileArchiveToolSysDef->getArchiveDataPtr()->getArchiveParamPtr());
 	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pPakTask);
 }
 
@@ -43,7 +44,7 @@ void PakItemBase::asyncArchiveDir(ArchiveParam* pArchiveParam)
 
 void PakItemBase::unArchiveFile()
 {
-	UnPakTask* pUnArchiveTask = new UnPakTask(this);
+	UnPakTask* pUnArchiveTask = new UnPakTask(this, FileArchiveToolSysDef->getArchiveDataPtr()->getUnArchiveParamPtr());
 	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pUnArchiveTask);
 }
 
@@ -85,6 +86,11 @@ void PakItemBase::readArchiveFileHeader(const char* pFileName)
 bool PakItemBase::isPakNameEqual(std::string& pakName)
 {
 	return false;
+}
+
+void PakItemBase::endOnePak()
+{
+
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

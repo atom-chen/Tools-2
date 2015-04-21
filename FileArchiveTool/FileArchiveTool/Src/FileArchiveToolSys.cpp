@@ -5,8 +5,8 @@
 #include "Util.h"
 #include "TaskQueue.h"
 #include "LogSys.h"
-#include "ArchiveParam.h"
-#include "UnArchiveParam.h"
+//#include "ArchiveParam.h"
+//#include "UnArchiveParam.h"
 #include "ThreadPool.h"
 #include "PakState.h"
 #include <Thread>
@@ -23,8 +23,8 @@ FileArchiveToolSys::FileArchiveToolSys()
 	m_pUtil = new Util;
 	m_pTaskQueue = new TaskQueue;
 	m_pLogSys = new LogSys;
-	m_pArchiveParam = new ArchiveParam;
-	m_pUnArchiveParam = new UnArchiveParam;
+	//m_pArchiveParam = new ArchiveParam;
+	//m_pUnArchiveParam = new UnArchiveParam;
 	m_pThreadPool = new ThreadPool(std::thread::hardware_concurrency() * 2);
 	m_pPakState = new PakState;
 }
@@ -37,8 +37,8 @@ FileArchiveToolSys::~FileArchiveToolSys()
 	delete m_pUtil;
 	delete m_pTaskQueue;
 	delete m_pLogSys;
-	delete m_pArchiveParam;
-	delete m_pUnArchiveParam;
+	//delete m_pArchiveParam;
+	//delete m_pUnArchiveParam;
 	delete m_pThreadPool;
 	delete m_pPakState;
 }
@@ -73,15 +73,15 @@ LogSys* FileArchiveToolSys::getLogSysPtr()
 	return m_pLogSys;
 }
 
-ArchiveParam* FileArchiveToolSys::getArchiveParamPtr()
-{
-	return m_pArchiveParam;
-}
-
-UnArchiveParam* FileArchiveToolSys::getUnArchiveParamPtr()
-{
-	return m_pUnArchiveParam;
-}
+//ArchiveParam* FileArchiveToolSys::getArchiveParamPtr()
+//{
+//	return m_pArchiveParam;
+//}
+//
+//UnArchiveParam* FileArchiveToolSys::getUnArchiveParamPtr()
+//{
+//	return m_pUnArchiveParam;
+//}
 
 ThreadPool* FileArchiveToolSys::getThreadPoolPtr()
 {

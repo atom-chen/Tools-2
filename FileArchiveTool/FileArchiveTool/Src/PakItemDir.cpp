@@ -261,4 +261,9 @@ bool PakItemDir::isPakNameEqual(std::string& pakName)
 	return *m_pakName == pakName;
 }
 
+void PakItemDir::endOnePak()
+{
+	m_pArchiveHeader->m_fileCount = m_pFileVec->size();
+}
+
 END_NAMESPACE_FILEARCHIVETOOL

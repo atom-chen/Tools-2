@@ -16,6 +16,9 @@ class UnArchiveParam;
 class PakItemBase;
 class PakPathSplitInfo;
 class PakStatInfo;
+class ArchiveParam;
+class UnArchiveParam;
+class PakParam;
 
 class FILEARCHIVETOOL_EXPORT ArchiveData
 {
@@ -23,12 +26,18 @@ protected:
 	typedef std::vector<PakItemBase*> PakItemVec;
 	typedef std::vector<PakItemBase*>::iterator PakItemVecIt;
 
+	typedef std::vector<PakParam*> PakParamVec;
+	typedef std::vector<PakParam*>::iterator PakParamVecIt;
+
 protected:
 	PakItemVec* m_pPakItemVec;		// 整个文件包
 	PakItemBase* m_curPak;				// 当前的包
 
 	PakPathSplitInfo* m_pPakPathSplitInfo;		// 解析的文件信息，内部使用这个处理
 	PakStatInfo* m_pPakStatInfo;				// 包的统计信息
+
+	PakParamVec* m_pPakParamVec;					// 打包参数列表
+	PakParam* m_pCurParam;
 
 public:
 	ArchiveData();
@@ -48,6 +57,12 @@ public:
 	void removeUnPakItem(PakItemBase* pPakItem);
 	size_t getPakItemCount();
 
+	ArchiveParam* getArchiveParamPtr();
+	UnArchiveParam* getUnArchiveParamPtr();
+
+	void addArchiveParamPtr(ArchiveParam* pArchiveParam);
+	void addUnArchiveParamPtr(UnArchiveParam* pUnArchiveParam);
+
 protected:
 	void clearFileVec();			// 清理 m_pFileVec 中的内容
 	void readArchiveFileHeader(const char* pFileName);
@@ -56,6 +71,11 @@ protected:
 	void newPakItem();		// 新建一个 PakItem
 	void addPakTask();	// 添加一打包任务
 	void addUnPakTask();
+
+	void removeArchiveParamPtr();
+	void removeUnArchiveParamPtr();
+	void handleNextPakParam();				// 处理下一个等待处理的 Param
+	bool hasNextPakParam();					// 是否有未处理的 Param
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

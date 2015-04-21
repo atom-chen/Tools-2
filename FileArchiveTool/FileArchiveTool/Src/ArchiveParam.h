@@ -2,6 +2,8 @@
 #define __ArchiveParam_H
 
 #include "Prerequisites.h"
+#include "PakParam.h"
+
 #include <string>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
@@ -15,22 +17,22 @@ enum FILEARCHIVETOOL_EXPORT ArchiveMode
 	eArchiveMode_SubDir,	// 打包当前目录，将当前目录下的所有的内容打包到一个文件里，可以拆包
 };
 
-class FILEARCHIVETOOL_EXPORT ArchiveParam
+class FILEARCHIVETOOL_EXPORT ArchiveParam : public PakParam
 {
 protected:
 	char* m_pArchiveDir;			// Archive 目录
-	char* m_pArchiveFilePath;		// Archive 输出文件名字
+	//char* m_pArchiveFilePath;		// Archive 输出文件名字
 	//ArchiveMode m_eArchiveMode;		// 打包模式
 
 public:
-	ArchiveParam();
-	~ArchiveParam();
+	ArchiveParam(EPakParam ePakParam = ePP_Pak);
+	virtual ~ArchiveParam();
 
 	void setArchiveDir(const char* pPath);
-	void setArchiveFilePath(const char* pPath);
+	//void setArchiveFilePath(const char* pPath);
 
 	const char* getArchiveDir();
-	const char* getArchiveFilePath();
+	//const char* getArchiveFilePath();
 	bool isEqualArchiveDir(std::string& path);			// 判断目录是否与当前 ArchiveDir 相同
 	//void setArchiveMode(ArchiveMode mode);
 	ArchiveMode getArchiveMode();

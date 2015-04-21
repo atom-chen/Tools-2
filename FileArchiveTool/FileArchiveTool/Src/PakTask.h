@@ -8,14 +8,17 @@
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 class PakItemBase;
+class ArchiveParam;
+class UnArchiveParam;
 
 class FILEARCHIVETOOL_EXPORT PakTask : public ITask
 {
 protected:
 	PakItemBase* m_pPakItem;
+	ArchiveParam* m_pArchiveParam;
 
 public:
-	PakTask(PakItemBase* pPakItem);
+	PakTask(PakItemBase* pPakItem, ArchiveParam* pUnArchiveParam);
 	~PakTask();
 
 	virtual bool exeTask();
@@ -26,9 +29,10 @@ class FILEARCHIVETOOL_EXPORT UnPakTask : public ITask
 {
 protected:
 	PakItemBase* m_pPakItem;
+	UnArchiveParam* m_pUnArchiveParam;
 
 public:
-	UnPakTask(PakItemBase* pPakItem);
+	UnPakTask(PakItemBase* pPakItem, UnArchiveParam* pUnArchiveParam);
 	~UnPakTask();
 
 	virtual bool exeTask();

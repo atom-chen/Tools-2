@@ -8,7 +8,11 @@
 #include "MLzma.h"
 #include "CharsetConv.h"
 #include "PakPathSplitInfo.h"
+#include "LogSys.h"
+#include "ArchiveData.h"
+
 #include <stdlib.h>
+#include <sstream>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -54,6 +58,7 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 	FILE* localFile = fopen(m_pFullPath, "rb");
 
 	char* pchar;
+	std::stringstream ss;//创建一个流
 
 	if (localFile != nullptr)
 	{
@@ -71,12 +76,18 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 		size_t writeLength;
 		if (readlength == m_fileSize)
 		{
+			ss.clear();
+			ss.str("");
+			ss << "局部文件 [" << m_pFullPath << "] 读取成功\n";
+
 			if (!FileArchiveToolSysDef->getConfigPtr()->bCompress())
 			{
 				writeLength = fwrite(pchar, 1, m_fileSize, fileHandle);
 				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
 				{
-
+					ss.clear();
+					ss.str("");
+					ss << "局部文件 [" << m_pFullPath << "] 非压缩写入打包文件失败\n";
 				}
 			}
 			else	// 需要压缩
@@ -87,7 +98,9 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 				writeLength = fwrite(pComprStr, 1, m_fileSize, fileHandle);
 				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
 				{
-
+					ss.clear();
+					ss.str("");
+					ss << "局部文件 [" << m_pFullPath << "] 压缩写入打包文件失败\n";
 				}
 
 				free(pComprStr);		// 记得释放这个内存
@@ -95,7 +108,9 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 		}
 		else			// 读取可能有问题，读取不了完整文件
 		{
-
+			ss.clear();
+			ss.str("");
+			ss << "局部文件 [" << m_pFullPath << "] 读取失败\n";
 		}
 
 		delete []pchar;
@@ -144,7 +159,7 @@ uint32 FileHeader::getFileSize()
 
 void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArchiveParam)
 {
-	strcat(m_pFullPath, pUnArchiveParam->getUnArchiveOutDir());
+	strcat(m_pFullPath, FileArchiveToolSysDef->getConfigPtr()->getUnpakOutputRootPath().c_str());
 	strcat(m_pFullPath, "/");
 	strcat(m_pFullPath, m_fileNamePath);
 
@@ -155,6 +170,7 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 
 	FILE* localFile = fopen(m_pFullPath, "wb");
 	char* pchar;
+	std::stringstream ss;//创建一个流
 
 	if (localFile != nullptr)
 	{
@@ -166,12 +182,30 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 		size_t writeLength;
 		if (readlength == m_fileSize)
 		{
+			ss.clear();
+			ss.str("");
+			ss << "读取打包文件文件 [" << pUnArchiveParam->getUnArchiveFilePath() << "] 成功\n";
+
+			FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
+
 			if (!FileArchiveToolSysDef->getConfigPtr()->bCompress())		// 如果不压缩
 			{
 				writeLength = fwrite(pchar, 1, m_fileSize, localFile);
 				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
 				{
+					ss.clear();
+					ss.str("");
+					ss << "提取打包文件 [" << pUnArchiveParam->getUnArchiveFilePath() << "] 中的文件 [" << m_pFullPath << "] 非解压缩写入失败\n";
 
+					FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
+				}
+				else
+				{
+					ss.clear();
+					ss.str("");
+					ss << "提取打包文件 [" << pUnArchiveParam->getUnArchiveFilePath() << "] 中的文件 [" << m_pFullPath << "] 非解压缩写入成功\n";
+
+					FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 				}
 			}
 			else	// 需要解压
@@ -182,7 +216,19 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 				writeLength = fwrite(pComprStr, 1, m_fileSize, localFile);
 				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
 				{
+					ss.clear();
+					ss.str("");
+					ss << "提取打包文件 [" << pUnArchiveParam->getUnArchiveFilePath() << "] 中的文件 [" << m_pFullPath << "] 解压缩写入失败\n";
 
+					FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
+				}
+				else
+				{
+					ss.clear();
+					ss.str("");
+					ss << "提取打包文件 [" << pUnArchiveParam->getUnArchiveFilePath() << "] 中的文件 [" << m_pFullPath << "] 解压缩写入成功\n";
+
+					FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 				}
 
 				free(pComprStr);		// 记得释放这个内存
@@ -190,7 +236,9 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 		}
 		else							// 读取可能有问题，读取不了完整文件
 		{
-
+			ss.clear();
+			ss.str("");
+			ss << "读取打包文件文件 [" << pUnArchiveParam->getUnArchiveFilePath() << "] 失败\n";
 		}
 
 		//fflush(localFile);
@@ -215,7 +263,7 @@ void FileHeader::initFileHeader(PakPathSplitInfo* pPakPathSplitInfo)
 	m_fileSize = pPakPathSplitInfo->getFileOrigSize();
 	setFullPath(pPakPathSplitInfo->getOrigPath().c_str(), pPakPathSplitInfo->getOrigFileName().c_str());
 	setFileName(pPakPathSplitInfo->getOrigFileName().c_str());
-	modifyArchiveFileName(FileArchiveToolSysDef->getArchiveParamPtr());
+	modifyArchiveFileName(FileArchiveToolSysDef->getArchiveDataPtr()->getArchiveParamPtr());
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

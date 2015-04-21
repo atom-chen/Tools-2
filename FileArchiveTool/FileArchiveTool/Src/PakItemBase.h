@@ -37,6 +37,7 @@ public:
 	virtual void initByPakPathSplitInfo(PakPathSplitInfo* m_pPakPathSplitInfo, uint32 packIdx);
 	virtual void readArchiveFileHeader(const char* pFileName);
 	virtual bool isPakNameEqual(std::string& pakName);
+	virtual void endOnePak();
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

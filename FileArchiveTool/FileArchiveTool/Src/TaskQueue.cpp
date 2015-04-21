@@ -33,10 +33,10 @@ void TaskQueue::addTask(ITask* task)
 
 ITask* TaskQueue::removeTask()
 {
+	boost::lock_guard<boost::mutex> lock(*m_taskLock);
 	ITask* ret = nullptr;
 	if (m_pTaskQueue->size())
 	{
-		boost::lock_guard<boost::mutex> lock(*m_taskLock);
 		ret = m_pTaskQueue->front();
 		m_pTaskQueue->pop();
 	}

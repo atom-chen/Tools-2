@@ -125,20 +125,27 @@ void ProjectWidget::archive()
 		QtFileArchiveToolSysDef->getLogSysPtr()->log("当前正在打包中\n");
 		return;
 	}
-	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveDir(m_pPath.c_str());
-	std::string filePath = QtFileArchiveToolSysDef->getUtilPtr()->getFullPathNoFileName(m_pPath.c_str());
-	filePath += "/";
-	filePath += QtFileArchiveToolSysDef->getUtilPtr()->getLastPathName(m_pPath.c_str());
-	filePath += PAKEXT;
-	QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveFilePath(filePath.c_str());
-	QtFileArchiveToolSysDef->getArchiveDataPtr()->ArchiveDir();
+
+	ArchiveParam* pArchiveParam = new ArchiveParam;
+	pArchiveParam->setArchiveDir(m_pPath.c_str());
+	QtFileArchiveToolSysDef->getArchiveDataPtr()->addArchiveParamPtr(pArchiveParam);
+
+	//std::string filePath = QtFileArchiveToolSysDef->getUtilPtr()->getFullPathNoFileName(m_pPath.c_str());
+	//filePath += "/";
+	//filePath += QtFileArchiveToolSysDef->getUtilPtr()->getLastPathName(m_pPath.c_str());
+	//filePath += PAKEXT;
+	//QtFileArchiveToolSysDef->getArchiveParamPtr()->setArchiveFilePath(filePath.c_str());
+	//QtFileArchiveToolSysDef->getArchiveDataPtr()->ArchiveDir();
 }
 
 void ProjectWidget::unArchiveFile()
 {
-	QtFileArchiveToolSysDef->getUnArchiveParamPtr()->setUnArchiveFilePath(m_pPath.c_str());
-	QtFileArchiveToolSysDef->getUnArchiveParamPtr()->setUnArchiveOutDir(QtFileArchiveToolSysDef->getUtilPtr()->getFullPathNoExtName(m_pPath.c_str()));
-	QtFileArchiveToolSysDef->getArchiveDataPtr()->unArchiveFile();
+	UnArchiveParam* pUnArchiveParam = new UnArchiveParam;
+	pUnArchiveParam->setUnArchiveFilePath(m_pPath.c_str());
+	QtFileArchiveToolSysDef->getArchiveDataPtr()->addUnArchiveParamPtr(pUnArchiveParam);
+
+	//QtFileArchiveToolSysDef->getUnArchiveParamPtr()->setUnArchiveOutDir(QtFileArchiveToolSysDef->getUtilPtr()->getFullPathNoExtName(m_pPath.c_str()));
+	//QtFileArchiveToolSysDef->getArchiveDataPtr()->unArchiveFile();
 }
 
 void ProjectWidget::createToolBar()

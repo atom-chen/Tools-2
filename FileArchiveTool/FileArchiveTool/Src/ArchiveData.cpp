@@ -27,11 +27,12 @@
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 ArchiveData::ArchiveData():
-	m_curPak(nullptr)
+	m_curPak(nullptr), m_pCurParam(nullptr)
 {
 	m_pPakItemVec = new PakItemVec;
 	m_pPakPathSplitInfo = new PakPathSplitInfo;
 	m_pPakStatInfo = new PakStatInfo;
+	m_pPakParamVec = new PakParamVec;
 }
 
 ArchiveData::~ArchiveData()
@@ -40,13 +41,14 @@ ArchiveData::~ArchiveData()
 	delete m_pPakItemVec;
 	delete m_pPakPathSplitInfo;
 	delete m_pPakStatInfo;
+	delete m_pPakParamVec;
 }
 
 void ArchiveData::ArchiveDir()
 {
 	FileArchiveToolSysDef->getPakStatePtr()->toggleState(ePS_PAKING);
 
-	ArchiveTask* pArchiveTask = new ArchiveTask(FileArchiveToolSysDef->getArchiveParamPtr());
+	ArchiveTask* pArchiveTask = new ArchiveTask(FileArchiveToolSysDef->getArchiveDataPtr()->getArchiveParamPtr());
 	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pArchiveTask);
 }
 
@@ -66,7 +68,7 @@ void ArchiveData::asyncArchiveDir(ArchiveParam* pArchiveParam)
 
 void ArchiveData::unArchiveFile()
 {
-	UnArchiveTask* pUnArchiveTask = new UnArchiveTask(FileArchiveToolSysDef->getUnArchiveParamPtr());
+	UnArchiveTask* pUnArchiveTask = new UnArchiveTask(getUnArchiveParamPtr());
 	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pUnArchiveTask);
 }
 
@@ -84,7 +86,7 @@ bool ArchiveData::fileHandle(const char* walkPath, struct _finddata_t* FileInfo)
 	std::string pathStr = walkPath;
 	m_pPakPathSplitInfo->initInfo(pathStr, FileInfo);
 
-	if (m_curPak == nullptr || !m_curPak->canAddFile(m_pPakPathSplitInfo))
+	if (m_curPak == nullptr || !m_pPakPathSplitInfo->getNeedPak() || !m_curPak->canAddFile(m_pPakPathSplitInfo))
 	{
 		addPakTask();
 		newPakItem();
@@ -143,7 +145,8 @@ void ArchiveData::addPakTask()
 {
 	if (m_curPak != nullptr)		// 如果当前有 Pak ，就开始打包
 	{
-		m_curPak->ArchiveDir();
+		m_curPak->endOnePak();			// 结束当前包，以便设置一些数据
+		m_curPak->ArchiveDir();			// 添加到线程，进行处理
 	}
 }
 
@@ -177,6 +180,12 @@ void ArchiveData::removePakItem(PakItemBase* pPakItem)
 		FileArchiveToolSysDef->getLogSysPtr()->log(LS_PAK_END);
 		FileArchiveToolSysDef->getLogSysPtr()->log("======================\n");
 		FileArchiveToolSysDef->getPakStatePtr()->toggleState(ePS_PAKEND);
+
+		removeArchiveParamPtr();
+		if (hasNextPakParam())
+		{
+			handleNextPakParam();
+		}
 	}
 }
 
@@ -184,11 +193,104 @@ void ArchiveData::removeUnPakItem(PakItemBase* pPakItem)
 {
 	delete m_curPak;
 	m_curPak = nullptr;
+
+	removeUnArchiveParamPtr();
+	if (hasNextPakParam())
+	{
+		handleNextPakParam();
+	}
 }
 
 size_t ArchiveData::getPakItemCount()
 {
 	return m_pPakItemVec->size();
+}
+
+ArchiveParam* ArchiveData::getArchiveParamPtr()
+{
+	if (m_pPakParamVec->size() > 0)
+	{
+		if ((*m_pPakParamVec)[0]->getPakParamType() == ePP_Pak)
+		{
+			return static_cast<ArchiveParam*>((*m_pPakParamVec)[0]);
+		}
+	}
+
+	return nullptr;
+}
+
+UnArchiveParam* ArchiveData::getUnArchiveParamPtr()
+{
+	if (m_pPakParamVec->size() > 0)
+	{
+		if ((*m_pPakParamVec)[0]->getPakParamType() == ePP_UnPak)
+		{
+			return static_cast<UnArchiveParam*>((*m_pPakParamVec)[0]);
+		}
+	}
+
+	return nullptr;
+}
+
+void ArchiveData::addArchiveParamPtr(ArchiveParam* pArchiveParam)
+{
+	m_pPakParamVec->push_back(pArchiveParam);
+	handleNextPakParam();
+}
+
+void ArchiveData::addUnArchiveParamPtr(UnArchiveParam* pUnArchiveParam)
+{
+	m_pPakParamVec->push_back(pUnArchiveParam);
+	handleNextPakParam();
+}
+
+void ArchiveData::removeArchiveParamPtr()
+{
+	if (m_pPakParamVec->size() > 0)
+	{
+		if ((*m_pPakParamVec)[0]->getPakParamType() == ePP_Pak)
+		{
+			PakParamVecIt ite = m_pPakParamVec->begin();
+			m_pPakParamVec->erase(ite);
+		}
+	}
+
+	m_pCurParam = nullptr;
+}
+
+void ArchiveData::removeUnArchiveParamPtr()
+{
+	if (m_pPakParamVec->size() > 0)
+	{
+		if ((*m_pPakParamVec)[0]->getPakParamType() == ePP_UnPak)
+		{
+			PakParamVecIt ite = m_pPakParamVec->begin();
+			m_pPakParamVec->erase(ite);
+		}
+	}
+
+	m_pCurParam = nullptr;
+}
+
+void ArchiveData::handleNextPakParam()
+{
+	if (m_pCurParam == nullptr)		// 如果只有当前一个
+	{
+		m_pCurParam = (*m_pPakParamVec)[0];
+		if (m_pCurParam->getPakParamType() == ePP_Pak)
+		{
+			ArchiveDir();
+		}
+		else if (m_pCurParam->getPakParamType() == ePP_UnPak)
+		{
+			unArchiveFile();
+		}
+	}
+}
+
+bool ArchiveData::hasNextPakParam()
+{
+	return (m_pPakParamVec->size() > 0);
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

@@ -5,9 +5,10 @@
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-PakTask::PakTask(PakItemBase* pPakItem)
+PakTask::PakTask(PakItemBase* pPakItem, ArchiveParam* pArchiveParam)
 {
 	m_pPakItem = pPakItem;
+	m_pArchiveParam = pArchiveParam;
 }
 
 PakTask::~PakTask()
@@ -17,7 +18,7 @@ PakTask::~PakTask()
 
 bool PakTask::exeTask()
 {
-	m_pPakItem->asyncArchiveDir(nullptr);
+	m_pPakItem->asyncArchiveDir(m_pArchiveParam);
 	return true;
 }
 
@@ -28,9 +29,10 @@ bool PakTask::exeResult()
 	return true;
 }
 
-UnPakTask::UnPakTask(PakItemBase* pPakItem)
+UnPakTask::UnPakTask(PakItemBase* pPakItem, UnArchiveParam* pUnArchiveParam)
 {
 	m_pPakItem = pPakItem;
+	m_pUnArchiveParam = pUnArchiveParam;
 }
 
 UnPakTask::~UnPakTask()
@@ -40,7 +42,7 @@ UnPakTask::~UnPakTask()
 
 bool UnPakTask::exeTask()
 {
-	m_pPakItem->asyncUnArchiveFile(nullptr);
+	m_pPakItem->asyncUnArchiveFile(m_pUnArchiveParam);
 	return true;
 }
 
