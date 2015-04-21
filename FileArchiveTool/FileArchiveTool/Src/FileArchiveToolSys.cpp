@@ -105,4 +105,10 @@ void FileArchiveToolSys::init()
 	m_pConfig->loadConfig();
 }
 
+void FileArchiveToolSys::destroy()
+{
+	// ³¹µ×ÊÍ·Å×Ô¼º
+	delete FileArchiveToolSys::getSingletonPtr();
+}
+
 END_NAMESPACE_FILEARCHIVETOOL

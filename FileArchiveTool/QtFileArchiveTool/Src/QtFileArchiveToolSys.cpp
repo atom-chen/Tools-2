@@ -14,3 +14,8 @@ void QtFileArchiveToolSys::init()
 {
 	FileArchiveToolSys::init();
 }
+
+void QtFileArchiveToolSys::destroy()
+{
+	FileArchiveToolSys::destroy();
+}

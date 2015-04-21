@@ -10,6 +10,7 @@ public:
 	virtual ~QtFileArchiveToolSys();
 
 	virtual void init();	// 构造函数调用完成立马调用这个
+	virtual void destroy();	// 最后调用释放所有资源
 };
 
 #define QtFileArchiveToolSysDef QtFileArchiveToolSys::getSingletonPtr()

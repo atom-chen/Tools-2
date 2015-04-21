@@ -276,5 +276,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	}
 
 	QtFileArchiveToolSysDef->getThreadPoolPtr()->wait();
+
+	// 释放整个资源
+
 	event->accept();
 }

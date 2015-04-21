@@ -18,6 +18,7 @@
 #include "LogSys.h"
 
 #include <sstream>
+#include <iostream>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -45,10 +46,17 @@ void PakItemDir::asyncArchiveDir(ArchiveParam* pArchiveParam)
 	ss.clear();
 	ss.str("");
 
+	//ss.precision(3);
+	ss << std::setprecision(3);
+	//std::setprecision(3);
+	//ss.setf(std::ios::unitbuf);
+	ss << std::unitbuf;
+	//std::setiosflags(std::ios::unitbuf);
+
 	ss << "开始输出包[" << *m_pakName << "_" << m_pakIdx << "]\n";
 	ss << "包中文件数量: " << m_pFileVec->size() << " \n";
 
-	float _fileSize = m_fileSize / 1024 / 1024;
+	float _fileSize = (float)m_fileSize / 1024 / 1024;
 
 	ss << "包中文件大小: " << _fileSize << "M \n";
 	ss << "包中文件列表:\n";
