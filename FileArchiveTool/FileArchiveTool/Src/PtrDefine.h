@@ -2,6 +2,8 @@
 #define __PtrDefine_H_
 
 #include "GlobalDefine.h"
+#include "FileArchiveToolSys.h"
+#include "LogSys.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -13,6 +15,16 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 	else\
 	{\
 		FileArchiveToolSysDef->getLogSysPtr()->log("要删除的指针为空，不能正确删除");\
+	}
+
+#define SAFE_DELETE_ARRAY(ptr) \
+	if(ptr != nullptr)\
+	{\
+		delete[] ptr;\
+	}\
+	else\
+	{\
+		FileArchiveToolSysDef->getLogSysPtr()->log("要删除的指针数组为空，不能正确删除");\
 	}
 
 END_NAMESPACE_FILEARCHIVETOOL

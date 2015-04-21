@@ -17,6 +17,7 @@
 #include "PakTask.h"
 #include "LogSys.h"
 #include "ManiFestData.h"
+#include "PtrDefine.h"
 
 #include <sstream>
 #include <iostream>
@@ -35,12 +36,12 @@ PakItemDir::PakItemDir(EPakItem ePakItem) :
 
 PakItemDir::~PakItemDir()
 {
-	delete m_pArchiveHeader;
+	SAFE_DELETE(m_pArchiveHeader);
 	clearFileVec();
-	delete m_pFileVec;
-	delete m_pakName;
-	delete m_fullPath;
-	delete m_pakFullName;
+	SAFE_DELETE(m_pFileVec);
+	SAFE_DELETE(m_pakName);
+	SAFE_DELETE(m_fullPath);
+	SAFE_DELETE(m_pakFullName);
 }
 
 void PakItemDir::asyncArchiveDir(ArchiveParam* pArchiveParam)
@@ -123,7 +124,7 @@ void PakItemDir::clearFileVec()
 	FileHeaderVecIt itEnd = m_pFileVec->end();
 	for (; itBegin != itEnd; ++itBegin)
 	{
-		delete (*itBegin);
+		SAFE_DELETE(*itBegin);
 	}
 
 	m_pFileVec->clear();

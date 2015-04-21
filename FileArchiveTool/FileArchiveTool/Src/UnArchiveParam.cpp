@@ -1,4 +1,5 @@
 #include "UnArchiveParam.h"
+#include "PtrDefine.h"
 
 #include <string.h>
 
@@ -13,8 +14,8 @@ UnArchiveParam::UnArchiveParam(EPakParam ePakParam) :
 
 UnArchiveParam::~UnArchiveParam()
 {
-	delete m_punArchiveFilePath;
-	//delete m_punArchiveOutDir;
+	SAFE_DELETE(m_punArchiveFilePath);
+	//SAFE_DELETE(m_punArchiveOutDir);
 }
 
 void UnArchiveParam::setUnArchiveFilePath(const char* pPath)

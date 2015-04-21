@@ -3,6 +3,7 @@
 #endif
 
 #include "Thread.h"
+#include "PtrDefine.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -15,8 +16,8 @@ Thread::Thread()
 
 Thread::~Thread()
 {
-	delete m_iThreadId;
-	delete m_ThreadImp;
+	SAFE_DELETE(m_iThreadId);
+	SAFE_DELETE(m_ThreadImp);
 }
 
 void Thread::Start()

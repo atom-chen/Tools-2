@@ -2,6 +2,7 @@
 #include "ITaskQueue.h"
 #include "ITask.h"
 #include "MCondition.h"
+#include "PtrDefine.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -13,7 +14,7 @@ TaskThread::TaskThread(ITaskQueue* pTaskQueue)
 
 TaskThread::~TaskThread()
 {
-	delete m_pMCondition;
+	SAFE_DELETE(m_pMCondition);
 }
 
 void TaskThread::run()

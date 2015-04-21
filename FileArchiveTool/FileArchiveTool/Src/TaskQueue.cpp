@@ -3,6 +3,7 @@
 #include "ITask.h"
 #include "FileArchiveToolSys.h"
 #include "ThreadPool.h"
+#include "PtrDefine.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -14,8 +15,8 @@ TaskQueue::TaskQueue()
 
 TaskQueue::~TaskQueue()
 {
-	delete m_pTaskQueue;
-	delete m_pResultQueue;
+	SAFE_DELETE(m_pTaskQueue);
+	SAFE_DELETE(m_pResultQueue);
 }
 
 void TaskQueue::addTask(ITask* task)
@@ -52,7 +53,7 @@ void TaskQueue::onTick()
 	if (task != nullptr)
 	{
 		task->exeResult();
-		delete task;
+		SAFE_DELETE(task);
 	}
 }
 

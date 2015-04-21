@@ -1,6 +1,7 @@
 #include "LogSys.h"
 #include "LogDeviceBase.h"
 #include "Thread.h"
+#include "PtrDefine.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -15,10 +16,10 @@ LogSys::LogSys()
 
 LogSys::~LogSys()
 {
-	delete m_pLogDeviceVec;
-	delete m_pAsyncLogVec;
-	delete m_asyncLogLock;
-	delete m_threadID;
+	SAFE_DELETE(m_pLogDeviceVec);
+	SAFE_DELETE(m_pAsyncLogVec);
+	SAFE_DELETE(m_asyncLogLock);
+	SAFE_DELETE(m_threadID);
 }
 
 void LogSys::log(const char* msg)

@@ -10,6 +10,7 @@
 #include "PakPathSplitInfo.h"
 #include "LogSys.h"
 #include "ArchiveData.h"
+#include "PtrDefine.h"
 
 #include <stdlib.h>
 #include <sstream>
@@ -29,9 +30,9 @@ FileHeader::FileHeader():
 
 FileHeader::~FileHeader()
 {
-	delete m_pFullPath;
-	delete m_fileNamePath;
-	delete m_pakFileNamePath;
+	SAFE_DELETE(m_pFullPath);
+	SAFE_DELETE(m_fileNamePath);
+	SAFE_DELETE(m_pakFileNamePath);
 }
 
 void FileHeader::setFullPath(const char* dir, const char* fileName)
@@ -151,7 +152,7 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 			FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 		}
 
-		delete []pchar;
+		SAFE_DELETE_ARRAY(pchar);
 
 		fclose(localFile);
 	}

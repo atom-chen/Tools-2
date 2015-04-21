@@ -1,4 +1,5 @@
 #include "MCondition.h"
+#include "PtrDefine.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -11,8 +12,8 @@ MCondition::MCondition()
 
 MCondition::~MCondition()
 {
-	delete m_NotifyLock;
-	delete m_pNotifyCond;
+	SAFE_DELETE(m_NotifyLock);
+	SAFE_DELETE(m_pNotifyCond);
 }
 
 bool MCondition::canEnterWait()

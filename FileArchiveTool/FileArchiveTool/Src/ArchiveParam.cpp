@@ -1,6 +1,8 @@
 #include "ArchiveParam.h"
 #include "FileArchiveToolSys.h"
 #include "Config.h"
+#include "PtrDefine.h"
+
 #include <string.h>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
@@ -14,8 +16,8 @@ ArchiveParam::ArchiveParam(EPakParam ePakParam) :
 
 ArchiveParam::~ArchiveParam()
 {
-	delete m_pArchiveDir;
-	//delete m_pArchiveFilePath;
+	SAFE_DELETE(m_pArchiveDir);
+	//SAFE_DELETE(m_pArchiveFilePath);
 }
 
 void ArchiveParam::setArchiveDir(const char* pPath)

@@ -2,7 +2,7 @@
 #define __LockQueue_H
 
 #include "Prerequisites.h"
-
+#include "PtrDefine.h"
 #include "boost/thread/mutex.hpp"
 #include <queue>
 
@@ -36,8 +36,8 @@ public:
 	~LockQueue()
 	{
 		clear();
-		delete m_lock;
-		delete m_queue;
+		SAFE_DELETE(m_lock);
+		SAFE_DELETE(m_queue);
 	}
 
 	void push(T item)
@@ -68,14 +68,14 @@ public:
 		boost::mutex::scoped_lock sl(*m_lock);
 		//for (T item : *m_queue)
 		//{
-		//	delete item;
+		//	SAFE_DELETE(item;
 		//}
 		//m_queue->swap(queue<T>());
 		T item;
 		while (!m_queue->empty())
 		{
 			item = m_queue->front();
-			delete item;
+			SAFE_DELETE(item);
 			m_queue->pop();
 		}
 	}
@@ -105,8 +105,8 @@ public:
 //LockQueue<T>::~LockQueue()
 //{
 //	clear();
-//	delete m_lock;
-//	delete m_queue;
+//	SAFE_DELETE(m_lock;
+//	SAFE_DELETE(m_queue;
 //}
 //
 //template<class T>
@@ -140,14 +140,14 @@ public:
 //	boost::mutex::scoped_lock sl(*m_lock);
 //	//for (T item : *m_queue)
 //	//{
-//	//	delete item;
+//	//	SAFE_DELETE(item;
 //	//}
 //	//m_queue->swap(queue<T>());
 //	T item;
 //	while (!m_queue->empty())
 //	{
 //		item = m_queue->front();
-//		delete item;
+//		SAFE_DELETE(item;
 //		m_queue->pop();
 //	}
 //}

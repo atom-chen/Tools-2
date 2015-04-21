@@ -11,6 +11,7 @@
 #include "DynBufResizePolicy.h"
 #include "StorageBuffer.h"
 #include "BufferDefaultValue.h"
+#include "PtrDefine.h"
 
 #include "Prerequisites.h"
 
@@ -59,7 +60,7 @@ public:
 	{
 		if (m_pStorageBuffer)
 		{
-			delete m_pStorageBuffer;
+			SAFE_DELETE(m_pStorageBuffer);
 		}
 	}
 

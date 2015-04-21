@@ -8,6 +8,7 @@
 #include "ThreadPool.h"
 #include "PakState.h"
 #include "ManiFestData.h"
+#include "PtrDefine.h"
 
 #include <Thread>
 
@@ -30,15 +31,15 @@ FileArchiveToolSys::FileArchiveToolSys()
 
 FileArchiveToolSys::~FileArchiveToolSys()
 {
-	delete m_pConfig;
-	delete m_pArchiveData;
-	delete m_pCharsetConv;
-	delete m_pUtil;
-	delete m_pTaskQueue;
-	delete m_pLogSys;
-	delete m_pThreadPool;
-	delete m_pPakState;
-	delete m_pManiFestData;
+	SAFE_DELETE(m_pConfig);
+	SAFE_DELETE(m_pArchiveData);
+	SAFE_DELETE(m_pCharsetConv);
+	SAFE_DELETE(m_pUtil);
+	SAFE_DELETE(m_pTaskQueue);
+	SAFE_DELETE(m_pLogSys);
+	SAFE_DELETE(m_pThreadPool);
+	SAFE_DELETE(m_pPakState);
+	SAFE_DELETE(m_pManiFestData);
 }
 
 Config* FileArchiveToolSys::getConfigPtr()
@@ -111,7 +112,7 @@ void FileArchiveToolSys::init()
 void FileArchiveToolSys::destroy()
 {
 	// ³¹µ×ÊÍ·Å×Ô¼º
-	delete FileArchiveToolSys::getSingletonPtr();
+	SAFE_DELETE(FileArchiveToolSys::getSingletonPtr());
 }
 
 END_NAMESPACE_FILEARCHIVETOOL

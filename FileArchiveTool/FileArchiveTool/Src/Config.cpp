@@ -7,6 +7,7 @@
 #include "boost/algorithm/string.hpp"
 #include "FileArchiveToolSys.h"
 #include "Util.h"
+#include "PtrDefine.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -21,11 +22,11 @@ Config::Config()
 
 Config::~Config()
 {
-	delete m_pBrowseRootPath;
-	delete m_pakInRootPath;
-	delete m_pakOutputRootPath;
-	delete m_unpakOutputRootPath;
-	delete m_maniFestFullPath;
+	SAFE_DELETE(m_pBrowseRootPath);
+	SAFE_DELETE(m_pakInRootPath);
+	SAFE_DELETE(m_pakOutputRootPath);
+	SAFE_DELETE(m_unpakOutputRootPath);
+	SAFE_DELETE(m_maniFestFullPath);
 }
 
 std::string& Config::getBrowseRootPath()

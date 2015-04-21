@@ -2,6 +2,7 @@
 #include "FileArchiveToolSys.h"
 #include "ArchiveParam.h"
 #include "Config.h"
+#include "PtrDefine.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -16,10 +17,10 @@ PakPathSplitInfo::PakPathSplitInfo() :
 
 PakPathSplitInfo::~PakPathSplitInfo()
 {
-	delete m_origPath;
-	delete m_pakName;
-	delete m_pakFilePath;
-	delete m_origFileName;
+	SAFE_DELETE(m_origPath);
+	SAFE_DELETE(m_pakName);
+	SAFE_DELETE(m_pakFilePath);
+	SAFE_DELETE(m_origFileName);
 }
 
 void PakPathSplitInfo::initInfo(std::string& path, struct _finddata_t* FileInfo)

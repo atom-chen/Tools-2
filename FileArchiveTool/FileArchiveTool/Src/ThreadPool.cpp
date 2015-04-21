@@ -3,6 +3,7 @@
 #include "FileArchiveToolSys.h"
 #include "ITaskQueue.h"
 #include "TaskQueue.h"
+#include "PtrDefine.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -44,7 +45,7 @@ void ThreadPool::wait()
 
 	for (auto thread : *m_pThreadVec)
 	{
-		delete thread;
+		SAFE_DELETE(thread);
 	}
 
 	m_pThreadVec->clear();

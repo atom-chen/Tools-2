@@ -2,7 +2,7 @@
 #define __LockList_H
 
 #include "Prerequisites.h"
-
+#include "PtrDefine.h"
 #include "boost/thread/mutex.hpp"
 #include <vector>
 
@@ -36,8 +36,8 @@ public:
 	~LockList()
 	{
 		clear();
-		delete m_lock;
-		delete m_vec;
+		SAFE_DELETE(m_lock);
+		SAFE_DELETE(m_vec);
 	}
 
 	std::vector<T>* getVec()
@@ -73,7 +73,7 @@ public:
 		boost::mutex::scoped_lock sl(*m_lock);
 		for (auto item : *m_vec)
 		{
-			delete item;
+			SAFE_DELETE(item);
 		}
 		m_vec->clear();
 	}
@@ -96,8 +96,8 @@ public:
 //LockList<T>::~LockList()
 //{
 //	clear();
-//	delete m_lock;
-//	delete m_vec;
+//	SAFE_DELETE(m_lock;
+//	SAFE_DELETE(m_vec;
 //}
 //
 //template<class T>
@@ -137,7 +137,7 @@ public:
 //	boost::mutex::scoped_lock sl(*m_lock);
 //	for (auto item : *m_vec)
 //	{
-//		delete item;
+//		SAFE_DELETE(item;
 //	}
 //	m_vec->clear();
 //}

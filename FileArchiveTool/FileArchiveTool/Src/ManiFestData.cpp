@@ -8,6 +8,7 @@
 #include "TaskQueue.h"
 #include "ArchiveData.h"
 #include  "CharsetConv.h"
+#include "PtrDefine.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -18,7 +19,7 @@ ManiFestItem::ManiFestItem()
 
 ManiFestItem::~ManiFestItem()
 {
-	delete m_inPakPath;
+	SAFE_DELETE(m_inPakPath);
 }
 
 std::string& ManiFestItem::getInPakPath()
@@ -69,7 +70,7 @@ ManiFestDirItem::ManiFestDirItem()
 
 ManiFestDirItem::~ManiFestDirItem()
 {
-	delete m_pakName;
+	SAFE_DELETE(m_pakName);
 }
 
 std::string& ManiFestDirItem::getPakName()
@@ -99,7 +100,7 @@ ManiFestData::ManiFestData()
 
 ManiFestData::~ManiFestData()
 {
-	delete m_pLockList;
+	SAFE_DELETE(m_pLockList);
 }
 
 LockList<ManiFestItem*>* ManiFestData::getLockList()

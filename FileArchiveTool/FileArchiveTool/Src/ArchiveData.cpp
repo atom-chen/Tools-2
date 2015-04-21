@@ -120,7 +120,7 @@ void ArchiveData::clearFileVec()
 	PakItemVecIt itEnd = m_pPakItemVec->end();
 	for (; itBegin != itEnd; ++itBegin)
 	{
-		delete (*itBegin);
+		SAFE_DELETE(*itBegin);
 	}
 
 	m_pPakItemVec->clear();
@@ -177,7 +177,7 @@ void ArchiveData::removePakItem(PakItemBase* pPakItem)
 		{
 			PakItemVecIt ite = m_pPakItemVec->begin();
 			std::advance(ite, idx);
-			delete *ite;
+			SAFE_DELETE(*ite);
 			m_pPakItemVec->erase(ite);
 			break;
 		}
@@ -197,7 +197,7 @@ void ArchiveData::removeUnPakItem(PakItemBase* pPakItem)
 	FileArchiveToolSysDef->getLogSysPtr()->log(LS_UNPAK_END);
 	FileArchiveToolSysDef->getLogSysPtr()->log(LS_SPLIT_LINE);
 
-	delete m_curPak;
+	SAFE_DELETE(m_curPak);
 	m_curPak = nullptr;
 
 	removeUnArchiveParamPtr();
@@ -270,7 +270,7 @@ void ArchiveData::removeArchiveParamPtr()
 		if ((*m_pPakParamVec)[0]->getPakParamType() == ePP_Pak)
 		{
 			PakParamVecIt ite = m_pPakParamVec->begin();
-			delete *ite;
+			SAFE_DELETE(*ite);
 			m_pPakParamVec->erase(ite);
 		}
 	}
@@ -285,7 +285,7 @@ void ArchiveData::removeUnArchiveParamPtr()
 		if ((*m_pPakParamVec)[0]->getPakParamType() == ePP_UnPak)
 		{
 			PakParamVecIt ite = m_pPakParamVec->begin();
-			delete *ite;
+			SAFE_DELETE(*ite);
 			m_pPakParamVec->erase(ite);
 		}
 	}

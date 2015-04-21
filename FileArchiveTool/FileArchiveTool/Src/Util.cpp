@@ -3,6 +3,8 @@
 #include <io.h>
 #include <direct.h>
 
+#include "PtrDefine.h"
+
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 Util::Util()
@@ -13,8 +15,8 @@ Util::Util()
 
 Util::~Util()
 {
-	delete m_walkDirDelegate;
-	delete []m_pPath;
+	SAFE_DELETE(m_walkDirDelegate);
+	SAFE_DELETE_ARRAY(m_pPath);
 }
 
 //递归的列出文件夹下所有的子文件夹和文件
