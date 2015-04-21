@@ -25,7 +25,7 @@ FileArchiveToolSys::FileArchiveToolSys()
 	m_pLogSys = new LogSys;
 	//m_pArchiveParam = new ArchiveParam;
 	//m_pUnArchiveParam = new UnArchiveParam;
-	m_pThreadPool = new ThreadPool(std::thread::hardware_concurrency() * 2);
+	m_pThreadPool = new ThreadPool(std::thread::hardware_concurrency()/* * 2*/);		// 几个 CPU 就几个线程，如果乘以 2 机器太卡了
 	m_pPakState = new PakState;
 }
 

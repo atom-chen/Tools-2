@@ -47,7 +47,10 @@ void PakItemDir::asyncArchiveDir(ArchiveParam* pArchiveParam)
 
 	ss << "开始输出包[" << *m_pakName << "_" << m_pakIdx << "]\n";
 	ss << "包中文件数量: " << m_pFileVec->size() << " \n";
-	ss << "包中文件大小: " << m_fileSize << " \n";
+
+	float _fileSize = m_fileSize / 1024 / 1024;
+
+	ss << "包中文件大小: " << _fileSize << "M \n";
 	ss << "包中文件列表:\n";
 	for (auto item : *m_pFileVec)
 	{

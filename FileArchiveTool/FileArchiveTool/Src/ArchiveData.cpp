@@ -46,6 +46,9 @@ ArchiveData::~ArchiveData()
 
 void ArchiveData::ArchiveDir()
 {
+	FileArchiveToolSysDef->getLogSysPtr()->log(LS_SPLIT_LINE);
+	FileArchiveToolSysDef->getLogSysPtr()->log(LS_PAK_ADD_TASK);
+
 	FileArchiveToolSysDef->getPakStatePtr()->toggleState(ePS_PAKING);
 
 	ArchiveTask* pArchiveTask = new ArchiveTask(FileArchiveToolSysDef->getArchiveDataPtr()->getArchiveParamPtr());
@@ -54,7 +57,7 @@ void ArchiveData::ArchiveDir()
 
 void ArchiveData::asyncArchiveDir(ArchiveParam* pArchiveParam)
 {
-	FileArchiveToolSysDef->getLogSysPtr()->log("======================\n");
+	FileArchiveToolSysDef->getLogSysPtr()->log(LS_PAK_START_PAK_THREAD);
 	FileArchiveToolSysDef->getLogSysPtr()->log(LS_START_SPLITPAK);
 
 	clearFileVec();
@@ -68,12 +71,17 @@ void ArchiveData::asyncArchiveDir(ArchiveParam* pArchiveParam)
 
 void ArchiveData::unArchiveFile()
 {
+	FileArchiveToolSysDef->getLogSysPtr()->log("======================\n");
+	FileArchiveToolSysDef->getLogSysPtr()->log(LS_UNPAK_ADD_TASK);
+
 	UnArchiveTask* pUnArchiveTask = new UnArchiveTask(getUnArchiveParamPtr());
 	FileArchiveToolSysDef->getTaskQueuePtr()->addTask(pUnArchiveTask);
 }
 
 void ArchiveData::asyncUnArchiveFile(UnArchiveParam* pUnArchiveParam)
 {
+	FileArchiveToolSysDef->getLogSysPtr()->log(LS_UNPAK_START_PAK_THREAD);
+
 	clearFileVec();
 	m_curPak = new PakItemDir;
 	addUnPakTask();
@@ -178,7 +186,7 @@ void ArchiveData::removePakItem(PakItemBase* pPakItem)
 	if (m_pPakItemVec->size() == 0)
 	{
 		FileArchiveToolSysDef->getLogSysPtr()->log(LS_PAK_END);
-		FileArchiveToolSysDef->getLogSysPtr()->log("======================\n");
+		FileArchiveToolSysDef->getLogSysPtr()->log(LS_SPLIT_LINE);
 		FileArchiveToolSysDef->getPakStatePtr()->toggleState(ePS_PAKEND);
 
 		removeArchiveParamPtr();
@@ -191,6 +199,9 @@ void ArchiveData::removePakItem(PakItemBase* pPakItem)
 
 void ArchiveData::removeUnPakItem(PakItemBase* pPakItem)
 {
+	FileArchiveToolSysDef->getLogSysPtr()->log(LS_UNPAK_END);
+	FileArchiveToolSysDef->getLogSysPtr()->log(LS_SPLIT_LINE);
+
 	delete m_curPak;
 	m_curPak = nullptr;
 

@@ -66,6 +66,8 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 		ss.str("");
 		ss << "打包局部文件 [" << m_pFullPath << "] 打开成功\n";
 
+		FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
+
 		// 计算文件大小
 		fseek(localFile, 0, SEEK_END); //定位到文件末
 		m_fileSize = ftell(localFile); //文件长度
@@ -84,6 +86,8 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 			ss.str("");
 			ss << "局部文件 [" << m_pFullPath << "] 读取成功\n";
 
+			FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
+
 			if (!FileArchiveToolSysDef->getConfigPtr()->bCompress())
 			{
 				writeLength = fwrite(pchar, 1, m_fileSize, fileHandle);
@@ -92,6 +96,8 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 					ss.clear();
 					ss.str("");
 					ss << "局部文件 [" << m_pFullPath << "] 非压缩写入打包文件失败\n";
+
+					FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 				}
 			}
 			else	// 需要压缩
@@ -105,6 +111,8 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 					ss.clear();
 					ss.str("");
 					ss << "局部文件 [" << m_pFullPath << "] 压缩写入打包文件失败\n";
+
+					FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 				}
 
 				free(pComprStr);		// 记得释放这个内存
@@ -115,6 +123,8 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 			ss.clear();
 			ss.str("");
 			ss << "局部文件 [" << m_pFullPath << "] 读取失败\n";
+
+			FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 		}
 
 		delete []pchar;
@@ -126,6 +136,8 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 		ss.clear();
 		ss.str("");
 		ss << "打包局部文件 [" << m_pFullPath << "] 打开失败\n";
+
+		FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 	}
 }
 
@@ -188,6 +200,8 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 		ss.str("");
 		ss << "解包局部文件 [" << m_pFullPath << "] 打开成功\n";
 
+		FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
+
 		// 一次性读取进来，可能需要压缩
 		pchar = new char[m_fileSize + 1];
 		memset(pchar, 0, m_fileSize + 1);
@@ -228,7 +242,7 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 				MLzma::LzmaStrUncompress(pchar, m_fileSize, &pComprStr, &m_fileSize);
 
 				writeLength = fwrite(pComprStr, 1, m_fileSize, localFile);
-				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
+				if (writeLength != m_fileSize)		// 文件写入出现错误，不能写入完整文件
 				{
 					ss.clear();
 					ss.str("");
@@ -253,6 +267,8 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 			ss.clear();
 			ss.str("");
 			ss << "读取打包文件文件 [" << pUnArchiveParam->getUnArchiveFilePath() << "] 失败\n";
+
+			FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 		}
 
 		//fflush(localFile);
@@ -263,6 +279,8 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 		ss.clear();
 		ss.str("");
 		ss << "解包局部文件 [" << m_pFullPath << "] 打开失败\n";
+
+		FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 	}
 }
 
