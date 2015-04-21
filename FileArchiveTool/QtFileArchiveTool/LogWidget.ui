@@ -28,7 +28,11 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QTextBrowser" name="textBrowser"/>
+      <widget class="QTextBrowser" name="textBrowser">
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

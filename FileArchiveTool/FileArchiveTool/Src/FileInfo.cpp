@@ -62,6 +62,10 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 
 	if (localFile != nullptr)
 	{
+		ss.clear();
+		ss.str("");
+		ss << "打包局部文件 [" << m_pFullPath << "] 打开成功\n";
+
 		// 计算文件大小
 		fseek(localFile, 0, SEEK_END); //定位到文件末
 		m_fileSize = ftell(localFile); //文件长度
@@ -116,6 +120,12 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 		delete []pchar;
 
 		fclose(localFile);
+	}
+	else
+	{
+		ss.clear();
+		ss.str("");
+		ss << "打包局部文件 [" << m_pFullPath << "] 打开失败\n";
 	}
 }
 
@@ -174,6 +184,10 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 
 	if (localFile != nullptr)
 	{
+		ss.clear();
+		ss.str("");
+		ss << "解包局部文件 [" << m_pFullPath << "] 打开成功\n";
+
 		// 一次性读取进来，可能需要压缩
 		pchar = new char[m_fileSize + 1];
 		memset(pchar, 0, m_fileSize + 1);
@@ -243,6 +257,12 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 
 		//fflush(localFile);
 		fclose(localFile);
+	}
+	else
+	{
+		ss.clear();
+		ss.str("");
+		ss << "解包局部文件 [" << m_pFullPath << "] 打开失败\n";
 	}
 }
 

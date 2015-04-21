@@ -251,6 +251,7 @@ void ArchiveData::removeArchiveParamPtr()
 		if ((*m_pPakParamVec)[0]->getPakParamType() == ePP_Pak)
 		{
 			PakParamVecIt ite = m_pPakParamVec->begin();
+			delete *ite;
 			m_pPakParamVec->erase(ite);
 		}
 	}
@@ -265,6 +266,7 @@ void ArchiveData::removeUnArchiveParamPtr()
 		if ((*m_pPakParamVec)[0]->getPakParamType() == ePP_UnPak)
 		{
 			PakParamVecIt ite = m_pPakParamVec->begin();
+			delete *ite;
 			m_pPakParamVec->erase(ite);
 		}
 	}

@@ -4,15 +4,22 @@
 
 #include "CharsetConv.h"
 //#include "iconv.h"
+#include "FileArchiveToolSys.h"
+#include "LogSys.h"
+#include "LogStr.h"
+
 #include <string.h>
 
 #include <unicode/ucnv.h> 
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
+// 字节缓冲区大小
+#define BYTE_BUFFER_SIZE 2 * 1024 * 1024
+
 CharsetConv::CharsetConv()
 {
-	m_bytes = new char[4096];
+	m_bytes = new char[BYTE_BUFFER_SIZE];
 }
 
 CharsetConv::~CharsetConv()
@@ -39,8 +46,19 @@ CharsetConv::~CharsetConv()
 //返回0为成功，错误代码定义见后面  
 int CharsetConv::convert(const char* toConverterName, const char* fromConverterName, char* target, int32 targetCapacity, const char* source, int32 sourceLength)
 {
-	UErrorCode  error = U_ZERO_ERROR;
+	if (sourceLength > targetCapacity)
+	{
+		FileArchiveToolSysDef->getLogSysPtr()->log(LS_CODE_BUFFER_OVERFLOW);
+	}
+
+	UErrorCode error = U_ZERO_ERROR;
 	ucnv_convert(toConverterName, fromConverterName, target, targetCapacity, source, sourceLength, &error);
+
+	if (error != U_ZERO_ERROR)		// 编码出错
+	{
+		FileArchiveToolSysDef->getLogSysPtr()->log(LS_CODE_ERROR);
+	}
+
 	return error;
 }
 
@@ -135,30 +153,30 @@ int CharsetConv::Utf8ToLocal(char * lpUTF8Str, char * lpGBKStr, int nGBKStrLen)
 
 char* CharsetConv::Utf8ToLocalStr(char * lpUTF8Str)
 {
-	memset(m_bytes, 0, 4096);
-	Utf8ToLocal(lpUTF8Str, m_bytes, 4096);
+	memset(m_bytes, 0, BYTE_BUFFER_SIZE);
+	Utf8ToLocal(lpUTF8Str, m_bytes, BYTE_BUFFER_SIZE);
 
 	return m_bytes;
 }
 
 char* CharsetConv::LocalToUtf8Str(char * lpGBKStr)
 {
-	memset(m_bytes, 0, 4096);
-	LocalToUtf8(lpGBKStr, m_bytes, 4096);
+	memset(m_bytes, 0, BYTE_BUFFER_SIZE);
+	LocalToUtf8(lpGBKStr, m_bytes, BYTE_BUFFER_SIZE);
 
 	return m_bytes;
 }
 
 int CharsetConv::Utf8ToLocalStrLen(char * lpUTF8Str)
 {
-	memset(m_bytes, 0, 4096);
-	return Utf8ToLocal(lpUTF8Str, m_bytes, 4096);
+	memset(m_bytes, 0, BYTE_BUFFER_SIZE);
+	return Utf8ToLocal(lpUTF8Str, m_bytes, BYTE_BUFFER_SIZE);
 }
 
 int CharsetConv::LocalToUtf8StrLen(char * lpGBKStr)
 {
-	memset(m_bytes, 0, 4096);
-	return LocalToUtf8(lpGBKStr, m_bytes, 4096);
+	memset(m_bytes, 0, BYTE_BUFFER_SIZE);
+	return LocalToUtf8(lpGBKStr, m_bytes, BYTE_BUFFER_SIZE);
 }
 
 END_NAMESPACE_FILEARCHIVETOOL
