@@ -253,17 +253,17 @@ bool Util::checkFlags(FileHeaderFlagIndex flagsID, char* flagsBytes, uint32 len)
 	return false;
 }
 
-void Util::setFlags(FileHeaderFlag flagsID, uint32 flags)
+void Util::setFlags(FileHeaderFlag flagsID, uint32& flags)
 {
 	flags |= flagsID;
 }
 
-void Util::clearFlags(FileHeaderFlag flagsID, uint32 flags)
+void Util::clearFlags(FileHeaderFlag flagsID, uint32& flags)
 {
 	flags &= ~flagsID;
 }
 
-bool Util::checkFlags(FileHeaderFlag flagsID, uint32 flags)
+bool Util::checkFlags(FileHeaderFlag flagsID, uint32& flags)
 {
 	return (flags & flagsID) > 0;
 }

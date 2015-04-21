@@ -26,14 +26,14 @@ protected:
 	typedef std::vector<FileHeader*>::iterator FileHeaderVecIt;
 
 protected:
-	std::string* m_pakName;				// 生成的包的名字
+	std::string* m_pakName;				// 生成的包的名字，不包括扩展名字，例如 aaa
 	uint32 m_pakIdx;					// 同类型的包的索引
-	std::string* m_pakFullName;			// 有扩展名字
+	std::string* m_pakFullName;			// 包名字和扩展名，不包括路径， 例如 aaa_0.abc
 	ArchiveHeader* m_pArchiveHeader;	// 这个是总的文件头部信息
 
 	uint32 m_fileSize;				// 文件总共大小
 	FileHeaderVec* m_pFileVec;		// 整个文件列表
-	std::string* m_fullPath;
+	std::string* m_fullPath;		// 包输出的完整路径和名字，例如 E:/aaa/bbb/aaa_0.abc
 
 public:
 	PakItemDir(EPakItem ePakItem = ePI_DIR);

@@ -137,7 +137,7 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 				{
 					ss.clear();
 					ss.str("");
-					ss << "局部文件 [" << m_pFullPath << "] 非压缩写入打包文件成功\n";
+					ss << "局部文件 [" << m_pFullPath << "] 压缩写入打包文件成功\n";
 
 					FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 				}

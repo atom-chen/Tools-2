@@ -253,6 +253,13 @@ UnArchiveParam* ArchiveData::getUnArchiveParamPtr()
 
 void ArchiveData::addArchiveParamPtr(ArchiveParam* pArchiveParam)
 {
+	// 各种判断
+	if (!FileArchiveToolSysDef->getConfigPtr()->isSubDirOfPakInRootPath(pArchiveParam->getArchiveDir()))
+	{
+		FileArchiveToolSysDef->getLogSysPtr()->log("打包的目录不是配置目录 pakInputRootPath 的子目录，因此这个目录不能打包，请修改 Config.txt 中的 pakInputRootPath 字段");
+		SAFE_DELETE(pArchiveParam);
+		return;
+	}
 	m_pPakParamVec->push_back(pArchiveParam);
 	handleNextPakParam();
 }

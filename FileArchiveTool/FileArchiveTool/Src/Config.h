@@ -38,6 +38,7 @@ public:
 
 	void loadConfig();
 	bool isEqualInRootPath(std::string& path);
+	bool isSubDirOfPakInRootPath(const char* path);	// 输入的目录是否是 m_pakInRootPath 的子目录
 
 protected:
 	void parseEqualTokens(std::vector<std::string>& equalTokens);

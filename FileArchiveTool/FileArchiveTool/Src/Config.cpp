@@ -150,4 +150,14 @@ bool Config::isEqualInRootPath(std::string& path)
 	return false;
 }
 
+bool Config::isSubDirOfPakInRootPath(const char* path)
+{
+	if (strncmp(m_pakInRootPath->c_str(), path, m_pakInRootPath->length()) == 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 END_NAMESPACE_FILEARCHIVETOOL

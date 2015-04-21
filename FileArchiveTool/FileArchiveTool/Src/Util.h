@@ -43,9 +43,9 @@ public:
 	void clearFlags(FileHeaderFlagIndex flagsID, char* flagsBytes, uint32 len);
 	bool checkFlags(FileHeaderFlagIndex flagsID, char* flagsBytes, uint32 len);
 
-	void setFlags(FileHeaderFlag flagsID, uint32 flags);
-	void clearFlags(FileHeaderFlag flagsID, uint32 flags);
-	bool checkFlags(FileHeaderFlag flagsID, uint32 flags);
+	void setFlags(FileHeaderFlag flagsID, uint32& flags);
+	void clearFlags(FileHeaderFlag flagsID, uint32& flags);
+	bool checkFlags(FileHeaderFlag flagsID, uint32& flags);
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

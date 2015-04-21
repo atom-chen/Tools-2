@@ -59,6 +59,7 @@ void PakItemDir::asyncArchiveDir(ArchiveParam* pArchiveParam)
 	//std::setiosflags(std::ios::unitbuf);
 
 	ss << "开始输出包[" << *m_pakName << "_" << m_pakIdx << "]\n";
+	ss << "包名字" << m_fullPath->c_str() << "\n";
 	ss << "包中文件数量: " << m_pFileVec->size() << " \n";
 
 	float _fileSize = (float)m_fileSize / 1024 / 1024;
