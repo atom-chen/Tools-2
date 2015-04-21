@@ -8,6 +8,7 @@
 #include "boost/algorithm/string.hpp"	
 #include "Prerequisites.h"
 #include "FastDelegate.h"
+#include "FileHeaderFlag.h"
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -37,6 +38,14 @@ public:
 
 	void trim_right(std::string& str);		// È¥µô×Ö·û´®ÓÒ±ßµÄ¿Õ¸ñ
 	void split(std::string& s, std::string& delim, std::vector< std::string >& ret);
+
+	void setFlags(FileHeaderFlagIndex flagsID, char* flagsBytes, uint32 len);
+	void clearFlags(FileHeaderFlagIndex flagsID, char* flagsBytes, uint32 len);
+	bool checkFlags(FileHeaderFlagIndex flagsID, char* flagsBytes, uint32 len);
+
+	void setFlags(FileHeaderFlag flagsID, uint32 flags);
+	void clearFlags(FileHeaderFlag flagsID, uint32 flags);
+	bool checkFlags(FileHeaderFlag flagsID, uint32 flags);
 };
 
 END_NAMESPACE_FILEARCHIVETOOL

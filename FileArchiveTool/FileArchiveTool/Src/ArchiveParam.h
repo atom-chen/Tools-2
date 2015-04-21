@@ -8,8 +8,6 @@
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-#define PAKEXT ".abc"
-
 // 当前只支持打包子目录
 enum FILEARCHIVETOOL_EXPORT ArchiveMode
 {

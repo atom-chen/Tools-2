@@ -8,15 +8,6 @@
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
-/**
- *@brief 文件头标识
- */
-enum FILEARCHIVETOOL_EXPORT FileHeaderFlag
-{
-	eFHF_CPS = 1 << 0,		// 压缩位
-};
-
-
 class MByteBuffer;
 class UnArchiveParam;
 class ArchiveParam;

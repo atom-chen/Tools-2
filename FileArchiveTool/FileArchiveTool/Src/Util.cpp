@@ -226,4 +226,46 @@ void Util::split(std::string& s, std::string& delim, std::vector< std::string >&
 	}
 }
 
+// ÉèÖÃ×´Ì¬Îª
+void Util::setFlags(FileHeaderFlagIndex flagsID, char* flagsBytes, uint32 len)
+{
+	if (flagsID / 8 < len)
+	{
+		flagsBytes[flagsID / 8] |= ((1 << ((int)flagsID % 8)));
+	}
+}
+
+void Util::clearFlags(FileHeaderFlagIndex flagsID, char* flagsBytes, uint32 len)
+{
+	if (flagsID / 8 < len)
+	{
+		flagsBytes[flagsID / 8] &= (~(1 << (flagsID % 8)));
+	}
+}
+
+bool Util::checkFlags(FileHeaderFlagIndex flagsID, char* flagsBytes, uint32 len)
+{
+	if (flagsID / 8 < len)
+	{
+		return ((flagsBytes[flagsID / 8] & (1 << (flagsID % 8))) > 0);
+	}
+
+	return false;
+}
+
+void Util::setFlags(FileHeaderFlag flagsID, uint32 flags)
+{
+	flags |= flagsID;
+}
+
+void Util::clearFlags(FileHeaderFlag flagsID, uint32 flags)
+{
+	flags &= ~flagsID;
+}
+
+bool Util::checkFlags(FileHeaderFlag flagsID, uint32 flags)
+{
+	return (flags & flagsID) > 0;
+}
+
 END_NAMESPACE_FILEARCHIVETOOL

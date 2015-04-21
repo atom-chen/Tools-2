@@ -11,6 +11,7 @@
 #include "LogSys.h"
 #include "ArchiveData.h"
 #include "PtrDefine.h"
+#include "ArchiveCV.h"
 
 #include <stdlib.h>
 #include <sstream>
@@ -18,7 +19,7 @@
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 FileHeader::FileHeader():
-	m_fileOffset(0), m_fileSize(0)
+	m_fileOffset(0), m_fileSize(0), m_flags(0)
 {
 	m_pFullPath = new char[MAX_PATH];
 	memset(m_pFullPath, 0, MAX_PATH);
@@ -97,7 +98,8 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 
 			FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 
-			if (!FileArchiveToolSysDef->getConfigPtr()->bCompress())
+			//if (!FileArchiveToolSysDef->getConfigPtr()->bCompress())
+			if (!FileArchiveToolSysDef->getUtilPtr()->checkFlags(eFHF_CPS, m_flags))
 			{
 				writeLength = fwrite(pchar, 1, m_fileSize, fileHandle);
 				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
@@ -251,7 +253,8 @@ void FileHeader::writeArchiveFile2File(FILE* fileHandle, UnArchiveParam* pUnArch
 
 			FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 
-			if (!FileArchiveToolSysDef->getConfigPtr()->bCompress())		// 如果不压缩
+			//if (!FileArchiveToolSysDef->getConfigPtr()->bCompress())		// 如果不压缩
+			if (!FileArchiveToolSysDef->getUtilPtr()->checkFlags(eFHF_CPS, m_flags))
 			{
 				writeLength = fwrite(pchar, 1, m_fileSize, localFile);
 				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
@@ -337,6 +340,10 @@ void FileHeader::modifyArchiveFileName(ArchiveParam* pArchiveParam)
 void FileHeader::initFileHeader(PakPathSplitInfo* pPakPathSplitInfo)
 {
 	m_fileSize = pPakPathSplitInfo->getFileOrigSize();
+	if (m_fileSize > PAK_BYTES_SIZE)
+	{
+		FileArchiveToolSysDef->getUtilPtr()->setFlags(eFHF_CPS, m_flags);
+	}
 	setFullPath(pPakPathSplitInfo->getOrigPath().c_str(), pPakPathSplitInfo->getOrigFileName().c_str());
 	setFileName(pPakPathSplitInfo->getOrigFileName().c_str());
 	modifyArchiveFileName(FileArchiveToolSysDef->getArchiveDataPtr()->getArchiveParamPtr());

@@ -18,6 +18,7 @@
 #include "LogSys.h"
 #include "ManiFestData.h"
 #include "PtrDefine.h"
+#include "ArchiveCV.h"
 
 #include <sstream>
 #include <iostream>
