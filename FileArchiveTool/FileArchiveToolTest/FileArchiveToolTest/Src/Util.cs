@@ -68,5 +68,20 @@ namespace FileArchiveToolTest
 			pPath = pPath.Replace ("\\", "/");
 			return pPath;
 		}
+
+		public static void setFlags(FileHeaderFlag flagsID, ref uint flags)
+		{
+			flags |= (uint)flagsID;
+		}
+
+		public static void clearFlags(FileHeaderFlag flagsID, ref uint flags)
+		{
+			flags &= ~(uint)flagsID;
+		}
+
+		public static bool checkFlags(FileHeaderFlag flagsID, ref uint flags)
+		{
+			return (flags & (uint)flagsID) > 0;
+		}
 	}
 }

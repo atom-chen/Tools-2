@@ -89,6 +89,8 @@
     <Compile Include="Src\Config.cs" />
     <Compile Include="Src\FileArchiveToolSys.cs" />
     <Compile Include="Src\Util.cs" />
+    <Compile Include="Src\PakItem.cs" />
+    <Compile Include="Src\FileHeaderFlag.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

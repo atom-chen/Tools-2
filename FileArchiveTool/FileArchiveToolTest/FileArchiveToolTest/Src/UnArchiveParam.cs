@@ -1,6 +1,6 @@
 namespace FileArchiveToolTest
 {
-	class UnArchiveParam
+	public class UnArchiveParam
 	{
 		protected string m_punArchiveFilePath;
 		protected string m_punArchiveOutDir;

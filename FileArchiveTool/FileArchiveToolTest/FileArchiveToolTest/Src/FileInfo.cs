@@ -4,13 +4,14 @@ using System;
 
 namespace FileArchiveToolTest
 {
-	class FileHeader
+	public class FileHeader
 	{
 		protected byte m_pathLen;					// 目录长度，不包括 '\0'
 		protected string m_pFullPath;
-		protected string m_fileNamePath;		// 文件路径名字
+		protected string m_fileNamePath;			// 文件路径名字
 		protected uint m_fileOffset;				// 文件在整个 Archive 中的偏移
 		protected uint m_fileSize;					// 文件大小
+		protected uint m_flags;						// 标识字段
 
 		public FileHeader()
 		{
@@ -23,6 +24,7 @@ namespace FileArchiveToolTest
 			m_fileNamePath = ba.readMultiByte(m_pathLen, Encoding.UTF8);
 			m_fileOffset = ba.readUnsignedInt();
 			m_fileSize = ba.readUnsignedInt();
+			m_flags = ba.readUnsignedInt();
 		}
 
 		public void writeArchiveFile2File(FileStream fileHandle, UnArchiveParam pUnArchiveParam)
@@ -54,7 +56,8 @@ namespace FileArchiveToolTest
 				uint readlength = (uint)fileHandle.Read(pchar, 0, (int)m_fileSize);
 				if (readlength == m_fileSize)
 				{
-					if (!FileArchiveToolSys.g_pFileArchiveToolSys.getConfigPtr().bCompress())		// 如果不压缩
+					//if (!FileArchiveToolSys.g_pFileArchiveToolSys.getConfigPtr().bCompress())		// 如果不压缩
+					if(!Util.checkFlags(FileHeaderFlag.eFHF_CPS, ref m_flags))
 					{
 						localFile.Write(pchar, 0, (int)m_fileSize);
 					}

@@ -3,15 +3,15 @@ using System.Text;
 
 namespace FileArchiveToolTest
 {
-	class ArchiveHeader
+	public class ArchiveHeader
 	{
 		public const uint ARCHIVETOOL_VERSION = 101100;
 
 		public byte[] m_magic;			// 幻数
-		public byte m_endian;				// 大小端
+		public byte m_endian;			// 大小端
 		public uint m_headerSize;		// 头部大小
 		public uint m_version;			// 版本
-		public uint m_fileCount;			// 文件总共数量
+		public uint m_fileCount;		// 文件总共数量
 
 		public ArchiveHeader()
 		{
