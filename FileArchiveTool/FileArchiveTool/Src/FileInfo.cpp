@@ -99,6 +99,14 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 
 					FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 				}
+				else
+				{
+					ss.clear();
+					ss.str("");
+					ss << "局部文件 [" << m_pFullPath << "] 非压缩写入打包文件成功\n";
+
+					FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
+				}
 			}
 			else	// 需要压缩
 			{
@@ -106,11 +114,19 @@ void FileHeader::writeFile2ArchiveFile(FILE* fileHandle)
 				MLzma::LzmaStrCompress(pchar, m_fileSize, &pComprStr, &m_fileSize);
 
 				writeLength = fwrite(pComprStr, 1, m_fileSize, fileHandle);
-				if (writeLength != readlength)		// 文件写入出现错误，不能写入完整文件
+				if (writeLength != m_fileSize)		// 文件写入出现错误，不能写入完整文件
 				{
 					ss.clear();
 					ss.str("");
 					ss << "局部文件 [" << m_pFullPath << "] 压缩写入打包文件失败\n";
+
+					FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
+				}
+				else
+				{
+					ss.clear();
+					ss.str("");
+					ss << "局部文件 [" << m_pFullPath << "] 非压缩写入打包文件成功\n";
 
 					FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
 				}
