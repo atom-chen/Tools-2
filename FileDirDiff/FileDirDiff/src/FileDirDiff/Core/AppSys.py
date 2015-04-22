@@ -6,21 +6,17 @@
 import os
 import glob
 
-from FileDirDiff.Core import Md5Checker
-from FileDirDiff.Core.Config import Config
-from FileDirDiff.Core.Utils import FileOperate
-from FileDirDiff.Core.Logger import Logger
-from FileDirDiff.Core.Md5Dir import Md5DirOperate
-
 # global data
 class AppSys():
-    pInstance = None
+    g_pInstance = None
+    #g_pInstance = AppSys()
+    #g_pInstance = AppSys.AppSys()
     
     @staticmethod
     def instance():
-        if AppSys.pInstance is None:
-            AppSys.pInstance = AppSys()
-        return AppSys.pInstance
+        if AppSys.g_pInstance is None:
+            AppSys.g_pInstance = AppSys()
+        return AppSys.g_pInstance
     
     def __init__(self):
         self.curmd5FileHandle = None    # 当前版本的 md5 版本文件
@@ -29,35 +25,39 @@ class AppSys():
         
         self.m_bOverVer = True     # Over
         self.m_verThread = None    # ver thread
-        self.m_md5DirOperate = Md5DirOperate()    # dir 操作
+        self.m_md5DirOperate = None    # dir 操作
+        self.m_config = None
+        self.m_logSys = None
+        self.Md5Checker = None
+        self.FileOperate = None
     
     def writemd(self, directoryName, filename, md):
         cmpdirectoryName = directoryName.replace('\\', '/')
         # asset/ui asset/module 下面的文件的  md5 码不用写入,这个需要比对目录的 md5
-        uipath = Config.instance().srcrootassetpath + "\\ui"
+        uipath = self.m_config.srcrootassetpath + "\\ui"
         uipath = uipath.replace('\\', '/')
-        modulepath = Config.instance().srcrootassetpath + "\\module"
+        modulepath = self.m_config.srcrootassetpath + "\\module"
         modulepath = modulepath.replace('\\', '/')
         
         # 如果计算文件夹 md5 的时候，才需要计算路径
-        if Config.instance().getfoldermd5cmp():
+        if self.m_config.getfoldermd5cmp():
             if uipath == cmpdirectoryName:
                 return
             if modulepath == cmpdirectoryName:
                 return
         
         # versionall.swf 和 versionapp.swf 不写入版本文件
-        if (filename == (Config.instance().preckallverfilename + '.swf')) or (filename == (Config.instance().preckappverfilename + '.swf')):
+        if (filename == (self.m_config.preckallverfilename + '.swf')) or (filename == (self.m_config.preckappverfilename + '.swf')):
             return
         
         # ModuleApp.swf 这个也不需要写入版本文件
-        if filename == Config.instance().appAppSwfNameAndExt():
+        if filename == self.m_config.appAppSwfNameAndExt():
             return
         
         if self.curmd5FileHandle is None:
-            #with open(config.Config.instance().curFilePath(), 'w', encoding='utf-8') as self.curmd5FileHandle:
+            #with open(config.AppSys.instance().m_config.curFilePath(), 'w', encoding='utf-8') as self.curmd5FileHandle:
             #    pass
-            self.curmd5FileHandle = open(Config.instance().curCKFilePath(), 'w', encoding='utf-8')
+            self.curmd5FileHandle = open(self.m_config.curCKFilePath(), 'w', encoding='utf-8')
         
         if self.curmd5FileCount > 0:
             self.curmd5FileHandle.write('\n')
@@ -68,7 +68,7 @@ class AppSys():
         idx = fullpath.find('asset')
         self.curmd5FileHandle.write(fullpath[idx:] + '=' + md)
         
-        Logger.instance().info('文件 CK 码:' + fullpath)
+        self.m_logSys.info('文件 CK 码:' + fullpath)
 
     def closemdfile(self):
         if not self.curmd5FileHandle is None:
@@ -76,34 +76,34 @@ class AppSys():
             self.curmd5FileHandle = None
             
     def buildAllMd(self):
-        Md5Checker.mdcallback = self.writemd
-        Md5Checker.m_subversion = Config.instance().subVersionByte()
-        Md5Checker.md5_for_dirs(Config.instance().srcrootassetpath)
+        self.Md5Checker.mdcallback = self.writemd
+        self.Md5Checker.m_subversion = self.m_config.subVersionByte()
+        self.Md5Checker.md5_for_dirs(self.m_config.srcrootassetpath)
         
-        Logger.instance().info(Config.instance().srcrootassetpath + 'md5 end')
+        self.m_logSys.info(self.m_config.srcrootassetpath + 'md5 end')
         
     def buildAppMd(self):
         # 计算 ModuleApp md5
-        fileHandle = open(Config.instance().appCKFilePath(), 'w', encoding='utf-8')
-        md = Md5Checker.md5_for_file(Config.instance().appAppSwfPath())
+        fileHandle = open(self.m_config.appCKFilePath(), 'w', encoding='utf-8')
+        md = self.Md5Checker.md5_for_file(self.m_config.appAppSwfPath())
         fileHandle.write('moduleapp=' + md + '\n')
         
         # 计算 startpicpath md5
-        md = Md5Checker.md5_for_file(Config.instance().startPicPath())
+        md = self.Md5Checker.md5_for_file(self.m_config.startPicPath())
         fileHandle.write('startpic=' + md + '\n')
         
         # 计算 versionall.swf 的 md5
-        md = Md5Checker.md5_for_file(Config.instance().allverFilePath())
+        md = self.Md5Checker.md5_for_file(self.m_config.allverFilePath())
         fileHandle.write('allverfile=' + md)
          
         fileHandle.close()
-        Logger.instance().info(Config.instance().appCKFilePath() + 'md5 end')
+        self.m_logSys.info(self.m_config.appCKFilePath() + 'md5 end')
 
     # 生成启动的 html
     def buildStartHtml(self):
-        startswfmd = Md5Checker.md5_for_file(Config.instance().appStartSwfPath())
-        htmlfileHandle = open(Config.instance().htmlPath(), 'w', encoding='utf-8')
-        tempfileHandle = open(Config.instance().htmltemplate, 'r', encoding='utf-8')
+        startswfmd = self.Md5Checker.md5_for_file(AppSys.instance().m_config.appStartSwfPath())
+        htmlfileHandle = open(AppSys.instance().m_config.htmlPath(), 'w', encoding='utf-8')
+        tempfileHandle = open(AppSys.instance().m_config.htmltemplate, 'r', encoding='utf-8')
         
         for curline in tempfileHandle:
             idx = curline.find('?v=')
@@ -118,14 +118,14 @@ class AppSys():
         htmlfileHandle.close()
         tempfileHandle.close()
         
-        Logger.instance().info('生成文件: ' + Config.instance().htmlname)
+        AppSys.instance().m_logSys.info('生成文件: ' + AppSys.instance().m_config.htmlname)
     
     def buildModuleMd(self):
-        dirname = Config.instance().srcrootassetpath + "/module"
+        dirname = AppSys.instance().m_config.srcrootassetpath + "/module"
         os.chdir(dirname)
         allswffile = glob.glob('*.swf')
         allswffile.sort()
-        uifilemd5lst = self.m_md5DirOperate.calcModuleFileDirMd5(allswffile, Config.instance().modulePath())
+        uifilemd5lst = self.m_md5DirOperate.calcModuleFileDirMd5(allswffile, AppSys.instance().m_config.modulePath())
         
         for filever in uifilemd5lst:
             if self.curmd5FileCount > 0:
@@ -139,11 +139,11 @@ class AppSys():
     
     # 生成 "asset/ui" 这个文件夹下的资源的 md5
     def buildUIMd(self):
-        dirname = Config.instance().srcrootassetpath + "/ui"
+        dirname = AppSys.instance().m_config.srcrootassetpath + "/ui"
         os.chdir(dirname)
         allswffile = glob.glob('*.swf')
         allswffile.sort()
-        uifilemd5lst = self.m_md5DirOperate.calcUIFileDirMd5(allswffile, Config.instance().uiPath())
+        uifilemd5lst = self.m_md5DirOperate.calcUIFileDirMd5(allswffile, AppSys.instance().m_config.uiPath())
         
         for filever in uifilemd5lst:
             if self.curmd5FileCount > 0:
@@ -158,17 +158,17 @@ class AppSys():
     def copyFile(self):
         # 拷贝文件
         if AppSys.instance().m_bOverVer:
-            filename = Config.instance().preckappverfilename
+            filename = AppSys.instance().m_config.preckappverfilename
             swfName = '%s.swf' % (filename)
-            FileOperate.copyFile(os.path.join(Config.instance().destrootpath, Config.instance().outDir, swfName), os.path.join(Config.instance().srcrootassetpath, swfName))
+            self.FileOperate.copyFile(os.path.join(AppSys.instance().m_config.destrootpath, AppSys.instance().m_config.outDir, swfName), os.path.join(AppSys.instance().m_config.srcrootassetpath, swfName))
         
-            filename = Config.instance().preckallverfilename
+            filename = AppSys.instance().m_config.preckallverfilename
             swfName = '%s.swf' % (filename)
         
-            FileOperate.copyFile(os.path.join(Config.instance().destrootpath, Config.instance().outDir, swfName), os.path.join(Config.instance().srcrootassetpath, swfName))
-            #FileOperate.copyFile(Config.instance().htmlPath(), os.path.join(Config.instance().srcrootpath, Config.instance().htmlname))
+            self.FileOperate.copyFile(os.path.join(AppSys.instance().m_config.destrootpath, AppSys.instance().m_config.outDir, swfName), os.path.join(AppSys.instance().m_config.srcrootassetpath, swfName))
+            #FileOperate.copyFile(AppSys.instance().m_config.htmlPath(), os.path.join(AppSys.instance().m_config.srcrootpath, AppSys.instance().m_config.htmlname))
         else:
-            Logger.instance().info('File is Building, cannot copy file')
+            AppSys.instance().m_logSys.info('File is Building, cannot copy file')
 
     def get_curverFileCount(self):
         return self.curverFileCount

@@ -11,11 +11,10 @@ from PyQt5 import  QtWidgets, QtCore
 import FileDirDiff.UI.ui_mainwindow
 import FileDirDiff.Frame.LoggerWin
 import FileDirDiff.Frame.LeftFnWin
-from FileDirDiff.Core import Config
-from FileDirDiff.Core.Logger import Logger
 from FileDirDiff.Core.Utils import ParamInfo
 
 from FileDirDiff.Core.GlobalIns import GlobalIns
+from FileDirDiff.Core.AppSys import AppSys
 
 class MainWindow(QtWidgets.QMainWindow):
     
@@ -45,13 +44,12 @@ class MainWindow(QtWidgets.QMainWindow):
         GlobalIns.insGlobal()
         
         # 显示初始化单件
-        Config.Config.instance()
-        Config.Config.instance().readInit('config.txt')
+        # 这样写提示找不到 m_config ，第二种写法就行了，可能第一种写法 g_pInstance 不能正确判断类型
+        #AppSys.g_pInstance.m_config.readInit('config.txt')
+        AppSys.instance().m_config.readInit('config.txt')
         # 写配置文件
-        Config.Config.instance().saveCFG()
-        Config.Config.instance().testGlobal()
+        AppSys.instance().m_config.saveCFG()
 
-        Logger.instance()
         ParamInfo.instance()
         
         self.m_qttimer = QtCore.QTimer()
@@ -60,6 +58,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def onTimer(self):
         listdata = []
-        Logger.instance().getlogger(listdata)
+        AppSys.instance().m_logSys.getlogger(listdata)
         for dataitem in listdata:
             self.m_LoggerWin.ui.textEdit.appendPlainText(dataitem)

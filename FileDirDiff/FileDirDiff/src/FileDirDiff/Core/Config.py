@@ -6,23 +6,10 @@
 import os
 import datetime
 #import time
-from FileDirDiff.Core.GlobalData import GlobalData
 
 # base config info
 class Config(object):
-    
-    pInstance = None
-    
-    @staticmethod
-    def instance():
-        if Config.pInstance is None:
-            Config.pInstance = Config()
-        return Config.pInstance
-    
     def __init__(self): 
-        assert(Config.pInstance is None)
-        Config.pInstance = self
-        
         # 注意全部需要初始化，否则如果配置文件不用，并且没有判断是否有这个属性，就会出问题
         self.srcrootpath = ""       # 资源的根目录,这个是原始资源的 目录
         self.srcrootassetpath = ""  # 源代码 asset 目录名字
@@ -239,10 +226,5 @@ class Config(object):
     def subVersionByte(self):
         #self.subversion.encode("utf-8")
         return bytes(self.subversion, encoding = "utf8")
-    
-    def testGlobal(self):
-        # 使用全局变量
-        if GlobalData.g_pInstance.g_pAppSys.get_curverFileCount() > 0:
-            pass
         
 

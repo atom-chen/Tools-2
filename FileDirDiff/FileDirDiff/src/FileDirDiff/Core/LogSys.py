@@ -5,16 +5,7 @@
 
 from threading import Lock
 
-class Logger(object):
-    
-    pInstance = None
-    
-    @staticmethod
-    def instance():
-        if Logger.pInstance is None:
-            Logger.pInstance = Logger()
-        return Logger.pInstance
-    
+class LogSys(object):
     def __init__(self):
         self.m_effLock = Lock()
         self.m_effLog = []
