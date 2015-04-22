@@ -1,7 +1,7 @@
 #-*- encoding=utf-8 -*-
 
 '''
-@brief 所有全部变量实例化都在这里，防止循环导入
+@brief 所有全部变量实例化都在这里，防止循环导入，使用方式，例如 AppSys.instance().m_config
 '''
 
 from FileDirDiff.Core.AppSys import AppSys

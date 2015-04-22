@@ -7,7 +7,7 @@
 import hashlib
 import os
 from FileDirDiff import Paths
-from FileDirDiff.Core.AppSys import AppSys
+from FileDirDiff.Core import GlobalData
 
 mdcallback = None       # 回调计算结果
 m_subversion = bytes('0', encoding = "utf8")       # 子版本，所有的都会使用子版本用来升级，这个字节编码，不是字符串
@@ -31,19 +31,19 @@ def md5_for_file(filepath):
 
 #一个目录的 md5 码
 def md5_for_onedir(directoryName, filesInDirectory):
-    AppSys.instance().m_logSys.info(directoryName)
+    GlobalData.g_pAppSys.m_logSys.info(directoryName)
     for fname in filesInDirectory:
         fpath = os.path.join(directoryName, fname)
         if not os.path.isdir(fpath):
             #print(fname, "\t", _md5_for_file(fpath))
             #updateMd5(fname, _md5_for_file(fpath))
-            #AppSys.AppSys.instance().writemd(fname, md5_for_file(fpath))
+            #AppSys.GlobalData.g_pAppSys.writemd(fname, md5_for_file(fpath))
             mdcallback(directoryName, fname, md5_for_file(fpath))
 
 #所有目录的 md5 码
 def md5_for_dirs(startdir):
     for root, dirs, files in os.walk(startdir):
-        AppSys.instance().m_logSys.info(''.join(dirs))
+        GlobalData.g_pAppSys.m_logSys.info(''.join(dirs))
         md5_for_onedir(root, files)
 
 #测试md5回调函数    

@@ -6,6 +6,13 @@
 import os
 import glob
 
+from FileDirDiff.Core import Md5Checker
+from FileDirDiff.Core.Config import Config
+from FileDirDiff.Core.Utils import FileOperate
+from FileDirDiff.Core.LogSys import LogSys
+from FileDirDiff.Core.Md5Dir import Md5DirOperate
+from FileDirDiff.Core import GlobalData
+
 # global data
 class AppSys():
     g_pInstance = None
@@ -16,6 +23,9 @@ class AppSys():
     def instance():
         if AppSys.g_pInstance is None:
             AppSys.g_pInstance = AppSys()
+        # 这样写就会奖  g_pAppSys 添加到  AppSys  模块中了
+        #g_pAppSys = AppSys.g_pInstance;
+        GlobalData.g_pAppSys = AppSys.g_pInstance;
         return AppSys.g_pInstance
     
     def __init__(self):
@@ -30,6 +40,14 @@ class AppSys():
         self.m_logSys = None
         self.Md5Checker = None
         self.FileOperate = None
+        
+    def postConstruct(self):
+        self.m_config = Config()
+        self.m_logSys = LogSys()
+        self.m_md5DirOperate = Md5DirOperate()
+        self.Md5Checker = Md5Checker;         # 保存模块
+        self.FileOperate = FileOperate;       # 保存模块
+        
     
     def writemd(self, directoryName, filename, md):
         cmpdirectoryName = directoryName.replace('\\', '/')
@@ -55,7 +73,7 @@ class AppSys():
             return
         
         if self.curmd5FileHandle is None:
-            #with open(config.AppSys.instance().m_config.curFilePath(), 'w', encoding='utf-8') as self.curmd5FileHandle:
+            #with open(config.GlobalData.g_pAppSys.m_config.curFilePath(), 'w', encoding='utf-8') as self.curmd5FileHandle:
             #    pass
             self.curmd5FileHandle = open(self.m_config.curCKFilePath(), 'w', encoding='utf-8')
         
@@ -101,9 +119,9 @@ class AppSys():
 
     # 生成启动的 html
     def buildStartHtml(self):
-        startswfmd = self.Md5Checker.md5_for_file(AppSys.instance().m_config.appStartSwfPath())
-        htmlfileHandle = open(AppSys.instance().m_config.htmlPath(), 'w', encoding='utf-8')
-        tempfileHandle = open(AppSys.instance().m_config.htmltemplate, 'r', encoding='utf-8')
+        startswfmd = self.Md5Checker.md5_for_file(GlobalData.g_pAppSys.m_config.appStartSwfPath())
+        htmlfileHandle = open(GlobalData.g_pAppSys.m_config.htmlPath(), 'w', encoding='utf-8')
+        tempfileHandle = open(GlobalData.g_pAppSys.m_config.htmltemplate, 'r', encoding='utf-8')
         
         for curline in tempfileHandle:
             idx = curline.find('?v=')
@@ -118,14 +136,14 @@ class AppSys():
         htmlfileHandle.close()
         tempfileHandle.close()
         
-        AppSys.instance().m_logSys.info('生成文件: ' + AppSys.instance().m_config.htmlname)
+        GlobalData.g_pAppSys.m_logSys.info('生成文件: ' + GlobalData.g_pAppSys.m_config.htmlname)
     
     def buildModuleMd(self):
-        dirname = AppSys.instance().m_config.srcrootassetpath + "/module"
+        dirname = GlobalData.g_pAppSys.m_config.srcrootassetpath + "/module"
         os.chdir(dirname)
         allswffile = glob.glob('*.swf')
         allswffile.sort()
-        uifilemd5lst = self.m_md5DirOperate.calcModuleFileDirMd5(allswffile, AppSys.instance().m_config.modulePath())
+        uifilemd5lst = self.m_md5DirOperate.calcModuleFileDirMd5(allswffile, GlobalData.g_pAppSys.m_config.modulePath())
         
         for filever in uifilemd5lst:
             if self.curmd5FileCount > 0:
@@ -139,11 +157,11 @@ class AppSys():
     
     # 生成 "asset/ui" 这个文件夹下的资源的 md5
     def buildUIMd(self):
-        dirname = AppSys.instance().m_config.srcrootassetpath + "/ui"
+        dirname = GlobalData.g_pAppSys.m_config.srcrootassetpath + "/ui"
         os.chdir(dirname)
         allswffile = glob.glob('*.swf')
         allswffile.sort()
-        uifilemd5lst = self.m_md5DirOperate.calcUIFileDirMd5(allswffile, AppSys.instance().m_config.uiPath())
+        uifilemd5lst = self.m_md5DirOperate.calcUIFileDirMd5(allswffile, GlobalData.g_pAppSys.m_config.uiPath())
         
         for filever in uifilemd5lst:
             if self.curmd5FileCount > 0:
@@ -157,18 +175,18 @@ class AppSys():
         
     def copyFile(self):
         # 拷贝文件
-        if AppSys.instance().m_bOverVer:
-            filename = AppSys.instance().m_config.preckappverfilename
+        if GlobalData.g_pAppSys.m_bOverVer:
+            filename = GlobalData.g_pAppSys.m_config.preckappverfilename
             swfName = '%s.swf' % (filename)
-            self.FileOperate.copyFile(os.path.join(AppSys.instance().m_config.destrootpath, AppSys.instance().m_config.outDir, swfName), os.path.join(AppSys.instance().m_config.srcrootassetpath, swfName))
+            self.FileOperate.copyFile(os.path.join(GlobalData.g_pAppSys.m_config.destrootpath, GlobalData.g_pAppSys.m_config.outDir, swfName), os.path.join(GlobalData.g_pAppSys.m_config.srcrootassetpath, swfName))
         
-            filename = AppSys.instance().m_config.preckallverfilename
+            filename = GlobalData.g_pAppSys.m_config.preckallverfilename
             swfName = '%s.swf' % (filename)
         
-            self.FileOperate.copyFile(os.path.join(AppSys.instance().m_config.destrootpath, AppSys.instance().m_config.outDir, swfName), os.path.join(AppSys.instance().m_config.srcrootassetpath, swfName))
-            #FileOperate.copyFile(AppSys.instance().m_config.htmlPath(), os.path.join(AppSys.instance().m_config.srcrootpath, AppSys.instance().m_config.htmlname))
+            self.FileOperate.copyFile(os.path.join(GlobalData.g_pAppSys.m_config.destrootpath, GlobalData.g_pAppSys.m_config.outDir, swfName), os.path.join(GlobalData.g_pAppSys.m_config.srcrootassetpath, swfName))
+            #FileOperate.copyFile(GlobalData.g_pAppSys.m_config.htmlPath(), os.path.join(GlobalData.g_pAppSys.m_config.srcrootpath, GlobalData.g_pAppSys.m_config.htmlname))
         else:
-            AppSys.instance().m_logSys.info('File is Building, cannot copy file')
+            GlobalData.g_pAppSys.m_logSys.info('File is Building, cannot copy file')
 
     def get_curverFileCount(self):
         return self.curverFileCount

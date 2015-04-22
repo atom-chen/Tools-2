@@ -12,8 +12,7 @@ import FileDirDiff.UI.ui_mainwindow
 import FileDirDiff.Frame.LoggerWin
 import FileDirDiff.Frame.LeftFnWin
 from FileDirDiff.Core.Utils import ParamInfo
-
-from FileDirDiff.Core.GlobalIns import GlobalIns
+from FileDirDiff.Core import GlobalData
 from FileDirDiff.Core.AppSys import AppSys
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -41,14 +40,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.m_LeftFnWin)
         
         #实例化全局变量
-        GlobalIns.insGlobal()
-        
+        AppSys.instance();          # 初始化全局变量
+        GlobalData.g_pAppSys.postConstruct()
         # 显示初始化单件
         # 这样写提示找不到 m_config ，第二种写法就行了，可能第一种写法 g_pInstance 不能正确判断类型
         #AppSys.g_pInstance.m_config.readInit('config.txt')
-        AppSys.instance().m_config.readInit('config.txt')
+        GlobalData.g_pAppSys.m_config.readInit('config.txt')
         # 写配置文件
-        AppSys.instance().m_config.saveCFG()
+        GlobalData.g_pAppSys.m_config.saveCFG()
 
         ParamInfo.instance()
         
@@ -58,6 +57,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def onTimer(self):
         listdata = []
-        AppSys.instance().m_logSys.getlogger(listdata)
+        GlobalData.g_pAppSys.m_logSys.getlogger(listdata)
         for dataitem in listdata:
             self.m_LoggerWin.ui.textEdit.appendPlainText(dataitem)
