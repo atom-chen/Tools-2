@@ -1,7 +1,7 @@
 #-*- encoding=utf-8 -*-
 
 '''
-@brief 所有全部变量实例化都在这里，防止循环导入
+@brief 所有全部变量实例化都在这里，防止循环导入，最后决定用这种方法，不会有什么错误提示
 '''
 
 from FileDirDiff.Core.AppSys import AppSys
