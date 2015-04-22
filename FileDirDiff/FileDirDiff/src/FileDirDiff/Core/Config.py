@@ -6,6 +6,7 @@
 import os
 import datetime
 #import time
+from FileDirDiff.Core.GlobalData import GlobalData
 
 # base config info
 class Config(object):
@@ -241,6 +242,7 @@ class Config(object):
     
     def testGlobal(self):
         # 使用全局变量
-        self.g_pAppSys.buildAppMd()
+        if GlobalData.g_pInstance.g_pAppSys.get_curverFileCount() > 0:
+            pass
         
 

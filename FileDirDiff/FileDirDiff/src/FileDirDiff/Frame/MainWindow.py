@@ -12,11 +12,10 @@ import FileDirDiff.UI.ui_mainwindow
 import FileDirDiff.Frame.LoggerWin
 import FileDirDiff.Frame.LeftFnWin
 from FileDirDiff.Core import Config
-from FileDirDiff.Core import AppSys
 from FileDirDiff.Core.Logger import Logger
 from FileDirDiff.Core.Utils import ParamInfo
 
-from FileDirDiff.Core.IAppSys import IAppSys
+from FileDirDiff.Core.GlobalIns import GlobalIns
 
 class MainWindow(QtWidgets.QMainWindow):
     
@@ -42,19 +41,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.m_LeftFnWin = FileDirDiff.Frame.LeftFnWin.LeftFnWin()
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.m_LeftFnWin)
         
+        #实例化全局变量
+        GlobalIns.insGlobal()
+        
         # 显示初始化单件
         Config.Config.instance()
         Config.Config.instance().readInit('config.txt')
         # 写配置文件
-        #config.Config.instance().swiftVersion()
         Config.Config.instance().saveCFG()
-        
-        # 实例化,共享数据
-        #AppSys.AppSys.instance()
-        IAppSys.pInstance = AppSys.AppSys()
-        #FileDirDiff.Core.AppSys.instance().savaDirMd()
-        Config.Config.instance().g_pAppSys = IAppSys.pInstance;
-        Config.Config.instance().testGlobal();
+        Config.Config.instance().testGlobal()
 
         Logger.instance()
         ParamInfo.instance()

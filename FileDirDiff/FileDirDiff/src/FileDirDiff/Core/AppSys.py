@@ -11,15 +11,18 @@ from FileDirDiff.Core.Config import Config
 from FileDirDiff.Core.Utils import FileOperate
 from FileDirDiff.Core.Logger import Logger
 from FileDirDiff.Core.Md5Dir import Md5DirOperate
-from FileDirDiff.Core.IAppSys import IAppSys
 
 # global data
-class AppSys(IAppSys):
+class AppSys():
+    pInstance = None
+    
+    @staticmethod
+    def instance():
+        if AppSys.pInstance is None:
+            AppSys.pInstance = AppSys()
+        return AppSys.pInstance
+    
     def __init__(self):
-        # 全局变量初始化
-        global g_pAppSys
-        g_pAppSys = self;
-        
         self.curmd5FileHandle = None    # 当前版本的 md5 版本文件
         self.curmd5FileCount = 0           # 当前 md5 文件数目
         self.curverFileCount = 0           # 当前 md5 文件数目

@@ -9,7 +9,7 @@ from xml.dom.minidom import Document
 
 from FileDirDiff.Core.Config import Config
 #from FileDirDiff.Core import AppSys
-from FileDirDiff.Core.IAppSys import IAppSys
+from FileDirDiff.Core.GlobalData import GlobalData
 from FileDirDiff.Core.Logger import Logger
 
 from FileDirDiff.Core.Utils import ParamInfo
@@ -122,11 +122,11 @@ class BuildFileVersion(object):
         fHandleVerDest = open(self.m_destVerFileName, 'w', encoding='utf8')
         for veritem in self.m_destVerlist:
             #if AppSys.AppSys.instance().curverFileCount > 0:
-            if IAppSys.instance().get_curverFileCount > 0:
+            if GlobalData.g_pInstance.g_pAppSys.get_curverFileCount > 0:
                 fHandleVerDest.write('\n')
             
             #AppSys.AppSys.instance().curverFileCount += 1
-            IAppSys.instance().add_curverFileCount(1)
+            GlobalData.g_pInstance.g_pAppSys.add_curverFileCount(1)
             fHandleVerDest.write(veritem.m_filename + '=' + str(veritem.m_version))
             
         Logger.instance().info('end build version file')
