@@ -37,7 +37,7 @@ def md5_for_onedir(directoryName, filesInDirectory):
         if not os.path.isdir(fpath):
             #print(fname, "\t", _md5_for_file(fpath))
             #updateMd5(fname, _md5_for_file(fpath))
-            #appdata.AppData.instance().writemd(fname, md5_for_file(fpath))
+            #AppSys.AppSys.instance().writemd(fname, md5_for_file(fpath))
             mdcallback(directoryName, fname, md5_for_file(fpath))
 
 #所有目录的 md5 码

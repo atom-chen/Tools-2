@@ -6,11 +6,11 @@
 from threading import Thread
 import os
 
-from FileDirDiff.Core.AppData import AppData
+from FileDirDiff.Core.AppSys import AppSys
 
 from FileDirDiff.Core.FileVersionInfo import BuildFileVersion
 from FileDirDiff.Core.Config import Config
-from FileDirDiff.Core import AppData
+from FileDirDiff.Core import AppSys
 from FileDirDiff.Core.Logger import Logger
 
 class VerThread(Thread):
@@ -25,7 +25,7 @@ class VerThread(Thread):
 
     @staticmethod
     def outVerSwf():
-        AppData.instance().m_bOverVer = False
+        AppSys.instance().m_bOverVer = False
         
         # 只有在点击生成版本的时候，才更改当前版本的版本日期，设置当前版本
         Config.instance().swiftVersion()
@@ -39,20 +39,20 @@ class VerThread(Thread):
             os.makedirs(os.path.join(Config.instance().destrootpath,  Config.instance().outDir))
         
         # 生成 app 文件，这个需要放在生成  versionall.swf 之后，因为需要 versionall.swf 的 md5 ，决定是否重新加载 versionall.swf 
-        #AppData.instance().buildAppMd()
+        #AppSys.instance().buildAppMd()
         
         # 生成所有的 md5 
-        AppData.instance().curmd5FileCount = 0
-        AppData.instance().buildAllMd()
+        AppSys.instance().curmd5FileCount = 0
+        AppSys.instance().buildAllMd()
         
         # 如果计算文件夹 md5 的时候，才需要计算路径
         if Config.instance().getfoldermd5cmp():
-            AppData.instance().buildModuleMd()
-            AppData.instance().buildUIMd()
-        AppData.instance().closemdfile()
+            AppSys.instance().buildModuleMd()
+            AppSys.instance().buildUIMd()
+        AppSys.instance().closemdfile()
 
         # 生成版本文件
-        AppData.instance().curverFileCount = 0
+        AppSys.instance().curverFileCount = 0
         buildver = BuildFileVersion()
         #buildver.buildVersionFile()
         
@@ -60,7 +60,7 @@ class VerThread(Thread):
         buildver.outVerSwf()
         
         # 生成 app 文件，这个需要放在生成  versionall.swf 之后，因为需要 versionall.swf 的 md5 ，决定是否重新加载 versionall.swf 
-        AppData.instance().buildAppMd()
+        AppSys.instance().buildAppMd()
         
         # 生成 moduleapp.swf 的 MD5 ，包括 versionall.swf 和 startpicpath 的 md5 
         buildver.outVerAppSwf()
@@ -70,10 +70,10 @@ class VerThread(Thread):
             
         # 如果计算文件夹 md5 的时候，才需要计算路径
         if Config.instance().getfoldermd5cmp():
-            AppData.AppData.instance().savaDirMd()
+            AppSys.AppSys.instance().savaDirMd()
         
         # 生成启动的 html 的配置，尤其是 start 的配置
-        #AppData.instance().buildStartHtml()
+        AppSysa.instance().buildStartHtml()
         
         Logger.instance().info("可以拷贝生成文件到目标文件夹了")
-        AppData.instance().m_bOverVer = True
+        AppSys.instance().m_bOverVer = True

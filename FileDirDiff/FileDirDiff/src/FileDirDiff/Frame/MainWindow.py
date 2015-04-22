@@ -8,15 +8,15 @@ Created on 2013-4-23
 
 from PyQt5 import  QtWidgets, QtCore
 
-import FileDirDiff.ui.ui_mainwindow
+import FileDirDiff.UI.ui_mainwindow
 import FileDirDiff.Frame.LoggerWin
 import FileDirDiff.Frame.LeftFnWin
 from FileDirDiff.Core import Config
-from FileDirDiff.Core import AppData
+from FileDirDiff.Core import AppSys
 from FileDirDiff.Core.Logger import Logger
 from FileDirDiff.Core.Utils import ParamInfo
 
-from FileDirDiff.Core.IAppData import IAppData
+from FileDirDiff.Core.IAppSys import IAppSys
 
 class MainWindow(QtWidgets.QMainWindow):
     
@@ -31,7 +31,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.app = app
         
-        self.ui = FileDirDiff.ui.ui_mainwindow.Ui_MainWindow()
+        self.ui = FileDirDiff.UI.ui_mainwindow.Ui_MainWindow()
         self.ui.setupUi(self)
         
         # 可停靠的窗口
@@ -50,9 +50,11 @@ class MainWindow(QtWidgets.QMainWindow):
         Config.Config.instance().saveCFG()
         
         # 实例化,共享数据
-        #appdata.AppData.instance()
-        IAppData.pInstance = AppData.AppData()
-        AppData.AppData.instance().savaDirMd()
+        #AppSys.AppSys.instance()
+        IAppSys.pInstance = AppSys.AppSys()
+        #FileDirDiff.Core.AppSys.instance().savaDirMd()
+        Config.Config.instance().g_pAppSys = IAppSys.pInstance;
+        Config.Config.instance().testGlobal();
 
         Logger.instance()
         ParamInfo.instance()

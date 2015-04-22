@@ -8,8 +8,8 @@ import os
 from xml.dom.minidom import Document
 
 from FileDirDiff.Core.Config import Config
-#from FileDirDiff.Core import AppData
-from FileDirDiff.Core.IAppData import IAppData
+#from FileDirDiff.Core import AppSys
+from FileDirDiff.Core.IAppSys import IAppSys
 from FileDirDiff.Core.Logger import Logger
 
 from FileDirDiff.Core.Utils import ParamInfo
@@ -121,12 +121,12 @@ class BuildFileVersion(object):
         # 输出字符串
         fHandleVerDest = open(self.m_destVerFileName, 'w', encoding='utf8')
         for veritem in self.m_destVerlist:
-            #if appdata.AppData.instance().curverFileCount > 0:
-            if IAppData.instance().get_curverFileCount > 0:
+            #if AppSys.AppSys.instance().curverFileCount > 0:
+            if IAppSys.instance().get_curverFileCount > 0:
                 fHandleVerDest.write('\n')
             
-            #appdata.AppData.instance().curverFileCount += 1
-            IAppData.instance().add_curverFileCount(1)
+            #AppSys.AppSys.instance().curverFileCount += 1
+            IAppSys.instance().add_curverFileCount(1)
             fHandleVerDest.write(veritem.m_filename + '=' + str(veritem.m_version))
             
         Logger.instance().info('end build version file')

@@ -18,7 +18,7 @@ class Config(object):
             Config.pInstance = Config()
         return Config.pInstance
     
-    def __init__(self):
+    def __init__(self): 
         assert(Config.pInstance is None)
         Config.pInstance = self
         
@@ -238,4 +238,9 @@ class Config(object):
     def subVersionByte(self):
         #self.subversion.encode("utf-8")
         return bytes(self.subversion, encoding = "utf8")
+    
+    def testGlobal(self):
+        # 使用全局变量
+        self.g_pAppSys.buildAppMd()
+        
 

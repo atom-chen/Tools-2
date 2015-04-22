@@ -11,11 +11,15 @@ from FileDirDiff.Core.Config import Config
 from FileDirDiff.Core.Utils import FileOperate
 from FileDirDiff.Core.Logger import Logger
 from FileDirDiff.Core.Md5Dir import Md5DirOperate
-from FileDirDiff.Core.IAppData import IAppData
+from FileDirDiff.Core.IAppSys import IAppSys
 
 # global data
-class AppData(IAppData):
+class AppSys(IAppSys):
     def __init__(self):
+        # 全局变量初始化
+        global g_pAppSys
+        g_pAppSys = self;
+        
         self.curmd5FileHandle = None    # 当前版本的 md5 版本文件
         self.curmd5FileCount = 0           # 当前 md5 文件数目
         self.curverFileCount = 0           # 当前 md5 文件数目
@@ -150,7 +154,7 @@ class AppData(IAppData):
         
     def copyFile(self):
         # 拷贝文件
-        if AppData.instance().m_bOverVer:
+        if AppSys.instance().m_bOverVer:
             filename = Config.instance().preckappverfilename
             swfName = '%s.swf' % (filename)
             FileOperate.copyFile(os.path.join(Config.instance().destrootpath, Config.instance().outDir, swfName), os.path.join(Config.instance().srcrootassetpath, swfName))

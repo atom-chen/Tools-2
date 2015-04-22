@@ -9,9 +9,9 @@ Created on 2013-4-23
 from PyQt5.QtWidgets import QApplication
 import sys
 
-class Application(QApplication):
+class AppFrame(QApplication):
     def __init__(self):
-        super(Application, self).__init__(sys.argv)
+        super(AppFrame, self).__init__(sys.argv)
         
         from FileDirDiff.Frame import MainWindow
 
