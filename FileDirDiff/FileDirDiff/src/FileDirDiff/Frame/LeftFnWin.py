@@ -8,7 +8,7 @@ Created on 2013-5-15
 from PyQt5 import QtWidgets
 
 import FileDirDiff.UI.ui_leftfnwin
-from FileDirDiff.Core import GlobalData
+from FileDirDiff.Core.AppSys import AppSys
 from FileDirDiff.Core.VerThread import VerThread
 
 class LeftFnWin(QtWidgets.QDockWidget):    
@@ -25,25 +25,25 @@ class LeftFnWin(QtWidgets.QDockWidget):
 
     # 生成当前版版本的 md5 文件
     def onBtnClkCheck(self):
-        #GlobalData.g_pAppSys.curmd5FileCount = 0
-        #md5checker.md5_for_dirs(GlobalData.g_pAppSys.m_config.srcrootpath)
-        #GlobalData.g_pAppSys.closemdfile()
-        GlobalData.g_pAppSys.m_logSys.info('test button')
+        #AppSys.instance().curmd5FileCount = 0
+        #md5checker.md5_for_dirs(AppSys.instance().m_config.srcrootpath)
+        #AppSys.instance().closemdfile()
+        AppSys.instance().m_logSys.info('test button')
     
     # 生成版本文件，用于更新资源使用
     # 拷贝文件
     def onBtnClkVersion(self):
-        #GlobalData.g_pAppSys.curverFileCount = 0
+        #AppSys.instance().curverFileCount = 0
         #buildver = fileversioninfo.BuildFileVersion()
         #buildver.buildVersionFile()
         
-        GlobalData.g_pAppSys.copyFile();
+        AppSys.instance().copyFile();
         
     # 生成版本的 swf 文件
     def onBtnClkVerSwf(self):
         #直接启动线程
-        if GlobalData.g_pAppSys.m_bOverVer:
-            GlobalData.g_pAppSys.m_verThread = VerThread("VerThread", VerThread.outVerSwf);
-            GlobalData.g_pAppSys.m_verThread.start()
+        if AppSys.instance().m_bOverVer:
+            AppSys.instance().m_verThread = VerThread("VerThread", VerThread.outVerSwf);
+            AppSys.instance().m_verThread.start()
         else:
-            GlobalData.g_pAppSys.m_logSys.info('Verthread is runing')
+            AppSys.instance().m_logSys.info('Verthread is runing')

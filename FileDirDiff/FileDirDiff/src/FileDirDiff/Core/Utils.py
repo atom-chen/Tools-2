@@ -9,18 +9,18 @@ import traceback
 import os
 import shutil
 
-from FileDirDiff.Core import GlobalData
+from FileDirDiff.Core.AppSys import AppSys
 
 class CmdLine:
     @staticmethod
     def execSwift():
-        cmd = 'java -jar %s xml2lib %s.xml %s.swc' % (GlobalData.g_pAppSys.m_config.swiftjar, ParamInfo.instance().m_swiftFullXmlFile, ParamInfo.instance().m_swiftFullSwcFile)
+        cmd = 'java -jar %s xml2lib %s.xml %s.swc' % (AppSys.instance().m_config.swiftjar, ParamInfo.instance().m_swiftFullXmlFile, ParamInfo.instance().m_swiftFullSwcFile)
         handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
         handle.wait()
     
     @staticmethod
     def exec7z():
-        cmd = '"%s" e -y %s.swc -o%s *.swf' % (GlobalData.g_pAppSys.m_config.z7z, ParamInfo.instance().m_swiftFullSwcFile, GlobalData.g_pAppSys.m_config.destrootpath + '/' + GlobalData.g_pAppSys.m_config.tmpDir)
+        cmd = '"%s" e -y %s.swc -o%s *.swf' % (AppSys.instance().m_config.z7z, ParamInfo.instance().m_swiftFullSwcFile, AppSys.instance().m_config.destrootpath + '/' + AppSys.instance().m_config.tmpDir)
         handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
         handle.wait()
 
@@ -47,15 +47,15 @@ class FileOperate(object):
         if os.path.isfile(srcfilename):
             try:
                 shutil.copyfile(srcfilename, destfilename)
-                GlobalData.g_pAppSys.m_logSys.info("copy file success: " + srcfilename)
+                AppSys.instance().m_logSys.info("copy file success: " + srcfilename)
             except:
                 # 错误输出
-                GlobalData.g_pAppSys.m_logSys.info("copy file error: " + srcfilename)
+                AppSys.instance().m_logSys.info("copy file error: " + srcfilename)
                 typeerr, value, tb = sys.exc_info()
                 errstr = traceback.format_exception(typeerr, value, tb)
-                GlobalData.g_pAppSys.m_logSys.info(errstr)
+                AppSys.instance().m_logSys.info(errstr)
 
         else:
-            GlobalData.g_pAppSys.m_logSys.info("cannot find file: " + srcfilename)
+            AppSys.instance().m_logSys.info("cannot find file: " + srcfilename)
 
 

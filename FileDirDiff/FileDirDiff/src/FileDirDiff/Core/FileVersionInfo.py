@@ -7,7 +7,7 @@
 import os
 from xml.dom.minidom import Document
 
-from FileDirDiff.Core import GlobalData
+from FileDirDiff.Core.AppSys import AppSys
 from FileDirDiff.Core.Utils import ParamInfo
 from FileDirDiff.Core.Utils import CmdLine
 
@@ -32,11 +32,11 @@ class FileMdInfo(object):
 '''
 class BuildFileVersion(object):
     def __init__(self):
-        self.m_srcVerFileName = GlobalData.g_pAppSys.m_config.preVerFilePath()  # 原始version版本信息文件,这个本来打算根据md来计算一个从0开始不断增大的一个整数
-        self.m_destVerFileName = GlobalData.g_pAppSys.m_config.curVerFilePath()  # 目标version版本信息文件
+        self.m_srcVerFileName = AppSys.instance().m_config.preVerFilePath()  # 原始version版本信息文件,这个本来打算根据md来计算一个从0开始不断增大的一个整数
+        self.m_destVerFileName = AppSys.instance().m_config.curVerFilePath()  # 目标version版本信息文件
         
-        self.m_srcMdFileName = GlobalData.g_pAppSys.m_config.preCKFilePath()  # 原始md版本信息文件
-        self.m_destMdFileName = GlobalData.g_pAppSys.m_config.curCKFilePath()  # 目标md版本信息文件
+        self.m_srcMdFileName = AppSys.instance().m_config.preCKFilePath()  # 原始md版本信息文件
+        self.m_destMdFileName = AppSys.instance().m_config.curCKFilePath()  # 目标md版本信息文件
         
         self.m_srcVerlist = []
         self.m_srcVermap = {}
@@ -48,7 +48,7 @@ class BuildFileVersion(object):
 
     # 生成版本文件
     def buildVersionFile(self):
-        GlobalData.g_pAppSys.m_logSys.info('start build version file')
+        AppSys.instance().m_logSys.info('start build version file')
         
         bVerSrcExist = False
         if os.path.exists(self.m_srcVerFileName):
@@ -117,21 +117,21 @@ class BuildFileVersion(object):
         # 输出字符串
         fHandleVerDest = open(self.m_destVerFileName, 'w', encoding='utf8')
         for veritem in self.m_destVerlist:
-            #if AppSys.GlobalData.g_pAppSys.curverFileCount > 0:
-            if GlobalData.g_pAppSys.get_curverFileCount > 0:
+            #if AppSys.AppSys.instance().curverFileCount > 0:
+            if AppSys.instance().get_curverFileCount > 0:
                 fHandleVerDest.write('\n')
             
-            #AppSys.GlobalData.g_pAppSys.curverFileCount += 1
-            GlobalData.g_pAppSys.add_curverFileCount(1)
+            #AppSys.AppSys.instance().curverFileCount += 1
+            AppSys.instance().add_curverFileCount(1)
             fHandleVerDest.write(veritem.m_filename + '=' + str(veritem.m_version))
             
-        GlobalData.g_pAppSys.m_logSys.info('end build version file')
+        AppSys.instance().m_logSys.info('end build version file')
 
         # 生成版本文件
     def readPreVersionFile(self):
-        GlobalData.g_pAppSys.m_logSys.info('start read preversion')
+        AppSys.instance().m_logSys.info('start read preversion')
         
-        preMdFileName = GlobalData.g_pAppSys.m_config.preCKFilePath()
+        preMdFileName = AppSys.instance().m_config.preCKFilePath()
         bMdSrcExist = False
         if os.path.exists(preMdFileName):
             if os.path.isfile(preMdFileName):
@@ -153,7 +153,7 @@ class BuildFileVersion(object):
                         self.m_srcMdlist.append(mdinfo)
                         self.m_srcMdMap[mdinfo.m_filename] = mdinfo
             
-        GlobalData.g_pAppSys.m_logSys.info('end read preversion')
+        AppSys.instance().m_logSys.info('end read preversion')
 
     def getFileVersion(self, filepath):
         if filepath in self.m_srcMdMap.keys():
@@ -163,16 +163,16 @@ class BuildFileVersion(object):
 
     # 输出整个版本    
     def outVerSwf(self):
-        filename = GlobalData.g_pAppSys.m_config.preckallverfilename
-        tmpdir = os.path.join(GlobalData.g_pAppSys.m_config.destrootpath, GlobalData.g_pAppSys.m_config.tmpDir)
+        filename = AppSys.instance().m_config.preckallverfilename
+        tmpdir = os.path.join(AppSys.instance().m_config.destrootpath, AppSys.instance().m_config.tmpDir)
         
         doc = Document()
         root = doc.createElement('lib')
         root.setAttribute('allowDomain', '*')
         
         byteArray = doc.createElement('bytearray')
-        byteArray.setAttribute('file', GlobalData.g_pAppSys.m_config.curCKFilePath())
-        byteArray.setAttribute('class', GlobalData.g_pAppSys.m_config.allverclass)
+        byteArray.setAttribute('file', AppSys.instance().m_config.curCKFilePath())
+        byteArray.setAttribute('class', AppSys.instance().m_config.allverclass)
         
         doc.appendChild(root)
         root.appendChild(byteArray)
@@ -190,22 +190,22 @@ class BuildFileVersion(object):
         CmdLine.execSwift()
         CmdLine.exec7z()
 
-        open('%s\\%s' % (GlobalData.g_pAppSys.m_config.destrootpath + '/' + GlobalData.g_pAppSys.m_config.outDir, swfName), 'wb').write(open('%s\\library.swf' % (GlobalData.g_pAppSys.m_config.destrootpath + '/' + GlobalData.g_pAppSys.m_config.tmpDir), 'rb').read())
-        os.remove('%s\\library.swf' % (GlobalData.g_pAppSys.m_config.destrootpath + '/' + GlobalData.g_pAppSys.m_config.tmpDir))
+        open('%s\\%s' % (AppSys.instance().m_config.destrootpath + '/' + AppSys.instance().m_config.outDir, swfName), 'wb').write(open('%s\\library.swf' % (AppSys.instance().m_config.destrootpath + '/' + AppSys.instance().m_config.tmpDir), 'rb').read())
+        os.remove('%s\\library.swf' % (AppSys.instance().m_config.destrootpath + '/' + AppSys.instance().m_config.tmpDir))
         os.remove('%s.swc' % xmlFullName)
-        GlobalData.g_pAppSys.m_logSys.info(GlobalData.g_pAppSys.m_config.preckallverfilename + '包 %s 完成' % swfName)
+        AppSys.instance().m_logSys.info(AppSys.instance().m_config.preckallverfilename + '包 %s 完成' % swfName)
     
     # 输出 app 模块的    
     def outVerAppSwf(self):
-        filename = GlobalData.g_pAppSys.m_config.preckappverfilename
-        tmpdir = os.path.join(GlobalData.g_pAppSys.m_config.destrootpath, GlobalData.g_pAppSys.m_config.tmpDir)
+        filename = AppSys.instance().m_config.preckappverfilename
+        tmpdir = os.path.join(AppSys.instance().m_config.destrootpath, AppSys.instance().m_config.tmpDir)
         
         doc = Document()
         root = doc.createElement('lib')
         root.setAttribute('allowDomain', '*')
         
         byteArray = doc.createElement('bytearray')
-        byteArray.setAttribute('file', GlobalData.g_pAppSys.m_config.appCKFilePath())
+        byteArray.setAttribute('file', AppSys.instance().m_config.appCKFilePath())
         byteArray.setAttribute('class', 'art.ver.app')
         
         doc.appendChild(root)
@@ -224,10 +224,10 @@ class BuildFileVersion(object):
         CmdLine.execSwift()
         CmdLine.exec7z()
 
-        open('%s\\%s' % (GlobalData.g_pAppSys.m_config.destrootpath + '/' + GlobalData.g_pAppSys.m_config.outDir, swfName), 'wb').write(open('%s\\library.swf' % (GlobalData.g_pAppSys.m_config.destrootpath + '/' + GlobalData.g_pAppSys.m_config.tmpDir), 'rb').read())
-        os.remove('%s\\library.swf' % (GlobalData.g_pAppSys.m_config.destrootpath + '/' + GlobalData.g_pAppSys.m_config.tmpDir))
+        open('%s\\%s' % (AppSys.instance().m_config.destrootpath + '/' + AppSys.instance().m_config.outDir, swfName), 'wb').write(open('%s\\library.swf' % (AppSys.instance().m_config.destrootpath + '/' + AppSys.instance().m_config.tmpDir), 'rb').read())
+        os.remove('%s\\library.swf' % (AppSys.instance().m_config.destrootpath + '/' + AppSys.instance().m_config.tmpDir))
         os.remove('%s.swc' % xmlFullName)
-        GlobalData.g_pAppSys.m_logSys.info(GlobalData.g_pAppSys.m_config.preckappverfilename + '包 %s 完成' % swfName)
+        AppSys.instance().m_logSys.info(AppSys.instance().m_config.preckappverfilename + '包 %s 完成' % swfName)
             
 if __name__ == '__main__':
     buildver = BuildFileVersion()
