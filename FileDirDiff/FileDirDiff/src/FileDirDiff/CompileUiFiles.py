@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-'''
-Created on 2013-4-23
 
-@author: Administrator 
+''' 
 '''
 
 import os
-from pysideuic import compileUi
+from PyQt5.uic import compileUi
 
 def compileUIFiles(uiDir):
     for name in os.listdir(uiDir):
@@ -20,9 +18,9 @@ def compileUIFiles(uiDir):
                     compileUi(uiFilePath, f)
 
 def main():
-    from autoupdate import paths
+    from FileDirDiff import Paths
 
-    compileUIFiles(paths.UI_DIR)
+    compileUIFiles(Paths.UI_DIR)
 
 if __name__ == "__main__":
     main()

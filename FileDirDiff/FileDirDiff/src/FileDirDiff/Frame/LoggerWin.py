@@ -5,12 +5,13 @@ Created on 2013-4-24
 @author: Administrator
 '''
 
-from PySide import QtGui
-import autoupdate.ui.ui_loggerwin
+from PyQt5 import QtWidgets
 
-class LoggerWin(QtGui.QDockWidget):    
+import FileDirDiff.ui.ui_loggerwin
+
+class LoggerWin(QtWidgets.QDockWidget):    
     def __init__(self):
         super(LoggerWin, self).__init__()
 
-        self.ui = autoupdate.ui.ui_loggerwin.Ui_LoggerWin()
+        self.ui = FileDirDiff.ui.ui_loggerwin.Ui_LoggerWin()
         self.ui.setupUi(self)

@@ -1,7 +1,6 @@
-'''
-Created on 2014年1月11日
+#-*- encoding=utf-8 -*-
 
-@author: hhh
+'''
 @brief AppData 的接口
 '''
 

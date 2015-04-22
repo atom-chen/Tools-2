@@ -5,29 +5,27 @@ Created on 2013-5-15
 @author: Administrator
 '''
 
-from PySide import QtCore, QtGui
+from PyQt5 import QtWidgets
 
+import FileDirDiff.ui.ui_leftfnwin
+from FileDirDiff.Core.AppData import AppData
+#from FileDirDiff.core.fileversioninfo import BuildFileVersion
+from FileDirDiff.Core.VerThread import VerThread
+from FileDirDiff.Core.Logger import Logger
+from FileDirDiff.Core import Config
+from FileDirDiff.Core import AppData
 
-import autoupdate.ui.ui_leftfnwin
-from autoupdate.core.appdata import AppData
-#from autoupdate.core.fileversioninfo import BuildFileVersion
-from autoupdate.core.verthread import VerThread
-from autoupdate.core.logger import Logger
-from autoupdate.core import config
-from autoupdate.core import appdata
-
-class LeftFnWin(QtGui.QDockWidget):    
+class LeftFnWin(QtWidgets.QDockWidget):    
     def __init__(self):
         super(LeftFnWin, self).__init__()
 
-        self.ui = autoupdate.ui.ui_leftfnwin.Ui_LeftFnWin()
+        self.ui = FileDirDiff.ui.ui_leftfnwin.Ui_LeftFnWin()
         self.ui.setupUi(self)
         
         # 注册事件处理函数
-        QtCore.QObject.connect(self.ui.m_btnCheck, QtCore.SIGNAL("clicked()"), self.onBtnClkCheck)
-        QtCore.QObject.connect(self.ui.m_btnVersion, QtCore.SIGNAL("clicked()"), self.onBtnClkVersion)
-        
-        QtCore.QObject.connect(self.ui.m_btnVerSwf, QtCore.SIGNAL("clicked()"), self.onBtnClkVerSwf)
+        self.ui.m_btnCheck.clicked.connect(self.onBtnClkCheck)
+        self.ui.m_btnVersion.clicked.connect(self.onBtnClkVersion)
+        self.ui.m_btnVerSwf.clicked.connect(self.onBtnClkVerSwf)
 
     # 生成当前版版本的 md5 文件
     def onBtnClkCheck(self):

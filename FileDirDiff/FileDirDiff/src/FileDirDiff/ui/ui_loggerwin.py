@@ -1,24 +1,24 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:\work\client-05\trunk\tools\autoupdate\autoupdate\src\autoupdate\ui\LoggerWin.ui'
+# Form implementation generated from reading ui file 'E:\Self\Self\Tools\Tools\FileDirDiff\FileDirDiff\src\FileDirDiff\ui\LoggerWin.ui'
 #
-# Created: Fri May 24 15:58:47 2013
-#      by: pyside-uic 0.2.14 running on PySide 1.1.2
+# Created: Wed Apr 22 10:34:36 2015
+#      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
 
-from PySide import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_LoggerWin(object):
     def setupUi(self, LoggerWin):
         LoggerWin.setObjectName("LoggerWin")
         LoggerWin.resize(471, 300)
-        self.verticalLayoutWidget = QtGui.QWidget()
+        self.verticalLayoutWidget = QtWidgets.QWidget()
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 0, 451, 271))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtGui.QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.textEdit = QtGui.QPlainTextEdit(self.verticalLayoutWidget)
+        self.textEdit = QtWidgets.QPlainTextEdit(self.verticalLayoutWidget)
         self.textEdit.setObjectName("textEdit")
         self.verticalLayout.addWidget(self.textEdit)
         LoggerWin.setWidget(self.verticalLayoutWidget)
@@ -27,5 +27,6 @@ class Ui_LoggerWin(object):
         QtCore.QMetaObject.connectSlotsByName(LoggerWin)
 
     def retranslateUi(self, LoggerWin):
-        LoggerWin.setWindowTitle(QtGui.QApplication.translate("LoggerWin", "logger", None, QtGui.QApplication.UnicodeUTF8))
+        _translate = QtCore.QCoreApplication.translate
+        LoggerWin.setWindowTitle(_translate("LoggerWin", "logger"))
 

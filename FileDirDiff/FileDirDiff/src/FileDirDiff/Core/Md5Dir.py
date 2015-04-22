@@ -1,15 +1,15 @@
-'''
-Created on 2014年1月10日
+#-*- encoding=utf-8 -*-
 
-@author: hhh
+'''
 @brief: calc dir md5
 '''
 import os
-from autoupdate.core import md5checker
-from autoupdate.core.fileversioninfo import FileVersionInfo
-from autoupdate.core.fileversioninfo import BuildFileVersion
-from autoupdate.core.config import Config
-from autoupdate.core.econst import EConst
+
+from FileDirDiff.Core import Md5Checker
+from FileDirDiff.Core.FileVersionInfo import FileVersionInfo
+from FileDirDiff.Core.FileVersionInfo import BuildFileVersion
+from FileDirDiff.Core.Config import Config
+from FileDirDiff.Core.EConst import EConst
 
 class Md5DirOperate(object):
     def __init__(self):
@@ -50,7 +50,7 @@ class Md5DirOperate(object):
             key = os.path.join("ui", filenamenoext)
             key = key.replace('\\', '/')
             if self.isDirMd5Change(key): # 如果目录 md5 改变,就求取新的 md5
-                curfileinfo.m_version = md5checker.md5_for_file(subdir)
+                curfileinfo.m_version = Md5Checker.md5_for_file(subdir)
             else:           # 直接从上一次的 md5 获取
                 binidx = subdir.find('bin')
                 subdir = subdir[binidx + 4:]
@@ -78,14 +78,14 @@ class Md5DirOperate(object):
             # 如果是 module/ModuleApp.swf ,这个需要比较库的 md5 
             if "module/ModuleApp".lower() == key.lower():
                 if self.isDirMd5Change(key) or self.isDirMd5Change("core/src") or self.isDirMd5Change("module/modulecommon") or self.isDirMd5Change("extern/GTween_V2_01") or self.isDirMd5Change("extern/richtextfield"):
-                    curfileinfo.m_version = md5checker.md5_for_file(subdir)
+                    curfileinfo.m_version = Md5Checker.md5_for_file(subdir)
                 else:           # 直接从上一次的 md5 获取
                     binidx = subdir.find('bin')
                     subdir = subdir[binidx + 4:]
                     curfileinfo.m_version = self.m_buildver.getFileVersion(subdir)
             else:
                 if self.isDirMd5Change(key): # 如果目录 md5 改变,就求取新的 md5
-                    curfileinfo.m_version = md5checker.md5_for_file(subdir)
+                    curfileinfo.m_version = Md5Checker.md5_for_file(subdir)
                 else:           # 直接从上一次的 md5 获取
                     binidx = subdir.find('bin')
                     subdir = subdir[binidx + 4:]
@@ -207,7 +207,7 @@ class Md5Dir(object):
                 if fname != ".actionScriptProperties" and fname != ".project":
                     fpath = os.path.join(root, fname)
                     if not os.path.isdir(fpath):
-                        filemd5 = md5checker.md5_for_file(fpath)
+                        filemd5 = Md5Checker.md5_for_file(fpath)
                         curfileinfo = FileInfo()
                         substridx = fpath.rfind(substr)
                         subroot = fpath[(substridx + 1 + len(substr)):]

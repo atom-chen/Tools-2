@@ -1,19 +1,17 @@
 #-*- encoding=utf-8 -*-
-'''
-Created on 2013-5-15
 
-@author: Administrator
+'''
 '''
 
 import os
 import glob
 
-from autoupdate.core import md5checker
-from autoupdate.core.config import Config
-from autoupdate.core.utils import FileOperate
-from autoupdate.core.logger import Logger
-from autoupdate.core.md5dir import Md5DirOperate
-from autoupdate.core.IAppData import IAppData
+from FileDirDiff.Core import Md5Checker
+from FileDirDiff.Core.Config import Config
+from FileDirDiff.Core.Utils import FileOperate
+from FileDirDiff.Core.Logger import Logger
+from FileDirDiff.Core.Md5Dir import Md5DirOperate
+from FileDirDiff.Core.IAppData import IAppData
 
 # global data
 class AppData(IAppData):
@@ -71,24 +69,24 @@ class AppData(IAppData):
             self.curmd5FileHandle = None
             
     def buildAllMd(self):
-        md5checker.mdcallback = self.writemd
-        md5checker.m_subversion = Config.instance().subVersionByte()
-        md5checker.md5_for_dirs(Config.instance().srcrootassetpath)
+        Md5Checker.mdcallback = self.writemd
+        Md5Checker.m_subversion = Config.instance().subVersionByte()
+        Md5Checker.md5_for_dirs(Config.instance().srcrootassetpath)
         
         Logger.instance().info(Config.instance().srcrootassetpath + 'md5 end')
         
     def buildAppMd(self):
         # 计算 ModuleApp md5
         fileHandle = open(Config.instance().appCKFilePath(), 'w', encoding='utf-8')
-        md = md5checker.md5_for_file(Config.instance().appAppSwfPath())
+        md = Md5Checker.md5_for_file(Config.instance().appAppSwfPath())
         fileHandle.write('moduleapp=' + md + '\n')
         
         # 计算 startpicpath md5
-        md = md5checker.md5_for_file(Config.instance().startPicPath())
+        md = Md5Checker.md5_for_file(Config.instance().startPicPath())
         fileHandle.write('startpic=' + md + '\n')
         
         # 计算 versionall.swf 的 md5
-        md = md5checker.md5_for_file(Config.instance().allverFilePath())
+        md = Md5Checker.md5_for_file(Config.instance().allverFilePath())
         fileHandle.write('allverfile=' + md)
          
         fileHandle.close()
@@ -96,7 +94,7 @@ class AppData(IAppData):
 
     # 生成启动的 html
     def buildStartHtml(self):
-        startswfmd = md5checker.md5_for_file(Config.instance().appStartSwfPath())
+        startswfmd = Md5Checker.md5_for_file(Config.instance().appStartSwfPath())
         htmlfileHandle = open(Config.instance().htmlPath(), 'w', encoding='utf-8')
         tempfileHandle = open(Config.instance().htmltemplate, 'r', encoding='utf-8')
         

@@ -32,17 +32,17 @@ buildOptions = dict(
 )
 
 setup(
-    name = "AUTOUPDATE",
+    name = "FileDirDiff",
     version = "1.0.0",
-    description = "AUTOUPDATE TOOL",
+    description = "FileDirDiff",
     options = dict(build_exe = buildOptions),
     executables = [
         # tool
         Executable(
-            "autoupdate/main.py",
+            "FileDirDiff/Main.py",
             base = GUI_BASE_APP,
-            targetName = "tool" + EXECUTABLE_EXTENSION,
-            icon = "autoupdate/data/icons/application_icon.ico"
+            targetName = "FileDirDiff" + EXECUTABLE_EXTENSION,
+            icon = "FileDirDiff/Data/Icons/AppIcon.ico"
         )
     ]
 )

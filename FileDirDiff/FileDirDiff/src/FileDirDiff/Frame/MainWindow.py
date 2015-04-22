@@ -6,20 +6,19 @@ Created on 2013-4-23
 @brief mainwindow
 '''
 
-from PySide import QtCore
-from PySide import QtGui
+from PyQt5 import  QtWidgets, QtCore
 
-import autoupdate.ui.ui_mainwindow
-import autoupdate.frame.loggerwin
-import autoupdate.frame.leftfnwin
-from autoupdate.core import config
-from autoupdate.core import appdata
-from autoupdate.core.logger import Logger
-from autoupdate.core.utils import ParamInfo
+import FileDirDiff.ui.ui_mainwindow
+import FileDirDiff.Frame.LoggerWin
+import FileDirDiff.Frame.LeftFnWin
+from FileDirDiff.Core import Config
+from FileDirDiff.Core import AppData
+from FileDirDiff.Core.Logger import Logger
+from FileDirDiff.Core.Utils import ParamInfo
 
-from autoupdate.core.IAppData import IAppData
+from FileDirDiff.Core.IAppData import IAppData
 
-class MainWindow(QtGui.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow):
     
     instance = None
     
@@ -32,34 +31,34 @@ class MainWindow(QtGui.QMainWindow):
 
         self.app = app
         
-        self.ui = autoupdate.ui.ui_mainwindow.Ui_MainWindow()
+        self.ui = FileDirDiff.ui.ui_mainwindow.Ui_MainWindow()
         self.ui.setupUi(self)
         
         # 可停靠的窗口
-        self.m_LoggerWin = autoupdate.frame.loggerwin.LoggerWin()
+        self.m_LoggerWin = FileDirDiff.Frame.LoggerWin.LoggerWin()
         self.addDockWidget(QtCore.Qt.BottomDockWidgetArea, self.m_LoggerWin)
         
         # 左边可停靠窗口
-        self.m_LeftFnWin = autoupdate.frame.leftfnwin.LeftFnWin()
+        self.m_LeftFnWin = FileDirDiff.Frame.LeftFnWin.LeftFnWin()
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.m_LeftFnWin)
         
         # 显示初始化单件
-        config.Config.instance()
-        config.Config.instance().readInit('config.txt')
+        Config.Config.instance()
+        Config.Config.instance().readInit('config.txt')
         # 写配置文件
         #config.Config.instance().swiftVersion()
-        config.Config.instance().saveCFG()
+        Config.Config.instance().saveCFG()
         
         # 实例化,共享数据
         #appdata.AppData.instance()
-        IAppData.pInstance = appdata.AppData()
-        appdata.AppData.instance().savaDirMd()
+        IAppData.pInstance = AppData.AppData()
+        AppData.AppData.instance().savaDirMd()
 
         Logger.instance()
         ParamInfo.instance()
         
         self.m_qttimer = QtCore.QTimer()
-        QtCore.QObject.connect(self.m_qttimer, QtCore.SIGNAL("timeout()"), self.onTimer)
+        self.m_qttimer.timeout.connect(self.onTimer)
         self.m_qttimer.start( 1000 )
 
     def onTimer(self):

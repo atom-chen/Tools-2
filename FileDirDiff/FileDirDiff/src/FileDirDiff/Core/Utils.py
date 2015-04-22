@@ -1,8 +1,6 @@
 #-*- encoding=utf-8 -*-
-'''
-Created on 2013-5-22
 
-@author: Administrator
+'''
 '''
 
 import subprocess
@@ -11,8 +9,8 @@ import traceback
 import os
 import shutil
 
-from autoupdate.core.config import Config
-from autoupdate.core.logger import Logger
+from FileDirDiff.Core.Config import Config
+from FileDirDiff.Core.Logger import Logger
 
 class CmdLine:
     @staticmethod

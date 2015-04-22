@@ -1,21 +1,19 @@
 #-*- encoding=utf-8 -*-
-'''
-Created on 2013-4-25
 
-@author: Administrator
+'''
 @brief 文件版本信息
 '''
 
 import os
 from xml.dom.minidom import Document
 
-from autoupdate.core.config import Config
-#from autoupdate.core import appdata
-from autoupdate.core.IAppData import IAppData
-from autoupdate.core.logger import Logger
+from FileDirDiff.Core.Config import Config
+#from FileDirDiff.Core import AppData
+from FileDirDiff.Core.IAppData import IAppData
+from FileDirDiff.Core.Logger import Logger
 
-from autoupdate.core.utils import ParamInfo
-from autoupdate.core.utils import CmdLine
+from FileDirDiff.Core.Utils import ParamInfo
+from FileDirDiff.Core.Utils import CmdLine
 
 '''
 @brief 文件版本信息

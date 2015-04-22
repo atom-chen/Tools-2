@@ -6,15 +6,15 @@ Created on 2013-4-23
 @brief application
 '''
 
-from PySide.QtGui import QApplication
+from PyQt5.QtWidgets import QApplication
 import sys
 
 class Application(QApplication):
     def __init__(self):
         super(Application, self).__init__(sys.argv)
         
-        from autoupdate.frame import mainwindow
+        from FileDirDiff.Frame import MainWindow
 
-        self.mainWindow = mainwindow.MainWindow(self)
+        self.mainWindow = MainWindow.MainWindow(self)
         self.mainWindow.show()
         self.mainWindow.raise_()

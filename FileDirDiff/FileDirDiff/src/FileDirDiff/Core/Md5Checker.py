@@ -1,15 +1,13 @@
 #-*- encoding=utf-8 -*-
-'''
-Created on 2013-4-24
 
-@author: Administrator
+'''
 @brief md5 checker
 '''
 
 import hashlib
 import os
-from autoupdate import paths
-from autoupdate.core.logger import Logger
+from FileDirDiff import Paths
+from FileDirDiff.Core.Logger import Logger
 
 mdcallback = None       # 回调计算结果
 m_subversion = bytes('0', encoding = "utf8")       # 子版本，所有的都会使用子版本用来升级，这个字节编码，不是字符串
@@ -57,7 +55,7 @@ def hasSubVersion():
     return m_subversion != bytes('0', encoding = "utf8")       # '0' 是没有子版本号
 
 if __name__ == '__main__':
-    filepath = os.path.join(paths.PACKAGE_DIR, 'mddest.txt')
+    filepath = os.path.join(Paths.PACKAGE_DIR, 'mddest.txt')
     global gfHandle
     gfHandle = open(filepath, 'w', encoding='utf8')
     root = input("type root directory:")

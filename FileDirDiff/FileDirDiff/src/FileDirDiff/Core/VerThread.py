@@ -1,19 +1,17 @@
 #-*- encoding=utf-8 -*-
-'''
-Created on 2013-5-23
 
-@author: Administrator
+'''
 '''
 
 from threading import Thread
 import os
 
-from autoupdate.core.appdata import AppData
+from FileDirDiff.Core.AppData import AppData
 
-from autoupdate.core.fileversioninfo import BuildFileVersion
-from autoupdate.core.config import Config
-from autoupdate.core import appdata
-from autoupdate.core.logger import Logger
+from FileDirDiff.Core.FileVersionInfo import BuildFileVersion
+from FileDirDiff.Core.Config import Config
+from FileDirDiff.Core import AppData
+from FileDirDiff.Core.Logger import Logger
 
 class VerThread(Thread):
     
@@ -72,7 +70,7 @@ class VerThread(Thread):
             
         # 如果计算文件夹 md5 的时候，才需要计算路径
         if Config.instance().getfoldermd5cmp():
-            appdata.AppData.instance().savaDirMd()
+            AppData.AppData.instance().savaDirMd()
         
         # 生成启动的 html 的配置，尤其是 start 的配置
         #AppData.instance().buildStartHtml()
