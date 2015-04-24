@@ -12,33 +12,33 @@ class BuildVersion(object):
         '''
         Constructor
         '''
-        self.curmd5FileHandle = None    # 当前版本的 md5 版本文件
-        self.curmd5FileCount = 0           # 当前 md5 文件数目
-        self.curverFileCount = 0           # 当前 md5 文件数目
+        self.m_curMd5FileHandle = None    # 当前版本的 md5 版本文件
+        self.m_curMd5FileCount = 0           # 当前 md5 文件数目
+        self.m_curVerFileCount = 0           # 当前 md5 文件数目
         
     def writemd(self, directoryName, filename, md):
-        if self.curmd5FileHandle is None:
-            #with open(config.AppSysBase.instance().m_config.curFilePath(), 'w', encoding='utf-8') as self.curmd5FileHandle:
+        if self.m_curMd5FileHandle is None:
+            #with open(config.AppSysBase.instance().m_config.curFilePath(), 'w', encoding='utf-8') as self.m_curMd5FileHandle:
             #    pass
-            self.curmd5FileHandle = open(AppSysBase.instance().m_config.curCKFilePath(), 'w', encoding='utf-8')
+            self.m_curMd5FileHandle = open(AppSysBase.instance().m_config.curCKFilePath(), 'w', encoding='utf-8')
         
-        if self.curmd5FileCount > 0:
-            self.curmd5FileHandle.write('\n')
-        self.curmd5FileCount += 1
+        if self.m_curMd5FileCount > 0:
+            self.m_curMd5FileHandle.write('\n')
+        self.m_curMd5FileCount += 1
         
         fullpath = os.path.join(directoryName, filename)
         fullpath = fullpath.replace('\\', '/')
         subLen = len(AppSysBase.instance().m_config.m_srcRootPath) + 1
         relPath = fullpath[subLen:]
-        self.curmd5FileHandle.write(relPath + '=' + md)
+        self.m_curMd5FileHandle.write(relPath + '=' + md)
         
         AppSysBase.instance().m_logSys.info('文件 CK 码:' + fullpath)
 
 
     def closemdfile(self):
-        if not self.curmd5FileHandle is None:
-            self.curmd5FileHandle.close()
-            self.curmd5FileHandle = None
+        if not self.m_curMd5FileHandle is None:
+            self.m_curMd5FileHandle.close()
+            self.m_curMd5FileHandle = None
 
 
     def buildFileMd(self):
@@ -60,21 +60,21 @@ class BuildVersion(object):
     def copyFile(self):
         # 拷贝文件
         if AppSysBase.instance().m_bOverVer:
-            filename = AppSysBase.instance().m_config.m_preCkAppVerFileName
-            swfName = '%s.swf' % (filename)
-            AppSysBase.instance().FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.m_destRootPath, AppSysBase.instance().m_config.m_outDir, swfName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, swfName))
+            filename = AppSysBase.instance().m_config.m_preVerFileName
+            zipName = "{0}.txt".format(filename)
+            AppSysBase.instance().FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.m_destRootPath, AppSysBase.instance().m_config.m_outDir, zipName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, zipName))
         
-            filename = AppSysBase.instance().m_config.m_preCkAllVerFileName
-            swfName = '%s.swf' % (filename)
+            filename = AppSysBase.instance().m_config.m_preVerAllName
+            zipName = "{0}.txt".format(filename)
         
-            AppSysBase.instance().FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.m_destRootPath, AppSysBase.instance().m_config.m_outDir, swfName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, swfName))
+            AppSysBase.instance().FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.m_destRootPath, AppSysBase.instance().m_config.m_outDir, zipName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, zipName))
             #FileOperate.copyFile(AppSysBase.instance().m_config.htmlPath(), os.path.join(AppSysBase.instance().m_config.m_srcRootPath, AppSysBase.instance().m_config.htmlname))
         else:
             AppSysBase.instance().m_logSys.info('File is Building, cannot copy file')
 
     def getCurVerFileCount(self):
-        return self.curverFileCount
+        return self.m_curVerFileCount
     
     def addCurVerFileCount(self, value):
-        self.curverFileCount += value
+        self.m_curVerFileCount += value
 

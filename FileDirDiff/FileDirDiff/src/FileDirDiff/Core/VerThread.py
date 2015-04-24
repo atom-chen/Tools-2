@@ -34,7 +34,7 @@ class VerThread(Thread):
             os.makedirs(os.path.join(AppSysBase.instance().m_config.m_destRootPath,  AppSysBase.instance().m_config.m_outDir))
         
         # 生成所有的 md5 
-        AppSysBase.instance().m_pBuildVersion.curmd5FileCount = 0
+        AppSysBase.instance().m_pBuildVersion.m_curMd5FileCount = 0
         AppSysBase.instance().m_pBuildVersion.buildFileMd()
         AppSysBase.instance().m_pBuildVersion.closemdfile()
         
