@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/FileDirDiff/CompileUiFiles.py=utf-8
 encoding//src/FileDirDiff/Core/AppSys.py=utf-8
+encoding//src/FileDirDiff/Core/AppSysBase.py=utf-8
 encoding//src/FileDirDiff/Core/Config.py=utf-8
 encoding//src/FileDirDiff/Core/EConst.py=utf-8
 encoding//src/FileDirDiff/Core/FileVersionInfo.py=utf-8

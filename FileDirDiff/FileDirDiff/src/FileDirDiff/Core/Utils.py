@@ -14,7 +14,7 @@ from FileDirDiff.Core.AppSys import AppSysBase
 class CmdLine:
     @staticmethod
     def exec7z():
-        cmd = '"%s" e -y %s.swc -o%s *.swf' % (AppSysBase.instance().m_config.z7z, ParamInfo.instance().m_swiftFullSwcFile, AppSysBase.instance().m_config.destrootpath + '/' + AppSysBase.instance().m_config.tmpDir)
+        cmd = '"%s" e -y %s.swc -o%s *.swf' % (AppSysBase.instance().m_config.m_z7z, ParamInfo.instance().m_swiftFullSwcFile, AppSysBase.instance().m_config.m_destRootPath + '/' + AppSysBase.instance().m_config.m_tmpDir)
         handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
         handle.wait()
 

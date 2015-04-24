@@ -45,6 +45,8 @@ class AppSys(AppSysBase):
         AppSysBase.instance().m_md5DirOperate = Md5DirOperate()
         AppSysBase.instance().Md5Checker = Md5Checker;         # 保存模块
         AppSysBase.instance().FileOperate = FileOperate;       # 保存模块
+        
+        AppSysBase.instance().m_config.readInit('config.txt')
     
 
     def writemd(self, directoryName, filename, md):
@@ -59,8 +61,9 @@ class AppSys(AppSysBase):
         
         fullpath = os.path.join(directoryName, filename)
         fullpath = fullpath.replace('\\', '/')
-        idx = fullpath.find('asset')
-        self.curmd5FileHandle.write(fullpath[idx:] + '=' + md)
+        subLen = len(self.m_config.m_srcRootPath) + 1
+        relPath = fullpath[subLen:]
+        self.curmd5FileHandle.write(relPath + '=' + md)
         
         self.m_logSys.info('文件 CK 码:' + fullpath)
 
@@ -73,10 +76,10 @@ class AppSys(AppSysBase):
 
     def buildAllMd(self):
         self.Md5Checker.mdcallback = self.writemd
-        self.Md5Checker.m_subversion = self.m_config.subVersionByte()
-        self.Md5Checker.md5_for_dirs(self.m_config.srcrootassetpath)
+        self.Md5Checker.m_m_subVersion = self.m_config.m_subVersionByte()
+        self.Md5Checker.md5_for_dirs(self.m_config.m_srcRootPath)
         
-        self.m_logSys.info(self.m_config.srcrootassetpath + 'md5 end')
+        self.m_logSys.info(self.m_config.m_srcRootPath + 'md5 end')
         
     def buildAppMd(self):
         # 计算 ModuleApp md5
@@ -111,15 +114,15 @@ class AppSys(AppSysBase):
     def copyFile(self):
         # 拷贝文件
         if AppSysBase.instance().m_bOverVer:
-            filename = AppSysBase.instance().m_config.preckappverfilename
+            filename = AppSysBase.instance().m_config.m_preCkAppVerFileName
             swfName = '%s.swf' % (filename)
-            self.FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.destrootpath, AppSysBase.instance().m_config.outDir, swfName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, swfName))
+            self.FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.m_destRootPath, AppSysBase.instance().m_config.m_outDir, swfName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, swfName))
         
-            filename = AppSysBase.instance().m_config.preckallverfilename
+            filename = AppSysBase.instance().m_config.m_preCkAllVerFileName
             swfName = '%s.swf' % (filename)
         
-            self.FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.destrootpath, AppSysBase.instance().m_config.outDir, swfName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, swfName))
-            #FileOperate.copyFile(AppSysBase.instance().m_config.htmlPath(), os.path.join(AppSysBase.instance().m_config.srcrootpath, AppSysBase.instance().m_config.htmlname))
+            self.FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.m_destRootPath, AppSysBase.instance().m_config.m_outDir, swfName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, swfName))
+            #FileOperate.copyFile(AppSysBase.instance().m_config.htmlPath(), os.path.join(AppSysBase.instance().m_config.m_srcRootPath, AppSysBase.instance().m_config.htmlname))
         else:
             AppSysBase.instance().m_logSys.info('File is Building, cannot copy file')
 

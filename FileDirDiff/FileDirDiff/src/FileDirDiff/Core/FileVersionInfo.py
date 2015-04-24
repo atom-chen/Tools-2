@@ -128,8 +128,8 @@ class BuildFileVersion(object):
         AppSysBase.instance().m_logSys.info('end build version file')
 
         # 生成版本文件
-    def readPreVersionFile(self):
-        AppSysBase.instance().m_logSys.info('start read preversion')
+    def readm_preVersionFile(self):
+        AppSysBase.instance().m_logSys.info('start read m_preVersion')
         
         preMdFileName = AppSysBase.instance().m_config.preCKFilePath()
         bMdSrcExist = False
@@ -153,7 +153,7 @@ class BuildFileVersion(object):
                         self.m_srcMdlist.append(mdinfo)
                         self.m_srcMdMap[mdinfo.m_filename] = mdinfo
             
-        AppSysBase.instance().m_logSys.info('end read preversion')
+        AppSysBase.instance().m_logSys.info('end read m_preVersion')
 
     def getFileVersion(self, filepath):
         if filepath in self.m_srcMdMap.keys():
@@ -163,8 +163,8 @@ class BuildFileVersion(object):
 
     # 输出整个版本    
     def outVerSwf(self):
-        filename = AppSysBase.instance().m_config.preckallverfilename
-        tmpdir = os.path.join(AppSysBase.instance().m_config.destrootpath, AppSysBase.instance().m_config.tmpDir)
+        filename = AppSysBase.instance().m_config.m_preCkAllVerFileName
+        m_tmpDir = os.path.join(AppSysBase.instance().m_config.m_destRootPath, AppSysBase.instance().m_config.m_tmpDir)
         
         doc = Document()
         root = doc.createElement('lib')
@@ -178,7 +178,7 @@ class BuildFileVersion(object):
         root.appendChild(byteArray)
        
         '''生成的xml写入文件'''
-        xmlFullName = '%s\\%s' % (tmpdir, filename)
+        xmlFullName = '%s\\%s' % (m_tmpDir, filename)
         fHandle = open('%s.xml' % xmlFullName, 'w')
         fHandle.write(str(doc.toprettyxml(indent = "  ", encoding="UTF-8"), encoding='utf-8'))
         fHandle.close()
@@ -189,15 +189,15 @@ class BuildFileVersion(object):
         ParamInfo.pInstance.m_swiftFullSwcFile = xmlFullName
         CmdLine.exec7z()
 
-        open('%s\\%s' % (AppSysBase.instance().m_config.destrootpath + '/' + AppSysBase.instance().m_config.outDir, swfName), 'wb').write(open('%s\\library.swf' % (AppSysBase.instance().m_config.destrootpath + '/' + AppSysBase.instance().m_config.tmpDir), 'rb').read())
-        os.remove('%s\\library.swf' % (AppSysBase.instance().m_config.destrootpath + '/' + AppSysBase.instance().m_config.tmpDir))
+        open('%s\\%s' % (AppSysBase.instance().m_config.m_destRootPath + '/' + AppSysBase.instance().m_config.m_outDir, swfName), 'wb').write(open('%s\\library.swf' % (AppSysBase.instance().m_config.m_destRootPath + '/' + AppSysBase.instance().m_config.m_tmpDir), 'rb').read())
+        os.remove('%s\\library.swf' % (AppSysBase.instance().m_config.m_destRootPath + '/' + AppSysBase.instance().m_config.m_tmpDir))
         os.remove('%s.swc' % xmlFullName)
-        AppSysBase.instance().m_logSys.info(AppSysBase.instance().m_config.preckallverfilename + '包 %s 完成' % swfName)
+        AppSysBase.instance().m_logSys.info(AppSysBase.instance().m_config.m_preCkAllVerFileName + '包 %s 完成' % swfName)
     
     # 输出 app 模块的    
     def outVerAppSwf(self):
-        filename = AppSysBase.instance().m_config.preckappverfilename
-        tmpdir = os.path.join(AppSysBase.instance().m_config.destrootpath, AppSysBase.instance().m_config.tmpDir)
+        filename = AppSysBase.instance().m_config.m_preCkAppVerFileName
+        m_tmpDir = os.path.join(AppSysBase.instance().m_config.m_destRootPath, AppSysBase.instance().m_config.m_tmpDir)
         
         doc = Document()
         root = doc.createElement('lib')
@@ -211,7 +211,7 @@ class BuildFileVersion(object):
         root.appendChild(byteArray)
        
         '''生成的xml写入文件'''
-        xmlFullName = '%s\\%s' % (tmpdir, filename)
+        xmlFullName = '%s\\%s' % (m_tmpDir, filename)
         fHandle = open('%s.xml' % xmlFullName, 'w')
         fHandle.write(str(doc.toprettyxml(indent = "  ", encoding="UTF-8"), encoding='utf-8'))
         fHandle.close()
@@ -222,10 +222,10 @@ class BuildFileVersion(object):
         ParamInfo.pInstance.m_swiftFullSwcFile = xmlFullName
         CmdLine.exec7z()
 
-        open('%s\\%s' % (AppSysBase.instance().m_config.destrootpath + '/' + AppSysBase.instance().m_config.outDir, swfName), 'wb').write(open('%s\\library.swf' % (AppSysBase.instance().m_config.destrootpath + '/' + AppSysBase.instance().m_config.tmpDir), 'rb').read())
-        os.remove('%s\\library.swf' % (AppSysBase.instance().m_config.destrootpath + '/' + AppSysBase.instance().m_config.tmpDir))
+        open('%s\\%s' % (AppSysBase.instance().m_config.m_destRootPath + '/' + AppSysBase.instance().m_config.m_outDir, swfName), 'wb').write(open('%s\\library.swf' % (AppSysBase.instance().m_config.m_destRootPath + '/' + AppSysBase.instance().m_config.m_tmpDir), 'rb').read())
+        os.remove('%s\\library.swf' % (AppSysBase.instance().m_config.m_destRootPath + '/' + AppSysBase.instance().m_config.m_tmpDir))
         os.remove('%s.swc' % xmlFullName)
-        AppSysBase.instance().m_logSys.info(AppSysBase.instance().m_config.preckappverfilename + '包 %s 完成' % swfName)
+        AppSysBase.instance().m_logSys.info(AppSysBase.instance().m_config.m_preCkAppVerFileName + '包 %s 完成' % swfName)
             
 if __name__ == '__main__':
     buildver = BuildFileVersion()

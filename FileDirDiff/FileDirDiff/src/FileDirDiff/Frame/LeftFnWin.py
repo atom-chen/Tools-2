@@ -26,7 +26,7 @@ class LeftFnWin(QtWidgets.QDockWidget):
     # 生成当前版版本的 md5 文件
     def onBtnClkCheck(self):
         #AppSysBase.instance().curmd5FileCount = 0
-        #md5checker.md5_for_dirs(AppSysBase.instance().m_config.srcrootpath)
+        #md5checker.md5_for_dirs(AppSysBase.instance().m_config.m_srcRootPath)
         #AppSysBase.instance().closemdfile()
         AppSysBase.instance().m_logSys.info('test button')
     

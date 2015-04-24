@@ -15,7 +15,7 @@ class Md5DirOperate(object):
     def __init__(self):
         self.m_dirMd5Lst = [Md5Dir(), Md5Dir()] # 两个版本的目录比较, [0] 是之前的版本 [1] 是现在的版本
         self.m_buildver = BuildFileVersion()
-        self.m_buildver.readPreVersionFile()
+        self.m_buildver.readm_preVersionFile()
         
         # 读取原始的目录配置文件
         bVerSrcExist = False
@@ -26,17 +26,17 @@ class Md5DirOperate(object):
         if bVerSrcExist:
             self.m_dirMd5Lst[EConst.ePreMd5Dir].initFromFile(AppSysBase.instance().m_config.preVerDirPath())
             
-        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSysBase.instance().m_config.uiSrcRootPath())
-        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSysBase.instance().m_config.externSrcRootPath())
-        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSysBase.instance().m_config.coreSrcRootPath())
-        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSysBase.instance().m_config.moduleSrcRootPath())
+        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSysBase.instance().m_config.uim_srcRootPath())
+        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSysBase.instance().m_config.externm_srcRootPath())
+        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSysBase.instance().m_config.corem_srcRootPath())
+        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSysBase.instance().m_config.modulem_srcRootPath())
     
     # filelst: 文件列表    rootdirname: 根目录名字, filelst 中的每一项的形式如下 UIArenaInfomation.swf,subdir 形式 asset/ui/UIArenaBetialRank.swf
     def calcUIFileDirMd5(self, filelst, rootdirname):
         retlst = []     # 返回的 list
         curfileinfo = None
         #buildver = BuildFileVersion()
-        #buildver.readPreVersionFile()
+        #buildver.readm_preVersionFile()
         for filenameext in filelst:
             dotidx = filenameext.find('.')
             filenamenoext = filenameext[0:dotidx]
@@ -62,7 +62,7 @@ class Md5DirOperate(object):
         retlst = []     # 返回的 list
         curfileinfo = None
         #buildver = BuildFileVersion()
-        #buildver.readPreVersionFile()
+        #buildver.readm_preVersionFile()
         for filenameext in filelst:
             dotidx = filenameext.find('.')
             filenamenoext = filenameext[0:dotidx]

@@ -10,7 +10,7 @@ from FileDirDiff import Paths
 from FileDirDiff.Core.AppSys import AppSysBase
 
 mdcallback = None       # 回调计算结果
-m_subversion = bytes('0', encoding = "utf8")       # 子版本，所有的都会使用子版本用来升级，这个字节编码，不是字符串
+m_m_subVersion = bytes('0', encoding = "utf8")       # 子版本，所有的都会使用子版本用来升级，这个字节编码，不是字符串
 
 #一个文件的 md5 码
 def md5_for_file(filepath):
@@ -23,8 +23,8 @@ def md5_for_file(filepath):
             break
         md5hash.update(data)
         
-    if hasSubVersion():
-        md5hash.update(m_subversion)
+    if hasm_subVersion():
+        md5hash.update(m_m_subVersion)
     
     f.close()
     return md5hash.hexdigest()
@@ -51,8 +51,8 @@ def updateMd5(filename, md):
     global gfHandle
     gfHandle.write(filename + '=' + md + '\n')
     
-def hasSubVersion():
-    return m_subversion != bytes('0', encoding = "utf8")       # '0' 是没有子版本号
+def hasm_subVersion():
+    return m_m_subVersion != bytes('0', encoding = "utf8")       # '0' 是没有子版本号
 
 if __name__ == '__main__':
     filepath = os.path.join(Paths.PACKAGE_DIR, 'mddest.txt')
