@@ -20,8 +20,8 @@ class LeftFnWin(QtWidgets.QDockWidget):
         
         # 注册事件处理函数
         self.ui.m_btnCheck.clicked.connect(self.onBtnClkCheck)
-        self.ui.m_btnVersion.clicked.connect(self.onBtnClkVersion)
-        self.ui.m_btnVerSwf.clicked.connect(self.onBtnClkVerSwf)
+        self.ui.m_btnCopy.clicked.connect(self.onBtnClkCopy)
+        self.ui.m_btnDiff.clicked.connect(self.onBtnClkDiff)
 
     # 生成当前版版本的 md5 文件
     def onBtnClkCheck(self):
@@ -32,7 +32,7 @@ class LeftFnWin(QtWidgets.QDockWidget):
     
     # 生成版本文件，用于更新资源使用
     # 拷贝文件
-    def onBtnClkVersion(self):
+    def onBtnClkCopy(self):
         #AppSys.instance().curverFileCount = 0
         #buildver = fileversioninfo.BuildFileVersion()
         #buildver.buildVersionFile()
@@ -40,10 +40,10 @@ class LeftFnWin(QtWidgets.QDockWidget):
         AppSys.instance().copyFile();
         
     # 生成版本的 swf 文件
-    def onBtnClkVerSwf(self):
+    def onBtnClkDiff(self):
         #直接启动线程
         if AppSys.instance().m_bOverVer:
-            AppSys.instance().m_verThread = VerThread("VerThread", VerThread.outVerSwf);
+            AppSys.instance().m_verThread = VerThread("VerThread", VerThread.outDiff);
             AppSys.instance().m_verThread.start()
         else:
             AppSys.instance().m_logSys.info('Verthread is runing')

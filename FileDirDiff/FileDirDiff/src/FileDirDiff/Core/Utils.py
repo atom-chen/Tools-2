@@ -13,12 +13,6 @@ from FileDirDiff.Core.AppSys import AppSys
 
 class CmdLine:
     @staticmethod
-    def execSwift():
-        cmd = 'java -jar %s xml2lib %s.xml %s.swc' % (AppSys.instance().m_config.swiftjar, ParamInfo.instance().m_swiftFullXmlFile, ParamInfo.instance().m_swiftFullSwcFile)
-        handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-        handle.wait()
-    
-    @staticmethod
     def exec7z():
         cmd = '"%s" e -y %s.swc -o%s *.swf' % (AppSys.instance().m_config.z7z, ParamInfo.instance().m_swiftFullSwcFile, AppSys.instance().m_config.destrootpath + '/' + AppSys.instance().m_config.tmpDir)
         handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)

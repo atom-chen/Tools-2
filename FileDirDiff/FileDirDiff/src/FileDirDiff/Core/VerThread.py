@@ -20,7 +20,7 @@ class VerThread(Thread):
             self.m_runF()
 
     @staticmethod
-    def outVerSwf():
+    def outDiff():
         AppSys.instance().m_bOverVer = False
         
         # 只有在点击生成版本的时候，才更改当前版本的版本日期，设置当前版本
@@ -58,11 +58,8 @@ class VerThread(Thread):
         # 生成 app 文件，这个需要放在生成  versionall.swf 之后，因为需要 versionall.swf 的 md5 ，决定是否重新加载 versionall.swf 
         AppSys.instance().buildAppMd()
         
-        # 生成 moduleapp.swf 的 MD5 ，包括 versionall.swf 和 startpicpath 的 md5 
+        # 生成 moduleapp.swf 的 MD5  
         buildver.outVerAppSwf()
-        
-        #AppSys.instance().m_config.saveCFG()
-        #AppSys.instance().m_config.swiftVersion()
             
         # 如果计算文件夹 md5 的时候，才需要计算路径
         if AppSys.instance().m_config.getfoldermd5cmp():

@@ -24,17 +24,8 @@ class Config(object):
         self.preckallverfilename = "versionall"   # all 模块的前缀
         self.preckappverfilename = "versionapp"   # app 模块的前缀
         
-        self.allverclass = 'art.ver.all'        # all 版本类名字
-        self.appverclass = 'art.ver.app'        # app 版本类名字
-        self.appmodulerelpath = 'asset\module\ModuleApp.swf'      # ModuleApp.swf 相对目录
-        
-        self.m_appmodulenameandext = 'ModuleApp.swf'                # ModuleApp.swf 模块的名字和扩展名字，美誉路径
-        
-        self.startpicpath = 'asset\\uiimage\\loadinglogo\\uiloadinglogo.swf'   # 启动的时候就显示的图片，主要是启动的时候可能加载到游戏的模块比较慢，一直黑屏，因此启动模块直接加载这个模块，系那是一个图片
-        
         # 工具类
         self.z7z= 'D:\\ProgramFiles\\7-Zip\\7z.exe'
-        self.swiftjar = 'E:\\work\\client-05\\trunk\\tools\\swift-tool\\Swift.jar'
         
         self.tmpDir = 'tmp'         # 临时文件夹目录
         self.outDir = 'output'      # 最终输出文件目录
@@ -70,8 +61,6 @@ class Config(object):
         
         # 修正资源目录
         self.srcrootassetpath = self.srcrootpath + '/' + 'asset'
-        # 计算临时数据
-        self.postInit()
 
     # 当前 md 校验和文件路径加名字
     def curCKFilePath(self):
@@ -124,29 +113,9 @@ class Config(object):
         curfilename = ('%s_%s%s' % (self.preckappname, self.curversion, '.txt'))
         return os.path.join(self.destrootpath, curfilename)
     
-    # ModuleApp 模块的目录
-    def appAppSwfPath(self):
-        return os.path.join(self.srcrootpath, self.appmodulerelpath)
-    
-    def postInit(self):
-        idx = self.appmodulerelpath.rfind('\\')
-        if idx != -1:
-            self.m_appmodulenameandext = self.appmodulerelpath[idx + 1:]
-        else:
-            idx = self.appmodulerelpath.rfind('/')
-            if idx != -1:
-                self.m_appmodulenameandext = self.appmodulerelpath[idx + 1:]
-            else:
-                self.m_appmodulenameandext = self.appmodulerelpath
-
-    
     # ModuleApp 模块的文件名字和扩展名字，没有路径
     def appAppSwfNameAndExt(self): 
         return self.m_appmodulenameandext
-    
-    # startpicpath 模块的目录
-    def startPicPath(self):
-        return os.path.join(self.srcrootpath, self.startpicpath)
     
     # 获取最终生成的 versionall.swf 的 md5 
     def allverFilePath(self):
@@ -197,18 +166,10 @@ class Config(object):
         fHandle.write('preverfilename=' + self.preverfilename + '\n')
         fHandle.write('preckallverfilename=' + self.preckallverfilename + '\n')
         fHandle.write('preckappverfilename=' + self.preckappverfilename + '\n')
-        fHandle.write('allverclass=' + self.allverclass + '\n')
-        
-        fHandle.write('appverclass=' + self.appverclass + '\n')
-        #fHandle.write('startswfname=' + self.startswfname + '\n')
-        fHandle.write('appmodulerelpath=' + self.appmodulerelpath + '\n')
-        fHandle.write('startpicpath=' + self.startpicpath + '\n')
-        #fHandle.write('htmlname=' + self.htmlname + '\n')
-        #fHandle.write('htmltemplate=' + self.htmltemplate + '\n')
+
         fHandle.write('srcrootpath=' + self.srcrootpath + '\n')
         fHandle.write('destrootpath=' + self.destrootpath + '\n')
         fHandle.write('z7z=' + self.z7z + '\n')
-        fHandle.write('swiftjar=' + self.swiftjar + '\n')
         fHandle.write('srccoderoot=' + self.srccoderoot + '\n')
         if self.foldermd5cmp:
             fHandle.write('foldermd5cmp=' + str(1) + '\n')

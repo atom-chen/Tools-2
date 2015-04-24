@@ -31,4 +31,8 @@ class GlobalIns(object):
         AppSys.instance().Md5Checker = Md5Checker;         # 保存模块
         AppSys.instance().FileOperate = FileOperate;       # 保存模块
         
+        # 这样写提示找不到 m_config ，第二种写法就行了，可能第一种写法 g_pInstance 不能正确判断类型
+        #AppSys.g_pInstance.m_config.readInit('config.txt')
+        AppSys.instance().m_config.readInit('config.txt')
+        
         

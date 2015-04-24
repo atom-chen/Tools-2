@@ -187,7 +187,6 @@ class BuildFileVersion(object):
         '''根据生成的xml打包as3用的xml成最终的swf包'''
         ParamInfo.pInstance.m_swiftFullXmlFile = xmlFullName
         ParamInfo.pInstance.m_swiftFullSwcFile = xmlFullName
-        CmdLine.execSwift()
         CmdLine.exec7z()
 
         open('%s\\%s' % (AppSys.instance().m_config.destrootpath + '/' + AppSys.instance().m_config.outDir, swfName), 'wb').write(open('%s\\library.swf' % (AppSys.instance().m_config.destrootpath + '/' + AppSys.instance().m_config.tmpDir), 'rb').read())
@@ -221,7 +220,6 @@ class BuildFileVersion(object):
         '''根据生成的xml打包as3用的xml成最终的swf包'''
         ParamInfo.pInstance.m_swiftFullXmlFile = xmlFullName
         ParamInfo.pInstance.m_swiftFullSwcFile = xmlFullName
-        CmdLine.execSwift()
         CmdLine.exec7z()
 
         open('%s\\%s' % (AppSys.instance().m_config.destrootpath + '/' + AppSys.instance().m_config.outDir, swfName), 'wb').write(open('%s\\library.swf' % (AppSys.instance().m_config.destrootpath + '/' + AppSys.instance().m_config.tmpDir), 'rb').read())
