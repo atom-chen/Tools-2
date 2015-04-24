@@ -6,17 +6,24 @@
 import os
 import glob
 
+from FileDirDiff.Core.AppSysBase import AppSysBase
+from FileDirDiff.Core import Md5Checker
+from FileDirDiff.Core.Config import Config
+from FileDirDiff.Core.Utils import FileOperate
+from FileDirDiff.Core.LogSys import LogSys
+from FileDirDiff.Core.Md5Dir import Md5DirOperate
+
 # global data
-class AppSys():
-    g_pInstance = None
+class AppSys(AppSysBase):
+    #g_pInstance = None
     #g_pInstance = AppSys()
     #g_pInstance = AppSys.AppSys()
     
     @staticmethod
     def instance():
-        if AppSys.g_pInstance is None:
-            AppSys.g_pInstance = AppSys()
-        return AppSys.g_pInstance
+        if AppSysBase.g_pInstance is None:
+            AppSysBase.g_pInstance = AppSys()
+        return AppSysBase.g_pInstance
     
     def __init__(self):
         self.curmd5FileHandle = None    # 当前版本的 md5 版本文件
@@ -30,10 +37,19 @@ class AppSys():
         self.m_logSys = None
         self.Md5Checker = None
         self.FileOperate = None
+        
+
+    def postInit(self):
+        AppSysBase.instance().m_config = Config()
+        AppSysBase.instance().m_logSys = LogSys()
+        AppSysBase.instance().m_md5DirOperate = Md5DirOperate()
+        AppSysBase.instance().Md5Checker = Md5Checker;         # 保存模块
+        AppSysBase.instance().FileOperate = FileOperate;       # 保存模块
     
+
     def writemd(self, directoryName, filename, md):
         if self.curmd5FileHandle is None:
-            #with open(config.AppSys.instance().m_config.curFilePath(), 'w', encoding='utf-8') as self.curmd5FileHandle:
+            #with open(config.AppSysBase.instance().m_config.curFilePath(), 'w', encoding='utf-8') as self.curmd5FileHandle:
             #    pass
             self.curmd5FileHandle = open(self.m_config.curCKFilePath(), 'w', encoding='utf-8')
         
@@ -48,11 +64,13 @@ class AppSys():
         
         self.m_logSys.info('文件 CK 码:' + fullpath)
 
+
     def closemdfile(self):
         if not self.curmd5FileHandle is None:
             self.curmd5FileHandle.close()
             self.curmd5FileHandle = None
-            
+
+
     def buildAllMd(self):
         self.Md5Checker.mdcallback = self.writemd
         self.Md5Checker.m_subversion = self.m_config.subVersionByte()
@@ -74,11 +92,11 @@ class AppSys():
         self.m_logSys.info(self.m_config.appCKFilePath() + 'md5 end')
 
     def buildModuleMd(self):
-        dirname = AppSys.instance().m_config.srcrootassetpath + "/module"
+        dirname = AppSysBase.instance().m_config.srcrootassetpath + "/module"
         os.chdir(dirname)
         allswffile = glob.glob('*.swf')
         allswffile.sort()
-        uifilemd5lst = self.m_md5DirOperate.calcModuleFileDirMd5(allswffile, AppSys.instance().m_config.modulePath())
+        uifilemd5lst = self.m_md5DirOperate.calcModuleFileDirMd5(allswffile, AppSysBase.instance().m_config.modulePath())
         
         for filever in uifilemd5lst:
             if self.curmd5FileCount > 0:
@@ -92,18 +110,18 @@ class AppSys():
         
     def copyFile(self):
         # 拷贝文件
-        if AppSys.instance().m_bOverVer:
-            filename = AppSys.instance().m_config.preckappverfilename
+        if AppSysBase.instance().m_bOverVer:
+            filename = AppSysBase.instance().m_config.preckappverfilename
             swfName = '%s.swf' % (filename)
-            self.FileOperate.copyFile(os.path.join(AppSys.instance().m_config.destrootpath, AppSys.instance().m_config.outDir, swfName), os.path.join(AppSys.instance().m_config.srcrootassetpath, swfName))
+            self.FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.destrootpath, AppSysBase.instance().m_config.outDir, swfName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, swfName))
         
-            filename = AppSys.instance().m_config.preckallverfilename
+            filename = AppSysBase.instance().m_config.preckallverfilename
             swfName = '%s.swf' % (filename)
         
-            self.FileOperate.copyFile(os.path.join(AppSys.instance().m_config.destrootpath, AppSys.instance().m_config.outDir, swfName), os.path.join(AppSys.instance().m_config.srcrootassetpath, swfName))
-            #FileOperate.copyFile(AppSys.instance().m_config.htmlPath(), os.path.join(AppSys.instance().m_config.srcrootpath, AppSys.instance().m_config.htmlname))
+            self.FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.destrootpath, AppSysBase.instance().m_config.outDir, swfName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, swfName))
+            #FileOperate.copyFile(AppSysBase.instance().m_config.htmlPath(), os.path.join(AppSysBase.instance().m_config.srcrootpath, AppSysBase.instance().m_config.htmlname))
         else:
-            AppSys.instance().m_logSys.info('File is Building, cannot copy file')
+            AppSysBase.instance().m_logSys.info('File is Building, cannot copy file')
 
     def get_curverFileCount(self):
         return self.curverFileCount

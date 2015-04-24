@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:\Self\Self\Tools\Tools\FileDirDiff\FileDirDiff\src\FileDirDiff\ui\LoggerWin.ui'
+# Form implementation generated from reading ui file 'D:\file\opensource\unity-game-git\unitygame\Tools\FileDirDiff\FileDirDiff\src\FileDirDiff\UI\LoggerWin.ui'
 #
-# Created: Wed Apr 22 10:34:36 2015
+# Created: Fri Apr 24 22:39:35 2015
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!

@@ -18,21 +18,21 @@
     <item>
      <widget class="QPushButton" name="m_btnCheck">
       <property name="text">
-       <string>test btn</string>
+       <string>Test Btn</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="m_btnVersion">
+     <widget class="QPushButton" name="m_btnCopy">
       <property name="text">
-       <string>copy file</string>
+       <string>Copy File</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="m_btnVerSwf">
+     <widget class="QPushButton" name="m_btnDiff">
       <property name="text">
-       <string>build version swf</string>
+       <string>Build Diff</string>
       </property>
      </widget>
     </item>

@@ -11,7 +11,7 @@ from PyQt5 import  QtWidgets, QtCore
 import FileDirDiff.UI.ui_mainwindow
 import FileDirDiff.Frame.LoggerWin
 import FileDirDiff.Frame.LeftFnWin
-from FileDirDiff.Core.GlobalIns import GlobalIns
+#from FileDirDiff.Core.GlobalIns import GlobalIns
 from FileDirDiff.Core.AppSys import AppSys
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -28,8 +28,11 @@ class MainWindow(QtWidgets.QMainWindow):
         
         self.createUI()
         #实例化全局变量
-        GlobalIns.insGlobal()
-        
+        #GlobalIns.insGlobal()
+        AppSys.instance();
+        AppSys.instance().postInit();
+
+
     def createUI(self):
         self.ui = FileDirDiff.UI.ui_mainwindow.Ui_MainWindow()
         self.ui.setupUi(self)
@@ -45,6 +48,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.m_qttimer = QtCore.QTimer()
         self.m_qttimer.timeout.connect(self.onTimer)
         self.m_qttimer.start( 1000 )
+
 
     def onTimer(self):
         listdata = []

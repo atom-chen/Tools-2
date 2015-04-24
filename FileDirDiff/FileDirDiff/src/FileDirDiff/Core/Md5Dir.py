@@ -8,7 +8,7 @@ import os
 from FileDirDiff.Core import Md5Checker
 from FileDirDiff.Core.FileVersionInfo import FileVersionInfo
 from FileDirDiff.Core.FileVersionInfo import BuildFileVersion
-from FileDirDiff.Core.AppSys import AppSys
+from FileDirDiff.Core.AppSys import AppSysBase
 from FileDirDiff.Core.EConst import EConst
 
 class Md5DirOperate(object):
@@ -19,17 +19,17 @@ class Md5DirOperate(object):
         
         # 读取原始的目录配置文件
         bVerSrcExist = False
-        if os.path.exists(AppSys.instance().m_config.preVerDirPath()):
-            if os.path.isfile(AppSys.instance().m_config.preVerDirPath()):
+        if os.path.exists(AppSysBase.instance().m_config.preVerDirPath()):
+            if os.path.isfile(AppSysBase.instance().m_config.preVerDirPath()):
                 bVerSrcExist = True
         
         if bVerSrcExist:
-            self.m_dirMd5Lst[EConst.ePreMd5Dir].initFromFile(AppSys.instance().m_config.preVerDirPath())
+            self.m_dirMd5Lst[EConst.ePreMd5Dir].initFromFile(AppSysBase.instance().m_config.preVerDirPath())
             
-        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSys.instance().m_config.uiSrcRootPath())
-        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSys.instance().m_config.externSrcRootPath())
-        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSys.instance().m_config.coreSrcRootPath())
-        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSys.instance().m_config.moduleSrcRootPath())
+        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSysBase.instance().m_config.uiSrcRootPath())
+        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSysBase.instance().m_config.externSrcRootPath())
+        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSysBase.instance().m_config.coreSrcRootPath())
+        self.m_dirMd5Lst[EConst.eCurMd5Dir].initFormDir(AppSysBase.instance().m_config.moduleSrcRootPath())
     
     # filelst: 文件列表    rootdirname: 根目录名字, filelst 中的每一项的形式如下 UIArenaInfomation.swf,subdir 形式 asset/ui/UIArenaBetialRank.swf
     def calcUIFileDirMd5(self, filelst, rootdirname):
@@ -119,7 +119,7 @@ class Md5DirOperate(object):
         return True;
 
     def savaDirMd(self):
-        self.m_dirMd5Lst[EConst.eCurMd5Dir].writeToFile(AppSys.instance().m_config.curVerDirPath())
+        self.m_dirMd5Lst[EConst.eCurMd5Dir].writeToFile(AppSysBase.instance().m_config.curVerDirPath())
     
     # 例如 ui/UIEquipSys.swf 可能目录是 ui/uiEquipSys ,返回正确的键值
     def keyInDic(self, idx, cmpstr):

@@ -9,12 +9,12 @@ import traceback
 import os
 import shutil
 
-from FileDirDiff.Core.AppSys import AppSys
+from FileDirDiff.Core.AppSys import AppSysBase
 
 class CmdLine:
     @staticmethod
     def exec7z():
-        cmd = '"%s" e -y %s.swc -o%s *.swf' % (AppSys.instance().m_config.z7z, ParamInfo.instance().m_swiftFullSwcFile, AppSys.instance().m_config.destrootpath + '/' + AppSys.instance().m_config.tmpDir)
+        cmd = '"%s" e -y %s.swc -o%s *.swf' % (AppSysBase.instance().m_config.z7z, ParamInfo.instance().m_swiftFullSwcFile, AppSysBase.instance().m_config.destrootpath + '/' + AppSysBase.instance().m_config.tmpDir)
         handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
         handle.wait()
 
@@ -41,15 +41,15 @@ class FileOperate(object):
         if os.path.isfile(srcfilename):
             try:
                 shutil.copyfile(srcfilename, destfilename)
-                AppSys.instance().m_logSys.info("copy file success: " + srcfilename)
+                AppSysBase.instance().m_logSys.info("copy file success: " + srcfilename)
             except:
                 # 错误输出
-                AppSys.instance().m_logSys.info("copy file error: " + srcfilename)
+                AppSysBase.instance().m_logSys.info("copy file error: " + srcfilename)
                 typeerr, value, tb = sys.exc_info()
                 errstr = traceback.format_exception(typeerr, value, tb)
-                AppSys.instance().m_logSys.info(errstr)
+                AppSysBase.instance().m_logSys.info(errstr)
 
         else:
-            AppSys.instance().m_logSys.info("cannot find file: " + srcfilename)
+            AppSysBase.instance().m_logSys.info("cannot find file: " + srcfilename)
 
 
