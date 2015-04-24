@@ -11,7 +11,6 @@ from FileDirDiff.Core import Md5Checker
 from FileDirDiff.Core.Config import Config
 from FileDirDiff.Core.Utils import FileOperate
 from FileDirDiff.Core.LogSys import LogSys
-from FileDirDiff.Core.Md5Dir import Md5DirOperate
 
 # global data
 class AppSys(AppSysBase):
@@ -42,7 +41,6 @@ class AppSys(AppSysBase):
     def postInit(self):
         AppSysBase.instance().m_config = Config()
         AppSysBase.instance().m_logSys = LogSys()
-        AppSysBase.instance().m_md5DirOperate = Md5DirOperate()
         AppSysBase.instance().Md5Checker = Md5Checker;         # 保存模块
         AppSysBase.instance().FileOperate = FileOperate;       # 保存模块
         
@@ -74,43 +72,22 @@ class AppSys(AppSysBase):
             self.curmd5FileHandle = None
 
 
-    def buildAllMd(self):
+    def buildFileMd(self):
         self.Md5Checker.mdcallback = self.writemd
-        self.Md5Checker.m_m_subVersion = self.m_config.m_subVersionByte()
+        self.Md5Checker.m_subVersion = self.m_config.subVersionByte()
         self.Md5Checker.md5_for_dirs(self.m_config.m_srcRootPath)
         
         self.m_logSys.info(self.m_config.m_srcRootPath + 'md5 end')
         
-    def buildAppMd(self):
+    def buildAllMd(self):
         # 计算 ModuleApp md5
-        fileHandle = open(self.m_config.appCKFilePath(), 'w', encoding='utf-8')
-        md = self.Md5Checker.md5_for_file(self.m_config.appAppSwfPath())
-        fileHandle.write('moduleapp=' + md + '\n')
-        
-        # 计算 versionall.swf 的 md5
-        md = self.Md5Checker.md5_for_file(self.m_config.allverFilePath())
-        fileHandle.write('allverfile=' + md)
-         
-        fileHandle.close()
-        self.m_logSys.info(self.m_config.appCKFilePath() + 'md5 end')
+        fileHandle = open(self.m_config.allCKFilePath(), 'w', encoding='utf-8')
+        md = self.Md5Checker.md5_for_file(self.m_config.curCKFilePath())
+        fileHandle.write('all=' + md + '\n')
 
-    def buildModuleMd(self):
-        dirname = AppSysBase.instance().m_config.srcrootassetpath + "/module"
-        os.chdir(dirname)
-        allswffile = glob.glob('*.swf')
-        allswffile.sort()
-        uifilemd5lst = self.m_md5DirOperate.calcModuleFileDirMd5(allswffile, AppSysBase.instance().m_config.modulePath())
-        
-        for filever in uifilemd5lst:
-            if self.curmd5FileCount > 0:
-                self.curmd5FileHandle.write('\n')
-            self.curmd5FileCount += 1
-            
-            fullpath = filever.m_filename
-            fullpath = fullpath.replace('\\', '/')
-            idx = fullpath.find('asset')
-            self.curmd5FileHandle.write(fullpath[idx:] + '=' + filever.m_version)
-        
+        fileHandle.close()
+        self.m_logSys.info(self.m_config.allCKFilePath() + 'md5 end')
+
     def copyFile(self):
         # 拷贝文件
         if AppSysBase.instance().m_bOverVer:

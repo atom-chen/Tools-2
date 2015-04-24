@@ -7,7 +7,6 @@ from threading import Thread
 import os
 
 from FileDirDiff.Core.AppSys import AppSysBase
-from FileDirDiff.Core.FileVersionInfo import BuildFileVersion
 
 class VerThread(Thread):
     
@@ -36,11 +35,11 @@ class VerThread(Thread):
         
         # 生成所有的 md5 
         AppSysBase.instance().curmd5FileCount = 0
-        AppSysBase.instance().buildAllMd()
+        AppSysBase.instance().buildFileMd()
         AppSysBase.instance().closemdfile()
         
-        # 生成 app 文件，这个需要放在生成  versionall.swf 之后，因为需要 versionall.swf 的 md5 ，决定是否重新加载 versionall.swf 
-        #AppSysBase.instance().buildAppMd()
+        # 生成 all 文件 
+        AppSysBase.instance().buildAllMd()
         
         AppSysBase.instance().m_logSys.info("可以拷贝生成文件到目标文件夹了")
         AppSysBase.instance().m_bOverVer = True
