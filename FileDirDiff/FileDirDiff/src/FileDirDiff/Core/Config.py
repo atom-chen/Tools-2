@@ -15,10 +15,10 @@ class Config(object):
         self.m_destRootPath = ""      # 存放最终文件的目录,这个就是临时目录
         self.m_preVersion = ""        # 之前版本，倒数第二次保存的版本信息
         self.m_curVersion = ""        # 当前版本，最后一次保存的版本信息
-        self.m_preCkFileName = "md5file"       # 校验和原始文件文件名字前缀
-        self.m_preCkAllName = "md5All"        # 校验和文件的校验和原始文件
-        self.m_preVerFileName = "verfile"       # 版本文件名字前缀
-        self.m_preVerAllName = "verall"
+        self.m_prefixMd5FileName = "md5file"       # 校验和原始文件文件名字前缀
+        self.m_prefixMd5AllName = "md5All"        # 校验和文件的校验和原始文件
+        self.m_prefixVerFileName = "verfile"       # 版本文件名字前缀
+        self.m_prefixVerAllName = "verall"
         self.m_subVersion = '0';        # 子版本号，主要是升级所有的文件的版本，经常有些文件传到服务器上，的那是文件有问题，需要主动升级版本号,'0' 是没有版本号
         # 工具类
         self.m_z7z= 'D:\\ProgramFiles\\7-Zip\\7z.exe'
@@ -42,33 +42,28 @@ class Config(object):
 
 
     # 当前 md 校验和文件路径加名字
-    def curCKFilePath(self):
-        curfilename = "{0}_{1}{2}".format(self.m_preCkFileName, self.m_curVersion, '.txt')
-        return os.path.join(self.m_destRootPath, curfilename)
+    def curMd5FilePath(self):
+        curfilename = "{0}_{1}{2}".format(self.m_prefixMd5FileName, self.m_curVersion, '.txt')
+        return os.path.join(self.m_destRootPath, self.m_tmpDir, curfilename)
 
     # 之前 md 校验和文件路径加名字
-    def preCKFilePath(self):
-        curfilename = "{0}_{1}{2}".format(self.m_preCkFileName, self.m_preVersion, '.txt')
-        return os.path.join(self.m_destRootPath, curfilename)
-
-    # 当前版本文件路径加名字
-    def curVerFilePath(self):
-        curfilename = "{0}_{1}{2}".format(self.m_preVerFileName, self.m_curVersion, '.txt')
-        return os.path.join(self.m_destRootPath, curfilename)        
-
-    # 当前版本文件路径加名字
-    def preVerFilePath(self):
-        curfilename = "{0}_{1}{2}".format(self.m_preVerFileName, self.m_preVersion, '.txt')
-        return os.path.join(self.m_destRootPath, curfilename)
-
-    # 返回  all 文件全
-    def allCKFilePath(self):
-        curfilename = "{0}_{1}{2}".format(self.m_preCkAllName, self.m_curVersion, '.txt')
-        return os.path.join(self.m_destRootPath, curfilename)
+    def preMd5FilePath(self):
+        curfilename = "{0}_{1}{2}".format(self.m_prefixMd5FileName, self.m_preVersion, '.txt')
+        return os.path.join(self.m_destRootPath, self.m_tmpDir, curfilename)
     
-    # 获取最终生成的 versionall.swf 的 md5 
-    def allVerFilePath(self):
-        return os.path.join(self.m_destRootPath, self.m_outDir, self.m_preCkAllVerFileName + '.swf')    
+    
+    def allMd5FilePath(self):
+        curfilename = "{0}_{1}{2}".format(self.m_prefixMd5AllName, self.m_preVersion, '.txt')
+        return os.path.join(self.m_destRootPath, self.m_tmpDir, curfilename)
+    
+
+    # 返回  file 文件
+    def verFilePath(self):
+        return os.path.join(self.m_destRootPath, self.m_outDir, self.m_prefixVerFileName + '.bytes')
+    
+    # 获取最终生成 all 的 md5 
+    def verAllPath(self):
+        return os.path.join(self.m_destRootPath, self.m_outDir, self.m_prefixVerAllName + '.bytes')    
     
     def isExistPreV(self):
         return self.m_preVersion != '0'
@@ -93,10 +88,10 @@ class Config(object):
         fHandle = open(filename, 'w', encoding = 'utf8')
         fHandle.write('m_preVersion=' + self.m_preVersion + '\n')
         fHandle.write('m_curVersion=' + self.m_curVersion + '\n')
-        fHandle.write('m_preCkFileName=' + self.m_preCkFileName + '\n')
-        fHandle.write('m_preCkAllName=' + self.m_preCkAllName + '\n')
-        fHandle.write('m_preVerFileName=' + self.m_preVerFileName + '\n')
-        fHandle.write('m_preVerAllName=' + self.m_preVerAllName + '\n')
+        fHandle.write('m_prefixMd5FileName=' + self.m_prefixMd5FileName + '\n')
+        fHandle.write('m_prefixMd5AllName=' + self.m_prefixMd5AllName + '\n')
+        fHandle.write('m_prefixVerFileName=' + self.m_prefixVerFileName + '\n')
+        fHandle.write('m_prefixVerAllName=' + self.m_prefixVerAllName + '\n')
 
         fHandle.write('m_srcRootPath=' + self.m_srcRootPath + '\n')
         fHandle.write('m_destRootPath=' + self.m_destRootPath + '\n')

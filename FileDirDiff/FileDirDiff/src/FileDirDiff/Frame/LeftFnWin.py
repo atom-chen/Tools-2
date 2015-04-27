@@ -32,7 +32,7 @@ class LeftFnWin(QtWidgets.QDockWidget):
     def onBtnClkCopy(self):
         AppSysBase.instance().copyFile();
         
-    # 生成版本的 swf 文件
+    # 生成版本文件
     def onBtnClkDiff(self):
         #直接启动线程
         if AppSysBase.instance().m_bOverVer:

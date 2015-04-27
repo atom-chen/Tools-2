@@ -34,12 +34,12 @@ class VerThread(Thread):
             os.makedirs(os.path.join(AppSysBase.instance().m_config.m_destRootPath,  AppSysBase.instance().m_config.m_outDir))
         
         # 生成所有的 md5 
-        AppSysBase.instance().m_pBuildVersion.m_curMd5FileCount = 0
         AppSysBase.instance().m_pBuildVersion.buildFileMd()
-        AppSysBase.instance().m_pBuildVersion.closemdfile()
-        
         # 生成 all 文件 
         AppSysBase.instance().m_pBuildVersion.buildAllMd()
+        
+        # 生成压缩文件
+        AppSysBase.instance().m_pBuildVersion.lzmaMd5File()
         
         AppSysBase.instance().m_logSys.info("可以拷贝生成文件到目标文件夹了")
         AppSysBase.instance().m_bOverVer = True

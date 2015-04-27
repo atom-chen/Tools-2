@@ -10,6 +10,7 @@ from FileDirDiff.Core.Utils import FileOperate
 from FileDirDiff.Core.LogSys import LogSys
 from FileDirDiff.Core.BuildVersion import BuildVersion
 from FileDirDiff.Core.Utils import ParamInfo
+from FileDirDiff.Core.Utils import CmdLine
 
 # global data
 class AppSys(AppSysBase):
@@ -32,6 +33,7 @@ class AppSys(AppSysBase):
         self.Md5Checker = None
         self.FileOperate = None
         self.m_pBuildVersion = None
+        self.CmdLine = None
         
 
     def postInit(self):
@@ -41,6 +43,7 @@ class AppSys(AppSysBase):
         AppSysBase.instance().FileOperate = FileOperate;       # 保存模块
         self.m_pBuildVersion = BuildVersion()
         self.m_pParamInfo = ParamInfo()
+        self.CmdLine = CmdLine
         
         AppSysBase.instance().m_config.readInit('config.txt')
     
