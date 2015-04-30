@@ -35,8 +35,8 @@ class VerThread(Thread):
         
         # 生成所有的 md5 
         AppSysBase.instance().m_pBuildVersion.buildFileMd()
-        # 生成 all 文件 
-        AppSysBase.instance().m_pBuildVersion.buildAllMd()
+        # 生成 Mini 文件 
+        AppSysBase.instance().m_pBuildVersion.buildMiniMd()
         
         # 生成压缩文件
         AppSysBase.instance().m_pBuildVersion.lzmaMd5File()

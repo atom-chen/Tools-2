@@ -1,6 +1,7 @@
 #-*- encoding=utf-8 -*-
 
 import os
+import lzma
 
 from FileDirDiff.Core.AppSysBase import AppSysBase
 
@@ -51,14 +52,14 @@ class BuildVersion(object):
         
         self.closemdfile()
         
-    def buildAllMd(self):
+    def buildMiniMd(self):
         # 计算 ModuleApp md5
-        fileHandle = open(AppSysBase.instance().m_config.allMd5FilePath(), 'w', encoding='utf-8')
+        fileHandle = open(AppSysBase.instance().m_config.miniMd5FilePath(), 'w', encoding='utf-8')
         md = AppSysBase.instance().Md5Checker.md5_for_file(AppSysBase.instance().m_config.curMd5FilePath())
-        fileHandle.write('all=' + md + '\n')
+        fileHandle.write('mini=' + md + '\n')
 
         fileHandle.close()
-        AppSysBase.instance().m_logSys.info(AppSysBase.instance().m_config.allMd5FilePath() + 'md5 end')
+        AppSysBase.instance().m_logSys.info(AppSysBase.instance().m_config.miniMd5FilePath() + 'md5 end')
         
         
     def lzmaMd5File(self):
@@ -67,11 +68,29 @@ class BuildVersion(object):
         AppSysBase.instance().m_pParamInfo.m_curOutCompressFullFileName = AppSysBase.instance().m_config.verFilePath()
         AppSysBase.instance().CmdLine.lzmaCompress()
         
+        '''
+        with open(AppSysBase.instance().m_pParamInfo.m_curInCompressFullFileName, 'r', encoding = 'utf8') as inHandle:
+            data = inHandle.read()
+            inHandle.close()
+            byteArr = bytes(data, encoding = "utf8")
+            with lzma.open(AppSysBase.instance().m_pParamInfo.m_curOutCompressFullFileName, 'w') as outHandle:
+                outHandle.write(byteArr)
+                outHandle.close()
+        '''
         
-        AppSysBase.instance().m_pParamInfo.m_curInCompressFullFileName = AppSysBase.instance().m_config.allMd5FilePath()
-        AppSysBase.instance().m_pParamInfo.m_curOutCompressFullFileName = AppSysBase.instance().m_config.verAllPath()
+        AppSysBase.instance().m_pParamInfo.m_curInCompressFullFileName = AppSysBase.instance().m_config.miniMd5FilePath()
+        AppSysBase.instance().m_pParamInfo.m_curOutCompressFullFileName = AppSysBase.instance().m_config.verMiniPath()
         AppSysBase.instance().CmdLine.lzmaCompress()
         
+        '''
+        with open(AppSysBase.instance().m_pParamInfo.m_curInCompressFullFileName, 'r', encoding = 'utf8') as inHandle:
+            data = inHandle.read()
+            inHandle.close()
+            byteArr = bytes(data, encoding = "utf8")
+            with lzma.open(AppSysBase.instance().m_pParamInfo.m_curOutCompressFullFileName, 'w') as outHandle:
+                outHandle.write(byteArr)
+                outHandle.close()
+        '''
 
     def copyFile(self):
         # 拷贝文件
@@ -80,7 +99,7 @@ class BuildVersion(object):
             zipName = "{0}.txt".format(filename)
             AppSysBase.instance().FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.m_destRootPath, AppSysBase.instance().m_config.m_outDir, zipName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, zipName))
         
-            filename = AppSysBase.instance().m_config.m_prefixVerAllName
+            filename = AppSysBase.instance().m_config.m_prefixVerMiniName
             zipName = "{0}.txt".format(filename)
         
             AppSysBase.instance().FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.m_destRootPath, AppSysBase.instance().m_config.m_outDir, zipName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, zipName))
