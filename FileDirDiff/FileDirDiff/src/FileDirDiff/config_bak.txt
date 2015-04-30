@@ -1,9 +1,9 @@
 m_preVersion=2015-04-25-00-24-24
 m_curVersion=2015-04-25-00-24-24
-m_preCkFileName=md5file
-m_preCkAllName=md5all
-m_preVerFileName=verfile
-m_preVerAllName=verall
+m_prefixMd5FileName=Md5File
+m_prefixMd5AllName=Md5Mini
+m_prefixVerFileName=VerFile
+m_prefixVerAllName=VerMini
 m_srcRootPath=E:\aaaaa
 m_destRootPath=E:\bbbbb
 m_z7z=D:\Program Files\7-Zip\7z.exe
