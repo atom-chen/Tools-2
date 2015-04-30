@@ -30,8 +30,13 @@ class BuildVersion(object):
         fullpath = os.path.join(directoryName, filename)
         fullpath = fullpath.replace('\\', '/')
         subLen = len(AppSysBase.instance().m_config.m_srcRootPath) + 1
-        relPath = fullpath[subLen:]
-        self.m_curMd5FileHandle.write(relPath + '=' + md)
+        relPath = fullpath[subLen:]         # 相对文件名字
+        with open(fullpath, 'r') as fHandle:
+            fHandle.seek(0, 2)
+            fileSize = fHandle.tell()
+            fHandle.close()
+
+        self.m_curMd5FileHandle.write(relPath + '=' + md + "=" + str(fileSize))
         
         AppSysBase.instance().m_logSys.info('文件  Md5 码:' + fullpath)
 
@@ -56,7 +61,13 @@ class BuildVersion(object):
         # 计算 ModuleApp md5
         fileHandle = open(AppSysBase.instance().m_config.miniMd5FilePath(), 'w', encoding='utf-8')
         md = AppSysBase.instance().Md5Checker.md5_for_file(AppSysBase.instance().m_config.curMd5FilePath())
-        fileHandle.write('mini=' + md + '\n')
+        
+        with open(AppSysBase.instance().m_config.curMd5FilePath(), 'r') as fHandle:
+            fHandle.seek(0, 2)
+            fileSize = fHandle.tell()
+            fHandle.close()
+        
+        fileHandle.write(AppSysBase.instance().m_config.verFileNameAndExt() + md + "=" + str(fileSize))
 
         fileHandle.close()
         AppSysBase.instance().m_logSys.info(AppSysBase.instance().m_config.miniMd5FilePath() + 'md5 end')

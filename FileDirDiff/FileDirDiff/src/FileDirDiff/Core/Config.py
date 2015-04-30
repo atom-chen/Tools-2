@@ -46,14 +46,9 @@ class Config(object):
         curfilename = "{0}_{1}{2}".format(self.m_prefixMd5FileName, self.m_curVersion, '.txt')
         return os.path.join(self.m_destRootPath, self.m_tmpDir, curfilename)
 
-    # 之前 md 校验和文件路径加名字
-    def preMd5FilePath(self):
-        curfilename = "{0}_{1}{2}".format(self.m_prefixMd5FileName, self.m_preVersion, '.txt')
-        return os.path.join(self.m_destRootPath, self.m_tmpDir, curfilename)
-    
     
     def miniMd5FilePath(self):
-        curfilename = "{0}_{1}{2}".format(self.m_prefixMd5MiniName, self.m_preVersion, '.txt')
+        curfilename = "{0}_{1}{2}".format(self.m_prefixMd5MiniName, self.m_curVersion, '.txt')
         return os.path.join(self.m_destRootPath, self.m_tmpDir, curfilename)
     
 
@@ -64,6 +59,12 @@ class Config(object):
     # 获取最终生成 Mini 的 md5 
     def verMiniPath(self):
         return os.path.join(self.m_destRootPath, self.m_outDir, self.m_prefixVerMiniName + '.bytes')    
+    
+    
+    def verFileNameAndExt(self):
+        ret = "{0}.{1}".format(self.m_prefixVerFileName, ".bytes")
+        return ret
+    
     
     def isExistPreV(self):
         return self.m_preVersion != '0'
@@ -97,7 +98,7 @@ class Config(object):
         fHandle.write('m_destRootPath=' + self.m_destRootPath + '\n')
         fHandle.write('m_z7z=' + self.m_z7z + '\n')
         fHandle.write('m_subVersion=' + self.m_subVersion)
-        
+
         fHandle.close()
         
     def hasSubVersion(self):
