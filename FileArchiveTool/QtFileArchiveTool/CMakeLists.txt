@@ -83,3 +83,4 @@ file(REMOVE_RECURSE ${QtFileArchiveTool_BINARY_DIR}/Debug/Config)
 file(MAKE_DIRECTORY ${QtFileArchiveTool_BINARY_DIR}/Debug/Config)
 # øΩ±¥ Config ≈‰÷√
 file(INSTALL ${QtFileArchiveTool_SOURCE_DIR}/Config/Config_bak.txt DESTINATION ${QtFileArchiveTool_BINARY_DIR}/Debug/Config)
+file(RENAME ${QtFileArchiveTool_BINARY_DIR}/Debug/Config/Config_bak.txt ${QtFileArchiveTool_BINARY_DIR}/Debug/Config/Config.txt)
