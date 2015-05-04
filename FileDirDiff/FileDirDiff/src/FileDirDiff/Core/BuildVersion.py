@@ -111,14 +111,61 @@ class BuildVersion(object):
     def copyFile(self):
         # 拷贝文件
         if AppSysBase.instance().m_bOverVer:
-            AppSysBase.instance().FileOperate.copyFile(AppSysBase.instance().m_config.verMiniPath(), AppSysBase.instance().m_config.destVerMiniPath())
-            AppSysBase.instance().FileOperate.copyFile(AppSysBase.instance().m_config.verFilePath(), AppSysBase.instance().m_config.destVerFilePath())
+            self.copyFileNoSafe();
         else:
             AppSysBase.instance().m_logSys.info('File is Building, cannot copy file')
+            
+            
+    def copyFileNoSafe(self):
+        AppSysBase.instance().FileOperate.copyFile(AppSysBase.instance().m_config.verMiniPath(), AppSysBase.instance().m_config.destVerMiniPath())
+        AppSysBase.instance().FileOperate.copyFile(AppSysBase.instance().m_config.verFilePath(), AppSysBase.instance().m_config.destVerFilePath())
+            
 
     def getCurVerFileCount(self):
         return self.m_curVerFileCount
     
     def addCurVerFileCount(self, value):
         self.m_curVerFileCount += value
+        
+        
+    """
+            生成清单文件
+    """
+    def buildFileListManifest(self):
+        with open(AppSysBase.instance().m_config.getFile2Unity3dPath(), 'r', encoding = 'utf8') as file2Unity3dPathHandle:
+            file2Unity3dPathMap = self.parseText(file2Unity3dPathHandle);
+            file2Unity3dPathHandle.close()
+            
+        with open(AppSysBase.instance().m_config.getFile2DirPath(), 'r', encoding = 'utf8') as file2DirPathHandle:
+            file2DirPathMap = self.parseText(file2DirPathHandle);
+            file2DirPathHandle.close()
 
+        with open(AppSysBase.instance().m_config.getFileListPath(), 'w', encoding = 'utf8') as fileListHandle:
+            bFirstLine = True
+            for (key, value) in file2Unity3dPathMap.items():
+                if value in file2DirPathMap:
+                    if bFirstLine:
+                        bFirstLine = False
+                    else:
+                        fileListHandle.write('\n')
+                    fileListHandle.write("{0}={1}={2}".format(key, value, file2DirPathMap[value]))
+                else:
+                    AppSysBase.instance().m_logSys.info("{0} canot find".format(key));
+                    
+        fileListHandle.close()
+                 
+
+    def parseText(self, fileHandle):
+        cont = fileHandle.read()
+        strlist = cont.split('\n')
+        idx = 0
+        substrList = []
+        retMap = {}
+        listlen = len(strlist)
+        while(idx < listlen):
+            substrList = strlist[idx].split('=')
+            if len(substrList[0]):
+                retMap[substrList[0]] = substrList[1]
+            idx += 1
+
+        return retMap

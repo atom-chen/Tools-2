@@ -14,6 +14,8 @@ class Config(object):
         self.m_srcRootPath = ""       # 资源的根目录,这个是原始资源的 目录
         self.m_tmpDir=""              # 临时目录
         self.m_destRootPath = ""      # 存放最终文件的目录,这个就是临时目录
+        self.m_file2DirPath = ""      # 文件到目录清单
+        self.m_file2Unity3dPath = ""  # 文件到 Unity3d 打包清单
         self.m_preVersion = ""        # 之前版本，倒数第二次保存的版本信息
         self.m_curVersion = ""        # 当前版本，最后一次保存的版本信息
         self.m_prefixMd5FileName = "Md5File"       # 校验和原始文件文件名字前缀
@@ -23,6 +25,7 @@ class Config(object):
         self.m_subVersion = '0';        # 子版本号，主要是升级所有的文件的版本，经常有些文件传到服务器上，的那是文件有问题，需要主动升级版本号,'0' 是没有版本号
         # 工具类
         self.m_z7z= 'D:\\ProgramFiles\\7-Zip\\7z.exe'
+        self.m_fileListName = ""
         
         self.m_tmpFileSubDir = "Tmp"              # 临时文件输出的子目录
         self.m_tmpOutSubDir = "Output"            # 临时文件输出目录
@@ -115,6 +118,9 @@ class Config(object):
         fHandle.write('m_srcRootPath=' + self.m_srcRootPath + '\n')
         fHandle.write('m_tmpDir=' + self.m_srcRootPath + '\n')
         fHandle.write('m_destRootPath=' + self.m_destRootPath + '\n')
+        fHandle.write('m_file2DirPath=' + self.m_file2DirPath + '\n')
+        fHandle.write('m_file2Unity3dPath=' + self.m_file2Unity3dPath + '\n')
+        fHandle.write('m_fileListName=' + self.m_fileListName + '\n')
         fHandle.write('m_z7z=' + self.m_z7z + '\n')
         fHandle.write('m_subVersion=' + self.m_subVersion)
 
@@ -127,5 +133,17 @@ class Config(object):
     def subVersionByte(self):
         #self.m_subVersion.encode("utf-8")
         return bytes(self.m_subVersion, encoding = "utf8")
+    
+    
+    def getFile2DirPath(self):
+        return self.m_file2DirPath
+    
+    
+    def getFile2Unity3dPath(self):
+        return self.m_file2Unity3dPath
+    
+    
+    def getFileListPath(self):
+        return os.path.join(self.m_destRootPath, self.m_fileListName)
         
 

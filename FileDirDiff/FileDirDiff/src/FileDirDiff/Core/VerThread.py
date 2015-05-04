@@ -37,11 +37,13 @@ class VerThread(Thread):
         AppSysBase.instance().m_pBuildVersion.buildFileMd()
         # 生成 Mini 文件 
         AppSysBase.instance().m_pBuildVersion.buildMiniMd()
-        
         # 生成压缩文件
         AppSysBase.instance().m_pBuildVersion.lzmaMd5File()
-        #拷贝文件
+        # 拷贝文件
+        AppSysBase.instance().m_pBuildVersion.copyFileNoSafe()
+        # 生成清单文件
+        AppSysBase.instance().m_pBuildVersion.buildFileListManifest()
         
-        AppSysBase.instance().m_logSys.info("可以拷贝生成文件到目标文件夹了")
+        AppSysBase.instance().m_logSys.info("版本数据文件生成结束")
         AppSysBase.instance().m_bOverVer = True
 
