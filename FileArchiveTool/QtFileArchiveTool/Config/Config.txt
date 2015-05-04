@@ -1,5 +1,0 @@
-maxSizePerPak=31457280
-pakInputRootPath=E:/ninhao
-pakOutputRootPath=E:/aaaaa
-unpakOutputRootPath=E:/bbbbb
-maniFestFullPath=E:/aaaaa/file2dir.txt

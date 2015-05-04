@@ -82,4 +82,4 @@ endif(NOT Qt5Widgets_FOUND)
 file(REMOVE_RECURSE ${QtFileArchiveTool_BINARY_DIR}/Debug/Config)
 file(MAKE_DIRECTORY ${QtFileArchiveTool_BINARY_DIR}/Debug/Config)
 # øΩ±¥ Config ≈‰÷√
-file(INSTALL ${QtFileArchiveTool_SOURCE_DIR}/Config/Config.txt DESTINATION ${QtFileArchiveTool_BINARY_DIR}/Debug/Config)
+file(INSTALL ${QtFileArchiveTool_SOURCE_DIR}/Config/Config_bak.txt DESTINATION ${QtFileArchiveTool_BINARY_DIR}/Debug/Config)
