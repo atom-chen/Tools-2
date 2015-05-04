@@ -1,0 +1,11 @@
+m_preVersion=2015-05-04-11-21-10
+m_curVersion=2015-05-04-11-26-18
+m_prefixMd5FileName=Md5File
+m_prefixMd5MiniName=Md5Mini
+m_prefixVerFileName=VerFile
+m_prefixVerMiniName=VerMini
+m_srcRootPath=E:\aaaaa
+m_tmpDir=E:\aaaaa
+m_destRootPath=E:\Work\Code20150402\client\trunk\Client\Assets\StreamingAssets
+m_z7z=D:\Program Files\7-Zip\7z.exe
+m_subVersion=0

@@ -12,6 +12,7 @@ class Config(object):
     def __init__(self): 
         # 注意全部需要初始化，否则如果配置文件不用，并且没有判断是否有这个属性，就会出问题
         self.m_srcRootPath = ""       # 资源的根目录,这个是原始资源的 目录
+        self.m_tmpDir=""              # 临时目录
         self.m_destRootPath = ""      # 存放最终文件的目录,这个就是临时目录
         self.m_preVersion = ""        # 之前版本，倒数第二次保存的版本信息
         self.m_curVersion = ""        # 当前版本，最后一次保存的版本信息
@@ -23,8 +24,8 @@ class Config(object):
         # 工具类
         self.m_z7z= 'D:\\ProgramFiles\\7-Zip\\7z.exe'
         
-        self.m_tmpDir = 'tmp'         # 临时文件夹目录
-        self.m_outDir = 'output'      # 最终输出文件目录
+        self.m_tmpFileSubDir = "Tmp"              # 临时文件输出的子目录
+        self.m_tmpOutSubDir = "Output"            # 临时文件输出目录
         
         #读取初始化数据
     def readInit(self, filename):
@@ -43,26 +44,35 @@ class Config(object):
 
     # 当前 md 校验和文件路径加名字
     def curMd5FilePath(self):
-        curfilename = "{0}_{1}{2}".format(self.m_prefixMd5FileName, self.m_curVersion, '.txt')
-        return os.path.join(self.m_destRootPath, self.m_tmpDir, curfilename)
+        curfilename = "{0}_{1}{2}".format(self.m_prefixMd5FileName, self.m_curVersion, '.bytes')
+        return os.path.join(self.m_tmpDir, self.m_tmpFileSubDir, curfilename)
 
     
     def miniMd5FilePath(self):
-        curfilename = "{0}_{1}{2}".format(self.m_prefixMd5MiniName, self.m_curVersion, '.txt')
-        return os.path.join(self.m_destRootPath, self.m_tmpDir, curfilename)
+        curfilename = "{0}_{1}{2}".format(self.m_prefixMd5MiniName, self.m_curVersion, '.bytes')
+        return os.path.join(self.m_tmpDir, self.m_tmpFileSubDir, curfilename)
     
 
     # 返回  file 文件
     def verFilePath(self):
-        return os.path.join(self.m_destRootPath, self.m_outDir, self.m_prefixVerFileName + '.bytes')
+        return os.path.join(self.m_tmpDir, self.m_tmpOutSubDir, self.m_prefixVerFileName + '.bytes')
     
     # 获取最终生成 Mini 的 md5 
     def verMiniPath(self):
-        return os.path.join(self.m_destRootPath, self.m_outDir, self.m_prefixVerMiniName + '.bytes')    
+        return os.path.join(self.m_tmpDir, self.m_tmpOutSubDir, self.m_prefixVerMiniName + '.bytes')    
+    
+    
+    # 返回  file 文件
+    def destVerFilePath(self):
+        return os.path.join(self.m_destRootPath, self.m_prefixVerFileName + '.bytes')
+    
+    # 获取最终生成 Mini 的 md5 
+    def destVerMiniPath(self):
+        return os.path.join(self.m_destRootPath, self.m_prefixVerMiniName + '.bytes')
     
     
     def verFileNameAndExt(self):
-        ret = "{0}.{1}".format(self.m_prefixVerFileName, ".bytes")
+        ret = "{0}{1}".format(self.m_prefixVerFileName, ".bytes")
         return ret
     
     
@@ -71,6 +81,14 @@ class Config(object):
     
     def isExistCurV(self):
         return self.m_curVersion != '0'
+    
+    # 临时文件目录
+    def tmpFileDir(self):
+        return os.path.join(self.m_tmpDir, "tmp")
+    
+    def outFileDir(self):
+        return os.path.join(self.m_tmpDir, "output")
+    
     
     def refreshVersion(self):
         self.m_preVersion = self.m_curVersion
@@ -85,7 +103,7 @@ class Config(object):
 
     
     def saveCFG(self):
-        filename = "config.txt"
+        filename = "Config/Config.txt"
         fHandle = open(filename, 'w', encoding = 'utf8')
         fHandle.write('m_preVersion=' + self.m_preVersion + '\n')
         fHandle.write('m_curVersion=' + self.m_curVersion + '\n')
@@ -95,6 +113,7 @@ class Config(object):
         fHandle.write('m_prefixVerMiniName=' + self.m_prefixVerMiniName + '\n')
 
         fHandle.write('m_srcRootPath=' + self.m_srcRootPath + '\n')
+        fHandle.write('m_tmpDir=' + self.m_srcRootPath + '\n')
         fHandle.write('m_destRootPath=' + self.m_destRootPath + '\n')
         fHandle.write('m_z7z=' + self.m_z7z + '\n')
         fHandle.write('m_subVersion=' + self.m_subVersion)

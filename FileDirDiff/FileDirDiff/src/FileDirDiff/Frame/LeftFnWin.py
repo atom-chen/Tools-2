@@ -30,7 +30,7 @@ class LeftFnWin(QtWidgets.QDockWidget):
     # 生成版本文件，用于更新资源使用
     # 拷贝文件
     def onBtnClkCopy(self):
-        AppSysBase.instance().copyFile();
+        AppSysBase.instance().m_pBuildVersion.copyFile();
         
     # 生成版本文件
     def onBtnClkDiff(self):

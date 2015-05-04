@@ -45,5 +45,5 @@ class AppSys(AppSysBase):
         self.m_pParamInfo = ParamInfo()
         self.CmdLine = CmdLine
         
-        AppSysBase.instance().m_config.readInit('config.txt')
+        AppSysBase.instance().m_config.readInit('Config/Config.txt')
     

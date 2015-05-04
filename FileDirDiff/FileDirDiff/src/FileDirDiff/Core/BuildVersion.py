@@ -67,7 +67,7 @@ class BuildVersion(object):
             fileSize = fHandle.tell()
             fHandle.close()
         
-        fileHandle.write(AppSysBase.instance().m_config.verFileNameAndExt() + md + "=" + str(fileSize))
+        fileHandle.write(AppSysBase.instance().m_config.verFileNameAndExt() + "=" + md + "=" + str(fileSize))
 
         fileHandle.close()
         AppSysBase.instance().m_logSys.info(AppSysBase.instance().m_config.miniMd5FilePath() + 'md5 end')
@@ -77,7 +77,10 @@ class BuildVersion(object):
         # 压缩
         AppSysBase.instance().m_pParamInfo.m_curInCompressFullFileName = AppSysBase.instance().m_config.curMd5FilePath()
         AppSysBase.instance().m_pParamInfo.m_curOutCompressFullFileName = AppSysBase.instance().m_config.verFilePath()
-        AppSysBase.instance().CmdLine.lzmaCompress()
+        #AppSysBase.instance().CmdLine.lzmaCompress()
+        
+        # 直接拷贝过去， LZMA 压缩还没有实现
+        AppSysBase.instance().FileOperate.copyFile(AppSysBase.instance().m_pParamInfo.m_curInCompressFullFileName, AppSysBase.instance().m_pParamInfo.m_curOutCompressFullFileName)
         
         '''
         with open(AppSysBase.instance().m_pParamInfo.m_curInCompressFullFileName, 'r', encoding = 'utf8') as inHandle:
@@ -91,7 +94,9 @@ class BuildVersion(object):
         
         AppSysBase.instance().m_pParamInfo.m_curInCompressFullFileName = AppSysBase.instance().m_config.miniMd5FilePath()
         AppSysBase.instance().m_pParamInfo.m_curOutCompressFullFileName = AppSysBase.instance().m_config.verMiniPath()
-        AppSysBase.instance().CmdLine.lzmaCompress()
+        #AppSysBase.instance().CmdLine.lzmaCompress()
+        
+        AppSysBase.instance().FileOperate.copyFile(AppSysBase.instance().m_pParamInfo.m_curInCompressFullFileName, AppSysBase.instance().m_pParamInfo.m_curOutCompressFullFileName)
         
         '''
         with open(AppSysBase.instance().m_pParamInfo.m_curInCompressFullFileName, 'r', encoding = 'utf8') as inHandle:
@@ -106,15 +111,8 @@ class BuildVersion(object):
     def copyFile(self):
         # 拷贝文件
         if AppSysBase.instance().m_bOverVer:
-            filename = AppSysBase.instance().m_config.m_prefixVerFileName
-            zipName = "{0}.txt".format(filename)
-            AppSysBase.instance().FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.m_destRootPath, AppSysBase.instance().m_config.m_outDir, zipName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, zipName))
-        
-            filename = AppSysBase.instance().m_config.m_prefixVerMiniName
-            zipName = "{0}.txt".format(filename)
-        
-            AppSysBase.instance().FileOperate.copyFile(os.path.join(AppSysBase.instance().m_config.m_destRootPath, AppSysBase.instance().m_config.m_outDir, zipName), os.path.join(AppSysBase.instance().m_config.srcrootassetpath, zipName))
-            #FileOperate.copyFile(AppSysBase.instance().m_config.htmlPath(), os.path.join(AppSysBase.instance().m_config.m_srcRootPath, AppSysBase.instance().m_config.htmlname))
+            AppSysBase.instance().FileOperate.copyFile(AppSysBase.instance().m_config.verMiniPath(), AppSysBase.instance().m_config.destVerMiniPath())
+            AppSysBase.instance().FileOperate.copyFile(AppSysBase.instance().m_config.verFilePath(), AppSysBase.instance().m_config.destVerFilePath())
         else:
             AppSysBase.instance().m_logSys.info('File is Building, cannot copy file')
 

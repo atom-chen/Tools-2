@@ -27,11 +27,11 @@ class VerThread(Thread):
         AppSysBase.instance().m_config.saveCFG()
         
         # 检查目录
-        if not os.path.exists(os.path.join(AppSysBase.instance().m_config.m_destRootPath,  AppSysBase.instance().m_config.m_tmpDir)):
-            os.makedirs(os.path.join(AppSysBase.instance().m_config.m_destRootPath,  AppSysBase.instance().m_config.m_tmpDir))
+        if not os.path.exists(AppSysBase.instance().m_config.tmpFileDir()):
+            os.makedirs(AppSysBase.instance().m_config.tmpFileDir())
         
-        if not os.path.exists(os.path.join(AppSysBase.instance().m_config.m_destRootPath,  AppSysBase.instance().m_config.m_outDir)):
-            os.makedirs(os.path.join(AppSysBase.instance().m_config.m_destRootPath,  AppSysBase.instance().m_config.m_outDir))
+        if not os.path.exists(AppSysBase.instance().m_config.outFileDir()):
+            os.makedirs(AppSysBase.instance().m_config.outFileDir())
         
         # 生成所有的 md5 
         AppSysBase.instance().m_pBuildVersion.buildFileMd()
@@ -40,6 +40,8 @@ class VerThread(Thread):
         
         # 生成压缩文件
         AppSysBase.instance().m_pBuildVersion.lzmaMd5File()
+        #拷贝文件
         
         AppSysBase.instance().m_logSys.info("可以拷贝生成文件到目标文件夹了")
         AppSysBase.instance().m_bOverVer = True
+
