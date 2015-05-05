@@ -4,6 +4,7 @@ import os
 import lzma
 
 from FileDirDiff.Core.AppSysBase import AppSysBase
+from FileDirDiff.Core.FileListItem import FileListItem
 
 class BuildVersion(object):
     '''
@@ -133,29 +134,41 @@ class BuildVersion(object):
     """
     def buildFileListManifest(self):
         with open(AppSysBase.instance().m_config.getFile2Unity3dPath(), 'r', encoding = 'utf8') as file2Unity3dPathHandle:
-            file2Unity3dPathMap = self.parseText(file2Unity3dPathHandle);
+            file2Unity3dPathList = self.parseTextAndRetList(file2Unity3dPathHandle);
             file2Unity3dPathHandle.close()
             
         with open(AppSysBase.instance().m_config.getFile2DirPath(), 'r', encoding = 'utf8') as file2DirPathHandle:
-            file2DirPathMap = self.parseText(file2DirPathHandle);
+            file2DirPathList = self.parseTextAndRetList(file2DirPathHandle);
             file2DirPathHandle.close()
 
         with open(AppSysBase.instance().m_config.getFileListPath(), 'w', encoding = 'utf8') as fileListHandle:
             bFirstLine = True
-            for (key, value) in file2Unity3dPathMap.items():
-                if value in file2DirPathMap:
+#             for (key, value) in file2Unity3dPathList.items():
+#                 if value in file2DirPathList:
+#                     if bFirstLine:
+#                         bFirstLine = False
+#                     else:
+#                         fileListHandle.write('\n')
+#                     fileListHandle.write("{0}={1}={2}".format(key, value, file2DirPathList[value]))
+#                 else:
+#                     AppSysBase.instance().m_logSys.info("{0} canot find".format(key));
+            for item in file2Unity3dPathList:
+                idx = self.findElemIdx(item.m_sndName, file2DirPathList)
+                if idx != -1:
                     if bFirstLine:
                         bFirstLine = False
                     else:
                         fileListHandle.write('\n')
-                    fileListHandle.write("{0}={1}={2}".format(key, value, file2DirPathMap[value]))
+                    fileListHandle.write("{0}={1}={2}".format(item.m_firstName, item.m_sndName, file2DirPathList[idx].m_sndName))
                 else:
-                    AppSysBase.instance().m_logSys.info("{0} canot find".format(key));
+                    AppSysBase.instance().m_logSys.info("{0} canot find".format(item.m_firstName));
+            
+            
                     
         fileListHandle.close()
                  
 
-    def parseText(self, fileHandle):
+    def parseTextAndRetDic(self, fileHandle):
         cont = fileHandle.read()
         strlist = cont.split('\n')
         idx = 0
@@ -169,3 +182,35 @@ class BuildVersion(object):
             idx += 1
 
         return retMap
+    
+    
+    def parseTextAndRetList(self, fileHandle):
+        cont = fileHandle.read()
+        strlist = cont.split('\n')
+        idx = 0
+        substrList = []
+        retList = []
+        listlen = len(strlist)
+        while(idx < listlen):
+            substrList = strlist[idx].split('=')
+            if len(substrList[0]):
+                item = FileListItem()
+                item.m_firstName = substrList[0]
+                item.m_sndName = substrList[1]
+                retList.append(item)
+            idx += 1
+
+        return retList
+
+
+    def findElemIdx(self, elem, elemList):
+        idx = 0
+        for item in elemList:
+            if item.m_firstName == elem:
+                return idx;
+            
+            idx += 1;
+                
+        return -1
+
+

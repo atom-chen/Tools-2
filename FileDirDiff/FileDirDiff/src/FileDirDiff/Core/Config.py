@@ -7,6 +7,8 @@ import os
 import datetime
 #import time
 
+from FileDirDiff.Core.AppSysBase import AppSysBase
+
 # base config info
 class Config(object):
     def __init__(self): 
@@ -32,7 +34,11 @@ class Config(object):
         
         #读取初始化数据
     def readInit(self, filename):
-        fHandle = open(filename, 'r', encoding = 'utf8')
+        try:
+            fHandle = open(filename, 'r', encoding = 'utf8')
+        except IOError:
+            AppSysBase.instance().m_logSys.info("{0} 打开文件失败".format(filename));
+            return;
         cont = fHandle.read()
         strlist = cont.split('\n')
         idx = 0

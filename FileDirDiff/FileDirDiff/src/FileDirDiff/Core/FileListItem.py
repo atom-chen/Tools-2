@@ -14,7 +14,9 @@ class FileListItem(object):
         '''
         Constructor
         '''
-        pass
+        self.m_firstName = ""
+        self.m_sndName = ""
+    
     
     
         
