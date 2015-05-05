@@ -5,6 +5,7 @@ encoding//src/FileDirDiff/Core/AppSysBase.py=utf-8
 encoding//src/FileDirDiff/Core/BuildVersion.py=utf-8
 encoding//src/FileDirDiff/Core/Config.py=utf-8
 encoding//src/FileDirDiff/Core/EConst.py=utf-8
+encoding//src/FileDirDiff/Core/FileListItem.py=utf-8
 encoding//src/FileDirDiff/Core/LogSys.py=utf-8
 encoding//src/FileDirDiff/Core/Md5Checker.py=utf-8
 encoding//src/FileDirDiff/Core/Utils.py=utf-8
