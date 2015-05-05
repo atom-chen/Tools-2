@@ -2,4 +2,4 @@ maxSizePerPak=31457280
 pakInputRootPath=E:/Work/Code20150402/client/trunk/Client/PkgOutput/AssetBundles/Windows
 pakOutputRootPath=E:/Work/Code20150402/client/trunk/Client/Assets/StreamingAssets
 unpakOutputRootPath=E:/bbbbb
-maniFestFullPath=E:/Work/Code20150402/client/trunk/Client/Assets/StreamingAssets/File2Dir.bytes
+maniFestFullPath=E:/aaaaa/File2Dir.bytes
