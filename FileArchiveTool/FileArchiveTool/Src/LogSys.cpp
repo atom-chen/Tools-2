@@ -2,6 +2,7 @@
 #include "LogDeviceBase.h"
 #include "Thread.h"
 #include "PtrDefine.h"
+#include <string>
 
 BEGIN_NAMESPACE_FILEARCHIVETOOL
 
@@ -38,7 +39,8 @@ void LogSys::log(const char* msg)
 	else
 	{
 		boost::lock_guard<boost::mutex> lock(*m_asyncLogLock);
-		m_pAsyncLogVec->push_back(msg);
+		std::string str(msg);			// 测试字符串释放的时候会宕机的问题
+		m_pAsyncLogVec->push_back(str);
 	}
 }
 
@@ -62,6 +64,7 @@ void LogSys::onTick()
 		}
 	}
 
+	// 这个地方在释放某个 std::string 字符串析构的时候会宕机
 	m_pAsyncLogVec->clear();
 }
 
