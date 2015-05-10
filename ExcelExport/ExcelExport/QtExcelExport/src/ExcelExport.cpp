@@ -1,5 +1,4 @@
 ﻿#include "ExcelExport.hxx"
-//#include <afx.h>	//CString的头文件 
 #include "Tools.hxx"
 //#include <QtGui/QtGui>
 #include "Platform.hxx"
@@ -414,9 +413,17 @@ void ExcelExport::exportPropertyVec2File(const char* lpszOutputFile, std::vector
 	FILE* file;
 	file = fopen(lpszOutputFile, "wb");
 	//fwrite(&count, sizeof(count), 1, file);
-	byteBuffer.writeFile(file);
-
-	fclose(file);
+	if (file == nullptr)
+	{
+		std::stringstream ss;
+		ss << "[" << lpszOutputFile << "] 文件打开失败 \n";
+		Tools::getSingletonPtr()->Log(Tools::getSingletonPtr()->LocalChar2UNICODEStr(ss.str().c_str()));
+	}
+	else
+	{
+		byteBuffer.writeFile(file);
+		fclose(file);
+	}
 }
 
 /**

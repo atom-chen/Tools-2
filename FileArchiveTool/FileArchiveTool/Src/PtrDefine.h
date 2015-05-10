@@ -9,8 +9,9 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 
 #define SAFE_DELETE(ptr) \
 	if(ptr != nullptr)\
-	{\
+		{\
 		delete ptr;\
+		ptr = nullptr;\
 	}\
 	else\
 	{\
@@ -21,6 +22,7 @@ BEGIN_NAMESPACE_FILEARCHIVETOOL
 	if(ptr != nullptr)\
 	{\
 		delete[] ptr;\
+		ptr = nullptr;\
 	}\
 	else\
 	{\

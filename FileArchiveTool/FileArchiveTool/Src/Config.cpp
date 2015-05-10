@@ -71,7 +71,15 @@ void Config::loadConfig()
 	FILE*fin = fopen(fullpath.c_str(), "rb");
 	if (fin == NULL)
 	{
-		printf("Open ScrFile ERR:%s\n", fullpath.c_str());
+		std::stringstream ss;//创建一个流
+
+		ss.clear();
+		ss.str("");
+
+		ss << "Open ScrFile ERR: [" << fullpath.c_str() << "] \n";
+
+		FileArchiveToolSysDef->getLogSysPtr()->log(ss.str().c_str());
+
 		return;
 	}
 

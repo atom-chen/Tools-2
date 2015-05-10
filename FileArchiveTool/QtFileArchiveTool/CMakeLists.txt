@@ -84,3 +84,11 @@ file(MAKE_DIRECTORY ${QtFileArchiveTool_BINARY_DIR}/Debug/Config)
 # 拷贝 Config 配置
 file(INSTALL ${QtFileArchiveTool_SOURCE_DIR}/Config/Config_bak.txt DESTINATION ${QtFileArchiveTool_BINARY_DIR}/Debug/Config)
 file(RENAME ${QtFileArchiveTool_BINARY_DIR}/Debug/Config/Config_bak.txt ${QtFileArchiveTool_BINARY_DIR}/Debug/Config/Config.txt)
+
+# 拷贝这个目录是为了 VS 中启动调试，因为 boost 的 FileSystem 不能获取 exe 当前工作目录
+# 删除 Config 并且创建文件目录
+file(REMOVE_RECURSE ${QtFileArchiveTool_BINARY_DIR}/Config)
+file(MAKE_DIRECTORY ${QtFileArchiveTool_BINARY_DIR}/Config)
+# 拷贝 Config 配置
+file(INSTALL ${QtFileArchiveTool_SOURCE_DIR}/Config/Config_bak.txt DESTINATION ${QtFileArchiveTool_BINARY_DIR}/Config)
+file(RENAME ${QtFileArchiveTool_BINARY_DIR}/Config/Config_bak.txt ${QtFileArchiveTool_BINARY_DIR}/Config/Config.txt)
