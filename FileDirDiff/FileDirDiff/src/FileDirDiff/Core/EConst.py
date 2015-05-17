@@ -7,3 +7,6 @@
 class EConst(object):
     ePreMd5Dir = 0
     eCurMd5Dir = 1
+
+
+

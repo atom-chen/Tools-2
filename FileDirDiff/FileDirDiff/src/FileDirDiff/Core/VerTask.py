@@ -1,25 +1,26 @@
 #-*- encoding=utf-8 -*-
 
-'''
-'''
-
-from threading import Thread
 import os
-
 from FileDirDiff.Core.AppSys import AppSysBase
+from FileDirDiff.Core.ProcessWrap import ProcessWrap
 
-class VerThread(Thread):
-    
-    def __init__(self, threadName, func):
-        super(VerThread, self).__init__(name = threadName)  # must add
-        self.m_runF = func
+class VerTask(object):
+    '''
+    classdocs
+    '''
 
-    def run(self):
-        if self.m_runF is not None:
-            self.m_runF()
+    def __init__(self, params):
+        '''
+        Constructor
+        '''
+        self.m_verProcess = ProcessWrap("VerProcess", self.outDiff);
 
-    @staticmethod
-    def outDiff():
+    def start(self):
+        self.m_verProcess.start()
+        #self.m_verProcess.join()
+
+    # @staticmethod
+    def outDiff(self):
         AppSysBase.instance().m_bOverVer = False
         
         # 只有在点击生成版本的时候，才更改当前版本的版本日期，设置当前版本
@@ -47,3 +48,4 @@ class VerThread(Thread):
         AppSysBase.instance().m_logSys.info("版本数据文件生成结束")
         AppSysBase.instance().m_bOverVer = True
 
+        

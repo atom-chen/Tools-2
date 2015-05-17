@@ -26,7 +26,7 @@ class AppSys(AppSysBase):
     
     def __init__(self):
         self.m_bOverVer = True     # Over
-        self.m_verThread = None    # ver thread
+        self.m_verTask = None    # ver thread
         self.m_md5DirOperate = None    # dir 操作
         self.m_config = None
         self.m_logSys = None

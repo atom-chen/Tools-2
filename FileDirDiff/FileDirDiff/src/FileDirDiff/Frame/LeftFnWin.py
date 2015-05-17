@@ -9,7 +9,7 @@ from PyQt5 import QtWidgets
 
 import FileDirDiff.UI.ui_leftfnwin
 from FileDirDiff.Core.AppSys import AppSysBase
-from FileDirDiff.Core.VerThread import VerThread
+from FileDirDiff.Core.VerTask import VerTask
 
 class LeftFnWin(QtWidgets.QDockWidget):    
     def __init__(self):
@@ -36,7 +36,8 @@ class LeftFnWin(QtWidgets.QDockWidget):
     def onBtnClkDiff(self):
         #直接启动线程
         if AppSysBase.instance().m_bOverVer:
-            AppSysBase.instance().m_verThread = VerThread("VerThread", VerThread.outDiff);
-            AppSysBase.instance().m_verThread.start()
+            if AppSysBase.instance().m_verTask is None:
+                AppSysBase.instance().m_verTask = VerTask();
+            AppSysBase.instance().m_verTask.start()
         else:
             AppSysBase.instance().m_logSys.info('Verthread is runing')
