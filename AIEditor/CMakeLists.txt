@@ -9,7 +9,7 @@ message(STATUS "builder main start")
 
 set(CMAKE_DEBUG_POSTFIX "_d")
 
-set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR})
+set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}" CACHE PATH "install prefix" FORCE)
 
 # if(MSVC)
 if(MSVC11 OR MSVC12)

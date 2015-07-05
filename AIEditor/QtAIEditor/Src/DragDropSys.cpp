@@ -18,7 +18,7 @@ void DragDropSys::startDrag()
 
 	if (m_pDragItem == nullptr)
 	{
-		m_pDragItem = QtAIEditorSys::getSingletonPtr()->m_pBuildFactory->buildBezierCurveItem();
+		m_pDragItem = (QGraphicsItem *)(QtAIEditorSys::getSingletonPtr()->m_pBuildFactory->buildBezierCurveItem());
 	}
 }
 
