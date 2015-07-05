@@ -2,7 +2,7 @@
 
 BEGIN_NAMESPACE_AIEDITOR
 
-template <> AIEditorSys* Singleton<AIEditorSys>::m_sSingleton = 0;
+template <> AIEditorSys* Singleton<AIEditorSys>::ms_Singleton = 0;
 
 AIEditorSys::AIEditorSys()
 {

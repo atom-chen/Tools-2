@@ -23,6 +23,6 @@ public:
 //	static QtAIEditorSys* getSingletonPtr();
 };
 
-#define g_pQtAIEditorSys ((QtAIEditorSys*)(QtAIEditorSys::getSingletonPtr()))
+#define g_pQtAIEditorSys (static_cast<QtAIEditorSys*>(QtAIEditorSys::getSingletonPtr()))
 
 #endif		// __QTAIEDITORSYS_H_
