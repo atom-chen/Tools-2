@@ -8,8 +8,13 @@
 class GraphicsView : public QGraphicsView
 {
     Q_OBJECT
+
+//protected:
+//	QPointF m_lastPos;
+
 public:
 	explicit GraphicsView(QWidget *parent = 0);
+	void adjustSceneRect();	// 调整 VIEW 始终正好能放下整个场景就行了
 
 protected:
 	void paintEvent(QPaintEvent *e);

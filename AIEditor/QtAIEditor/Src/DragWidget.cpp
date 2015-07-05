@@ -35,6 +35,7 @@ DragWidget::DragWidget(QWidget *parent)
     this->resize(600, 400);
 
 	g_pQtAIEditorSys->setGraphicsScenePtr(m_pScene);
+	g_pQtAIEditorSys->setGraphicsViewPtr(m_pView);
 }
 
 void DragWidget::makeDraggable(QGraphicsItem *item)

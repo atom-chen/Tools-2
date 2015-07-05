@@ -4,6 +4,8 @@
 #include <QtWidgets/QWidget>
 #include "AIEditor.h"
 
+class DraggableItemBase;
+
 namespace Ui
 {
 	class DraggableItemWidget;
@@ -19,9 +21,13 @@ public:
 
 private:
 	Ui::DraggableItemWidget *m_ui;
+	DraggableItemBase* m_pDraggableItemBase;
 
 public Q_SLOTS:
 	void onClkBtn();
+
+public:
+	void setDraggableItemBase(DraggableItemBase* pDraggableItemBase);
 };
 
 #endif // DRAGGABLEITEMWIDGET_H

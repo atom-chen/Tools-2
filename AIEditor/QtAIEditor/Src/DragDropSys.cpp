@@ -26,6 +26,8 @@ void DragDropSys::startDrag(QPoint* pStartPt)
 		g_pGraphicsScene->addGraphicsObject(m_pBezierCurveItem);
 	}
 	m_pBezierCurveItem->setStartPos(pStartPt);
+	m_pBezierCurveItem->setEndPos(pStartPt);
+	m_pBezierCurveItem->updateCtrlPos();
 }
 
 void DragDropSys::stopDrag()

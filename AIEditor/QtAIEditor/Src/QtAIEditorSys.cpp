@@ -2,6 +2,7 @@
 #include "DragDropSys.h"
 #include "BuildFactory.h"
 #include "GraphicsScene.h"
+#include "GraphicsView.h"
 
 QtAIEditorSys::QtAIEditorSys()
 {
@@ -27,4 +28,14 @@ GraphicsScene* QtAIEditorSys::getGraphicsScenePtr()
 void QtAIEditorSys::setGraphicsScenePtr(GraphicsScene* pGraphicsScene)
 {
 	m_pGraphicsScene = pGraphicsScene;
+}
+
+GraphicsView* QtAIEditorSys::getGraphicsViewPtr()
+{
+	return  m_pGraphicsView;
+}
+
+void QtAIEditorSys::setGraphicsViewPtr(GraphicsView* pGraphicsView)
+{
+	m_pGraphicsView = pGraphicsView;
 }

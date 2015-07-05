@@ -11,6 +11,8 @@ DraggableItemBase::DraggableItemBase()
 	m_draggableItemWidget = new DraggableItemWidget();
 	QGraphicsProxyWidget* pProxyWidget = new QGraphicsProxyWidget(this);
 	pProxyWidget->setWidget(m_draggableItemWidget);
+
+	m_draggableItemWidget->setDraggableItemBase(this);
 }
 
 void DraggableItemBase::dragMoveEvent(QGraphicsSceneDragDropEvent* evt)

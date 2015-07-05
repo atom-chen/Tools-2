@@ -46,10 +46,10 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent * m)
 			// pathItem->pixEarsePath(pathItemPos , this->m_pix_earse_size);
 		}
 		QRect rect;
-		rect.setTopLeft(this->m_lastPos.toPoint() - QPoint(150, 150));
-		rect.setBottomRight(this->m_lastPos.toPoint() + QPoint(150, 150));
+		rect.setTopLeft(this->m_lastPos.toPoint() - QPoint(500, 500));
+		rect.setBottomRight(this->m_lastPos.toPoint() + QPoint(500, 500));
 		//这里就是刷新函数，用来刷新scene，但是它同时也会自动刷新item
-		this->invalidate(rect, QGraphicsScene::AllLayers);
+		this->invalidate(rect, QGraphicsScene::AllLayers);	// 重新绘制窗口区域，如果不重新绘制
 	}
 }
 
