@@ -2,7 +2,6 @@
 #define __DRAGDROPSYS_H
 
 #include "AIEditor.h"
-#include "IDragDropSys.h"
 
 class QGraphicsItem;
 class BuildFactory;
