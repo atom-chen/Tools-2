@@ -5,8 +5,10 @@ GraphicsView::GraphicsView(QWidget *parent)
 {
 }
 
-//void GraphicsView::paintEvent(QPaintEvent *e)
-//{
+void GraphicsView::paintEvent(QPaintEvent *e)
+{
+	QGraphicsView::paintEvent(e);
+
 //	QPainter painter(this);
 //	painter.setRenderHint(QPainter::Antialiasing, true);
 //	QPen pen;
@@ -51,21 +53,23 @@ GraphicsView::GraphicsView(QWidget *parent)
 //	painter.setPen(dotpen);
 //	painter.drawPoint(start_pos);
 //	painter.drawPoint(end_pos);
-//}
+}
 
-//void GraphicsView::mouseMoveEvent(QMouseEvent * e)//鼠标移动事件响应
-//{
-//	QPoint coursePoint;
-//	coursePoint = e->pos();//获取当前光标的位置
-//	QPointF convPt = this->mapToScene(coursePoint);
-//}
-//
-//void GraphicsView::mousePressEvent(QMouseEvent * e)//鼠标单击事件响应
-//{
-//
-//}
-//
-//void GraphicsView::mouseReleaseEvent(QMouseEvent * e)//鼠标松开事件响应
-//{
-//
-//}
+void GraphicsView::mouseMoveEvent(QMouseEvent * e)//鼠标移动事件响应
+{
+	QGraphicsView::mouseMoveEvent(e);
+
+	QPoint coursePoint;
+	coursePoint = e->pos();//获取当前光标的位置
+	QPointF convPt = this->mapToScene(coursePoint);
+}
+
+void GraphicsView::mousePressEvent(QMouseEvent * e)//鼠标单击事件响应
+{
+	QGraphicsView::mousePressEvent(e);
+}
+
+void GraphicsView::mouseReleaseEvent(QMouseEvent * e)//鼠标松开事件响应
+{
+	QGraphicsView::mouseReleaseEvent(e);
+}

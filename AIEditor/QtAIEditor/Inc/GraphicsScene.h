@@ -7,6 +7,10 @@
 class GraphicsScene : public QGraphicsScene
 {
     Q_OBJECT
+
+protected:
+	QPointF m_lastPos;
+
 public:
     explicit GraphicsScene(QObject *parent = 0);
 
