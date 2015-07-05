@@ -2,6 +2,7 @@
 #include "ui_DraggableItemWidget.h"
 #include "QtAIEditorSys.h"
 //#include <QtCore/QObject>
+#include "DragDropSys.h"
 
 DraggableItemWidget::DraggableItemWidget(QWidget *parent)
 	: QWidget(parent, 0), m_ui(new Ui::DraggableItemWidget)
@@ -18,5 +19,6 @@ DraggableItemWidget::~DraggableItemWidget()
 
 void DraggableItemWidget::onClkBtn()
 {
-	QtAIEditorSys::getSingletonPtr()->m_pDragDropSys->startDrag();
+	QPoint pStartPt;
+	g_pQtAIEditorSys->m_pDragDropSys->startDrag(&pStartPt);
 }

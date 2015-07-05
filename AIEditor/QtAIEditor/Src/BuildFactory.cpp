@@ -1,7 +1,7 @@
 #include "BuildFactory.h"
 #include "BezierCurveItem.h"
 
-QGraphicsObject* BuildFactory::buildBezierCurveItem()
+BezierCurveItem* BuildFactory::buildBezierCurveItem()
 {
 	return new BezierCurveItem();
 }

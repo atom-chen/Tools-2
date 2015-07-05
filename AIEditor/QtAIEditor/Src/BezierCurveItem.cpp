@@ -15,6 +15,18 @@ BezierCurveItem::BezierCurveItem()
 	updateCtrlPos();
 }
 
+void BezierCurveItem::setStartPos(QPoint* pPos)
+{
+	m_startPos.setX(pPos->x());
+	m_startPos.setY(pPos->y());
+}
+
+void BezierCurveItem::setEndPos(QPoint* pPos)
+{
+	m_endPos.setX(pPos->x());
+	m_endPos.setY(pPos->y());
+}
+
 void BezierCurveItem::updateCtrlPos()
 {
 	m_midPos.setX((m_startPos + m_endPos).x() / 2);

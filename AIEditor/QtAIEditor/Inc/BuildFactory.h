@@ -1,14 +1,13 @@
 #ifndef __BUILDFACTORY_H
 #define __BUILDFACTORY_H
 
-#include "IBuildFactory.h"
-
 class QGraphicsObject;
+class BezierCurveItem;
 
-class BuildFactory : public IBuildFactory
+class BuildFactory
 {
 public:
-	QGraphicsObject* buildBezierCurveItem();
+	BezierCurveItem* buildBezierCurveItem();
 };
 
 #endif // __BUILDFACTORY_H
