@@ -1,8 +1,7 @@
 #include "QtAIEditorSys.h"
 #include "DragDropSys.h"
 #include "BuildFactory.h"
-
-//QtAIEditorSys* QtAIEditorSys::m_sSingleton = 0;
+#include "GraphicsScene.h"
 
 QtAIEditorSys::QtAIEditorSys()
 {
@@ -10,11 +9,22 @@ QtAIEditorSys::QtAIEditorSys()
 	m_pBuildFactory = new BuildFactory();
 }
 
-//QtAIEditorSys* QtAIEditorSys::getSingletonPtr()
-//{
-//	if (m_sSingleton == nullptr)
-//	{
-//		m_sSingleton = new QtAIEditorSys();
-//	}
-//	return m_sSingleton;
-//}
+DragDropSys* QtAIEditorSys::getDragDropSysPtr()
+{
+	return m_pDragDropSys;
+}
+
+BuildFactory* QtAIEditorSys::getBuildFactoryPtr()
+{
+	return m_pBuildFactory;
+}
+
+GraphicsScene* QtAIEditorSys::getGraphicsScenePtr()
+{
+	return m_pGraphicsScene;
+}
+
+void QtAIEditorSys::setGraphicsScenePtr(GraphicsScene* pGraphicsScene)
+{
+	m_pGraphicsScene = pGraphicsScene;
+}

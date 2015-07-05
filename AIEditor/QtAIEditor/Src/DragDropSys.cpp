@@ -3,10 +3,12 @@
 #include "QtAIEditorSys.h"
 #include "BezierCurveItem.h"
 #include "BuildFactory.h"
+#include "GraphicsScene.h"
 
 DragDropSys::DragDropSys()
 {
 	m_startDrag = false;
+	m_pBezierCurveItem = nullptr;
 }
 
 DragDropSys::~DragDropSys()
@@ -20,7 +22,8 @@ void DragDropSys::startDrag(QPoint* pStartPt)
 
 	if (m_pBezierCurveItem == nullptr)
 	{
-		m_pBezierCurveItem = g_pQtAIEditorSys->m_pBuildFactory->buildBezierCurveItem();
+		m_pBezierCurveItem = g_pBuildFactory->buildBezierCurveItem();
+		g_pGraphicsScene->addGraphicsObject(m_pBezierCurveItem);
 	}
 	m_pBezierCurveItem->setStartPos(pStartPt);
 }
@@ -42,4 +45,9 @@ void DragDropSys::drog()
 BezierCurveItem* DragDropSys::getBezierCurveItem()
 {
 	return m_pBezierCurveItem;
+}
+
+bool DragDropSys::getStartDrag()
+{
+	return m_startDrag;
 }

@@ -17,10 +17,14 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent * m)
 //    m->ignore();
     QGraphicsScene::mouseMoveEvent(m);
 
-	QPointF coursePoint;
-	coursePoint = m->pos();//获取当前光标的位置
-	QPoint intPt;
-	g_pQtAIEditorSys->m_pDragDropSys->getBezierCurveItem()->setEndPos(&intPt);
+	if (g_pDragDropSys->getStartDrag())
+	{
+		QPointF coursePoint;
+		coursePoint = m->pos();//获取当前光标的位置
+		QPoint intPt;
+		g_pDragDropSys->getBezierCurveItem()->setEndPos(&intPt);
+		g_pDragDropSys->getBezierCurveItem()->updateCtrlPos();
+	}
 }
 
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *evt)
@@ -31,4 +35,9 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *evt)
 void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *evt)
 {
 	QGraphicsScene::mouseReleaseEvent(evt);
+}
+
+void GraphicsScene::addGraphicsObject(QGraphicsObject* pQGraphicsObject)
+{
+	addItem(pQGraphicsObject);
 }

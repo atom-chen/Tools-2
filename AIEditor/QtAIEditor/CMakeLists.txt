@@ -62,8 +62,6 @@ else(NOT Qt5Widgets_FOUND)
 		./Inc/DragDropSys.h
 		./Inc/QtAIEditorSys.h
 		./Inc/BuildFactory.h
-		./Inc/IBuildFactory.h
-		./Inc/IDragDropSys.h
     )
 
 	#these files need build moc files

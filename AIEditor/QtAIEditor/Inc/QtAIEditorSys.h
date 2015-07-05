@@ -5,24 +5,26 @@
 
 class DragDropSys;
 class BuildFactory;
+class GraphicsScene;
 
 class QtAIEditorSys : public AIEditorSys
 {
-public:
+protected:
 	DragDropSys* m_pDragDropSys;				// 拖放数据
 	BuildFactory* m_pBuildFactory;				// 工厂生成
+	GraphicsScene* m_pGraphicsScene;
 
 public:
 	QtAIEditorSys();
-
-	// 这里写是为了解决没有实例化模板的时候导致的链接错误
-//protected:
-//	static QtAIEditorSys* m_sSingleton;
-//
-//public:
-//	static QtAIEditorSys* getSingletonPtr();
+	DragDropSys* getDragDropSysPtr();
+	BuildFactory* getBuildFactoryPtr();
+	GraphicsScene* getGraphicsScenePtr();
+	void setGraphicsScenePtr(GraphicsScene* pGraphicsScene);
 };
 
 #define g_pQtAIEditorSys (static_cast<QtAIEditorSys*>(QtAIEditorSys::getSingletonPtr()))
+#define g_pDragDropSys g_pQtAIEditorSys->getDragDropSysPtr()
+#define g_pBuildFactory g_pQtAIEditorSys->getBuildFactoryPtr()
+#define g_pGraphicsScene g_pQtAIEditorSys->getGraphicsScenePtr()
 
 #endif		// __QTAIEDITORSYS_H_

@@ -13,6 +13,10 @@ public:
 //signals:
 
 //public slots :
+
+public:
+	void addGraphicsObject(QGraphicsObject* pQGraphicsObject);
+
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *evt);
     void mouseMoveEvent(QGraphicsSceneMouseEvent * m);

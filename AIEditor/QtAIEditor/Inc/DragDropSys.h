@@ -24,6 +24,7 @@ public:
 	void drog();
 
 	BezierCurveItem* getBezierCurveItem();
+	bool getStartDrag();
 };
 
 #endif // DRAGDROPSYS_H

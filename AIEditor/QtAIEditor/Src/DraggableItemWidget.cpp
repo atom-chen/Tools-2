@@ -20,5 +20,5 @@ DraggableItemWidget::~DraggableItemWidget()
 void DraggableItemWidget::onClkBtn()
 {
 	QPoint pStartPt;
-	g_pQtAIEditorSys->m_pDragDropSys->startDrag(&pStartPt);
+	g_pDragDropSys->startDrag(&pStartPt);
 }
