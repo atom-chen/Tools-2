@@ -4,6 +4,8 @@
 #include <QtWidgets/QDockWidget>
 #include "AIEditor.h"
 
+class QTreeWidgetItem;
+
 namespace Ui
 {
 	class ProjectWidget;
@@ -16,6 +18,9 @@ class ProjectWidget : public QDockWidget
 public:
 	explicit ProjectWidget(QWidget *parent = 0);
 	~ProjectWidget();
+
+private slots:
+	void showSelectedImage(QTreeWidgetItem * item, int column); //点击树节点事件
 
 private:
 	Ui::ProjectWidget *m_ui;

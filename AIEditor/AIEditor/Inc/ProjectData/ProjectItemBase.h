@@ -7,7 +7,8 @@ BEGIN_NAMESPACE_AIEDITOR
 
 class AIEDITOR_EXPORT ProjectItemBase
 {
-
+public:
+	ProjectItemBase();
 };
 
 END_NAMESPACE_AIEDITOR
