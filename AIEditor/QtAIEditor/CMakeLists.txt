@@ -28,22 +28,22 @@ else(NOT Qt5Widgets_FOUND)
     file(GLOB UI_FILES *.ui)
 
     set(SRCS_FILES
-	    ./src/Main.cpp
-        ./src/MainWindow.cpp
-		./src/LogWidget.cpp
-		./src/ProjectWidget.cpp
-		./src/CenterTabWidget.cpp
-		./src/DragWidget.cpp
-		./src/DraggablePiece.cpp
-		./src/GraphicsScene.cpp
-		./src/BoardHexagon.cpp
-		./src/DraggableItemBase.cpp
-		./src/DraggableItemWidget.cpp
-		./src/GraphicsView.cpp
-		./src/BezierCurveItem.cpp
-		./src/DragDropSys.cpp
-		./src/QtAIEditorSys.cpp
-		./src/BuildFactory.cpp
+	    ./Src/Main.cpp
+        ./Src/MainWindow.cpp
+		./Src/LogWidget.cpp
+		./Src/ProjectWidget.cpp
+		./Src/CenterTabWidget.cpp
+		./Src/DragWidget.cpp
+		./Src/DraggablePiece.cpp
+		./Src/GraphicsScene.cpp
+		./Src/BoardHexagon.cpp
+		./Src/DraggableItemBase.cpp
+		./Src/DraggableItemWidget.cpp
+		./Src/GraphicsView.cpp
+		./Src/BezierCurveItem.cpp
+		./Src/DragDropSys.cpp
+		./Src/QtAIEditorSys.cpp
+		./Src/BuildFactory.cpp
     )
 	
 	set(INCS_FILES
@@ -62,6 +62,7 @@ else(NOT Qt5Widgets_FOUND)
 		./Inc/DragDropSys.h
 		./Inc/QtAIEditorSys.h
 		./Inc/BuildFactory.h
+		./Inc/QtIncAll.h
     )
 
 	#these files need build moc files
@@ -78,6 +79,11 @@ else(NOT Qt5Widgets_FOUND)
 	
 	SET(QRC_FILES ./Res/Qrc.qrc)
 	
+	set(PROJECT_WIDGET_DATA_FILES
+		./Inc/ProjectWidget/ProjectWidgetItemBase.h
+		./Src/ProjectWidget/ProjectWidgetItemBase.cpp
+	)
+	
 	qt5_wrap_cpp(MOC_SRCS ${MOC_FILES})
     qt5_wrap_ui(UI_SRCS ${UI_FILES})
 	qt5_add_resources(QRC_SRCS ${QRC_FILES})
@@ -91,18 +97,21 @@ else(NOT Qt5Widgets_FOUND)
 	
     source_group("Source Files" FILES ${SRCS_FILES})
     source_group("Include Files" FILES ${INCS_FILES})
+	source_group("ProjectWidget" FILES ${PROJECT_WIDGET_DATA_FILES})
 
     # if we don't include this CMake will not include ui headers properly:
     include_directories(${CMAKE_CURRENT_BINARY_DIR})
     include_directories(./Inc)
+	include_directories(./Inc/ProjectWidget)
 	include_directories(../AIEditor/Inc)
+	include_directories(../AIEditor/Inc/ProjectData)
 	include_directories(${QT_BINARY_DIR}/../include)
 	
 	link_directories(${QT_BINARY_DIR}/../lib)
 	
 	ADD_DEFINITIONS(-DAIEDITOR_DLL)
 	
-    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${INCS_FILES} ${QRC_SRCS} ${RC_FILES})
+    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${INCS_FILES} ${QRC_SRCS} ${RC_FILES} ${PROJECT_WIDGET_DATA_FILES})
 
     ADD_EXECUTABLE(QtAIEditor WIN32 ${ALLSRCS})
 

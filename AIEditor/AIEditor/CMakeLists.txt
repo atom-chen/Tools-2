@@ -22,19 +22,26 @@ set(INCS_FILES
 )
 
 set(SRCS_FILES
-	./src/Aaa.cpp
-	./src/AIEditorSys.cpp
+	./Src/Aaa.cpp
+	./Src/AIEditorSys.cpp
+)
+
+set(PROJECT_DATA_FILES
+	./Inc/ProjectData/ProjectItemBase.h
+	./Src/ProjectData/ProjectItemBase.cpp
 )
 
 source_group("Source Files" FILES ${SRCS_FILES})
 source_group("Include Files" FILES ${INCS_FILES})
 
-include_directories(./Inc)
+source_group("ProjectData" FILES ${PROJECT_DATA_FILES})
+
+include_directories(./Inc ./Inc/ProjectData)
 
 ADD_DEFINITIONS(-DAIEDITOR_DLL -DAIEDITOR_DLL_EXPORT)
 
 #set(ALL_SRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${INCS_FILES} ${QRC_SRCS} ${RC_FILES})
-set(ALL_SRCS ${SRCS_FILES} ${INCS_FILES})
+set(ALL_SRCS ${SRCS_FILES} ${INCS_FILES} ${PROJECT_DATA_FILES})
 
 ADD_LIBRARY(AIEditor SHARED ${ALL_SRCS})
 
