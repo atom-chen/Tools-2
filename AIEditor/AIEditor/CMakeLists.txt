@@ -47,3 +47,20 @@ set_target_properties(AIEditor PROPERTIES DEBUG_POSTFIX _d)
 #install(FILES 
 #	${INST_FILES} DESTINATION "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}"
 #)
+
+install(FILES 
+	${AIEditor_BINARY_DIR}/Debug/AIEditor_d.dll
+	DESTINATION "${AIEditor_BINARY_DIR}/../QtAIEditor/Debug" CONFIGURATIONS Debug
+)
+install(FILES 
+	${AIEditor_BINARY_DIR}/Release/AIEditor.dll
+	DESTINATION "${AIEditor_BINARY_DIR}/../QtAIEditor/Release" CONFIGURATIONS Release None ""
+)
+install(FILES 
+	${AIEditor_BINARY_DIR}/RelWithDebInfo/AIEditor.dll
+	DESTINATION "${AIEditor_BINARY_DIR}/../QtAIEditor/RelWithDebInfo" CONFIGURATIONS RelWithDebInfo
+)
+install(FILES 
+	${AIEditor_BINARY_DIR}/MinSizeRel/AIEditor.dll
+	DESTINATION "${AIEditor_BINARY_DIR}/../QtAIEditor/MinSizeRel" CONFIGURATIONS MinSizeRel
+)
