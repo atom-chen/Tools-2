@@ -19,6 +19,7 @@ protected:
 	//MyDirModel* m_pModel;
 	QHBoxLayout * m_pHbox;
 	QTreeView* m_pTreeView;
+	QListWidget* m_pListWidget;			// ÁÐ±í´°¿Ú
 
 public:
 	explicit ExplorerWidget(QWidget *parent = 0);
