@@ -62,8 +62,10 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/BuildFactory.cpp
 		./Src/ExplorerWidget.h
 		./Src/ExplorerWidget.cpp
-		./Src/FileSystemModel.h
-		./Src/FileSystemModel.cpp
+		./Src/MyFileSystemModel.h
+		./Src/MyFileSystemModel.cpp
+		./Src/MyDirModel.h
+		./Src/MyDirModel.cpp
     )
 
 	#these files need build moc files

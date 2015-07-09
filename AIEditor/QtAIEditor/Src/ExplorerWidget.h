@@ -4,7 +4,8 @@
 #include "QtIncAll.h"
 #include "AIEditor.h"
 
-class FileSystemModel;
+class MyFileSystemModel;
+class MyDirModel;
 
 /**
  *@brief 资源管理器窗口
@@ -14,7 +15,8 @@ class ExplorerWidget : public QDockWidget
 	Q_OBJECT
 
 protected:
-	FileSystemModel* m_pModel;
+	//MyFileSystemModel* m_pModel;
+	MyDirModel* m_pModel;
 	QHBoxLayout * m_pHbox;
 	QTreeView* m_pTreeView;
 

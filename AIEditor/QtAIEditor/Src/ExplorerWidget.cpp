@@ -1,5 +1,6 @@
 #include "ExplorerWidget.h"
 #include "FileSystemModel.h"
+#include "MyDirModel.h"
 
 ExplorerWidget::ExplorerWidget(QWidget *parent)
 	: QDockWidget(parent, 0)
@@ -10,9 +11,10 @@ ExplorerWidget::ExplorerWidget(QWidget *parent)
 	m_pHbox = new QHBoxLayout;
 	this->setLayout(m_pHbox);
 
-	m_pModel = new FileSystemModel;
+	//m_pModel = new MyFileSystemModel;
+	m_pModel = new MyDirModel;
 	m_pModel->setReadOnly(false);
-	//m_pModel->setSorting(QDir::DirsFirst | QDir::IgnoreCase | QDir::Name);
+	// m_pModel->setSorting(QDir::DirsFirst | QDir::IgnoreCase | QDir::Name);
 
 	m_pTreeView = new QTreeView;
 	m_pHbox->addWidget(m_pTreeView);
