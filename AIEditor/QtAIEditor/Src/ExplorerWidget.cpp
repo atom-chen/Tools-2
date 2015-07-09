@@ -25,7 +25,7 @@ ExplorerWidget::ExplorerWidget(QWidget *parent)
 	m_pTreeView = new QTreeView(_HLayoutWidget);
 	m_pHbox->addWidget(m_pTreeView);
 	m_pTreeView->setModel(m_pModel);
-	m_pTreeView->setRootIndex(m_pModel->index("E:\\"));
+	m_pTreeView->setRootIndex(m_pModel->index("E:/Self"));	// 如果是 QFileSystemModel 模型，调用 QTreeView::setRootIndex 没有效果，需要释同时调用 QFileSystemModel::setRootPath 和 QTreeView::setRootIndex 才行。 QDirModel 只需要调用 QTreeView::setRootIndex 就行了。
 
 	m_pTreeView->header()->setStretchLastSection(true);
 	m_pTreeView->header()->setSortIndicator(0, Qt::AscendingOrder);
@@ -33,10 +33,10 @@ ExplorerWidget::ExplorerWidget(QWidget *parent)
 
 	// 如果是 QFileSystemModel ，如果没有下面的这段代码，是不能看到任何内容的。但是 QDirModel 没有下面的代码也可以看到内容
 	{
-		//QModelIndex index = m_pModel->index(QDir::currentPath());
-		//m_pTreeView->expand(index);
-		//m_pTreeView->scrollTo(index);
-		//m_pTreeView->resizeColumnToContents(0);
+		QModelIndex index = m_pModel->index(QDir::currentPath());
+		m_pTreeView->expand(index);
+		m_pTreeView->scrollTo(index);
+		m_pTreeView->resizeColumnToContents(0);
 	}
 
 	// 列表窗口
