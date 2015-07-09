@@ -28,6 +28,7 @@ else(NOT Qt5Widgets_FOUND)
     file(GLOB UI_FILES *.ui)
 
     set(SRCS_FILES
+		./Src/QtIncAll.h
 	    ./Src/Main.cpp
 		./Src/MainWindow.h
         ./Src/MainWindow.cpp
@@ -59,7 +60,10 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/QtAIEditorSys.cpp
 		./Src/BuildFactory.h
 		./Src/BuildFactory.cpp
-		./Src/QtIncAll.h
+		./Src/ExplorerWidget.h
+		./Src/ExplorerWidget.cpp
+		./Src/FileSystemModel.h
+		./Src/FileSystemModel.cpp
     )
 
 	#these files need build moc files
@@ -72,6 +76,7 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/GraphicsScene.h
 		./Src/DraggableItemWidget.h
 		./Src/GraphicsView.h
+		./Src/ExplorerWidget.h
     )
 	
 	SET(QRC_FILES ./Res/Qrc.qrc)

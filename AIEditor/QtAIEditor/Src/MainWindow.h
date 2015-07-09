@@ -20,6 +20,7 @@ class LogWidget;
 class ProjectWidget;
 class CenterTabWidget;
 class DragWidget;
+class ExplorerWidget;
 
 namespace Ui
 {
@@ -72,6 +73,7 @@ private:
 	CenterTabWidget* m_centerTabWidget;
 	LogWidget* m_logWidget;
 	DragWidget* m_dragWidget;
+	ExplorerWidget* m_pExplorerWidget;
 
 private:
 	void connectAction();

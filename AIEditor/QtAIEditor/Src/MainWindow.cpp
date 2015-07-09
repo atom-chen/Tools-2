@@ -5,6 +5,7 @@
 #include "ProjectWidget.h"
 #include "CenterTabWidget.h"
 #include "DragWidget.h"
+#include "ExplorerWidget.h"
 
 #include <QtCore/qnamespace.h>
 //#include "DraggableFrame.h"
@@ -48,6 +49,10 @@ void MainWindow::createDockWidget()
 
 	m_logWidget = new LogWidget(this);
 	this->addDockWidget(Qt::BottomDockWidgetArea, m_logWidget);
+
+	// 资源管理器窗口
+	m_pExplorerWidget = new ExplorerWidget(this);
+	this->addDockWidget(Qt::BottomDockWidgetArea, m_pExplorerWidget);
 
 	// 不停靠，直接显示框架窗口
 	//m_logWidget = new LogWidget();
