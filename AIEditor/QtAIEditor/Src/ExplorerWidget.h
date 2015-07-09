@@ -6,6 +6,8 @@
 
 class MyBasicFileSystemModel;
 class MyDirModel;
+class MyBasicTreeWidget;
+class MyBasicListWidget;
 
 /**
  *@brief 资源管理器窗口
@@ -16,10 +18,9 @@ class ExplorerWidget : public QDockWidget
 
 protected:
 	MyBasicFileSystemModel* m_pModel;
-	//MyDirModel* m_pModel;
 	QHBoxLayout * m_pHbox;
-	QTreeView* m_pTreeView;
-	QListWidget* m_pListWidget;			// 列表窗口
+	MyBasicTreeWidget* m_pTreeWidget;
+	MyBasicListWidget* m_pListWidget;			// 列表窗口
 
 public:
 	explicit ExplorerWidget(QWidget *parent = 0);

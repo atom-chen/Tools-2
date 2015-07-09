@@ -1,6 +1,8 @@
 #include "ExplorerWidget.h"
 #include "MyBasicFileSystemModel.h"
 #include "MyDirModel.h"
+#include "MyBasicTreeWidget.h"
+#include "MyBasicListWidget.h"
 
 ExplorerWidget::ExplorerWidget(QWidget *parent)
 	: QDockWidget(parent, 0)
@@ -19,29 +21,13 @@ ExplorerWidget::ExplorerWidget(QWidget *parent)
 	m_pHbox->setContentsMargins(0, 0, 0, 0);
 
 	// 目录窗口
-	m_pModel = new MyBasicFileSystemModel;
-	//m_pModel = new MyDirModel;
-
-	m_pTreeView = new QTreeView(_HLayoutWidget);
-	m_pTreeView->setItemsExpandable(false);
-	m_pHbox->addWidget(m_pTreeView);
-	m_pTreeView->setModel(m_pModel);
-	m_pTreeView->setRootIndex(m_pModel->index("E:/Self"));	// 如果是 QFileSystemModel 模型，调用 QTreeView::setRootIndex 没有效果，需要释同时调用 QFileSystemModel::setRootPath 和 QTreeView::setRootIndex 才行。 QDirModel 只需要调用 QTreeView::setRootIndex 就行了。
-
-	m_pTreeView->header()->setStretchLastSection(true);
-	m_pTreeView->header()->setSortIndicator(0, Qt::AscendingOrder);
-	m_pTreeView->header()->setSortIndicatorShown(true);
-
-	// 如果是 QFileSystemModel ，如果没有下面的这段代码，是不能看到任何内容的。但是 QDirModel 没有下面的代码也可以看到内容
-	{
-		QModelIndex index = m_pModel->index(QDir::currentPath());
-		m_pTreeView->expand(index);
-		m_pTreeView->scrollTo(index);
-		m_pTreeView->resizeColumnToContents(0);
-	}
+	m_pTreeWidget = new MyBasicTreeWidget(_HLayoutWidget);
+	m_pTreeWidget->add2Layout(m_pHbox);
 
 	// 列表窗口
-	m_pListWidget = new QListWidget(_HLayoutWidget);
+	m_pListWidget = new MyBasicListWidget;
+	//m_pListWidget->resize(400, 200);
+	//m_pListWidget->show();
 	m_pHbox->addWidget(m_pListWidget);
 
 	this->setWidget(_HLayoutWidget);	// 最后一定要把 Layout 的父窗口添加到 DockWidget 中，才会刷新一次 Layout ，否则不能刷新

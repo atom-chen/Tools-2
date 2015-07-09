@@ -62,16 +62,6 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/BuildFactory.cpp
 		./Src/ExplorerWidget.h
 		./Src/ExplorerWidget.cpp
-		./Src/MyCheckFileSystemModel.h
-		./Src/MyCheckFileSystemModel.cpp
-		./Src/MyBasicFileSystemModel.h
-		./Src/MyBasicFileSystemModel.cpp
-		./Src/MyDirModel.h
-		./Src/MyDirModel.cpp
-		./Src/MyBasicTreeView.h
-		./Src/MyBasicTreeView.cpp
-		./Src/MyBasicTreeWidget.h
-		./Src/MyBasicTreeWidget.cpp
     )
 
 	#these files need build moc files
@@ -85,7 +75,7 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/DraggableItemWidget.h
 		./Src/GraphicsView.h
 		./Src/ExplorerWidget.h
-		./Src/MyBasicTreeView.h
+		./Src/TreeWidget/MyBasicTreeView.h
     )
 	
 	SET(QRC_FILES ./Res/Qrc.qrc)
@@ -93,6 +83,29 @@ else(NOT Qt5Widgets_FOUND)
 	set(PROJECT_WIDGET_DATA_FILES
 		./Src/ProjectWidget/ProjectWidgetItemBase.h
 		./Src/ProjectWidget/ProjectWidgetItemBase.cpp
+	)
+	
+	set(TREE_WIDGET
+		./Src/TreeWidget/MyCheckFileSystemModel.h
+		./Src/TreeWidget/MyCheckFileSystemModel.cpp
+		./Src/TreeWidget/MyBasicFileSystemModel.h
+		./Src/TreeWidget/MyBasicFileSystemModel.cpp
+		./Src/TreeWidget/MyDirModel.h
+		./Src/TreeWidget/MyDirModel.cpp
+		./Src/TreeWidget/MyBasicTreeView.h
+		./Src/TreeWidget/MyBasicTreeView.cpp
+		./Src/TreeWidget/MyBasicTreeWidget.h
+		./Src/TreeWidget/MyBasicTreeWidget.cpp
+	)
+	
+	set(LIST_WIDGET_SRC
+		./Src/ListWidget/MyBasicListWidget.h
+		./Src/ListWidget/MyBasicListWidget.cpp
+	)
+	
+	set(MISC_SRC
+		./Src/Misc/UtilEncode.h
+		./Src/Misc/UtilEncode.cpp
 	)
 	
 	qt5_wrap_cpp(MOC_SRCS ${MOC_FILES})
@@ -108,11 +121,17 @@ else(NOT Qt5Widgets_FOUND)
 	
     source_group("Base" FILES ${SRCS_FILES})
 	source_group("ProjectWidget" FILES ${PROJECT_WIDGET_DATA_FILES})
+	source_group("TreeWidget" FILES ${TREE_WIDGET})
+	source_group("Misc" FILES ${MISC_SRC})
+	source_group("ListWidget" FILES ${LIST_WIDGET_SRC})
 
     # if we don't include this CMake will not include ui headers properly:
     include_directories(${CMAKE_CURRENT_BINARY_DIR})
     include_directories(./Src)
 	include_directories(./Src/ProjectWidget)
+	include_directories(./Src/TreeWidget)
+	include_directories(./Src/ListWidget)
+	include_directories(./Src/Misc)
 	include_directories(../AIEditor/Src)
 	include_directories(../AIEditor/Src/ProjectData)
 	include_directories(${QT_BINARY_DIR}/../include)
@@ -121,7 +140,7 @@ else(NOT Qt5Widgets_FOUND)
 	
 	ADD_DEFINITIONS(-DAIEDITOR_DLL)
 	
-    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES} ${PROJECT_WIDGET_DATA_FILES})
+    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES} ${PROJECT_WIDGET_DATA_FILES} ${TREE_WIDGET} ${MISC_SRC} ${LIST_WIDGET_SRC})
 
     ADD_EXECUTABLE(QtAIEditor WIN32 ${ALLSRCS})
 
