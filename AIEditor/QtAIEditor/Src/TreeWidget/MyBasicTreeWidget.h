@@ -3,19 +3,12 @@
 
 #include "QtIncAll.h"
 
-class MyBasicTreeView;
-class MyBasicFileSystemModel;
-
-class MyBasicTreeWidget
+class MyBasicTreeWidget : QTreeWidget
 {
-protected:
-	MyBasicTreeView* m_pTreeView;
-	MyBasicFileSystemModel* m_pModel;
+	Q_OBJECT
 
 public:
 	MyBasicTreeWidget(QWidget *parent = 0);
-	MyBasicTreeView* getTreeViewPtr();
-	void add2Layout(QHBoxLayout* layout);
 };
 
 #endif

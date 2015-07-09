@@ -1,7 +1,7 @@
 #include "ExplorerWidget.h"
 #include "MyBasicFileSystemModel.h"
 #include "MyDirModel.h"
-#include "MyBasicTreeWidget.h"
+#include "MyBasicMVCTreeWidget.h"
 #include "MyBasicListWidget.h"
 
 ExplorerWidget::ExplorerWidget(QWidget *parent)
@@ -12,7 +12,6 @@ ExplorerWidget::ExplorerWidget(QWidget *parent)
 
 	// Layout 容器占位窗口
 	QWidget* _HLayoutWidget = new QWidget/*(this)*/;	// 构造或者 setWidget 设置窗口
-	// this->setWidget(_HLayoutWidget);
 
 	// 设置窗口布局
 	m_pHbox = new QHBoxLayout/*(_HLayoutWidget)*/;	// 构造赋值或者 setLayout 赋值
@@ -20,7 +19,7 @@ ExplorerWidget::ExplorerWidget(QWidget *parent)
 	m_pHbox->setContentsMargins(0, 0, 0, 0);
 
 	// 目录窗口
-	m_pTreeWidget = new MyBasicTreeWidget(_HLayoutWidget);
+	m_pTreeWidget = new MyBasicMVCTreeWidget(_HLayoutWidget);
 	m_pTreeWidget->add2Layout(m_pHbox);
 
 	// 列表窗口

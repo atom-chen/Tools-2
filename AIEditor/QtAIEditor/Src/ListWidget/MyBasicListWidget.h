@@ -7,6 +7,8 @@
 
 class MyBasicListWidget : public QWidget
 {
+	Q_OBJECT
+
 public:
 	QLabel *m_label;
 	QListWidget *m_list;

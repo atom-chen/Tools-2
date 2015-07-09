@@ -76,14 +76,11 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/GraphicsView.h
 		./Src/ExplorerWidget.h
 		./Src/TreeWidget/MyBasicTreeView.h
+		./Src/TreeWidget/MyBasicTreeWidget.h
+		./Src/ListWidget/MyBasicListWidget.h
     )
 	
 	SET(QRC_FILES ./Res/Qrc.qrc)
-	
-	set(PROJECT_WIDGET_DATA_FILES
-		./Src/ProjectWidget/ProjectWidgetItemBase.h
-		./Src/ProjectWidget/ProjectWidgetItemBase.cpp
-	)
 	
 	set(TREE_WIDGET
 		./Src/TreeWidget/MyCheckFileSystemModel.h
@@ -94,13 +91,23 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TreeWidget/MyDirModel.cpp
 		./Src/TreeWidget/MyBasicTreeView.h
 		./Src/TreeWidget/MyBasicTreeView.cpp
+		./Src/TreeWidget/MyBasicMVCTreeWidget.h
+		./Src/TreeWidget/MyBasicMVCTreeWidget.cpp
 		./Src/TreeWidget/MyBasicTreeWidget.h
 		./Src/TreeWidget/MyBasicTreeWidget.cpp
+		./Src/TreeWidget/MyBasicTreeWidgetItem.h
+		./Src/TreeWidget/MyBasicTreeWidgetItem.cpp
+		./Src/TreeWidget/MyBasicTreeWidgetItemData.h
+		./Src/TreeWidget/MyBasicTreeWidgetItemData.cpp
 	)
 	
 	set(LIST_WIDGET_SRC
 		./Src/ListWidget/MyBasicListWidget.h
 		./Src/ListWidget/MyBasicListWidget.cpp
+		./Src/ListWidget/MyBasicListWidgetItem.h
+		./Src/ListWidget/MyBasicListWidgetItem.cpp
+		./Src/ListWidget/MyBasicListWidgetItemData.h
+		./Src/ListWidget/MyBasicListWidgetItemData.cpp
 	)
 	
 	set(MISC_SRC
@@ -120,7 +127,6 @@ else(NOT Qt5Widgets_FOUND)
 	source_group("Rc Files" FILES ${RC_FILES})
 	
     source_group("Base" FILES ${SRCS_FILES})
-	source_group("ProjectWidget" FILES ${PROJECT_WIDGET_DATA_FILES})
 	source_group("TreeWidget" FILES ${TREE_WIDGET})
 	source_group("Misc" FILES ${MISC_SRC})
 	source_group("ListWidget" FILES ${LIST_WIDGET_SRC})
@@ -140,7 +146,7 @@ else(NOT Qt5Widgets_FOUND)
 	
 	ADD_DEFINITIONS(-DAIEDITOR_DLL)
 	
-    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES} ${PROJECT_WIDGET_DATA_FILES} ${TREE_WIDGET} ${MISC_SRC} ${LIST_WIDGET_SRC})
+    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES} ${TREE_WIDGET} ${MISC_SRC} ${LIST_WIDGET_SRC})
 
     ADD_EXECUTABLE(QtAIEditor WIN32 ${ALLSRCS})
 

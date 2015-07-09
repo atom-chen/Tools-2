@@ -1,6 +1,6 @@
 #include "ProjectWidget.h"
 #include "ui_ProjectWidget.h"
-#include "ProjectWidgetItemBase.h"
+#include "MyBasicTreeWidgetItemData.h"
 
 ProjectWidget::ProjectWidget(QWidget *parent)
 	: QDockWidget(parent, 0), m_ui(new Ui::ProjectWidget)
@@ -12,7 +12,7 @@ ProjectWidget::ProjectWidget(QWidget *parent)
 	connect(m_ui->treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(showSelectedImage(QTreeWidgetItem*, int)));
 
 	QTreeWidgetItem *imageItem1 = new QTreeWidgetItem(m_ui->treeWidget, QStringList(QStringLiteral("Í¼Ïñ1")));
-	ProjectWidgetItemBase* itemWidget = new ProjectWidgetItemBase;
+	MyBasicTreeWidgetItemData* itemWidget = new MyBasicTreeWidgetItemData;
 	itemWidget->m_self = itemWidget;
 	imageItem1->setData(0, Qt::UserRole, itemWidget->m_value);
 	imageItem1->setIcon(0, QIcon("xxx.png"));
@@ -52,6 +52,6 @@ void ProjectWidget::showSelectedImage(QTreeWidgetItem *item, int column)
 	}
 
 	QVariant userData = item->data(0, Qt::UserRole);
-	ProjectWidgetItemBase ret = userData.value<ProjectWidgetItemBase>();
+	MyBasicTreeWidgetItemData ret = userData.value<MyBasicTreeWidgetItemData>();
 	//ret.delSelf();
 }

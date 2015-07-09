@@ -6,7 +6,7 @@
 
 class MyBasicFileSystemModel;
 class MyDirModel;
-class MyBasicTreeWidget;
+class MyBasicMVCTreeWidget;
 class MyBasicListWidget;
 
 /**
@@ -19,7 +19,7 @@ class ExplorerWidget : public QDockWidget
 protected:
 	MyBasicFileSystemModel* m_pModel;
 	QHBoxLayout * m_pHbox;
-	MyBasicTreeWidget* m_pTreeWidget;
+	MyBasicMVCTreeWidget* m_pTreeWidget;
 	MyBasicListWidget* m_pListWidget;			// ÁÐ±í´°¿Ú
 
 public:
