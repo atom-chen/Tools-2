@@ -68,6 +68,10 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/MyBasicFileSystemModel.cpp
 		./Src/MyDirModel.h
 		./Src/MyDirModel.cpp
+		./Src/MyBasicTreeView.h
+		./Src/MyBasicTreeView.cpp
+		./Src/MyBasicTreeWidget.h
+		./Src/MyBasicTreeWidget.cpp
     )
 
 	#these files need build moc files
@@ -81,6 +85,7 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/DraggableItemWidget.h
 		./Src/GraphicsView.h
 		./Src/ExplorerWidget.h
+		./Src/MyBasicTreeView.h
     )
 	
 	SET(QRC_FILES ./Res/Qrc.qrc)

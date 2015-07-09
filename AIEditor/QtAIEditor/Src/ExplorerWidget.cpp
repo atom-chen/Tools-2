@@ -23,6 +23,7 @@ ExplorerWidget::ExplorerWidget(QWidget *parent)
 	//m_pModel = new MyDirModel;
 
 	m_pTreeView = new QTreeView(_HLayoutWidget);
+	m_pTreeView->setItemsExpandable(false);
 	m_pHbox->addWidget(m_pTreeView);
 	m_pTreeView->setModel(m_pModel);
 	m_pTreeView->setRootIndex(m_pModel->index("E:/Self"));	// 如果是 QFileSystemModel 模型，调用 QTreeView::setRootIndex 没有效果，需要释同时调用 QFileSystemModel::setRootPath 和 QTreeView::setRootIndex 才行。 QDirModel 只需要调用 QTreeView::setRootIndex 就行了。
