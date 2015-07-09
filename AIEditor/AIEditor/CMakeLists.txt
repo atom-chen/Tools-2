@@ -11,37 +11,33 @@ if("${CMAKE_VERSION}" VERSION_GREATER 2.8.11)
 	cmake_policy(SET CMP0020 OLD)
 endif()
 
-set(INCS_FILES
-	./Inc/Platform.h
-	./Inc/Prerequisites.h
-	./Inc/AIEditor.h
-	./Inc/GlobalDefine.h
-	./Inc/Aaa.h
-	./Inc/Singleton.h
-	./Inc/AIEditorSys.h
-)
-
 set(SRCS_FILES
+	./Src/Platform.h
+	./Src/Prerequisites.h
+	./Src/AIEditor.h
+	./Src/GlobalDefine.h
+	./Src/Singleton.h
+	./Src/Aaa.h
 	./Src/Aaa.cpp
+	./Src/AIEditorSys.h
 	./Src/AIEditorSys.cpp
 )
 
 set(PROJECT_DATA_FILES
-	./Inc/ProjectData/ProjectItemBase.h
+	./Src/ProjectData/ProjectItemBase.h
 	./Src/ProjectData/ProjectItemBase.cpp
 )
 
-source_group("Source Files" FILES ${SRCS_FILES})
-source_group("Include Files" FILES ${INCS_FILES})
+source_group("Base" FILES ${SRCS_FILES})
 
 source_group("ProjectData" FILES ${PROJECT_DATA_FILES})
 
-include_directories(./Inc ./Inc/ProjectData)
+include_directories(./Src ./Src/ProjectData)
 
 ADD_DEFINITIONS(-DAIEDITOR_DLL -DAIEDITOR_DLL_EXPORT)
 
-#set(ALL_SRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${INCS_FILES} ${QRC_SRCS} ${RC_FILES})
-set(ALL_SRCS ${SRCS_FILES} ${INCS_FILES} ${PROJECT_DATA_FILES})
+#set(ALL_SRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES})
+set(ALL_SRCS ${SRCS_FILES} ${PROJECT_DATA_FILES})
 
 ADD_LIBRARY(AIEditor SHARED ${ALL_SRCS})
 

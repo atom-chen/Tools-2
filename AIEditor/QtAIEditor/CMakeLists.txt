@@ -29,58 +29,55 @@ else(NOT Qt5Widgets_FOUND)
 
     set(SRCS_FILES
 	    ./Src/Main.cpp
+		./Src/MainWindow.h
         ./Src/MainWindow.cpp
+		./Src/LogWidget.h
 		./Src/LogWidget.cpp
+		./Src/ProjectWidget.h
 		./Src/ProjectWidget.cpp
+		./Src/CenterTabWidget.h
 		./Src/CenterTabWidget.cpp
+		./Src/DragWidget.h
 		./Src/DragWidget.cpp
+		./Src/DraggablePiece.h
 		./Src/DraggablePiece.cpp
+		./Src/GraphicsScene.h
 		./Src/GraphicsScene.cpp
+		./Src/BoardHexagon.h
 		./Src/BoardHexagon.cpp
+		./Src/DraggableItemBase.h
 		./Src/DraggableItemBase.cpp
+		./Src/DraggableItemWidget.h
 		./Src/DraggableItemWidget.cpp
+		./Src/GraphicsView.h
 		./Src/GraphicsView.cpp
+		./Src/BezierCurveItem.h
 		./Src/BezierCurveItem.cpp
+		./Src/DragDropSys.h
 		./Src/DragDropSys.cpp
+		./Src/QtAIEditorSys.h
 		./Src/QtAIEditorSys.cpp
+		./Src/BuildFactory.h
 		./Src/BuildFactory.cpp
-    )
-	
-	set(INCS_FILES
-        ./Inc/MainWindow.h
-		./Inc/LogWidget.h
-		./Inc/ProjectWidget.h
-		./Inc/CenterTabWidget.h
-		./Inc/DragWidget.h
-		./Inc/DraggablePiece.h
-		./Inc/GraphicsScene.h
-		./Inc/BoardHexagon.h
-		./Inc/DraggableItemBase.h
-		./Inc/DraggableItemWidget.h
-		./Inc/GraphicsView.h
-		./Inc/BezierCurveItem.h
-		./Inc/DragDropSys.h
-		./Inc/QtAIEditorSys.h
-		./Inc/BuildFactory.h
-		./Inc/QtIncAll.h
+		./Src/QtIncAll.h
     )
 
 	#these files need build moc files
     SET(MOC_FILES
-        ./Inc/MainWindow.h
-		./Inc/LogWidget.h
-		./Inc/ProjectWidget.h
-		./Inc/CenterTabWidget.h
-		./Inc/DragWidget.h
-		./Inc/GraphicsScene.h
-		./Inc/DraggableItemWidget.h
-		./Inc/GraphicsView.h
+        ./Src/MainWindow.h
+		./Src/LogWidget.h
+		./Src/ProjectWidget.h
+		./Src/CenterTabWidget.h
+		./Src/DragWidget.h
+		./Src/GraphicsScene.h
+		./Src/DraggableItemWidget.h
+		./Src/GraphicsView.h
     )
 	
 	SET(QRC_FILES ./Res/Qrc.qrc)
 	
 	set(PROJECT_WIDGET_DATA_FILES
-		./Inc/ProjectWidget/ProjectWidgetItemBase.h
+		./Src/ProjectWidget/ProjectWidgetItemBase.h
 		./Src/ProjectWidget/ProjectWidgetItemBase.cpp
 	)
 	
@@ -95,23 +92,22 @@ else(NOT Qt5Widgets_FOUND)
 	file(GLOB RC_FILES ./Res/*.rc)
 	source_group("Rc Files" FILES ${RC_FILES})
 	
-    source_group("Source Files" FILES ${SRCS_FILES})
-    source_group("Include Files" FILES ${INCS_FILES})
+    source_group("Base" FILES ${SRCS_FILES})
 	source_group("ProjectWidget" FILES ${PROJECT_WIDGET_DATA_FILES})
 
     # if we don't include this CMake will not include ui headers properly:
     include_directories(${CMAKE_CURRENT_BINARY_DIR})
-    include_directories(./Inc)
-	include_directories(./Inc/ProjectWidget)
-	include_directories(../AIEditor/Inc)
-	include_directories(../AIEditor/Inc/ProjectData)
+    include_directories(./Src)
+	include_directories(./Src/ProjectWidget)
+	include_directories(../AIEditor/Src)
+	include_directories(../AIEditor/Src/ProjectData)
 	include_directories(${QT_BINARY_DIR}/../include)
 	
 	link_directories(${QT_BINARY_DIR}/../lib)
 	
 	ADD_DEFINITIONS(-DAIEDITOR_DLL)
 	
-    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${INCS_FILES} ${QRC_SRCS} ${RC_FILES} ${PROJECT_WIDGET_DATA_FILES})
+    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES} ${PROJECT_WIDGET_DATA_FILES})
 
     ADD_EXECUTABLE(QtAIEditor WIN32 ${ALLSRCS})
 
