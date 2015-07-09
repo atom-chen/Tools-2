@@ -30,7 +30,7 @@ endif(MSVC)
 add_subdirectory(FileArchiveTool)
 add_subdirectory(QtFileArchiveTool)
 add_subdirectory(lzma920)
-add_subdirectory(lua-5.3.0)
+#add_subdirectory(lua-5.3.0)
 
 install(FILES 
 	${CMAKE_SOURCE_DIR}/icu4c-54_1-src/bin64/icuuc54d.dll
