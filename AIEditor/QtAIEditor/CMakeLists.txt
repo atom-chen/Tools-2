@@ -62,8 +62,10 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/BuildFactory.cpp
 		./Src/ExplorerWidget.h
 		./Src/ExplorerWidget.cpp
-		./Src/MyFileSystemModel.h
-		./Src/MyFileSystemModel.cpp
+		./Src/MyCheckFileSystemModel.h
+		./Src/MyCheckFileSystemModel.cpp
+		./Src/MyBasicFileSystemModel.h
+		./Src/MyBasicFileSystemModel.cpp
 		./Src/MyDirModel.h
 		./Src/MyDirModel.cpp
     )

@@ -1,12 +1,12 @@
-#ifndef __FileSystemModel_H
-#define __FileSystemModel_H
+#ifndef __MyCheckFileSystemModel_H
+#define __MyCheckFileSystemModel_H
 
 #include "QtIncAll.h"
 
-class MyFileSystemModel : public QFileSystemModel
+class MyCheckFileSystemModel : public QFileSystemModel
 {
 public:
-	MyFileSystemModel();
+	MyCheckFileSystemModel();
 	QSet<QPersistentModelIndex> checkedIndexes;
 	// flags( )ÖÐ·µ»Ø ItemIsUserCheckable¡£
 	Qt::ItemFlags flags(const QModelIndex &index) const;

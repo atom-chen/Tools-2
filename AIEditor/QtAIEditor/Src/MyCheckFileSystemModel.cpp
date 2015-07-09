@@ -1,15 +1,15 @@
-#include "MyFileSystemModel.h"  
+#include "MyCheckFileSystemModel.h"  
 
-MyFileSystemModel::MyFileSystemModel()
+MyCheckFileSystemModel::MyCheckFileSystemModel()
 {
 }
 
-Qt::ItemFlags MyFileSystemModel::flags(const QModelIndex &index) const
+Qt::ItemFlags MyCheckFileSystemModel::flags(const QModelIndex &index) const
 {
 	return QFileSystemModel::flags(index) | Qt::ItemIsUserCheckable;	// 没有 Qt::ItemIsUserCheckable 虽然有复选框，但是不能选中
 }
 
-QVariant MyFileSystemModel::data(const QModelIndex &index, int role) const
+QVariant MyCheckFileSystemModel::data(const QModelIndex &index, int role) const
 {
 	if (role == Qt::CheckStateRole)
 	{
@@ -21,7 +21,7 @@ QVariant MyFileSystemModel::data(const QModelIndex &index, int role) const
 	}
 }
 
-bool MyFileSystemModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool MyCheckFileSystemModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
 	if (role == Qt::CheckStateRole)
 	{
@@ -47,7 +47,7 @@ bool MyFileSystemModel::setData(const QModelIndex &index, const QVariant &value,
 	return QFileSystemModel::setData(index, value, role);
 }
 
-bool MyFileSystemModel::recursiveCheck(const QModelIndex &index, const QVariant &value)
+bool MyCheckFileSystemModel::recursiveCheck(const QModelIndex &index, const QVariant &value)
 {
 	if (hasChildren(index))
 	{
