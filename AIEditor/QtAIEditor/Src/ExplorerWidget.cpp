@@ -15,8 +15,7 @@ ExplorerWidget::ExplorerWidget(QWidget *parent)
 	// this->setWidget(_HLayoutWidget);
 
 	// 设置窗口布局
-	m_pHbox = new QHBoxLayout(_HLayoutWidget);	// 构造赋值或者 setLayout 赋值
-	//this->setLayout(m_pHbox);
+	m_pHbox = new QHBoxLayout/*(_HLayoutWidget)*/;	// 构造赋值或者 setLayout 赋值
 	m_pHbox->setObjectName(QStringLiteral("ExplorerWidgetHbox"));
 	m_pHbox->setContentsMargins(0, 0, 0, 0);
 
@@ -30,6 +29,7 @@ ExplorerWidget::ExplorerWidget(QWidget *parent)
 	//m_pListWidget->show();
 	m_pHbox->addWidget(m_pListWidget);
 
+	_HLayoutWidget->setLayout(m_pHbox);
 	this->setWidget(_HLayoutWidget);	// 最后一定要把 Layout 的父窗口添加到 DockWidget 中，才会刷新一次 Layout ，否则不能刷新
 }
 
