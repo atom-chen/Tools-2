@@ -3,12 +3,13 @@
 
 #include "QtIncAll.h"
 
-class MyBasicTreeWidgetItem : QTreeWidgetItem
+class MyBasicTreeWidgetItem : public QTreeWidgetItem
 {
 protected:
 
 public:
-	MyBasicTreeWidgetItem();
+	MyBasicTreeWidgetItem(QTreeWidget *view, const QStringList &strings, int type = Type);
+	MyBasicTreeWidgetItem(QTreeWidgetItem *parent, const QStringList &strings, int type = Type);
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include "ProjectWidget.h"
 #include "ui_ProjectWidget.h"
 #include "MyBasicTreeWidgetItemData.h"
+#include "MyBasicTreeWidgetItem.h"
 
 ProjectWidget::ProjectWidget(QWidget *parent)
 	: QDockWidget(parent, 0), m_ui(new Ui::ProjectWidget)
@@ -11,17 +12,17 @@ ProjectWidget::ProjectWidget(QWidget *parent)
 	m_ui->treeWidget->setHeaderLabel(QStringLiteral("解决方案窗口")); //设置头的标题
 	connect(m_ui->treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(showSelectedImage(QTreeWidgetItem*, int)));
 
-	QTreeWidgetItem *imageItem1 = new QTreeWidgetItem(m_ui->treeWidget, QStringList(QStringLiteral("图像1")));
+	MyBasicTreeWidgetItem *imageItem1 = new MyBasicTreeWidgetItem(m_ui->treeWidget, QStringList(QStringLiteral("图像1")));
 	MyBasicTreeWidgetItemData* itemWidget = new MyBasicTreeWidgetItemData;
 	itemWidget->m_self = itemWidget;
 	imageItem1->setData(0, Qt::UserRole, itemWidget->m_value);
 	imageItem1->setIcon(0, QIcon("xxx.png"));
-	QTreeWidgetItem *imageItem1_1 = new QTreeWidgetItem(imageItem1, QStringList(QStringLiteral("Band1"))); //子节点1
+	MyBasicTreeWidgetItem *imageItem1_1 = new MyBasicTreeWidgetItem(imageItem1, QStringList(QStringLiteral("Band1"))); //子节点1
 	imageItem1->addChild(imageItem1_1); //添加子节点
 
-	QTreeWidgetItem *imageItem2 = new QTreeWidgetItem(m_ui->treeWidget, QStringList(QStringLiteral("图像2")));
-	QTreeWidgetItem *imageItem2_1 = new QTreeWidgetItem(imageItem2, QStringList(QStringLiteral("Band1"))); //子节点1
-	QTreeWidgetItem *imageItem2_2 = new QTreeWidgetItem(imageItem2, QStringList(QStringLiteral("Band2"))); //子节点2
+	MyBasicTreeWidgetItem *imageItem2 = new MyBasicTreeWidgetItem(m_ui->treeWidget, QStringList(QStringLiteral("图像2")));
+	MyBasicTreeWidgetItem *imageItem2_1 = new MyBasicTreeWidgetItem(imageItem2, QStringList(QStringLiteral("Band1"))); //子节点1
+	MyBasicTreeWidgetItem *imageItem2_2 = new MyBasicTreeWidgetItem(imageItem2, QStringList(QStringLiteral("Band2"))); //子节点2
 	imageItem2->addChild(imageItem2_1);  //添加子节点
 	imageItem2->addChild(imageItem2_2);
 
