@@ -3,8 +3,6 @@
 
 #include "QtIncAll.h"
 
-#include "ProjectItemBase.h"
-
 class MyBasicTreeWidgetItem : QTreeWidgetItem
 {
 protected:

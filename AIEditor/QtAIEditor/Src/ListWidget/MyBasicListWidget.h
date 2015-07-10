@@ -3,7 +3,7 @@
 
 #include "QtIncAll.h"
 
-#include "ProjectItemBase.h"
+#include "MyBasicTreeWidgetItemLogicData.h"
 
 class MyBasicListWidget : public QWidget
 {

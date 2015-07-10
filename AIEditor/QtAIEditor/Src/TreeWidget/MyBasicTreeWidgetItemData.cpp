@@ -3,7 +3,7 @@
 MyBasicTreeWidgetItemData::MyBasicTreeWidgetItemData()
 {
 	//m_self = this;
-	m_itemData = new ProjectItemBase;
+	m_itemData = new MyBasicTreeWidgetItemLogicData;
 	m_type = 10;
 	m_value.setValue(*this);	// 不能传地址，只能传递引用
 }

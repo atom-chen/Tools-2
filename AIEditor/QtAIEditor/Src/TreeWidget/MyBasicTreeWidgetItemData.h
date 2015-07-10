@@ -3,7 +3,7 @@
 
 #include <QtCore/QtCore>
 
-#include "ProjectItemBase.h"
+#include "MyBasicTreeWidgetItemLogicData.h"
 
 class MyBasicTreeWidgetItemData
 {
@@ -12,7 +12,7 @@ public:
 	MyBasicTreeWidgetItemData* m_self;
 
 protected:
-	ProjectItemBase* m_itemData;
+	MyBasicTreeWidgetItemLogicData* m_itemData;
 	int m_type;
 
 public:
