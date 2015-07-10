@@ -8,9 +8,6 @@
 MyTabMainWindow::MyTabMainWindow(QWidget *parent) :QMainWindow(parent)
 {
 	m_pTabWidget = new MyTabWidget(this);
-	m_pTabWidget->setMovable(true);
-	m_pTabWidget->setTabsClosable(true);
-	m_pTabWidget->setTabShape(QTabWidget::Triangular);
 	//Ìí¼Ó4¸ötabÒ³
 	//addTestWindow();
 	setCentralWidget(m_pTabWidget);

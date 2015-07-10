@@ -15,6 +15,8 @@ public:
 	TabWidgetMgr();
 	void openTabMainWindow(QWidget* parent = 0);
 	void openOneActionEffectEditor(std::string path);
+	void hideMainWindow();
+	void closeMainWindow();
 };
 
-#endif // MAINWINDOW_H
+#endif

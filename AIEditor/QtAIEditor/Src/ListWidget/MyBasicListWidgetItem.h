@@ -14,6 +14,7 @@ public:
 	MyBasicListWidgetItem(const QIcon &icon, const QString &text, QListWidget *view = 0, int type = Type);
 	~MyBasicListWidgetItem();
 	void setItemData(MyBasicListWidgetItemData* pItemData);
+	MyBasicListWidgetItemData* getItemData();
 };
 
 #endif

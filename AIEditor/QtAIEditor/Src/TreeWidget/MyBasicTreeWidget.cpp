@@ -4,3 +4,8 @@ MyBasicTreeWidget::MyBasicTreeWidget(QWidget *parent)
 {
 	
 }
+
+MyBasicTreeWidget::~MyBasicTreeWidget()
+{
+
+}

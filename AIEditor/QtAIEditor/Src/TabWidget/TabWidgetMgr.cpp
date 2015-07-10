@@ -21,3 +21,13 @@ void TabWidgetMgr::openOneActionEffectEditor(std::string path)
 	openTabMainWindow(nullptr);
 	m_pMyTabMainWindow->openOneActionEffectEditor(path);
 }
+
+void TabWidgetMgr::hideMainWindow()
+{
+	m_pMyTabMainWindow->hide();
+}
+
+void TabWidgetMgr::closeMainWindow()
+{
+	m_pMyTabMainWindow->close();
+}

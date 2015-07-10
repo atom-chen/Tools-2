@@ -10,7 +10,7 @@ MyBasicListWidget::MyBasicListWidget(QWidget *parent)
 	m_label->setFixedWidth(70);
 	m_label->setText(QStringLiteral("测试列表"));
 	m_list = new QListWidget;
-	addTest();
+	//addTest();
 	QHBoxLayout *layout = new QHBoxLayout;
 	layout->addWidget(m_label);
 	layout->addWidget(m_list);
@@ -34,22 +34,34 @@ void MyBasicListWidget::updateListWidget(QString path)
 	int idx = 0;
 	QFileIconProvider icon_provider;
 	QIcon icon;
+	bool _bFile = true;
 	for (idx = 0; idx < fileList.size(); ++idx)
 	{
 		if (fileList[idx].isDir())		// 如果是目录
 		{
 			icon = icon_provider.icon(QFileIconProvider::Folder);
+			_bFile = false;
 		}
 		else					// 如果是文件
 		{
 			icon = icon_provider.icon(fileList[idx]);
+			_bFile = true;
 		}
 		MyBasicListWidgetItem* pMyBasicListWidgetItem = new MyBasicListWidgetItem(icon, fileList[idx].fileName());
 		MyBasicListWidgetItemData* pMyBasicListWidgetItemData = new MyBasicListWidgetItemData;
+		pMyBasicListWidgetItemData->setBFile(_bFile);
 		pMyBasicListWidgetItem->setItemData(pMyBasicListWidgetItemData);
-		pMyBasicListWidgetItemData->setFullPath(UtilEncode::qUnicode2SLocal(path));
+		pMyBasicListWidgetItemData->setFullPath(UtilEncode::qUnicode2SLocal(fileList[idx].absoluteFilePath()));
 		pMyBasicListWidgetItem->setData(Qt::UserRole, pMyBasicListWidgetItemData->m_value);
 		m_list->addItem(pMyBasicListWidgetItem);
+
+		// test setData 数据
+		//MyBasicListWidgetItemData itemData;
+		//QVariant userData = pMyBasicListWidgetItem->data(Qt::UserRole);
+		//if (userData.canConvert<MyBasicListWidgetItemData>())
+		//{
+		//	itemData = userData.value<MyBasicListWidgetItemData>();
+		//}
 	}
 }
 

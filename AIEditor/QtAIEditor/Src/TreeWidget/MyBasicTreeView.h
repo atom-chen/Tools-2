@@ -9,6 +9,8 @@ class MyBasicTreeView : public QTreeView
 
 public:
 	MyBasicTreeView(QWidget *parent = 0);
+	~MyBasicTreeView();
+
 	void setModel(QAbstractItemModel *model);
 	void setItemsExpandable(bool enable);
 	void setRootIndex(const QModelIndex &index);

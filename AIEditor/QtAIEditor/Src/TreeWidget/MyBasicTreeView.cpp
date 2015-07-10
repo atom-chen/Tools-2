@@ -7,6 +7,11 @@ MyBasicTreeView::MyBasicTreeView(QWidget *parent)
 	this->header()->setSortIndicatorShown(true);
 }
 
+MyBasicTreeView::~MyBasicTreeView()
+{
+
+}
+
 void MyBasicTreeView::setModel(QAbstractItemModel *model)
 {
 	QTreeView::setModel(model);

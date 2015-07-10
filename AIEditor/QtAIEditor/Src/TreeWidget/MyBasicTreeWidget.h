@@ -9,6 +9,7 @@ class MyBasicTreeWidget : QTreeWidget
 
 public:
 	MyBasicTreeWidget(QWidget *parent = 0);
+	~MyBasicTreeWidget();
 };
 
 #endif

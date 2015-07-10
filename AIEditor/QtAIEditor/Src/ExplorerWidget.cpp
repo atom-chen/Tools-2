@@ -6,6 +6,8 @@
 #include "MyBasicTreeView.h"
 #include "QtAIEditorSys.h"
 #include "TabWidgetMgr.h"
+#include "MyBasicListWidgetItemData.h"
+#include "MyBasicListWidgetItem.h"
 
 ExplorerWidget::ExplorerWidget(QWidget *parent)
 	: QDockWidget(parent, 0)
@@ -61,5 +63,17 @@ void ExplorerWidget::onTreeViewDoubleClick(const QModelIndex & index)
 // 双击 List 项
 void ExplorerWidget::onListDoubleClick(QListWidgetItem *Item)
 {
-	g_pTabWidgetMgr->openTabMainWindow();
+	// test
+	//MyBasicListWidgetItemData itemData;
+	//QVariant userData = Item->data(Qt::UserRole);
+	//if (userData.canConvert<MyBasicListWidgetItemData>())
+	//{
+	//	itemData = userData.value<MyBasicListWidgetItemData>();
+	//}
+	MyBasicListWidgetItem* pItem = (MyBasicListWidgetItem*)Item;
+	MyBasicListWidgetItemData* pItemData = pItem->getItemData();
+	if (pItemData->getBFile())	// 只有是文件的时候才会编辑
+	{
+		g_pTabWidgetMgr->openOneActionEffectEditor(pItemData->getFullPath());
+	}
 }

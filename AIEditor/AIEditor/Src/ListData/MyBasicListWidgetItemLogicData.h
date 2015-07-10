@@ -12,6 +12,7 @@ protected:
 #include "PushWarn.h"
 	std::string m_fullPathAndName;
 #include "PopWarn.h"
+	bool m_bFile;		// 是否是文件
 
 public:
 	MyBasicListWidgetItemLogicData();
@@ -19,6 +20,9 @@ public:
 
 	void setFullPath(std::string path);
 	std::string getFullPath();
+
+	void setBFile(bool bFile_);
+	bool getBFile();
 };
 
 END_NAMESPACE_AIEDITOR
