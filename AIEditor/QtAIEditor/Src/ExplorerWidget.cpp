@@ -3,6 +3,7 @@
 #include "MyDirModel.h"
 #include "MyBasicMVCTreeWidget.h"
 #include "MyBasicListWidget.h"
+#include "MyBasicTreeView.h"
 
 ExplorerWidget::ExplorerWidget(QWidget *parent)
 	: QDockWidget(parent, 0)
@@ -21,6 +22,9 @@ ExplorerWidget::ExplorerWidget(QWidget *parent)
 	// 目录窗口
 	m_pTreeWidget = new MyBasicMVCTreeWidget(_HLayoutWidget);
 	m_pTreeWidget->add2Layout(m_pHbox);
+	// 添加事件监听器
+	QObject::connect(m_pTreeWidget->getTreeViewPtr(), SIGNAL(clicked(const QModelIndex)), this, SLOT(onTreeViewClick(const QModelIndex)));
+	QObject::connect(m_pTreeWidget->getTreeViewPtr(), SIGNAL(doubleClicked(const QModelIndex)), this, SLOT(onTreeViewDoubleClick(const QModelIndex)));
 
 	// 列表窗口
 	m_pListWidget = new MyBasicListWidget;
@@ -35,4 +39,17 @@ ExplorerWidget::ExplorerWidget(QWidget *parent)
 ExplorerWidget::~ExplorerWidget()
 {
 
+}
+
+// 点击左边资源管理器树
+void ExplorerWidget::onTreeViewClick(const QModelIndex & index)
+{
+	QFileInfo fileInfo = m_pTreeWidget->fileInfo(index);
+	m_pListWidget->updateListWidget(fileInfo.absoluteFilePath());
+}
+
+void ExplorerWidget::onTreeViewDoubleClick(const QModelIndex & index)
+{
+	// QAbstractItemModel* m = (QAbstractItemModel*)index.model();
+	QFileInfo fileInfo = m_pTreeWidget->fileInfo(index);
 }

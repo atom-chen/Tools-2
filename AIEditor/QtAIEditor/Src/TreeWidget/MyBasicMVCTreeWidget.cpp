@@ -24,3 +24,14 @@ void MyBasicMVCTreeWidget::add2Layout(QHBoxLayout* layout)
 {
 	layout->addWidget(m_pTreeView);
 }
+
+QModelIndex MyBasicMVCTreeWidget::currentIndex() const
+{
+	return m_pTreeView->currentIndex();
+}
+
+QFileInfo MyBasicMVCTreeWidget::fileInfo(const QModelIndex &index) const
+{
+	QFileInfo fileInfo = m_pModel->fileInfo(index);
+	return fileInfo;
+}

@@ -5,7 +5,8 @@
 
 class MyBasicListWidgetItem : public QListWidgetItem
 {
-
+public:
+	MyBasicListWidgetItem(const QIcon &icon, const QString &text, QListWidget *view = 0, int type = Type);
 };
 
 #endif

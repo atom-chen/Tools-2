@@ -16,6 +16,8 @@ public:
 	MyBasicMVCTreeWidget(QWidget *parent = 0);
 	MyBasicTreeView* getTreeViewPtr();
 	void add2Layout(QHBoxLayout* layout);
+	QModelIndex currentIndex() const;
+	QFileInfo fileInfo(const QModelIndex &aindex) const;
 };
 
 #endif

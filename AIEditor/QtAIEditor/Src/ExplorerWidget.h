@@ -25,6 +25,10 @@ protected:
 public:
 	explicit ExplorerWidget(QWidget *parent = 0);
 	~ExplorerWidget();
+
+public Q_SLOTS:
+	void onTreeViewClick(const QModelIndex & index);
+	void onTreeViewDoubleClick(const QModelIndex & index);
 };
 
 #endif // LOGWIDGET_H

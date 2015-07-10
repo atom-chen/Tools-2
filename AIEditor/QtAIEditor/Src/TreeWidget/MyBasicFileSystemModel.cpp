@@ -5,7 +5,7 @@ MyBasicFileSystemModel::MyBasicFileSystemModel()
 	this->setReadOnly(false);	// 设置只读属性
 	//this->setFilter(QDir::Dirs);		// 只显示当前目录
 	//this->setFilter(QDir::AllEntries);
-	this->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);        //只显示文件夹  
+	this->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);        // 只显示文件夹，去掉当前目录和父目录(. 和 ..)
 
 	// 设置过滤器,这个如果只显示目录的时候设置这个就会有问题，树中显示不全
 	//QStringList filter;
