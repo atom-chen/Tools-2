@@ -54,6 +54,10 @@ void MainWindow::createDockWidget()
 	m_pExplorerWidget = new ExplorerWidget(this);
 	this->addDockWidget(Qt::BottomDockWidgetArea, m_pExplorerWidget);
 
+	//setDockOptions(QMainWindow::ForceTabbedDocks);		//设置停靠选项，比如允许动画或是否允许拖放重合成一个tab选项卡类型的部件，枚举值见4
+	tabifyDockWidget(m_logWidget, m_pExplorerWidget);		// 重叠这两个窗口，而不是平铺
+	m_logWidget->raise();					// 强制显示 m_logWidget 这个窗口
+
 	// 不停靠，直接显示框架窗口
 	//m_logWidget = new LogWidget();
 	//m_logWidget->show();
