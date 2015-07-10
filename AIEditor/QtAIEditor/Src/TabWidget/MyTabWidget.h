@@ -1,5 +1,6 @@
 #ifndef __MyTabWidget_H
 #define __MyTabWidget_H
+
 #include <QTabWidget>
 #include <QtGui>
 #include "MyTabBar.h"
@@ -13,4 +14,5 @@ public:
 public:
 	MyTabBar *tabBar;
 };
+
 #endif

@@ -13,4 +13,8 @@ void TabWidgetMgr::openTabMainWindow(QWidget* parent)
 		m_pMyTabMainWindow = new MyTabMainWindow;
 		m_pMyTabMainWindow->show();
 	}
+	else
+	{
+		m_pMyTabMainWindow->show();
+	}
 }

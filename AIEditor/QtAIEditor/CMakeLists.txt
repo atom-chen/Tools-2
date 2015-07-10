@@ -80,7 +80,9 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/ListWidget/MyBasicListWidget.h
 		./Src/TabWidget/MyTabBar.h
 		./Src/TabWidget/MyTabMainWindow.h
-		./Src/TabWidget/MyTabSubWidget.h
+		./Src/TabWidget/MyTabSubWidgetFrame.h
+		./Src/TabWidget/MyTabSubWidgetBase.h
+		./Src/TabWidget/ActionEffectEditor.h
 		./Src/TabWidget/MyTabWidget.h
     )
 	
@@ -119,12 +121,16 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TabWidget/MyTabBar.cpp
 		./Src/TabWidget/MyTabMainWindow.h
 		./Src/TabWidget/MyTabMainWindow.cpp
-		./Src/TabWidget/MyTabSubWidget.h
-		./Src/TabWidget/MyTabSubWidget.cpp
+		./Src/TabWidget/MyTabSubWidgetFrame.h
+		./Src/TabWidget/MyTabSubWidgetFrame.cpp
 		./Src/TabWidget/MyTabWidget.h
 		./Src/TabWidget/MyTabWidget.cpp
 		./Src/TabWidget/TabWidgetMgr.h
 		./Src/TabWidget/TabWidgetMgr.cpp
+		./Src/TabWidget/MyTabSubWidgetBase.h
+		./Src/TabWidget/MyTabSubWidgetBase.cpp
+		./Src/TabWidget/ActionEffectEditor.h
+		./Src/TabWidget/ActionEffectEditor.cpp
 	)
 	
 	set(MISC_SRC

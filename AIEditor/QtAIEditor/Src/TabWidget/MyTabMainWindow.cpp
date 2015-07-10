@@ -1,6 +1,6 @@
 #include "MyTabMainWindow.h"
 #include "MyTabWidget.h"
-#include "MyTabSubWidget.h"
+#include "MyTabSubWidgetFrame.h"
 #include <QtGui>
 
 MyTabMainWindow::MyTabMainWindow(QWidget *parent) :QMainWindow(parent)
@@ -25,7 +25,7 @@ MyTabMainWindow::MyTabMainWindow(QWidget *parent) :QMainWindow(parent)
 
 void MyTabMainWindow::slot_tabDrag(int index, QPoint point)
 {
-	MyTabSubWidget *widget = new MyTabSubWidget;
+	MyTabSubWidgetFrame *widget = new MyTabSubWidgetFrame;
 	QWidget *draged = tabWidget->widget(index);
 	QString windowName = tabWidget->tabText(index);
 	tabWidget->removeTab(index);
@@ -43,7 +43,7 @@ void MyTabMainWindow::slot_tabDrag(int index, QPoint point)
 
 void MyTabMainWindow::slot_tabBarDoubleClicked()
 {
-	MyTabSubWidget *widget = qobject_cast<MyTabSubWidget*>(sender());
+	MyTabSubWidgetFrame *widget = qobject_cast<MyTabSubWidgetFrame*>(sender());
 	QObjectList list = widget->children();
 	QTextEdit *edit = NULL;
 

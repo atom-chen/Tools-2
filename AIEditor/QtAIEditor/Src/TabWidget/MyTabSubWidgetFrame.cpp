@@ -1,17 +1,17 @@
-#include "MyTabSubWidget.h"
+#include "MyTabSubWidgetFrame.h"
 #include <QtGui>
 
-MyTabSubWidget::MyTabSubWidget(QWidget *parent) :QWidget(parent)
+MyTabSubWidgetFrame::MyTabSubWidgetFrame(QWidget *parent) :QWidget(parent)
 {
 
 }
 
-MyTabSubWidget::~MyTabSubWidget()
+MyTabSubWidgetFrame::~MyTabSubWidgetFrame()
 {
 
 }
 
-bool MyTabSubWidget::event(QEvent *event)
+bool MyTabSubWidgetFrame::event(QEvent *event)
 {
 #ifdef unix
 	if (event->type() == QEvent::MouseButtonDblClick){   //标题栏单击没反应，就单击窗口边缘替代吧

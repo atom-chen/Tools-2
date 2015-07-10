@@ -1,5 +1,6 @@
 #ifndef __MyTabBar_H
 #define __MyTabBar_H
+
 #include <QTabBar>
 #include <QtGui>
 
@@ -17,4 +18,5 @@ private:
 signals:
 	void sig_tabDrag(int, QPoint);
 };
+
 #endif

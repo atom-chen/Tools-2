@@ -3,12 +3,13 @@
 #include "BuildFactory.h"
 #include "GraphicsScene.h"
 #include "GraphicsView.h"
+#include "TabWidgetMgr.h"
 
 QtAIEditorSys::QtAIEditorSys()
 {
 	m_pDragDropSys = new DragDropSys();
 	m_pBuildFactory = new BuildFactory();
-	m_pTabWidgetMgr = nullptr;
+	m_pTabWidgetMgr = new TabWidgetMgr;
 }
 
 DragDropSys* QtAIEditorSys::getDragDropSysPtr()
