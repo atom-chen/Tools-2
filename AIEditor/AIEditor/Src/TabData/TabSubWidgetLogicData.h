@@ -1,12 +1,12 @@
-#ifndef __MyBasicListWidgetItemLogicData_H
-#define __MyBasicListWidgetItemLogicData_H
+#ifndef __TabSubWidgetLogicData_H
+#define __TabSubWidgetLogicData_H
 
 #include <string>
 #include "AIEditor.h"
 
 BEGIN_NAMESPACE_AIEDITOR
 
-class AIEDITOR_EXPORT MyBasicListWidgetItemLogicData
+class AIEDITOR_EXPORT TabSubWidgetLogicData
 {
 protected:
 #include "PushWarn.h"
@@ -14,8 +14,8 @@ protected:
 #include "PopWarn.h"
 
 public:
-	MyBasicListWidgetItemLogicData();
-	~MyBasicListWidgetItemLogicData();
+	TabSubWidgetLogicData();
+	~TabSubWidgetLogicData();
 
 	void setFullPath(std::string path);
 	std::string getFullPath();

@@ -14,7 +14,7 @@ protected:
 	void mousePressEvent(QMouseEvent *);
 	void mouseReleaseEvent(QMouseEvent *);   //通过两个事件模拟出tab被拖动的动作
 private:
-	bool pressFlag;
+	bool m_pressFlag;
 signals:
 	void sig_tabDrag(int, QPoint);
 };

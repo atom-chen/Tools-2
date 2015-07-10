@@ -21,6 +21,9 @@ public:
 	void setViewMode(QListView::ViewMode mode);
 	void updateListWidget(QString path);
 	QListWidget* getListWidgetPtr();
+
+private:
+	void addTest();
 };
 
 #endif

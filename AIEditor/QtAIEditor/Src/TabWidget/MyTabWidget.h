@@ -12,7 +12,7 @@ public:
 	MyTabWidget(QWidget* = 0);
 	virtual ~MyTabWidget(){};
 public:
-	MyTabBar *tabBar;
+	MyTabBar *m_tabBar;
 };
 
 #endif

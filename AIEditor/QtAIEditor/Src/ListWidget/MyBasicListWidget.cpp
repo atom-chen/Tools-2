@@ -10,10 +10,7 @@ MyBasicListWidget::MyBasicListWidget(QWidget *parent)
 	m_label->setFixedWidth(70);
 	m_label->setText(QStringLiteral("²âÊÔÁÐ±í"));
 	m_list = new QListWidget;
-	m_list->addItem(new MyBasicListWidgetItem(QIcon(":/images/line.PNG"), tr("Line")));
-	m_list->addItem(new MyBasicListWidgetItem(QIcon(":/images/rect.PNG"), tr("Rectangle")));
-	m_list->addItem(new MyBasicListWidgetItem(QIcon(":/images/oval.PNG"), tr("Oval")));
-	m_list->addItem(new MyBasicListWidgetItem(QIcon(":/images/tri.PNG"), tr("Triangle")));
+	addTest();
 	QHBoxLayout *layout = new QHBoxLayout;
 	layout->addWidget(m_label);
 	layout->addWidget(m_list);
@@ -59,4 +56,12 @@ void MyBasicListWidget::updateListWidget(QString path)
 QListWidget* MyBasicListWidget::getListWidgetPtr()
 {
 	return m_list;
+}
+
+void MyBasicListWidget::addTest()
+{
+	m_list->addItem(new MyBasicListWidgetItem(QIcon(":/images/line.PNG"), tr("Line")));
+	m_list->addItem(new MyBasicListWidgetItem(QIcon(":/images/rect.PNG"), tr("Rectangle")));
+	m_list->addItem(new MyBasicListWidgetItem(QIcon(":/images/oval.PNG"), tr("Oval")));
+	m_list->addItem(new MyBasicListWidgetItem(QIcon(":/images/tri.PNG"), tr("Triangle")));
 }

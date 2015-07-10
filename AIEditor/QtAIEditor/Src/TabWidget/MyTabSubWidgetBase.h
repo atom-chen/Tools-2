@@ -2,8 +2,9 @@
 #define __MyTabSubWidgetBase_H
 
 #include <QWidget>
+#include "TabSubWidgetLogicData.h"
 
-class MyTabSubWidgetBase : public QWidget
+class MyTabSubWidgetBase : public QWidget, public TabSubWidgetLogicData
 {
 	Q_OBJECT
 public:

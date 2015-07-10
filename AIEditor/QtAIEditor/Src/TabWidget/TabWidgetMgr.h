@@ -2,6 +2,7 @@
 #define __TabWidgetMgr_H
 
 #include "QtIncAll.h"
+#include <string>
 
 class MyTabMainWindow;
 
@@ -13,6 +14,7 @@ protected:
 public:
 	TabWidgetMgr();
 	void openTabMainWindow(QWidget* parent = 0);
+	void openOneActionEffectEditor(std::string path);
 };
 
 #endif // MAINWINDOW_H
