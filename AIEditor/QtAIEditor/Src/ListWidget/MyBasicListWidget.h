@@ -20,6 +20,7 @@ public:
 	MyBasicListWidget(QWidget *parent = 0);
 	void setViewMode(QListView::ViewMode mode);
 	void updateListWidget(QString path);
+	QListWidget* getListWidgetPtr();
 };
 
 #endif

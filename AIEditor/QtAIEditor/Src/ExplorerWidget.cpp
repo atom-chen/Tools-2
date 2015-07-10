@@ -31,6 +31,8 @@ ExplorerWidget::ExplorerWidget(QWidget *parent)
 	//m_pListWidget->resize(400, 200);
 	//m_pListWidget->show();
 	m_pHbox->addWidget(m_pListWidget);
+	// 添加监听事件
+	QObject::connect(m_pListWidget->getListWidgetPtr(), SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(onListDoubleClick(QListWidgetItem *)));
 
 	_HLayoutWidget->setLayout(m_pHbox);
 	this->setWidget(_HLayoutWidget);	// 最后一定要把 Layout 的父窗口添加到 DockWidget 中，才会刷新一次 Layout ，否则不能刷新
@@ -52,4 +54,10 @@ void ExplorerWidget::onTreeViewDoubleClick(const QModelIndex & index)
 {
 	// QAbstractItemModel* m = (QAbstractItemModel*)index.model();
 	QFileInfo fileInfo = m_pTreeWidget->fileInfo(index);
+}
+
+// 双击 List 项
+void ExplorerWidget::onListDoubleClick(QListWidgetItem *Item)
+{
+	
 }

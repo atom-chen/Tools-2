@@ -78,6 +78,10 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TreeWidget/MyBasicTreeView.h
 		./Src/TreeWidget/MyBasicTreeWidget.h
 		./Src/ListWidget/MyBasicListWidget.h
+		./Src/TabWidget/MyTabBar.h
+		./Src/TabWidget/MyTabMainWindow.h
+		./Src/TabWidget/MyTabSubWidget.h
+		./Src/TabWidget/MyTabWidget.h
     )
 	
 	SET(QRC_FILES ./Res/Qrc.qrc)
@@ -110,6 +114,17 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/ListWidget/MyBasicListWidgetItemData.cpp
 	)
 	
+	set(TAB_WIDGET_SRC
+		./Src/TabWidget/MyTabBar.h
+		./Src/TabWidget/MyTabBar.cpp
+		./Src/TabWidget/MyTabMainWindow.h
+		./Src/TabWidget/MyTabMainWindow.cpp
+		./Src/TabWidget/MyTabSubWidget.h
+		./Src/TabWidget/MyTabSubWidget.cpp
+		./Src/TabWidget/MyTabWidget.h
+		./Src/TabWidget/MyTabWidget.cpp
+	)
+	
 	set(MISC_SRC
 		./Src/Misc/UtilEncode.h
 		./Src/Misc/UtilEncode.cpp
@@ -130,6 +145,7 @@ else(NOT Qt5Widgets_FOUND)
 	source_group("TreeWidget" FILES ${TREE_WIDGET})
 	source_group("Misc" FILES ${MISC_SRC})
 	source_group("ListWidget" FILES ${LIST_WIDGET_SRC})
+	source_group("TabWidget" FILES ${TAB_WIDGET_SRC})
 
     # if we don't include this CMake will not include ui headers properly:
     include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -145,7 +161,7 @@ else(NOT Qt5Widgets_FOUND)
 	
 	ADD_DEFINITIONS(-DAIEDITOR_DLL)
 	
-    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES} ${TREE_WIDGET} ${MISC_SRC} ${LIST_WIDGET_SRC})
+    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES} ${TREE_WIDGET} ${MISC_SRC} ${LIST_WIDGET_SRC} ${TAB_WIDGET_SRC})
 
     ADD_EXECUTABLE(QtAIEditor WIN32 ${ALLSRCS})
 

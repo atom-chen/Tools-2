@@ -48,3 +48,8 @@ void MyBasicListWidget::updateListWidget(QString path)
 		m_list->addItem(new MyBasicListWidgetItem(icon, fileList[idx].fileName()));
 	}
 }
+
+QListWidget* MyBasicListWidget::getListWidgetPtr()
+{
+	return m_list;
+}

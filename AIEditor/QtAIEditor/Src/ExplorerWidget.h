@@ -29,6 +29,7 @@ public:
 public Q_SLOTS:
 	void onTreeViewClick(const QModelIndex & index);
 	void onTreeViewDoubleClick(const QModelIndex & index);
+	void onListDoubleClick(QListWidgetItem *Item);
 };
 
 #endif // LOGWIDGET_H
