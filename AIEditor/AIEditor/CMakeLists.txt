@@ -21,6 +21,8 @@ set(SRCS_FILES
 	./Src/Aaa.cpp
 	./Src/AIEditorSys.h
 	./Src/AIEditorSys.cpp
+	./Src/PushWarn.h
+	./Src/PopWarn.h
 )
 
 set(TREE_DATA_FILES
