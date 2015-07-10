@@ -7,6 +7,7 @@ class DragDropSys;
 class BuildFactory;
 class GraphicsScene;
 class GraphicsView;
+class TabWidgetMgr;
 
 class QtAIEditorSys : public AIEditorSys
 {
@@ -15,6 +16,7 @@ protected:
 	BuildFactory* m_pBuildFactory;				// 工厂生成
 	GraphicsScene* m_pGraphicsScene;
 	GraphicsView* m_pGraphicsView;
+	TabWidgetMgr* m_pTabWidgetMgr;
 
 public:
 	QtAIEditorSys();
@@ -24,6 +26,7 @@ public:
 	void setGraphicsScenePtr(GraphicsScene* pGraphicsScene);
 	GraphicsView* getGraphicsViewPtr();
 	void setGraphicsViewPtr(GraphicsView* pGraphicsView);
+	TabWidgetMgr* getTabWidgetMgrPtr();
 };
 
 #define g_pQtAIEditorSys (static_cast<QtAIEditorSys*>(QtAIEditorSys::getSingletonPtr()))
@@ -31,5 +34,6 @@ public:
 #define g_pBuildFactory g_pQtAIEditorSys->getBuildFactoryPtr()
 #define g_pGraphicsScene g_pQtAIEditorSys->getGraphicsScenePtr()
 #define g_pGraphicsView g_pQtAIEditorSys->getGraphicsViewPtr()
+#define g_pTabWidgetMgr g_pQtAIEditorSys->getTabWidgetMgrPtr()
 
 #endif		// __QTAIEDITORSYS_H_

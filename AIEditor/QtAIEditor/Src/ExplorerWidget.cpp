@@ -4,6 +4,8 @@
 #include "MyBasicMVCTreeWidget.h"
 #include "MyBasicListWidget.h"
 #include "MyBasicTreeView.h"
+#include "QtAIEditorSys.h"
+#include "TabWidgetMgr.h"
 
 ExplorerWidget::ExplorerWidget(QWidget *parent)
 	: QDockWidget(parent, 0)
@@ -59,5 +61,5 @@ void ExplorerWidget::onTreeViewDoubleClick(const QModelIndex & index)
 // Ë«»÷ List Ïî
 void ExplorerWidget::onListDoubleClick(QListWidgetItem *Item)
 {
-	
+	g_pTabWidgetMgr->openTabMainWindow();
 }

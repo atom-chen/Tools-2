@@ -123,6 +123,8 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TabWidget/MyTabSubWidget.cpp
 		./Src/TabWidget/MyTabWidget.h
 		./Src/TabWidget/MyTabWidget.cpp
+		./Src/TabWidget/TabWidgetMgr.h
+		./Src/TabWidget/TabWidgetMgr.cpp
 	)
 	
 	set(MISC_SRC
@@ -152,6 +154,7 @@ else(NOT Qt5Widgets_FOUND)
     include_directories(./Src)
 	include_directories(./Src/TreeWidget)
 	include_directories(./Src/ListWidget)
+	include_directories(./Src/TabWidget)
 	include_directories(./Src/Misc)
 	include_directories(../AIEditor/Src)
 	include_directories(../AIEditor/Src/TreeData)

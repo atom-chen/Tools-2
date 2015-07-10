@@ -8,6 +8,7 @@ QtAIEditorSys::QtAIEditorSys()
 {
 	m_pDragDropSys = new DragDropSys();
 	m_pBuildFactory = new BuildFactory();
+	m_pTabWidgetMgr = nullptr;
 }
 
 DragDropSys* QtAIEditorSys::getDragDropSysPtr()
@@ -38,4 +39,9 @@ GraphicsView* QtAIEditorSys::getGraphicsViewPtr()
 void QtAIEditorSys::setGraphicsViewPtr(GraphicsView* pGraphicsView)
 {
 	m_pGraphicsView = pGraphicsView;
+}
+
+TabWidgetMgr* QtAIEditorSys::getTabWidgetMgrPtr()
+{
+	return m_pTabWidgetMgr;
 }
