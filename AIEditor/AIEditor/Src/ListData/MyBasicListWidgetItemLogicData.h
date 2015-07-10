@@ -16,6 +16,8 @@ protected:
 public:
 	MyBasicListWidgetItemLogicData();
 	~MyBasicListWidgetItemLogicData();
+
+	void setFullPath(std::string path);
 };
 
 END_NAMESPACE_AIEDITOR

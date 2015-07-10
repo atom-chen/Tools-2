@@ -1,5 +1,7 @@
 #include "MyBasicListWidget.h"
 #include "MyBasicListWidgetItem.h"
+#include "MyBasicListWidgetItemData.h"
+#include "UtilEncode.h"
 
 MyBasicListWidget::MyBasicListWidget(QWidget *parent)
 	: QWidget(parent)
@@ -45,7 +47,12 @@ void MyBasicListWidget::updateListWidget(QString path)
 		{
 			icon = icon_provider.icon(fileList[idx]);
 		}
-		m_list->addItem(new MyBasicListWidgetItem(icon, fileList[idx].fileName()));
+		MyBasicListWidgetItem* pMyBasicListWidgetItem = new MyBasicListWidgetItem(icon, fileList[idx].fileName());
+		MyBasicListWidgetItemData* pMyBasicListWidgetItemData = new MyBasicListWidgetItemData;
+		pMyBasicListWidgetItem->setItemData(pMyBasicListWidgetItemData);
+		pMyBasicListWidgetItemData->setFullPath(UtilEncode::qUnicode2SLocal(path));
+		pMyBasicListWidgetItem->setData(Qt::UserRole, pMyBasicListWidgetItemData->m_value);
+		m_list->addItem(pMyBasicListWidgetItem);
 	}
 }
 

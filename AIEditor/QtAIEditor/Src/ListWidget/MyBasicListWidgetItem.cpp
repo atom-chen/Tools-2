@@ -5,3 +5,13 @@ MyBasicListWidgetItem::MyBasicListWidgetItem(const QIcon &icon, const QString &t
 {
 
 }
+
+MyBasicListWidgetItem::~MyBasicListWidgetItem()
+{
+	delete(m_pItemData);
+}
+
+void MyBasicListWidgetItem::setItemData(MyBasicListWidgetItemData* pItemData)
+{
+	m_pItemData = pItemData;
+}

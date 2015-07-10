@@ -6,7 +6,12 @@
 
 class MyBasicListWidgetItemData : public MyBasicListWidgetItemLogicData
 {
+public:
+	QVariant m_value;
 
+public:
+	MyBasicListWidgetItemData();
+	~MyBasicListWidgetItemData();
 };
 
 Q_DECLARE_METATYPE(MyBasicListWidgetItemData)
