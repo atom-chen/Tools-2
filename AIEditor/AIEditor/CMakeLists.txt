@@ -28,16 +28,21 @@ set(TREE_DATA_FILES
 	./Src/TreeData/MyBasicTreeWidgetItemLogicData.cpp
 )
 
+set(LIST_DATA_FILES
+	./Src/ListData/MyBasicListWidgetItemLogicData.h
+	./Src/ListData/MyBasicListWidgetItemLogicData.cpp
+)
+
 source_group("Base" FILES ${SRCS_FILES})
-
 source_group("TreeData" FILES ${TREE_DATA_FILES})
+source_group("ListData" FILES ${LIST_DATA_FILES})
 
-include_directories(./Src ./Src/ProjectData)
+include_directories(./Src ./Src/TreeData ./Src/ListData)
 
 ADD_DEFINITIONS(-DAIEDITOR_DLL -DAIEDITOR_DLL_EXPORT)
 
 #set(ALL_SRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES})
-set(ALL_SRCS ${SRCS_FILES} ${TREE_DATA_FILES})
+set(ALL_SRCS ${SRCS_FILES} ${TREE_DATA_FILES} ${LIST_DATA_FILES})
 
 ADD_LIBRARY(AIEditor SHARED ${ALL_SRCS})
 

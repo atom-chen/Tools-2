@@ -164,6 +164,7 @@ else(NOT Qt5Widgets_FOUND)
 	include_directories(./Src/Misc)
 	include_directories(../AIEditor/Src)
 	include_directories(../AIEditor/Src/TreeData)
+	include_directories(../AIEditor/Src/ListData)
 	include_directories(${QT_BINARY_DIR}/../include)
 	
 	link_directories(${QT_BINARY_DIR}/../lib)

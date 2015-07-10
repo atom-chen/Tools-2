@@ -5,14 +5,13 @@
 
 #include "MyBasicTreeWidgetItemLogicData.h"
 
-class MyBasicTreeWidgetItemData
+class MyBasicTreeWidgetItemData : public MyBasicTreeWidgetItemLogicData
 {
 public:
 	QVariant m_value;
 	MyBasicTreeWidgetItemData* m_self;
 
 protected:
-	MyBasicTreeWidgetItemLogicData* m_itemData;
 	int m_type;
 
 public:
