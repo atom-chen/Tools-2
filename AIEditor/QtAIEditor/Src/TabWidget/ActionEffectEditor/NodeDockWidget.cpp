@@ -5,7 +5,7 @@
 NodeDockWidget::NodeDockWidget(QWidget *parent)
 	: QDockWidget(parent)
 {
-	m_pHbox = new QVBoxLayout;
+	m_pHbox = new QGridLayout;
 	QWidget* dockWidgetContents = new QWidget();
 	this->setWidget(dockWidgetContents);
 

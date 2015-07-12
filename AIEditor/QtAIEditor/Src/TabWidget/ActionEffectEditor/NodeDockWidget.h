@@ -11,7 +11,7 @@ class NodeDockWidget : public QDockWidget
 	Q_OBJECT
 
 protected:
-	QVBoxLayout * m_pHbox;
+	QGridLayout * m_pHbox;
 	MyScrollAreaWidget* m_pScrollArea;
 
 public:

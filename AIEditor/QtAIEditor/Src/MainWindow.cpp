@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 	createDockWidget();
 
 	m_aaa.sayHello();
-	testWidget();
+	//testWidget();
 }
 
 MainWindow::~MainWindow()

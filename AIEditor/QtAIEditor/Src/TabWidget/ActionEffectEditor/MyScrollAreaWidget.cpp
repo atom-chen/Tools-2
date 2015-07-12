@@ -1,9 +1,12 @@
 #include "MyScrollAreaWidget.h"
+#include "BtnListWidget.h"
 
 MyScrollAreaWidget::MyScrollAreaWidget(QWidget *parent)
 	: QScrollArea(parent)
 {
-	test2f();
+	//test2f();
+	test3f();
+	//test4f();
 }
 
 MyScrollAreaWidget::~MyScrollAreaWidget()
@@ -93,4 +96,57 @@ QWidget* MyScrollAreaWidget::createGroupBox(const QString& title, int n)
 		boxlayout->addWidget(new QRadioButton(QString("%1").arg(i)));
 
 	return box;
+}
+
+void MyScrollAreaWidget::test3f()
+{
+	m_ScrollAreaWidgetContents = new QWidget;
+	m_ScrollAreaWidgetContents->setGeometry(0, 0, 330, 1000);
+	m_ScrollAreaWidgetContents->setMinimumSize(200, 1000);
+
+	int topY = 0;
+	QSize _size;
+	//QVBoxLayout* pHbox = new QVBoxLayout;
+	// 如果 BtnListWidget* pBtnWidget = new BtnListWidget(); this->setWidget(pBtnWidget); 竟然不能显示 BtnListWidget 中的内容
+	BtnListWidget* pBtnWidget = new BtnListWidget(m_ScrollAreaWidgetContents);
+	//this->setWidget(pBtnWidget);
+	//pHbox->addWidget(pBtnWidget);
+	//this->setLayout(pHbox);
+	m_vec.push_back(pBtnWidget);
+	topY += pBtnWidget->height();
+
+	pBtnWidget = new BtnListWidget(m_ScrollAreaWidgetContents);
+	//this->setWidget(pBtnWidget);
+	m_vec.push_back(pBtnWidget);
+	_size = pBtnWidget->size();
+	pBtnWidget->setGeometry(0, topY, _size.width(), _size.height());
+	topY += pBtnWidget->height();
+
+	this->setWidget(m_ScrollAreaWidgetContents);
+}
+
+void MyScrollAreaWidget::test4f()
+{
+	m_ScrollAreaWidgetContents = new QWidget;
+	m_ScrollAreaWidgetContents->setGeometry(0, 0, 200, 1000);
+	m_ScrollAreaWidgetContents->setMinimumSize(200, 1000);
+
+	QPushButton* pBtn = new QPushButton(m_ScrollAreaWidgetContents);
+	pBtn->setGeometry(0, 0, 200, 30);
+	pBtn->setMinimumSize(200, 30);
+	pBtn->show();
+	//pPnt->setWidget(pBtn);
+	pBtn = new QPushButton(m_ScrollAreaWidgetContents);
+	pBtn->setGeometry(0, 30, 200, 30);
+	pBtn->setMinimumSize(200, 30);
+	pBtn->move(0, 30);
+	pBtn->show();
+	//pPnt->setWidget(pBtn);
+	pBtn = new QPushButton(m_ScrollAreaWidgetContents);
+	pBtn->setGeometry(0, 60, 200, 30);
+	pBtn->setMinimumSize(200, 30);
+	pBtn->show();
+	//pPnt->setWidget(pBtn);
+
+	this->setWidget(m_ScrollAreaWidgetContents);
 }

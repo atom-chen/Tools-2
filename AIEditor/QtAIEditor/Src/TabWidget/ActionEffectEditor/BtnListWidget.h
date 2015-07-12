@@ -8,7 +8,6 @@ class BtnListWidget : public QWidget
 	Q_OBJECT
 
 protected:
-	QVBoxLayout * m_pVbox;
 	QPushButton* m_pBtn;
 	QListWidget* m_pListWidget;
 
