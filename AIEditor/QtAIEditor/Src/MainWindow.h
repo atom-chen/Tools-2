@@ -78,6 +78,7 @@ private:
 private:
 	void connectAction();
 	void createDockWidget();
+	void testWidget();
 };
 
 #endif // MAINWINDOW_H

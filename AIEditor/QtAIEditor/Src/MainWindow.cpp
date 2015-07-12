@@ -9,6 +9,7 @@
 
 #include <QtCore/qnamespace.h>
 //#include "DraggableFrame.h"
+#include "TestQScrollArea1F.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent, 0), m_ui(new Ui::MainWindow)
@@ -28,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 	createDockWidget();
 
 	m_aaa.sayHello();
+	testWidget();
 }
 
 MainWindow::~MainWindow()
@@ -181,4 +183,10 @@ void MainWindow::loadFile(QString fileName)
 void MainWindow::connectAction()
 {
 	QObject::connect(m_ui->actionOpen, SIGNAL(triggered()), this, SLOT(slotOpenFile()));
+}
+
+void MainWindow::testWidget()
+{
+	TestQScrollArea1F* ptest = new TestQScrollArea1F;
+	ptest->show();
 }

@@ -1,22 +1,17 @@
-#ifndef __MyTabBar_H
-#define __MyTabBar_H
+#ifndef __TestQScrollArea1F_H
+#define __TestQScrollArea1F_H
 
-#include <QTabBar>
-#include <QtGui>
+#include "QtIncAll.h"
 
-class MyTabBar :public QTabBar
+class TestQScrollArea1F :public QWidget
 {
 	Q_OBJECT
 public:
-	MyTabBar(QWidget* = 0);
-	virtual ~MyTabBar(){};
-protected:
-	void mousePressEvent(QMouseEvent *);
-	void mouseReleaseEvent(QMouseEvent *);   //通过两个事件模拟出tab被拖动的动作
+	TestQScrollArea1F(QWidget *parent = 0, Qt::WindowFlags flags = 0);
+	~TestQScrollArea1F();
 private:
-	bool m_pressFlag;
-signals:
-	void sig_tabDrag(int, QPoint);
+	void createWidget();
+	QWidget* createGroupBox(const QString& title, int n);
 };
 
 #endif
