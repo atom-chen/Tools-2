@@ -4,13 +4,15 @@
 #include "MyTabSubWidgetBase.h"
 #include "QtIncAll.h"
 
+class MyScrollAreaWidget;
+
 class NodeDockWidget : public QDockWidget
 {
 	Q_OBJECT
 
 protected:
 	QVBoxLayout * m_pHbox;
-	QScrollArea* m_pQScrollArea;
+	MyScrollAreaWidget* m_pScrollArea;
 
 public:
 	NodeDockWidget(QWidget *parent = 0);

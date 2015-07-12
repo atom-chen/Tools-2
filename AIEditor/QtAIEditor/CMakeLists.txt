@@ -85,7 +85,9 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TabWidget/ActionEffectEditor/ActionEffectEditor.h
 		./Src/TabWidget/ActionEffectEditor/NodeDockWidget.h
 		./Src/TabWidget/ActionEffectEditor/BtnListWidget.h
+		./Src/TabWidget/ActionEffectEditor/MyScrollAreaWidget.h
 		./Src/TabWidget/MyTabWidget.h
+		./Src/TestWidget/TestQScrollArea1F.h
     )
 	
 	SET(QRC_FILES ./Res/Qrc.qrc)
@@ -154,6 +156,13 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TabWidget/ActionEffectEditor/NodeDockWidget.cpp
 		./Src/TabWidget/ActionEffectEditor/BtnListWidget.h
 		./Src/TabWidget/ActionEffectEditor/BtnListWidget.cpp
+		./Src/TabWidget/ActionEffectEditor/MyScrollAreaWidget.h
+		./Src/TabWidget/ActionEffectEditor/MyScrollAreaWidget.cpp
+	)
+	
+	set(TEST_WIDGET_SRC
+		./Src/TestWidget/TestQScrollArea1F.h
+		./Src/TestWidget/TestQScrollArea1F.cpp
 	)
 	
 	qt5_wrap_cpp(MOC_SRCS ${MOC_FILES})
@@ -174,6 +183,7 @@ else(NOT Qt5Widgets_FOUND)
 	source_group("TabWidget" FILES ${TAB_WIDGET_SRC})
 	source_group("NodeWidget" FILES ${NODE_WIDGET_SRC})
 	source_group("TabWidget\\ActionEffectEditor" FILES ${ACTION_EFFECT_EDITOR_SRC})
+	source_group("TestWidget" FILES ${TEST_WIDGET_SRC})
 
     # if we don't include this CMake will not include ui headers properly:
     include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -183,6 +193,7 @@ else(NOT Qt5Widgets_FOUND)
 	include_directories(./Src/TabWidget)
 	include_directories(./Src/TabWidget/ActionEffectEditor)
 	include_directories(./Src/NodeWidget)
+	include_directories(./Src/TestWidget)
 	include_directories(./Src/Misc)
 	include_directories(../AIEditor/Src)
 	include_directories(../AIEditor/Src/TreeData)
@@ -195,7 +206,7 @@ else(NOT Qt5Widgets_FOUND)
 	
 	ADD_DEFINITIONS(-DAIEDITOR_DLL)
 	
-    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES} ${TREE_WIDGET} ${MISC_SRC} ${LIST_WIDGET_SRC} ${TAB_WIDGET_SRC} ${NODE_WIDGET_SRC} ${ACTION_EFFECT_EDITOR_SRC})
+    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES} ${TREE_WIDGET} ${MISC_SRC} ${LIST_WIDGET_SRC} ${TAB_WIDGET_SRC} ${NODE_WIDGET_SRC} ${ACTION_EFFECT_EDITOR_SRC} ${TEST_WIDGET_SRC})
 
     ADD_EXECUTABLE(QtAIEditor WIN32 ${ALLSRCS})
 
