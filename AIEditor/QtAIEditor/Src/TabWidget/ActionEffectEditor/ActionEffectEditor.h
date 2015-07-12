@@ -5,19 +5,20 @@
 
 #include <QWidget>
 #include <QGraphicsItem>
+#include <QtDesigner/QtDesigner>
 
-class QHBoxLayout;
 class GraphicsView;
 class GraphicsScene;
+class NodeDockWidget;
 
 class ActionEffectEditor : public MyTabSubWidgetBase
 {
 	Q_OBJECT
 
 protected:
-	QHBoxLayout * m_pHbox;
 	GraphicsView * m_pView;
 	GraphicsScene * m_pScene;
+	NodeDockWidget* m_pNodeDockWidget;
 
 public:
 	ActionEffectEditor(QWidget *parent = 0);

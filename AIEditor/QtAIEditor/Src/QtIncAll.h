@@ -7,5 +7,6 @@
 #include <QtCore/QtCore>
 #include <QtWidgets/QtWidgets>
 #include <QtGui/QtGui>
+//#include <QtDesigner/QtDesigner>
 
 #endif		// __QtIncAll_H_

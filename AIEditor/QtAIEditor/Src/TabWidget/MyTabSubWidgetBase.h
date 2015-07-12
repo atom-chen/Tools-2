@@ -1,10 +1,10 @@
 #ifndef __MyTabSubWidgetBase_H
 #define __MyTabSubWidgetBase_H
 
-#include <QWidget>
+#include <QMainWindow>
 #include "TabSubWidgetLogicData.h"
 
-class MyTabSubWidgetBase : public QWidget, public TabSubWidgetLogicData
+class MyTabSubWidgetBase : public QMainWindow, public TabSubWidgetLogicData
 {
 	Q_OBJECT
 public:

@@ -10,13 +10,13 @@
 #include "GraphicsView.h"
 #include "BezierCurveItem.h"
 #include "QtAIEditorSys.h"
+#include "NodeDockWidget.h"
 
 ActionEffectEditor::ActionEffectEditor(QWidget *parent)
 	: MyTabSubWidgetBase(parent)
 {
-	m_pHbox = new QHBoxLayout;
-	//QGraphicsView * view = new QGraphicsView;
-	m_pView = new GraphicsView;
+	//m_pHbox = new QHBoxLayout;
+	m_pView = new GraphicsView(this);
 	m_pScene = new GraphicsScene;
 
 	addMultiPolygon();
@@ -29,13 +29,16 @@ ActionEffectEditor::ActionEffectEditor(QWidget *parent)
 
 	m_pView->setMouseTracking(true);
 
-	m_pHbox->addWidget(m_pView);
-	this->setLayout(m_pHbox);
-
-	this->resize(600, 400);
+	//m_pHbox->addWidget(m_pView);
+	//this->setLayout(m_pHbox);
+	//this->resize(600, 400);
+	setCentralWidget(m_pView);
 
 	g_pQtAIEditorSys->setGraphicsScenePtr(m_pScene);
 	g_pQtAIEditorSys->setGraphicsViewPtr(m_pView);
+
+	m_pNodeDockWidget = new NodeDockWidget(this);
+	this->addDockWidget(Qt::RightDockWidgetArea, m_pNodeDockWidget);
 }
 
 ActionEffectEditor::~ActionEffectEditor()

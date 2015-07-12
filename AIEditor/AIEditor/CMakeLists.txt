@@ -40,17 +40,27 @@ set(TAB_DATA_FILES
 	./Src/TabData/TabSubWidgetLogicData.cpp
 )
 
+set(NODE_DATA_FILES
+	./Src/NodeData/NodeDataBase.h
+	./Src/NodeData/NodeDataBase.cpp
+	./Src/NodeData/NodeDataMgr.h
+	./Src/NodeData/NodeDataMgr.cpp
+	./Src/NodeData/TestNodeData.h
+	./Src/NodeData/TestNodeData.cpp
+)
+
 source_group("Base" FILES ${SRCS_FILES})
 source_group("TreeData" FILES ${TREE_DATA_FILES})
 source_group("ListData" FILES ${LIST_DATA_FILES})
 source_group("TabData" FILES ${TAB_DATA_FILES})
+source_group("NodeData" FILES ${NODE_DATA_FILES})
 
-include_directories(./Src ./Src/TreeData ./Src/ListData)
+include_directories(./Src ./Src/TreeData ./Src/ListData ./Src/NodeData)
 
 ADD_DEFINITIONS(-DAIEDITOR_DLL -DAIEDITOR_DLL_EXPORT)
 
 #set(ALL_SRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES})
-set(ALL_SRCS ${SRCS_FILES} ${TREE_DATA_FILES} ${LIST_DATA_FILES} ${TAB_DATA_FILES})
+set(ALL_SRCS ${SRCS_FILES} ${TREE_DATA_FILES} ${LIST_DATA_FILES} ${TAB_DATA_FILES} ${NODE_DATA_FILES})
 
 ADD_LIBRARY(AIEditor SHARED ${ALL_SRCS})
 

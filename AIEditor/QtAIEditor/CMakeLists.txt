@@ -82,7 +82,9 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TabWidget/MyTabMainWindow.h
 		./Src/TabWidget/MyTabSubWidgetFrame.h
 		./Src/TabWidget/MyTabSubWidgetBase.h
-		./Src/TabWidget/ActionEffectEditor.h
+		./Src/TabWidget/ActionEffectEditor/ActionEffectEditor.h
+		./Src/TabWidget/ActionEffectEditor/NodeDockWidget.h
+		./Src/TabWidget/ActionEffectEditor/BtnListWidget.h
 		./Src/TabWidget/MyTabWidget.h
     )
 	
@@ -129,13 +131,29 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TabWidget/TabWidgetMgr.cpp
 		./Src/TabWidget/MyTabSubWidgetBase.h
 		./Src/TabWidget/MyTabSubWidgetBase.cpp
-		./Src/TabWidget/ActionEffectEditor.h
-		./Src/TabWidget/ActionEffectEditor.cpp
 	)
 	
 	set(MISC_SRC
 		./Src/Misc/UtilEncode.h
 		./Src/Misc/UtilEncode.cpp
+	)
+	
+	set(NODE_WIDGET_SRC
+		./Src/NodeWidget/NodeWidgetBase.h
+		./Src/NodeWidget/NodeWidgetBase.cpp
+		./Src/NodeWidget/NodeWidgetMgr.h
+		./Src/NodeWidget/NodeWidgetMgr.cpp
+		./Src/NodeWidget/TestNodeWidget.h
+		./Src/NodeWidget/TestNodeWidget.cpp
+	)
+	
+	set(ACTION_EFFECT_EDITOR_SRC
+		./Src/TabWidget/ActionEffectEditor/ActionEffectEditor.h
+		./Src/TabWidget/ActionEffectEditor/ActionEffectEditor.cpp
+		./Src/TabWidget/ActionEffectEditor/NodeDockWidget.h
+		./Src/TabWidget/ActionEffectEditor/NodeDockWidget.cpp
+		./Src/TabWidget/ActionEffectEditor/BtnListWidget.h
+		./Src/TabWidget/ActionEffectEditor/BtnListWidget.cpp
 	)
 	
 	qt5_wrap_cpp(MOC_SRCS ${MOC_FILES})
@@ -154,6 +172,8 @@ else(NOT Qt5Widgets_FOUND)
 	source_group("Misc" FILES ${MISC_SRC})
 	source_group("ListWidget" FILES ${LIST_WIDGET_SRC})
 	source_group("TabWidget" FILES ${TAB_WIDGET_SRC})
+	source_group("NodeWidget" FILES ${NODE_WIDGET_SRC})
+	source_group("TabWidget\\ActionEffectEditor" FILES ${ACTION_EFFECT_EDITOR_SRC})
 
     # if we don't include this CMake will not include ui headers properly:
     include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -161,18 +181,21 @@ else(NOT Qt5Widgets_FOUND)
 	include_directories(./Src/TreeWidget)
 	include_directories(./Src/ListWidget)
 	include_directories(./Src/TabWidget)
+	include_directories(./Src/TabWidget/ActionEffectEditor)
+	include_directories(./Src/NodeWidget)
 	include_directories(./Src/Misc)
 	include_directories(../AIEditor/Src)
 	include_directories(../AIEditor/Src/TreeData)
 	include_directories(../AIEditor/Src/ListData)
 	include_directories(../AIEditor/Src/TabData)
+	include_directories(../AIEditor/Src/NodeData)
 	include_directories(${QT_BINARY_DIR}/../include)
 	
 	link_directories(${QT_BINARY_DIR}/../lib)
 	
 	ADD_DEFINITIONS(-DAIEDITOR_DLL)
 	
-    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES} ${TREE_WIDGET} ${MISC_SRC} ${LIST_WIDGET_SRC} ${TAB_WIDGET_SRC})
+    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES} ${TREE_WIDGET} ${MISC_SRC} ${LIST_WIDGET_SRC} ${TAB_WIDGET_SRC} ${NODE_WIDGET_SRC} ${ACTION_EFFECT_EDITOR_SRC})
 
     ADD_EXECUTABLE(QtAIEditor WIN32 ${ALLSRCS})
 
