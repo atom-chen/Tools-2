@@ -1,7 +1,19 @@
 #include "BtnListWidget.h"
+#include "DragDropItemWidget.h"
 
 BtnListWidget::BtnListWidget(QWidget *parent)
 	: QWidget(parent)
+{
+	//test1f();
+	test2f();
+}
+
+BtnListWidget::~BtnListWidget()
+{
+
+}
+
+void BtnListWidget::test1f()
 {
 	this->setGeometry(QRect(0, 300, 300, 150));
 
@@ -34,7 +46,26 @@ BtnListWidget::BtnListWidget(QWidget *parent)
 	item1 = new QListWidgetItem("America", m_pListWidget);
 }
 
-BtnListWidget::~BtnListWidget()
+void BtnListWidget::test2f()
 {
+	int totalHeight = 0;
 
+	m_pBtn = new QPushButton(this);
+	m_pBtn->setObjectName(QStringLiteral("pushButton"));
+	m_pBtn->setGeometry(QRect(20, 20, 200, 30));
+	totalHeight += 30;
+
+	DragDropItemWidget* pItemWidget;
+	int itemHeight = 30;
+	int heightY = 0;
+	int idx = 0;
+	for (; idx < 5; ++idx)
+	{
+		pItemWidget = new DragDropItemWidget(this);
+		m_itemWidgetVec.push_back(pItemWidget);
+		pItemWidget->setGeometry(QRect(0, heightY, 300, itemHeight));
+		totalHeight += itemHeight;
+	}
+
+	this->setGeometry(QRect(0, 300, 300, totalHeight));
 }

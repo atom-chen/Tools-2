@@ -101,27 +101,28 @@ QWidget* MyScrollAreaWidget::createGroupBox(const QString& title, int n)
 void MyScrollAreaWidget::test3f()
 {
 	m_ScrollAreaWidgetContents = new QWidget;
-	m_ScrollAreaWidgetContents->setGeometry(0, 0, 330, 1000);
+	//m_ScrollAreaWidgetContents->setGeometry(0, 0, 330, 1000);
 	m_ScrollAreaWidgetContents->setMinimumSize(200, 1000);
 
+	BtnListWidget* pBtnWidget;
 	int topY = 0;
+	int totalHeight = 0;
 	QSize _size;
-	//QVBoxLayout* pHbox = new QVBoxLayout;
-	// 如果 BtnListWidget* pBtnWidget = new BtnListWidget(); this->setWidget(pBtnWidget); 竟然不能显示 BtnListWidget 中的内容
-	BtnListWidget* pBtnWidget = new BtnListWidget(m_ScrollAreaWidgetContents);
-	//this->setWidget(pBtnWidget);
-	//pHbox->addWidget(pBtnWidget);
-	//this->setLayout(pHbox);
-	m_vec.push_back(pBtnWidget);
-	topY += pBtnWidget->height();
-
-	pBtnWidget = new BtnListWidget(m_ScrollAreaWidgetContents);
-	//this->setWidget(pBtnWidget);
-	m_vec.push_back(pBtnWidget);
-	_size = pBtnWidget->size();
-	pBtnWidget->setGeometry(0, topY, _size.width(), _size.height());
-	topY += pBtnWidget->height();
-
+	int idx = 0;
+	for (idx = 0; idx < 10; ++idx)
+	{
+		//QVBoxLayout* pHbox = new QVBoxLayout;
+		// 如果 BtnListWidget* pBtnWidget = new BtnListWidget(); this->setWidget(pBtnWidget); 竟然不能显示 BtnListWidget 中的内容
+		pBtnWidget = new BtnListWidget(m_ScrollAreaWidgetContents);
+		//this->setWidget(pBtnWidget);
+		//pHbox->addWidget(pBtnWidget);
+		//this->setLayout(pHbox);
+		m_vec.push_back(pBtnWidget);
+		_size = pBtnWidget->size();
+		pBtnWidget->setGeometry(0, topY, _size.width(), _size.height());
+		topY += pBtnWidget->height();
+	}
+	m_ScrollAreaWidgetContents->setGeometry(0, 0, 330, topY);
 	this->setWidget(m_ScrollAreaWidgetContents);
 }
 

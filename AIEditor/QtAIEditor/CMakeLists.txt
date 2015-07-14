@@ -86,6 +86,7 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TabWidget/ActionEffectEditor/NodeDockWidget.h
 		./Src/TabWidget/ActionEffectEditor/BtnListWidget.h
 		./Src/TabWidget/ActionEffectEditor/MyScrollAreaWidget.h
+		./Src/TabWidget/ActionEffectEditor/DragDropItemWidget.h
 		./Src/TabWidget/MyTabWidget.h
 		./Src/TestWidget/TestQScrollArea1F.h
     )
@@ -158,6 +159,8 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TabWidget/ActionEffectEditor/BtnListWidget.cpp
 		./Src/TabWidget/ActionEffectEditor/MyScrollAreaWidget.h
 		./Src/TabWidget/ActionEffectEditor/MyScrollAreaWidget.cpp
+		./Src/TabWidget/ActionEffectEditor/DragDropItemWidget.h
+		./Src/TabWidget/ActionEffectEditor/DragDropItemWidget.cpp
 	)
 	
 	set(TEST_WIDGET_SRC

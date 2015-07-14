@@ -12,6 +12,9 @@ NodeDockWidget::NodeDockWidget(QWidget *parent)
 	m_pScrollArea = new MyScrollAreaWidget(dockWidgetContents);
 	m_pHbox->addWidget(m_pScrollArea);
 
+	//m_pDesignerWidgetBox = new qdesigner_internal::QDesignerWidgetBox(dockWidgetContents);
+	//m_pHbox->addWidget(m_pDesignerWidgetBox);
+
 	dockWidgetContents->setLayout(m_pHbox);
 	//this->resize(600, 400);
 }

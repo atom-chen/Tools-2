@@ -13,6 +13,7 @@ class NodeDockWidget : public QDockWidget
 protected:
 	QGridLayout * m_pHbox;
 	MyScrollAreaWidget* m_pScrollArea;
+	//qdesigner_internal::QDesignerWidgetBox* m_pDesignerWidgetBox;
 
 public:
 	NodeDockWidget(QWidget *parent = 0);
