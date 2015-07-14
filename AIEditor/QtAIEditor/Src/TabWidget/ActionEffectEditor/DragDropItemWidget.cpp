@@ -24,3 +24,30 @@ void DragDropItemWidget::changgeSize(int width_)
 	pRect = this->geometry();
 	this->setGeometry(pRect.x(), pRect.y(), width_, pRect.height());
 }
+
+void DragDropItemWidget::mousePressEvent(QMouseEvent *event)
+{
+	if (event->button() == Qt::LeftButton)
+	{
+		m_dragStartPosition = event->pos();
+	}
+}
+
+void DragDropItemWidget::mouseMoveEvent(QMouseEvent *event)
+{
+	if (!(event->buttons() & Qt::LeftButton))
+	{
+		return;
+	}
+	if ((event->pos() - m_dragStartPosition).manhattanLength() < QApplication::startDragDistance())
+	{
+		return;
+	}
+	QDrag *drag = new QDrag(this);
+	QMimeData *mimeData = new QMimeData;
+	QString mimeType = QStringLiteral("text/plain");
+	QString uniqueId = QStringLiteral("123");
+	mimeData->setData(mimeType, uniqueId.toUtf8());
+	drag->setMimeData(mimeData);
+	Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
+}

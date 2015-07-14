@@ -9,12 +9,17 @@ class DragDropItemWidget : public QWidget
 
 protected:
 	QPushButton* m_pBtn;		// Ò»¸ö°´Å¥
+	QPoint m_dragStartPosition;
 
 public:
 	DragDropItemWidget(QWidget *parent = 0, int width_ = 0);
 	~DragDropItemWidget();
 
 	void changgeSize(int width_);
+
+protected:
+	void mousePressEvent(QMouseEvent *event);
+	void mouseMoveEvent(QMouseEvent *event);
 };
 
 #endif

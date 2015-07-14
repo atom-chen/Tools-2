@@ -3,6 +3,7 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include "QtIncAll.h"
 
 class GraphicsScene : public QGraphicsScene
 {
@@ -22,9 +23,11 @@ public:
 	void addGraphicsObject(QGraphicsObject* pQGraphicsObject);
 
 protected:
-	void mousePressEvent(QGraphicsSceneMouseEvent *evt);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent * m);
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent *evt);
+	virtual void mousePressEvent(QGraphicsSceneMouseEvent *evt);
+	virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * m);
+	virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *evt);
+	virtual void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
+	virtual void dropEvent(QGraphicsSceneDragDropEvent *event);
 };
 
 #endif // GRAPHICSSCENE_H

@@ -24,10 +24,7 @@ ActionEffectEditor::ActionEffectEditor(QWidget *parent)
 	addDragWidget();
 	addBezierCurve();
 
-	m_pView->setRenderHint(QPainter::Antialiasing);
 	m_pView->setScene(m_pScene);
-
-	m_pView->setMouseTracking(true);
 
 	//m_pHbox->addWidget(m_pView);
 	//this->setLayout(m_pHbox);
@@ -39,6 +36,7 @@ ActionEffectEditor::ActionEffectEditor(QWidget *parent)
 
 	m_pNodeDockWidget = new NodeDockWidget(this);
 	this->addDockWidget(Qt::RightDockWidgetArea, m_pNodeDockWidget);
+	this->setAcceptDrops(true);		// 接收拖动操作
 }
 
 ActionEffectEditor::~ActionEffectEditor()

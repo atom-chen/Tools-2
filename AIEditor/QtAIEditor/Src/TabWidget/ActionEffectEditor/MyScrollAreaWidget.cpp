@@ -163,7 +163,7 @@ void MyScrollAreaWidget::resizeEvent(QResizeEvent *evt)
 
 	QRect pRect;
 	pRect = m_ScrollAreaWidgetContents->geometry();
-	m_ScrollAreaWidgetContents->setGeometry(pRect.x(), pRect.y(), curWidth - m_leftGap - m_rightGap, pRect.height());
+	m_ScrollAreaWidgetContents->setGeometry(pRect.x(), pRect.y(), curWidth, pRect.height());
 
 	int idx = 0;
 	for (idx = 0; idx < 10; ++idx)

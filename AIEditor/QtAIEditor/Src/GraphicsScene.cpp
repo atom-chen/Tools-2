@@ -67,3 +67,21 @@ void GraphicsScene::addGraphicsObject(QGraphicsObject* pQGraphicsObject)
 {
 	addItem(pQGraphicsObject);
 }
+
+void GraphicsScene::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
+{
+	if (event->mimeData()->hasFormat("text/plain"))
+	{
+		event->setDropAction(Qt::MoveAction);
+		event->accept();
+		//event->acceptProposedAction();
+	}
+
+	//QGraphicsScene::dragEnterEvent(event);
+}
+
+void GraphicsScene::dropEvent(QGraphicsSceneDragDropEvent *event)
+{
+	event->acceptProposedAction();
+	QGraphicsScene::dropEvent(event);
+}

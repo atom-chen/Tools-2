@@ -3,10 +3,14 @@
 #include "DragDropSys.h"
 #include "GraphicsScene.h"
 #include "BezierCurveItem.h"
+#include "DragDropItemWidget.h"
 
 GraphicsView::GraphicsView(QWidget *parent)
 	: QGraphicsView(parent)
 {
+	this->setRenderHint(QPainter::Antialiasing);
+	this->setMouseTracking(true);
+	this->setAcceptDrops(true);		// 接收拖动操作
 }
 
 void GraphicsView::paintEvent(QPaintEvent *e)
@@ -113,4 +117,26 @@ void GraphicsView::mouseReleaseEvent(QMouseEvent * e)//鼠标松开事件响应
 void GraphicsView::adjustSceneRect()
 {
 	this->setSceneRect(g_pGraphicsScene->itemsBoundingRect());
+}
+
+void GraphicsView::dragEnterEvent(QDragEnterEvent *event)
+{
+	if (event->mimeData()->hasFormat("text/plain"))
+	{
+		event->setDropAction(Qt::MoveAction);
+		event->accept();
+		//event->acceptProposedAction();
+	}
+
+	//QGraphicsView::dragEnterEvent(event);
+}
+
+void GraphicsView::dropEvent(QDropEvent *event)
+{
+	//textBrowser->setPlainText(event->mimeData()->text());
+	//mimeTypeCombo->clear();
+	//mimeTypeCombo->addItems(event->mimeData()->formats());
+	event->acceptProposedAction();
+
+	QGraphicsView::dropEvent(event);
 }
