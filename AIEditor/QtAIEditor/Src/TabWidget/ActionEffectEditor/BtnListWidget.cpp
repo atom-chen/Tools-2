@@ -1,9 +1,10 @@
 #include "BtnListWidget.h"
 #include "DragDropItemWidget.h"
 
-BtnListWidget::BtnListWidget(QWidget *parent)
+BtnListWidget::BtnListWidget(QWidget *parent, int width_)
 	: QWidget(parent)
 {
+	m_curWidth = width_;
 	//test1f();
 	test2f();
 }
@@ -48,24 +49,40 @@ void BtnListWidget::test1f()
 
 void BtnListWidget::test2f()
 {
-	int totalHeight = 0;
+	int heightY = 0;
 
 	m_pBtn = new QPushButton(this);
 	m_pBtn->setObjectName(QStringLiteral("pushButton"));
-	m_pBtn->setGeometry(QRect(20, 20, 200, 30));
-	totalHeight += 30;
+	m_pBtn->setGeometry(QRect(0, heightY, m_curWidth, 30));
+	heightY += 30;
 
 	DragDropItemWidget* pItemWidget;
 	int itemHeight = 30;
-	int heightY = 0;
 	int idx = 0;
 	for (; idx < 5; ++idx)
 	{
-		pItemWidget = new DragDropItemWidget(this);
+		pItemWidget = new DragDropItemWidget(this, m_curWidth);
 		m_itemWidgetVec.push_back(pItemWidget);
-		pItemWidget->setGeometry(QRect(0, heightY, 300, itemHeight));
-		totalHeight += itemHeight;
+		pItemWidget->setGeometry(QRect(0, heightY, m_curWidth, itemHeight));
+		heightY += itemHeight;
 	}
 
-	this->setGeometry(QRect(0, 300, 300, totalHeight));
+	this->setGeometry(QRect(0, 0, m_curWidth, heightY));
+}
+
+void BtnListWidget::changgeSize(int width_)
+{
+	QRect pRect;
+	pRect = m_pBtn->geometry();
+	m_pBtn->setGeometry(pRect.x(), pRect.y(), width_, pRect.height());
+
+	int idx = 0;
+	for (; idx < 5; ++idx)
+	{
+		pRect = m_itemWidgetVec[idx]->geometry();
+		m_itemWidgetVec[idx]->changgeSize(width_);
+	}
+
+	pRect = this->geometry();
+	this->setGeometry(pRect.x(), pRect.y(), width_, pRect.height());
 }

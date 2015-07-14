@@ -4,6 +4,11 @@
 MyScrollAreaWidget::MyScrollAreaWidget(QWidget *parent)
 	: QScrollArea(parent)
 {
+	m_leftGap = 10;
+	m_rightGap = 10;
+	m_topGap = 10;
+	m_bottomGap = 10;
+
 	//test2f();
 	test3f();
 	//test4f();
@@ -105,7 +110,7 @@ void MyScrollAreaWidget::test3f()
 	m_ScrollAreaWidgetContents->setMinimumSize(200, 1000);
 
 	BtnListWidget* pBtnWidget;
-	int topY = 0;
+	int topY = m_topGap;
 	int totalHeight = 0;
 	QSize _size;
 	int idx = 0;
@@ -113,16 +118,16 @@ void MyScrollAreaWidget::test3f()
 	{
 		//QVBoxLayout* pHbox = new QVBoxLayout;
 		// 如果 BtnListWidget* pBtnWidget = new BtnListWidget(); this->setWidget(pBtnWidget); 竟然不能显示 BtnListWidget 中的内容
-		pBtnWidget = new BtnListWidget(m_ScrollAreaWidgetContents);
+		pBtnWidget = new BtnListWidget(m_ScrollAreaWidgetContents, this->width() - m_leftGap - m_bottomGap);
 		//this->setWidget(pBtnWidget);
 		//pHbox->addWidget(pBtnWidget);
 		//this->setLayout(pHbox);
 		m_vec.push_back(pBtnWidget);
 		_size = pBtnWidget->size();
-		pBtnWidget->setGeometry(0, topY, _size.width(), _size.height());
+		pBtnWidget->setGeometry(m_leftGap, topY, _size.width(), _size.height());
 		topY += pBtnWidget->height();
 	}
-	m_ScrollAreaWidgetContents->setGeometry(0, 0, 330, topY);
+	m_ScrollAreaWidgetContents->setGeometry(0, 0, this->width(), topY + m_bottomGap);
 	this->setWidget(m_ScrollAreaWidgetContents);
 }
 
@@ -150,4 +155,20 @@ void MyScrollAreaWidget::test4f()
 	//pPnt->setWidget(pBtn);
 
 	this->setWidget(m_ScrollAreaWidgetContents);
+}
+
+void MyScrollAreaWidget::resizeEvent(QResizeEvent *evt)
+{
+	int curWidth = evt->size().width();
+
+	QRect pRect;
+	pRect = m_ScrollAreaWidgetContents->geometry();
+	m_ScrollAreaWidgetContents->setGeometry(pRect.x(), pRect.y(), curWidth - m_leftGap - m_rightGap, pRect.height());
+
+	int idx = 0;
+	for (idx = 0; idx < 10; ++idx)
+	{
+		pRect = m_vec[idx]->geometry();
+		m_vec[idx]->changgeSize(curWidth - m_leftGap - m_bottomGap);
+	}
 }

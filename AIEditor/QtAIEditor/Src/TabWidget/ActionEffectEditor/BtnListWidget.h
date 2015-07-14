@@ -14,11 +14,12 @@ protected:
 	QPushButton* m_pBtn;
 	QListWidget* m_pListWidget;
 	std::vector<DragDropItemWidget*> m_itemWidgetVec;
+	int m_curWidth;
 
 public:
-	BtnListWidget(QWidget *parent = 0);
+	BtnListWidget(QWidget *parent = 0, int width_ = 0);
 	~BtnListWidget();
-
+	void changgeSize(int width_);
 
 protected:
 	void test1f();

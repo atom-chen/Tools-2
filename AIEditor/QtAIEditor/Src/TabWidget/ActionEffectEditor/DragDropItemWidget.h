@@ -11,8 +11,10 @@ protected:
 	QPushButton* m_pBtn;		// Ò»¸ö°´Å¥
 
 public:
-	DragDropItemWidget(QWidget *parent = 0);
+	DragDropItemWidget(QWidget *parent = 0, int width_ = 0);
 	~DragDropItemWidget();
+
+	void changgeSize(int width_);
 };
 
 #endif
