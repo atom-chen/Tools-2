@@ -209,6 +209,7 @@ else(NOT Qt5Widgets_FOUND)
 	include_directories(../GameEditor/Src/TabData)
 	include_directories(../GameEditor/Src/NodeData)
 	include_directories(../GameEditor/Src/SkillAction)
+	include_directories( ../Extern/tinyxml)
 	include_directories(${QT_BINARY_DIR}/../include)
 	
 	link_directories(${QT_BINARY_DIR}/../lib)
@@ -221,8 +222,12 @@ else(NOT Qt5Widgets_FOUND)
 
     set_target_properties(QtGameEditor PROPERTIES DEBUG_POSTFIX _d LINK_FLAGS "/ENTRY:\"mainCRTStartup\"")
 	
-	TARGET_LINK_LIBRARIES(QtGameEditor ${Qt5Widgets_LIBRARIES} GameEditor)
+	TARGET_LINK_LIBRARIES(QtGameEditor ${Qt5Widgets_LIBRARIES} GameEditor tinyxml)
 	
 	add_dependencies(QtGameEditor GameEditor tinyxml)
 	
 endif(NOT Qt5Widgets_FOUND)
+
+file(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/Config)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Config)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Config DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Config)

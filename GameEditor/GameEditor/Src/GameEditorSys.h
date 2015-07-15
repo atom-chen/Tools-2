@@ -5,10 +5,16 @@
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
+class SkillActionNodeConfig;
+
 class GAMEEDITOR_EXPORT GameEditorSys : public Singleton<GameEditorSys>
 {
+protected:
+	SkillActionNodeConfig* m_pSkillActionNodeConfig;
+
 public:
 	GameEditorSys();
+	SkillActionNodeConfig* getSkillActionNodeConfigPtr();
 
 private:
 	// 不要手工调用这个函数，这个函数仅仅是为了当 AIEditor 模块没有使用 g_pGameEditorSys 的时候，导致模板类 Singleton 不能在 DLL 中导出的问题。如果 AIEditor 模块使用 g_pGameEditorSys，可以去掉这个函数。
@@ -16,6 +22,7 @@ private:
 };
 
 #define g_pGameEditorSys GameEditorSys::getSingletonPtr()
+#define g_pSkillActionNodeConfig g_pGameEditorSys->getSkillActionNodeConfigPtr()
 
 END_NAMESPACE_GAMEEDITOR
 

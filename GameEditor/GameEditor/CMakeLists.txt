@@ -61,7 +61,7 @@ source_group("TabData" FILES ${TAB_DATA_FILES})
 source_group("NodeData" FILES ${NODE_DATA_FILES})
 source_group("SkillAction" FILES ${SKILLACTION_DATA_FILES})
 
-include_directories(./Src ./Src/TreeData ./Src/ListData ./Src/NodeData ./Src/SkillAction)
+include_directories(./Src ./Src/TreeData ./Src/ListData ./Src/NodeData ./Src/SkillAction ../Extern/tinyxml)
 
 ADD_DEFINITIONS(-DGAMEEDITOR_DLL -DGAMEEDITOR_DLL_EXPORT)
 
@@ -71,6 +71,8 @@ set(ALL_SRCS ${SRCS_FILES} ${TREE_DATA_FILES} ${LIST_DATA_FILES} ${TAB_DATA_FILE
 ADD_LIBRARY(GameEditor SHARED ${ALL_SRCS})
 
 set_target_properties(GameEditor PROPERTIES DEBUG_POSTFIX _d)
+
+TARGET_LINK_LIBRARIES(GameEditor tinyxml)
 
 add_dependencies(GameEditor tinyxml)
 

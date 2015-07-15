@@ -1,6 +1,6 @@
-#ifndef __PopWarn_H_
-#define __PopWarn_H_
+//#ifndef __PopWarn_H_
+//#define __PopWarn_H_
 
 #pragma warning(pop)
 
-#endif
+//#endif
