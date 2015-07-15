@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 
 cmake_policy(SET CMP0003 NEW)
 cmake_policy(SET CMP0005 NEW)
 
-project(AIEditor)
+project(GameEditor)
 
 message(STATUS "builder main start")
 
@@ -19,5 +19,5 @@ if(MSVC11 OR MSVC12)
 	add_definitions(-DNOMINMAX)
 endif(MSVC11 OR MSVC12)
 
-add_subdirectory(AIEditor)
-add_subdirectory(QtAIEditor)
+add_subdirectory(GameEditor)
+add_subdirectory(QtGameEditor)

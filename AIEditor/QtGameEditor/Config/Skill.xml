@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Config>
-	<solution name="打包所有的内容" xmlrootpath="../../../../../../../Work/Client20141215/策划/游戏设置" defaultoutput="../../../../../../../Work/Client20141215/策划/游戏设置/输出" cmd="" >
-		<package xml="test_client.xml" output="" />
-		<package xml="test_server.xml" output="" />
-	</solution>
-</Config>

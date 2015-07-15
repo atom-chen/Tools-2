@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 	m_ui->setupUi(this);
 
 	//设置主窗口标题
-	setWindowTitle(QStringLiteral("行为树编辑器"));
+	setWindowTitle(QStringLiteral("游戏编辑器"));
 	//text = new QTextEdit(this);
 	//setCentralWidget(text);
 
