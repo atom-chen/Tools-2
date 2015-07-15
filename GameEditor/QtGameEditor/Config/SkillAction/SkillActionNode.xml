@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Config>
-	<AttackActionNode Id="aaa" >
-	</AttackActionNode>
+	<AttackActionNodeCommon Id="aaa" >
+	</AttackActionNodeCommon>
 </Config>

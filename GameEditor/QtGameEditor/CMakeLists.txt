@@ -208,6 +208,7 @@ else(NOT Qt5Widgets_FOUND)
 	include_directories(../GameEditor/Src/ListData)
 	include_directories(../GameEditor/Src/TabData)
 	include_directories(../GameEditor/Src/NodeData)
+	include_directories(../GameEditor/Src/SkillAction)
 	include_directories(${QT_BINARY_DIR}/../include)
 	
 	link_directories(${QT_BINARY_DIR}/../lib)
@@ -222,6 +223,6 @@ else(NOT Qt5Widgets_FOUND)
 	
 	TARGET_LINK_LIBRARIES(QtGameEditor ${Qt5Widgets_LIBRARIES} GameEditor)
 	
-	add_dependencies(QtGameEditor GameEditor)
+	add_dependencies(QtGameEditor GameEditor tinyxml)
 	
 endif(NOT Qt5Widgets_FOUND)
