@@ -3,10 +3,14 @@
 #include "QtAIEditorSys.h"
 #include "DragDropSys.h"
 #include "BezierCurveItem.h"
+#include "DragDropItemWidget.h"
+#include "RecvDropRectItem.h"
 
 MyGraphicsScene::MyGraphicsScene(QObject *parent)
     : QGraphicsScene(parent)
 {
+	m_pRecvDropRectItem = new RecvDropRectItem();
+	this->addItem(m_pRecvDropRectItem);
 }
 
 
@@ -84,4 +88,11 @@ void MyGraphicsScene::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
 	event->acceptProposedAction();
 	QGraphicsScene::dropEvent(event);
+}
+
+void MyGraphicsScene::adjustSceneRect(QPointF& sceneLeftTopPos, QPointF& sceneRightBtmPos)
+{
+	//QRectF rect = g_pGraphicsScene->itemsBoundingRect();
+	//m_pRecvDropRectItem->setRect(rect.x(), rect.y(), rect.width(), rect.height());
+	m_pRecvDropRectItem->setRect(sceneLeftTopPos.x(), sceneLeftTopPos.y(), (sceneRightBtmPos.x() - sceneLeftTopPos.x()), (sceneRightBtmPos.y() - sceneLeftTopPos.y()));
 }

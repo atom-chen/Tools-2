@@ -9,12 +9,12 @@ class MyGraphicsView : public QGraphicsView
 {
     Q_OBJECT
 
-//protected:
+protected:
 //	QPointF m_lastPos;
 
 public:
 	explicit MyGraphicsView(QWidget *parent = 0);
-	void adjustSceneRect();	// 调整 VIEW 始终正好能放下整个场景就行了
+	void onSceneResize();	// 场景大小改变接口，主要是 View 事件触发的，因此要自己处理各种事件去更新 View 大小
 
 protected:
 	virtual void paintEvent(QPaintEvent *e);
@@ -24,6 +24,7 @@ protected:
 	virtual void mouseReleaseEvent(QMouseEvent * e);//鼠标松开事件响应
 	virtual void dragEnterEvent(QDragEnterEvent *event);
 	virtual void dropEvent(QDropEvent *event);
+	virtual void resizeEvent(QResizeEvent *evt);	// View 大小改变事件
 };
 
 #endif // GRAPHICSVIEW_H

@@ -3,14 +3,13 @@
 #include "DragDropSys.h"
 #include "MyGraphicsScene.h"
 #include "BezierCurveItem.h"
-#include "DragDropItemWidget.h"
 
 MyGraphicsView::MyGraphicsView(QWidget *parent)
 	: QGraphicsView(parent)
 {
 	this->setRenderHint(QPainter::Antialiasing);
 	this->setMouseTracking(true);
-	this->setDragMode(ScrollHandDrag);	// QGraphicsView 是不能接收拖拽的，必须拖动到 QGraphicsItem 上才行
+	//this->setDragMode(ScrollHandDrag);	// 拖放会变成手。QGraphicsView 是不能接收拖拽的，必须拖动到 QGraphicsItem 上才行
 	this->setAcceptDrops(true);		// 接收拖动操作
 }
 
@@ -112,10 +111,10 @@ void MyGraphicsView::mousePressEvent(QMouseEvent * e)//鼠标单击事件响应
 void MyGraphicsView::mouseReleaseEvent(QMouseEvent * e)//鼠标松开事件响应
 {
 	QGraphicsView::mouseReleaseEvent(e);
-	adjustSceneRect();
+	onSceneResize();
 }
 
-void MyGraphicsView::adjustSceneRect()
+void MyGraphicsView::onSceneResize()
 {
 	this->setSceneRect(g_pGraphicsScene->itemsBoundingRect());
 }
@@ -140,4 +139,15 @@ void MyGraphicsView::dropEvent(QDropEvent *event)
 	event->acceptProposedAction();
 
 	QGraphicsView::dropEvent(event);
+}
+
+void MyGraphicsView::resizeEvent(QResizeEvent *evt)
+{
+	// View 整个窗口区域都可以拖放
+	QPoint viewLeftTopPos = QPoint(0, 0);
+	QPointF sceneLeftTopPos = this->mapToScene(viewLeftTopPos);	// 转换成场景位置
+	QPoint viewRightBtmPos = QPoint(this->size().width(), this->size().height());
+	QPointF sceneRightBtmPos = this->mapToScene(viewRightBtmPos);
+
+	g_pGraphicsScene->adjustSceneRect(sceneLeftTopPos, sceneRightBtmPos);
 }

@@ -5,12 +5,15 @@
 #include <QGraphicsSceneMouseEvent>
 #include "QtIncAll.h"
 
+class RecvDropRectItem;
+
 class MyGraphicsScene : public QGraphicsScene
 {
     Q_OBJECT
 
 protected:
 	QPointF m_lastPos;
+	RecvDropRectItem* m_pRecvDropRectItem;	// 接收拖放事件
 
 public:
 	explicit MyGraphicsScene(QObject *parent = 0);
@@ -21,6 +24,7 @@ public:
 
 public:
 	void addGraphicsObject(QGraphicsObject* pQGraphicsObject);
+	void adjustSceneRect(QPointF& sceneLeftTopPos, QPointF& sceneRightBtmPos);
 
 protected:
 	virtual void mousePressEvent(QGraphicsSceneMouseEvent *evt);

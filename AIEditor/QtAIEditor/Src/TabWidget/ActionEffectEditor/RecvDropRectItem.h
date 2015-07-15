@@ -1,5 +1,5 @@
-#ifndef __BOARDHEXAGON_H
-#define __BOARDHEXAGON_H
+#ifndef __RecvDropRectItem_H
+#define __RecvDropRectItem_H
 
 #include <QGraphicsPolygonItem>
 #include <QGraphicsSceneHoverEvent>
@@ -8,11 +8,14 @@
 #include <QGraphicsItem>
 //#include <QGraphicsScene>
 
-class BoardHexagon : public QGraphicsPolygonItem
+/**
+ *@brief 接收鼠标拖拽的矩形区域，因为在 QGraphicsView 如果要接收拖放事件，必须有一个 QGraphicsItem 才行，因此添加这个
+ */
+class RecvDropRectItem : public QGraphicsRectItem
 {
 public:
-    BoardHexagon(QGraphicsItem *parent = 0);
-    ~BoardHexagon(){}
+	RecvDropRectItem(QGraphicsItem *parent = 0);
+	~RecvDropRectItem(){}
     void focusInEvent(QFocusEvent*);
     void focusOutEvent(QFocusEvent*);
     void hoverEnterEvent(QGraphicsSceneHoverEvent*);

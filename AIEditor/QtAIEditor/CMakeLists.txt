@@ -161,6 +161,8 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TabWidget/ActionEffectEditor/MyScrollAreaWidget.cpp
 		./Src/TabWidget/ActionEffectEditor/DragDropItemWidget.h
 		./Src/TabWidget/ActionEffectEditor/DragDropItemWidget.cpp
+		./Src/TabWidget/ActionEffectEditor/RecvDropRectItem.h
+		./Src/TabWidget/ActionEffectEditor/RecvDropRectItem.cpp
 	)
 	
 	set(TEST_WIDGET_SRC
