@@ -1,0 +1,10 @@
+#include "Aaa.h"
+
+BEGIN_NAMESPACE_GAMEEDITOR
+
+void Aaa::sayHello()
+{
+
+}
+
+END_NAMESPACE_GAMEEDITOR
