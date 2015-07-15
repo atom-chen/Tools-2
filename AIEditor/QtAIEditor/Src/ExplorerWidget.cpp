@@ -185,12 +185,14 @@ void ExplorerWidget::splitterSplitWithLayoutWithParent()
 	// QSplitter 窗口
 	m_mainSplitter = new QSplitter(Qt::Horizontal, m_splitterParent);
 	m_mainSplitter->setObjectName(QStringLiteral("ExplorerWidgetQSplitter"));
-	m_mainSplitter->setHandleWidth(10);
-	m_mainSplitter->setStyleSheet("QSplitter::handle { background-color: black }"); //设置分界线的样式
+	//m_mainSplitter->setHandleWidth(10);
+	//m_mainSplitter->setStyleSheet("QSplitter::handle { background-color: black }"); //设置分界线的样式
+	m_mainSplitter->setStyleSheet("QSplitter::handle { background-color: lightgray }"); //设置分界线的样式
 	m_mainSplitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	//m_mainSplitter->setOpaqueResize(false);			// 设置拖动时是否实时更新
-	//m_mainSplitter->setStretchFactor(0, 1);			// 设定可伸缩控件
-	//m_mainSplitter->setStretchFactor(1, 1);			// 设定可伸缩控件
+	m_mainSplitter->setOpaqueResize(false);			// 设置拖动时是否实时更新
+	m_mainSplitter->setStretchFactor(0, 1);			// 设定可伸缩控件
+	m_mainSplitter->setStretchFactor(1, 1);			// 设定可伸缩控件
+	//m_mainSplitter->setDisabled(true);				// Disable the Middle Line, it can't adjust. 
 
 	// 目录窗口
 	m_pTreeWidget = new MyBasicMVCTreeWidget;
