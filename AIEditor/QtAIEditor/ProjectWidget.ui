@@ -14,20 +14,26 @@
    <string>ProjectWidget</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <widget class="QTreeWidget" name="treeWidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>0</y>
-      <width>381</width>
+      <width>391</width>
       <height>271</height>
      </rect>
     </property>
-    <column>
-     <property name="text">
-      <string>解决方案</string>
-     </property>
-    </column>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QTreeWidget" name="treeWidget">
+       <column>
+        <property name="text">
+         <string>解决方案</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>

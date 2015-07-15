@@ -21,6 +21,7 @@ protected:
 	QHBoxLayout * m_pHbox;
 	MyBasicMVCTreeWidget* m_pTreeWidget;
 	MyBasicListWidget* m_pListWidget;			// 列表窗口
+	QSplitter * m_mainSplitter;					// 分割窗口
 
 public:
 	explicit ExplorerWidget(QWidget *parent = 0);
@@ -30,6 +31,10 @@ public Q_SLOTS:
 	void onTreeViewClick(const QModelIndex & index);
 	void onTreeViewDoubleClick(const QModelIndex & index);
 	void onListDoubleClick(QListWidgetItem *Item);
+
+protected:
+	void layoutSplit();
+	void splitterSplit();
 };
 
 #endif // LOGWIDGET_H

@@ -25,6 +25,11 @@ void MyBasicMVCTreeWidget::add2Layout(QHBoxLayout* layout)
 	layout->addWidget(m_pTreeView);
 }
 
+void MyBasicMVCTreeWidget::add2Splitter(QSplitter * splitter)
+{
+	splitter->addWidget(m_pTreeView);
+}
+
 QModelIndex MyBasicMVCTreeWidget::currentIndex() const
 {
 	return m_pTreeView->currentIndex();
