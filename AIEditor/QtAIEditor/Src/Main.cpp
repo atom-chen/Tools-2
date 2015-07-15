@@ -2,7 +2,7 @@
 #include <QTranslator>
 
 #include "MainWindow.h"
-#include "QtAIEditorSys.h"
+#include "QtGameEditorSys.h"
 
 #if _MSC_VER >= 1600
 	#pragma execution_character_set("utf-8")
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	QTranslator translator(0);
 	translator.load("RunPath/languages/qt_zh.qm");
 	pApp->installTranslator(&translator);
-	QtAIEditorSys* qtAIEditorSys = new QtAIEditorSys();
+	QtGameEditorSys* qtAIEditorSys = new QtGameEditorSys();
 	MainWindow* pMainWindow = new MainWindow();
 	pMainWindow->show();
 

@@ -2,7 +2,7 @@
 #define __DRAGGABLEITEMWIDGET_H
 
 #include <QtWidgets/QWidget>
-#include "AIEditor.h"
+#include "GameEditor.h"
 
 class DraggableItemBase;
 

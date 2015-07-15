@@ -2,7 +2,7 @@
 #define __ExplorerWidget_H
 
 #include "QtIncAll.h"
-#include "AIEditor.h"
+#include "GameEditor.h"
 
 class MyBasicFileSystemModel;
 class MyDirModel;

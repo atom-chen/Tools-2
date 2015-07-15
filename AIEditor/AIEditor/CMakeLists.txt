@@ -14,13 +14,13 @@ endif()
 set(SRCS_FILES
 	./Src/Platform.h
 	./Src/Prerequisites.h
-	./Src/AIEditor.h
+	./Src/GameEditor.h
 	./Src/GlobalDefine.h
 	./Src/Singleton.h
 	./Src/Aaa.h
 	./Src/Aaa.cpp
-	./Src/AIEditorSys.h
-	./Src/AIEditorSys.cpp
+	./Src/GameEditorSys.h
+	./Src/GameEditorSys.cpp
 	./Src/PushWarn.h
 	./Src/PopWarn.h
 )

@@ -3,7 +3,7 @@
 
 #include "GlobalDefine.h"
 
-BEGIN_NAMESPACE_AIEDITOR
+BEGIN_NAMESPACE_GAMEEDITOR
 
 #if defined(WIN32)
 	#if !defined(AIEDITOR_DLL)
@@ -32,6 +32,6 @@ typedef signed char int8;
     typedef long long int64;
 #endif
 
-END_NAMESPACE_AIEDITOR
+END_NAMESPACE_GAMEEDITOR
 
 #endif

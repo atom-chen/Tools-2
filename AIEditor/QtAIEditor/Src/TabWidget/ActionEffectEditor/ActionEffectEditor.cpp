@@ -9,7 +9,7 @@
 #include "DraggableItemBase.h"
 #include "MyGraphicsView.h"
 #include "BezierCurveItem.h"
-#include "QtAIEditorSys.h"
+#include "QtGameEditorSys.h"
 #include "NodeDockWidget.h"
 
 ActionEffectEditor::ActionEffectEditor(QWidget *parent)
@@ -31,8 +31,8 @@ ActionEffectEditor::ActionEffectEditor(QWidget *parent)
 	//this->resize(600, 400);
 	setCentralWidget(m_pView);
 
-	g_pQtAIEditorSys->setGraphicsScenePtr(m_pScene);
-	g_pQtAIEditorSys->setGraphicsViewPtr(m_pView);
+	g_pQtGameEditorSys->setGraphicsScenePtr(m_pScene);
+	g_pQtGameEditorSys->setGraphicsViewPtr(m_pView);
 
 	m_pNodeDockWidget = new NodeDockWidget(this);
 	this->addDockWidget(Qt::RightDockWidgetArea, m_pNodeDockWidget);

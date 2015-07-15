@@ -1,9 +1,9 @@
 #ifndef __TestNodeData_H
 #define __TestNodeData_H
 
-#include "AIEditor.h"
+#include "GameEditor.h"
 
-BEGIN_NAMESPACE_AIEDITOR
+BEGIN_NAMESPACE_GAMEEDITOR
 
 class AIEDITOR_EXPORT TestNodeData
 {
@@ -12,6 +12,6 @@ public:
 	~TestNodeData();
 };
 
-END_NAMESPACE_AIEDITOR
+END_NAMESPACE_GAMEEDITOR
 
 #endif

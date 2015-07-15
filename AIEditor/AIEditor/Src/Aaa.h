@@ -1,9 +1,9 @@
 #ifndef __Aaa_H_
 #define __Aaa_H_
 
-#include "AIEditor.h"
+#include "GameEditor.h"
 
-BEGIN_NAMESPACE_AIEDITOR
+BEGIN_NAMESPACE_GAMEEDITOR
 
 class AIEDITOR_EXPORT Aaa
 {
@@ -11,6 +11,6 @@ public:
 	void sayHello();
 };
 
-END_NAMESPACE_AIEDITOR
+END_NAMESPACE_GAMEEDITOR
 
 #endif

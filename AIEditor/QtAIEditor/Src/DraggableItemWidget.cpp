@@ -1,6 +1,6 @@
 #include "DraggableItemWidget.h"
 #include "ui_DraggableItemWidget.h"
-#include "QtAIEditorSys.h"
+#include "QtGameEditorSys.h"
 //#include <QtCore/QObject>
 #include "DragDropSys.h"
 #include "DraggableItemBase.h"

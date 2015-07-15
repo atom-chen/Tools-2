@@ -9,7 +9,7 @@
 #include "DraggableItemBase.h"
 #include "MyGraphicsView.h"
 #include "BezierCurveItem.h"
-#include "QtAIEditorSys.h"
+#include "QtGameEditorSys.h"
 
 DragWidget::DragWidget(QWidget *parent)
     : QWidget(parent)
@@ -34,8 +34,8 @@ DragWidget::DragWidget(QWidget *parent)
 
     this->resize(600, 400);
 
-	g_pQtAIEditorSys->setGraphicsScenePtr(m_pScene);
-	g_pQtAIEditorSys->setGraphicsViewPtr(m_pView);
+	g_pQtGameEditorSys->setGraphicsScenePtr(m_pScene);
+	g_pQtGameEditorSys->setGraphicsViewPtr(m_pView);
 }
 
 void DragWidget::makeDraggable(QGraphicsItem *item)

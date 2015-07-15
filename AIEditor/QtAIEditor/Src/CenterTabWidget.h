@@ -2,7 +2,7 @@
 #define __CENTERTABWIDGET_H
 
 #include <QtWidgets/QTabWidget>
-#include "AIEditor.h"
+#include "GameEditor.h"
 
 namespace Ui
 {

@@ -1,9 +1,9 @@
 #ifndef __NodeDataBase_H
 #define __NodeDataBase_H
 
-#include "AIEditor.h"
+#include "GameEditor.h"
 
-BEGIN_NAMESPACE_AIEDITOR
+BEGIN_NAMESPACE_GAMEEDITOR
 
 class AIEDITOR_EXPORT NodeDataBase
 {
@@ -12,6 +12,6 @@ public:
 	~NodeDataBase();
 };
 
-END_NAMESPACE_AIEDITOR
+END_NAMESPACE_GAMEEDITOR
 
 #endif

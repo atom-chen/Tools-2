@@ -14,7 +14,7 @@
 #include <QString>
 #include <QMenuBar>
 
-#include "AIEditor.h"
+#include "GameEditor.h"
 
 class LogWidget;
 class ProjectWidget;

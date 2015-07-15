@@ -56,8 +56,8 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/BezierCurveItem.cpp
 		./Src/DragDropSys.h
 		./Src/DragDropSys.cpp
-		./Src/QtAIEditorSys.h
-		./Src/QtAIEditorSys.cpp
+		./Src/QtGameEditorSys.h
+		./Src/QtGameEditorSys.cpp
 		./Src/BuildFactory.h
 		./Src/BuildFactory.cpp
 		./Src/ExplorerWidget.h

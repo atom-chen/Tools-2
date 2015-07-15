@@ -2,7 +2,7 @@
 #define __PROJECTWIDGET_H
 
 #include <QtWidgets/QDockWidget>
-#include "AIEditor.h"
+#include "GameEditor.h"
 
 class QTreeWidgetItem;
 

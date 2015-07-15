@@ -2,7 +2,7 @@
 #define __LOGWIDGET_H
 
 #include <QtWidgets/QDockWidget>
-#include "AIEditor.h"
+#include "GameEditor.h"
 
 namespace Ui
 {

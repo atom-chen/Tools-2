@@ -4,7 +4,7 @@
 #include "MyBasicMVCTreeWidget.h"
 #include "MyBasicListWidget.h"
 #include "MyBasicTreeView.h"
-#include "QtAIEditorSys.h"
+#include "QtGameEditorSys.h"
 #include "TabWidgetMgr.h"
 #include "MyBasicListWidgetItemData.h"
 #include "MyBasicListWidgetItem.h"

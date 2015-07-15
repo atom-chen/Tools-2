@@ -1,6 +1,6 @@
 #include "MyTabWidget.h"
 #include "TabWidgetMgr.h"
-#include "QtAIEditorSys.h"
+#include "QtGameEditorSys.h"
 
 MyTabWidget::MyTabWidget(QWidget *parent) :QTabWidget(parent)
 {

@@ -1,5 +1,5 @@
 #include "MyGraphicsView.h"
-#include "QtAIEditorSys.h"
+#include "QtGameEditorSys.h"
 #include "DragDropSys.h"
 #include "MyGraphicsScene.h"
 #include "BezierCurveItem.h"

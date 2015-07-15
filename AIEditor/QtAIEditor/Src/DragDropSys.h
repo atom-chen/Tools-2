@@ -1,7 +1,7 @@
 #ifndef __DRAGDROPSYS_H
 #define __DRAGDROPSYS_H
 
-#include "AIEditor.h"
+#include "GameEditor.h"
 
 class QGraphicsItem;
 class BuildFactory;

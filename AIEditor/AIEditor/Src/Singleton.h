@@ -4,7 +4,7 @@
 #include <assert.h>
 #include "GlobalDefine.h"
 
-BEGIN_NAMESPACE_AIEDITOR
+BEGIN_NAMESPACE_GAMEEDITOR
 
 template<class T>
 class AIEDITOR_EXPORT Singleton
@@ -37,6 +37,6 @@ public:
 	}
 };
 
-END_NAMESPACE_AIEDITOR
+END_NAMESPACE_GAMEEDITOR
 
 #endif				// SINGLETON_H

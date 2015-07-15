@@ -1,6 +1,6 @@
 #include "DragDropSys.h"
 #include "BuildFactory.h"
-#include "QtAIEditorSys.h"
+#include "QtGameEditorSys.h"
 #include "BezierCurveItem.h"
 #include "BuildFactory.h"
 #include "MyGraphicsScene.h"

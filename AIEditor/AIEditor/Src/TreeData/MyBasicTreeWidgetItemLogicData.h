@@ -1,9 +1,9 @@
 #ifndef __MyBasicTreeWidgetItemLogicData_H_
 #define __MyBasicTreeWidgetItemLogicData_H_
 
-#include "AIEditor.h"
+#include "GameEditor.h"
 
-BEGIN_NAMESPACE_AIEDITOR
+BEGIN_NAMESPACE_GAMEEDITOR
 
 class AIEDITOR_EXPORT MyBasicTreeWidgetItemLogicData
 {
@@ -11,6 +11,6 @@ public:
 	MyBasicTreeWidgetItemLogicData();
 };
 
-END_NAMESPACE_AIEDITOR
+END_NAMESPACE_GAMEEDITOR
 
 #endif

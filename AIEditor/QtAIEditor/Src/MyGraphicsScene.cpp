@@ -1,6 +1,6 @@
 #include "MyGraphicsScene.h"
 #include <QDebug>
-#include "QtAIEditorSys.h"
+#include "QtGameEditorSys.h"
 #include "DragDropSys.h"
 #include "BezierCurveItem.h"
 #include "DragDropItemWidget.h"
