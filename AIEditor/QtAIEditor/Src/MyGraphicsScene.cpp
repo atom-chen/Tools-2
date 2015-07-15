@@ -1,16 +1,16 @@
-#include "GraphicsScene.h"
+#include "MyGraphicsScene.h"
 #include <QDebug>
 #include "QtAIEditorSys.h"
 #include "DragDropSys.h"
 #include "BezierCurveItem.h"
 
-GraphicsScene::GraphicsScene(QObject *parent)
+MyGraphicsScene::MyGraphicsScene(QObject *parent)
     : QGraphicsScene(parent)
 {
 }
 
 
-void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent * m)
+void MyGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent * m)
 {
 	//    qDebug() << //Q_FUNC_INFO <<
 	//                m->scenePos();
@@ -53,22 +53,22 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent * m)
 	}
 }
 
-void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *evt)
+void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *evt)
 {
 	QGraphicsScene::mousePressEvent(evt);
 }
 
-void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *evt)
+void MyGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *evt)
 {
 	QGraphicsScene::mouseReleaseEvent(evt);
 }
 
-void GraphicsScene::addGraphicsObject(QGraphicsObject* pQGraphicsObject)
+void MyGraphicsScene::addGraphicsObject(QGraphicsObject* pQGraphicsObject)
 {
 	addItem(pQGraphicsObject);
 }
 
-void GraphicsScene::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
+void MyGraphicsScene::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
 {
 	if (event->mimeData()->hasFormat("text/plain"))
 	{
@@ -80,7 +80,7 @@ void GraphicsScene::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
 	//QGraphicsScene::dragEnterEvent(event);
 }
 
-void GraphicsScene::dropEvent(QGraphicsSceneDragDropEvent *event)
+void MyGraphicsScene::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
 	event->acceptProposedAction();
 	QGraphicsScene::dropEvent(event);

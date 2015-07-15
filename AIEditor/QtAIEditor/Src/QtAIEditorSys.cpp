@@ -1,8 +1,8 @@
 #include "QtAIEditorSys.h"
 #include "DragDropSys.h"
 #include "BuildFactory.h"
-#include "GraphicsScene.h"
-#include "GraphicsView.h"
+#include "MyGraphicsScene.h"
+#include "MyGraphicsView.h"
 #include "TabWidgetMgr.h"
 
 QtAIEditorSys::QtAIEditorSys()
@@ -22,22 +22,22 @@ BuildFactory* QtAIEditorSys::getBuildFactoryPtr()
 	return m_pBuildFactory;
 }
 
-GraphicsScene* QtAIEditorSys::getGraphicsScenePtr()
+MyGraphicsScene* QtAIEditorSys::getGraphicsScenePtr()
 {
 	return m_pGraphicsScene;
 }
 
-void QtAIEditorSys::setGraphicsScenePtr(GraphicsScene* pGraphicsScene)
+void QtAIEditorSys::setGraphicsScenePtr(MyGraphicsScene* pGraphicsScene)
 {
 	m_pGraphicsScene = pGraphicsScene;
 }
 
-GraphicsView* QtAIEditorSys::getGraphicsViewPtr()
+MyGraphicsView* QtAIEditorSys::getGraphicsViewPtr()
 {
 	return  m_pGraphicsView;
 }
 
-void QtAIEditorSys::setGraphicsViewPtr(GraphicsView* pGraphicsView)
+void QtAIEditorSys::setGraphicsViewPtr(MyGraphicsView* pGraphicsView)
 {
 	m_pGraphicsView = pGraphicsView;
 }

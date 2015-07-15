@@ -42,16 +42,16 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/DragWidget.cpp
 		./Src/DraggablePiece.h
 		./Src/DraggablePiece.cpp
-		./Src/GraphicsScene.h
-		./Src/GraphicsScene.cpp
+		./Src/MyGraphicsScene.h
+		./Src/MyGraphicsScene.cpp
 		./Src/BoardHexagon.h
 		./Src/BoardHexagon.cpp
 		./Src/DraggableItemBase.h
 		./Src/DraggableItemBase.cpp
 		./Src/DraggableItemWidget.h
 		./Src/DraggableItemWidget.cpp
-		./Src/GraphicsView.h
-		./Src/GraphicsView.cpp
+		./Src/MyGraphicsView.h
+		./Src/MyGraphicsView.cpp
 		./Src/BezierCurveItem.h
 		./Src/BezierCurveItem.cpp
 		./Src/DragDropSys.h
@@ -71,9 +71,9 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/ProjectWidget.h
 		./Src/CenterTabWidget.h
 		./Src/DragWidget.h
-		./Src/GraphicsScene.h
+		./Src/MyGraphicsScene.h
 		./Src/DraggableItemWidget.h
-		./Src/GraphicsView.h
+		./Src/MyGraphicsView.h
 		./Src/ExplorerWidget.h
 		./Src/TreeWidget/MyBasicTreeView.h
 		./Src/TreeWidget/MyBasicTreeWidget.h

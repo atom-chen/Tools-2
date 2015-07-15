@@ -5,8 +5,8 @@
 #include <QGraphicsItem>
 
 class QHBoxLayout;
-class GraphicsView;
-class GraphicsScene;
+class MyGraphicsView;
+class MyGraphicsScene;
 
 class DragWidget : public QWidget
 {
@@ -14,8 +14,8 @@ class DragWidget : public QWidget
 
 protected:
 	QHBoxLayout * m_pHbox;
-	GraphicsView * m_pView;
-	GraphicsScene * m_pScene;
+	MyGraphicsView * m_pView;
+	MyGraphicsScene * m_pScene;
 
 public:
 	DragWidget(QWidget *parent = 0);

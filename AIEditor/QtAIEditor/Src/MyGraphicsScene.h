@@ -1,11 +1,11 @@
-#ifndef __GRAPHICSSCENE_H
-#define __GRAPHICSSCENE_H
+#ifndef __MYGRAPHICSSCENE_H
+#define __MYGRAPHICSSCENE_H
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include "QtIncAll.h"
 
-class GraphicsScene : public QGraphicsScene
+class MyGraphicsScene : public QGraphicsScene
 {
     Q_OBJECT
 
@@ -13,7 +13,7 @@ protected:
 	QPointF m_lastPos;
 
 public:
-    explicit GraphicsScene(QObject *parent = 0);
+	explicit MyGraphicsScene(QObject *parent = 0);
 
 //signals:
 

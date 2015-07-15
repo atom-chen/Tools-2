@@ -1,13 +1,13 @@
 #include "DragWidget.h"
 #include <QGraphicsView>
-#include "graphicsscene.h"
+#include "Mygraphicsscene.h"
 #include <QHBoxLayout>
 #include <QGraphicsPolygonItem>
 #include <QPolygonF>
 #include <qmath.h>
 #include "BoardHexagon.h"
 #include "DraggableItemBase.h"
-#include "GraphicsView.h"
+#include "MyGraphicsView.h"
 #include "BezierCurveItem.h"
 #include "QtAIEditorSys.h"
 
@@ -16,8 +16,8 @@ DragWidget::DragWidget(QWidget *parent)
 {
 	m_pHbox = new QHBoxLayout;
     //QGraphicsView * view = new QGraphicsView;
-	m_pView = new GraphicsView;
-	m_pScene = new GraphicsScene;
+	m_pView = new MyGraphicsView;
+	m_pScene = new MyGraphicsScene;
 
 	addMultiPolygon();
 	addEllipse();

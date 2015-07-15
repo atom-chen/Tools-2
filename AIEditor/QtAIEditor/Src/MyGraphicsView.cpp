@@ -1,19 +1,20 @@
-#include "GraphicsView.h"
+#include "MyGraphicsView.h"
 #include "QtAIEditorSys.h"
 #include "DragDropSys.h"
-#include "GraphicsScene.h"
+#include "MyGraphicsScene.h"
 #include "BezierCurveItem.h"
 #include "DragDropItemWidget.h"
 
-GraphicsView::GraphicsView(QWidget *parent)
+MyGraphicsView::MyGraphicsView(QWidget *parent)
 	: QGraphicsView(parent)
 {
 	this->setRenderHint(QPainter::Antialiasing);
 	this->setMouseTracking(true);
+	this->setDragMode(ScrollHandDrag);	// QGraphicsView 是不能接收拖拽的，必须拖动到 QGraphicsItem 上才行
 	this->setAcceptDrops(true);		// 接收拖动操作
 }
 
-void GraphicsView::paintEvent(QPaintEvent *e)
+void MyGraphicsView::paintEvent(QPaintEvent *e)
 {
 	QGraphicsView::paintEvent(e);
 
@@ -63,7 +64,7 @@ void GraphicsView::paintEvent(QPaintEvent *e)
 //	painter.drawPoint(end_pos);
 }
 
-void GraphicsView::mouseMoveEvent(QMouseEvent * e)//鼠标移动事件响应
+void MyGraphicsView::mouseMoveEvent(QMouseEvent * e)//鼠标移动事件响应
 {
 	QGraphicsView::mouseMoveEvent(e);
 
@@ -103,23 +104,23 @@ void GraphicsView::mouseMoveEvent(QMouseEvent * e)//鼠标移动事件响应
 	//}
 }
 
-void GraphicsView::mousePressEvent(QMouseEvent * e)//鼠标单击事件响应
+void MyGraphicsView::mousePressEvent(QMouseEvent * e)//鼠标单击事件响应
 {
 	QGraphicsView::mousePressEvent(e);
 }
 
-void GraphicsView::mouseReleaseEvent(QMouseEvent * e)//鼠标松开事件响应
+void MyGraphicsView::mouseReleaseEvent(QMouseEvent * e)//鼠标松开事件响应
 {
 	QGraphicsView::mouseReleaseEvent(e);
 	adjustSceneRect();
 }
 
-void GraphicsView::adjustSceneRect()
+void MyGraphicsView::adjustSceneRect()
 {
 	this->setSceneRect(g_pGraphicsScene->itemsBoundingRect());
 }
 
-void GraphicsView::dragEnterEvent(QDragEnterEvent *event)
+void MyGraphicsView::dragEnterEvent(QDragEnterEvent *event)
 {
 	if (event->mimeData()->hasFormat("text/plain"))
 	{
@@ -131,7 +132,7 @@ void GraphicsView::dragEnterEvent(QDragEnterEvent *event)
 	//QGraphicsView::dragEnterEvent(event);
 }
 
-void GraphicsView::dropEvent(QDropEvent *event)
+void MyGraphicsView::dropEvent(QDropEvent *event)
 {
 	//textBrowser->setPlainText(event->mimeData()->text());
 	//mimeTypeCombo->clear();

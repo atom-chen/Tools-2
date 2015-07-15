@@ -3,7 +3,7 @@
 #include "QtAIEditorSys.h"
 #include "BezierCurveItem.h"
 #include "BuildFactory.h"
-#include "GraphicsScene.h"
+#include "MyGraphicsScene.h"
 
 DragDropSys::DragDropSys()
 {

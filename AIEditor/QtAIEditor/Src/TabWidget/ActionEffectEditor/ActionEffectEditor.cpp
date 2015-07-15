@@ -1,13 +1,13 @@
 #include "ActionEffectEditor.h"
 #include <QGraphicsView>
-#include "graphicsscene.h"
+#include "MyGraphicsScene.h"
 #include <QHBoxLayout>
 #include <QGraphicsPolygonItem>
 #include <QPolygonF>
 #include <qmath.h>
 #include "BoardHexagon.h"
 #include "DraggableItemBase.h"
-#include "GraphicsView.h"
+#include "MyGraphicsView.h"
 #include "BezierCurveItem.h"
 #include "QtAIEditorSys.h"
 #include "NodeDockWidget.h"
@@ -16,8 +16,8 @@ ActionEffectEditor::ActionEffectEditor(QWidget *parent)
 	: MyTabSubWidgetBase(parent)
 {
 	//m_pHbox = new QHBoxLayout;
-	m_pView = new GraphicsView(this);
-	m_pScene = new GraphicsScene;
+	m_pView = new MyGraphicsView(this);
+	m_pScene = new MyGraphicsScene;
 
 	addMultiPolygon();
 	addEllipse();

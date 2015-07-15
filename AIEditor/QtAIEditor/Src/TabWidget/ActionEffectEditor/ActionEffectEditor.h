@@ -7,8 +7,8 @@
 #include <QGraphicsItem>
 #include <QtDesigner/QtDesigner>
 
-class GraphicsView;
-class GraphicsScene;
+class MyGraphicsView;
+class MyGraphicsScene;
 class NodeDockWidget;
 
 class ActionEffectEditor : public MyTabSubWidgetBase
@@ -16,8 +16,8 @@ class ActionEffectEditor : public MyTabSubWidgetBase
 	Q_OBJECT
 
 protected:
-	GraphicsView * m_pView;
-	GraphicsScene * m_pScene;
+	MyGraphicsView * m_pView;
+	MyGraphicsScene * m_pScene;
 	NodeDockWidget* m_pNodeDockWidget;
 
 public:

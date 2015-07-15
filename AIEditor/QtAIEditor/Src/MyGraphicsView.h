@@ -1,11 +1,11 @@
-#ifndef __GRAPHICSVIEW_H
-#define __GRAPHICSVIEW_H
+#ifndef __MYGRAPHICSVIEW_H
+#define __MYGRAPHICSVIEW_H
 
 #include <QGraphicsView>
 #include <QtGui/QtGui>
 #include <QtCore/QtCore>
 
-class GraphicsView : public QGraphicsView
+class MyGraphicsView : public QGraphicsView
 {
     Q_OBJECT
 
@@ -13,7 +13,7 @@ class GraphicsView : public QGraphicsView
 //	QPointF m_lastPos;
 
 public:
-	explicit GraphicsView(QWidget *parent = 0);
+	explicit MyGraphicsView(QWidget *parent = 0);
 	void adjustSceneRect();	// 调整 VIEW 始终正好能放下整个场景就行了
 
 protected:
@@ -22,8 +22,8 @@ protected:
 	virtual void mouseMoveEvent(QMouseEvent * e);//鼠标移动事件响应
 	virtual void mousePressEvent(QMouseEvent * e);//鼠标单击事件响应
 	virtual void mouseReleaseEvent(QMouseEvent * e);//鼠标松开事件响应
-	virtual void GraphicsView::dragEnterEvent(QDragEnterEvent *event);
-	virtual void GraphicsView::dropEvent(QDropEvent *event);
+	virtual void dragEnterEvent(QDragEnterEvent *event);
+	virtual void dropEvent(QDropEvent *event);
 };
 
 #endif // GRAPHICSVIEW_H
