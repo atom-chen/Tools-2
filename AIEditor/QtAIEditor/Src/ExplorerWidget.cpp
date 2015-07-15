@@ -208,6 +208,8 @@ void ExplorerWidget::splitterSplitWithLayoutWithParent()
 	m_pHSplitterbox->addWidget(m_mainSplitter);
 	m_splitterParent->setLayout(m_pHSplitterbox);
 
+	m_pHbox->addWidget(m_splitterParent);
+
 	_dockWidgetContents->setLayout(m_pHbox);
 	this->setWidget(_dockWidgetContents);	// 最后一定要把 Layout 的父窗口添加到 DockWidget 中，才会刷新一次 Layout ，否则不能刷新
 }

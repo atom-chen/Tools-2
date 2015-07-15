@@ -14,6 +14,7 @@ public:
 protected:
 	void testNoLayout();
 	void testLayout();
+	void testLayoutList();
 };
 
 #endif
