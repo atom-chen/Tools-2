@@ -10,6 +10,7 @@
 #include <QtCore/qnamespace.h>
 //#include "DraggableFrame.h"
 #include "TestQScrollArea1F.h"
+#include "TestQSplitter.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent, 0), m_ui(new Ui::MainWindow)
@@ -187,6 +188,8 @@ void MainWindow::connectAction()
 
 void MainWindow::testWidget()
 {
-	TestQScrollArea1F* ptest = new TestQScrollArea1F;
-	ptest->show();
+	//TestQScrollArea1F* ptest = new TestQScrollArea1F;
+	//ptest->show();
+
+	TestQSplitter* pTestQSplitter = new TestQSplitter;
 }

@@ -19,6 +19,8 @@ class ExplorerWidget : public QDockWidget
 protected:
 	MyBasicFileSystemModel* m_pModel;
 	QHBoxLayout * m_pHbox;
+	QHBoxLayout * m_pHSplitterbox;
+	QWidget* m_splitterParent;
 	MyBasicMVCTreeWidget* m_pTreeWidget;
 	MyBasicListWidget* m_pListWidget;			// 列表窗口
 	QSplitter * m_mainSplitter;					// 分割窗口
@@ -34,7 +36,11 @@ public Q_SLOTS:
 
 protected:
 	void layoutSplit();
-	void splitterSplit();
+	void splitterSplitNoLayout();
+	void splitterSplitWithLayoutNoParent();
+	void splitterSplitWithLayoutWithParent();
+	void testSplitterNoLayout();
+	void testSplitterWithLayout();
 };
 
 #endif // LOGWIDGET_H

@@ -89,6 +89,7 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TabWidget/ActionEffectEditor/DragDropItemWidget.h
 		./Src/TabWidget/MyTabWidget.h
 		./Src/TestWidget/TestQScrollArea1F.h
+		./Src/TestWidget/TestQSplitter.h
     )
 	
 	SET(QRC_FILES ./Res/Qrc.qrc)
@@ -168,6 +169,8 @@ else(NOT Qt5Widgets_FOUND)
 	set(TEST_WIDGET_SRC
 		./Src/TestWidget/TestQScrollArea1F.h
 		./Src/TestWidget/TestQScrollArea1F.cpp
+		./Src/TestWidget/TestQSplitter.h
+		./Src/TestWidget/TestQSplitter.cpp
 	)
 	
 	qt5_wrap_cpp(MOC_SRCS ${MOC_FILES})
