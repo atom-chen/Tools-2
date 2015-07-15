@@ -103,6 +103,7 @@ void MyTabMainWindow::removeOneEditor(std::string path)
 		if ((*iteBegin)->getFullPath() == path)
 		{
 			m_frameVec.erase(iteBegin);
+			break;
 		}
 	}
 }
