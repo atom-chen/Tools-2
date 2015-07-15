@@ -46,3 +46,8 @@ TabWidgetMgr* QtGameEditorSys::getTabWidgetMgrPtr()
 {
 	return m_pTabWidgetMgr;
 }
+
+void QtGameEditorSys::init()
+{
+	GameEditorSys::init();
+}

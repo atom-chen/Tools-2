@@ -22,4 +22,9 @@ SkillActionNodeConfig* GameEditorSys::getSkillActionNodeConfigPtr()
 	return m_pSkillActionNodeConfig;
 }
 
+void GameEditorSys::init()
+{
+	m_pSkillActionNodeConfig->loadXml();
+}
+
 END_NAMESPACE_GAMEEDITOR

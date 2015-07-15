@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
 	translator.load("RunPath/languages/qt_zh.qm");
 	pApp->installTranslator(&translator);
 	QtGameEditorSys* qtAIEditorSys = new QtGameEditorSys();
+	qtAIEditorSys->init();
 	MainWindow* pMainWindow = new MainWindow();
 	pMainWindow->show();
 

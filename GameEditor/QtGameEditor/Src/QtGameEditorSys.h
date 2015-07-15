@@ -27,6 +27,8 @@ public:
 	MyGraphicsView* getGraphicsViewPtr();
 	void setGraphicsViewPtr(MyGraphicsView* pGraphicsView);
 	TabWidgetMgr* getTabWidgetMgrPtr();
+
+	virtual void init();
 };
 
 #define g_pQtGameEditorSys (static_cast<QtGameEditorSys*>(QtGameEditorSys::getSingletonPtr()))

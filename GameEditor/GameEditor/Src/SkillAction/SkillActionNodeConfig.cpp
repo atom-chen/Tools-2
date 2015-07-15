@@ -14,17 +14,27 @@ AttackActionNodeBase::~AttackActionNodeBase()
 
 AttackActionNodeListBase::AttackActionNodeListBase()
 {
-
+	
 }
 
 AttackActionNodeListBase::~AttackActionNodeListBase()
+{
+	for (auto item : m_nodeList)
+	{
+		delete item;
+	}
+
+	m_nodeList.clear();
+}
+
+void AttackActionNodeListBase::addNode(AttackActionNodeBase* node_)
 {
 
 }
 
 void AttackActionNodeBase::parseXml(tinyxml2::XMLElement* attackActionNodeElem_)
 {
-
+	m_id = attackActionNodeElem_->Attribute("Id");
 }
 
 AttackActionNodeCommon::AttackActionNodeCommon()
@@ -51,7 +61,7 @@ SkillActionNodeConfig::SkillActionNodeConfig()
 
 SkillActionNodeConfig::~SkillActionNodeConfig()
 {
-
+	m_id2ListVec.clear();
 }
 
 bool SkillActionNodeConfig::loadXml()
@@ -67,13 +77,16 @@ bool SkillActionNodeConfig::loadXml()
 	}
 
 	config = doc.FirstChildElement("Config");
+	AttackActionNodeListBase vec;
 	// ÆÕÍ¨½Úµã
 	AttackActionNodeCommon* pAttackActionNodeCommon;
 	pAttackActionNodeElem = config->FirstChildElement("AttackActionNodeCommon");
+	m_id2ListVec.push_back(AttackActionNodeListBase());
+	vec = m_id2ListVec.back();
 	while (pAttackActionNodeElem)
 	{
 		pAttackActionNodeCommon = new AttackActionNodeCommon();
-		m_id2ListMap["AttackActionNodeCommon"].push_back(pAttackActionNodeCommon);
+		vec.addNode(pAttackActionNodeCommon);
 		pAttackActionNodeCommon->parseXml(pAttackActionNodeElem);
 		pAttackActionNodeElem = pAttackActionNodeElem->NextSiblingElement("AttackActionNodeCommon");
 	}

@@ -5,7 +5,6 @@
 #include "tinyxml2.h"
 #include <string>
 #include <vector>
-#include <map>
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
@@ -35,11 +34,14 @@ class GAMEEDITOR_EXPORT AttackActionNodeListBase
 protected:
 #include "PushWarn.h"
 	std::vector<AttackActionNodeBase*> m_nodeList;
+	std::string m_name;
 #include "PopWarn.h"
 
 public:
 	AttackActionNodeListBase();
 	virtual ~AttackActionNodeListBase();
+
+	void addNode(AttackActionNodeBase* node_);
 };
 
 class GAMEEDITOR_EXPORT AttackActionNodeCommon : public AttackActionNodeBase
@@ -55,7 +57,7 @@ class GAMEEDITOR_EXPORT SkillActionNodeConfig
 {
 protected:
 #include "PushWarn.h"
-	std::map<std::string, std::vector<AttackActionNodeBase*>> m_id2ListMap;
+	std::vector<AttackActionNodeListBase> m_id2ListVec;
 #include "PopWarn.h"
 
 public:
