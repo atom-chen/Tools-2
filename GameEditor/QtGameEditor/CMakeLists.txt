@@ -210,6 +210,7 @@ else(NOT Qt5Widgets_FOUND)
 	include_directories(../GameEditor/Src/NodeData)
 	include_directories(../GameEditor/Src/SkillAction)
 	include_directories( ../Extern/tinyxml)
+	include_directories( ../Extern/lua/src)
 	include_directories(${QT_BINARY_DIR}/../include)
 	
 	link_directories(${QT_BINARY_DIR}/../lib)
@@ -222,9 +223,9 @@ else(NOT Qt5Widgets_FOUND)
 
     set_target_properties(QtGameEditor PROPERTIES DEBUG_POSTFIX _d LINK_FLAGS "/ENTRY:\"mainCRTStartup\"")
 	
-	TARGET_LINK_LIBRARIES(QtGameEditor ${Qt5Widgets_LIBRARIES} GameEditor tinyxml)
+	TARGET_LINK_LIBRARIES(QtGameEditor ${Qt5Widgets_LIBRARIES} GameEditor tinyxml Lua)
 	
-	add_dependencies(QtGameEditor GameEditor tinyxml)
+	add_dependencies(QtGameEditor GameEditor tinyxml Lua)
 	
 endif(NOT Qt5Widgets_FOUND)
 

@@ -19,6 +19,7 @@ if(MSVC11 OR MSVC12)
 	add_definitions(-DNOMINMAX)
 endif(MSVC11 OR MSVC12)
 
+add_subdirectory(Extern/lua)
 add_subdirectory(Extern/tinyxml)
 add_subdirectory(GameEditor)
 add_subdirectory(QtGameEditor)
