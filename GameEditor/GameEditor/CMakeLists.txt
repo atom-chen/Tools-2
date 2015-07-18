@@ -55,6 +55,8 @@ set(SKILLACTION_DATA_FILES
 )
 
 set(LUA_C_BRIDGE_FILES
+	./Src/LuaCBridge/LuaCBase.h
+	./Src/LuaCBridge/LuaCBase.cpp
 	./Src/LuaCBridge/LuaCScriptMgr.h
 	./Src/LuaCBridge/LuaCScriptMgr.cpp
 	./Src/LuaCBridge/LuaCBridge.h
@@ -65,6 +67,17 @@ set(LUA_C_BRIDGE_FILES
 	./Src/LuaCBridge/LuaCTable.cpp
 	./Src/LuaCBridge/LuaCVM.h
 	./Src/LuaCBridge/LuaCVM.cpp
+	./Src/LuaCBridge/LuaCFunction.h
+	./Src/LuaCBridge/LuaCFunction.cpp
+	./Src/LuaCBridge/LuaCObjectTranslator.h
+	./Src/LuaCBridge/LuaCObjectTranslator.cpp
+)
+
+set(LUA_C_TEST_FILES
+	./Src/LuaCWrap/LuaCTest.h
+	./Src/LuaCWrap/LuaCTest.cpp
+	./Src/LuaCWrap/LuaCTestWrap.h
+	./Src/LuaCWrap/LuaCTestWrap.cpp
 )
 
 source_group("Base" FILES ${SRCS_FILES})
@@ -74,13 +87,14 @@ source_group("TabData" FILES ${TAB_DATA_FILES})
 source_group("NodeData" FILES ${NODE_DATA_FILES})
 source_group("SkillAction" FILES ${SKILLACTION_DATA_FILES})
 source_group("LuaCBridge" FILES ${LUA_C_BRIDGE_FILES})
+source_group("LuaCWrap" FILES ${LUA_C_TEST_FILES})
 
-include_directories(./Src ./Src/TreeData ./Src/ListData ./Src/NodeData ./Src/SkillAction ./Src/LuaCBridge ../Extern/tinyxml ../Extern/lua/src)
+include_directories(./Src ./Src/TreeData ./Src/ListData ./Src/NodeData ./Src/SkillAction ./Src/LuaCBridge ./Src/LuaCWrap ../Extern/tinyxml ../Extern/lua/src)
 
 ADD_DEFINITIONS(-DGAMEEDITOR_DLL -DGAMEEDITOR_DLL_EXPORT)
 
 #set(ALL_SRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES})
-set(ALL_SRCS ${SRCS_FILES} ${TREE_DATA_FILES} ${LIST_DATA_FILES} ${TAB_DATA_FILES} ${NODE_DATA_FILES} ${SKILLACTION_DATA_FILES} ${LUA_C_BRIDGE_FILES})
+set(ALL_SRCS ${SRCS_FILES} ${TREE_DATA_FILES} ${LIST_DATA_FILES} ${TAB_DATA_FILES} ${NODE_DATA_FILES} ${SKILLACTION_DATA_FILES} ${LUA_C_BRIDGE_FILES} ${LUA_C_TEST_FILES})
 
 ADD_LIBRARY(GameEditor SHARED ${ALL_SRCS})
 

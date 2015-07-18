@@ -28,6 +28,18 @@ BEGIN_NAMESPACE_GAMEEDITOR
 class GAMEEDITOR_EXPORT LuaCObject
 {
 public:
+	int m_type;
+
+	union
+	{
+		lua_Integer m_int;
+		lua_Number m_float;
+		int m_bool;
+		const char* m_pChar;
+		void* m_pUserData;
+	}m_variant;
+
+public:
 	LuaCObject();
 	~LuaCObject();
 };
