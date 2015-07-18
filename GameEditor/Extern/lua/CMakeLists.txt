@@ -78,18 +78,18 @@ if(WIN32)
 	
 	install(FILES 
 		${Lua_BINARY_DIR}/Debug/Lua_d.dll
-		DESTINATION "${Lua_BINARY_DIR}/../QtGameEditor/Debug" CONFIGURATIONS Debug
+		DESTINATION "${Lua_BINARY_DIR}/../../QtGameEditor/Debug" CONFIGURATIONS Debug
 	)
 	install(FILES 
 		${Lua_BINARY_DIR}/Release/Lua.dll
-		DESTINATION "${Lua_BINARY_DIR}/../QtGameEditor/Release" CONFIGURATIONS Release None ""
+		DESTINATION "${Lua_BINARY_DIR}/../../QtGameEditor/Release" CONFIGURATIONS Release None ""
 	)
 	install(FILES 
 		${Lua_BINARY_DIR}/RelWithDebInfo/Lua.dll
-		DESTINATION "${Lua_BINARY_DIR}/../QtGameEditor/RelWithDebInfo" CONFIGURATIONS RelWithDebInfo
+		DESTINATION "${Lua_BINARY_DIR}/../../QtGameEditor/RelWithDebInfo" CONFIGURATIONS RelWithDebInfo
 	)
 	install(FILES 
 		${Lua_BINARY_DIR}/MinSizeRel/Lua.dll
-		DESTINATION "${Lua_BINARY_DIR}/../QtGameEditor/MinSizeRel" CONFIGURATIONS MinSizeRel
+		DESTINATION "${Lua_BINARY_DIR}/../../QtGameEditor/MinSizeRel" CONFIGURATIONS MinSizeRel
 	)
 endif(WIN32)

@@ -63,6 +63,8 @@ set(LUA_C_BRIDGE_FILES
 	./Src/LuaCBridge/LuaCObject.cpp
 	./Src/LuaCBridge/LuaCTable.h
 	./Src/LuaCBridge/LuaCTable.cpp
+	./Src/LuaCBridge/LuaCVM.h
+	./Src/LuaCBridge/LuaCVM.cpp
 )
 
 source_group("Base" FILES ${SRCS_FILES})
