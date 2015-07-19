@@ -5,10 +5,17 @@
 #include <string>
 #include "LuaCFunction.h"
 #include "LuaCTable.h"
+#include "LuaCObject.h"
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
 LuaCObjectTranslator* LuaCScriptMgr::_translator = nullptr;
+#if MULTI_STATE
+List<LuaScriptMgr*> LuaCScriptMgr::mgrList;
+int LuaCScriptMgr::mgrPos = 0;
+#else
+LuaCFunction* LuaCScriptMgr::traceback;
+#endif
 
 LuaCScriptMgr::LuaCScriptMgr()
 {
@@ -295,6 +302,168 @@ void LuaCScriptMgr::PushVarObject(lua_State* L, LuaCObject* o)
 	//		PushObject(L, o);
 	//	}
 	//}
+}
+
+//不缓存LuaFunction
+std::vector<LuaCObject*> LuaCScriptMgr::CallLuaFunction(std::string name, std::vector<LuaCObject*>& args)
+{
+	std::vector<LuaCObject*> objs;
+	LuaCBase* lb = nullptr;
+
+	if (dict.find(name) != dict.end())
+	{
+		LuaCFunction* func = (LuaCFunction*)lb;
+		return func->Call(args);
+	}
+	else
+	{
+		lua_State* L = m_pLuaCVM->L;
+		LuaCFunction* func = nullptr;
+		int oldTop = lua_gettop(L);
+
+		if (PushLuaFunction(L, name))
+		{
+			int reference = luaL_ref(L, LUA_REGISTRYINDEX);
+			func = new LuaCFunction(reference, m_pLuaCVM);
+			lua_settop(L, oldTop);
+			//std::vector<LuaCObject*> objs = func->Call(args);
+			objs = func->Call(args);
+			//func.Dispose();
+			return objs;
+		}
+
+		//return nullptr;
+		return objs;
+	}
+}
+
+bool LuaCScriptMgr::PushLuaFunction(lua_State* L, std::string fullPath)
+{
+	int oldTop = lua_gettop(L);
+	int pos = (int)fullPath.find_last_of('.');
+
+	if (pos > 0)
+	{
+		std::string tableName = fullPath.substr(0, pos);
+
+		if (PushLuaTable(L, tableName))
+		{
+			std::string funcName = fullPath.substr(pos + 1);
+			lua_pushstring(L, funcName.c_str());
+			lua_rawget(L, -2);
+		}
+
+		int type = lua_type(L, -1);
+
+		if (type != LUA_TFUNCTION)
+		{
+			lua_settop(L, oldTop);
+			return false;
+		}
+
+		lua_insert(L, oldTop + 1);
+		lua_settop(L, oldTop + 1);
+	}
+	else
+	{
+		lua_getglobal(L, fullPath.c_str());
+		int type = lua_type(L, -1);
+
+		if (type != LUA_TFUNCTION)
+		{
+			lua_settop(L, oldTop);
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void LuaCScriptMgr::PushTraceBack(lua_State* L)
+{
+#if !MULTI_STATE
+	if (traceback == nullptr)
+	{
+		lua_getglobal(L, "traceback");
+		return;
+	}
+
+	traceback->push();
+#else
+	lua_getglobal(L, "traceback");
+#endif
+}
+
+bool LuaCScriptMgr::PushLuaTable(lua_State* L, std::string fullPath)
+{
+	//string[] path = fullPath.Split(new char[] { '.' });
+	std::vector<std::string> path;
+	std::string delim = ".";
+	LuaCScriptMgr::split(fullPath, delim, &path);
+
+	int oldTop = lua_gettop(L);
+	lua_getglobal(L, path[0].c_str());
+	//lua_pushstring(L, path[0].c_str());
+	//lua_rawget(L, LUA_GLOBALSINDEX);
+
+	int type = lua_type(L, -1);
+
+	if (type != LUA_TTABLE)
+	{
+		lua_settop(L, oldTop);
+		lua_pushnil(L);
+		//Debugger.LogError("Push lua table {0} failed", path[0]);
+		return false;
+	}
+
+	for (int i = 1; i < path.size(); i++)
+	{
+		lua_pushstring(L, path[i].c_str());
+		lua_rawget(L, -2);
+		type = lua_type(L, -1);
+
+		if (type != LUA_TTABLE)
+		{
+			lua_settop(L, oldTop);
+			//Debugger.LogError("Push lua table {0} failed", fullPath);
+			return false;
+		}
+	}
+
+	if (path.size() > 1)
+	{
+		lua_insert(L, oldTop + 1);
+		lua_settop(L, oldTop + 1);
+	}
+
+	return true;
+}
+
+////压入一个从object派生的变量
+//void LuaCScriptMgr::PushObject(lua_State* L, object o)
+//{
+//	GetTranslator(L).pushObject(L, o, "luaNet_metatable");
+//}
+//
+//void LuaCScriptMgr::Push(lua_State* L, UnityEngine.Object obj)
+//{
+//	PushObject(L, obj == null ? null : obj);
+//}
+
+void LuaCScriptMgr::split(std::string& s, std::string& delim, std::vector<std::string>* ret)
+{
+	size_t last = 0;
+	size_t index = s.find_first_of(delim, last);
+	while (index != std::string::npos)
+	{
+		ret->push_back(s.substr(last, index - last));
+		last = index + 1;
+		index = s.find_first_of(delim, last);
+	}
+	if (index - last>0)
+	{
+		ret->push_back(s.substr(last, index - last));
+	}
 }
 
 END_NAMESPACE_GAMEEDITOR
