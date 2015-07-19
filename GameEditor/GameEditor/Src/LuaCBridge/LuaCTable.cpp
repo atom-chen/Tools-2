@@ -1,8 +1,9 @@
 #include "LuaCTable.h"
+#include "LuaCVM.h"
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
-LuaCTable::LuaCTable()
+LuaCTable::LuaCTable(int reference, LuaCVM* interpreter)
 {
 
 }

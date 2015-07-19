@@ -2,8 +2,12 @@
 #define __LuaCObject_H_
 
 #include "GameEditor.h"
+#include "LuaCBase.h"
 
 BEGIN_NAMESPACE_GAMEEDITOR
+
+class LuaCTable;
+class LuaCFunction;
 
 /**
 *@brief 等价 Lua 源代码中的 lua.h ，#define LUA_TNIL		0
@@ -37,11 +41,14 @@ public:
 		int m_bool;
 		const char* m_pChar;
 		void* m_pUserData;
-	}m_variant;
+		LuaCTable* m_pLuaCTable;
+		LuaCFunction* m_pLuaCFunction;
+	};
 
 public:
 	LuaCObject();
 	~LuaCObject();
+	int GetType();
 };
 
 END_NAMESPACE_GAMEEDITOR

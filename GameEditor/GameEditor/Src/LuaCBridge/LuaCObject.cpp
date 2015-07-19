@@ -12,4 +12,9 @@ LuaCObject::~LuaCObject()
 
 }
 
+int LuaCObject::GetType()
+{
+	return m_type;
+}
+
 END_NAMESPACE_GAMEEDITOR

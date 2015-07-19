@@ -1,8 +1,9 @@
 #include "LuaCFunction.h"
+#include "LuaCVM.h"
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
-LuaCFunction::LuaCFunction()
+LuaCFunction::LuaCFunction(int reference, LuaCVM* interpreter)
 {
 
 }

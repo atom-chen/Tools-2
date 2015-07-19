@@ -1,11 +1,12 @@
 #include "LuaCVM.h"
 #include "LuaCObjectTranslator.h"
+#include "LuaCObject.h"
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
 LuaCVM::LuaCVM()
 {
-	m_translator = new LuaCObjectTranslator;
+	translator = new LuaCObjectTranslator;
 	openLua();
 }
 
@@ -17,80 +18,80 @@ LuaCVM::~LuaCVM()
 void LuaCVM::openLua()
 {
 	/* initialize Lua */
-	// m_L = lua_open();		// Lua5.1
-	// m_L = lua_newstate();	// Lua5.3
-	m_L = luaL_newstate();		// Lua5.3
+	// L = lua_open();		// Lua5.1
+	// L = lua_newstate();	// Lua5.3
+	L = luaL_newstate();		// Lua5.3
 	/* load Lua libraries */
-	luaL_openlibs(m_L);
+	luaL_openlibs(L);
 }
 
 void LuaCVM::closeLua()
 {
-	lua_close(m_L);
+	lua_close(L);
 }
 
-LuaCObject LuaCVM::getLuaObject(std::string fullPath);
+LuaCObject* LuaCVM::getLuaObject(std::string fullPath)
 {
-	LuaCObject returnValue = null;
+	LuaCObject* returnValue = nullptr;
 	int oldTop = lua_gettop(L);
 	std::vector<std::string> path;
 	std::string delim = ".";
 	split(fullPath, delim, &path);
 
-	lua_getglobal(L, path[0]);
-	returnValue = translator.getObject(L, -1);
-	if (path.Length > 1)
+	lua_getglobal(L, path[0].c_str());
+	returnValue = translator->getObject(L, -1);
+	if (path.size() > 1)
 	{
-		string[] remainingPath = new string[path.Length - 1];
-		Array.Copy(path, 1, remainingPath, 0, path.Length - 1);
+		std::vector<std::string> remainingPath;
+		remainingPath.assign(path.begin() + 1, path.end());
 		returnValue = getObject(remainingPath);
 	}
 	lua_settop(L, oldTop);
 	return returnValue;
 }
 
-void LuaCVM::setLuaObject(std::string fullPath)
+void LuaCVM::setLuaObject(std::string fullPath, LuaCObject* value)
 {
-	int oldTop = LuaDLL.lua_gettop(L);
+	int oldTop = lua_gettop(L);
 	std::vector<std::string> path;
 	std::string delim = ".";
 	split(fullPath, delim, &path);
 
-	if (path.Length == 1)
+	if (path.size() == 1)
 	{
-		translator.push(L, value);
-		LuaDLL.lua_setglobal(L, fullPath);
+		translator->push(L, value);
+		lua_setglobal(L, fullPath.c_str());
 	}
 	else
 	{
-		//LuaDLL.lua_getglobal(L, path[0]);
-		LuaDLL.lua_rawglobal(L, path[0]);
-		LuaTypes type = LuaDLL.lua_type(L, -1);
+		lua_getglobal(L, path[0].c_str());
+		//lua_rawglobal(L, path[0]);			// lua_rawglobal 没有这个函数
+		int type = lua_type(L, -1);
 
-		if (type == LuaTypes.LUA_TNIL)
+		if (type == LUA_TNIL)
 		{
-			Debugger.LogError("Table {0} not exists", path[0]);
-			LuaDLL.lua_settop(L, oldTop);
+			// 输出日志
+			lua_settop(L, oldTop);
 			return;
 		}
 
-		string[] remainingPath = new string[path.Length - 1];
-		Array.Copy(path, 1, remainingPath, 0, path.Length - 1);
+		std::vector<std::string> remainingPath;;
+		remainingPath.assign(path.begin() + 1, path.end());
 		setObject(remainingPath, value);
 	}
 
-	LuaDLL.lua_settop(L, oldTop);
+	lua_settop(L, oldTop);
 }
 
-LuaCObject LuaCVM::getObject(std::vector<std::string>& remainingPath)
+LuaCObject* LuaCVM::getObject(std::vector<std::string>& remainingPath)
 {
-	object returnValue = null;
-	for (int i = 0; i < remainingPath.Length; i++)
+	LuaCObject* returnValue = nullptr;
+	for (int i = 0; i < remainingPath.size(); i++)
 	{
-		LuaDLL.lua_pushstring(L, remainingPath[i]);
-		LuaDLL.lua_gettable(L, -2);
-		returnValue = translator.getObject(L, -1);
-		if (returnValue == null) break;
+		lua_pushstring(L, remainingPath[i].c_str());
+		lua_gettable(L, -2);
+		returnValue = translator->getObject(L, -1);
+		if (returnValue == nullptr) break;
 	}
 	return returnValue;
 }
@@ -110,6 +111,37 @@ void LuaCVM::split(std::string& s, std::string& delim, std::vector<std::string>*
 	{
 		ret->push_back(s.substr(last, index - last));
 	}
+}
+
+void LuaCVM::setObject(std::vector<std::string>& remainingPath, LuaCObject* val)
+{
+	for (int i = 0; i < remainingPath.size() - 1; i++)
+	{
+		lua_pushstring(L, remainingPath[i].c_str());
+		lua_gettable(L, -2);
+	}
+
+	lua_pushstring(L, remainingPath[remainingPath.size() - 1].c_str());
+
+	//可以释放先
+	//if (val == null)
+	//{
+	//    LuaDLL.lua_gettable(L, -2);               
+	//    LuaTypes type = LuaDLL.lua_type(L, -1);
+
+	//    if (type == LuaTypes.LUA_TUSERDATA)
+	//    {
+	//        int udata = LuaDLL.luanet_tonetobject(L, -1);
+
+	//        if (udata != -1)
+	//        {
+	//            translator.collectObject(udata);
+	//        }
+	//    }
+	//}
+
+	translator->push(L, val);
+	lua_settable(L, -3);
 }
 
 END_NAMESPACE_GAMEEDITOR
