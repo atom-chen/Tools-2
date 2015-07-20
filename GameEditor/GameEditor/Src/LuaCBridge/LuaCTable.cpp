@@ -5,7 +5,9 @@ BEGIN_NAMESPACE_GAMEEDITOR
 
 LuaCTable::LuaCTable(int reference, LuaCVM* interpreter)
 {
-
+	_Reference = reference;
+	_Interpreter = interpreter;
+	translator = interpreter->translator;
 }
 
 LuaCTable::~LuaCTable()

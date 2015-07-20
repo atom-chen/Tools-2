@@ -29,6 +29,11 @@ LuaCScriptMgr::~LuaCScriptMgr()
 	m_pLuaCVM->closeLua();
 }
 
+LuaCVM* LuaCScriptMgr::getLuaCVM()
+{
+	return m_pLuaCVM;
+}
+
 void LuaCScriptMgr::setLuaFilePath(std::string path)
 {
 	std::stringstream strStream;
@@ -39,6 +44,16 @@ void LuaCScriptMgr::setLuaFilePath(std::string path)
 void LuaCScriptMgr::setCFilePath(std::string path)
 {
 
+}
+
+void LuaCScriptMgr::doString(std::string value)
+{
+	m_pLuaCVM->doString(value);
+}
+
+void LuaCScriptMgr::doFile(std::string path)
+{
+	m_pLuaCVM->doFile(path);
 }
 
 void LuaCScriptMgr::CheckArgsCount(lua_State* L, int count)
@@ -178,6 +193,46 @@ void LuaCScriptMgr::PushVarObject(lua_State* L, LuaCObject* o)
 
 	int t = o->GetType();
 
+	if (LUAC_TBOOLEAN == t)
+	{
+		lua_pushnil(L);
+	}
+	else if (LUAC_TBOOLEAN == t)
+	{
+		lua_pushboolean(L, o->m_bool);
+	}
+	else if (LUAC_TLIGHTUSERDATA == t)
+	{
+		lua_pushlightuserdata(L, o->m_pLightUserData);
+	}
+	else if (LUAC_TNUMBER == t)
+	{
+		lua_pushnumber(L, o->m_float);
+	}
+	else if (LUAC_TSTRING == t)
+	{
+		lua_pushstring(L, o->m_pChar);
+	}
+	else if (LUAC_TTABLE == t)
+	{
+		lua_rawseti(L, LUA_REGISTRYINDEX, o->m_pLuaCTable->getRef());
+	}
+	else if (LUAC_TFUNCTION == t)
+	{
+		lua_rawseti(L, LUA_REGISTRYINDEX, o->m_pLuaCFunction->getRef());
+	}
+	else if (LUAC_TUSERDATA == t)
+	{
+		//lua_rawseti(L, o->m_pUserData);
+	}
+	else if (LUAC_TTHREAD == t)
+	{
+
+	}
+	else
+	{
+		lua_pushinteger(L, o->m_int);
+	}
 	//if (t.IsValueType)
 	//{
 	//	if (t == typeof(bool))

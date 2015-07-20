@@ -2,6 +2,7 @@
 #include <assert.h>
 #include "SkillActionNodeConfig.h"
 #include "LuaCScriptMgr.h"
+#include "LuaCTestWrap.h"
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
@@ -11,6 +12,12 @@ GameEditorSys::GameEditorSys()
 {
 	m_pLuaCScriptMgr = new LuaCScriptMgr;
 	m_pSkillActionNodeConfig = new SkillActionNodeConfig;
+	LuaCTestWrap_Bind();
+	const char* testfunc = "cHelloWorld(\"ninhoa\")";
+	m_pLuaCScriptMgr->doString(testfunc);
+
+	const char* testCPPFunc = "aaa.bbb.ccc:cppHelloHello(\"ninhoa\")";
+	m_pLuaCScriptMgr->doString(testCPPFunc);
 }
 
 void GameEditorSys::instanceT()

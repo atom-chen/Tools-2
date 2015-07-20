@@ -36,8 +36,13 @@ public:
 	LuaCScriptMgr();
 	~LuaCScriptMgr();
 
+	LuaCVM* getLuaCVM();
+
 	void setLuaFilePath(std::string path);	// 设置 Lua 文件的查找目录
 	void setCFilePath(std::string path);	// 设置 C 库的查找目录
+
+	void doString(std::string value);
+	void doFile(std::string path);
 	std::vector<LuaCObject*> CallLuaFunction(std::string name, std::vector<LuaCObject*>& args);
 
 	static void CheckArgsCount(lua_State* L, int count);

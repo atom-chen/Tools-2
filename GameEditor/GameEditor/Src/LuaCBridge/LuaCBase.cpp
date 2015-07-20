@@ -22,4 +22,9 @@ void LuaCBase::PushArgs(lua_State* L, LuaCObject* o)
 	LuaCScriptMgr::PushVarObject(L, o);
 }
 
+int LuaCBase::getRef()
+{
+	return _Reference;
+}
+
 END_NAMESPACE_GAMEEDITOR

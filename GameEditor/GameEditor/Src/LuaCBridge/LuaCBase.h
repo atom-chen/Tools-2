@@ -13,7 +13,7 @@ class LuaCObject;
 
 class GAMEEDITOR_EXPORT LuaCBase
 {
-protected:
+public:
 	bool _Disposed;
 	int _Reference;
 	LuaCVM* _Interpreter;
@@ -29,6 +29,7 @@ public:
 	~LuaCBase();
 
 	void PushArgs(lua_State* L, LuaCObject* o);
+	int getRef();
 };
 
 END_NAMESPACE_GAMEEDITOR

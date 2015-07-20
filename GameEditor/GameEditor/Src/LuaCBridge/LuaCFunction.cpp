@@ -7,7 +7,8 @@ BEGIN_NAMESPACE_GAMEEDITOR
 
 LuaCFunction::LuaCFunction(int reference, LuaCVM* interpreter)
 {
-
+	_Reference = reference;
+	_Interpreter = interpreter;
 }
 
 LuaCFunction::~LuaCFunction()
@@ -150,6 +151,7 @@ void LuaCFunction::push(lua_State* luaState)
 {
 	if (_Reference != 0)
 	{
+		// luaL_ref
 		//lua_getref(luaState, _Reference);
 	}
 	else

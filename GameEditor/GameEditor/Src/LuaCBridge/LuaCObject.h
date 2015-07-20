@@ -12,14 +12,14 @@ class LuaCFunction;
 /**
 *@brief 等价 Lua 源代码中的 lua.h ，#define LUA_TNIL		0
 */
-#define LUAC_TNONE		(-1)
+#define LUAC_TNONE			(-1)
 
-#define LUAC_TNIL		0
+#define LUAC_TNIL			0
 #define LUAC_TBOOLEAN		1
 #define LUAC_TLIGHTUSERDATA	2
 #define LUAC_TNUMBER		3
 #define LUAC_TSTRING		4
-#define LUAC_TTABLE		5
+#define LUAC_TTABLE			5
 #define LUAC_TFUNCTION		6
 #define LUAC_TUSERDATA		7
 #define LUAC_TTHREAD		8
@@ -36,13 +36,14 @@ public:
 
 	union
 	{
-		lua_Integer m_int;
-		lua_Number m_float;
-		int m_bool;
-		const char* m_pChar;
-		void* m_pUserData;
-		LuaCTable* m_pLuaCTable;
-		LuaCFunction* m_pLuaCFunction;
+		lua_Integer m_int;				// 整形
+		lua_Number m_float;				// 浮点类型
+		int m_bool;						// 布尔类型
+		const char* m_pChar;			// 字符串
+		void* m_pLightUserData;			// 轻量级用户数据，主要是指针
+		void* m_pUserData;				// 用户数据
+		LuaCTable* m_pLuaCTable;		// 表
+		LuaCFunction* m_pLuaCFunction;	// 函数
 	};
 
 public:

@@ -1,6 +1,7 @@
 #include "LuaCVM.h"
 #include "LuaCObjectTranslator.h"
 #include "LuaCObject.h"
+#include "LuaCTable.h"
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
@@ -28,6 +29,16 @@ void LuaCVM::openLua()
 void LuaCVM::closeLua()
 {
 	lua_close(L);
+}
+
+void LuaCVM::doString(std::string value)
+{
+	luaL_dostring(L, value.c_str());
+}
+
+void LuaCVM::doFile(std::string path)
+{
+	luaL_dofile(L, path.c_str());
 }
 
 LuaCObject* LuaCVM::getLuaObject(std::string fullPath)
@@ -64,8 +75,8 @@ void LuaCVM::setLuaObject(std::string fullPath, LuaCObject* value)
 	}
 	else
 	{
-		lua_getglobal(L, path[0].c_str());
-		//lua_rawglobal(L, path[0]);			// lua_rawglobal 没有这个函数
+		lua_getglobal(L, path[0].c_str());		// lua5.3 lua_getglobal
+		//lua_rawglobal(L, path[0]);			// lua5.1 lua_rawglobal
 		int type = lua_type(L, -1);
 
 		if (type == LUA_TNIL)
@@ -142,6 +153,44 @@ void LuaCVM::setObject(std::vector<std::string>& remainingPath, LuaCObject* val)
 
 	translator->push(L, val);
 	lua_settable(L, -3);
+}
+
+void LuaCVM::NewTable(std::string fullPath)
+{
+	std::vector<std::string> path;
+	std::string delim = ".";
+	split(fullPath, delim, &path);
+
+	int oldTop = lua_gettop(L);
+	if (path.size() == 1)
+	{
+		lua_newtable(L);
+		lua_setglobal(L, fullPath.c_str());
+	}
+	else
+	{
+		lua_getglobal(L, path[0].c_str());
+		for (int i = 1; i < path.size() - 1; i++)
+		{
+			lua_pushstring(L, path[i].c_str());
+			lua_gettable(L, -2);
+		}
+		lua_pushstring(L, path[path.size() - 1].c_str());
+		lua_newtable(L);
+		lua_settable(L, -3);
+	}
+	lua_settop(L, oldTop);
+}
+
+LuaCTable* LuaCVM::NewTable()
+{
+	int oldTop = lua_gettop(L);
+
+	lua_newtable(L);
+	LuaCTable* returnVal = (LuaCTable*)translator->getObject(L, -1);
+
+	lua_settop(L, oldTop);
+	return returnVal;
 }
 
 END_NAMESPACE_GAMEEDITOR
