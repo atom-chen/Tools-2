@@ -8,10 +8,14 @@ BEGIN_NAMESPACE_GAMEEDITOR
 
 class GAMEEDITOR_EXPORT LuaCTest
 {
+protected:
+	int m_mem;
+
 public:
 	LuaCTest();
 	~LuaCTest();
 
+	void setMem(int mem_);
 	void sayHello(std::string str);
 };
 

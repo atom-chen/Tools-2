@@ -7,6 +7,8 @@
 BEGIN_NAMESPACE_GAMEEDITOR
 
 void LuaCTestWrap_Bind();
+void testBind1f();
+void testBind2f();
 int LuaCTestWrap_cHelloWorld(lua_State* L);
 int LuaCTestWrap_cppHelloHello(lua_State* L);
 

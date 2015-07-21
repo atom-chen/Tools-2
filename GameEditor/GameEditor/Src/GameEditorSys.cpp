@@ -13,10 +13,12 @@ GameEditorSys::GameEditorSys()
 	m_pLuaCScriptMgr = new LuaCScriptMgr;
 	m_pSkillActionNodeConfig = new SkillActionNodeConfig;
 	LuaCTestWrap_Bind();
-	const char* testfunc = "cHelloWorld(\"ninhoa\")";
+	//const char* testfunc = "cHelloWorld(\"ninhoa\")";
+	const char* testfunc = "TestStaticHandle.cHelloWorld(\"ninhoa\")";
 	m_pLuaCScriptMgr->doString(testfunc);
 
-	const char* testCPPFunc = "aaa.bbb.ccc:cppHelloHello(\"ninhoa\")";
+	//const char* testCPPFunc = "aaa.bbb.ccc:cppHelloHello(\"ninhoa\")";
+	const char* testCPPFunc = "cppHelloHello(aaa, \"ninhoa\")";
 	m_pLuaCScriptMgr->doString(testCPPFunc);
 }
 

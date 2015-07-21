@@ -15,6 +15,9 @@ class LuaCBase;
 class LuaCObject;
 class LuaCFunction;
 
+class LuaMethod;
+class LuaField;
+
 class GAMEEDITOR_EXPORT LuaCScriptMgr
 {
 public:
@@ -54,6 +57,9 @@ public:
 	static void PushTraceBack(lua_State* L);
 	static bool PushLuaTable(lua_State* L, std::string fullPath);
 	static void split(std::string& s, std::string& delim, std::vector<std::string>* ret);
+	static void RegisterLib(lua_State* L, std::string libName, std::string className, std::vector<LuaMethod*> regs, std::vector<LuaField*> fields, std::string baseClassName);
+	static void CreateTable(lua_State* L, std::string fullPath);
+	static int garbageCollection(lua_State* luaState);
 };
 
 END_NAMESPACE_GAMEEDITOR

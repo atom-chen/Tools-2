@@ -6,6 +6,7 @@
 #include "LuaCFunction.h"
 #include "LuaCTable.h"
 #include "LuaCObject.h"
+#include "LuaCMember.h"
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
@@ -457,7 +458,9 @@ bool LuaCScriptMgr::PushLuaTable(lua_State* L, std::string fullPath)
 	LuaCScriptMgr::split(fullPath, delim, &path);
 
 	int oldTop = lua_gettop(L);
+	// Lua 5.3
 	lua_getglobal(L, path[0].c_str());
+	// Lua 5.1
 	//lua_pushstring(L, path[0].c_str());
 	//lua_rawget(L, LUA_GLOBALSINDEX);
 
@@ -519,6 +522,204 @@ void LuaCScriptMgr::split(std::string& s, std::string& delim, std::vector<std::s
 	{
 		ret->push_back(s.substr(last, index - last));
 	}
+}
+
+void LuaCScriptMgr::CreateTable(lua_State* L, std::string fullPath)
+{
+	//string[] path = fullPath.Split(new char[] { '.' });
+	std::vector<std::string> path;
+	std::string delim = ".";
+	LuaCScriptMgr::split(fullPath, delim, &path);
+
+	int oldTop = lua_gettop(L);
+
+	if (path.size() > 1)
+	{
+		lua_getglobal(L, path[0].c_str());
+		int type = lua_type(L, -1);
+
+		if (type == LUA_TNIL)
+		{
+			lua_pop(L, 1);
+			lua_createtable(L, 0, 0);
+			// Lua 5.1
+			//lua_pushstring(L, path[0].c_str());
+			//lua_pushvalue(L, -2);
+			//lua_settable(L, LUA_GLOBALSINDEX);
+			// Lua 5.3
+			lua_pushvalue(L, -1);
+			lua_setglobal(L, path[0].c_str());
+		}
+
+		for (int i = 1; i < path.size() - 1; i++)
+		{
+			lua_pushstring(L, path[i].c_str());
+			lua_rawget(L, -2);
+
+			type = lua_type(L, -1);
+
+			if (type == LUA_TNIL)
+			{
+				lua_pop(L, 1);
+				lua_createtable(L, 0, 0);
+				lua_pushstring(L, path[i].c_str());
+				lua_pushvalue(L, -2);
+				lua_rawset(L, -4);
+			}
+		}
+
+		lua_pushstring(L, path[path.size() - 1].c_str());
+		lua_rawget(L, -2);
+
+		type = lua_type(L, -1);
+
+		if (type == LUA_TNIL)
+		{
+			lua_pop(L, 1);
+			lua_createtable(L, 0, 0);
+			lua_pushstring(L, path[path.size() - 1].c_str());
+			lua_pushvalue(L, -2);
+			lua_rawset(L, -4);
+		}
+	}
+	else
+	{
+		lua_getglobal(L, path[0].c_str());
+		int type = lua_type(L, -1);
+
+		if (type == LUA_TNIL)
+		{
+			lua_pop(L, 1);
+			lua_createtable(L, 0, 0);
+			// Lua 5.1
+			//lua_pushstring(L, path[0].c_str());
+			//lua_pushvalue(L, -2);
+			//lua_settable(L, LUA_GLOBALSINDEX);
+			// Lua 5.3
+			lua_pushvalue(L, -1);
+			lua_setglobal(L, path[0].c_str());
+		}
+	}
+
+	lua_insert(L, oldTop + 1);
+	lua_settop(L, oldTop + 1);
+}
+
+void LuaCScriptMgr::RegisterLib(lua_State* L, std::string libName, std::string className, std::vector<LuaMethod*> regs, std::vector<LuaField*> fields, std::string baseClassName)
+{
+	CreateTable(L, libName);
+
+	luaL_getmetatable(L, className.c_str());
+
+	if (lua_isnil(L, -1))
+	{
+		lua_pop(L, 1);
+		luaL_newmetatable(L, className.c_str());
+	}
+
+	if (baseClassName.length() > 0)
+	{
+		//LuaDLL.lua_pushstring(L, "base");
+		//LuaDLL.luaL_getmetatable(L, baseType.AssemblyQualifiedName);
+
+		//if (LuaDLL.lua_isnil(L, -1))
+		//{
+		//    LuaDLL.lua_pop(L, 1);
+		//    LuaDLL.luaL_newmetatable(L, baseType.AssemblyQualifiedName);
+		//}
+
+		//LuaDLL.lua_rawset(L, -3);
+
+		luaL_getmetatable(L, baseClassName.c_str());
+
+		if (lua_isnil(L, -1))
+		{
+			lua_pop(L, 1);
+			luaL_newmetatable(L, baseClassName.c_str());
+			//checkBaseType.Add(baseType);
+		}
+		else
+		{
+			//checkBaseType.Remove(baseType);
+		}
+
+		lua_setmetatable(L, -2);
+	}
+
+
+	//LuaDLL.lua_pushstring(L, "__index");
+	//LuaDLL.lua_pushvalue(L, -2);
+	//LuaDLL.lua_pushstring(L, "ToLua_Index");
+	//LuaDLL.lua_rawget(L, (int)LuaIndexes.LUA_REGISTRYINDEX);                 
+	////LuaDLL.lua_pushvalue(L, -2);
+	////LuaDLL.lua_pushstdcallcfunction(L, tolua_index, 1);        
+	//LuaDLL.lua_rawset(L, -3);
+	//tolua_setindex(L);
+
+	//LuaDLL.lua_pushstring(L, "__newindex");
+	//LuaDLL.lua_pushstring(L, "ToLua_NewIndex");
+	//LuaDLL.lua_rawget(L, (int)LuaIndexes.LUA_REGISTRYINDEX);            
+	////LuaDLL.lua_pushstdcallcfunction(L, NewIndex);
+	//LuaDLL.lua_rawset(L, -3);
+	//tolua_setnewindex(L);
+
+	lua_pushstring(L, "__call");
+	lua_pushstring(L, "ToLua_TableCall");
+	lua_rawget(L, LUA_REGISTRYINDEX);
+	lua_rawset(L, -3);
+
+	lua_pushstring(L, "__gc");
+	//lua_pushstdcallcfunction(L, __gc);
+	lua_pushcfunction(L, garbageCollection);
+	lua_rawset(L, -3);
+
+	for (int i = 0; i < regs.size(); i++)
+	{
+		lua_pushstring(L, regs[i]->name.c_str());
+		//lua_pushstdcallcfunction(L, regs[i]->func);
+		lua_pushcfunction(L, regs[i]->func);
+		lua_rawset(L, -3);
+	}
+
+	for (int i = 0; i < fields.size(); i++)
+	{
+		lua_pushstring(L, fields[i]->name.c_str());
+		lua_createtable(L, 2, 0);
+
+		if (fields[i]->getter != nullptr)
+		{
+			//lua_pushstdcallcfunction(L, fields[i]->getter);
+			lua_pushcfunction(L, fields[i]->getter);
+			lua_rawseti(L, -2, 1);
+		}
+
+		if (fields[i]->setter != nullptr)
+		{
+			//lua_pushstdcallcfunction(L, fields[i]->setter);
+			lua_pushcfunction(L, fields[i]->setter);
+			lua_rawseti(L, -2, 2);
+		}
+
+		lua_rawset(L, -3);
+	}
+
+	lua_setmetatable(L, -2);
+	lua_settop(L, 0);
+
+	//checkBaseType.Remove(t);
+}
+
+int LuaCScriptMgr::garbageCollection(lua_State* luaState)
+{
+	//int udata = luanet_rawnetobj(luaState, 1);
+
+	//if (udata != -1)
+	//{
+	//	ObjectTranslator translator = ObjectTranslator.FromState(luaState);
+	//	translator.collectObject(udata);
+	//}
+
+	return 0;
 }
 
 END_NAMESPACE_GAMEEDITOR

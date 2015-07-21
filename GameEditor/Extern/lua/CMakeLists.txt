@@ -70,7 +70,7 @@ if(WIN32)
 	source_group("Src" FILES ${SRCS})
     include_directories(.)
 	
-	# Lua 定义成 Dll，具体看 luaconf.h
+	# Lua 定义成 Dll，具体看 luaconf.h， LUA_CORE 已经在  Lua 源代码中有定义了，因此使用 LUA_LIB 
 	ADD_DEFINITIONS(-DLUA_BUILD_AS_DLL -DLUA_CORE)
     ADD_LIBRARY(Lua SHARED ${SRCS})
 	set_target_properties(Lua PROPERTIES DEBUG_POSTFIX _d)

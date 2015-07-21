@@ -71,6 +71,8 @@ set(LUA_C_BRIDGE_FILES
 	./Src/LuaCBridge/LuaCFunction.cpp
 	./Src/LuaCBridge/LuaCObjectTranslator.h
 	./Src/LuaCBridge/LuaCObjectTranslator.cpp
+	./Src/LuaCBridge/LuaCMember.h
+	./Src/LuaCBridge/LuaCMember.cpp
 )
 
 set(LUA_C_TEST_FILES
