@@ -663,10 +663,10 @@ void LuaCScriptMgr::RegisterLib(lua_State* L, std::string libName, std::string c
 	//LuaDLL.lua_rawset(L, -3);
 	//tolua_setnewindex(L);
 
-	lua_pushstring(L, "__call");
-	lua_pushstring(L, "ToLua_TableCall");
-	lua_rawget(L, LUA_REGISTRYINDEX);
-	lua_rawset(L, -3);
+	//lua_pushstring(L, "__call");
+	//lua_pushstring(L, "ToLua_TableCall");
+	//lua_rawget(L, LUA_REGISTRYINDEX);
+	//lua_rawset(L, -3);
 
 	lua_pushstring(L, "__gc");
 	//lua_pushstdcallcfunction(L, __gc);

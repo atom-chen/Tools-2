@@ -15,7 +15,7 @@ void LuaCTestWrap_Bind()
 
 void testBind1f()
 {
-	lua_register(g_pLuaCScriptMgr->getLuaCVM()->L, "cHelloWorld", LuaCTestWrap_cHelloWorld);
+	lua_register(g_pLuaCScriptMgr->getLuaCVM()->L, "cHelloWorld", LuaCTestWrap_cHelloWorld);	// 全局注册函数请使用这个
 
 	LuaCTest* pLuaCTest = new LuaCTest;
 	pLuaCTest->setMem(10);

@@ -14,7 +14,7 @@ GameEditorSys::GameEditorSys()
 	m_pSkillActionNodeConfig = new SkillActionNodeConfig;
 	LuaCTestWrap_Bind();
 	//const char* testfunc = "cHelloWorld(\"ninhoa\")";
-	const char* testfunc = "TestStaticHandle.cHelloWorld(\"ninhoa\")";
+	const char* testfunc = "LuaCTest.cHelloWorld(\"ninhoa\")";
 	m_pLuaCScriptMgr->doString(testfunc);
 
 	//const char* testCPPFunc = "aaa.bbb.ccc:cppHelloHello(\"ninhoa\")";
