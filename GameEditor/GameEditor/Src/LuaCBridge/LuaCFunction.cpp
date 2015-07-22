@@ -2,6 +2,7 @@
 #include "LuaCVM.h"
 #include "LuaCScriptMgr.h"
 #include "LuaCObjectTranslator.h"
+#include "LuaCommon.h"
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
@@ -9,6 +10,14 @@ LuaCFunction::LuaCFunction(int reference, LuaCVM* interpreter)
 {
 	_Reference = reference;
 	_Interpreter = interpreter;
+}
+
+LuaCFunction::LuaCFunction(int reference, lua_State* l)
+{
+	_Reference = reference;
+	L = l;
+	translator = LuaCObjectTranslator::FromState(L);
+	_Interpreter = translator->interpreter;
 }
 
 LuaCFunction::~LuaCFunction()
@@ -151,8 +160,7 @@ void LuaCFunction::push(lua_State* luaState)
 {
 	if (_Reference != 0)
 	{
-		// luaL_ref
-		//lua_getref(luaState, _Reference);
+		lua_getref(luaState, _Reference);
 	}
 	else
 	{
@@ -164,7 +172,7 @@ void LuaCFunction::push()
 {
 	if (_Reference != 0)
 	{
-		//lua_getref(L, _Reference);
+		lua_getref(L, _Reference);
 	}
 	else
 	{

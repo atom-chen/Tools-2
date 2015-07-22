@@ -75,6 +75,7 @@ set(LUA_C_BRIDGE_FILES
 	./Src/LuaCBridge/LuaCMember.cpp
 	./Src/LuaCBridge/LuaScriptException.h
 	./Src/LuaCBridge/LuaScriptException.cpp
+	./Src/LuaCBridge/LuaCommon.h
 )
 
 set(LUA_C_TEST_FILES

@@ -2,6 +2,7 @@
 #include "LuaCObjectTranslator.h"
 #include "LuaCObject.h"
 #include "LuaCTable.h"
+#include "LuaCommon.h"
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
@@ -192,5 +193,110 @@ LuaCTable* LuaCVM::NewTable()
 	lua_settop(L, oldTop);
 	return returnVal;
 }
+
+LuaCObject* LuaCVM::rawGetObject(int reference, std::string field)
+{
+	int oldTop = lua_gettop(L);
+	lua_getref(L, reference);
+	lua_pushstring(L, field.c_str());
+	lua_rawget(L, -2);
+	LuaCObject* obj = translator->getObject(L, -1);
+	lua_settop(L, oldTop);
+	return obj;
+}
+/*
+* Gets a field of the table or userdata corresponding to the provided reference
+*/
+LuaCObject* LuaCVM::getObject(int reference, std::string field)
+{
+	int oldTop = lua_gettop(L);
+	lua_getref(L, reference);
+
+	std::vector<std::string> path;
+	std::string delim = ".";
+	split(field, delim, &path);
+
+	LuaCObject* returnValue = getObject(path);
+	lua_settop(L, oldTop);
+	return returnValue;
+}
+/*
+* Gets a numeric field of the table or userdata corresponding the the provided reference
+*/
+LuaCObject* LuaCVM::getObject(int reference, LuaCObject* field)
+{
+	int oldTop = lua_gettop(L);
+	lua_getref(L, reference);
+	translator->push(L, field);
+	lua_gettable(L, -2);
+	LuaCObject* returnValue = translator->getObject(L, -1);
+	lua_settop(L, oldTop);
+	return returnValue;
+}
+/*
+* Sets a field of the table or userdata corresponding the the provided reference
+* to the provided value
+*/
+void LuaCVM::setObject(int reference, std::string field, LuaCObject* val)
+{
+	int oldTop = lua_gettop(L);
+	lua_getref(L, reference);
+
+	std::vector<std::string> path;
+	std::string delim = ".";
+	split(field, delim, &path);
+
+	setObject(path, val);
+	lua_settop(L, oldTop);
+}
+/*
+* Sets a numeric field of the table or userdata corresponding the the provided reference
+* to the provided value
+*/
+void LuaCVM::setObject(int reference, LuaCObject* field, LuaCObject* val)
+{
+	int oldTop = lua_gettop(L);
+	lua_getref(L, reference);
+	translator->push(L, field);
+	translator->push(L, val);
+	lua_settable(L, -3);
+	lua_settop(L, oldTop);
+}
+
+///*
+//* Registers an object's method as a Lua function (global or table field)
+//* The method may have any signature
+//*/
+//LuaCFunction* LuaCVM::RegisterFunction(std::string path, LuaCObject* target, MethodBase function /*MethodInfo function*/)  //CP: Fix for struct constructor by Alexander Kappner (link: http://luaforge.net/forum/forum.php?thread_id=2859&forum_id=145)
+//{
+//	// We leave nothing on the stack when we are done
+//	int oldTop = lua_gettop(L);
+//
+//	LuaMethodWrapper wrapper = new LuaMethodWrapper(translator, target, function.DeclaringType, function);
+//	translator.push(L, new LuaCSFunction(wrapper.call));
+//
+//	this[path] = translator.getObject(L, -1);
+//	LuaFunction f = GetFunction(path);
+//
+//	LuaDLL.lua_settop(L, oldTop);
+//
+//	return f;
+//}
+//
+//LuaCFunction LuaCVM::CreateFunction(LuaCObject* target, MethodBase function /*MethodInfo function*/)  //CP: Fix for struct constructor by Alexander Kappner (link: http://luaforge.net/forum/forum.php?thread_id=2859&forum_id=145)
+//{
+//	// We leave nothing on the stack when we are done
+//	int oldTop = LuaDLL.lua_gettop(L);
+//
+//	LuaMethodWrapper wrapper = new LuaMethodWrapper(translator, target, function.DeclaringType, function);
+//	translator.push(L, new LuaCSFunction(wrapper.call));
+//
+//	object obj = translator.getObject(L, -1);
+//	LuaFunction f = (obj is LuaCSFunction ? new LuaFunction((LuaCSFunction)obj, this) : (LuaFunction)obj);
+//
+//	LuaDLL.lua_settop(L, oldTop);
+//
+//	return f;
+//}
 
 END_NAMESPACE_GAMEEDITOR

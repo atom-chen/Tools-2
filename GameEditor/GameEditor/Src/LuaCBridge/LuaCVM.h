@@ -40,6 +40,11 @@ public:
 
 	void NewTable(std::string fullPath);
 	LuaCTable* NewTable();
+	LuaCObject* rawGetObject(int reference, std::string field);
+	LuaCObject* getObject(int reference, std::string field);
+	LuaCObject* getObject(int reference, LuaCObject* field);
+	void setObject(int reference, std::string field, LuaCObject* val);
+	void LuaCVM::setObject(int reference, LuaCObject* field, LuaCObject* val);
 };
 
 END_NAMESPACE_GAMEEDITOR

@@ -20,6 +20,7 @@ protected:
 
 public:
 	LuaCFunction(int reference, LuaCVM* interpreter);
+	LuaCFunction(int reference, lua_State* l);
 	~LuaCFunction();
 
 	std::vector<LuaCObject*> LuaCFunction::call(std::vector<LuaCObject*> args, std::vector<int> returnTypes);
