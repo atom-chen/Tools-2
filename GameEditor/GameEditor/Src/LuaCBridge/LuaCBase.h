@@ -30,6 +30,7 @@ public:
 
 	void PushArgs(lua_State* L, LuaCObject* o);
 	int getRef();
+	void AddRef();
 };
 
 END_NAMESPACE_GAMEEDITOR

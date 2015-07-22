@@ -17,10 +17,12 @@ class LuaCFunction;
 
 class LuaMethod;
 class LuaField;
+class LuaCTable;
 
 class GAMEEDITOR_EXPORT LuaCScriptMgr
 {
 public:
+	static LuaCScriptMgr* Instance;
 	static LuaCObjectTranslator* _translator;
 #if MULTI_STATE
 	static List<LuaScriptMgr*> mgrList;
@@ -32,7 +34,12 @@ public:
 protected:
 	LuaCVM* m_pLuaCVM;
 #include "PushWarn.h"
+	typedef std::map<std::string, LuaCBase*>::iterator mapIte;
 	std::map<std::string, LuaCBase*> dict;
+	std::string luaIndex;
+	std::string luaNewIndex;
+	std::string luaTableCall;
+	std::string luaEnumIndex;
 #include "PopWarn.h"
 
 public:
@@ -47,6 +54,25 @@ public:
 	void doString(std::string value);
 	void doFile(std::string path);
 	std::vector<LuaCObject*> CallLuaFunction(std::string name, std::vector<LuaCObject*>& args);
+	lua_State* GetL();
+	void PrintLua(std::vector<std::string> param);
+	void LuaGC(std::vector<std::string> param);
+	void LuaMem(std::vector<std::string> param);
+	LuaCFunction* GetLuaFunction(std::string name);
+	int GetFunctionRef(std::string name);
+	bool IsFuncExists(std::string name);
+	LuaCTable* GetLuaTable(std::string tableName);
+	void RemoveLuaRes(std::string name);
+	static double GetNumber(lua_State* L, int stackPos);
+	static bool GetBoolean(lua_State* L, int stackPos);
+	std::string GetString(lua_State* L, int stackPos);
+	static LuaCFunction* GetFunction(lua_State* L, int stackPos);
+	static LuaCFunction* ToLuaFunction(lua_State* L, int stackPos);
+	static LuaCFunction* GetLuaFunction(lua_State* L, int stackPos);
+	static LuaCTable* ToLuaTable(lua_State* L, int stackPos);
+	static LuaCTable* GetTable(lua_State* L, int stackPos);
+	static LuaCTable* GetLuaTable(lua_State* L, int stackPos);
+	static LuaCObject* GetLuaObject(lua_State* L, int stackPos);
 
 	static void CheckArgsCount(lua_State* L, int count);
 	static LuaCObject* GetVarObject(lua_State* L, int stackPos);
@@ -60,6 +86,11 @@ public:
 	static void RegisterLib(lua_State* L, std::string libName, std::string className, std::vector<LuaMethod*> regs, std::vector<LuaField*> fields, std::string baseClassName);
 	static void CreateTable(lua_State* L, std::string fullPath);
 	static int garbageCollection(lua_State* luaState);
+	static void ThrowLuaException(lua_State* L);
+	static LuaCScriptMgr* GetMgrFromLuaState(lua_State* L);
+	static void RegisterLib(lua_State* L, std::string libName, std::vector<LuaMethod*> regs);
+	static void RegisterLib(lua_State* L, std::string libName, std::string className, std::vector<LuaMethod*> regs);
+	static std::string GetLuaString(lua_State* L, int stackPos);
 };
 
 END_NAMESPACE_GAMEEDITOR

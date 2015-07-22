@@ -27,4 +27,9 @@ int LuaCBase::getRef()
 	return _Reference;
 }
 
+void LuaCBase::AddRef()
+{
+	++count;
+}
+
 END_NAMESPACE_GAMEEDITOR

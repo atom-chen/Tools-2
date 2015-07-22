@@ -73,6 +73,8 @@ set(LUA_C_BRIDGE_FILES
 	./Src/LuaCBridge/LuaCObjectTranslator.cpp
 	./Src/LuaCBridge/LuaCMember.h
 	./Src/LuaCBridge/LuaCMember.cpp
+	./Src/LuaCBridge/LuaScriptException.h
+	./Src/LuaCBridge/LuaScriptException.cpp
 )
 
 set(LUA_C_TEST_FILES

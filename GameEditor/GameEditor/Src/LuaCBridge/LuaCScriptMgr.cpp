@@ -7,9 +7,11 @@
 #include "LuaCTable.h"
 #include "LuaCObject.h"
 #include "LuaCMember.h"
+#include "LuaScriptException.h"
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
+LuaCScriptMgr* LuaCScriptMgr::Instance = nullptr;
 LuaCObjectTranslator* LuaCScriptMgr::_translator = nullptr;
 #if MULTI_STATE
 List<LuaScriptMgr*> LuaCScriptMgr::mgrList;
@@ -21,6 +23,157 @@ LuaCFunction* LuaCScriptMgr::traceback;
 LuaCScriptMgr::LuaCScriptMgr()
 {
 	m_pLuaCVM = new LuaCVM;
+
+	luaIndex = 
+		"        \
+		local rawget = rawget \
+		local rawset = rawset \
+		local getmetatable = getmetatable \
+		local type = type \
+		local function index(obj, name) \
+		local o = obj \
+		local meta = getmetatable(o) \
+		local parent = meta \
+		local v = nil \
+				 \
+		while meta~= nil do \
+			v = rawget(meta, name) \
+						 \
+			if v~= nil then \
+				if parent ~= meta then rawset(parent, name, v) end \
+								 \
+					local t = type(v) \
+										 \
+					if t == 'function' then \
+						return v \
+					else \
+					local func = v[1] \
+										 \
+					if func ~= nil then \
+						return func(obj) \
+						end \
+						end \
+						break \
+						end \
+												 \
+						meta = getmetatable(meta) \
+						end \
+												 \
+						error('unknown member name '..name, 2) \
+						return nil \
+						end \
+						return index";
+
+
+	luaNewIndex =
+		" \
+		local rawget = rawget \
+		local getmetatable = getmetatable \
+		local rawset = rawset \
+		local function newindex(obj, name, val) \
+		local meta = getmetatable(obj) \
+		local parent = meta \
+		local v = nil \
+				 \
+		while meta~= nil do \
+			v = rawget(meta, name) \
+						 \
+			if v~= nil then \
+				if parent ~= meta then rawset(parent, name, v) end \
+					local func = v[2] \
+					if func ~= nil then \
+						return func(obj, nil, val) \
+						end \
+						break \
+						end \
+												 \
+						meta = getmetatable(meta) \
+						end \
+												 \
+						error('field or property '..name..' does not exist', 2) \
+						return nil \
+						end \
+						return newindex";
+
+	luaTableCall =
+		" \
+		local rawget = rawget \
+		local getmetatable = getmetatable \
+				 \
+		local function call(obj, ...) \
+		local meta = getmetatable(obj) \
+		local fun = rawget(meta, 'New') \
+				 \
+		if fun ~= nil then \
+			return fun(...) \
+		else \
+		error('unknow function __call', 2) \
+		end \
+		end \
+				 \
+		return call \
+		";
+
+	luaEnumIndex =
+		" \
+		local rawget = rawget \
+		local getmetatable = getmetatable \
+				 \
+		local function indexEnum(obj, name) \
+		local v = rawget(obj, name) \
+				 \
+		if v ~= nil then \
+			return v \
+			end \
+						 \
+			local meta = getmetatable(obj) \
+			local func = rawget(meta, name) \
+						 \
+			if func ~= nil then \
+				v = func() \
+				rawset(obj, name, v) \
+				return v \
+			else \
+			error('field '..name..' does not exist', 2) \
+			end \
+			end \
+						 \
+			return indexEnum \
+			";
+
+	lua_pushstring(m_pLuaCVM->L, "ToLua_Index");
+	luaL_dostring(m_pLuaCVM->L, luaIndex.c_str());
+	lua_rawset(m_pLuaCVM->L, LUA_REGISTRYINDEX);
+
+	lua_pushstring(m_pLuaCVM->L, "ToLua_NewIndex");
+	luaL_dostring(m_pLuaCVM->L, luaNewIndex.c_str());
+	lua_rawset(m_pLuaCVM->L, LUA_REGISTRYINDEX);
+
+	lua_pushstring(m_pLuaCVM->L, "ToLua_TableCall");
+	luaL_dostring(m_pLuaCVM->L, luaTableCall.c_str());
+	lua_rawset(m_pLuaCVM->L, LUA_REGISTRYINDEX);
+
+	lua_pushstring(m_pLuaCVM->L, "ToLua_EnumIndex");
+	luaL_dostring(m_pLuaCVM->L, luaEnumIndex.c_str());
+	lua_rawset(m_pLuaCVM->L, LUA_REGISTRYINDEX);
+
+	//Bind();
+
+#if MULTI_STATE
+	mgrList.Add(this);
+	LuaDLL.lua_pushnumber(lua.L, mgrPos);
+	LuaDLL.lua_setglobal(lua.L, "_LuaScriptMgr");
+
+	++mgrPos;
+#else
+	lua_pushnumber(m_pLuaCVM->L, 0);
+	lua_setglobal(m_pLuaCVM->L, "_LuaScriptMgr");
+#endif
+	//CmdTable.RegisterCommand("ToLua", ToLua.Generate);
+	//CmdTable.RegisterCommand("LuaGC", LuaGC);
+	//CmdTable.RegisterCommand("memory", LuaMem);
+	//CmdTable.RegisterCommand("GM", SendGMmsg); 
+
 	setLuaFilePath("D:/file/opensource/unity-game-git/unitygame/Tools/GameEditor/LuaScript");
 	luaL_dofile(m_pLuaCVM->L, "TestLua.lua");
 }
@@ -33,6 +186,37 @@ LuaCScriptMgr::~LuaCScriptMgr()
 LuaCVM* LuaCScriptMgr::getLuaCVM()
 {
 	return m_pLuaCVM;
+}
+
+lua_State* LuaCScriptMgr::GetL()
+{
+	return m_pLuaCVM->L;
+}
+
+void LuaCScriptMgr::PrintLua(std::vector<std::string> param)
+{
+	if (param.size() != 2)
+	{
+		//Debugger.Log("PrintLua [ModuleName]");
+		return;
+	}
+
+	std::vector<LuaCObject*> paramList;
+	LuaCObject* pLuaCObject = new LuaCObject;
+	pLuaCObject->m_type = LUAC_TSTRING;
+	pLuaCObject->m_pChar = param[1].c_str();
+	CallLuaFunction("PrintLua", paramList);
+}
+
+void LuaCScriptMgr::LuaGC(std::vector<std::string> param)
+{
+	lua_gc(m_pLuaCVM->L, LUA_GCCOLLECT, 0);
+}
+
+void LuaCScriptMgr::LuaMem(std::vector<std::string> param)
+{
+	std::vector<LuaCObject*> paramList;
+	CallLuaFunction("mem_report", paramList);
 }
 
 void LuaCScriptMgr::setLuaFilePath(std::string path)
@@ -393,6 +577,72 @@ std::vector<LuaCObject*> LuaCScriptMgr::CallLuaFunction(std::string name, std::v
 	}
 }
 
+//会缓存LuaFunction
+LuaCFunction* LuaCScriptMgr::GetLuaFunction(std::string name)
+{
+	LuaCBase* func = nullptr;
+
+	if (dict.find(name) == dict.end())
+	{
+		func = dict[name];
+		lua_State* L = m_pLuaCVM->L;
+		int oldTop = lua_gettop(L);
+
+		if (PushLuaFunction(L, name))
+		{
+			int reference = luaL_ref(L, LUA_REGISTRYINDEX);
+			func = new LuaCFunction(reference, m_pLuaCVM);
+			func->name = name;
+			dict[name] = func;
+		}
+		else
+		{
+			//Debugger.LogError("Lua function {0} not exists", name);
+		}
+
+		lua_settop(L, oldTop);
+	}
+	else
+	{
+		func->AddRef();
+	}
+
+	return (LuaCFunction*)func;
+}
+
+int LuaCScriptMgr::GetFunctionRef(std::string name)
+{
+	lua_State* L = m_pLuaCVM->L;
+	int oldTop = lua_gettop(L);
+	int reference = -1;
+
+	if (PushLuaFunction(L, name))
+	{
+		reference = luaL_ref(L, LUA_REGISTRYINDEX);
+	}
+	else
+	{
+		//Debugger.LogWarning("Lua function {0} not exists", name);
+	}
+
+	lua_settop(L, oldTop);
+	return reference;
+}
+
+bool LuaCScriptMgr::IsFuncExists(std::string name)
+{
+	lua_State* L = m_pLuaCVM->L;
+	int oldTop = lua_gettop(L);
+
+	if (PushLuaFunction(L, name))
+	{
+		lua_settop(L, oldTop);
+		return true;
+	}
+
+	return false;
+}
+
 bool LuaCScriptMgr::PushLuaFunction(lua_State* L, std::string fullPath)
 {
 	int oldTop = lua_gettop(L);
@@ -709,6 +959,57 @@ void LuaCScriptMgr::RegisterLib(lua_State* L, std::string libName, std::string c
 	//checkBaseType.Remove(t);
 }
 
+//注册一个枚举类型
+void LuaCScriptMgr::RegisterLib(lua_State* L, std::string libName, std::string className, std::vector<LuaMethod*> regs)
+{
+	CreateTable(L, libName);
+
+	luaL_getmetatable(L, className.c_str());
+
+	if (lua_isnil(L, -1))
+	{
+		lua_pop(L, 1);
+		luaL_newmetatable(L, className.c_str());
+	}
+
+	lua_pushstring(L, "ToLua_EnumIndex");
+	lua_rawget(L, LUA_REGISTRYINDEX);
+	lua_setfield(L, -2, "__index");
+
+	lua_pushstring(L, "__gc");
+	lua_pushcfunction(L, garbageCollection);
+	lua_rawset(L, -3);
+
+	for (int i = 0; i < regs.size() - 1; i++)
+	{
+		lua_pushstring(L, regs[i]->name.c_str());
+		lua_pushcfunction(L, regs[i]->func);
+		lua_rawset(L, -3);
+	}
+
+	int pos = (int)regs.size() - 1;
+	lua_pushstring(L, regs[pos]->name.c_str());
+	lua_pushcfunction(L, regs[pos]->func);
+	lua_rawset(L, -4);
+
+	lua_setmetatable(L, -2);
+	lua_settop(L, 0);
+}
+
+void LuaCScriptMgr::RegisterLib(lua_State* L, std::string libName, std::vector<LuaMethod*> regs)
+{
+	CreateTable(L, libName);
+
+	for (int i = 0; i < regs.size(); i++)
+	{
+		lua_pushstring(L, regs[i]->name.c_str());
+		lua_pushcfunction(L, regs[i]->func);
+		lua_rawset(L, -3);
+	}
+
+	lua_settop(L, 0);
+}
+
 int LuaCScriptMgr::garbageCollection(lua_State* luaState)
 {
 	//int udata = luanet_rawnetobj(luaState, 1);
@@ -720,6 +1021,232 @@ int LuaCScriptMgr::garbageCollection(lua_State* luaState)
 	//}
 
 	return 0;
+}
+
+void LuaCScriptMgr::ThrowLuaException(lua_State* L)
+{
+	std::string err = lua_tostring(L, -1);
+	if (err.length() == 0) err = "Unknown Lua Error";
+	throw new LuaScriptException(err, "");
+}
+
+LuaCScriptMgr* LuaCScriptMgr::GetMgrFromLuaState(lua_State* L)
+{
+#if MULTI_STATE      
+
+	LuaDLL.lua_getglobal(L, "_LuaScriptMgr");
+	int pos = (int)GetNumber(L, -1);
+	LuaDLL.lua_pop(L, 1);
+	return mgrList[pos];
+#else
+	return Instance;
+#endif
+}
+
+LuaCTable* LuaCScriptMgr::GetLuaTable(std::string tableName)
+{
+	LuaCBase* lt = nullptr;
+
+	if (dict.find(tableName) == dict.end())
+	{
+		lua_State* L = m_pLuaCVM->L;
+		int oldTop = lua_gettop(L);
+
+		if (PushLuaTable(L, tableName))
+		{
+			int reference = luaL_ref(L, LUA_REGISTRYINDEX);
+			lt = new LuaCTable(reference, m_pLuaCVM);
+			lt->name = tableName;
+			dict[tableName] = lt;
+		}
+
+		lua_settop(L, oldTop);
+	}
+	else
+	{
+		lt->AddRef();
+	}
+
+	return (LuaCTable*)lt;
+}
+
+void LuaCScriptMgr::RemoveLuaRes(std::string name)
+{
+	mapIte ite = dict.find(name);
+	if (ite != dict.end())
+	{
+		dict.erase(ite);
+	}
+}
+
+double LuaCScriptMgr::GetNumber(lua_State* L, int stackPos)
+{
+	if (lua_isnumber(L, stackPos))
+	{
+		return lua_tonumber(L, stackPos);
+	}
+
+	//luaL_typerror(L, stackPos, "number");
+	return 0;
+}
+
+bool LuaCScriptMgr::GetBoolean(lua_State* L, int stackPos)
+{
+	if (lua_isboolean(L, stackPos))
+	{
+		return lua_toboolean(L, stackPos);
+	}
+
+	//luaL_typerror(L, stackPos, "boolean");
+	return false;
+}
+
+std::string LuaCScriptMgr::GetString(lua_State* L, int stackPos)
+{
+	std::string str = GetLuaString(L, stackPos);
+
+	if (str == "")
+	{
+		//luaL_typerror(L, stackPos, "string");
+	}
+
+	return str;
+}
+
+LuaCFunction* LuaCScriptMgr::GetFunction(lua_State* L, int stackPos)
+{
+	int luatype = lua_type(L, stackPos);
+
+	if (luatype != LUA_TFUNCTION)
+	{
+		return nullptr;
+	}
+
+	lua_pushvalue(L, stackPos);
+	return new LuaCFunction(luaL_ref(L, LUA_REGISTRYINDEX), GetTranslator(L)->interpreter);
+}
+
+LuaCFunction* LuaCScriptMgr::ToLuaFunction(lua_State* L, int stackPos)
+{
+	lua_pushvalue(L, stackPos);
+	return new LuaCFunction(luaL_ref(L, LUA_REGISTRYINDEX), GetTranslator(L)->interpreter);
+}
+
+LuaCFunction* LuaCScriptMgr::GetLuaFunction(lua_State* L, int stackPos)
+{
+	LuaCFunction* func = GetFunction(L, stackPos);
+
+	if (func == nullptr)
+	{
+		//luaL_typerror(L, stackPos, "function");
+		return nullptr;
+	}
+
+	return func;
+}
+
+// 自己添加的函数
+//public static LuaTable SelfToLuaTable(IntPtr L, int stackPos)
+//{
+//    LuaDLL.lua_pushvalue(L, stackPos);
+//    return new LuaTable(LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX), GetTranslator(L).interpreter);
+//}
+
+LuaCTable* LuaCScriptMgr::ToLuaTable(lua_State* L, int stackPos)
+{
+	lua_pushvalue(L, stackPos);
+	return new LuaCTable(luaL_ref(L, LUA_REGISTRYINDEX), GetTranslator(L)->interpreter);
+}
+
+LuaCTable* LuaCScriptMgr::GetTable(lua_State* L, int stackPos)
+{
+	int luatype = lua_type(L, stackPos);
+
+	if (luatype != LUA_TTABLE)
+	{
+		return nullptr;
+	}
+
+	lua_pushvalue(L, stackPos);
+	return new LuaCTable(luaL_ref(L, LUA_REGISTRYINDEX), GetTranslator(L)->interpreter);
+}
+
+LuaCTable* LuaCScriptMgr::GetLuaTable(lua_State* L, int stackPos)
+{
+	LuaCTable* table = GetTable(L, stackPos);
+
+	if (table == nullptr)
+	{
+		//luaL_typerror(L, stackPos, "table");
+		return nullptr;
+	}
+
+	return table;
+}
+
+//注册到lua中的object类型对象, 存放在ObjectTranslator objects 池中
+LuaCObject* LuaCScriptMgr::GetLuaObject(lua_State* L, int stackPos)
+{
+	//return GetTranslator(L)->getRawNetObject(L, stackPos);
+	return nullptr;
+}
+
+std::string LuaCScriptMgr::GetLuaString(lua_State* L, int stackPos)
+{
+	int luatype = lua_type(L, stackPos);
+	std::stringstream strStream;
+	std::string retVal = "";
+
+	if (luatype == LUA_TSTRING)
+	{
+		retVal = lua_tostring(L, stackPos);
+	}
+	else if (luatype == LUA_TUSERDATA)
+	{
+		LuaCObject* obj = GetLuaObject(L, stackPos);
+
+		if (obj == nullptr)
+		{
+			luaL_argerror(L, stackPos, "string expected, got nil");
+			return "";
+		}
+
+		if (obj->GetType() == LUAC_TSTRING)
+		{
+			retVal = obj->m_pChar;
+		}
+		else
+		{
+			//retVal = obj.ToString();
+			retVal = "aaa";
+		}
+	}
+	else if (luatype == LUA_TNUMBER)
+	{
+		double d = lua_tonumber(L, stackPos);
+		strStream << d;
+		retVal = strStream.str();
+	}
+	else if (luatype == LUA_TBOOLEAN)
+	{
+		bool b = lua_toboolean(L, stackPos);
+		strStream << b;
+		retVal = strStream.str();
+	}
+	else if (luatype == LUA_TNIL)
+	{
+		return retVal;
+	}
+	else
+	{
+		lua_getglobal(L, "tostring");
+		lua_pushvalue(L, stackPos);
+		lua_call(L, 1, 1);
+		retVal = lua_tostring(L, -1);
+		lua_pop(L, 1);
+	}
+
+	return retVal;
 }
 
 END_NAMESPACE_GAMEEDITOR
