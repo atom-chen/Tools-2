@@ -11,6 +11,7 @@ BEGIN_NAMESPACE_GAMEEDITOR
 class LuaCObjectTranslator;
 class LuaCObject;
 class LuaCTable;
+class LuaCFunction;
 
 /**
  *@brief 表示一个 Lua 中的表，等价于 Lua 源代码的 ltable.h
@@ -44,7 +45,8 @@ public:
 	LuaCObject* getObject(int reference, std::string field);
 	LuaCObject* getObject(int reference, LuaCObject* field);
 	void setObject(int reference, std::string field, LuaCObject* val);
-	void LuaCVM::setObject(int reference, LuaCObject* field, LuaCObject* val);
+	void setObject(int reference, LuaCObject* field, LuaCObject* val);
+	LuaCFunction* RegisterFunction(std::string fullPath, lua_CFunction function);
 };
 
 END_NAMESPACE_GAMEEDITOR

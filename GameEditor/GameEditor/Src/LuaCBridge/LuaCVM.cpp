@@ -3,6 +3,8 @@
 #include "LuaCObject.h"
 #include "LuaCTable.h"
 #include "LuaCommon.h"
+#include "GameEditorSys.h"
+#include "LuaCScriptMgr.h"
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
@@ -279,26 +281,35 @@ void LuaCVM::setObject(int reference, LuaCObject* field, LuaCObject* val)
 	lua_settop(L, oldTop);
 }
 
-///*
-//* Registers an object's method as a Lua function (global or table field)
-//* The method may have any signature
-//*/
-//LuaCFunction* LuaCVM::RegisterFunction(std::string path, LuaCObject* target, MethodBase function /*MethodInfo function*/)  //CP: Fix for struct constructor by Alexander Kappner (link: http://luaforge.net/forum/forum.php?thread_id=2859&forum_id=145)
-//{
-//	// We leave nothing on the stack when we are done
-//	int oldTop = lua_gettop(L);
-//
-//	LuaMethodWrapper wrapper = new LuaMethodWrapper(translator, target, function.DeclaringType, function);
-//	translator.push(L, new LuaCSFunction(wrapper.call));
-//
-//	this[path] = translator.getObject(L, -1);
-//	LuaFunction f = GetFunction(path);
-//
-//	LuaDLL.lua_settop(L, oldTop);
-//
-//	return f;
-//}
-//
+// 注册一个函数
+LuaCFunction* LuaCVM::RegisterFunction(std::string fullPath, lua_CFunction function)
+{
+	// We leave nothing on the stack when we are done
+	int oldTop = lua_gettop(L);
+
+	std::vector<std::string> path;
+	std::string delim = ".";
+	LuaCVM::split(fullPath, delim, &path);
+
+	// 注册到表中
+	if (path.size() > 1)
+	{
+		int dotIdx = fullPath.find_last_of(".");
+		std::string tablePath = fullPath.substr(0, dotIdx);
+		std::string lastPath = fullPath.substr(dotIdx + 1, fullPath.length() - (dotIdx + 1));
+		LuaCTable* pLuaCTable = g_pGameEditorSys->getLuaCScriptMgrPtr()->getLuaTable(tablePath);
+		pLuaCTable->setLuaFunction(lastPath, function);
+	}
+	else	// 注册到全局表中
+	{
+		lua_register(L, path[path.size() - 1].c_str(), function);	// 全局注册函数请使用这个
+	}
+	lua_settop(L, oldTop);
+
+	LuaCFunction* f = g_pLuaCScriptMgr->GetLuaFunction(fullPath);
+	return f;
+}
+
 //LuaCFunction LuaCVM::CreateFunction(LuaCObject* target, MethodBase function /*MethodInfo function*/)  //CP: Fix for struct constructor by Alexander Kappner (link: http://luaforge.net/forum/forum.php?thread_id=2859&forum_id=145)
 //{
 //	// We leave nothing on the stack when we are done

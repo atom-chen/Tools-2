@@ -12,7 +12,7 @@ BEGIN_NAMESPACE_GAMEEDITOR
 
 void LuaCTestWrap_Bind()
 {
-	TestBind5f();
+	testBind2f();
 }
 
 void testBind1f()
@@ -43,6 +43,9 @@ void testBind2f()
 
 	//g_pLuaCScriptMgr->RegisterLib(g_pLuaCScriptMgr->getLuaCVM()->L, "SDK.Lib.TestStaticHandle", "LuaCTest", methodList, fieldList, "");
 	g_pLuaCScriptMgr->RegisterLib(g_pLuaCScriptMgr->getLuaCVM()->L, "TestStaticHandle", "LuaCTest", methodList, fieldList, "");
+
+	const char* testfunc = "TestStaticHandle.cHelloWorld(\"ninhoa\")";
+	g_pLuaCScriptMgr->doString(testfunc);
 }
 
 void testBind3f()
@@ -58,7 +61,7 @@ void testBind3f()
 	g_pLuaCScriptMgr->getLuaCVM()->setLuaObject("func", pObject);
 }
 
-void TestBind4f()
+void testBind4f()
 {
 	std::vector<LuaMethod*> methodList;
 	methodList.push_back(new LuaMethod("cHelloWorld", LuaCTestWrap_cHelloWorld));
@@ -75,7 +78,7 @@ void TestBind4f()
 	pTable->setField("nihao", pObject);
 }
 
-void TestBind5f()
+void testBind5f()
 {
 	lua_register(g_pLuaCScriptMgr->getLuaCVM()->L, "cppHelloWorld", LuaCTestWrap_cppHelloWorld);	// 全局注册函数请使用这个
 	LuaCTest* pLuaCTest = new LuaCTest;

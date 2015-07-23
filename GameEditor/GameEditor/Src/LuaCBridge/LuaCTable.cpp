@@ -78,6 +78,16 @@ void LuaCTable::Set(std::string key, LuaCObject* o)
 	lua_settop(L, 0);
 }
 
+void LuaCTable::setLuaFunction(std::string key, lua_CFunction func)
+{
+	lua_State* L = _Interpreter->L;
+	push(L);
+	lua_pushstring(L, key.c_str());
+	lua_pushcfunction(L, func);
+	lua_rawset(L, -3);
+	lua_settop(L, 0);
+}
+
 /*
 * Gets an string fields of a table ignoring its metatable,
 * if it exists

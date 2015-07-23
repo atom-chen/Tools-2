@@ -29,6 +29,7 @@ public:
 	LuaCFunction* RawGetFunc(std::string field);
 	void push(lua_State* luaState);
 	std::string ToString();
+	void setLuaFunction(std::string key, lua_CFunction func);
 };
 
 END_NAMESPACE_GAMEEDITOR

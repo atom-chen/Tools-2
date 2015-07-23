@@ -10,8 +10,8 @@ void LuaCTestWrap_Bind();
 void testBind1f();
 void testBind2f();
 void testBind3f();
-void TestBind4f();
-void TestBind5f();
+void testBind4f();
+void testBind5f();
 int LuaCTestWrap_cHelloWorld(lua_State* L);
 int LuaCTestWrap_cppHelloWorld(lua_State* L);
 
