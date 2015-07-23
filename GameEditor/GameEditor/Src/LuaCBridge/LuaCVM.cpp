@@ -297,7 +297,8 @@ LuaCFunction* LuaCVM::RegisterFunction(std::string fullPath, lua_CFunction funct
 		int dotIdx = fullPath.find_last_of(".");
 		std::string tablePath = fullPath.substr(0, dotIdx);
 		std::string lastPath = fullPath.substr(dotIdx + 1, fullPath.length() - (dotIdx + 1));
-		LuaCTable* pLuaCTable = g_pGameEditorSys->getLuaCScriptMgrPtr()->getLuaTable(tablePath);
+		LuaCTable* pLuaCTable = nullptr;
+		//g_pGameEditorSys->getLuaCScriptMgrPtr()->getLuaTable(tablePath);
 		pLuaCTable->setLuaFunction(lastPath, function);
 	}
 	else	// 注册到全局表中
