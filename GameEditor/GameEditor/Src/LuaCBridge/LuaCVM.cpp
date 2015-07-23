@@ -34,7 +34,23 @@ void LuaCVM::closeLua()
 
 void LuaCVM::doString(std::string value)
 {
-	luaL_dostring(L, value.c_str());
+	int ret = luaL_dostring(L, value.c_str());
+	if (LUA_OK == ret)	// Ö´ÐÐ³É¹¦
+	{
+
+	}
+	else if (LUA_ERRRUN == ret)	// a runtime error. 
+	{
+
+	}
+	else if (LUA_ERRMEM == ret)	// memory allocation error. For such errors, Lua does not call the error handler function. 
+	{
+
+	}
+	else if (LUA_ERRERR == ret)	// error while running the error handler function. 
+	{
+
+	}
 }
 
 void LuaCVM::doFile(std::string path)

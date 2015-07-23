@@ -15,12 +15,18 @@ GameEditorSys::GameEditorSys()
 	LuaCTestWrap_Bind();
 	//const char* testfunc = "cHelloWorld(\"ninhoa\")";
 	//const char* testfunc = "LuaCTest.cHelloWorld(\"ninhoa\")";
-	const char* testfunc = "TestStaticHandle.cHelloWorld(\"ninhoa\")";
-	m_pLuaCScriptMgr->doString(testfunc);
+	//const char* testfunc = "TestStaticHandle.cHelloWorld(\"ninhoa\")";
+	//const char* testfunc = "asdf.cppHelloWorld(\"ninhoa\")";
+	//const char* testfunc = "cppHelloWorld(asdf, \"ninhoa\")";
+	//m_pLuaCScriptMgr->doString(testfunc);
 
-	//const char* testCPPFunc = "aaa.bbb.ccc:cppHelloHello(\"ninhoa\")";
-	const char* testCPPFunc = "cppHelloHello(aaa, \"ninhoa\")";
-	m_pLuaCScriptMgr->doString(testCPPFunc);
+	//const char* testCPPFunc = "aaa.bbb.ccc:cppHelloWorld(\"ninhoa\")";
+	//const char* testCPPFunc = "cppHelloWorld(aaa, \"ninhoa\")";
+	//const char* testCPPFunc = 
+	//	"obj = asdf.nihao" \
+	//	"func = asdf.cppHelloWorld" \
+	//	"asdf.func(\"asasas\")";
+	//m_pLuaCScriptMgr->doString(testCPPFunc);
 }
 
 void GameEditorSys::instanceT()
