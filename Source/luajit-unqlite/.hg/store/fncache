@@ -1,0 +1,13 @@
+data/unqlite.dll.i
+data/perf_linux.sh.i
+data/test_linux.sh.i
+data/perf.lua.i
+data/test.lua.i
+data/src/unqlite.lua.i
+data/LICENSE.txt.i
+data/LICENSE_unqlite.txt.i
+data/.hgignore.i
+data/libunqlite.so.d
+data/README.rst.i
+data/libunqlite.so.i
+data/unqlite.dll.d
