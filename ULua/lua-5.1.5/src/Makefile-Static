@@ -15,8 +15,8 @@ RM = rm -fr
 CC = gcc
 CPPC = g++
 AR = ar -rc
-CFLAGS = -O2 -W -Wall -c
-CPPFLAGS = -O2 -c
+CFLAGS = -m64 -O2 -W -Wall -c
+CPPFLAGS = -m64 -O2 -c
 
 SRC_OBJECT = $(APP_DIR)lapi.c $(APP_DIR)lauxlib.c $(APP_DIR)lbaselib.c $(APP_DIR)lcode.c $(APP_DIR)ldblib.c $(APP_DIR)ldebug.c $(APP_DIR)ldo.c $(APP_DIR)ldump.c $(APP_DIR)lfunc.c $(APP_DIR)lgc.c $(APP_DIR)linit.c $(APP_DIR)liolib.c $(APP_DIR)llex.c $(APP_DIR)lmathlib.c $(APP_DIR)lmem.c $(APP_DIR)loadlib.c $(APP_DIR)lobject.c $(APP_DIR)lopcodes.c $(APP_DIR)loslib.c $(APP_DIR)lparser.c $(APP_DIR)lstate.c $(APP_DIR)lstring.c $(APP_DIR)lstrlib.c $(APP_DIR)ltable.c $(APP_DIR)ltablib.c $(APP_DIR)ltm.c $(APP_DIR)lundump.c $(APP_DIR)lvm.c $(APP_DIR)lzio.c $(APP_DIR)print.c
 
@@ -24,16 +24,22 @@ H_OBJECT = $(APP_DIR)lapi.h $(APP_DIR)lauxlib.h $(APP_DIR)lcode.h $(APP_DIR)ldeb
 
 OBJECT = lapi.o lauxlib.o lbaselib.o lcode.o ldblib.o ldebug.o ldo.o ldump.o lfunc.o lgc.o linit.o liolib.o llex.o lmathlib.o lmem.o loadlib.o lobject.o lopcodes.o loslib.o lparser.o lstate.o lstring.o lstrlib.o ltable.o ltablib.o ltm.o lundump.o lvm.o lzio.o print.o
 
-DY_SRC_OBJECT = $(APP_DIR)lua.c
-DY_OBJECT=lua.o
 LIB_OBJECT = liblua.a
-BIN_OBJECT = lua.exe
+LIB_NAME = lua
+
+LUA_SRC_OBJECT = $(APP_DIR)lua.c
+LUA_OBJECT=lua.o
+LUA_BIN_OBJECT = lua.exe
+
+LUAC_SRC_OBJECT = $(APP_DIR)luac.c
+LUAC_OBJECT=luac.o
+LUAC_BIN_OBJECT = luac.exe
 
 #****************************************************************************
 
 .PHONY:all
 
-all:$(LIB_OBJECT) $(BIN_OBJECT)
+all:$(LIB_OBJECT) $(LUA_BIN_OBJECT) $(LUAC_BIN_OBJECT)
 
 $(LIB_OBJECT):$(OBJECT)
 	$(AR) $(LIB_OBJECT) $(OBJECT)
@@ -42,13 +48,21 @@ $(LIB_OBJECT):$(OBJECT)
 $(OBJECT):$(SRC_OBJECT) $(H_OBJECT)
 	$(CC) $(CFLAGS) $(SRC_OBJECT) -I./
 
-$(BIN_OBJECT):$(DY_OBJECT)
-	$(CC) -o $(BIN_OBJECT) $(OBJECT_DIR)$(DY_OBJECT) $(LIB_DIR)$(LIB_OBJECT)
-	#mv $(BIN_OBJECT) $(BIN_DIR)
+$(LUA_BIN_OBJECT):$(LUA_OBJECT)
+	$(CC) -o $(LUA_BIN_OBJECT) $(OBJECT_DIR)$(LUA_OBJECT) -l$(LIB_NAME) -I./ -L$(LIB_DIR)
+	#mv $(LUA_BIN_OBJECT) $(BIN_DIR)
 		
-$(DY_OBJECT):$(DY_SRC_OBJECT)
-	$(CC) $(CFLAGS) $(DY_SRC_OBJECT) -o $(DY_OBJECT)
-	#mv $(OBJECT) $(DY_OBJECT) $(OBJECT_DIR)
+$(LUA_OBJECT):$(LUA_SRC_OBJECT)
+	$(CC) $(CFLAGS) $(LUA_SRC_OBJECT) -o $(LUA_OBJECT) -l$(LIB_NAME) -I./ -L$(LIB_DIR)
+	#mv $(OBJECT) $(LUA_OBJECT) $(OBJECT_DIR)
+	
+$(LUAC_BIN_OBJECT):$(LUAC_OBJECT)
+	$(CC) -o $(LUAC_BIN_OBJECT) $(OBJECT_DIR)$(LUAC_OBJECT) -l$(LIB_NAME) -I./ -L$(LIB_DIR)
+	#mv $(LUAC_BIN_OBJECT) $(BIN_DIR)
+		
+$(LUAC_OBJECT):$(LUAC_SRC_OBJECT)
+	$(CC) $(CFLAGS) $(LUAC_SRC_OBJECT) -o $(LUAC_OBJECT) -l$(LIB_NAME) -I./ -L$(LIB_DIR)
+	#mv $(OBJECT) $(LUAC_OBJECT) $(OBJECT_DIR)
 	
 clean:
 	#$(RM) $(LIB_DIR) $(BIN_DIR) $(OBJECT_DIR)
