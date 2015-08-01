@@ -13,7 +13,10 @@ RM = rm -fr
 
 #****************************************************************************
 CC = gcc
-AR = ar rc
+CPPC = g++
+AR = ar -rc
+CFLAGS = -O2 -W -Wall -c
+CPPFLAGS = -O2 -c
 
 SRC_OBJECT = $(APP_DIR)lapi.c $(APP_DIR)lauxlib.c $(APP_DIR)lbaselib.c $(APP_DIR)lcode.c $(APP_DIR)ldblib.c $(APP_DIR)ldebug.c $(APP_DIR)ldo.c $(APP_DIR)ldump.c $(APP_DIR)lfunc.c $(APP_DIR)lgc.c $(APP_DIR)linit.c $(APP_DIR)liolib.c $(APP_DIR)llex.c $(APP_DIR)lmathlib.c $(APP_DIR)lmem.c $(APP_DIR)loadlib.c $(APP_DIR)lobject.c $(APP_DIR)lopcodes.c $(APP_DIR)loslib.c $(APP_DIR)lparser.c $(APP_DIR)lstate.c $(APP_DIR)lstring.c $(APP_DIR)lstrlib.c $(APP_DIR)ltable.c $(APP_DIR)ltablib.c $(APP_DIR)ltm.c $(APP_DIR)lundump.c $(APP_DIR)lvm.c $(APP_DIR)lzio.c $(APP_DIR)print.c
 
@@ -34,18 +37,19 @@ all:$(LIB_OBJECT) $(BIN_OBJECT)
 
 $(LIB_OBJECT):$(OBJECT)
 	$(AR) $(LIB_OBJECT) $(OBJECT)
-	mv $(LIB_OBJECT) $(LIB_DIR)
+	#mv $(LIB_OBJECT) $(LIB_DIR)
 
 $(OBJECT):$(SRC_OBJECT) $(H_OBJECT)
-	$(CC) -c $(SRC_OBJECT) -I./
+	$(CC) $(CFLAGS) $(SRC_OBJECT) -I./
 
 $(BIN_OBJECT):$(DY_OBJECT)
 	$(CC) -o $(BIN_OBJECT) $(OBJECT_DIR)$(DY_OBJECT) $(LIB_DIR)$(LIB_OBJECT)
-	mv $(BIN_OBJECT) $(BIN_DIR)
+	#mv $(BIN_OBJECT) $(BIN_DIR)
 		
 $(DY_OBJECT):$(DY_SRC_OBJECT)
-	$(CC) -c $(DY_SRC_OBJECT) -o $(DY_OBJECT)
-	mv $(OBJECT) $(DY_OBJECT) $(OBJECT_DIR)
+	$(CC) $(CFLAGS) $(DY_SRC_OBJECT) -o $(DY_OBJECT)
+	#mv $(OBJECT) $(DY_OBJECT) $(OBJECT_DIR)
 	
 clean:
-	$(RM) $(LIB_DIR) $(BIN_DIR) $(OBJECT_DIR)
+	#$(RM) $(LIB_DIR) $(BIN_DIR) $(OBJECT_DIR)
+	$(RM) *.a *.o *.exe *.dll
