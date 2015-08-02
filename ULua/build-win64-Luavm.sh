@@ -23,5 +23,5 @@ gcc lua_wrap.c \
     -I./ \
     -Ilua-5.1.5/src \
     -Wl,--whole-archive \
-    -lwindow/x86_64/liblua.a \
+    window/x86_64/liblua.a \
     -Wl,--no-whole-archive -lwsock32 -static-libgcc -static-libstdc++
