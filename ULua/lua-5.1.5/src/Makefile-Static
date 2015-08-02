@@ -78,3 +78,12 @@ endif
 clean:
 	#$(RM) $(LIB_DIR) $(BIN_DIR) $(OBJECT_DIR)
 	$(RM) *.a *.o *.exe *.dll $(LIB_DIR) $(BIN_DIR) $(OBJECT_DIR)
+ifneq ($(SRC_DIR), $(LIB_DIR))
+	$(RM) $(LIB_DIR)
+endif
+ifneq ($(SRC_DIR), $(BIN_DIR))
+	$(RM) $(BIN_DIR)
+endif
+ifneq ($(SRC_DIR), $(OBJECT_DIR))
+	$(RM) $(OBJECT_DIR)
+endif
