@@ -11,7 +11,6 @@ SRC_DIR = ./
 
 RM = rm -fr
 
-#****************************************************************************
 CC = gcc
 CPPC = g++
 AR = ar -rc
@@ -35,8 +34,6 @@ LUA_BIN_OBJECT = lua.exe
 LUAC_SRC_FILES = $(SRC_DIR)luac.c
 LUAC_OBJECT=luac.o
 LUAC_BIN_OBJECT = luac.exe
-
-#****************************************************************************
 
 .PHONY:all
 
@@ -77,7 +74,7 @@ endif
 
 clean:
 	#$(RM) $(LIB_DIR) $(BIN_DIR) $(OBJECT_DIR)
-	$(RM) *.a *.o *.exe *.dll $(LIB_DIR) $(BIN_DIR) $(OBJECT_DIR)
+	$(RM) *.a *.o *.exe *.dll
 ifneq ($(SRC_DIR), $(LIB_DIR))
 	$(RM) $(LIB_DIR)
 endif
