@@ -13,7 +13,7 @@ mkdir -p window/x86_64
 cd lua-5.1.5/src
 mingw32-make -fMakefile-Static clean
 
-mingw32-make -fMakefile-Static BUILDMODE=static CC="gcc -m64"
+mingw32-make -fMakefile-Static BUILDMODE=static
 cp liblua.a ../../window/x86_64/liblua.a
 
 cd ../..
