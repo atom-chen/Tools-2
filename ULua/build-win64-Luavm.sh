@@ -1,26 +1,9 @@
-#!/bin/bash
-#
-# Windows 32-bit/64-bit
-
-# Copyright (C) polynation games ltd - All Rights Reserved
-# Unauthorized copying of this file, via any medium is strictly prohibited
-# Proprietary and confidential
-# Written by Christopher Redden, December 2013
-
-# 62 Bit Version
-mkdir -p window/x86_64
-
 cd lua-5.1.5/src
-mingw32-make -fMakefile-Static clean
-
-mingw32-make -fmakefile-Luavm BUILDMODE=static
-#cp liblua.a ../../window/x86_64/liblua.a
-
+mingw32-make -fMakefile-Static all
 cd ../..
 
 cd luasocket/src
-mingw32-make -fMakefile-Static BUILDMODE=static
-
+mingw32-make -fmakefile-Luavm all
 cd ../..
 
 gcc lua_wrap.c \
