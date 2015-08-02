@@ -1,0 +1,92 @@
+SHELL = /bin/sh
+
+SRC_ROOT_DIR = .
+
+INSTALL_LIB_DIR = ../../window/x86_64
+INSTALL_BIN_DIR = .
+INSTALL_OBJECT_DIR = .
+
+DEP_INCLUDE_DIR = -I. -I../../lua-5.1.5/src
+DEP_LIB_DIR = -L../../window/x86_64
+DEP_LIBS = -llua -lwsock32
+
+#$(shell mkdir -p ${INSTALL_LIB_DIR})
+#$(shell mkdir -p ${INSTALL_BIN_DIR})
+#$(shell mkdir -p ${INSTALL_OBJECT_DIR})
+
+RM = rm -fr
+MV = mv
+
+CC = gcc
+CPPC = g++
+AR = ar -rc
+CFLAGS = -m64 -O2 -W -Wall -c
+CPPFLAGS = -m64 -O2 -c
+CFLAGS_DEBUG = -m64 -O2 -W -Wall -c -g
+
+CFLAGS_SO = -shared -o -fPIC
+
+SOCKET_SRC_FILES = $(SRC_ROOT_DIR)/luasocket.c $(SRC_ROOT_DIR)/timeout.c $(SRC_ROOT_DIR)/buffer.c $(SRC_ROOT_DIR)/io.c $(SRC_ROOT_DIR)/auxiliar.c $(SRC_ROOT_DIR)/options.c $(SRC_ROOT_DIR)/inet.c $(SRC_ROOT_DIR)/tcp.c $(SRC_ROOT_DIR)/udp.c $(SRC_ROOT_DIR)/except.c $(SRC_ROOT_DIR)/select.c $(SRC_ROOT_DIR)/wsocket.c
+
+SOCKET_HEAD_FILES = $(SRC_ROOT_DIR)/luasocket.h $(SRC_ROOT_DIR)/timeout.h $(SRC_ROOT_DIR)/buffer.h $(SRC_ROOT_DIR)/io.h $(SRC_ROOT_DIR)/auxiliar.h $(SRC_ROOT_DIR)/options.h $(SRC_ROOT_DIR)/inet.h $(SRC_ROOT_DIR)/tcp.h $(SRC_ROOT_DIR)/udp.h $(SRC_ROOT_DIR)/except.h $(SRC_ROOT_DIR)/select.h $(SRC_ROOT_DIR)/wsocket.h $(SRC_ROOT_DIR)/socket.h
+
+SOCKET_OBJECT_FILES = luasocket.o timeout.o buffer.o io.o auxiliar.o options.o inet.o tcp.o udp.o except.o select.o wsocket.o
+SOCKET_INSTALL_OBJECT_FILES = $(INSTALL_OBJECT_DIR)/luasocket.o $(INSTALL_OBJECT_DIR)/timeout.o $(INSTALL_OBJECT_DIR)/buffer.o $(INSTALL_OBJECT_DIR)/io.o $(INSTALL_OBJECT_DIR)/auxiliar.o $(INSTALL_OBJECT_DIR)/options.o $(INSTALL_OBJECT_DIR)/inet.o $(INSTALL_OBJECT_DIR)/tcp.o $(INSTALL_OBJECT_DIR)/udp.o $(INSTALL_OBJECT_DIR)/except.o $(INSTALL_OBJECT_DIR)/select.o $(INSTALL_OBJECT_DIR)/wsocket.o
+
+SOCKET_LIB_OBJECT = socketcore.dll
+SOCKET_LIB_NAME = socketcore
+
+MIME_SRC_FILES = $(SRC_ROOT_DIR)/mime.c
+
+MIME_HEAD_FILES = $(SRC_ROOT_DIR)/mime.h
+
+MIME_OBJECT_FILES = mime.o
+MIME_INSTALL_OBJECT_FILES = $(INSTALL_OBJECT_DIR)/mime.o
+
+MIME_LIB_OBJECT = mimecore.dll
+MIME_LIB_NAME = mimecore
+
+.PHONY:all
+
+all:$(SOCKET_LIB_OBJECT) $(MIME_LIB_OBJECT)
+
+$(SOCKET_LIB_OBJECT):$(SOCKET_OBJECT_FILES)
+	$(CC) $(SOCKET_INSTALL_OBJECT_FILES) $(CFLAGS_SO) -o $(SOCKET_LIB_OBJECT) $(DEP_LIB_DIR) $(DEP_LIBS)
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_LIB_DIR))
+	$(MV) $(SOCKET_LIB_OBJECT) $(INSTALL_LIB_DIR)
+endif
+
+$(SOCKET_OBJECT_FILES):$(SOCKET_SRC_FILES) $(SOCKET_HEAD_FILES)
+	$(CC) $(CFLAGS) $(SOCKET_SRC_FILES) $(DEP_INCLUDE_DIR)
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_OBJECT_DIR))
+	$(MV) $(SOCKET_OBJECT_FILES) $(INSTALL_OBJECT_DIR)
+endif
+
+
+
+$(MIME_LIB_OBJECT):$(MIME_OBJECT_FILES)
+	$(CC) $(MIME_INSTALL_OBJECT_FILES) $(CFLAGS_SO) -o $(MIME_LIB_OBJECT) $(DEP_LIB_DIR) $(DEP_LIBS)
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_LIB_DIR))
+	$(MV) $(MIME_LIB_OBJECT) $(INSTALL_LIB_DIR)
+endif
+
+$(MIME_OBJECT_FILES):$(MIME_SRC_FILES) $(MIME_HEAD_FILES)
+	$(CC) $(CFLAGS) $(MIME_SRC_FILES) $(DEP_INCLUDE_DIR)
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_OBJECT_DIR))
+	$(MV) $(MIME_OBJECT_FILES) $(INSTALL_OBJECT_DIR)
+endif
+
+
+
+clean:
+	#$(RM) $(INSTALL_LIB_DIR) $(INSTALL_BIN_DIR) $(INSTALL_OBJECT_DIR)
+	$(RM) *.a *.o *.exe *.dll
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_LIB_DIR))
+	$(RM) $(INSTALL_LIB_DIR)
+endif
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_BIN_DIR))
+	$(RM) $(INSTALL_BIN_DIR)
+endif
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_OBJECT_DIR))
+	$(RM) $(INSTALL_OBJECT_DIR)
+endif
