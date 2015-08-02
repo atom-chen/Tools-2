@@ -2,20 +2,33 @@ SHELL = /bin/sh
 
 SRC_ROOT_DIR = .
 
+
 INSTALL_LIB_DIR = ../../window/x86_64
 INSTALL_BIN_DIR = .
 INSTALL_OBJECT_DIR = .
 
+
 DEP_INCLUDE_DIR = -I. -I../../lua-5.1.5/src
 DEP_LIB_DIR = -L../../window/x86_64
-DEP_LIBS = -llua -lwsock32
+DEP_LIB_FILES = -llua -lwsock32
 
-#$(shell mkdir -p ${INSTALL_LIB_DIR})
-#$(shell mkdir -p ${INSTALL_BIN_DIR})
-#$(shell mkdir -p ${INSTALL_OBJECT_DIR})
+
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_LIB_DIR))
+$(shell mkdir -p ${INSTALL_LIB_DIR})
+endif
+
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_BIN_DIR))
+$(shell mkdir -p ${INSTALL_BIN_DIR})
+endif
+
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_OBJECT_DIR))
+$(shell mkdir -p ${INSTALL_OBJECT_DIR})
+endif
+
 
 RM = rm -fr
 MV = mv
+
 
 CC = gcc
 CPPC = g++
@@ -25,6 +38,7 @@ CPPFLAGS = -m64 -O2 -c
 CFLAGS_DEBUG = -m64 -O2 -W -Wall -c -g
 
 CFLAGS_SO = -shared -o -fPIC
+
 
 SOCKET_SRC_FILES = $(SRC_ROOT_DIR)/luasocket.c $(SRC_ROOT_DIR)/timeout.c $(SRC_ROOT_DIR)/buffer.c $(SRC_ROOT_DIR)/io.c $(SRC_ROOT_DIR)/auxiliar.c $(SRC_ROOT_DIR)/options.c $(SRC_ROOT_DIR)/inet.c $(SRC_ROOT_DIR)/tcp.c $(SRC_ROOT_DIR)/udp.c $(SRC_ROOT_DIR)/except.c $(SRC_ROOT_DIR)/select.c $(SRC_ROOT_DIR)/wsocket.c
 
@@ -46,12 +60,13 @@ MIME_INSTALL_OBJECT_FILES = $(INSTALL_OBJECT_DIR)/mime.o
 MIME_LIB_OBJECT = mimecore.dll
 MIME_LIB_NAME = mimecore
 
+
 .PHONY:all
 
 all:$(SOCKET_LIB_OBJECT) $(MIME_LIB_OBJECT)
 
 $(SOCKET_LIB_OBJECT):$(SOCKET_OBJECT_FILES)
-	$(CC) $(SOCKET_INSTALL_OBJECT_FILES) $(CFLAGS_SO) -o $(SOCKET_LIB_OBJECT) $(DEP_LIB_DIR) $(DEP_LIBS)
+	$(CC) $(SOCKET_INSTALL_OBJECT_FILES) $(CFLAGS_SO) -o $(SOCKET_LIB_OBJECT) $(DEP_LIB_DIR) $(DEP_LIB_FILES)
 ifneq ($(SRC_ROOT_DIR), $(INSTALL_LIB_DIR))
 	$(MV) $(SOCKET_LIB_OBJECT) $(INSTALL_LIB_DIR)
 endif
@@ -65,7 +80,7 @@ endif
 
 
 $(MIME_LIB_OBJECT):$(MIME_OBJECT_FILES)
-	$(CC) $(MIME_INSTALL_OBJECT_FILES) $(CFLAGS_SO) -o $(MIME_LIB_OBJECT) $(DEP_LIB_DIR) $(DEP_LIBS)
+	$(CC) $(MIME_INSTALL_OBJECT_FILES) $(CFLAGS_SO) -o $(MIME_LIB_OBJECT) $(DEP_LIB_DIR) $(DEP_LIB_FILES)
 ifneq ($(SRC_ROOT_DIR), $(INSTALL_LIB_DIR))
 	$(MV) $(MIME_LIB_OBJECT) $(INSTALL_LIB_DIR)
 endif
@@ -75,7 +90,6 @@ $(MIME_OBJECT_FILES):$(MIME_SRC_FILES) $(MIME_HEAD_FILES)
 ifneq ($(SRC_ROOT_DIR), $(INSTALL_OBJECT_DIR))
 	$(MV) $(MIME_OBJECT_FILES) $(INSTALL_OBJECT_DIR)
 endif
-
 
 
 clean:

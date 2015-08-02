@@ -1,15 +1,34 @@
 SHELL = /bin/sh
 
-LIB_DIR = ./
-BIN_DIR = ./
-OBJECT_DIR = ./
-SRC_DIR = ./
 
-#$(shell mkdir -p ${LIB_DIR})
-#$(shell mkdir -p ${BIN_DIR})
-#$(shell mkdir -p ${OBJECT_DIR})
+SRC_ROOT_DIR = .
+
+
+INSTALL_LIB_DIR = ../../window/x86_64
+INSTALL_BIN_DIR = .
+INSTALL_OBJECT_DIR = .
+
+
+DEP_INCLUDE_DIR = -I.
+DEP_LIB_DIR = ""
+DEP_LIB_FILES = ""
+
+
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_LIB_DIR))
+$(shell mkdir -p ${INSTALL_LIB_DIR})
+endif
+
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_BIN_DIR))
+$(shell mkdir -p ${INSTALL_BIN_DIR})
+endif
+
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_OBJECT_DIR))
+$(shell mkdir -p ${INSTALL_OBJECT_DIR})
+endif
 
 RM = rm -fr
+MV = mv
+
 
 CC = gcc
 CPPC = g++
@@ -18,69 +37,85 @@ CFLAGS = -m64 -O2 -W -Wall -c
 CPPFLAGS = -m64 -O2 -c
 CFLAGS_DEBUG = -m64 -O2 -W -Wall -c -g
 
-SRC_FILES = $(SRC_DIR)lapi.c $(SRC_DIR)lauxlib.c $(SRC_DIR)lbaselib.c $(SRC_DIR)lcode.c $(SRC_DIR)ldblib.c $(SRC_DIR)ldebug.c $(SRC_DIR)ldo.c $(SRC_DIR)ldump.c $(SRC_DIR)lfunc.c $(SRC_DIR)lgc.c $(SRC_DIR)linit.c $(SRC_DIR)liolib.c $(SRC_DIR)llex.c $(SRC_DIR)lmathlib.c $(SRC_DIR)lmem.c $(SRC_DIR)loadlib.c $(SRC_DIR)lobject.c $(SRC_DIR)lopcodes.c $(SRC_DIR)loslib.c $(SRC_DIR)lparser.c $(SRC_DIR)lstate.c $(SRC_DIR)lstring.c $(SRC_DIR)lstrlib.c $(SRC_DIR)ltable.c $(SRC_DIR)ltablib.c $(SRC_DIR)ltm.c $(SRC_DIR)lundump.c $(SRC_DIR)lvm.c $(SRC_DIR)lzio.c $(SRC_DIR)print.c
 
-HEAD_FILES = $(SRC_DIR)lapi.h $(SRC_DIR)lauxlib.h $(SRC_DIR)lcode.h $(SRC_DIR)ldebug.h $(SRC_DIR)ldo.h $(SRC_DIR)lfunc.h $(SRC_DIR)lgc.h $(SRC_DIR)llex.h $(SRC_DIR)llimits.h $(SRC_DIR)lmem.h $(SRC_DIR)lobject.h $(SRC_DIR)lopcodes.h $(SRC_DIR)lparser.h $(SRC_DIR)lstate.h $(SRC_DIR)lstring.h $(SRC_DIR)ltable.h $(SRC_DIR)ltm.h $(SRC_DIR)lua.h $(SRC_DIR)luaconf.h $(SRC_DIR)lualib.h $(SRC_DIR)lundump.h $(SRC_DIR)lvm.h $(SRC_DIR)lzio.h
+SRC_FILES = $(SRC_ROOT_DIR)/lapi.c $(SRC_ROOT_DIR)/lauxlib.c $(SRC_ROOT_DIR)/lbaselib.c $(SRC_ROOT_DIR)/lcode.c $(SRC_ROOT_DIR)/ldblib.c $(SRC_ROOT_DIR)/ldebug.c $(SRC_ROOT_DIR)/ldo.c $(SRC_ROOT_DIR)/ldump.c $(SRC_ROOT_DIR)/lfunc.c $(SRC_ROOT_DIR)/lgc.c $(SRC_ROOT_DIR)/linit.c $(SRC_ROOT_DIR)/liolib.c $(SRC_ROOT_DIR)/llex.c $(SRC_ROOT_DIR)/lmathlib.c $(SRC_ROOT_DIR)/lmem.c $(SRC_ROOT_DIR)/loadlib.c $(SRC_ROOT_DIR)/lobject.c $(SRC_ROOT_DIR)/lopcodes.c $(SRC_ROOT_DIR)/loslib.c $(SRC_ROOT_DIR)/lparser.c $(SRC_ROOT_DIR)/lstate.c $(SRC_ROOT_DIR)/lstring.c $(SRC_ROOT_DIR)/lstrlib.c $(SRC_ROOT_DIR)/ltable.c $(SRC_ROOT_DIR)/ltablib.c $(SRC_ROOT_DIR)/ltm.c $(SRC_ROOT_DIR)/lundump.c $(SRC_ROOT_DIR)/lvm.c $(SRC_ROOT_DIR)/lzio.c $(SRC_ROOT_DIR)/print.c
+
+HEAD_FILES = $(SRC_ROOT_DIR)/lapi.h $(SRC_ROOT_DIR)/lauxlib.h $(SRC_ROOT_DIR)/lcode.h $(SRC_ROOT_DIR)/ldebug.h $(SRC_ROOT_DIR)/ldo.h $(SRC_ROOT_DIR)/lfunc.h $(SRC_ROOT_DIR)/lgc.h $(SRC_ROOT_DIR)/llex.h $(SRC_ROOT_DIR)/llimits.h $(SRC_ROOT_DIR)/lmem.h $(SRC_ROOT_DIR)/lobject.h $(SRC_ROOT_DIR)/lopcodes.h $(SRC_ROOT_DIR)/lparser.h $(SRC_ROOT_DIR)/lstate.h $(SRC_ROOT_DIR)/lstring.h $(SRC_ROOT_DIR)/ltable.h $(SRC_ROOT_DIR)/ltm.h $(SRC_ROOT_DIR)/lua.h $(SRC_ROOT_DIR)/luaconf.h $(SRC_ROOT_DIR)/lualib.h $(SRC_ROOT_DIR)/lundump.h $(SRC_ROOT_DIR)/lvm.h $(SRC_ROOT_DIR)/lzio.h
 
 OBJECT_FILES = lapi.o lauxlib.o lbaselib.o lcode.o ldblib.o ldebug.o ldo.o ldump.o lfunc.o lgc.o linit.o liolib.o llex.o lmathlib.o lmem.o loadlib.o lobject.o lopcodes.o loslib.o lparser.o lstate.o lstring.o lstrlib.o ltable.o ltablib.o ltm.o lundump.o lvm.o lzio.o print.o
+
+INSTALL_OBJECT_FILES = $(INSTALL_OBJECT_DIR)/lapi.o $(INSTALL_OBJECT_DIR)/lauxlib.o $(INSTALL_OBJECT_DIR)/lbaselib.o $(INSTALL_OBJECT_DIR)/lcode.o $(INSTALL_OBJECT_DIR)/ldblib.o $(INSTALL_OBJECT_DIR)/ldebug.o $(INSTALL_OBJECT_DIR)/ldo.o $(INSTALL_OBJECT_DIR)/ldump.o $(INSTALL_OBJECT_DIR)/lfunc.o $(INSTALL_OBJECT_DIR)/lgc.o $(INSTALL_OBJECT_DIR)/linit.o $(INSTALL_OBJECT_DIR)/liolib.o $(INSTALL_OBJECT_DIR)/llex.o $(INSTALL_OBJECT_DIR)/lmathlib.o $(INSTALL_OBJECT_DIR)/lmem.o $(INSTALL_OBJECT_DIR)/loadlib.o $(INSTALL_OBJECT_DIR)/lobject.o $(INSTALL_OBJECT_DIR)/lopcodes.o $(INSTALL_OBJECT_DIR)/loslib.o $(INSTALL_OBJECT_DIR)/lparser.o $(INSTALL_OBJECT_DIR)/lstate.o $(INSTALL_OBJECT_DIR)/lstring.o $(INSTALL_OBJECT_DIR)/lstrlib.o $(INSTALL_OBJECT_DIR)/ltable.o $(INSTALL_OBJECT_DIR)/ltablib.o $(INSTALL_OBJECT_DIR)/ltm.o $(INSTALL_OBJECT_DIR)/lundump.o $(INSTALL_OBJECT_DIR)/lvm.o $(INSTALL_OBJECT_DIR)/lzio.o $(INSTALL_OBJECT_DIR)/print.o
 
 LIB_OBJECT = liblua.a
 LIB_NAME = lua
 
-LUA_SRC_FILES = $(SRC_DIR)lua.c
-LUA_OBJECT=lua.o
-LUA_BIN_OBJECT = lua.exe
+LUA_SRC_FILES = $(SRC_ROOT_DIR)/lua.c
+LUA_OBJECT_FILES = lua.o
+LUA_INSTALL_OBJECT_FILES = $(INSTALL_OBJECT_DIR)/lua.o
+LUA_BIN_OBJECT_FILE = lua.exe
 
-LUAC_SRC_FILES = $(SRC_DIR)luac.c
-LUAC_OBJECT=luac.o
-LUAC_BIN_OBJECT = luac.exe
+LUA_DEP_INCLUDE_DIR = -I.
+LUA_DEP_LIB_DIR = -L../../window/x86_64
+LUA_DEP_LIB_FILES = -llua
+
+LUAC_SRC_FILES = $(SRC_ROOT_DIR)/luac.c
+LUAC_OBJECT_FILES = luac.o
+LUAC_INSTALL_OBJECT_FILES = $(INSTALL_OBJECT_DIR)/lua.o
+LUAC_BIN_OBJECT_FILE = luac.exe
+
+LUAC_DEP_INCLUDE_DIR = -I.
+LUAC_DEP_LIB_DIR = -L../../window/x86_64
+LUAC_DEP_LIB_FILES = -llua
+
 
 .PHONY:all
 
 all:$(LIB_OBJECT) $(LUA_BIN_OBJECT) $(LUAC_BIN_OBJECT)
 
 $(LIB_OBJECT):$(OBJECT_FILES)
-	$(AR) $(LIB_OBJECT) $(OBJECT_FILES)
-ifneq ($(SRC_DIR), $(LIB_DIR))
-	mv $(LIB_OBJECT) $(LIB_DIR)
+	$(AR) $(LIB_OBJECT) $(INSTALL_OBJECT_FILES)
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_LIB_DIR))
+	mv $(LIB_OBJECT) $(INSTALL_LIB_DIR)
 endif
 
 $(OBJECT_FILES):$(SRC_FILES) $(HEAD_FILES)
-	$(CC) $(CFLAGS) $(SRC_FILES) -I./
+	$(CC) $(CFLAGS) $(SRC_FILES) $(DEP_INCLUDE_DIR)
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_OBJECT_DIR))
+	$(MV) $(OBJECT_FILES) $(INSTALL_OBJECT_DIR)
+endif
 
-$(LUA_BIN_OBJECT):$(LUA_OBJECT)
-	$(CC) -o $(LUA_BIN_OBJECT) $(OBJECT_DIR)$(LUA_OBJECT) -I./ -L$(LIB_DIR) -l$(LIB_NAME)
-ifneq ($(SRC_DIR), $(BIN_DIR))
-	mv $(LUA_BIN_OBJECT) $(BIN_DIR)
+$(LUA_BIN_OBJECT):$(LUA_OBJECT_FILES)
+	$(CC) -o $(LUA_BIN_OBJECT_FILE) $(LUA_INSTALL_OBJECT_FILES) $(LUA_DEP_LIB_DIR) $(LUA_DEP_LIB_FILES)
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_BIN_DIR))
+	$(MV) $(LUA_BIN_OBJECT_FILE) $(INSTALL_BIN_DIR)
 endif
 		
-$(LUA_OBJECT):$(LUA_SRC_FILES)
-	$(CC) $(CFLAGS) $(LUA_SRC_FILES) -o $(LUA_OBJECT) -I./ -L$(LIB_DIR) -l$(LIB_NAME)
-ifneq ($(SRC_DIR), $(OBJECT_DIR))
-	mv $(OBJECT_FILES) $(LUA_OBJECT) $(OBJECT_DIR)
+$(LUA_OBJECT_FILES):$(LUA_SRC_FILES)
+	$(CC) $(CFLAGS) $(LUA_SRC_FILES) $(LUA_DEP_INCLUDE_DIR)
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_OBJECT_DIR))
+	$(MV) $(LUA_OBJECT_FILES) $(INSTALL_OBJECT_DIR)
 endif
 	
-$(LUAC_BIN_OBJECT):$(LUAC_OBJECT)
-	$(CC) -o $(LUAC_BIN_OBJECT) $(OBJECT_DIR)$(LUAC_OBJECT) -I./ -L$(LIB_DIR) -l$(LIB_NAME)
-ifneq ($(SRC_DIR), $(BIN_DIR))
-	mv $(LUAC_BIN_OBJECT) $(BIN_DIR)
+$(LUAC_BIN_OBJECT_FILE):$(LUAC_OBJECT_FILES)
+	$(CC) $(LUA_INSTALL_OBJECTS) $(LUAC_DEP_LIB_DIR) $(LUAC_DEP_LIBS)
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_BIN_DIR))
+	$(MV) $(LUAC_BIN_OBJECT_FILES) $(INSTALL_BIN_DIR)
 endif
 		
-$(LUAC_OBJECT):$(LUAC_SRC_FILES)
-	$(CC) $(CFLAGS) $(LUAC_SRC_FILES) -o $(LUAC_OBJECT) -I./ -L$(LIB_DIR) -l$(LIB_NAME)
-ifneq ($(SRC_DIR), $(OBJECT_DIR))
-	#mv $(OBJECT_FILES) $(LUAC_OBJECT) $(OBJECT_DIR)
+$(LUAC_OBJECT_FILE):$(LUAC_SRC_FILES)
+	$(CC) $(CFLAGS) $(LUAC_SRC_FILES) $(LUAC_DEP_INCLUDE_DIR)
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_OBJECT_DIR))
+	$(MV) $(LUAC_OBJECT_FILES) $(INSTALL_OBJECT_DIR)
 endif
 
 clean:
-	#$(RM) $(LIB_DIR) $(BIN_DIR) $(OBJECT_DIR)
 	$(RM) *.a *.o *.exe *.dll
-ifneq ($(SRC_DIR), $(LIB_DIR))
-	$(RM) $(LIB_DIR)
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_LIB_DIR))
+	$(RM) $(INSTALL_LIB_DIR)
 endif
-ifneq ($(SRC_DIR), $(BIN_DIR))
-	$(RM) $(BIN_DIR)
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_BIN_DIR))
+	$(RM) $(INSTALL_BIN_DIR)
 endif
-ifneq ($(SRC_DIR), $(OBJECT_DIR))
-	$(RM) $(OBJECT_DIR)
+ifneq ($(SRC_ROOT_DIR), $(INSTALL_OBJECT_DIR))
+	$(RM) $(INSTALL_OBJECT_DIR)
 endif
