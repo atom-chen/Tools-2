@@ -11,6 +11,9 @@
 //#include "DraggableFrame.h"
 #include "TestQScrollArea1F.h"
 #include "TestQSplitter.h"
+#include "EventHandlingOgreWidget.h"
+#include <Ogre.h>
+#include "OgreSys.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent, 0), m_ui(new Ui::MainWindow)
@@ -30,12 +33,38 @@ MainWindow::MainWindow(QWidget *parent)
 	createDockWidget();
 
 	m_aaa.sayHello();
+
 	//testWidget();
+	mAutoUpdateTimer = new QTimer;
+	QObject::connect(mAutoUpdateTimer, SIGNAL(timeout()), this, SLOT(update()));
+	
+	mOgreWidget = new EventHandlingOgreWidget(0, 0);
+	m_centerTabWidget->addTab(mOgreWidget, QStringLiteral("OgreWidget"));
+	g_pGameEditorSys->getOgreSysPtr()->initialise(mOgreWidget->getWinParams(), mOgreWidget->width(), mOgreWidget->height());
+	mOgreWidget->resize(mOgreWidget->width(), mOgreWidget->height());
+	mAutoUpdateEnabled = true;
+
+	//On the test system, a value of one here gives a high frame rate and still allows
+	//event processing to take place. A value of 0 doubles the frame rate but the mouse
+	//becomes jumpy. This property is configerable via setAutoUpdateInterval().
+	mAutoUpdateTimer->setInterval(1);
+	if (mAutoUpdateEnabled)
+	{
+		mAutoUpdateTimer->start();
+	}
+
+	initHiddenRenderWindow();
 }
 
 MainWindow::~MainWindow()
 {
-
+	//We delete the OgreWidget last because it
+	//owns the LogManager (through Qt's mechanism).
+	if (mOgreWidget)
+	{
+		delete mOgreWidget;
+		mOgreWidget = 0;
+	}
 }
 
 void MainWindow::createDockWidget()
@@ -192,4 +221,60 @@ void MainWindow::testWidget()
 	//ptest->show();
 
 	TestQSplitter* pTestQSplitter = new TestQSplitter;
+}
+
+void MainWindow::update(void)
+{
+	mOgreWidget->update();
+}
+
+void MainWindow::initHiddenRenderWindow()
+{
+	Ogre::NameValuePairList hiddenParams;
+
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+	hiddenParams["externalWindowHandle"] = Ogre::StringConverter::toString((size_t)winId());
+#else
+#if QT_VERSION < 0x050000
+	const QX11Info info = this->x11Info();
+	Ogre::String winHandle;
+	winHandle = Ogre::StringConverter::toString((unsigned long)(info.display()));
+	winHandle += ":";
+	winHandle += Ogre::StringConverter::toString((unsigned int)(info.screen()));
+	winHandle += ":";
+	winHandle += Ogre::StringConverter::toString((unsigned long)(this->winId()));
+	winHandle += ":";
+	winHandle += Ogre::StringConverter::toString((unsigned long)(info.visual()));
+
+	hiddenParams["externalWindowHandle"] = winHandle;
+
+#elif QT_VERSION >= 0x050100 && defined(Q_WS_X11)
+	const QX11Info info = this->x11Info();
+	Ogre::String winHandle;
+	winHandle = Ogre::StringConverter::toString((unsigned long)(info.display()));
+	winHandle += ":";
+	winHandle += Ogre::StringConverter::toString((unsigned int)(info.appScreen()));
+	winHandle += ":";
+	winHandle += Ogre::StringConverter::toString((unsigned long)(this->winId()));
+
+	hiddenParams["externalWindowHandle"] = winHandle;
+#else // only for the time between Qt 5.0 and Qt 5.1 when QX11Info was not included
+	hiddenParams["externalWindowHandle"] = Ogre::StringConverter::toString((unsigned long)(this->winId()));
+#endif
+#endif
+
+#if defined(Q_OS_MAC)
+	hiddenParams["macAPICocoaUseNSView"] = "true";
+	hiddenParams["macAPI"] = "cocoa";
+#endif
+
+	hiddenParams["border"] = "none";
+	Ogre::RenderWindow* pPrimary = Ogre::Root::getSingletonPtr()->createRenderWindow("Primary1", 1, 1, false, &hiddenParams);
+	pPrimary->setVisible(false);
+	//pPrimary->setAutoUpdated(false);
+
+	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+
+	// Load resources
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }

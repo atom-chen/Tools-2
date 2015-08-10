@@ -3,6 +3,7 @@
 #include "SkillActionNodeConfig.h"
 #include "LuaCScriptMgr.h"
 #include "LuaCTestWrap.h"
+#include "OgreSys.h"
 
 BEGIN_NAMESPACE_GAMEEDITOR
 
@@ -12,6 +13,7 @@ GameEditorSys::GameEditorSys()
 {
 	m_pLuaCScriptMgr = new LuaCScriptMgr;
 	m_pSkillActionNodeConfig = new SkillActionNodeConfig;
+	m_pOgreSys = new OgreSys;
 	LuaCTestWrap_Bind();
 	//const char* testfunc = "cHelloWorld(\"ninhoa\")";
 	//const char* testfunc = "LuaCTest.cHelloWorld(\"ninhoa\")";
@@ -43,6 +45,11 @@ SkillActionNodeConfig* GameEditorSys::getSkillActionNodeConfigPtr()
 LuaCScriptMgr* GameEditorSys::getLuaCScriptMgrPtr()
 {
 	return m_pLuaCScriptMgr;
+}
+
+OgreSys* GameEditorSys::getOgreSysPtr()
+{
+	return m_pOgreSys;
 }
 
 void GameEditorSys::init()

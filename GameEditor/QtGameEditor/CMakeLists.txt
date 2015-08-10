@@ -90,6 +90,8 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TabWidget/MyTabWidget.h
 		./Src/TestWidget/TestQScrollArea1F.h
 		./Src/TestWidget/TestQSplitter.h
+		./Src/OgreWidget/OgreWidget.h
+		./Src/OgreWidget/EventHandlingOgreWidget.h
     )
 	
 	SET(QRC_FILES ./Res/Qrc.qrc)
@@ -173,6 +175,16 @@ else(NOT Qt5Widgets_FOUND)
 		./Src/TestWidget/TestQSplitter.cpp
 	)
 	
+	set(OGRE_WIDGET_SRC
+		./Src/OgreWidget/OgreWidget.h
+		./Src/OgreWidget/OgreWidget.cpp
+		./Src/OgreWidget/EventHandlingOgreWidget.h
+		./Src/OgreWidget/EventHandlingOgreWidget.cpp
+		./Src/OgreWidget/GameLogic.h
+		./Src/OgreWidget/GameLogic.cpp
+		./Src/OgreWidget/EventHandler.h
+	)
+	
 	qt5_wrap_cpp(MOC_SRCS ${MOC_FILES})
     qt5_wrap_ui(UI_SRCS ${UI_FILES})
 	qt5_add_resources(QRC_SRCS ${QRC_FILES})
@@ -192,6 +204,18 @@ else(NOT Qt5Widgets_FOUND)
 	source_group("NodeWidget" FILES ${NODE_WIDGET_SRC})
 	source_group("TabWidget\\ActionEffectEditor" FILES ${ACTION_EFFECT_EDITOR_SRC})
 	source_group("TestWidget" FILES ${TEST_WIDGET_SRC})
+	source_group("OgreWidget" FILES ${OGRE_WIDGET_SRC})
+	
+	set(BOOST_ROOT $ENV{BOOST_ROOT})
+	set(Boost_USE_STATIC_LIBS   ON)
+	set(Boost_USE_MULTITHREADED ON)
+	find_package(Boost
+				 1.57.0
+				 COMPONENTS thread filesystem
+				 REQUIRED)
+
+	# Create debug libraries with _d postfix
+	set(CMAKE_DEBUG_POSTFIX "_d")
 
     # if we don't include this CMake will not include ui headers properly:
     include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -201,6 +225,7 @@ else(NOT Qt5Widgets_FOUND)
 	include_directories(./Src/TabWidget)
 	include_directories(./Src/TabWidget/ActionEffectEditor)
 	include_directories(./Src/NodeWidget)
+	include_directories(./Src/OgreWidget)
 	include_directories(./Src/TestWidget)
 	include_directories(./Src/Misc)
 	include_directories(../GameEditor/Src)
@@ -209,21 +234,24 @@ else(NOT Qt5Widgets_FOUND)
 	include_directories(../GameEditor/Src/TabData)
 	include_directories(../GameEditor/Src/NodeData)
 	include_directories(../GameEditor/Src/SkillAction)
+	include_directories(../GameEditor/Src/OgreSys)
 	include_directories( ../Extern/tinyxml)
 	include_directories( ../Extern/lua/src)
 	include_directories(${QT_BINARY_DIR}/../include)
+	include_directories(../Extern/ogre/build/sdk/include/OGRE ../Extern/ogre/build/sdk/include/OIS)
+	include_directories(${Boost_INCLUDE_DIRS})
 	
-	link_directories(${QT_BINARY_DIR}/../lib)
+	link_directories(${QT_BINARY_DIR}/../lib ../Extern/ogre/build/sdk/lib ${Boost_LIBRARY_DIRS})
 	
 	ADD_DEFINITIONS(-DGAMEEDITOR_DLL)
 	
-    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES} ${TREE_WIDGET} ${MISC_SRC} ${LIST_WIDGET_SRC} ${TAB_WIDGET_SRC} ${NODE_WIDGET_SRC} ${ACTION_EFFECT_EDITOR_SRC} ${TEST_WIDGET_SRC})
+    set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES} ${TREE_WIDGET} ${MISC_SRC} ${LIST_WIDGET_SRC} ${TAB_WIDGET_SRC} ${NODE_WIDGET_SRC} ${ACTION_EFFECT_EDITOR_SRC} ${TEST_WIDGET_SRC} ${OGRE_WIDGET_SRC})
 
     ADD_EXECUTABLE(QtGameEditor WIN32 ${ALLSRCS})
 
     set_target_properties(QtGameEditor PROPERTIES DEBUG_POSTFIX _d LINK_FLAGS "/ENTRY:\"mainCRTStartup\"")
 	
-	TARGET_LINK_LIBRARIES(QtGameEditor ${Qt5Widgets_LIBRARIES} GameEditor tinyxml Lua)
+	TARGET_LINK_LIBRARIES(QtGameEditor ${Qt5Widgets_LIBRARIES} GameEditor tinyxml Lua OgreMain_d  OgreHlmsUnlit_d OgreHlmsPbs_d OIS_d)
 	
 	add_dependencies(QtGameEditor GameEditor tinyxml Lua)
 	

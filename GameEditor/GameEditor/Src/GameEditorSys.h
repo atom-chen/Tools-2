@@ -7,17 +7,20 @@ BEGIN_NAMESPACE_GAMEEDITOR
 
 class SkillActionNodeConfig;
 class LuaCScriptMgr;
+class OgreSys;
 
 class GAMEEDITOR_EXPORT GameEditorSys : public Singleton<GameEditorSys>
 {
 protected:
 	SkillActionNodeConfig* m_pSkillActionNodeConfig;
 	LuaCScriptMgr* m_pLuaCScriptMgr;
+	OgreSys* m_pOgreSys;
 
 public:
 	GameEditorSys();
 	SkillActionNodeConfig* getSkillActionNodeConfigPtr();
 	LuaCScriptMgr* getLuaCScriptMgrPtr();
+	OgreSys* getOgreSysPtr();
 
 	virtual void init();
 
@@ -29,6 +32,7 @@ private:
 #define g_pGameEditorSys GameEditorSys::getSingletonPtr()
 #define g_pSkillActionNodeConfig g_pGameEditorSys->getSkillActionNodeConfigPtr()
 #define g_pLuaCScriptMgr g_pGameEditorSys->getLuaCScriptMgrPtr()
+#define g_pOgreSys g_pGameEditorSys->getOgreSysPtr()
 
 END_NAMESPACE_GAMEEDITOR
 
