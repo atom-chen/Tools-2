@@ -1533,7 +1533,11 @@ namespace FxOgreFBX
                 params.tangentsSplitMirrored, params.tangentsSplitRotated, params.tangentsUseParity);
         }
         // Export the binary mesh
-        Ogre::MeshSerializer serializer(nullptr);	// TODO:
+#if OGRE_VERSION < 0x020000
+        Ogre::MeshSerializer serializer();
+#else
+		Ogre::MeshSerializer serializer(Ogre::Root::getSingleton().getRenderSystem()->getVaoManager());	// TODO: Ogre 2.0 需要传递 VAO 这个参数
+#endif
         try
         {
 #if OGRE_VERSION < 0x020000
@@ -1568,8 +1572,10 @@ namespace FxOgreFBX
 		pMesh->sharedVertexData[0] = new Ogre::v1::VertexData();
 		pMesh->sharedVertexData[0]->vertexCount = m_sharedGeom.vertices.size();
 
-		pMesh->sharedVertexData[1] = new Ogre::v1::VertexData();
-		pMesh->sharedVertexData[1]->vertexCount = m_sharedGeom.vertices.size();
+		// TODO: 不知道是重新 new 一个好，还是直接赋值老的好，我感觉凡变量变成数组的，只要直接将 [1] = [0] 就行了
+		//pMesh->sharedVertexData[1] = new Ogre::v1::VertexData();
+		//pMesh->sharedVertexData[1]->vertexCount = m_sharedGeom.vertices.size();
+		//pMesh->sharedVertexData[1] = pMesh->sharedVertexData[0];
 #endif
         // Define a new vertex declaration
 #if OGRE_VERSION < 0x020000
@@ -1578,7 +1584,7 @@ namespace FxOgreFBX
 #else
 		Ogre::v1::VertexDeclaration* pDecl = new Ogre::v1::VertexDeclaration();
 		pMesh->sharedVertexData[0]->vertexDeclaration = pDecl;
-		pMesh->sharedVertexData[1]->vertexDeclaration = pDecl;
+		//pMesh->sharedVertexData[1]->vertexDeclaration = pDecl;	// TODO: 添加这一行，导致 pMesh->sharedVertexData[0]->reorganiseBuffers(pOptimalDecl); 报错
 #endif
         unsigned buf = 0;
         size_t offset = 0;
@@ -1939,7 +1945,7 @@ namespace FxOgreFBX
 #if OGRE_VERSION < 0x020000
                     pTrack = pAnimation->createVertexTrack(0,pMesh->sharedVertexData,Ogre::VAT_MORPH);
 #else
-					pTrack = nullptr/*pAnimation->createVertexTrack(0, pMesh->sharedVertexData, Ogre::v1::VAT_MORPH)*/;	// TODO:
+					pTrack = pAnimation->createVertexTrack(0, pMesh->sharedVertexData[0], Ogre::v1::VAT_MORPH);	// TODO: Ogre2 中 OgreMesh.h VertexData *sharedVertexData[2]; old 的中是 VertexData *sharedVertexData
 #endif
                 else
                 {
@@ -1947,8 +1953,8 @@ namespace FxOgreFBX
                     pTrack = pAnimation->createVertexTrack(t->m_index,pMesh->getSubMesh(t->m_index-1)->vertexData,
                         Ogre::VAT_MORPH);
 #else
-					pTrack = nullptr/*pAnimation->createVertexTrack(t->m_index, pMesh->getSubMesh(t->m_index - 1)->vertexData,
-						Ogre::v1::VAT_MORPH)*/;		// TODO:
+					pTrack = pAnimation->createVertexTrack(t->m_index, pMesh->getSubMesh(t->m_index - 1)->vertexData[0],
+						Ogre::v1::VAT_MORPH);		// TODO: Ogre2 中 OgreSubMesh.h VertexData *vertexData[2]; old 的中是 VertexData *vertexData
 #endif
                 }
                 // Create keyframes for current track
@@ -2019,7 +2025,7 @@ namespace FxOgreFBX
 #if OGRE_VERSION < 0x020000
                 pTrack = pAnimation->createVertexTrack(0,pMesh->sharedVertexData,Ogre::VAT_POSE);
 #else
-				pTrack = nullptr/*pAnimation->createVertexTrack(0, pMesh->sharedVertexData, Ogre::v1::VAT_POSE)*/;	// TODO:
+				pTrack = pAnimation->createVertexTrack(0, pMesh->sharedVertexData[0], Ogre::v1::VAT_POSE);	// TODO: Ogre2 中 OgreMesh.h VertexData *sharedVertexData[2]; old 的中是 VertexData *sharedVertexData
 #endif
             else
             {
@@ -2027,8 +2033,8 @@ namespace FxOgreFBX
                 pTrack = pAnimation->createVertexTrack(t->m_index,pMesh->getSubMesh(t->m_index-1)->vertexData,
                     Ogre::VAT_POSE);
 #else
-				pTrack = nullptr/*pAnimation->createVertexTrack(t->m_index, pMesh->getSubMesh(t->m_index - 1)->vertexData,
-					Ogre::v1::VAT_POSE)*/;		// TODO:
+				pTrack = pAnimation->createVertexTrack(t->m_index, pMesh->getSubMesh(t->m_index - 1)->vertexData[0],
+					Ogre::v1::VAT_POSE);		// TODO: Ogre2 中 OgreSubMesh.h VertexData *vertexData[2]; old 的中是 VertexData *vertexData
 #endif
             }
             // Create keyframes for current track

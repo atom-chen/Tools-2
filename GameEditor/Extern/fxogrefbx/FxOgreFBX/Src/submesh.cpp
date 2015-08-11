@@ -334,10 +334,9 @@ namespace FxOgreFBX
 		pSubmesh->indexData[0]->indexCount = 3 * m_faces.size();
 		pSubmesh->vertexData[0]->vertexCount = m_vertices.size();
 
-		pSubmesh->vertexData[1] = new Ogre::v1::VertexData();
-		// Set number of indexes
-		pSubmesh->indexData[1]->indexCount = 3 * m_faces.size();
-		pSubmesh->vertexData[1]->vertexCount = m_vertices.size();
+		// TODO: 所有的改成数组的变量，都让他们数组的两个值相等，因为程序中会取数组内容，而没有判断
+		pSubmesh->vertexData[1] = pSubmesh->vertexData[0];
+		pSubmesh->indexData[1] = pSubmesh->indexData[0];
 #endif
         // Check if we need to use 32 bit indexes
         bool use32BitIndexes = false;

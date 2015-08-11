@@ -866,34 +866,46 @@ namespace FxOgreFBX
     bool OgreExporter::writeOgreData()
     {
         // Create Ogre Root
-    //		Ogre::Root ogreRoot;
+		// Ogre::Root ogreRoot;
         // Create singletons
         Ogre::LogManager logMgr;
 
         // Doug Perkowski - 02/04/09
         // Creating default log to avoid crashes in skeleton serialization.
         Ogre::LogManager::getSingleton().createLog("Ogre.log", true, true, true);
-        Ogre::ResourceGroupManager rgm;
-#if OGRE_VERSION < 0x020000
-        Ogre::MeshManager meshMgr;
-		Ogre::SkeletonManager skelMgr;
+
+#if OGRE_VERSION >= 0x020000
+		Ogre::String pluginsPath;
+#if OGRE_DEBUG_MODE
+		pluginsPath = "plugins_tools_d.cfg";
 #else
-		Ogre::v1::MeshManager meshMgr;
-		Ogre::MeshManager meshMgrV2;
-		// Ogre::SkeletonManager skelMgr;		// TODO: 这个是最新的骨骼管理器，现在还在用旧的，因此暂时注释掉
-		Ogre::v1::OldSkeletonManager skelMgr;
+		pluginsPath = "plugins_tools.cfg";
 #endif
-        Ogre::MaterialManager matMgr;
-#if OGRE_VERSION < 0x020000
-        Ogre::DefaultHardwareBufferManager hardwareBufMgr;
-#else
-		Ogre::v1::DefaultHardwareBufferManager hardwareBufMgr;
+		Ogre::Root ogreRoot(pluginsPath, "", "OgreMeshTool.log");
+		ogreRoot.setRenderSystem(ogreRoot.getRenderSystemByName("NULL Rendering Subsystem"));
+		ogreRoot.initialise(true);
 #endif
 
-        // Doug Perkowski  - 03/09/10
-        // Creating LodStrategyManager
-        // http://www.ogre3d.org/forums/viewtopic.php?f=8&t=55844
-        Ogre::LodStrategyManager lodstrategymanager;   
+#if OGRE_VERSION < 0x020000
+		Ogre::ResourceGroupManager rgm;
+        Ogre::MeshManager meshMgr;
+		Ogre::SkeletonManager skelMgr;
+		Ogre::MaterialManager matMgr;
+		Ogre::DefaultHardwareBufferManager hardwareBufMgr;
+		// Doug Perkowski  - 03/09/10
+		// Creating LodStrategyManager
+		// http://www.ogre3d.org/forums/viewtopic.php?f=8&t=55844
+		Ogre::LodStrategyManager lodstrategymanager;
+#else
+		// Ogre::ResourceGroupManager rgm;	// TODO: Ogre2.0 已经在 Ogre::Root 中创建了 Ogre::ResourceGroupManager ，因此不用自己单独创建
+		// Ogre::v1::MeshManager meshMgr;	// TODO: Ogre2.0 已经在 Ogre::Root 中创建了 Ogre::MeshManager ，因此不用自己单独创建
+		// Ogre::MeshManager meshMgrV2;		// TODO: Ogre2.0 已经在 Ogre::Root 中创建了 Ogre::MeshManager ，因此不用自己单独创建
+		// Ogre::SkeletonManager skelMgr;	// TODO: 这个是最新的骨骼管理器，现在还在用旧的，因此暂时注释掉
+		// Ogre::v1::OldSkeletonManager skelMgr;	// TODO: Ogre2.0 已经在 Ogre::Root 中创建了 Ogre::OldSkeletonManager ，因此不用自己单独创建
+		// Ogre::MaterialManager matMgr;	// TODO: Ogre2.0 已经在 Ogre::Root 中创建了 Ogre::MaterialManager ，因此不用自己单独创建
+		// Ogre::v1::DefaultHardwareBufferManager hardwareBufMgr;	// TODO: Ogre2.0 已经在 Ogre::Root 中创建了 Ogre::DefaultHardwareBufferManager ，因此不用自己单独创建
+		// Ogre::LodStrategyManager lodstrategymanager;
+#endif
         
         // Write mesh binary
         if (m_params.exportMesh)

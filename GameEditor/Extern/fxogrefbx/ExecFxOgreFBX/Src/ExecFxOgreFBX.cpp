@@ -352,7 +352,6 @@ int main(int argc, char *argv[])
     
     if( ops.outputmeshfile.length() > 0 )
     {
-
         bool success = FxOgreFBX::FxOgreFBXDLL::ExportOgreFromFBX(ops.fbxfile.c_str(), ops.outputmeshfile.c_str(), pLogPath, pAnimName, pFrame0AnimName, ops.copyUniqueTextures, ops.bindframe);
         if( !success )
         {

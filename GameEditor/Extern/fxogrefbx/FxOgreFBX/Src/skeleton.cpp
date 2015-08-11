@@ -854,7 +854,7 @@ namespace FxOgreFBX
 #if OGRE_VERSION < 0x020000
             Ogre::Bone *pBone = iterator.getNext();
 #else
-			Ogre::Bone *pBone/* = iterator.getNext()*/;		// TODO:
+			Ogre::v1::OldBone *pBone = iterator.getNext();		// TODO: Ogre2 骨头 Bone， old 的骨头 OldBone
 #endif
             joint j;
             j.name = pBone->getName().c_str();
@@ -873,7 +873,7 @@ namespace FxOgreFBX
 #if OGRE_VERSION < 0x020000
             Ogre::Node *pParent = pBone->getParent();
 #else
-			Ogre::Node *pParent = nullptr/*pBone->getParent()*/;		// TODO:
+			Ogre::v1::OldNode *pParent = pBone->getParent();		// TODO: Ogre2 的节点是 Node ，old 的节点是 OldNode
 #endif
             if( pParent )
             {
@@ -885,9 +885,9 @@ namespace FxOgreFBX
             Ogre::Quaternion quat = pBone->getInitialOrientation();
             Ogre::Vector3 scale = pBone->getInitialScale();
 #else
-			Ogre::Vector3 pos/* = pBone->getInitialPosition()*/;				// TODO:
-			Ogre::Quaternion quat/* = pBone->getInitialOrientation()*/;			// TODO:
-			Ogre::Vector3 scale/* = pBone->getInitialScale()*/;					// TODO:
+			Ogre::Vector3 pos = pBone->getInitialPosition();				// TODO: TODO: Ogre2 骨头 Bone， old 的骨头 OldBone
+			Ogre::Quaternion quat = pBone->getInitialOrientation();			// TODO: TODO: Ogre2 骨头 Bone， old 的骨头 OldBone
+			Ogre::Vector3 scale = pBone->getInitialScale();					// TODO: TODO: Ogre2 骨头 Bone， old 的骨头 OldBone
 #endif
             j.posx = pos.x;
             j.posy = pos.y;
@@ -1006,8 +1006,8 @@ namespace FxOgreFBX
         Ogre::SkeletonPtr pSkeleton = Ogre::SkeletonManager::getSingleton().create(name.c_str(), 
             Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 #else
-		Ogre::v1::SkeletonPtr pSkeleton/*Ogre::SkeletonManager::getSingleton().create(name.c_str(),
-			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME)*/;			// TODO:
+		Ogre::v1::SkeletonPtr pSkeleton = Ogre::v1::OldSkeletonManager::getSingleton().create(name.c_str(),
+			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);			// TODO: Ogre2 新的骨骼动画管理器 Ogre::SkeletonManager， old 骨骼动画管理器 Ogre::v1::OldSkeletonManager
 #endif
         // Create skeleton bones
         stat = createOgreBones(*pSkeleton,params);
@@ -1056,19 +1056,19 @@ namespace FxOgreFBX
 #if OGRE_VERSION < 0x020000
             Ogre::Bone* pBone = skeleton.createBone(m_joints[i].name.c_str(), m_joints[i].id);
 #else
-			Ogre::Bone* pBone/* = skeleton.createBone(m_joints[i].name.c_str(), m_joints[i].id)*/;		// TODO:
+			Ogre::v1::OldBone* pBone = skeleton.createBone(m_joints[i].name.c_str(), m_joints[i].id);		// TODO: Ogre2 骨头 Ogre::Bone ，old 的骨头 Ogre::v1::OldBone
 #endif
             // Set bone position (relative to it's parent)
-#if OGRE_VERSION < 0x020000
+//#if OGRE_VERSION < 0x020000
             pBone->setPosition(static_cast<Ogre::Real>(j->posx),
                 static_cast<Ogre::Real>(j->posy),
                 static_cast<Ogre::Real>(j->posz));
-#else
-			Ogre::Vector3 Pos(static_cast<Ogre::Real>(j->posx),
-				static_cast<Ogre::Real>(j->posy),
-				static_cast<Ogre::Real>(j->posz));
-			pBone->setPosition(Pos);
-#endif
+//#else
+			//Ogre::Vector3 Pos(static_cast<Ogre::Real>(j->posx),
+			//	static_cast<Ogre::Real>(j->posy),
+			//	static_cast<Ogre::Real>(j->posz));
+			//pBone->setPosition(Pos);
+//#endif
             // Set bone orientation (relative to it's parent)
             Ogre::Quaternion orient;
             orient.w = static_cast<Ogre::Real>(j->quatw);
@@ -1078,12 +1078,12 @@ namespace FxOgreFBX
             //orient.FromAngleAxis(Ogre::Radian(j->angle),Ogre::Vector3(j->axisx,j->axisy,j->axisz));
             pBone->setOrientation(orient);
             // Set bone scale (relative to it's parent
-#if OGRE_VERSION < 0x020000
+//#if OGRE_VERSION < 0x020000
             pBone->setScale(j->scalex,j->scaley,j->scalez);
-#else
-			Ogre::Vector3 scale(j->scalex, j->scaley, j->scalez);
-			pBone->setScale(scale);
-#endif
+//#else
+			//Ogre::Vector3 scale(j->scalex, j->scaley, j->scalez);
+			//pBone->setScale(scale);
+//#endif
 
             if( j->bInheritScale == false )
             {
@@ -1106,11 +1106,11 @@ namespace FxOgreFBX
                 pParent->addChild(pBone);
 #else
 				// Get the parent joint
-				Ogre::Bone* pParent = nullptr/*skeleton.getBone(m_joints[parentIdx].id)*/;	// TODO:
+				Ogre::v1::OldBone* pParent = skeleton.getBone(m_joints[parentIdx].id);	// TODO: Ogre2 骨头 OgreBone，old 的骨头 OldBone
 				// Get current joint from skeleton
-				Ogre::Bone* pBone = nullptr/*skeleton.getBone(m_joints[i].id)*/;			// TODO:
+				Ogre::v1::OldBone* pBone = skeleton.getBone(m_joints[i].id);			// TODO: Ogre2 骨头 OgreBone，old 的骨头 OldBone
 				// Place current bone in the parent's child list
-				/*pParent->addChild(pBone);*/												// TODO:
+				pParent->addChild(pBone);												// TODO: Ogre2 骨头 OgreBone，old 的骨头 OldBone
 #endif
             }
         }

@@ -300,7 +300,7 @@ void OgreSys::setRenderWindow(Ogre::RenderWindow* renderWin)
 
 void OgreSys::createScene01(void)
 {
-	Ogre::Item *item = mSceneManager->createItem("Cube_d.mesh",
+	Ogre::Item *item = mSceneManager->createItem("aaa.mesh",
 		Ogre::ResourceGroupManager::
 		AUTODETECT_RESOURCE_GROUP_NAME,
 		Ogre::SCENE_DYNAMIC);

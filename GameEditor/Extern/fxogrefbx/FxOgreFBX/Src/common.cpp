@@ -48,11 +48,12 @@ namespace FxOgreFBX
             matMgr = new Ogre::MaterialManager();
             matMgr->initialise();
             skelMgr = new Ogre::SkeletonManager();
-			meshSerializer = new Ogre::MeshSerializer(nullptr);	// TODO:
 #if OGRE_VERSION < 0x020000
+			meshSerializer = new Ogre::MeshSerializer();
             skeletonSerializer = new Ogre::SkeletonSerializer();
             bufferManager = new Ogre::DefaultHardwareBufferManager();
 #else
+			meshSerializer = new Ogre::MeshSerializer(Ogre::Root::getSingleton().getRenderSystem()->getVaoManager());	// TODO: Ogre 2.0 需要传递 VAO 这个参数
 			skeletonSerializer = new Ogre::v1::SkeletonSerializer();
 			bufferManager = new Ogre::v1::DefaultHardwareBufferManager();
 			meshMgr = new Ogre::v1::MeshManager();
