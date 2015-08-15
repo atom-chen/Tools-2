@@ -15,12 +15,15 @@
 #include <QMenuBar>
 
 #include "GameEditor.h"
+#include <Ogre.h>
 
 class LogWidget;
 class ProjectWidget;
 class CenterTabWidget;
 class DragWidget;
 class ExplorerWidget;
+
+class EventHandlingOgreWidget;
 
 namespace Ui
 {
@@ -44,6 +47,7 @@ public slots:
 	void slotNewFile();
 	void slotOpenFile();
 	//void slotSaveFile();
+	void update(void);
 
 private:
 	QMenu *fileMenu;
@@ -75,10 +79,15 @@ private:
 	DragWidget* m_dragWidget;
 	ExplorerWidget* m_pExplorerWidget;
 
+	EventHandlingOgreWidget* mOgreWidget;
+	QTimer* mAutoUpdateTimer;
+	bool mAutoUpdateEnabled;
+
 private:
 	void connectAction();
 	void createDockWidget();
 	void testWidget();
+	void initHiddenRenderWindow();
 };
 
 #endif // MAINWINDOW_H

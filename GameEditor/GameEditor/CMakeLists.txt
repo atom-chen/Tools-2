@@ -85,6 +85,11 @@ set(LUA_C_TEST_FILES
 	./Src/LuaCWrap/LuaCTestWrap.cpp
 )
 
+set(OGRESYS_FILES
+	./Src/OgreSys/OgreSys.h
+	./Src/OgreSys/OgreSys.cpp	
+)
+
 source_group("Base" FILES ${SRCS_FILES})
 source_group("TreeData" FILES ${TREE_DATA_FILES})
 source_group("ListData" FILES ${LIST_DATA_FILES})
@@ -93,19 +98,33 @@ source_group("NodeData" FILES ${NODE_DATA_FILES})
 source_group("SkillAction" FILES ${SKILLACTION_DATA_FILES})
 source_group("LuaCBridge" FILES ${LUA_C_BRIDGE_FILES})
 source_group("LuaCWrap" FILES ${LUA_C_TEST_FILES})
+source_group("OgreSys" FILES ${OGRESYS_FILES})
 
-include_directories(./Src ./Src/TreeData ./Src/ListData ./Src/NodeData ./Src/SkillAction ./Src/LuaCBridge ./Src/LuaCWrap ../Extern/tinyxml ../Extern/lua/src)
+set(BOOST_ROOT $ENV{BOOST_ROOT})
+set(Boost_USE_STATIC_LIBS   ON)
+set(Boost_USE_MULTITHREADED ON)
+find_package(Boost
+			 1.57.0
+			 COMPONENTS thread filesystem
+			 REQUIRED)
+
+# Create debug libraries with _d postfix
+set(CMAKE_DEBUG_POSTFIX "_d")
+
+include_directories(./Src ./Src/TreeData ./Src/ListData ./Src/NodeData ./Src/SkillAction ./Src/LuaCBridge ./Src/LuaCWrap ../Extern/tinyxml ../Extern/lua/src ./Src/OgreSys)
+include_directories(../Extern/ogre/build/sdk/include/OGRE ../Extern/ogre/build/sdk/include/OGRE/Hlms/Unlit ../Extern/ogre/build/sdk/include/OGRE/Hlms/Pbs ../Extern/ogre/build/sdk/include/OGRE/Compositor ../Extern/ogre/build/sdk/include/OIS ${Boost_INCLUDE_DIRS})
+link_directories(../Extern/ogre/build/sdk/lib ${Boost_LIBRARY_DIRS})
 
 ADD_DEFINITIONS(-DGAMEEDITOR_DLL -DGAMEEDITOR_DLL_EXPORT)
 
 #set(ALL_SRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES})
-set(ALL_SRCS ${SRCS_FILES} ${TREE_DATA_FILES} ${LIST_DATA_FILES} ${TAB_DATA_FILES} ${NODE_DATA_FILES} ${SKILLACTION_DATA_FILES} ${LUA_C_BRIDGE_FILES} ${LUA_C_TEST_FILES})
+set(ALL_SRCS ${SRCS_FILES} ${TREE_DATA_FILES} ${LIST_DATA_FILES} ${TAB_DATA_FILES} ${NODE_DATA_FILES} ${SKILLACTION_DATA_FILES} ${LUA_C_BRIDGE_FILES} ${LUA_C_TEST_FILES} ${OGRESYS_FILES})
 
 ADD_LIBRARY(GameEditor SHARED ${ALL_SRCS})
 
 set_target_properties(GameEditor PROPERTIES DEBUG_POSTFIX _d)
 
-TARGET_LINK_LIBRARIES(GameEditor tinyxml Lua)
+TARGET_LINK_LIBRARIES(GameEditor tinyxml Lua OgreMain_d OgreHlmsUnlit_d OgreHlmsPbs_d OIS_d)
 
 add_dependencies(GameEditor tinyxml Lua)
 

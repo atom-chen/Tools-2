@@ -1,5 +1,7 @@
 #include "TabSubWidgetLogicData.h"
 
+BEGIN_NAMESPACE_GAMEEDITOR
+
 TabSubWidgetLogicData::TabSubWidgetLogicData()
 {
 
@@ -19,3 +21,5 @@ std::string TabSubWidgetLogicData::getFullPath()
 {
 	return m_fullPathAndName;
 }
+
+END_NAMESPACE_GAMEEDITOR
