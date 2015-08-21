@@ -3,14 +3,15 @@ SHELL = /bin/sh
 SRC_ROOT_DIR = .
 
 
-INSTALL_LIB_DIR = ../../window/x86_64
+INSTALL_LIB_DIR = ../../Plugins/x86_64
 INSTALL_BIN_DIR = .
 INSTALL_OBJECT_DIR = .
 
 
 DEP_INCLUDE_DIR = -I. -I../../lua-5.1.5/src
-DEP_LIB_DIR = -L../../window/x86_64
-DEP_LIB_FILES = -llua -lwsock32
+#DEP_LIB_DIR = -L../../window/x86_64
+DEP_LIB_DIR = -L../../Plugins/x86_64
+DEP_LIB_FILES = -lulua -lwsock32
 
 
 ifneq ($(SRC_ROOT_DIR), $(INSTALL_LIB_DIR))
@@ -37,7 +38,7 @@ CFLAGS = -m64 -O2 -W -Wall -c
 CPPFLAGS = -m64 -O2 -c
 CFLAGS_DEBUG = -m64 -O2 -W -Wall -c -g
 
-CFLAGS_SO = -shared -o -fPIC
+CFLAGS_SO = -shared -o -fPIC -static-libgcc -static-libstdc++
 
 
 SOCKET_SRC_FILES = $(SRC_ROOT_DIR)/luasocket.c $(SRC_ROOT_DIR)/timeout.c $(SRC_ROOT_DIR)/buffer.c $(SRC_ROOT_DIR)/io.c $(SRC_ROOT_DIR)/auxiliar.c $(SRC_ROOT_DIR)/options.c $(SRC_ROOT_DIR)/inet.c $(SRC_ROOT_DIR)/tcp.c $(SRC_ROOT_DIR)/udp.c $(SRC_ROOT_DIR)/except.c $(SRC_ROOT_DIR)/select.c $(SRC_ROOT_DIR)/wsocket.c

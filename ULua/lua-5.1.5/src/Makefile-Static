@@ -33,7 +33,7 @@ MV = mv
 CC = gcc
 CPPC = g++
 AR = ar -rc
-CFLAGS = -m64 -O2 -W -Wall -c
+CFLAGS = -m64 -O2 -W -Wall -c -static-libgcc -static-libstdc++
 CPPFLAGS = -m64 -O2 -c
 CFLAGS_DEBUG = -m64 -O2 -W -Wall -c -g
 
