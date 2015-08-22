@@ -9,6 +9,7 @@ class LuaCObjectTranslator;
 class LuaCObject;
 class LuaCTable;
 class LuaCFunction;
+class LuaCScriptMgr;
 
 /**
  *@brief 表示一个 Lua 中的表，等价于 Lua 源代码的 ltable.h
@@ -17,6 +18,7 @@ class LuaCVM
 {
 public:
 	lua_State* L;
+	LuaCScriptMgr* m_pLuaCScriptMgr;
 
 public:
 	LuaCObjectTranslator* translator;
@@ -44,9 +46,6 @@ public:
 	void setObject(int reference, std::string field, LuaCObject* val);
 	void setObject(int reference, LuaCObject* field, LuaCObject* val);
 	LuaCFunction* RegisterFunction(std::string fullPath, lua_CFunction function);
-
-	LuaCFunction* GetLuaFunction(std::string name);
-	LuaCTable* GetLuaTable(std::string tableName);
 };
 
 #endif

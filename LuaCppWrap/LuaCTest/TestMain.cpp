@@ -1,6 +1,6 @@
 #include "LuaCTestWrap.h"
 
-void mian()
+void main()
 {
 	LuaCTestWrap_Bind();
 }

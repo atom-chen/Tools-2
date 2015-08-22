@@ -294,7 +294,7 @@ LuaCFunction* LuaCVM::RegisterFunction(std::string fullPath, lua_CFunction funct
 		int dotIdx = fullPath.find_last_of(".");
 		std::string tablePath = fullPath.substr(0, dotIdx);
 		std::string lastPath = fullPath.substr(dotIdx + 1, fullPath.length() - (dotIdx + 1));
-		LuaCTable* pLuaCTable = GetLuaTable(tablePath);
+		LuaCTable* pLuaCTable = m_pLuaCScriptMgr->GetLuaTable(tablePath);
 		pLuaCTable->setLuaFunction(lastPath, function);
 	}
 	else	// 注册到全局表中
@@ -303,7 +303,7 @@ LuaCFunction* LuaCVM::RegisterFunction(std::string fullPath, lua_CFunction funct
 	}
 	lua_settop(L, oldTop);
 
-	LuaCFunction* f = GetLuaFunction(fullPath);
+	LuaCFunction* f = m_pLuaCScriptMgr->GetLuaFunction(fullPath);
 	return f;
 }
 
@@ -322,67 +322,3 @@ LuaCFunction* LuaCVM::RegisterFunction(std::string fullPath, lua_CFunction funct
 //
 //	return f;
 //}
-
-//会缓存LuaFunction
-LuaCFunction* LuaCVM::GetLuaFunction(std::string name)
-{
-	//LuaCBase* func = nullptr;
-
-	//if (dict.find(name) == dict.end())
-	//{
-	//	func = dict[name];
-	//	lua_State* L = m_pLuaCVM->L;
-	//	int oldTop = lua_gettop(L);
-
-	//	if (PushLuaFunction(L, name))
-	//	{
-	//		int reference = luaL_ref(L, LUA_REGISTRYINDEX);
-	//		func = new LuaCFunction(reference, m_pLuaCVM);
-	//		func->name = name;
-	//		dict[name] = func;
-	//	}
-	//	else
-	//	{
-	//		//Debugger.LogError("Lua function {0} not exists", name);
-	//	}
-
-	//	lua_settop(L, oldTop);
-	//}
-	//else
-	//{
-	//	func->AddRef();
-	//}
-
-	//return (LuaCFunction*)func;
-
-	return nullptr;
-}
-
-LuaCTable* LuaCVM::GetLuaTable(std::string tableName)
-{
-	/*LuaCBase* lt = nullptr;
-
-	if (dict.find(tableName) == dict.end())
-	{
-		lua_State* L = m_pLuaCVM->L;
-		int oldTop = lua_gettop(L);
-
-		if (PushLuaTable(L, tableName))
-		{
-			int reference = luaL_ref(L, LUA_REGISTRYINDEX);
-			lt = new LuaCTable(reference, m_pLuaCVM);
-			lt->name = tableName;
-			dict[tableName] = lt;
-		}
-
-		lua_settop(L, oldTop);
-	}
-	else
-	{
-		lt->AddRef();
-	}
-
-	return (LuaCTable*)lt;*/
-
-	return nullptr;
-}

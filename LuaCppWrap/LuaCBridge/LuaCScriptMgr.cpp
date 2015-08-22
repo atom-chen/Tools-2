@@ -21,6 +21,7 @@ LuaCFunction* LuaCScriptMgr::traceback;
 LuaCScriptMgr::LuaCScriptMgr()
 {
 	m_pLuaCVM = new LuaCVM;
+	m_pLuaCVM->m_pLuaCScriptMgr = this;
 
 	luaIndex = 
 		"        \

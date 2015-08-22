@@ -11,7 +11,7 @@ LuaCScriptMgr* g_pLuaCScriptMgr = new LuaCScriptMgr;
 
 void LuaCTestWrap_Bind()
 {
-	testBind2f();
+	testBind7f();
 }
 
 void testBind1f()
@@ -86,6 +86,26 @@ void testBind5f()
 
 	const char* testCPPFunc = "asdf:cppHelloWorld(asdf, \"asasas\")";
 	g_pLuaCScriptMgr->doString(testCPPFunc);
+}
+
+void testBind6f()
+{
+	lua_register(g_pLuaCScriptMgr->getLuaCVM()->L, "cHelloWorld", LuaCTestWrap_cHelloWorld);	// 全局注册函数请使用这个
+	const char* testCFunc = "cHelloWorld(\"asasas\")";
+	g_pLuaCScriptMgr->doString(testCFunc);
+}
+
+void testBind7f()
+{
+	g_pLuaCScriptMgr->getLuaCVM()->NewTable("TestStaticHandle");
+
+	std::vector<LuaMethod*> methodList;
+	methodList.push_back(new LuaMethod("cHelloWorld", LuaCTestWrap_cHelloWorld));
+	std::vector<LuaField*> fieldList;
+	g_pLuaCScriptMgr->RegisterLib(g_pLuaCScriptMgr->getLuaCVM()->L, "TestStaticHandle", "LuaCTest", methodList, fieldList, "");
+
+	const char* testfunc = "TestStaticHandle.cHelloWorld(\"ninhoa\")";
+	g_pLuaCScriptMgr->doString(testfunc);
 }
 
 int LuaCTestWrap_cHelloWorld(lua_State* L)
