@@ -2,8 +2,6 @@
 #include "LuaCObject.h"
 #include "LuaCScriptMgr.h"
 
-BEGIN_NAMESPACE_GAMEEDITOR
-
 std::vector<LuaCObjectTranslator*> LuaCObjectTranslator::list;
 
 LuaCObjectTranslator::LuaCObjectTranslator()
@@ -89,5 +87,3 @@ LuaCObject* LuaCObjectTranslator::getAsType(lua_State* luaState, int stackPos, i
 {
 	return nullptr;
 }
-
-END_NAMESPACE_GAMEEDITOR

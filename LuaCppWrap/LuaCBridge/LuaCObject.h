@@ -1,10 +1,7 @@
 #ifndef __LuaCObject_H_
 #define __LuaCObject_H_
 
-#include "GameEditor.h"
 #include "LuaCBase.h"
-
-BEGIN_NAMESPACE_GAMEEDITOR
 
 class LuaCTable;
 class LuaCFunction;
@@ -29,7 +26,7 @@ class LuaCFunction;
 /**
  *@brief 等价 Lua 源代码中的 lobject.h
  */
-class GAMEEDITOR_EXPORT LuaCObject
+class LuaCObject
 {
 public:
 	int m_type;
@@ -51,7 +48,5 @@ public:
 	~LuaCObject();
 	int GetType();
 };
-
-END_NAMESPACE_GAMEEDITOR
 
 #endif

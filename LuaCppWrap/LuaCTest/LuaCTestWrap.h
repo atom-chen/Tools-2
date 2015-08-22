@@ -1,10 +1,9 @@
 #ifndef __LuaCTestWrap_H_
 #define __LuaCTestWrap_H_
 
-#include "GameEditor.h"
 #include "lua.hpp"
 
-BEGIN_NAMESPACE_GAMEEDITOR
+class LuaCScriptMgr;
 
 void LuaCTestWrap_Bind();
 void testBind1f();
@@ -15,6 +14,6 @@ void testBind5f();
 int LuaCTestWrap_cHelloWorld(lua_State* L);
 int LuaCTestWrap_cppHelloWorld(lua_State* L);
 
-END_NAMESPACE_GAMEEDITOR
+extern LuaCScriptMgr* g_pLuaCScriptMgr;
 
 #endif

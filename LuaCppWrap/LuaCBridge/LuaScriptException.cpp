@@ -1,7 +1,5 @@
 #include "LuaScriptException.h"
 
-BEGIN_NAMESPACE_GAMEEDITOR
-
 LuaScriptException::LuaScriptException()
 {
 
@@ -37,5 +35,3 @@ std::string LuaScriptException::getSource()
 {
 	return source;
 }
-
-END_NAMESPACE_GAMEEDITOR

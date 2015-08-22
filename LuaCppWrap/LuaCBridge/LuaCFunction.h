@@ -1,19 +1,16 @@
 #ifndef __LuaCFunction_H_
 #define __LuaCFunction_H_
 
-#include "GameEditor.h"
 #include "lua.hpp"
 #include "LuaCBase.h"
 #include <vector>
-
-BEGIN_NAMESPACE_GAMEEDITOR
 
 class LuaCVM;
 
 /**
  *@brief 表示一个 Lua 中的表，等价于 Lua 源代码的 ltable.h
  */
-class GAMEEDITOR_EXPORT LuaCFunction : public LuaCBase
+class LuaCFunction : public LuaCBase
 {
 protected:
 	lua_State* L;
@@ -37,7 +34,5 @@ public:
 	std::string LuaCFunction::ToString();
 	int LuaCFunction::GetReference();
 };
-
-END_NAMESPACE_GAMEEDITOR
 
 #endif

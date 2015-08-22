@@ -1,13 +1,10 @@
 #ifndef __LuaScriptMgr_H_
 #define __LuaScriptMgr_H_
 
-#include "GameEditor.h"
 #include "lua.hpp"
 #include <string>
 #include <vector>
 #include <map>
-
-BEGIN_NAMESPACE_GAMEEDITOR
 
 class LuaCVM;
 class LuaCObjectTranslator;
@@ -19,7 +16,7 @@ class LuaMethod;
 class LuaField;
 class LuaCTable;
 
-class GAMEEDITOR_EXPORT LuaCScriptMgr
+class LuaCScriptMgr
 {
 public:
 	static LuaCScriptMgr* Instance;
@@ -33,14 +30,12 @@ public:
 
 protected:
 	LuaCVM* m_pLuaCVM;
-#include "PushWarn.h"
 	typedef std::map<std::string, LuaCBase*>::iterator mapIte;
 	std::map<std::string, LuaCBase*> dict;
 	std::string luaIndex;
 	std::string luaNewIndex;
 	std::string luaTableCall;
 	std::string luaEnumIndex;
-#include "PopWarn.h"
 
 public:
 	LuaCScriptMgr();
@@ -92,7 +87,5 @@ public:
 	static void RegisterLib(lua_State* L, std::string libName, std::string className, std::vector<LuaMethod*> regs);
 	static std::string GetLuaString(lua_State* L, int stackPos);
 };
-
-END_NAMESPACE_GAMEEDITOR
 
 #endif

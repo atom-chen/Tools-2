@@ -4,8 +4,6 @@
 #include "LuaCObjectTranslator.h"
 #include "LuaCommon.h"
 
-BEGIN_NAMESPACE_GAMEEDITOR
-
 LuaCFunction::LuaCFunction(int reference, LuaCVM* interpreter)
 {
 	_Reference = reference;
@@ -189,5 +187,3 @@ int LuaCFunction::GetReference()
 {
 	return _Reference;
 }
-
-END_NAMESPACE_GAMEEDITOR

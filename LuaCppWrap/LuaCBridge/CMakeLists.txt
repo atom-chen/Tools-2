@@ -27,7 +27,9 @@ set(SRC_FILES
 )
 
 source_group("Src" FILES ${SRC_FILES})
-include_directories(.)
+include_directories(. ../lua)
 
 ADD_LIBRARY(${PROJECT_NAME} STATIC ${SRC_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX _d)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} Lua)
+add_dependencies(${PROJECT_NAME} Lua)

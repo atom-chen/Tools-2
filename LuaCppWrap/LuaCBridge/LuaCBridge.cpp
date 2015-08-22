@@ -1,7 +1,5 @@
 #include "LuaCBridge.h"
 
-BEGIN_NAMESPACE_GAMEEDITOR
-
 LuaCBridge::LuaCBridge()
 {
 
@@ -41,5 +39,3 @@ void LuaCBridge::getGlobalData(const char* dataName_)
 {
 
 }
-
-END_NAMESPACE_GAMEEDITOR

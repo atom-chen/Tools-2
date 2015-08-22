@@ -4,8 +4,6 @@
 #include "LuaCommon.h"
 #include "LuaCFunction.h"
 
-BEGIN_NAMESPACE_GAMEEDITOR
-
 LuaCTable::LuaCTable(int reference, LuaCVM* interpreter)
 {
 	_Reference = reference;
@@ -142,5 +140,3 @@ std::string LuaCTable::ToString()
 {
 	return "table";
 }
-
-END_NAMESPACE_GAMEEDITOR

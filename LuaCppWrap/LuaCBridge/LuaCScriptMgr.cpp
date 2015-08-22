@@ -9,8 +9,6 @@
 #include "LuaCMember.h"
 #include "LuaScriptException.h"
 
-BEGIN_NAMESPACE_GAMEEDITOR
-
 LuaCScriptMgr* LuaCScriptMgr::Instance = nullptr;
 LuaCObjectTranslator* LuaCScriptMgr::_translator = nullptr;
 #if MULTI_STATE
@@ -1248,5 +1246,3 @@ std::string LuaCScriptMgr::GetLuaString(lua_State* L, int stackPos)
 
 	return retVal;
 }
-
-END_NAMESPACE_GAMEEDITOR

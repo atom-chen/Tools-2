@@ -2,8 +2,6 @@
 #include "LuaCScriptMgr.h"
 #include "LuaCObject.h"
 
-BEGIN_NAMESPACE_GAMEEDITOR
-
 LuaCBase::LuaCBase()
 {
 	_Interpreter = nullptr;
@@ -31,5 +29,3 @@ void LuaCBase::AddRef()
 {
 	++count;
 }
-
-END_NAMESPACE_GAMEEDITOR

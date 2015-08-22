@@ -1,7 +1,5 @@
 #include "LuaCTest.h"
 
-BEGIN_NAMESPACE_GAMEEDITOR
-
 LuaCTest::LuaCTest()
 {
 	m_mem = 1;
@@ -21,5 +19,3 @@ void LuaCTest::sayHello(std::string str)
 {
 
 }
-
-END_NAMESPACE_GAMEEDITOR

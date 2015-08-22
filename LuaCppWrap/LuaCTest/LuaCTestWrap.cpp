@@ -1,5 +1,4 @@
 #include "LuaCTestWrap.h"
-#include "GameEditorSys.h"
 #include "LuaCScriptMgr.h"
 #include "LuaCVM.h"
 #include "LuaCTest.h"
@@ -8,7 +7,7 @@
 #include "lua.hpp"
 #include "LuaCTable.h"
 
-BEGIN_NAMESPACE_GAMEEDITOR
+LuaCScriptMgr* g_pLuaCScriptMgr = new LuaCScriptMgr;
 
 void LuaCTestWrap_Bind()
 {
@@ -107,5 +106,3 @@ int LuaCTestWrap_cppHelloWorld(lua_State* L)
 	//此处的n是C++向栈中压入的参数个数，如果和压入栈个数不一致，可能导致栈失衡
 	return 0;
 }
-
-END_NAMESPACE_GAMEEDITOR
