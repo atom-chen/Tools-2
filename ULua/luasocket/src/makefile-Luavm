@@ -33,11 +33,11 @@ MV = mv
 CC = gcc
 CPPC = g++
 AR = ar -rc
-CFLAGS = -m64 -O2 -W -Wall -c
+CFLAGS = -m64 -O2 -W -Wall -c -static-libgcc -static-libstdc++
 CPPFLAGS = -m64 -O2 -c
 CFLAGS_DEBUG = -m64 -O2 -W -Wall -c -g
 
-CFLAGS_SO = -shared -o -fPIC
+CFLAGS_SO = -shared -o -fPIC -static-libgcc -static-libstdc++
 
 
 SOCKET_SRC_FILES = $(SRC_ROOT_DIR)/luasocket.c $(SRC_ROOT_DIR)/timeout.c $(SRC_ROOT_DIR)/buffer.c $(SRC_ROOT_DIR)/io.c $(SRC_ROOT_DIR)/auxiliar.c $(SRC_ROOT_DIR)/options.c $(SRC_ROOT_DIR)/inet.c $(SRC_ROOT_DIR)/tcp.c $(SRC_ROOT_DIR)/udp.c $(SRC_ROOT_DIR)/except.c $(SRC_ROOT_DIR)/select.c $(SRC_ROOT_DIR)/wsocket.c
