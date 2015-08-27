@@ -47,7 +47,6 @@ gcc lua_wrap.c \
 	luasocket/src/except.c \
 	luasocket/src/select.c \
 	luasocket/src/wsocket.c \
-	luasocket/src/mime.c \
 	-o Plugins/x86/ulua.dll -m32 -shared \
 	-I./ \
 	-Iluajit/src \
