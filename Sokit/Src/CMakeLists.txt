@@ -61,6 +61,7 @@ else(NOT Qt5Widgets_FOUND)
 
 	#these files need build moc files
     SET(MOC_FILES
+		./main.h
         ./baseform.h
 		./clientform.h
 		./clientskt.h
@@ -96,14 +97,12 @@ else(NOT Qt5Widgets_FOUND)
 	# Find includes in corresponding build directories
 	set(CMAKE_INCLUDE_CURRENT_DIR ON)
 	# Instruct CMake to run moc automatically when needed.
-	set(CMAKE_AUTOMOC ON)
+	#set(CMAKE_AUTOMOC ON)
 
     include_directories(.)
 	#include_directories(${QT_BINARY_DIR}/../include)
 	
 	#link_directories(${QT_BINARY_DIR}/../lib)
-	
-	include_directories(${QT_BINARY_DIR}/../include/QtNetwork)
 	
     set(ALLSRCS ${SRCS_FILES} ${MOC_SRCS} ${UI_SRCS} ${QRC_SRCS} ${RC_FILES})
 
@@ -111,6 +110,6 @@ else(NOT Qt5Widgets_FOUND)
 
     set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX _d LINK_FLAGS "/ENTRY:\"mainCRTStartup\"")
 	
-	TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${Qt5Widgets_LIBRARIES} ${Qt5Network_PLUGINS})
+	TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${Qt5Widgets_LIBRARIES} ${Qt5Network_LIBRARIES})
 	
 endif(NOT Qt5Widgets_FOUND)
