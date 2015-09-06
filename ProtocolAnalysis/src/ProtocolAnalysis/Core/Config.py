@@ -47,4 +47,8 @@ class Config(object):
                     else:    
                         self.__dict__[self.m_cfg2Var[substrList[0]]] = substrList[1]
                 idx += 1
+                
+                
+    def getProtoFilesList(self):
+        return self.m_protoFilesList
 

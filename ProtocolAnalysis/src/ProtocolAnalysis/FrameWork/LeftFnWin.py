@@ -22,6 +22,7 @@ class LeftFnWin(QtWidgets.QDockWidget):
 
     def onBtnClkTest(self):
         AppSysBase.instance().getLoggerPtr().info('test button')
+        AppSysBase.instance().getConfigPtr().getProtoFilesList().parse()
     
 
     # 拷贝文件
