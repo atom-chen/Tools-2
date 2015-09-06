@@ -27,7 +27,7 @@ class Config(object):
         
         # 配置文件和自己变量之间的映射
         self.m_cfg2Var = {}
-        self.m_cfg2Var["ProtoDir"] = "m_protoDir"
+        self.m_cfg2Var["ProtoFilesList"] = "m_protoFilesList"
         self.m_cfg2Var["OutPath"] = "m_outPath"
 
         #读取初始化数据
@@ -42,7 +42,7 @@ class Config(object):
             while idx < listlen:
                 substrList = strlist[idx].split('=')
                 if len(substrList[0]):
-                    if substrList[0] == 'ProtoDir':
+                    if substrList[0] == 'ProtoFilesList':
                         self.__dict__[self.m_cfg2Var[substrList[0]]] = ProtoFilesList(substrList[1])
                     else:    
                         self.__dict__[self.m_cfg2Var[substrList[0]]] = substrList[1]

@@ -1,2 +1,2 @@
-ProtoDir=E:/dump/TestProto.proto
+ProtoFilesList=E:/dump/TestProto.proto
 OutPath=E:/dump
