@@ -4,6 +4,8 @@
 #import datetime
 #import time
 
+from ProtocolAnalysis.ProtoParse.ProtoFilesList import ProtoFilesList
+
 # base config info
 class Config(object):
     
@@ -20,10 +22,13 @@ class Config(object):
     #    Config.pInstance = self
         
         # 注意全部需要初始化，否则如果配置文件不用，并且没有判断是否有这个属性，就会出问题
-        self.m_srcCodePath = ""       # 源代码所在目录
-        self.m_fileNameList = []
-        self.m_tmpCodePath = ""  # 临时代码目录
-        self.m_destCodePath = ""      # dest 代码目录
+        self.m_protoFilesList = None        # Prote 文件所在目录，使用逗号分隔，如果有 '.' 就是一个 Proto 文件，如果没有，就说明是一个目录
+        self.m_outPath = ""         # 输出文件目录
+        
+        # 配置文件和自己变量之间的映射
+        self.m_cfg2Var = {}
+        self.m_cfg2Var["ProtoDir"] = "m_protoDir"
+        self.m_cfg2Var["OutPath"] = "m_outPath"
 
         #读取初始化数据
     def readInit(self, filename):
@@ -37,14 +42,9 @@ class Config(object):
             while idx < listlen:
                 substrList = strlist[idx].split('=')
                 if len(substrList[0]):
-                    if substrList[0] == 'm_fileNameList':
-                        if len(substrList[1]) > 0:
-                            fileList = substrList[1].split(',')
-                            idxList = 0
-                            while idxList < len(fileList):
-                                self.m_fileNameList.append(fileList[idxList])
-                                idxList += 1
+                    if substrList[0] == 'ProtoDir':
+                        self.__dict__[self.m_cfg2Var[substrList[0]]] = ProtoFilesList(substrList[1])
                     else:    
-                        self.__dict__[substrList[0]] = substrList[1]
+                        self.__dict__[self.m_cfg2Var[substrList[0]]] = substrList[1]
                 idx += 1
 

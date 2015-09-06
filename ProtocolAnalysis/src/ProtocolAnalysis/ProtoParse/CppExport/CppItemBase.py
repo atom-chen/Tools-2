@@ -1,8 +1,4 @@
-'''
-Created on 2015年2月13日
-
-@author: Administrator
-'''
+#-*- encoding=utf-8 -*-
 
 from ProtocolAnalysis.Core.Utils import Utils
 

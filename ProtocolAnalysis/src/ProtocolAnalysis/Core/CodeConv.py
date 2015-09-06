@@ -1,7 +1,7 @@
 #-*- encoding=utf-8 -*-
 
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
-from ProtocolAnalysis.CppParse import CppFile
+from ProtocolAnalysis.ProtoParse.CppExport import CppFile
 
 class CodeConv(object):
     '''
@@ -20,6 +20,6 @@ class CodeConv(object):
         if fineName in AppSysBase.instance().getConfigPtr().m_fileNameList:
             AppSysBase.instance().getLoggerPtr().info(filePathName)
             
-            cppFile = CppFile.CppFile()
+            cppFile = CppFile.CppFiCppFile           
             cppFile.parseCpp(filePathName)
 

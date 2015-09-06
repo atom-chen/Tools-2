@@ -1,8 +1,4 @@
-'''
-Created on 2015年2月13日
-
-@author: luguhu
-'''
+#-*- encoding=utf-8 -*-
 
 class PropertyBase(object):
     '''

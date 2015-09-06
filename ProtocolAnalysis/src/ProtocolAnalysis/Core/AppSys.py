@@ -24,11 +24,12 @@ class AppSys(AppSysBase):
         Constructor
         '''
         
+        # 实例定义
         self.m_bConvOver = True
         self.m_convThread = None
         
         self.m_config = Config()
-        self.m_config.readInit('config.txt')
+        self.m_config.readInit('Config/Config.txt')
         
         self.m_logger = Logger()
         self.m_codeConv = CodeConv()
@@ -58,5 +59,5 @@ class AppSys(AppSysBase):
         self.m_convThread
         
     def setConvThread(self, rhv): 
-        self.m_convThread = rhv 
-    
+        self.m_convThread = rhv
+

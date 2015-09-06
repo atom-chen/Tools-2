@@ -1,0 +1,2 @@
+ProtoDir=E:\dump
+OutPath=E:\dump

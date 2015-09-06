@@ -1,16 +1,11 @@
-'''
-Created on 2015年2月13日
+#-*- encoding=utf-8 -*-
 
-@author: {Administrator}
-'''
-
-from ProtocolAnalysis.Core.Utils import Utils
 from ProtocolAnalysis.DataStruct import MStack
-from ProtocolAnalysis.CppParse import CppItemBase
-from ProtocolAnalysis.CppParse import CppMultiComment
-from ProtocolAnalysis.CppParse import TokenParseData
-from ProtocolAnalysis.CppParse import CppStructItem
-from ProtocolAnalysis.Core.Logger import Logger
+from ProtocolAnalysis.ProtoParse.CppExport import CppItemBase
+from ProtocolAnalysis.ProtoParse.CppExport import CppMultiComment
+from ProtocolAnalysis.ProtoParse.CppExport import TokenParseData
+from ProtocolAnalysis.ProtoParse.CppExport import CppStructItem
+from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 
 
 class CppFile(CppItemBase.CppItemBase):
@@ -34,54 +29,35 @@ class CppFile(CppItemBase.CppItemBase):
     
     def parseCpp(self, filePathName):
         with open(filePathName, 'r', encoding = 'utf8') as fHandle:
-            tokenParseData = TokenParseData.TokenParseData('')
+            #tokenParseData = TokenParseData.TokenParsTokenParseData
+            tokenParseData = None         
             try:
                 tokenParseData.m_fileStr = fHandle.read();       # 读取所有的内容
             except Exception as e:
-                Utils.logStackInfo()
-                Logger.instance().info("{0} 文件解析错误".format(filePathName))
+                AppSysBase.instance().getClsUtils().logStackInfo()
+                AppSysBase.instance().getLoggerPtr().instance().info("{0} 文件解析错误".format(filePathName))
                 return
             
                 
-            Utils.skipSpaceAndBr(tokenParseData)          # 删除左边的空格
+            AppSysBase.instance().getClsUtils().skipSpaceAndBr(tokenParseData)          # 删除左边的空格
             while len(tokenParseData.m_fileStr):
-                oneToken = Utils.getToken(tokenParseData)
+                oneToken = AppSysBase.instance().getClsUtils().getToken(tokenParseData)
                 if oneToken == "#ifndef":
-                    Utils.skipCurLine(tokenParseData)
+                    AppSysBase.instance().getClsUtils().skipCurLine(tokenParseData)
                 elif oneToken == "#define":
-                    Utils.skipCurLine(tokenParseData)
+                    AppSysBase.instance().getClsUtils().skipCurLine(tokenParseData)
                 elif oneToken == "#include":
-                    Utils.skipCurLine(tokenParseData)
+                    AppSysBase.instance().getClsUtils().skipCurLine(tokenParseData)
                 elif oneToken[0:3] == "/**":
                     self.m_curCppElem = CppMultiComment.CppMultiComment()
                     self.m_pStack.push(self.m_curCppElem)
                     self.m_curCppElem.parseCppElem(tokenParseData)
                 elif oneToken[0:2] == "//":
-                    Utils.skipCurLine(tokenParseData)
+                    AppSysBase.instance().getClsUtils().skipCurLine(tokenParseData)
                 elif oneToken == "struct":
                     self.m_curCppElem = CppStructItem.CppStructItem()
                     self.m_curCppElem.parseCppElem(tokenParseData)
     
                 
-                Utils.skipSpaceAndBr(tokenParseData)          # 删除左边的空格
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                AppSysBase.instance().getClsUtils().skipSpaceAndBr(tokenParseData)          # 删除左边的空格
                 

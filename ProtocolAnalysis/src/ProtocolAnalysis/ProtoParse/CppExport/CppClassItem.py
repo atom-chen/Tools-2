@@ -1,10 +1,6 @@
-'''
-Created on 2015年2月13日
+#-*- encoding=utf-8 -*-
 
-@author: Administrator
-'''
-
-from ProtocolAnalysis.CPPParse import CppItemBase
+from ProtocolAnalysis.ProtoParse.CppExport import CppItemBase
 
 class CppClassItem(CppItemBase.CppItemBase):
     '''

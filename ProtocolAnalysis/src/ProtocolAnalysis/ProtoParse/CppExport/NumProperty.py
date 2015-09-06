@@ -1,10 +1,6 @@
-'''
-Created on 2015年2月13日
+#-*- encoding=utf-8 -*-
 
-@author: luguhu
-'''
-
-from ProtocolAnalysis.CPPParse import PropertyBase
+from ProtocolAnalysis.ProtoParse.CppExport import PropertyBase
 
 class NumProperty(object):
     '''
