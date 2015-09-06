@@ -17,3 +17,6 @@ class ProtoFileBase(object):
         self.m_type = fileType
         self.m_fullPath = fullPath
 
+
+    def parse(self):
+        pass

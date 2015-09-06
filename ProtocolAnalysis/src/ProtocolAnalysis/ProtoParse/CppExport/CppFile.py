@@ -3,7 +3,7 @@
 from ProtocolAnalysis.DataStruct import MStack
 from ProtocolAnalysis.ProtoParse.CppExport import CppItemBase
 from ProtocolAnalysis.ProtoParse.CppExport import CppMultiComment
-from ProtocolAnalysis.ProtoParse.CppExport import TokenParseData
+from ProtocolAnalysis.ProtoParse.CppExport.TokenParseData import TokenParseData
 from ProtocolAnalysis.ProtoParse.CppExport import CppStructItem
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 
@@ -29,8 +29,7 @@ class CppFile(CppItemBase.CppItemBase):
     
     def parseCpp(self, filePathName):
         with open(filePathName, 'r', encoding = 'utf8') as fHandle:
-            #tokenParseData = TokenParseData.TokenParsTokenParseData
-            tokenParseData = None         
+            tokenParseData = TokenParseData('')         
             try:
                 tokenParseData.m_fileStr = fHandle.read();       # 读取所有的内容
             except Exception as e:

@@ -1,0 +1,4 @@
+message stTest
+{
+	optional uint32 time = 1;
+};

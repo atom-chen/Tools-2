@@ -13,4 +13,10 @@ class ProtoDir(ProtoFileBase):
         Constructor
         '''
         super(ProtoDir, self).__init__(eFileType.eDir, fullPath)
+        self.m_filesList = []
+
+
+    def parse(self):
+        for file in self.m_filesList:
+            file.parse();
 

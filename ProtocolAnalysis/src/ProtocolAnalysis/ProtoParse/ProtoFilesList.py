@@ -29,5 +29,12 @@ class ProtoFilesList(object):
                         protoDir = ProtoDir(fileList[idxList])
                         self.m_filesList.append(protoDir)
                         
-                    idxList += 1    
+                    idxList += 1
+                    
+                    
+    def parse(self):
+        for file in self.m_filesList:
+            file.parse();
+                    
+                    
         
