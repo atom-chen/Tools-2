@@ -32,17 +32,17 @@ buildOptions = dict(
 )
 
 setup(
-    name = "CPP2CSharp",
+    name = "ProtocolAnalysis",
     version = "1.0.0",
-    description = "CPP2CSharp TOOL",
+    description = "ProtocolAnalysis TOOL",
     options = dict(build_exe = buildOptions),
     executables = [
         # tool
         Executable(
-            "CPP2CSharp/Main.py",
+            "ProtocolAnalysis/Main.py",
             base = GUI_BASE_APP,
             targetName = "tool" + EXECUTABLE_EXTENSION,
-            icon = "CPP2CSharp/Data/Icons/AppIcon.ico"
+            icon = "ProtocolAnalysis/Data/Icons/AppIcon.ico"
         )
     ]
 )
