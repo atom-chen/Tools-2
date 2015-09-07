@@ -1,12 +1,16 @@
 #-*- encoding=utf-8 -*-
 
+
 from threading import Lock
 
+
 class Logger(object):
+ 
     
     def __init__(self):
         self.m_effLock = Lock()
         self.m_effLog = []
+
 
     # 输出一行信息
     def info(self, desc):
@@ -21,9 +25,11 @@ class Logger(object):
                 self.m_effLog.append(desc)
             self.m_effLock.release()
 
+
     def getlogger(self, loglist):
         self.m_effLock.acquire()
         for log in self.m_effLog:
             loglist.append(log)
         del self.m_effLog[:]
         self.m_effLock.release()
+

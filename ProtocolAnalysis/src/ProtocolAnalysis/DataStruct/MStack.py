@@ -1,8 +1,5 @@
-'''
-Created on 2015年2月13日 
+#-*- encoding=utf-8 -*-
 
-@author: Administrator
-'''
 
 class MStack(object):
     '''
@@ -29,7 +26,8 @@ class MStack(object):
         else:
             self.top = self.top - 1;
             return self.stack.pop();
- 
+
+
     def isfull(self):
         return self.top + 1 == self.size;
     

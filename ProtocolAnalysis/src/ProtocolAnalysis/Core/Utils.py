@@ -1,5 +1,6 @@
 #-*- encoding=utf-8 -*-
 
+
 #import subprocess
 import sys
 import traceback
@@ -9,6 +10,8 @@ from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 
 
 class Utils(object):
+
+
     @staticmethod
     def copyFile(srcfilename, destfilename):
         if os.path.isfile(srcfilename):
@@ -24,6 +27,7 @@ class Utils(object):
 
         else:
             AppSysBase.instance().getLoggerPtr().info("cannot find file: " + srcfilename)
+
 
     # 获取字符串的编码
     @staticmethod
@@ -54,7 +58,8 @@ class Utils(object):
     @staticmethod
     def joinPath(path, file):
         return os.path.join(path, file)
-    
+
+
     @staticmethod
     def makeDir(path):
         # 检查目录

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
+
 from ProtocolAnalysis.ProtoParse.ProtoFileBase import ProtoFileBase, eFileType
+
 
 class ProtoDir(ProtoFileBase):
     '''

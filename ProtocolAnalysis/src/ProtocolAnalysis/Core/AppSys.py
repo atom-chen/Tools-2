@@ -1,5 +1,6 @@
 #-*- encoding=utf-8 -*-
 
+
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 from ProtocolAnalysis.Core.Config import Config
 from ProtocolAnalysis.Core.Logger import Logger
@@ -11,6 +12,7 @@ class AppSys(AppSysBase):
     '''
     classdocs
     '''
+
 
     @staticmethod
     def instance():
@@ -36,28 +38,36 @@ class AppSys(AppSysBase):
         
         # Utils 类
         self.m_clsUtils = Utils
-    
+
+
     def getConfigPtr(self):
         return self.m_config    
-        
+
+
     def getLoggerPtr(self):
         return self.m_logger   
-    
+
+
     def getCodeConvPtr(self):
         return self.m_codeConv   
-    
+
+
     def getConvOver(self):
         return self.m_bConvOver
-    
+
+
     def setConvOver(self, rhv):
         self.m_bConvOver = rhv
-        
+
+
     def getClsUtils(self):
         return self.m_clsUtils
-        
+
+
     def getConvThread(self):
         self.m_convThread
-        
+
+
     def setConvThread(self, rhv): 
         self.m_convThread = rhv
 

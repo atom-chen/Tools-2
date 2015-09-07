@@ -1,8 +1,10 @@
 #-*- encoding=utf-8 -*-
 
+
 from ProtocolAnalysis.ProtoParse.ProtoBase.ProtoElemBase import ProtoElemBase, eProtoElemType
 from ProtocolAnalysis.ProtoParse.ProtoBase.ProtoKeyWord import ProtoKeyWord
 from ProtocolAnalysis.ProtoParse.ProtoBase.MessageMember import MessageMember
+
 
 class ProtoMessage(ProtoElemBase):
     '''

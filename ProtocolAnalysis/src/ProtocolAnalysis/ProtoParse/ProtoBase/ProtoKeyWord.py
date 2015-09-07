@@ -1,5 +1,6 @@
 #-*- encoding=utf-8 -*-
 
+
 # Proto 的关键字
 class ProtoKeyWord(object):
     ePackage = "package"
@@ -15,4 +16,4 @@ class ProtoKeyWord(object):
     eLeftBrace = "{"
     eRightBrace = "}"
     eSemicolon = ";"
-    
+

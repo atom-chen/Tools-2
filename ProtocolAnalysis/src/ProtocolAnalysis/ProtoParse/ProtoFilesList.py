@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 
+
 from ProtocolAnalysis.ProtoParse.ProtoFile import ProtoFile
 from ProtocolAnalysis.ProtoParse.ProtoDir import ProtoDir
+
 
 class ProtoFilesList(object):
     '''
     classdocs
     '''
     ProtoDotExt = ".proto"
+
 
     # filesStr 配置文件中的字符串
     def __init__(self, filesStr):

@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 
+
 from PyQt5 import QtWidgets
 
 import ProtocolAnalysis.UI.ui_leftfnwin
+
 from ProtocolAnalysis.Core.ConvThread import ConvThread
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 
-class LeftFnWin(QtWidgets.QDockWidget):    
+
+class LeftFnWin(QtWidgets.QDockWidget):
+
+    
     def __init__(self):
         super(LeftFnWin, self).__init__()
 
@@ -29,7 +34,8 @@ class LeftFnWin(QtWidgets.QDockWidget):
     def onBtnClkCopy(self):
         #AppData.instance().copyFile();
         pass
-        
+
+
     # 生成版本的 swf 文件
     def onBtnClkConv(self):
         #直接启动线程

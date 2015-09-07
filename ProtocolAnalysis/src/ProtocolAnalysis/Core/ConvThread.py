@@ -1,7 +1,9 @@
 #-*- encoding=utf-8 -*-
 
+
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 from ProtocolAnalysis.Core.ThreadWrap import ThreadWrap
+
 
 class ConvThread(ThreadWrap):
     

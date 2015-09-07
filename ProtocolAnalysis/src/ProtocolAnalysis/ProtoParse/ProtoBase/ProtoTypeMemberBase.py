@@ -1,5 +1,6 @@
 #-*- encoding=utf-8 -*-
 
+
 # 类型成员基本属性
 class ProtoTypeMemberBase(object):
     '''

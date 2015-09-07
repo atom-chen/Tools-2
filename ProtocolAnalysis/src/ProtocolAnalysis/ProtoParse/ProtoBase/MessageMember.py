@@ -1,6 +1,8 @@
 #-*- encoding=utf-8 -*-
 
+
 from ProtocolAnalysis.ProtoParse.ProtoBase.ProtoTypeMemberBase import ProtoTypeMemberBase
+
 
 class MessageMember(ProtoTypeMemberBase):
     '''

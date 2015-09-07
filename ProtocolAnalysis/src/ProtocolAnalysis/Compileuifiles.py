@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
+
 import os
 from PyQt5.uic import compileUi
+
 
 def compileUIFiles(uiDir):
     for name in os.listdir(uiDir):
@@ -14,10 +16,12 @@ def compileUIFiles(uiDir):
                 with open(os.path.join(uiDir, uiResultPath), "w") as f:
                     compileUi(uiFilePath, f)
 
+
 def main():
     from ProtocolAnalysis import Paths
 
     compileUIFiles(Paths.UI_DIR)
+
 
 if __name__ == "__main__":
     main()

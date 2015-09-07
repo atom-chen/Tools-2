@@ -1,5 +1,6 @@
 #-*- encoding=utf-8 -*-
 
+
 class TokenParseBuffer(object):
     '''
     classdocs
@@ -41,7 +42,8 @@ class TokenParseBuffer(object):
         self.skipSpaceBrTab()
         
         return ret
-    
+
+
     # 获取一个符号，但是不从缓冲区中移除符号
     def getTokenAndNoRemove(self):
         curPos_ = self.m_curPos         # 记录当前位置
@@ -62,7 +64,7 @@ class TokenParseBuffer(object):
         
         return ret
         
-    
+
     # 移除一个符号，并且返回符号长度
     def removeOneToken(self):
         self.skipSpaceBrTab()
@@ -81,6 +83,7 @@ class TokenParseBuffer(object):
         self.skipSpaceBrTab()
         
         return len(ret) 
+
 
     # 跳过当前行
     def skipCurLine(self):

@@ -1,8 +1,4 @@
-'''
-Created on 
-
-@author: Administrator
-'''
+#-*- encoding=utf-8 -*-
 
 
 class MQueue():

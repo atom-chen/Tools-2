@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+
 class eFileType(object):
     eFile = 0
     eDir = 1
+
 
 class ProtoFileBase(object):
     '''
