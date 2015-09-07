@@ -26,10 +26,15 @@ class AppSys(AppSysBase):
         '''
         Constructor
         '''
+
         
+    def construct(self):
         # 实例定义
         self.m_bConvOver = True
         self.m_convThread = None
+        
+        # Utils 类
+        self.m_clsUtils = Utils
         
         self.m_config = Config()
         self.m_config.readInit('Config/Config.txt')
@@ -37,9 +42,6 @@ class AppSys(AppSysBase):
         self.m_logger = Logger()
         self.m_codeConv = CodeConv()
         self.m_exportCSharpFile = ExportCSharpFile()
-        
-        # Utils 类
-        self.m_clsUtils = Utils
 
 
     def getConfigPtr(self):

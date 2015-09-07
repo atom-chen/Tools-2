@@ -38,6 +38,7 @@ class MainWindow(QtWidgets.QMainWindow):
         
         # 实例化系统
         AppSys.instance();
+        AppSysBase.instance().construct()
         
         self.m_qttimer = QtCore.QTimer()
         self.m_qttimer.timeout.connect(self.onTimer)

@@ -7,36 +7,36 @@ from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoElemBase import eProtoElemType
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpKeyWord import CSharpKeyWord
 
 
-class ExportCSharpFile(object):
+class ExportCSharpFile():
     '''
     classdocs
     '''
 
 
-    def __init__(self, params):
+    def __init__(self):
         '''
         Constructor
         '''
     
     
     def export(self):
-        for file in AppSysBase.instance().getConfigPtr().getProtoFilesList():
+        for file in AppSysBase.instance().getConfigPtr().getProtoFilesList().getFilesListPtr():
             if file.getFileType() == eFileType.eFile:       # 如果是文件，直接解析
                 fileNameNoExt = file.getFileNameNoExt()
                 fileOutPath = AppSysBase.instance().getConfigPtr().getCSOutPath();
-                fullPath = "{0}/{1}.cs".format(fileNameNoExt, fileOutPath)
-                with open(fullPath, 'r', encoding = 'utf8') as fHandle:
+                fullPath = "{0}/{1}.cs".format(fileOutPath, fileNameNoExt)
+                with open(fullPath, 'w', encoding = 'utf8') as fHandle:
                     for protoElem in file.getProtoElemList():   # 遍历整个文件列表
                         if protoElem.getType() == eProtoElemType.eMessage:  # 如果是消息
                             self.exportMessage(fHandle, protoElem)
                     
-                    fHandle.Close()         # 关闭文件输入
+                    fHandle.close()         # 关闭文件输入
                         
     
     # 导出一个 ProtoMessage 
     def exportMessage(self, fHandle, message):
         # 写入类的名字
-        clsName = "public class {0}\n{\n".format(message.getTypeName())
+        clsName = "public class {0}\n{1}\n".format(message.getTypeName(), "{")
         fHandle.write(clsName)
         
         # 写入类的成员
@@ -45,11 +45,11 @@ class ExportCSharpFile(object):
             fHandle.write(memberStr)
             
         # 写入构造函数
-        constructFuncStr = "public {0}()\n{\n}\n".format(member.getVarName())
+        constructFuncStr = "public {0}()\n{1}\n{2}\n".format(member.getVarName(), "{", "}")
         fHandle.write(constructFuncStr)
         
         # 写入序列化函数    
-        serializeStr = "override public void serialize(ByteBuffer ba)\n{\n}\n"
+        serializeStr = "override public void serialize(ByteBuffer ba)\n{0}\n{1}\n".format("{", "}")
         fHandle.write(serializeStr)
         # 吸入反序列化函数
 
