@@ -21,46 +21,45 @@ class TokenParseBuffer(object):
 
 
     def isEOF(self):
-        return self.m_curPos == len(self.m_fileBytes) 
+        return self.m_curPos == len(self.m_fileBytes)
     
     
     # 从字符串的左边获取一个符号，并且删除这个符号
     def getTokenAndRemove(self):
         self.skipSpaceBrTab()
         
-        idx = 0;
+        idx = self.m_curPos;
         ret = ''
+        
         while idx < len(self.m_fileBytes):
-            if self.m_fileBytes[idx] == ' ' or self.m_fileBytes[idx] == '\n' or self.m_fileBytes[idx] == '\t':       # 如果遇到空格或者换行符，就算是一个符号
+            if self.isSpaceBrTab(self.m_fileBytes[idx]):    # 空格、换行、tab 键还是保留在原始缓冲区中的
                 break 
             ret += self.m_fileBytes[idx]
             idx += 1
             
-        if len(ret):
-            self.m_fileBytes = self.m_fileBytes[idx:]         # 删除内容
+        #if len(ret):
+        #    self.m_fileBytes = self.m_fileBytes[idx:]         # 删除内容
+        self.m_curPos = idx
             
-        self.skipSpaceBrTab()
+        #self.skipSpaceBrTab()
         
         return ret
 
 
     # 获取一个符号，但是不从缓冲区中移除符号
     def getTokenAndNoRemove(self):
-        curPos_ = self.m_curPos         # 记录当前位置
-        
         self.skipSpaceBrTab()
         
-        idx = 0;
+        idx = self.m_curPos;
         ret = ''
+        
         while idx < len(self.m_fileBytes):
-            if self.m_fileBytes[idx] == ' ' or self.m_fileBytes[idx] == '\n' or self.m_fileBytes[idx] == '\t':       # 如果遇到空格或者换行符，就算是一个符号
+            if self.isSpaceBrTab(self.m_fileBytes[idx]):    # 空格、换行、tab 键还是保留在原始缓冲区中的
                 break 
             ret += self.m_fileBytes[idx]
             idx += 1
             
-        self.skipSpaceBrTab()
-        
-        self.m_curPos = curPos_
+        #self.skipSpaceBrTab()
         
         return ret
         
@@ -69,83 +68,114 @@ class TokenParseBuffer(object):
     def removeOneToken(self):
         self.skipSpaceBrTab()
         
-        idx = 0;
+        idx = self.m_curPos;
         ret = ''
+        
         while idx < len(self.m_fileBytes):
-            if self.m_fileBytes[idx] == ' ' or self.m_fileBytes[idx] == '\n' or self.m_fileBytes[idx] == '\t':       # 如果遇到空格或者换行符，就算是一个符号
-                break 
+            if self.isSpaceBrTab(self.m_fileBytes[idx]):    # 空格、换行、tab 键还是保留在原始缓冲区中的
+                break
             ret += self.m_fileBytes[idx]
             idx += 1
             
-        if len(ret):
-            self.m_fileBytes = self.m_fileBytes[idx:]         # 删除内容
+        #if len(ret):
+        #    self.m_fileBytes = self.m_fileBytes[idx:]         # 删除内容
+        
+        self.m_curPos = idx
             
-        self.skipSpaceBrTab()
+        #self.skipSpaceBrTab()
         
         return len(ret) 
 
 
     # 跳过当前行
     def skipCurLine(self):
-        idx = 0;
-        while idx < len(self.m_fileBytes):
-            if self.m_fileBytes[idx] == '\n':
-                break;
-            idx += 1
-
-        self.m_curPos += idx
+        idx = self.m_curPos;
+        ret = ''
         
-
-    # 跳过空格和换行
-    def skipSpaceBrTab(self):
-        idx = 0;
         while idx < len(self.m_fileBytes):
-            if self.m_fileBytes[idx] != ' ' and self.m_fileBytes[idx] != '\n' and self.m_fileBytes[idx] != '\t':       # 如果遇到空格或者换行符，就算是一个符号
-                break;
-            idx += 1
-
-        self.m_curPos += idx
-
-    
-    def skipSpace(self):
-        idx = 0;
-        while idx < len(self.m_fileBytes):
-            if self.m_fileBytes[idx] != ' ':
-                break;
-            idx += 1
-            
-        self.m_curPos += idx
-    
-    
-    def skipBr(self):
-        idx = 0;
-        while idx < len(self.m_fileBytes):
-            if self.m_fileBytes[idx] != '\n':
-                break;
-            idx += 1
-            
-        self.m_curPos += idx        
-    
-    
-    def skipTab(self):
-        idx = 0;
-        while idx < len(self.m_fileBytes):
-            if self.m_fileBytes[idx] != '\t':
-                break;
-            idx += 1
-            
-        self.m_curPos += idx
-        
-        
-    def getLineNoRemove(self):
-        idx = 0;
-        ret = ""
-        while idx < len(self.m_fileBytes):
-            if self.m_fileBytes[idx] == '\n':
+            if self.m_fileBytes[idx] == '\n':       # 空格、换行、tab 键还是保留在原始缓冲区中的
                 break;
             ret += self.m_fileBytes[idx]
             idx += 1
 
+        self.m_curPos = idx
+
+
+    # 是否是空格、换行、或者 Tab 键
+    def isSpaceBrTab(self, char):
+        if char == ' ' or char == '\n' or char == '\t':       # 如果遇到空格或者换行符，就算是一个符号
+            return True
+        
+        return False
+
+    # 跳过空格和换行
+    def skipSpaceBrTab(self):
+        idx = self.m_curPos;
+        ret = ''
+        
+        while idx < len(self.m_fileBytes):
+            if not self.isSpaceBrTab(self.m_fileBytes[idx]):
+                break
+            ret += self.m_fileBytes[idx]
+            idx += 1
+
+        self.m_curPos = idx
+
+    
+    def skipSpace(self):
+        idx = self.m_curPos;
+        ret = ''
+        
+        while idx < len(self.m_fileBytes):
+            if self.m_fileBytes[idx] != ' ':
+                break
+            ret += self.m_fileBytes[idx]
+            idx += 1
+            
+        self.m_curPos = idx
+    
+    
+    def skipBr(self):
+        idx = self.m_curPos;
+        ret = ''
+        
+        while idx < len(self.m_fileBytes):
+            if self.m_fileBytes[idx] != '\n':
+                break;
+            ret += self.m_fileBytes[idx]
+            idx += 1
+            
+        self.m_curPos = idx        
+    
+    
+    def skipTab(self):
+        idx = self.m_curPos;
+        ret = ''
+        
+        while idx < len(self.m_fileBytes):
+            if self.m_fileBytes[idx] != '\t':
+                break;
+            ret += self.m_fileBytes[idx]
+            idx += 1
+            
+        self.m_curPos = idx
+        
+        
+    def getLineNoRemove(self):
+        curPos_ = self.m_curPos             # 保存当前位置信息
+        
+        self.skipBr()                       # 一行的开始必定是 "\n"，因此跳过
+        
+        idx = self.m_curPos
+        ret = ""
+        
+        while idx < len(self.m_fileBytes):
+            if self.m_fileBytes[idx] == '\n':
+                break;
+            ret += self.m_fileBytes[idx]            # 将 "\n" 不放到当前行中
+            idx += 1
+        
+        self.m_curPos = curPos_
         
         return ret
 

@@ -16,4 +16,5 @@ class ProtoKeyWord(object):
     eLeftBrace = "{"
     eRightBrace = "}"
     eSemicolon = ";"
+    eRightBraceSemicolon = "};"
 

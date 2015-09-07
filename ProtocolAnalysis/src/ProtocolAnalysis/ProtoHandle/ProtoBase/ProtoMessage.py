@@ -21,19 +21,21 @@ class ProtoMessage(ProtoElemBase):
 
     def parse(self, tokenParseBuffer):
         typeKeyWord = tokenParseBuffer.getTokenAndRemove()  # "message"
-        self.m_typeName = tokenParseBuffer.getTokenAndRemove() # "stUserInfo"
+        self.m_typeName = tokenParseBuffer.getTokenAndRemove() # "stTest"
         tokenParseBuffer.getTokenAndRemove()        # 移除 "{"
         
         while True:
             linePrefix = tokenParseBuffer.getTokenAndNoRemove()
-            if linePrefix == ProtoKeyWord.eRightBrace:
+            if linePrefix == ProtoKeyWord.eRightBraceSemicolon:     # 如果取出来是 "};"
                 break
+            elif linePrefix == ProtoKeyWord.eRightBrace:            # 如果取出来是 "}"
+                tokenParseBuffer.getTokenAndRemove()        # 移除 ";"
+                break 
             else:
                 messageMember = MessageMember()
                 self.m_memberList.append(messageMember)
                 messageMember.parse(tokenParseBuffer)
             
         
-        tokenParseBuffer.getTokenAndRemove()        # 移除 "}"
-        tokenParseBuffer.getTokenAndRemove()        # 移除 ";"
+        tokenParseBuffer.getTokenAndRemove()        # 移除 "};"
         

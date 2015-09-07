@@ -25,7 +25,7 @@ class ProtoFile(ProtoFileBase):
         tokenParseBuffer = TokenParseBuffer()
         tokenParseBuffer.openFile(self.m_fullPath)
         while not tokenParseBuffer.isEOF():
-            tokenKey = tokenParseBuffer.getLineNoRemove()
+            tokenKey = tokenParseBuffer.getTokenAndNoRemove()       # 获取一个符号，检查具体类型
             
             if tokenKey == ProtoKeyWord.eMessage:
                 msg = ProtoMessage()
