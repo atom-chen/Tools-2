@@ -1,3 +1,9 @@
+// 自己测试注释-1
+
+package TestPackage;
+
+//自己测试注释-2
+
 message stTest
 {
 	optional uint32 time = 1;

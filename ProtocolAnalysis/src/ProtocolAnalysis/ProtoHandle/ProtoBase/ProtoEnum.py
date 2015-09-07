@@ -16,3 +16,7 @@ class ProtoEnum(ProtoElemBase):
         '''
         super(ProtoEnum, self).__init__(eProtoElemType.eEnum)
 
+    
+    def parse(self, tokenParseBuffer):
+        pass
+    

@@ -16,7 +16,7 @@ class ProtoTypeMemberBase(object):
         self.m_typeName = ""
         self.m_varName = ""
         self.m_seqValue = 0
-        self.m_comment = ""
+        self.m_commentStr = ""
 
 
     def parse(self, tokenParseBuffer):

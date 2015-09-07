@@ -20,7 +20,7 @@ class ProtoMessage(ProtoElemBase):
 
 
     def parse(self, tokenParseBuffer):
-        typeKeyWord = tokenParseBuffer.getTokenAndRemove()  # "message"
+        self.m_typeKeyWord = tokenParseBuffer.getTokenAndRemove()  # "message"
         self.m_typeName = tokenParseBuffer.getTokenAndRemove() # "stTest"
         tokenParseBuffer.getTokenAndRemove()        # 移除 "{"
         

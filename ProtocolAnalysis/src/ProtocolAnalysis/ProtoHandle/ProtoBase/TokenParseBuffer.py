@@ -1,6 +1,9 @@
 #-*- encoding=utf-8 -*-
 
 
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoKeyWord import ProtoKeyWord
+
+
 class TokenParseBuffer(object):
     '''
     classdocs
@@ -164,7 +167,7 @@ class TokenParseBuffer(object):
     def getLineNoRemove(self):
         curPos_ = self.m_curPos             # 保存当前位置信息
         
-        self.skipBr()                       # 一行的开始必定是 "\n"，因此跳过
+        self.skipSpaceBrTab()               # 一行的开始必定是 "\n"，因此跳过
         
         idx = self.m_curPos
         ret = ""
@@ -176,6 +179,53 @@ class TokenParseBuffer(object):
             idx += 1
         
         self.m_curPos = curPos_
+        
+        return ret
+
+
+    def getLineRemove(self):
+        self.skipSpaceBrTab()                       # 一行的开始必定是 "\n"，因此跳过
+        
+        idx = self.m_curPos
+        ret = ""
+        
+        while idx < len(self.m_fileBytes):
+            if self.m_fileBytes[idx] == '\n':
+                break;
+            ret += self.m_fileBytes[idx]            # 将 "\n" 不放到当前行中
+            idx += 1
+        
+        self.m_curPos = idx
+        
+        return ret
+
+
+    # 获取单行注释和多行注释和空行
+    def getCommentAndSpaceLine(self):
+        self.skipSpaceBrTab()                       # 一行的开始必定是 "\n"，因此跳过
+        
+        ret = ""
+        minIdx = len(self.m_fileBytes)
+        curIdx = 0
+        
+        curIdx = self.m_fileBytes.find(ProtoKeyWord.eMessage, self.m_curPos)     # "message" 关键字查找
+        if minIdx > curIdx:
+            minIdx = curIdx
+            
+        curIdx = self.m_fileBytes.find(ProtoKeyWord.eEnum, self.m_curPos)     # "enum" 关键字查找
+        if curIdx >= 0 and minIdx > curIdx:
+            minIdx = curIdx
+            
+        curIdx = self.m_fileBytes.find(ProtoKeyWord.ePackage, self.m_curPos)     # "package" 关键字查找
+        if curIdx >= 0 and minIdx > curIdx:
+            minIdx = curIdx 
+        
+        if minIdx < len(self.m_fileBytes):      # 如果可以找到关键字
+            ret = self.m_fileBytes[self.m_curPos : minIdx - 1]          # minIdx - 1 去掉最后的 "\n"
+            self.m_curPos = minIdx
+        else:       # 如果没有找到关键字，就说明已经到文件的结尾都没有这些关键字了，全部作为注释了
+            ret = self.m_fileBytes[self.m_curPos : ]
+            self.m_curPos = len(self.m_fileBytes)
         
         return ret
 
