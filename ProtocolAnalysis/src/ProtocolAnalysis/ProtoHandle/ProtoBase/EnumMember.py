@@ -7,7 +7,7 @@ class EnumMember(object):
     '''
 
 
-    def __init__(self, params):
+    def __init__(self):
         '''
         Constructor
         '''
@@ -25,5 +25,5 @@ class EnumMember(object):
         else: 
             tokenParseBuffer.getTokenAndRemove()        # 移除 ";"
         if hasComment:
-            self.m_commentStr = tokenParseBuffer.getTokenAndRemove()
+            self.m_commentStr = tokenParseBuffer.getLineRemove()
 

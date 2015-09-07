@@ -30,5 +30,5 @@ class MessageMember(ProtoTypeMemberBase):
         else: 
             tokenParseBuffer.getTokenAndRemove()        # 移除 ";"
         if hasComment:
-            self.m_commentStr = tokenParseBuffer.getTokenAndRemove()
+            self.m_commentStr = tokenParseBuffer.getLineRemove()
 

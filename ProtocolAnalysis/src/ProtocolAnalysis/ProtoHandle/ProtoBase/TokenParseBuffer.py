@@ -209,7 +209,7 @@ class TokenParseBuffer(object):
         curIdx = 0
         
         curIdx = self.m_fileBytes.find(ProtoKeyWord.eMessage, self.m_curPos)     # "message" 关键字查找
-        if minIdx > curIdx:
+        if curIdx >= 0 and minIdx > curIdx:
             minIdx = curIdx
             
         curIdx = self.m_fileBytes.find(ProtoKeyWord.eEnum, self.m_curPos)     # "enum" 关键字查找

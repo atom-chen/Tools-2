@@ -33,23 +33,66 @@ class ExportCSharpFile():
                     fHandle.close()         # 关闭文件输入
                         
     
+    # 导出命名空间
+    def exportNSStart(self, fHandle):
+        startNS = "namespace SDK.Lib"
+        fHandle.write(startNS)
+        
+        startNS = "{"
+        fHandle.write(startNS)
+    
+    
+    # 导出命名空间结束
+    def exportNSEnd(self, fHandle):
+        endNS = "}"
+        fHandle.write(endNS)
+        
+        
+    
+    
     # 导出一个 ProtoMessage 
     def exportMessage(self, fHandle, message):
         # 写入类的名字
-        clsName = "public class {0}\n{1}\n".format(message.getTypeName(), "{")
+        clsName = "public class {0}\n".format(message.getTypeName())
         fHandle.write(clsName)
+        # 输入左括号
+        leftBrace = "{0}\n".format("{")
+        fHandle.write(leftBrace)
         
         # 写入类的成员
         for member in message.getMemberList():
-            memberStr = "public {0} {1};\n".format(CSharpKeyWord.sProtoKey2CSharpKey[member.getTypeName()], member.getVarName())
+            memberStr = "\tpublic {0} {1};\n".format(CSharpKeyWord.sProtoKey2CSharpKey[member.getTypeName()], member.getVarName())
             fHandle.write(memberStr)
             
+        # 写入一个空行
+        spaceLine = "\n"
+        fHandle.write(spaceLine)
+        
         # 写入构造函数
-        constructFuncStr = "public {0}()\n{1}\n{2}\n".format(member.getVarName(), "{", "}")
+        constructFuncStr = "\tpublic {0}()\n".format(message.getTypeName())
         fHandle.write(constructFuncStr)
         
+        constructFuncStr = "\t{0}\n".format("{")
+        fHandle.write(constructFuncStr)
+        
+        constructFuncStr = "\t{0}\n".format("}")
+        fHandle.write(constructFuncStr)
+        
+        # 写入一个空行
+        spaceLine = "\n"
+        fHandle.write(spaceLine)
+        
         # 写入序列化函数    
-        serializeStr = "override public void serialize(ByteBuffer ba)\n{0}\n{1}\n".format("{", "}")
+        serializeStr = "\toverride public void serialize(ByteBuffer ba)\n"
+        fHandle.write(serializeStr)
+        
+        serializeStr = "\t{0}\n".format("{")
+        fHandle.write(serializeStr)
+        
+        serializeStr = "\t{0}\n".format("}")
+        fHandle.write(serializeStr)
+        
+        serializeStr = "{0}\n".format("}")
         fHandle.write(serializeStr)
         # 吸入反序列化函数
 
