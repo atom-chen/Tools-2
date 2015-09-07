@@ -228,4 +228,4 @@ class TokenParseBuffer(object):
             self.m_curPos = len(self.m_fileBytes)
         
         return ret
-
+    

@@ -7,6 +7,7 @@ import traceback
 import os
 import shutil
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoKeyWord import ProtoKeyWord
 
 
 class Utils(object):
@@ -117,4 +118,26 @@ class Utils(object):
             idx += 1
 
         strParam.m_fileStr = strParam.m_fileStr[idx:]         # 删除内容
+
+
+    # 当前符号是否是注释
+    @staticmethod
+    def tokenIsComment(tokenKey):
+        if len(tokenKey) == 2:  # // 注释
+            if tokenKey == ProtoKeyWord.eSingleLineComment:
+                return True
+        elif len(tokenKey) == 3:  # /** 注释
+            if tokenKey == ProtoKeyWord.eMulLineCommentStart:
+                return True
+        elif len(tokenKey) > 2:
+            tokenKey = tokenKey[:2]         # 截取前两个字节
+            if tokenKey == ProtoKeyWord.eSingleLineComment:
+                return True
+        elif len(tokenKey) > 3:
+            tokenKey = tokenKey[:3]         # 截取前两个字节
+            if tokenKey == ProtoKeyWord.eMulLineCommentStart:
+                return True
+
+        return False
+
 

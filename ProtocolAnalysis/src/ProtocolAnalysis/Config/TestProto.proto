@@ -6,5 +6,11 @@ package TestPackage;
 
 message stTest
 {
-	optional uint32 time = 1;
+	optional uint32 time = 1; 		// 成员属性测试
+};
+
+// 测试枚举
+enum eTest
+{
+	eValue_1 = 0;		// 测试枚举值
 };

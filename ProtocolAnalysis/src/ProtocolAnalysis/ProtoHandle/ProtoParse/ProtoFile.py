@@ -8,6 +8,7 @@ from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoMessage import ProtoMessage
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoComment import ProtoComment
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoPackage import ProtoPackage
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoEnum import ProtoEnum
+from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 
 
 class ProtoFile(ProtoFileBase):
@@ -43,26 +44,8 @@ class ProtoFile(ProtoFileBase):
                 self.m_protoElemList.append(enum_)
                 enum_.parse(tokenParseBuffer)
             else:   # 只处理注释
-                if len(tokenKey) == 2:  # // 注释
-                    if tokenKey == ProtoKeyWord.eSingleLineComment:
-                        comment = ProtoComment()
-                        self.m_protoElemList.append(comment)
-                        comment.parse(tokenParseBuffer)
-                elif len(tokenKey) == 3:  # /** 注释
-                    if tokenKey == ProtoKeyWord.eMulLineCommentStart:
-                        comment = ProtoComment()
-                        self.m_protoElemList.append(comment)
-                        comment.parse(tokenParseBuffer)
-                elif len(tokenKey) > 2:
-                    tokenKey = tokenKey[:2]         # 截取前两个字节
-                    if tokenKey == ProtoKeyWord.eSingleLineComment:
-                        comment = ProtoComment()
-                        self.m_protoElemList.append(comment)
-                        comment.parse(tokenParseBuffer)
-                elif len(tokenKey) > 3:
-                    tokenKey = tokenKey[:3]         # 截取前两个字节
-                    if tokenKey == ProtoKeyWord.eMulLineCommentStart:
-                        comment = ProtoComment()
-                        self.m_protoElemList.append(comment)
-                        comment.parse(tokenParseBuffer)
+                if AppSysBase.instance().getClsUtils().tokenIsComment(tokenKey):       # 如果当前符号是注释
+                    comment = ProtoComment()
+                    self.m_protoElemList.append(comment)
+                    comment.parse(tokenParseBuffer)
 

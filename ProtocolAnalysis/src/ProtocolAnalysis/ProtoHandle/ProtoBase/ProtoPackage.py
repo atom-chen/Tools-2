@@ -22,7 +22,7 @@ class ProtoPackage(ProtoElemBase):
         self.m_typeName = tokenParseBuffer.getTokenAndRemove() # "stTest"
         
         if self.m_typeName.find(";") != -1:     # 如果数字后面的分号一起取出来，中间没有空格
-            self.m_seqValue = self.m_seqValue[:len(self.m_typeName) - 1]
+            self.m_typeName = self.m_typeName[:len(self.m_typeName) - 1]
         else: 
             tokenParseBuffer.getTokenAndRemove()        # 移除 ";"
         
