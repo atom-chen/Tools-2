@@ -1,2 +1,2 @@
-ProtoFilesList=E:/dump/TestProto.proto
-OutPath=E:/dump
+ProtoFilesList=E:/Self/Self/Tools/Tools/ProtocolAnalysis/src/ProtocolAnalysis/Config/TestProto.proto
+OutPath=E:/Self/Self/Tools/Tools/ProtocolAnalysis/src/ProtocolAnalysis/Config

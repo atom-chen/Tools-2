@@ -5,7 +5,7 @@
 #import time
 
 
-from ProtocolAnalysis.ProtoParse.ProtoFilesList import ProtoFilesList
+from ProtocolAnalysis.ProtoHandle.ProtoParse.ProtoFilesList import ProtoFilesList
 
 
 # base config info

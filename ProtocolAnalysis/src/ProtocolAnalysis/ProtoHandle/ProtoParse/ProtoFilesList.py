@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 
-from ProtocolAnalysis.ProtoParse.ProtoFile import ProtoFile
-from ProtocolAnalysis.ProtoParse.ProtoDir import ProtoDir
+from ProtocolAnalysis.ProtoHandle.ProtoParse.ProtoFile import ProtoFile
+from ProtocolAnalysis.ProtoHandle.ProtoParse.ProtoDir import ProtoDir
 
 
 class ProtoFilesList(object):

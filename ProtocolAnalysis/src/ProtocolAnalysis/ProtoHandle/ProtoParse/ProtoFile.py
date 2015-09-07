@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 
-from ProtocolAnalysis.ProtoParse.ProtoFileBase import ProtoFileBase, eFileType
-from ProtocolAnalysis.ProtoParse.ProtoBase.TokenParseBuffer import TokenParseBuffer
-from ProtocolAnalysis.ProtoParse.ProtoBase.ProtoKeyWord import ProtoKeyWord
-from ProtocolAnalysis.ProtoParse.ProtoBase.ProtoMessage import ProtoMessage
+from ProtocolAnalysis.ProtoHandle.ProtoParse.ProtoFileBase import ProtoFileBase, eFileType
+from ProtocolAnalysis.ProtoHandle.ProtoBase.TokenParseBuffer import TokenParseBuffer
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoKeyWord import ProtoKeyWord
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoMessage import ProtoMessage
 
 
 class ProtoFile(ProtoFileBase):

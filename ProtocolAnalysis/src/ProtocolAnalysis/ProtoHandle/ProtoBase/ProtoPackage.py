@@ -1,7 +1,7 @@
 #-*- encoding=utf-8 -*-
 
 
-from ProtocolAnalysis.ProtoParse.ProtoBase.ProtoElemBase import ProtoElemBase, eProtoElemType
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoElemBase import ProtoElemBase, eProtoElemType
 
 
 class ProtoPackage(ProtoElemBase):
