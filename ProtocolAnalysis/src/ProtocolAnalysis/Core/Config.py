@@ -6,7 +6,6 @@
 
 
 from ProtocolAnalysis.ProtoHandle.ProtoParse.ProtoFilesList import ProtoFilesList
-from fileinput import close
 
 
 # base config info

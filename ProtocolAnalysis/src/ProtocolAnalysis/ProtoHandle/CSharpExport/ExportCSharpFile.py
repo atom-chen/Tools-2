@@ -4,6 +4,7 @@
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 from ProtocolAnalysis.ProtoHandle.ProtoParse.ProtoFileBase import eFileType
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoElemBase import eProtoElemType
+from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpKeyWord import CSharpKeyWord
 
 
 class ExportCSharpFile(object):
@@ -34,5 +35,21 @@ class ExportCSharpFile(object):
     
     # 导出一个 ProtoMessage 
     def exportMessage(self, fHandle, message):
-        pass
+        # 写入类的名字
+        clsName = "public class {0}\n{\n".format(message.getTypeName())
+        fHandle.write(clsName)
+        
+        # 写入类的成员
+        for member in message.getMemberList():
+            memberStr = "public {0} {1};\n".format(CSharpKeyWord.sProtoKey2CSharpKey[member.getTypeName()], member.getVarName())
+            fHandle.write(memberStr)
+            
+        # 写入构造函数
+        constructFuncStr = "public {0}()\n{\n}\n".format(member.getVarName())
+        fHandle.write(constructFuncStr)
+        
+        # 写入序列化函数    
+        serializeStr = "override public void serialize(ByteBuffer ba)\n{\n}\n"
+        fHandle.write(serializeStr)
+        # 吸入反序列化函数
 

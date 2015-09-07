@@ -22,3 +22,12 @@ class ProtoTypeMemberBase(object):
     def parse(self, tokenParseBuffer):
         pass
     
+    
+    def getTypeName(self):
+        return self.m_typeName
+    
+    
+    
+    def getVarName(self):
+        return self.m_varName
+    
