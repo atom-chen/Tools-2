@@ -40,4 +40,6 @@ class ProtoFilesList(object):
             file.parse();
                     
                     
-        
+    def getFilesListPtr(self):
+        return self.m_filesList
+

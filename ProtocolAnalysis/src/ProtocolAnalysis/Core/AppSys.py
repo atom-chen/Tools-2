@@ -6,6 +6,7 @@ from ProtocolAnalysis.Core.Config import Config
 from ProtocolAnalysis.Core.Logger import Logger
 from ProtocolAnalysis.Core.CodeConv import CodeConv
 from ProtocolAnalysis.Core.Utils import Utils
+from ProtocolAnalysis.ProtoHandle.CSharpExport.ExportCSharpFile import ExportCSharpFile
 
 
 class AppSys(AppSysBase):
@@ -35,6 +36,7 @@ class AppSys(AppSysBase):
         
         self.m_logger = Logger()
         self.m_codeConv = CodeConv()
+        self.m_exportCSharpFile = ExportCSharpFile()
         
         # Utils 类
         self.m_clsUtils = Utils
@@ -70,4 +72,8 @@ class AppSys(AppSysBase):
 
     def setConvThread(self, rhv): 
         self.m_convThread = rhv
+
+
+    def getExportCSharpFile(self):
+        return self.m_exportCSharpFile
 

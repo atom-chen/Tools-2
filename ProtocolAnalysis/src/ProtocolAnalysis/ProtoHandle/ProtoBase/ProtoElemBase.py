@@ -12,8 +12,8 @@ class ProtoElemBase(object):
 
 
     def __init__(self, elemType):
-        self.m_typeKeyWord = ""
         self.m_type = elemType
+        self.m_typeKeyWord = ""
         self.m_commentStr = ""          # 注释字符串
         self.m_typeName = ""            # 元素的类型名字
         self.m_memberList = []          # 成员列表
@@ -21,4 +21,8 @@ class ProtoElemBase(object):
     
     def parse(self, tokenParseBuffer):
         pass
+
+
+    def getType(self):
+        return self.m_type
 

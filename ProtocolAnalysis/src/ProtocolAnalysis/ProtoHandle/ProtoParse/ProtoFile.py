@@ -22,6 +22,8 @@ class ProtoFile(ProtoFileBase):
         Constructor
         '''
         super(ProtoFile, self).__init__(eFileType.eFile, fullPath)
+        self.m_fullPath = AppSysBase.instance().getClsUtils().normalPath(self.m_fullPath)
+        self.m_fileNameNoExt = AppSysBase.instance().getClsUtils().getFileNameNoExt(self.m_fullPath)
         self.m_protoElemList = []
 
 
@@ -48,4 +50,8 @@ class ProtoFile(ProtoFileBase):
                     comment = ProtoComment()
                     self.m_protoElemList.append(comment)
                     comment.parse(tokenParseBuffer)
+
+
+    def getProtoElemList(self):
+        return self.m_protoElemList
 

@@ -17,4 +17,6 @@ class ProtoKeyWord(object):
     eRightBrace = "}"
     eSemicolon = ";"
     eRightBraceSemicolon = "};"
+    
+    eUint32 = "uint32"
 

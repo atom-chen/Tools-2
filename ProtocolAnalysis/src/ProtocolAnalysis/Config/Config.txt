@@ -1,2 +1,3 @@
 ProtoFilesList=E:/Self/Self/Tools/Tools/ProtocolAnalysis/src/ProtocolAnalysis/Config/TestProto.proto
-OutPath=E:/Self/Self/Tools/Tools/ProtocolAnalysis/src/ProtocolAnalysis/Config
+CSOutPath=E:/Self/Self/Tools/Tools/ProtocolAnalysis/src/ProtocolAnalysis/Config
+CPPOutPath=E:/Self/Self/Tools/Tools/ProtocolAnalysis/src/ProtocolAnalysis/Config

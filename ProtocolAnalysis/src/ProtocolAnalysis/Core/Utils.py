@@ -141,3 +141,33 @@ class Utils(object):
         return False
 
 
+    # 修改路径为 "/"
+    @staticmethod
+    def normalPath(fullPath):
+        ret = fullPath.replace('\\', '/')
+        return ret
+
+
+    # 获取文件的文件名字，没有扩展目录
+    @staticmethod
+    def getFileNameNoExt(fileName):
+        normalFileName = Utils.normalPath(fileName)
+        lastSlashIdx = normalFileName.rfind("/")
+        lastDotIdx = normalFileName.rfind(".")
+        ret = ""
+        if lastSlashIdx != -1:       # 如果查找到斜杠
+            if lastDotIdx != -1:
+                ret = normalFileName[lastSlashIdx + 1:lastDotIdx]
+            else:
+                ret = normalFileName[lastSlashIdx + 1:]
+        else:
+            if lastDotIdx != -1:
+                ret = normalFileName[:lastDotIdx]
+            else:
+                ret = normalFileName
+        return ret
+            
+            
+        
+        
+        
