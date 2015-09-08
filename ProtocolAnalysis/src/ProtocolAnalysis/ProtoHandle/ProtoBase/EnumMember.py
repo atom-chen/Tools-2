@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 
-class EnumMember(object):
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoTypeMemberBase import ProtoTypeMemberBase
+
+
+class EnumMember(ProtoTypeMemberBase):
     '''
     classdocs
     '''

@@ -19,11 +19,19 @@ class ProtoMessage(ProtoElemBase):
         Constructor
         '''
         super(ProtoMessage, self).__init__(eProtoElemType.eMessage)
+        self.m_parentCls = ""
 
 
     def parse(self, tokenParseBuffer):
         self.m_typeKeyWord = tokenParseBuffer.getTokenAndRemove()  # "message"
         self.m_typeName = tokenParseBuffer.getTokenAndRemove() # "stTest"
+        # 检查父类
+        nextToken = tokenParseBuffer.getTokenAndNoRemove()
+        if nextToken == ":":     # 说明有基类
+            nextToken = tokenParseBuffer.getTokenAndRemove()    # 移除 ":"
+            self.m_parentCls = tokenParseBuffer.getTokenAndRemove()
+        
+        
         tokenParseBuffer.getTokenAndRemove()        # 移除 "{"
         
         while True:
@@ -44,4 +52,9 @@ class ProtoMessage(ProtoElemBase):
             
         
         tokenParseBuffer.getTokenAndRemove()        # 移除 "};"
+        
+        
+    def getParentCls(self):
+        return self.m_parentCls
+        
         

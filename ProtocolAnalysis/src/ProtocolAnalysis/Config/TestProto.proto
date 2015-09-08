@@ -2,9 +2,14 @@
 
 package TestPackage;
 
+message stBase
+{
+	optional uint32 param = 1; 		// 基类成员属性测试
+};
+
 //自己测试注释-2
 
-message stTest
+message stTest : stBase
 {
 	optional uint32 time = 1; 		// 成员属性测试
 };
@@ -13,4 +18,12 @@ message stTest
 enum eTest
 {
 	eValue_1 = 0;		// 测试枚举值
+};
+
+/**
+ * @brief 多行测试
+ */
+message stTestMulti : stBase
+{
+	optional uint32 time = 1; 		// 成员属性测试
 };

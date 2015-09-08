@@ -194,4 +194,10 @@ class Utils(object):
         fHandle.write("}")
     
     
+    # 判断字符串是否有效
+    @staticmethod
+    def isNullOrEmpty(str_):
+        return str_ == None or len(str_) == 0
+    
+    
     

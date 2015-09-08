@@ -36,16 +36,27 @@ class ExportCSharpFile():
                         if protoElem.getType() == eProtoElemType.eMessage:  # 如果是消息
                             if fileMsgCount > 0:            # 如果之前已经有输出，需要输出一个新行
                                 AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
-                                AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
                             self.exportMessage(fHandle, protoElem)
                             fileMsgCount += 1
-
+                        elif protoElem.getType() == eProtoElemType.eComment:
+                            if fileMsgCount > 0:
+                                AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+                            self.exportComment(fHandle, protoElem)
+                            fileMsgCount += 1
 
                     self.exportNSEnd(fHandle)
                     
                     fHandle.close()         # 关闭文件输入
-     
-       
+    
+    
+    # 导出注释
+    def exportComment(self, fHandle, message):
+        if not AppSysBase.instance().getClsUtils().isNullOrEmpty(message.getCommentStr()):
+            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            fHandle.write(message.getCommentStr())
+    
+    
     # 导出导入的命名空间
     def exportUsing(self, fHandle):
         # 输出导入的命名空间
@@ -78,7 +89,10 @@ class ExportCSharpFile():
         # 写入类的名字
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
-        clsName = "public class {0}".format(message.getTypeName())
+        if AppSysBase.instance().getClsUtils().isNullOrEmpty(message.getParentCls()):
+            clsName = "public class {0}".format(message.getTypeName())
+        else:
+            clsName = "public class {0} : {1}".format(message.getTypeName(), message.getParentCls())
         fHandle.write(clsName)
         
         # 输入左括号
@@ -92,8 +106,13 @@ class ExportCSharpFile():
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
             
+            # 写入变量名字
             memberStr = "public {0} {1};".format(CSharpKeyWord.sProtoKey2CSharpKey[member.getTypeName()], member.getVarName())
             fHandle.write(memberStr)
+            #写入注释
+            if not AppSysBase.instance().getClsUtils().isNullOrEmpty(member.getCommentStr()):   # 如果字符串不为空
+                AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+                fHandle.write(member.getCommentStr())
             
             AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         

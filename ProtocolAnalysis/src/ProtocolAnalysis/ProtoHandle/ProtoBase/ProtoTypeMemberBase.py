@@ -12,11 +12,11 @@ class ProtoTypeMemberBase(object):
         '''
         Constructor
         '''
-        self.m_qualifier = ""
-        self.m_typeName = ""
-        self.m_varName = ""
-        self.m_seqValue = 0
-        self.m_commentStr = ""
+        self.m_qualifier = ""       # message
+        self.m_typeName = ""        # message
+        self.m_varName = ""         # message enum
+        self.m_seqValue = 0         # message enum
+        self.m_commentStr = ""      # message enum
 
 
     def parse(self, tokenParseBuffer):
@@ -30,4 +30,8 @@ class ProtoTypeMemberBase(object):
     
     def getVarName(self):
         return self.m_varName
+    
+    
+    def getCommentStr(self):
+        return self.m_commentStr
     

@@ -221,11 +221,15 @@ class TokenParseBuffer(object):
             minIdx = curIdx 
         
         if minIdx < len(self.m_fileBytes):      # 如果可以找到关键字
-            ret = self.m_fileBytes[self.m_curPos : minIdx - 1]          # minIdx - 1 去掉最后的 "\n"
+            ret = self.m_fileBytes[self.m_curPos : minIdx]
             self.m_curPos = minIdx
         else:       # 如果没有找到关键字，就说明已经到文件的结尾都没有这些关键字了，全部作为注释了
             ret = self.m_fileBytes[self.m_curPos : ]
             self.m_curPos = len(self.m_fileBytes)
+            
+        if len(ret) > 0:    # 如果有注释
+            strlist = ret.split('\n')
         
-        return ret
+        #return ret
+        return strlist
     
