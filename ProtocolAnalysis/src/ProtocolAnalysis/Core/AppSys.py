@@ -7,6 +7,11 @@ from ProtocolAnalysis.Core.Logger import Logger
 from ProtocolAnalysis.Core.CodeConv import CodeConv
 from ProtocolAnalysis.Core.Utils import Utils
 from ProtocolAnalysis.ProtoHandle.CSharpExport.ExportCSharpFile import ExportCSharpFile
+from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportComment import CSharpExportComment
+from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportMessage import CSharpExportMessage
+from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportEnum import CSharpExportEnum
+from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportUsing import CSharpExportUsing
+from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportNS import CSharpExportNS
 
 
 class AppSys(AppSysBase):
@@ -35,6 +40,11 @@ class AppSys(AppSysBase):
         
         # Utils 类
         self.m_clsUtils = Utils
+        self.m_clsCSharpExportMessage = CSharpExportMessage
+        self.m_clsCSharpExportEnum = CSharpExportEnum
+        self.m_clsCSharpExportUsing = CSharpExportUsing
+        self.m_clsCSharpExportNS = CSharpExportNS
+        self.m_clsCSharpExportComment = CSharpExportComment
         
         self.m_config = Config()
         self.m_config.readInit('Config/Config.txt')
@@ -78,4 +88,23 @@ class AppSys(AppSysBase):
 
     def getExportCSharpFile(self):
         return self.m_exportCSharpFile
+    
+    
+    def getClsCSharpExportMessage(self):
+        return self.m_clsCSharpExportMessage
+    
 
+    def getClsCSharpExportEnum(self):
+        return self.m_clsCSharpExportEnum
+    
+    
+    def getClsCSharpExportComment(self):
+        return self.m_clsCSharpExportComment
+    
+    
+    def getClsCSharpExportUsing(self):
+        return self.m_clsCSharpExportUsing
+    
+    
+    def getClsCSharpExportNS(self):
+        return self.m_clsCSharpExportNS
