@@ -25,37 +25,36 @@ class ExportCSharpFile():
                 fileNameNoExt = file.getFileNameNoExt()
                 fileOutPath = AppSysBase.instance().getConfigPtr().getCSOutPath();
                 fullPath = "{0}/{1}.cs".format(fileOutPath, fileNameNoExt)
+                
+                fileMsgCount = 0
+                
                 with open(fullPath, 'w', encoding = 'utf8') as fHandle:
+                    self.exportUsing(fHandle)
+                    self.exportNSStart(fHandle)
+                    
                     for protoElem in file.getProtoElemList():   # 遍历整个文件列表
                         if protoElem.getType() == eProtoElemType.eMessage:  # 如果是消息
+                            if fileMsgCount > 0:            # 如果之前已经有输出，需要输出一个新行
+                                AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+                                AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
                             self.exportMessage(fHandle, protoElem)
+                            fileMsgCount += 1
+
+
+                    self.exportNSEnd(fHandle)
                     
                     fHandle.close()         # 关闭文件输入
-                        
-    
-    # 导出命名空间
-    def exportNSStart(self, fHandle):
-        startNS = "namespace SDK.Lib"
-        fHandle.write(startNS)
-        
-        startNS = "{"
-        fHandle.write(startNS)
-    
-    
-    # 导出命名空间结束
-    def exportNSEnd(self, fHandle):
-        endNS = "}"
-        fHandle.write(endNS)
-        
-        
-    
-    
-    # 导出一个 ProtoMessage 
-    def exportMessage(self, fHandle, message):
+     
+       
+    # 导出导入的命名空间
+    def exportUsing(self, fHandle):
         # 输出导入的命名空间
         importNS = "using SDK.Lib;"
         fHandle.write(importNS)
         
+    
+    # 导出命名空间开始
+    def exportNSStart(self, fHandle):
         # 输出命名空间
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
@@ -66,6 +65,16 @@ class ExportCSharpFile():
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         AppSysBase.instance().getClsUtils().writeLBrace2File(fHandle)
         
+        
+    # 导出命名空间结束
+    def exportNSEnd(self, fHandle):
+        # 写入命名空间的右括号
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
+        
+    
+    # 导出一个 ProtoMessage 
+    def exportMessage(self, fHandle, message):
         # 写入类的名字
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
@@ -145,11 +154,7 @@ class ExportCSharpFile():
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
         
-        # 写入命名空间的右括号
-        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
-        AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
-        
-        # 吸入反序列化函数
+    # 导入反序列化函数
     
     
     
