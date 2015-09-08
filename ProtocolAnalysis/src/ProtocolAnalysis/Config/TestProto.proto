@@ -11,7 +11,8 @@ message stBase
 
 message stTest : stBase
 {
-	optional uint32 time = 1; 		// 成员属性测试
+	optional uint32 time_1 = 1; 		// 成员属性测试-1
+	optional uint32 time_2 = 1; 		// 成员属性测试-2
 };
 
 // 测试枚举

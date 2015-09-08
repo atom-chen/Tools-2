@@ -25,24 +25,18 @@ class ExportCSharpFile():
                 fileNameNoExt = file.getFileNameNoExt()
                 fileOutPath = AppSysBase.instance().getConfigPtr().getCSOutPath();
                 fullPath = "{0}/{1}.cs".format(fileOutPath, fileNameNoExt)
-                
-                fileMsgCount = 0
-                
+
                 with open(fullPath, 'w', encoding = 'utf8') as fHandle:
                     self.exportUsing(fHandle)
                     self.exportNSStart(fHandle)
                     
                     for protoElem in file.getProtoElemList():   # 遍历整个文件列表
                         if protoElem.getType() == eProtoElemType.eMessage:  # 如果是消息
-                            if fileMsgCount > 0:            # 如果之前已经有输出，需要输出一个新行
-                                AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
                             self.exportMessage(fHandle, protoElem)
-                            fileMsgCount += 1
+                        elif protoElem.getType() == eProtoElemType.eEnum:
+                            self.exportEnum(fHandle, protoElem)
                         elif protoElem.getType() == eProtoElemType.eComment:
-                            if fileMsgCount > 0:
-                                AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
                             self.exportComment(fHandle, protoElem)
-                            fileMsgCount += 1
 
                     self.exportNSEnd(fHandle)
                     
@@ -174,9 +168,47 @@ class ExportCSharpFile():
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
         
+        # 输入一个空行，以便隔开
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        
     # 导入反序列化函数
     
     
     
+    # 导出 enum
+    def exportEnum(self, fHandle, message):
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        clsName = "public enum {0}".format(message.getTypeName())
+        fHandle.write(clsName)
+        
+        # 输入左括号
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeLBrace2File(fHandle)
+        
+        # 写入类的成员
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        for member in message.getMemberList():
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            
+            # 写入变量名字
+            memberStr = "{0},".format(member.getVarName())
+            fHandle.write(memberStr)
+            #写入注释
+            if not AppSysBase.instance().getClsUtils().isNullOrEmpty(member.getCommentStr()):   # 如果字符串不为空
+                AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+                fHandle.write(member.getCommentStr())
+            
+            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        
+        # 写入枚举的右括号
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
+        
+        # 输入一个空行，以便隔开
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
     
     
