@@ -12,7 +12,6 @@ from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportMessage import CSharp
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportEnum import CSharpExportEnum
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportUsing import CSharpExportUsing
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportNS import CSharpExportNS
-from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportImport import CSharpExportImport
 
 
 class AppSys(AppSysBase):
@@ -46,7 +45,6 @@ class AppSys(AppSysBase):
         self.m_clsCSharpExportUsing = CSharpExportUsing
         self.m_clsCSharpExportNS = CSharpExportNS
         self.m_clsCSharpExportComment = CSharpExportComment
-        self.m_clsCSharpExportImport = CSharpExportImport
         
         self.m_config = Config()
         self.m_config.readInit('Config/Config.txt')
@@ -110,10 +108,6 @@ class AppSys(AppSysBase):
     
     def getClsCSharpExportNS(self):
         return self.m_clsCSharpExportNS
-    
-    
-    def getClsCSharpExportImport(self):
-        return self.m_clsCSharpExportImport
 
     
     

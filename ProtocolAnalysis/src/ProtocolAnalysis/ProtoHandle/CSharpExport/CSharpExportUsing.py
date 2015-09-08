@@ -24,11 +24,16 @@ class CSharpExportUsing(object):
         #fHandle.write(importUsing)
         
         # 输出导入的命名空间
+        bFirst = True
         for protoElem in file.getProtoElemList():   # 遍历整个文件列表
             if protoElem.getElemType() == eProtoElemType.eImport:
                 for importNS in protoElem.getHeaderList():
+                    if not bFirst:
+                        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+                    
                     nsStr = "using {0};".format(importNS)
                     fHandle.write(nsStr)
                     
-                    AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+                    bFirst = False
+                    
 
