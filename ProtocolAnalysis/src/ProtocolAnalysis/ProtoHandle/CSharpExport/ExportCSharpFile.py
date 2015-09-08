@@ -51,10 +51,11 @@ class ExportCSharpFile():
     
     # 导出注释
     def exportComment(self, fHandle, message):
-        if not AppSysBase.instance().getClsUtils().isNullOrEmpty(message.getCommentStr()):
-            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
-            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
-            fHandle.write(message.getCommentStr())
+        if len(message.getCommentList()) > 0:
+            for commentStr in message.getCommentList():
+                AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+                AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+                fHandle.write(commentStr)
     
     
     # 导出导入的命名空间

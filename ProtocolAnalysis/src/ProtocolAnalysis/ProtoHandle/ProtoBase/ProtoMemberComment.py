@@ -17,5 +17,5 @@ class ProtoMemberComment(ProtoTypeMemberBase):
 
     # 可能是单行注释或者多行注释
     def parse(self, tokenParseBuffer):
-        self.m_commentStr = tokenParseBuffer.getCommentAndSpaceLine()
+        self.m_commentList = tokenParseBuffer.getCommentAndSpaceLine()
 

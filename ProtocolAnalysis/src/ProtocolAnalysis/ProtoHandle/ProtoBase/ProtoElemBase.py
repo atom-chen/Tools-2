@@ -15,7 +15,7 @@ class ProtoElemBase(object):
         self.m_type = elemType          # 基本元素类型， message enum 
         self.m_typeKeyWord = ""         # Proto 关键字，例如 "message\enum" 类似, message enum
         self.m_typeName = ""            # 元素的类型名字, message enum
-        self.m_commentStr = ""          # 注释字符串，只有 ProtoComment 会用到这个字段, Comment
+        self.m_commentList = []          # 注释字符串列表，就是可能会有很多行，只有 ProtoComment 会用到这个字段, Comment
         self.m_memberList = []          # 成员列表,message enum
     
     
@@ -31,8 +31,8 @@ class ProtoElemBase(object):
         return self.m_typeName
     
 
-    def getCommentStr(self):
-        return self.m_commentStr
+    def getCommentList(self):
+        return self.m_commentList
 
 
     def getMemberList(self):

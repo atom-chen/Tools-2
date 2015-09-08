@@ -228,7 +228,11 @@ class TokenParseBuffer(object):
             self.m_curPos = len(self.m_fileBytes)
             
         if len(ret) > 0:    # 如果有注释
-            strlist = ret.split('\n')
+            # 删除最后一个 "\n"
+            lastNextIdx = ret.rfind("\n")
+            if lastNextIdx != -1:
+                ret = ret[:lastNextIdx]
+            strlist = ret.split('\n') 
         
         #return ret
         return strlist

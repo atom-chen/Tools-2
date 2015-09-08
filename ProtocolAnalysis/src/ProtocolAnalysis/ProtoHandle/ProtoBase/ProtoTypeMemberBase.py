@@ -16,7 +16,7 @@ class ProtoTypeMemberBase(object):
         self.m_typeName = ""        # message
         self.m_varName = ""         # message enum
         self.m_seqValue = 0         # message enum
-        self.m_commentStr = ""      # message enum
+        self.m_commentStr = ""      # message enum，但是只有一行
 
 
     def parse(self, tokenParseBuffer):
