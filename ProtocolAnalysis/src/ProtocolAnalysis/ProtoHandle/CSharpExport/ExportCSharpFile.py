@@ -52,47 +52,106 @@ class ExportCSharpFile():
     
     # 导出一个 ProtoMessage 
     def exportMessage(self, fHandle, message):
+        # 输出导入的命名空间
+        importNS = "using SDK.Lib;"
+        fHandle.write(importNS)
+        
+        # 输出命名空间
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        
+        nsStr = "namespace Game.Msg"
+        fHandle.write(nsStr)
+        
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeLBrace2File(fHandle)
+        
         # 写入类的名字
-        clsName = "public class {0}\n".format(message.getTypeName())
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        clsName = "public class {0}".format(message.getTypeName())
         fHandle.write(clsName)
+        
         # 输入左括号
-        leftBrace = "{0}\n".format("{")
-        fHandle.write(leftBrace)
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeLBrace2File(fHandle)
         
         # 写入类的成员
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         for member in message.getMemberList():
-            memberStr = "\tpublic {0} {1};\n".format(CSharpKeyWord.sProtoKey2CSharpKey[member.getTypeName()], member.getVarName())
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            
+            memberStr = "public {0} {1};".format(CSharpKeyWord.sProtoKey2CSharpKey[member.getTypeName()], member.getVarName())
             fHandle.write(memberStr)
             
-        # 写入一个空行
-        spaceLine = "\n"
-        fHandle.write(spaceLine)
+            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         
         # 写入构造函数
-        constructFuncStr = "\tpublic {0}()\n".format(message.getTypeName())
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        constructFuncStr = "public {0}()".format(message.getTypeName())
         fHandle.write(constructFuncStr)
         
-        constructFuncStr = "\t{0}\n".format("{")
-        fHandle.write(constructFuncStr)
+        # 写入构造函数左括号
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeLBrace2File(fHandle)
         
-        constructFuncStr = "\t{0}\n".format("}")
-        fHandle.write(constructFuncStr)
+        # 写入构造函数内容
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         
-        # 写入一个空行
-        spaceLine = "\n"
-        fHandle.write(spaceLine)
-        
-        # 写入序列化函数    
-        serializeStr = "\toverride public void serialize(ByteBuffer ba)\n"
-        fHandle.write(serializeStr)
-        
-        serializeStr = "\t{0}\n".format("{")
-        fHandle.write(serializeStr)
-        
-        serializeStr = "\t{0}\n".format("}")
-        fHandle.write(serializeStr)
-        
-        serializeStr = "{0}\n".format("}")
-        fHandle.write(serializeStr)
-        # 吸入反序列化函数
+        # 写入构造函数右括号
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
 
+        # 写入序列化函数名字
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        serializeStr = "override public void serialize(ByteBuffer bu)"
+        fHandle.write(serializeStr)
+        
+        # 写入序列函数的左括号
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeLBrace2File(fHandle)
+        
+        # 写入序列函数基本函数
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        fHandle.write("base.serialize(bu)")
+        
+        # 写入序列函数的右括号
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
+        
+        # 写入类的右括号
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
+        
+        # 写入命名空间的右括号
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
+        
+        # 吸入反序列化函数
+    
+    
+    
+    
+    

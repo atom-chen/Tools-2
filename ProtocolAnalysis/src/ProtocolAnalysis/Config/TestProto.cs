@@ -1,12 +1,19 @@
-public class stTest
+using SDK.Lib;
+
+namespace Game.Msg
 {
-	public uint32 time;
-
-	public stTest()
+	public class stTest
 	{
-	}
+		public uint32 time;
 
-	override public void serialize(ByteBuffer ba)
-	{
+		public stTest()
+		{
+			
+		}
+
+		override public void serialize(ByteBuffer bu)
+		{
+			base.serialize(bu)
+		}
 	}
 }

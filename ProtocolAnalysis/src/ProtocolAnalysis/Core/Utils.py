@@ -168,6 +168,30 @@ class Utils(object):
         return ret
             
             
+    # 添加一个水平制表
+    @staticmethod
+    def writeTab2File(fHandle):
+        # 写入一个水平制表 \t
+        fHandle.write("\t")
         
         
+    # 写入一个空行
+    @staticmethod
+    def writeNewLine2File(fHandle):
+        # 写入一个空行
+        fHandle.write("\n")
         
+    
+    # 写入左大括号
+    @staticmethod
+    def writeLBrace2File(fHandle):
+        fHandle.write("{")
+        
+        
+    # 写入右大括号
+    @staticmethod
+    def writeRBrace2File(fHandle):
+        fHandle.write("}")
+    
+    
+    
