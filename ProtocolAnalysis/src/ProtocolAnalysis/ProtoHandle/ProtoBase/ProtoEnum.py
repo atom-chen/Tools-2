@@ -22,6 +22,8 @@ class ProtoEnum(ProtoElemBase):
 
     
     def parse(self, tokenParseBuffer):
+        super(ProtoEnum, self).parse(tokenParseBuffer)
+        
         self.m_typeKeyWord = tokenParseBuffer.getTokenAndRemove()  # "enum"
         self.m_typeName = tokenParseBuffer.getTokenAndRemove() # "eTest"
         tokenParseBuffer.getTokenAndRemove()        # 移除 "{"

@@ -27,8 +27,8 @@ class ExportCSharpFile():
                 fullPath = "{0}/{1}.cs".format(fileOutPath, fileNameNoExt)
 
                 with open(fullPath, 'w', encoding = 'utf8') as fHandle:
-                    AppSysBase.instance().getClsCSharpExportUsing().exportUsing(fHandle)
-                    AppSysBase.instance().getClsCSharpExportNS().exportNSStart(fHandle)
+                    AppSysBase.instance().getClsCSharpExportUsing().exportUsing(fHandle, file)
+                    AppSysBase.instance().getClsCSharpExportNS().exportNSStart(fHandle, file)
                     
                     for protoElem in file.getProtoElemList():   # 遍历整个文件列表
                         if protoElem.getElemType() == eProtoElemType.eMessage:  # 如果是消息

@@ -6,6 +6,8 @@ class eProtoElemType(object):
     eEnum = 1       # 枚举类型
     eMessage = 2    # message 类型
     eComment = 3    # 注释
+    eHeader = 4     # C++ 的包含头文件
+    eImport = 5     # CSharp 包含的名字空间
 
 
 class ProtoElemBase(object):

@@ -20,6 +20,8 @@ class MessageMember(ProtoTypeMemberBase):
 
 
     def parse(self, tokenParseBuffer):
+        super(MessageMember, self).parse(tokenParseBuffer)
+        
         line = tokenParseBuffer.getLineNoRemove()       # 注释可能在一行的结尾
         hasComment = (line.find("//") != -1)
         

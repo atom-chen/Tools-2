@@ -6,6 +6,8 @@ class ProtoKeyWord(object):
     ePackage = "package"
     eMessage = "message"
     eEnum = "enum"
+    eHeader = "header"
+    eImport = "import"
     eSingleLineComment = "//"
     eMulLineCommentStart = "/**"
     eMulLineCommentEnd = "*/"

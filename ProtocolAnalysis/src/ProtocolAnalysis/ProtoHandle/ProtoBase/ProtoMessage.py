@@ -24,6 +24,8 @@ class ProtoMessage(ProtoElemBase):
 
 
     def parse(self, tokenParseBuffer):
+        super(ProtoMessage, self).parse(tokenParseBuffer)
+        
         self.m_typeKeyWord = tokenParseBuffer.getTokenAndRemove()  # "message"
         self.m_typeName = tokenParseBuffer.getTokenAndRemove() # "stTest"
         # 检查父类

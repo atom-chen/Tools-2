@@ -2,6 +2,7 @@
 
 
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoElemBase import eProtoElemType
 
 
 class CSharpExportNS(object):
@@ -18,13 +19,19 @@ class CSharpExportNS(object):
     
     @staticmethod
     # 导出命名空间开始
-    def exportNSStart(fHandle):
+    def exportNSStart(fHandle, file):
         # 输出命名空间
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         
-        nsStr = "namespace Game.Msg"
-        fHandle.write(nsStr)
+        #nsStr = "namespace Game.Msg"
+        #fHandle.write(nsStr)
+        
+        for protoElem in file.getProtoElemList():   # 遍历整个文件列表
+            if protoElem.getElemType() == eProtoElemType.ePackage:
+                nsStr = "namespace {0}".format(protoElem.getTypeName())
+                fHandle.write(nsStr)
+        
         
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         AppSysBase.instance().getClsUtils().writeLBrace2File(fHandle)

@@ -218,7 +218,15 @@ class TokenParseBuffer(object):
             
         curIdx = self.m_fileBytes.find(ProtoKeyWord.ePackage, self.m_curPos)     # "package" 关键字查找
         if curIdx >= 0 and minIdx > curIdx:
-            minIdx = curIdx 
+            minIdx = curIdx
+            
+        curIdx = self.m_fileBytes.find(ProtoKeyWord.eHeader, self.m_curPos)     # "header" 关键字查找
+        if curIdx >= 0 and minIdx > curIdx:
+            minIdx = curIdx
+            
+        curIdx = self.m_fileBytes.find(ProtoKeyWord.eImport, self.m_curPos)     # "import" 关键字查找
+        if curIdx >= 0 and minIdx > curIdx:
+            minIdx = curIdx
         
         if minIdx < len(self.m_fileBytes):      # 如果可以找到关键字
             ret = self.m_fileBytes[self.m_curPos : minIdx]

@@ -1,9 +1,16 @@
 using SDK.Lib;
+using Game.UI;
+
 
 namespace Game.Msg
 {
 	// 自己测试注释-1
 	
+	public enum CVMsg
+	{
+		MAX_PASSWORD = 32,
+	}
+
 	public class stBase
 	{
 		public uint32 param;	// 基类成员属性测试
@@ -36,7 +43,7 @@ namespace Game.Msg
 			base.serialize(bu)
 			bu.writeUnsignedInt32(time_1);
 			bu.writeUnsignedInt32(time_2);
-			bu.writeMultiByte(strPassword, GkEncode.UTF8, MAX_PASSWORD);
+			bu.writeMultiByte(strPassword, GkEncode.UTF8, CVMsg.MAX_PASSWORD);
 		}
 	}
 

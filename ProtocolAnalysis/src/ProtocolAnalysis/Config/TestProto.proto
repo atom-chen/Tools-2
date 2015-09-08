@@ -1,6 +1,14 @@
 // 自己测试注释-1
 
-package TestPackage;
+header "aaa/bbb.h","dddd/gggg.h";	// 包含头文件
+import SDK.Lib,Game.UI;		// 命名空间解释
+
+package Game.Msg;
+
+enum CVMsg
+{
+	MAX_PASSWORD = 32;
+};
 
 message stBase
 {
@@ -13,7 +21,7 @@ message stTest : stBase
 {
 	uint32 time_1 = 1; 		// 成员属性测试-1
 	uint32 time_2 = 1; 		// 成员属性测试-2
-	char strPassword[MAX_PASSWORD] = {0};	// 测试数组成员
+	char strPassword[CVMsg.MAX_PASSWORD] = {0};	// 测试数组成员
 };
 
 // 测试枚举

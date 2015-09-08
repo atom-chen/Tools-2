@@ -8,6 +8,8 @@ from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoMessage import ProtoMessage
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoComment import ProtoComment
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoPackage import ProtoPackage
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoEnum import ProtoEnum
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoHeader import ProtoHeader
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoImport import ProtoImport
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 
 
@@ -45,6 +47,14 @@ class ProtoFile(ProtoFileBase):
                 enum_ = ProtoEnum()
                 self.m_protoElemList.append(enum_)
                 enum_.parse(tokenParseBuffer)
+            elif tokenKey == ProtoKeyWord.eHeader:
+                header_ = ProtoHeader()
+                self.m_protoElemList.append(header_)
+                header_.parse(tokenParseBuffer)
+            elif tokenKey == ProtoKeyWord.eImport:
+                import_ = ProtoImport()
+                self.m_protoElemList.append(import_)
+                import_.parse(tokenParseBuffer)
             else:   # 只处理注释
                 if AppSysBase.instance().getClsUtils().tokenIsComment(tokenKey):       # 如果当前符号是注释
                     comment = ProtoComment()
