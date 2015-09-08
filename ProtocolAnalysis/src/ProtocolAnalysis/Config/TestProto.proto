@@ -4,7 +4,7 @@ package TestPackage;
 
 message stBase
 {
-	optional uint32 param = 1; 		// 基类成员属性测试
+	uint32 param = 1; 		// 基类成员属性测试
 };
 
 //自己测试注释-2

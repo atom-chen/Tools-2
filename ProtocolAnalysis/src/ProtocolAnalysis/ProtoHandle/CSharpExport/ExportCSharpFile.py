@@ -5,6 +5,7 @@ from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 from ProtocolAnalysis.ProtoHandle.ProtoParse.ProtoFileBase import eFileType
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoElemBase import eProtoElemType
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpKeyWord import CSharpKeyWord
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoTypeMemberBase import PropertyType
 
 
 class ExportCSharpFile():
@@ -31,11 +32,11 @@ class ExportCSharpFile():
                     self.exportNSStart(fHandle)
                     
                     for protoElem in file.getProtoElemList():   # 遍历整个文件列表
-                        if protoElem.getType() == eProtoElemType.eMessage:  # 如果是消息
+                        if protoElem.getElemType() == eProtoElemType.eMessage:  # 如果是消息
                             self.exportMessage(fHandle, protoElem)
-                        elif protoElem.getType() == eProtoElemType.eEnum:
+                        elif protoElem.getElemType() == eProtoElemType.eEnum:
                             self.exportEnum(fHandle, protoElem)
-                        elif protoElem.getType() == eProtoElemType.eComment:
+                        elif protoElem.getElemType() == eProtoElemType.eComment:
                             self.exportComment(fHandle, protoElem)
 
                     self.exportNSEnd(fHandle)
@@ -96,8 +97,8 @@ class ExportCSharpFile():
         AppSysBase.instance().getClsUtils().writeLBrace2File(fHandle)
         
         # 写入类的成员
-        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         for member in message.getMemberList():
+            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
             
@@ -109,7 +110,8 @@ class ExportCSharpFile():
                 AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
                 fHandle.write(member.getCommentStr())
             
-            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        # 与后面分割一个空格
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         
         # 写入构造函数
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
@@ -139,8 +141,6 @@ class ExportCSharpFile():
                 AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
                 fHandle.write(baseMemberInit.getCommentStr())
             
-            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
-            
         
         # 写入构造函数右括号
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
@@ -168,6 +168,21 @@ class ExportCSharpFile():
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         fHandle.write("base.serialize(bu)")
+        
+        # 写入序列化的内容
+        for member in message.getMemberList():
+            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            
+            # 写入变量名字
+            if member.getPropertyType() == PropertyType.eUint32:   # 如果是 uint32 
+                serializeStr = "bu.writeUnsignedInt32({0});".format(member.getVarName())
+            if member.getPropertyType() == PropertyType.eCharArray:
+                serializeStr = "bu.writeMultiByte({0}, GkEncode.UTF8, {1});".format(member.getVarName(), member.getArrLen())
+            fHandle.write(serializeStr)
+        
         
         # 写入序列函数的右括号
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
@@ -200,20 +215,19 @@ class ExportCSharpFile():
         AppSysBase.instance().getClsUtils().writeLBrace2File(fHandle)
         
         # 写入类的成员
-        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         for member in message.getMemberList():
+            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
             
             # 写入变量名字
-            memberStr = "{0},".format(member.getVarName())
+            memberStr = "{0} = {1},".format(member.getVarName(), member.getDefaultValue())
             fHandle.write(memberStr)
             #写入注释
             if not AppSysBase.instance().getClsUtils().isNullOrEmpty(member.getCommentStr()):   # 如果字符串不为空
                 AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
                 fHandle.write(member.getCommentStr())
-            
-            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+
         
         # 写入枚举的右括号
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)

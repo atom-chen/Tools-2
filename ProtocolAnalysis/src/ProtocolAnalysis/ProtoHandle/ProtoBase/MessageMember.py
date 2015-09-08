@@ -52,4 +52,12 @@ class MessageMember(ProtoTypeMemberBase):
             if self.m_typeName == ProtoKeyWord.eUint32:
                 self.m_propType = PropertyType.eUint32
         
-            
+    
+    def getVarNameAndArray(self):
+        return self.m_varNameAndArray;
+    
+    
+    def getArrLen(self):
+        return self.m_arrLen
+        
+        

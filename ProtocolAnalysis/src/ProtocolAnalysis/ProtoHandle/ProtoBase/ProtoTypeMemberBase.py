@@ -30,6 +30,10 @@ class ProtoTypeMemberBase(object):
         pass
     
     
+    def getPropertyType(self):
+        return self.m_propType
+    
+    
     def getTypeName(self):
         return self.m_typeName
     
