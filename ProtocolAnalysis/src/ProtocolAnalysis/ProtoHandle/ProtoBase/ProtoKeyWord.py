@@ -17,6 +17,9 @@ class ProtoKeyWord(object):
     eRightBrace = "}"
     eSemicolon = ";"
     eRightBraceSemicolon = "};"
+    eBase = "base"      # 说明是基类中的成员
     
     eUint32 = "uint32"
+    eChar = "char"
+    
 

@@ -11,8 +11,9 @@ message stBase
 
 message stTest : stBase
 {
-	optional uint32 time_1 = 1; 		// 成员属性测试-1
-	optional uint32 time_2 = 1; 		// 成员属性测试-2
+	uint32 time_1 = 1; 		// 成员属性测试-1
+	uint32 time_2 = 1; 		// 成员属性测试-2
+	char strPassword[MAX_PASSWORD] = {0};	// 测试数组成员
 };
 
 // 测试枚举
@@ -26,5 +27,6 @@ enum eTest
  */
 message stTestMulti : stBase
 {
-	optional uint32 time = 1; 		// 成员属性测试
+	base aaa = eTest.eValue_1;	// 定义基类成员的数值，基类成员前面添加 base ，不用写类型
+	uint32 time = 1; 		// 成员属性测试
 };

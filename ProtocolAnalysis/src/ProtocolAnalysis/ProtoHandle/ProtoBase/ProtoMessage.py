@@ -20,6 +20,7 @@ class ProtoMessage(ProtoElemBase):
         '''
         super(ProtoMessage, self).__init__(eProtoElemType.eMessage)
         self.m_parentCls = ""
+        self.m_baseMemberInitList = []      # 父类成员初始化列表
 
 
     def parse(self, tokenParseBuffer):
@@ -45,6 +46,10 @@ class ProtoMessage(ProtoElemBase):
                 memberComment = ProtoMemberComment()
                 self.m_memberList.append(memberComment)
                 memberComment.parse(memberComment)
+            elif linePrefix == ProtoKeyWord.eBase:
+                messageMember = MessageMember()
+                self.m_baseMemberInitList.append(messageMember)
+                messageMember.parse(tokenParseBuffer)
             else:
                 messageMember = MessageMember()
                 self.m_memberList.append(messageMember)
@@ -58,3 +63,7 @@ class ProtoMessage(ProtoElemBase):
         return self.m_parentCls
         
         
+    # 获取基类成员初始化列表
+    def getBaseMemberInitList(self):
+        return self.m_baseMemberInitList
+

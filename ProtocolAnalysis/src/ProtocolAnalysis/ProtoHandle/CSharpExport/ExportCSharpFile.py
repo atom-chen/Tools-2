@@ -125,10 +125,22 @@ class ExportCSharpFile():
         AppSysBase.instance().getClsUtils().writeLBrace2File(fHandle)
         
         # 写入构造函数内容
-        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
-        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
-        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
-        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        for baseMemberInit in message.getBaseMemberInitList():
+            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            
+            # 写入变量名字
+            memberStr = "{0} = {1};".format(baseMemberInit.getVarName(), baseMemberInit.getDefaultValue())
+            fHandle.write(memberStr)
+            #写入注释
+            if not AppSysBase.instance().getClsUtils().isNullOrEmpty(baseMemberInit.getCommentStr()):   # 如果字符串不为空
+                AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+                fHandle.write(baseMemberInit.getCommentStr())
+            
+            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+            
         
         # 写入构造函数右括号
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
