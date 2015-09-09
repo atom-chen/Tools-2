@@ -12,8 +12,8 @@ class ProtoKeyWord(object):
     eMulLineCommentStart = "/**"
     eMulLineCommentEnd = "*/"
     
-    eOptional = "optional"
-    eRepeated = "repeated"
+    #eOptional = "optional"
+    #eRepeated = "repeated"
     
     eLeftBrace = "{"
     eRightBrace = "}"
@@ -23,5 +23,9 @@ class ProtoKeyWord(object):
     
     eUint32 = "uint32"
     eChar = "char"
+    
+    
+    # 关键字分隔符
+    sKeyWordDelimiter = ["package", "message", "enum", "header", "import"]
     
 

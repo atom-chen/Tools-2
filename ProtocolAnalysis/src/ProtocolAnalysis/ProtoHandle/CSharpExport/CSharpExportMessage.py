@@ -21,6 +21,25 @@ class CSharpExportMessage(object):
     # 导出一个 ProtoMessage 
     def exportMessage(fHandle, message):
         # 写入类的名字
+        CSharpExportMessage.exportClsDeclStart(fHandle, message)
+        # 写入类的成员
+        CSharpExportMessage.exportMemDecl(fHandle, message)
+        # 与后面分割一个空格
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        # 写入构造函数
+        CSharpExportMessage.exportConstruct(fHandle, message)
+        # 写入序列化函数
+        CSharpExportMessage.exportSerialize(fHandle, message)
+        # 写入类的右括号
+        CSharpExportMessage.exportClsDeclEnd(fHandle, message)
+        # 输入一个空行，以便隔开
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+
+
+    # 导出类声明
+    @staticmethod
+    def exportClsDeclStart(fHandle, message):
+        # 写入类的名字
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         if AppSysBase.instance().getClsUtils().isNullOrEmpty(message.getParentCls()):
@@ -34,6 +53,19 @@ class CSharpExportMessage(object):
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeLBrace2File(fHandle)
         
+        
+    # 写入类声明结束
+    @staticmethod
+    def exportClsDeclEnd(fHandle, message):
+        # 写入类的右括号
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
+
+
+    # 写入成员声明
+    @staticmethod
+    def exportMemDecl(fHandle, message):
         # 写入类的成员
         for member in message.getMemberList():
             AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
@@ -47,10 +79,11 @@ class CSharpExportMessage(object):
             if not AppSysBase.instance().getClsUtils().isNullOrEmpty(member.getCommentStr()):   # 如果字符串不为空
                 AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
                 fHandle.write(member.getCommentStr())
-            
-        # 与后面分割一个空格
-        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
-        
+
+
+    # 写入构造函数
+    @staticmethod
+    def exportConstruct(fHandle, message):
         # 写入构造函数
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
@@ -86,6 +119,9 @@ class CSharpExportMessage(object):
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
 
+    # 导出序列化函数
+    @staticmethod
+    def exportSerialize(fHandle, message):
         # 写入序列化函数名字
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
@@ -127,16 +163,7 @@ class CSharpExportMessage(object):
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
-        
-        # 写入类的右括号
-        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
-        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
-        AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
-        
-        # 输入一个空行，以便隔开
-        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
-        
-    # 导入反序列化函数
     
+    # 导入反序列化函数
     
     
