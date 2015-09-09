@@ -14,7 +14,7 @@ class TestFor(object):
         '''
     
     def run(self):
-        pass
+        self.testFor()
     
     
     '''

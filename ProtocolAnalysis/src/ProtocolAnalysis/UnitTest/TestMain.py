@@ -2,6 +2,7 @@
 
 
 from ProtocolAnalysis.UnitTest.TestFor import TestFor
+from ProtocolAnalysis.UnitTest.TestInternalFunc import TestInternalFunc
 
 
 class TestMain(object):
@@ -15,13 +16,15 @@ class TestMain(object):
         '''
         Constructor
         '''
-        self.testFor = TestFor()
+        self.m_testFor = TestFor()
+        self.m_testInternalFunc = TestInternalFunc()
         
         self.run()
         
 
     def run(self):
         self.testFor.run()
+        self.m_testInternalFunc.run()
     
     
 

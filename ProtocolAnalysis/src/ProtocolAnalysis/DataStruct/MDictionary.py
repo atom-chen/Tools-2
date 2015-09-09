@@ -18,7 +18,8 @@ class MDictionary(object):
             return self.m_dict[key]
         
         return None
-    
+
+
     def __setitem__(self, key, value):  
         self.m_dict[key] = value; 
         

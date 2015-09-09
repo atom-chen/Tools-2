@@ -60,5 +60,6 @@ encoding//src/ProtocolAnalysis/UI/ui_leftfnwin.py=utf-8
 encoding//src/ProtocolAnalysis/UI/ui_loggerwin.py=utf-8
 encoding//src/ProtocolAnalysis/UI/ui_mainwindow.py=utf-8
 encoding//src/ProtocolAnalysis/UnitTest/TestFor.py=utf-8
+encoding//src/ProtocolAnalysis/UnitTest/TestInternalFunc.py=utf-8
 encoding//src/ProtocolAnalysis/UnitTest/TestMain.py=utf-8
 encoding//src/cx_Freezer.py=utf-8
