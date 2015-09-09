@@ -21,6 +21,8 @@ class EventDispatch(DelayHandleMgrBase):
         '''
         Constructor
         '''
+        super(EventDispatch, self).__init__()
+        
         self.m_eventId = eventId_
         self.m_handleList = MList()
         self.m_uniqueId = 0       # 唯一 Id ，调试使用

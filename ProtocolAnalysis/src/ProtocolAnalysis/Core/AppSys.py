@@ -3,7 +3,6 @@
 
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 from ProtocolAnalysis.Core.Config import Config
-from ProtocolAnalysis.Core.Logger import Logger
 from ProtocolAnalysis.Core.CodeConv import CodeConv
 from ProtocolAnalysis.Core.Utils import Utils
 from ProtocolAnalysis.ProtoHandle.CSharpExport.ExportCSharpFile import ExportCSharpFile
@@ -50,6 +49,8 @@ class AppSys(AppSysBase):
         self.m_bConvOver = True
         self.m_convThread = None
         
+        self.m_logSys = LogSys()
+        
         # Utils 类
         self.m_clsUtils = Utils
         self.m_clsUtilFile = UtilFile
@@ -67,8 +68,6 @@ class AppSys(AppSysBase):
         self.m_logger = Logger()
         self.m_codeConv = CodeConv()
         self.m_exportCSharpFile = ExportCSharpFile()
-        
-        self.m_logSys = LogSys()
         
         # 单元测试放在最后初始化
         self.m_testMain = TestMain()
