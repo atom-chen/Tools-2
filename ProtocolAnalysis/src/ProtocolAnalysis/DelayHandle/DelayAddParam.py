@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 
 
-class DelayAddParam(DelayHandleParamBase)
+from ProtocolAnalysis.DelayHandle.DelayHandleParamBase import DelayHandleParamBase
+
+
+class DelayAddParam(DelayHandleParamBase):
     '''
     classdocs
     '''
 
 
-    def __init__(self, params):
+    def __init__(self):
         '''
         Constructor
         '''
+        self.m_priority = 0.0;
 
-
-    public float m_priority = 0.0f;

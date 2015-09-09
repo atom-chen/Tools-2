@@ -2,17 +2,16 @@
 
 
 
-class DelayHandleObject
+class DelayHandleObject(object):
     '''
     classdocs
     '''
 
 
-    def __init__(self, params):
+    def __init__(self):
         '''
         Constructor
         '''
+        self.m_delayObject = None
+        self.m_delayParam = None
 
-
-    public IDelayHandleItem m_delayObject;
-    public DelayHandleParamBase m_delayParam;

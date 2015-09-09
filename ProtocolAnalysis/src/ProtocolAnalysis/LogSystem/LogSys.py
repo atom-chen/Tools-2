@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
+#-*- encoding=utf-8 -*
 
 
-class DelayHandleParamBase(object):
+class LogSys(object):
     '''
     classdocs
     '''
@@ -11,4 +11,7 @@ class DelayHandleParamBase(object):
         '''
         Constructor
         '''
+
+    def log(self, str):
+        pass
 

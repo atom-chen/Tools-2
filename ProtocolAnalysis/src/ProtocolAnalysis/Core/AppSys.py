@@ -12,6 +12,10 @@ from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportMessage import CSharp
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportEnum import CSharpExportEnum
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportUsing import CSharpExportUsing
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportNS import CSharpExportNS
+from ProtocolAnalysis.LogSystem.LogSys import LogSys
+
+
+from ProtocolAnalysis.UnitTest.TestMain import TestMain
 
 
 class AppSys(AppSysBase):
@@ -52,6 +56,12 @@ class AppSys(AppSysBase):
         self.m_logger = Logger()
         self.m_codeConv = CodeConv()
         self.m_exportCSharpFile = ExportCSharpFile()
+        
+        self.m_logSys = LogSys()
+        
+        # 单元测试放在最后初始化
+        self.m_testMain = TestMain()
+        self.m_testMain.run()
 
 
     def getConfigPtr(self):

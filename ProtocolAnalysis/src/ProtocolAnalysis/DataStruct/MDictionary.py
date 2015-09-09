@@ -1,14 +1,15 @@
 #-*- encoding=utf-8 -*-
 
 
-class IDispatchObject(object):
+class MDictionary(object):
     '''
     classdocs
     '''
 
 
-    def __init__(self):
+    def __init__(self, params):
         '''
         Constructor
         '''
+        self.m_dic = {}
 
