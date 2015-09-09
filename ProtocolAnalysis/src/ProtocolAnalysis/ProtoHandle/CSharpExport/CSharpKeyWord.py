@@ -11,8 +11,12 @@ class CSharpKeyWord(object):
 
 
     sProtoKey2CSharpKey = {}
-    sProtoKey2CSharpKey[ProtoKeyWord.eUint32] = "uint32"
-    sProtoKey2CSharpKey[ProtoKeyWord.eChar] = "string"
+    sProtoKey2CSharpKey[ProtoKeyWord.eInt8] = "string"
+    sProtoKey2CSharpKey[ProtoKeyWord.eUint8] = "byte"
+    sProtoKey2CSharpKey[ProtoKeyWord.eInt16] = "short"
+    sProtoKey2CSharpKey[ProtoKeyWord.eUint16] = "ushort"
+    sProtoKey2CSharpKey[ProtoKeyWord.eInt32] = "int"
+    sProtoKey2CSharpKey[ProtoKeyWord.eUint32] = "uint"
 
 
     def __init__(self, params):

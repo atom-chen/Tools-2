@@ -1,5 +1,5 @@
-#-*- encoding=utf-8 -*-
 
+#-*- encoding=utf-8 -*-
 
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpKeyWord import CSharpKeyWord
@@ -153,9 +153,19 @@ class CSharpExportMessage(object):
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
             
             # 写入变量名字
-            if member.getPropertyType() == PropertyType.eUint32:   # 如果是 uint32 
+            if member.getPropertyType() == PropertyType.eInt8:
+                serializeStr = "bu.writeUnsignedInt8({0});".format(member.getVarName())
+            if member.getPropertyType() == PropertyType.eUint8:
+                serializeStr = "bu.writeUnsignedInt8({0});".format(member.getVarName())
+            if member.getPropertyType() == PropertyType.eInt16:
+                serializeStr = "bu.writeInt16({0});".format(member.getVarName())
+            if member.getPropertyType() == PropertyType.eUint16:
+                serializeStr = "bu.writeUnsignedInt16({0});".format(member.getVarName())
+            if member.getPropertyType() == PropertyType.eInt32:
+                serializeStr = "bu.writeInt32({0});".format(member.getVarName())
+            if member.getPropertyType() == PropertyType.eUint32:
                 serializeStr = "bu.writeUnsignedInt32({0});".format(member.getVarName())
-            if member.getPropertyType() == PropertyType.eCharArray:
+            if member.getPropertyType() == PropertyType.eInt8Array:
                 serializeStr = "bu.writeMultiByte({0}, GkEncode.UTF8, {1});".format(member.getVarName(), member.getArrLen())
             fHandle.write(serializeStr)
         
@@ -198,9 +208,19 @@ class CSharpExportMessage(object):
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
             
             # 写入变量名字
+            if member.getPropertyType() == PropertyType.eInt8:
+                serializeStr = "bu.readUnsignedInt8(ref {0});".format(member.getVarName())
+            if member.getPropertyType() == PropertyType.eUint8: 
+                serializeStr = "bu.readUnsignedInt8(ref {0});".format(member.getVarName())
+            if member.getPropertyType() == PropertyType.eInt16: 
+                serializeStr = "bu.readInt16(ref {0});".format(member.getVarName())
+            if member.getPropertyType() == PropertyType.eUint16: 
+                serializeStr = "bu.readUnsignedInt16(ref {0});".format(member.getVarName())
+            if member.getPropertyType() == PropertyType.eInt32: 
+                serializeStr = "bu.readInt32(ref {0});".format(member.getVarName())
             if member.getPropertyType() == PropertyType.eUint32:   # 如果是 uint32 
                 serializeStr = "bu.readUnsignedInt32(ref {0});".format(member.getVarName())
-            if member.getPropertyType() == PropertyType.eCharArray:
+            if member.getPropertyType() == PropertyType.eInt8Array:
                 serializeStr = "bu.readMultiByte(ref {0}, {1}, GkEncode.UTF8);".format(member.getVarName(), member.getArrLen())
             fHandle.write(serializeStr)
         

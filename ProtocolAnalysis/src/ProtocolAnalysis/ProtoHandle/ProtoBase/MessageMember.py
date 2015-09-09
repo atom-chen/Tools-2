@@ -17,6 +17,12 @@ class MessageMember(ProtoTypeMemberBase):
         '''
         self.m_varNameAndArray = ""
         self.m_arrLen = ""
+        
+        self.arrLenBeforDot = ""
+        self.arrLenAfterDot = ""
+        
+        self.defaultValueBeforDot = ""  # 默认值点前面部分，例如 CVMsg.MAX_PASSWORD ，值就是 CVMsg ，如果是 10 ，这个值是 ""
+        self.defaultValueAfterDot = ""  # 默认值点前面部分，例如 CVMsg.MAX_PASSWORD ，值就是 MAX_PASSWORD ，如果是 10 ，这个值是 ""
 
 
     def parse(self, tokenParseBuffer):
@@ -37,7 +43,9 @@ class MessageMember(ProtoTypeMemberBase):
         if hasComment:
             self.m_commentStr = tokenParseBuffer.getLineRemove()
         
+        self.splitDefaultValue()
         self.resolveMemberType()
+        self.splitArrLen()
             
     # 解析成员类型
     def resolveMemberType(self):
@@ -48,12 +56,48 @@ class MessageMember(ProtoTypeMemberBase):
             self.m_varName = self.m_varNameAndArray[ : lBraceIdx]
             self.m_arrLen = self.m_varNameAndArray[lBraceIdx + 1 : rBraceidx]
             
-            if self.m_typeName == ProtoKeyWord.eChar:
-                self.m_propType = PropertyType.eCharArray
+            if self.m_typeName == ProtoKeyWord.eInt8: 
+                self.m_propType = PropertyType.eInt8Array
+            if self.m_typeName == ProtoKeyWord.eUint8: 
+                self.m_propType = PropertyType.eUint8Array
+            if self.m_typeName == ProtoKeyWord.eInt16: 
+                self.m_propType = PropertyType.eInt16Array
+            if self.m_typeName == ProtoKeyWord.eUint16: 
+                self.m_propType = PropertyType.eUint16Array
+            if self.m_typeName == ProtoKeyWord.eInt32: 
+                self.m_propType = PropertyType.eInt32Array
+            if self.m_typeName == ProtoKeyWord.eUint32: 
+                self.m_propType = PropertyType.eUint32Array
         else:
+            if self.m_typeName == ProtoKeyWord.eInt8:
+                self.m_propType = PropertyType.eInt8
+            if self.m_typeName == ProtoKeyWord.eUint8:
+                self.m_propType = PropertyType.eUint8
+            if self.m_typeName == ProtoKeyWord.eInt16:
+                self.m_propType = PropertyType.eInt16
+            if self.m_typeName == ProtoKeyWord.eUint16:
+                self.m_propType = PropertyType.eUint16
+            if self.m_typeName == ProtoKeyWord.eInt32:
+                self.m_propType = PropertyType.eInt32
             if self.m_typeName == ProtoKeyWord.eUint32:
                 self.m_propType = PropertyType.eUint32
         
+    
+    # 分割默认值，数字是没有小数点的，如果有小数点，需要转换成整数才行，类似乘以 100 
+    def splitDefaultValue(self):
+        dotIdx = self.m_defaultValue.find(".")
+        if dotIdx != -1:
+            self.defaultValueBeforDot = self.m_defaultValue[ : dotIdx]
+            self.defaultValueAfterDot = self.m_defaultValue[dotIdx + 1 : len(self.m_defaultValue)]
+
+
+    def splitArrLen(self):
+        if self.m_propType == PropertyType.eInt8Array:
+            dotIdx = self.m_arrLen.find(".")
+            if dotIdx != -1:
+                self.arrLenBeforDot = self.m_arrLen[ : dotIdx]
+                self.arrLenAfterDot = self.m_arrLen[dotIdx + 1 : len(self.m_arrLen)]            
+    
     
     def getVarNameAndArray(self):
         return self.m_varNameAndArray;
@@ -62,4 +106,19 @@ class MessageMember(ProtoTypeMemberBase):
     def getArrLen(self):
         return self.m_arrLen
         
-        
+    
+    def getDefaultValueBeforDot(self):
+        return self.defaultValueBeforDot
+
+
+    def getDefaultValueAfterDot(self):
+        return self.defaultValueAfterDot
+
+
+    def getArrLenBeforDot(self):
+        return self.arrLenBeforDot
+
+
+    def getArrLenAfterDot(self):
+        return self.arrLenAfterDot
+

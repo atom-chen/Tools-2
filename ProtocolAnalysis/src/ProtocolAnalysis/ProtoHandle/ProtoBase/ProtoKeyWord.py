@@ -21,9 +21,16 @@ class ProtoKeyWord(object):
     eRightBraceSemicolon = "};"
     eBase = "base"      # 说明是基类中的成员
     
-    eUint32 = "uint32"
-    eChar = "char"
     
+    #eInt8 = "int8" # 这个就是 char 类型，这种类型基本只能是数组 char pChar[32]
+    eInt8 = "char"
+    eUint8 = "uint8"
+    
+    eInt16 = "int16"
+    eUint16 = "uint16"    
+    
+    eInt32 = "int32"
+    eUint32 = "uint32"
     
     # 关键字分隔符
     sKeyWordDelimiter = ["package", "message", "enum", "header", "import"]
