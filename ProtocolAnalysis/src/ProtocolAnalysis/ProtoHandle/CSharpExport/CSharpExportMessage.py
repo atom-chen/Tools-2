@@ -174,7 +174,18 @@ class CSharpExportMessage(object):
             elif member.getPropertyType() == PropertyType.eInt8Array:
                 serializeStr = "bu.writeMultiByte({0}, GkEncode.UTF8, {1});".format(member.getVarName(), member.getArrLen())
             else:       # 各种数组处理
-                  
+                if member.getPropertyType() == PropertyType.eUint8Array:
+                    CSharpExportMessage.exportArrSerialize(fHandle, message, member, "byte", "8")
+                if member.getPropertyType() == PropertyType.eInt16Array:
+                    CSharpExportMessage.exportArrSerialize(fHandle, message, member, "short", "16")
+                if member.getPropertyType() == PropertyType.eUint16Array:
+                    CSharpExportMessage.exportArrSerialize(fHandle, message, member, "ushort", "16")
+                if member.getPropertyType() == PropertyType.eInt32Array:
+                    CSharpExportMessage.exportArrSerialize(fHandle, message, member, "int", "32")
+                if member.getPropertyType() == PropertyType.eUint32Array:
+                    CSharpExportMessage.exportArrSerialize(fHandle, message, member, "uint", "32")
+                    
+                serializeStr = ""   # 防止最后输出
                 
             fHandle.write(serializeStr)
         
@@ -219,18 +230,31 @@ class CSharpExportMessage(object):
             # 写入变量名字
             if member.getPropertyType() == PropertyType.eInt8:
                 serializeStr = "bu.readUnsignedInt8(ref {0});".format(member.getVarName())
-            if member.getPropertyType() == PropertyType.eUint8: 
+            elif member.getPropertyType() == PropertyType.eUint8: 
                 serializeStr = "bu.readUnsignedInt8(ref {0});".format(member.getVarName())
-            if member.getPropertyType() == PropertyType.eInt16: 
+            elif member.getPropertyType() == PropertyType.eInt16: 
                 serializeStr = "bu.readInt16(ref {0});".format(member.getVarName())
-            if member.getPropertyType() == PropertyType.eUint16: 
+            elif member.getPropertyType() == PropertyType.eUint16: 
                 serializeStr = "bu.readUnsignedInt16(ref {0});".format(member.getVarName())
-            if member.getPropertyType() == PropertyType.eInt32: 
+            elif member.getPropertyType() == PropertyType.eInt32: 
                 serializeStr = "bu.readInt32(ref {0});".format(member.getVarName())
-            if member.getPropertyType() == PropertyType.eUint32:   # 如果是 uint32 
+            elif member.getPropertyType() == PropertyType.eUint32:   # 如果是 uint32 
                 serializeStr = "bu.readUnsignedInt32(ref {0});".format(member.getVarName())
-            if member.getPropertyType() == PropertyType.eInt8Array:
+            elif member.getPropertyType() == PropertyType.eInt8Array:
                 serializeStr = "bu.readMultiByte(ref {0}, {1}, GkEncode.UTF8);".format(member.getVarName(), member.getArrLen())
+            else:
+                if member.getPropertyType() == PropertyType.eUint8Array:
+                    CSharpExportMessage.exportArrDerialize(fHandle, message, member, "byte", "8")
+                if member.getPropertyType() == PropertyType.eInt16Array:
+                    CSharpExportMessage.exportArrDerialize(fHandle, message, member, "short", "16")
+                if member.getPropertyType() == PropertyType.eUint16Array:
+                    CSharpExportMessage.exportArrDerialize(fHandle, message, member, "ushort", "16")
+                if member.getPropertyType() == PropertyType.eInt32Array:
+                    CSharpExportMessage.exportArrDerialize(fHandle, message, member, "int", "32")
+                if member.getPropertyType() == PropertyType.eUint32Array:
+                    CSharpExportMessage.exportArrDerialize(fHandle, message, member, "uint", "32")
+                
+                serializeStr = ""
             fHandle.write(serializeStr)
         
         
@@ -240,4 +264,77 @@ class CSharpExportMessage(object):
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
     
+    
+    # 输出数组输入
+    @staticmethod
+    def exportArrSerialize(fHandle, message, member, typeStr, typeWrite):
+        serializeStr = "{0} = new {1}[{2}];".format(member.getVarName(), typeStr, member.getArrLen())
+        fHandle.write(serializeStr)
+        
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        serializeStr = "for(int idx = 0; idx < member.getArrLen(); ++idx)"
+        fHandle.write(serializeStr)
+        
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        serializeStr = "{"
+        fHandle.write(serializeStr)
+        
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        serializeStr = "bu.{0}({1}[idx]);".format(typeWrite, member.getVarName())
+        fHandle.write(serializeStr)
+        
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        serializeStr = "}"
+        fHandle.write(serializeStr)
+
+
+    # 输出数组输入
+    @staticmethod
+    def exportArrDerialize(fHandle, message, member, typeStr, typeRead):
+        serializeStr = "{0} = new {1}[{2}];".format(member.getVarName(), typeStr, member.getArrLen())
+        fHandle.write(serializeStr)
+        
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        serializeStr = "for(int idx = 0; idx < member.getArrLen(); ++idx)"
+        fHandle.write(serializeStr)
+        
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        serializeStr = "{"
+        fHandle.write(serializeStr)
+        
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        serializeStr = "bu.{0}(ref {1}[idx]);".format(typeRead, member.getVarName())
+        fHandle.write(serializeStr)
+        
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        serializeStr = "}"
+        fHandle.write(serializeStr)
+        
+        
     
