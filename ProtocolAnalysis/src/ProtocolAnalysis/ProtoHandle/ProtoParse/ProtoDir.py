@@ -42,5 +42,6 @@ class ProtoDir(ProtoFileBase):
         paramList[0].m_filesList.append(file)
         
         
-        
-        
+    def getFilesList(self):
+        return self.m_filesList
+
