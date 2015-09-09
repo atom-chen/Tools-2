@@ -13,6 +13,7 @@ from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportEnum import CSharpExp
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportUsing import CSharpExportUsing
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportNS import CSharpExportNS
 from ProtocolAnalysis.LogSystem.LogSys import LogSys
+from ProtocolAnalysis.Core.UtilFile import UtilFile
 
 
 from ProtocolAnalysis.UnitTest.TestMain import TestMain
@@ -51,6 +52,9 @@ class AppSys(AppSysBase):
         
         # Utils 类
         self.m_clsUtils = Utils
+        self.m_clsUtilFile = UtilFile
+        
+        
         self.m_clsCSharpExportMessage = CSharpExportMessage
         self.m_clsCSharpExportEnum = CSharpExportEnum
         self.m_clsCSharpExportUsing = CSharpExportUsing
@@ -126,5 +130,8 @@ class AppSys(AppSysBase):
     def getClsCSharpExportNS(self):
         return self.m_clsCSharpExportNS
 
+
+    def getClsUtilFile(self):
+        return self.m_clsUtilFile
     
     
