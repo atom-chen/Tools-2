@@ -14,7 +14,7 @@ class ProtoElemBase(object):
 
 
     def __init__(self, elemType):
-        self.m_elemType = elemType          # 基本元素类型， message enum 
+        self.m_elemType = elemType      # 基本元素类型， message enum 
         self.m_typeKeyWord = ""         # Proto 关键字，例如 "message\enum" 类似, message enum
         self.m_typeName = ""            # 元素的类型名字, message enum
         self.m_commentList = []          # 注释字符串列表，就是可能会有很多行，只有 ProtoComment 会用到这个字段, Comment

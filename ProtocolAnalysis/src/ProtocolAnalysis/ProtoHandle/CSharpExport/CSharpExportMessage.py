@@ -30,6 +30,8 @@ class CSharpExportMessage(object):
         CSharpExportMessage.exportConstruct(fHandle, message)
         # 写入序列化函数
         CSharpExportMessage.exportSerialize(fHandle, message)
+        # 写入反序列化函数
+        CSharpExportMessage.exportDerialize(fHandle, message)
         # 写入类的右括号
         CSharpExportMessage.exportClsDeclEnd(fHandle, message)
         # 输入一个空行，以便隔开
@@ -165,5 +167,48 @@ class CSharpExportMessage(object):
         AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
     
     # 导入反序列化函数
+    @staticmethod
+    def exportDerialize(fHandle, message):
+        # 写入反序列化函数名字
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        serializeStr = "override public void derialize(ByteBuffer bu)"
+        fHandle.write(serializeStr)
+        
+        # 写入序列函数的左括号
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeLBrace2File(fHandle)
+        
+        # 写入序列函数基本函数
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        fHandle.write("base.derialize(bu)")
+        
+        # 写入序列化的内容
+        for member in message.getMemberList():
+            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            
+            # 写入变量名字
+            if member.getPropertyType() == PropertyType.eUint32:   # 如果是 uint32 
+                serializeStr = "bu.readUnsignedInt32(ref {0});".format(member.getVarName())
+            if member.getPropertyType() == PropertyType.eCharArray:
+                serializeStr = "bu.readMultiByte(ref {0}, {1}, GkEncode.UTF8);".format(member.getVarName(), member.getArrLen())
+            fHandle.write(serializeStr)
+        
+        
+        # 写入序列函数的右括号
+        AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
     
     

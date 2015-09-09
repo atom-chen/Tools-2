@@ -23,6 +23,12 @@ namespace Game.Msg
 			base.serialize(bu)
 			bu.writeUnsignedInt32(param);
 		}
+
+		override public void derialize(ByteBuffer bu)
+		{
+			base.derialize(bu)
+			bu.readUnsignedInt32(ref param);
+		}
 	}
 
 	//自己测试注释-2
@@ -43,6 +49,14 @@ namespace Game.Msg
 			bu.writeUnsignedInt32(time_1);
 			bu.writeUnsignedInt32(time_2);
 			bu.writeMultiByte(strPassword, GkEncode.UTF8, CVMsg.MAX_PASSWORD);
+		}
+
+		override public void derialize(ByteBuffer bu)
+		{
+			base.derialize(bu)
+			bu.readUnsignedInt32(ref time_1);
+			bu.readUnsignedInt32(ref time_2);
+			bu.readMultiByte(ref strPassword, CVMsg.MAX_PASSWORD, GkEncode.UTF8);
 		}
 	}
 
@@ -68,6 +82,12 @@ namespace Game.Msg
 		{
 			base.serialize(bu)
 			bu.writeUnsignedInt32(time);
+		}
+
+		override public void derialize(ByteBuffer bu)
+		{
+			base.derialize(bu)
+			bu.readUnsignedInt32(ref time);
 		}
 	}
 
