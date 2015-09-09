@@ -1,88 +1,67 @@
 #-*- encoding=utf-8 -*-
 
 
+from ProtocolAnalysis.DataStruct.MDictionary import MDictionary
+from ProtocolAnalysis.Core.AppSysBase import AppSysBase
+
+
 class EventDispatchGroup(object):
-    protected Dictionary<int, EventDispatch> m_groupID2DispatchDic = new Dictionary<int, EventDispatch>();
-    protected bool m_bInLoop;       // 是否是在循环遍历中
+    '''
+    classdocs
+    '''
 
-    public EventDispatchGroup()
-    {
-        m_bInLoop = false;
-    }
 
-    // 添加分发器
-    public void addEventDispatch(int groupID, EventDispatch disp)
-    {
-        if (!m_groupID2DispatchDic.ContainsKey(groupID))
-        {
-            m_groupID2DispatchDic[groupID] = disp;
-        }
-    }
+    def __init__(self):
+        '''
+        Constructor
+        '''
+        self.m_groupID2DispatchDic = MDictionary()
+        self.m_bInLoop = False       # 是否是在循环遍历中
 
-    public void addEventHandle(int groupID, Action<IDispatchObject> handle)
-    {
-        m_groupID2DispatchDic[groupID].addEventHandle(handle);
-    }
 
-    public void removeEventHandle(int groupID, Action<IDispatchObject> handle)
-    {
-        if (m_groupID2DispatchDic.ContainsKey(groupID))
-        {
-            m_groupID2DispatchDic[groupID].removeEventHandle(handle);
-        }
-        else
-        {
-            Ctx.m_instance.m_logSys.log("Event Dispatch Group not exist");
-        }
-    }
+    # 添加分发器
+    def addEventDispatch(self, groupID, disp):
+        if self.m_groupID2DispatchDic.ContainsKey(groupID):
+            self.m_groupID2DispatchDic[groupID] = disp
 
-    public void dispatchEvent(int groupID,  IDispatchObject dispatchObject)
-    {
-        m_bInLoop = true;
-        if (m_groupID2DispatchDic.ContainsKey(groupID))
-        {
-            m_groupID2DispatchDic[groupID].dispatchEvent(dispatchObject);
-        }
-        else
-        {
-            Ctx.m_instance.m_logSys.log("Event Dispatch Group not exist");
-        }
-        m_bInLoop = false;
-    }
 
-    public void clearAllEventHandle()
-    {
-        if (!m_bInLoop)
-        {
-            foreach (EventDispatch dispatch in m_groupID2DispatchDic.Values)
-            {
-                dispatch.clearEventHandle();
-            }
+    def addEventHandle(self, groupID, handle):
+        self.m_groupID2DispatchDic[groupID].addEventHandle(handle)
 
-            m_groupID2DispatchDic.Clear();
-        }
-        else
-        {
-            Ctx.m_instance.m_logSys.log("looping cannot delete element");
-        }
-    }
 
-    public void clearGroupEventHandle(int groupID)
-    {
-        if (!m_bInLoop)
-        {
-            if (m_groupID2DispatchDic.ContainsKey(groupID))
-            {
-                m_groupID2DispatchDic[groupID].clearEventHandle();
-                m_groupID2DispatchDic.Remove(groupID);
-            }
-            else
-            {
-                Ctx.m_instance.m_logSys.log("Event Dispatch Group not exist");
-            }
-        }
-        else
-        {
-            Ctx.m_instance.m_logSys.log("looping cannot delete element");
-        }
-    }
+    def removeEventHandle(self, groupID, handle):
+        if self.m_groupID2DispatchDic.ContainsKey(groupID):
+            self.m_groupID2DispatchDic[groupID].removeEventHandle(handle)
+        else:
+            AppSysBase.instance().m_logSys.log("Event Dispatch Group not exist")
+
+
+    def dispatchEvent(self, groupID, dispatchObject):
+        self.m_bInLoop = True
+        if self.m_groupID2DispatchDic.ContainsKey(groupID):
+            self.m_groupID2DispatchDic[groupID].dispatchEvent(dispatchObject)
+        else:
+            AppSysBase.instance().m_logSys.log("Event Dispatch Group not exist")
+        self.m_bInLoop = False;
+
+
+    def clearAllEventHandle(self):
+        if not self.m_bInLoop:
+            for dispatch in self.m_groupID2DispatchDic.Values():
+                dispatch.clearEventHandle()
+
+            self.m_groupID2DispatchDic.Clear()
+        else:
+            AppSysBase.instance().m_logSys.log("looping cannot delete element");
+
+
+    def clearGroupEventHandle(self, groupID):
+        if not self.m_bInLoop:
+            if self.m_groupID2DispatchDic.ContainsKey(groupID):
+                self.m_groupID2DispatchDic[groupID].clearEventHandle()
+                self.m_groupID2DispatchDic.Remove(groupID)
+            else:
+                AppSysBase.instance().m_logSys.log("Event Dispatch Group not exist");
+        else:
+            AppSysBase.instance().m_logSys.log("looping cannot delete element");
+

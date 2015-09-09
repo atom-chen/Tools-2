@@ -24,17 +24,24 @@ class AppSys(AppSysBase):
     '''
 
 
-    @staticmethod
-    def instance():
-        if AppSysBase.g_pInstance is None:
-            AppSysBase.g_pInstance = AppSys()
-        return AppSysBase.g_pInstance
+    #@staticmethod
+    #def instance():
+    #    if AppSysBase.g_pInstance is None:
+    #        AppSysBase.g_pInstance = AppSys()
+    #    return AppSysBase.g_pInstance
 
 
     def __init__(self):
         '''
         Constructor
         '''
+        self.construct()
+        
+        
+    def __new__(cls, *args, **kwd):         # 在__init__之前调用
+        if AppSysBase.g_pInstance is None:    # 生成唯一实例
+            AppSysBase.g_pInstance = object.__new__(cls, *args, **kwd)
+        return AppSysBase.g_pInstance
 
         
     def construct(self):

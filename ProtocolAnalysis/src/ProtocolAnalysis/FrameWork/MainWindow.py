@@ -37,8 +37,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.m_LeftFnWin)
         
         # 实例化系统
-        AppSys.instance();
-        AppSysBase.instance().construct()
+        #AppSys.instance();
+        #AppSysBase.instance().construct()
+        AppSys()
         
         self.m_qttimer = QtCore.QTimer()
         self.m_qttimer.timeout.connect(self.onTimer)

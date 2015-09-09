@@ -16,6 +16,16 @@ class MList(object):
         self.list = self.m_list         # 建立一个连接
         
     
+    def __getattr__(self, name):
+        attrName = "m_{0}".format(name)
+        return self.__dict__[attrName]
+    
+    
+    def __setattr__(self, name, value):
+        attrName = "m_{0}".format(name)
+        self.__dict__[attrName] = value
+        
+    
     # 添加一个元素
     def append(self, elem):
         self.m_list.append(elem)
