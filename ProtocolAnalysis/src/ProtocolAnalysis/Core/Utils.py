@@ -200,4 +200,29 @@ class Utils(object):
         return str_ == None or len(str_) == 0
     
     
+    # 判断字符串的前缀
+    @staticmethod
+    def isStrPrefix(srcStr, prefixStr):
+        prefixLen = len(prefixStr)
+        if len(srcStr) < prefixLen:
+            return False
+        else:
+            if srcStr[ : prefixLen] == prefixStr:
+                return True
+            else:
+                return False
+        
     
+    # 添加前缀
+    @staticmethod
+    def addPrefixIfNo(srcStr, prefixStr):
+        if Utils.isStrPrefix(srcStr, prefixStr):
+            return srcStr
+        else:
+            return "{0}{1}".format(prefixStr, srcStr)
+    
+    
+    # 添加 m_ 前缀
+    @staticmethod
+    def addMemberPrefix(srcStr):
+        return Utils.addPrefixIfNo(srcStr, "m_")

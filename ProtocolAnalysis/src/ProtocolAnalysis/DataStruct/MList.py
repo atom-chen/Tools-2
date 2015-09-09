@@ -1,6 +1,9 @@
 #-*- encoding=utf-8 -*-
 
 
+from ProtocolAnalysis.Core.Utils import Utils
+
+
 # List 包装
 class MList(object):
     '''
@@ -17,12 +20,12 @@ class MList(object):
         
     
     def __getattr__(self, name):
-        attrName = "m_{0}".format(name)
+        attrName = Utils.addMemberPrefix(name)
         return self.__dict__[attrName]
     
     
     def __setattr__(self, name, value):
-        attrName = "m_{0}".format(name)
+        attrName = Utils.addMemberPrefix(name)
         self.__dict__[attrName] = value
         
     

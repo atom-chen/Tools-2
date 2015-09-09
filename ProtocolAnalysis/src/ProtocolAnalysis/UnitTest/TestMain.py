@@ -12,19 +12,19 @@ class TestMain(object):
     '''
 
 
-    def __init__(self, params):
+    def __init__(self):
         '''
         Constructor
         '''
         self.m_testFor = TestFor()
         self.m_testInternalFunc = TestInternalFunc()
         
-        self.run()
-        
 
     def run(self):
-        self.testFor.run()
+        self.m_testFor.run()
         self.m_testInternalFunc.run()
+        self.m_testInternalFunc = None     # __del__ 测试，可以调用
+        #self.m_testInternalFunc.dispose()   # __del__ 测试，不能调用
     
     
 
