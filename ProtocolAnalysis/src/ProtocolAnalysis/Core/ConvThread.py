@@ -17,7 +17,7 @@ class ConvThread(ThreadWrap):
         AppSysBase.instance().getClsUtils().makeDir(AppSysBase.instance().getConfigPtr().m_tmpCodePath)
         AppSysBase.instance().getClsUtils().makeDir(AppSysBase.instance().getConfigPtr().m_destCodePath)
         
-        AppSysBase.instance().getClsUtils().traverseDirs(AppSysBase.instance().getConfigPtr().m_srcCodePath, AppSysBase.instance().getCodeConvPtr().convProtocolAnalysis)
+        # 进行代码转换
 
         AppSysBase.instance().getLoggerPtr().info("File Conv End")
         AppSysBase.instance().setConvOver(True)

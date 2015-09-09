@@ -3,7 +3,6 @@
 
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 from ProtocolAnalysis.Core.Config import Config
-from ProtocolAnalysis.Core.CodeConv import CodeConv
 from ProtocolAnalysis.Core.Utils import Utils
 from ProtocolAnalysis.ProtoHandle.CSharpExport.ExportCSharpFile import ExportCSharpFile
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportComment import CSharpExportComment
@@ -64,26 +63,19 @@ class AppSys(AppSysBase):
         
         self.m_config = Config()
         self.m_config.readInit('Config/Config.txt')
-        
-        self.m_logger = Logger()
-        self.m_codeConv = CodeConv()
         self.m_exportCSharpFile = ExportCSharpFile()
         
         # 单元测试放在最后初始化
-        self.m_testMain = TestMain()
-        self.m_testMain.run()
+        #self.m_testMain = TestMain()
+        #self.m_testMain.run()
 
 
     def getConfigPtr(self):
         return self.m_config    
 
 
-    def getLoggerPtr(self):
-        return self.m_logger   
-
-
-    def getCodeConvPtr(self):
-        return self.m_codeConv   
+    def getLogSysPtr(self):
+        return self.m_logSys   
 
 
     def getConvOver(self):

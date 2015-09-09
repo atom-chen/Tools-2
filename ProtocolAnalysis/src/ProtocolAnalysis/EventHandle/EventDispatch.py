@@ -29,9 +29,10 @@ class EventDispatch(DelayHandleMgrBase):
 
 
     # 相同的函数只能增加一次
-    def addEventHandle(self, handle):
+    def addEventHandle(self, handle, paramList):
         funcObject = EventDispatchFunctionObject();
         funcObject.m_handle = handle;
+        funcObject.m_paramList = paramList
         if None != handle:
             self.addObject(funcObject);
         else:
@@ -69,7 +70,7 @@ class EventDispatch(DelayHandleMgrBase):
 
         for handle in self.m_handleList.list:
             if not handle.m_bClientDispose:
-                handle.m_handle(dispatchObject);
+                handle.m_handle(handle.m_paramList, dispatchObject);
 
         self.decDepth();
 

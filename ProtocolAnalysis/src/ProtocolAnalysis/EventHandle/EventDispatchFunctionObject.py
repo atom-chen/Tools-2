@@ -16,6 +16,7 @@ class EventDispatchFunctionObject(IDelayHandleItem):
         '''
         self.m_bClientDispose = False       # 是否释放了资源
         self.m_handle = None
+        self.m_paramList = None             # 参数列表
 
 
     def setClientDispose(self):

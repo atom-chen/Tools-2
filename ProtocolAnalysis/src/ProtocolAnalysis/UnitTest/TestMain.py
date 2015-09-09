@@ -3,6 +3,7 @@
 
 from ProtocolAnalysis.UnitTest.TestFor import TestFor
 from ProtocolAnalysis.UnitTest.TestInternalFunc import TestInternalFunc
+from ProtocolAnalysis.UnitTest.TestFuncPtr import TestFuncObj
 
 
 class TestMain(object):
@@ -18,6 +19,7 @@ class TestMain(object):
         '''
         self.m_testFor = TestFor()
         self.m_testInternalFunc = TestInternalFunc()
+        self.m_testFuncObj = TestFuncObj()
         
 
     def run(self):
@@ -25,6 +27,7 @@ class TestMain(object):
         self.m_testInternalFunc.run()
         self.m_testInternalFunc = None     # __del__ 测试，可以调用
         #self.m_testInternalFunc.dispose()   # __del__ 测试，不能调用
+        self.m_testFuncObj.run()
     
     
 

@@ -66,14 +66,26 @@ class TestInternalFunc(object):
         #    return self.__dict__[attrName]
         #else:
         #    return None
-        return self.__dict__[attrName]
+        # 这种方法是可以的
+        for key in self.__dict__:
+            if key == attrName:
+                return self.__dict__[attrName]
+        
+        return None
+        # 新方法
+        #if hasattr(self, attrName):
+        #    getattr(self, attrName)
+        #return None
         
 
     def __setattr__(self, name, value):
         print("__setattr__() is called ")
         
         attrName = Utils.addMemberPrefix(name)
+        # 这种方法可以
         self.__dict__[attrName] = value
+        # 使用新的方法，这个方法会调用 __setattr__
+        #setattr(self, attrName, value)
         
         
     def __delattr__(self, name):

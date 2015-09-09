@@ -28,9 +28,9 @@ class UtilFile(object):
         for fname in filesInDirectory:
             fpath = os.path.join(directoryName, fname)
             if not os.path.isdir(fpath):
-                m_dirName = directoryName
-                m_fileName = fname
-                m_fileFullPath = fpath
+                UtilFile.m_dirName = directoryName
+                UtilFile.m_fileName = fname
+                UtilFile.m_fileFullPath = fpath
                 UtilFile.m_sEventDispatch.dispatchEvent(None)
     
     # 递归遍历整个目录

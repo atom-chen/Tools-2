@@ -48,7 +48,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def onTimer(self):
         listdata = []
-        AppSysBase.instance().getLoggerPtr().getlogger(listdata)
+        AppSysBase.instance().getLogSysPtr().getlogger(listdata)
         for dataitem in listdata:
             self.m_LoggerWin.ui.textEdit.appendPlainText(dataitem)
 

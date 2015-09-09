@@ -25,8 +25,8 @@ class EventDispatchGroup(object):
             self.m_groupID2DispatchDic[groupID] = disp
 
 
-    def addEventHandle(self, groupID, handle):
-        self.m_groupID2DispatchDic[groupID].addEventHandle(handle)
+    def addEventHandle(self, groupID, handle, paramList):
+        self.m_groupID2DispatchDic[groupID].addEventHandle(handle, paramList)
 
 
     def removeEventHandle(self, groupID, handle):

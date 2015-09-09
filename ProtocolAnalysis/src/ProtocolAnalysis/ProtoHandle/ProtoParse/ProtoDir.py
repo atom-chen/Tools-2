@@ -29,16 +29,17 @@ class ProtoDir(ProtoFileBase):
 
     # 转变目录到文件列表
     def convDir2Files(self):
-        AppSysBase.instance().getClsUtilFile().getEventDispatch().addEventHandle(self.findFileHandle)
+        AppSysBase.instance().getClsUtilFile().getEventDispatch().addEventHandle(self.findFileHandle, [self])
         
         AppSysBase.instance().getClsUtilFile().traversalAllDirs(self.m_fullPath)
         
         AppSysBase.instance().getClsUtilFile().getEventDispatch().removeEventHandle(self.findFileHandle)
     
     # 查找文件回调函数
-    def findFileHandle(self):
+    @staticmethod
+    def findFileHandle(paramList, disp):
         file = ProtoFile(AppSysBase.instance().getClsUtilFile().getFileFullPath())
-        self.m_filesList.append(file)
+        paramList[0].m_filesList.append(file)
         
         
         
