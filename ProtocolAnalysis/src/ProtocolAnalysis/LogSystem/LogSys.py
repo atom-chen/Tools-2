@@ -12,6 +12,10 @@ class LogSys(object):
         self.m_effLog = []
 
 
+    def log(self, str_):
+        self.info(str_)
+
+
     # 输出一行信息
     def info(self, desc):
         if not desc is None:

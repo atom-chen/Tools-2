@@ -19,14 +19,35 @@ class MList(object):
         self.list = self.m_list         # 建立一个连接
         
     
+    # 主要是函数访问，函数先访问这个函数，如果没有，才访问 __getattr__ 
+    def __getattribute__(self, *args, **kwargs):
+        print("__getattribute__() is called")
+        return object.__getattribute__(self, *args, **kwargs)
+
+
+    # 主要是直接使用 MList.list 访问 m_list
     def __getattr__(self, name):
         attrName = Utils.addMemberPrefix(name)
         return self.__dict__[attrName]
     
     
+    # 主要是直接使用 MList.list 访问 m_list
     def __setattr__(self, name, value):
         attrName = Utils.addMemberPrefix(name)
         self.__dict__[attrName] = value
+        
+    
+    # 直接 MList[idx] 访问里面的元素
+    def __getitem__(self, key):
+        if key < self.Count():
+            return self.m_list[key]
+        
+        return None
+
+
+    def __setitem__(self, key, value):
+        if key < self.Count():
+            self.m_list[key] = value
         
     
     # 添加一个元素
@@ -45,6 +66,10 @@ class MList(object):
             return True
             
         return False
+    
+    
+    def Remove(self, elem):
+        return self.remove(elem)
     
     
     # 根据索引移除一个元素
@@ -72,7 +97,7 @@ class MList(object):
     
     # 获取列表的长度
     def Count(self):
-        self.len()
+        return self.len()
         
         
     def Clear(self):
@@ -86,12 +111,12 @@ class MList(object):
     
     # 统计某个元素在列表中出现的次数
     def elemCount(self, elem):
-        self.m_list.count(elem)
+        return self.m_list.count(elem)
         
         
     # 移除列表中的一个元素（默认最后一个元素），并且返回该元素的值
     def pop(self):
-        self.m_list.pop()
+        return self.m_list.pop()
         
         
     # 反向列表中元素

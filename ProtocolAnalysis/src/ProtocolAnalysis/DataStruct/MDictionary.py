@@ -20,8 +20,8 @@ class MDictionary(object):
         return None
 
 
-    def __setitem__(self, key, value):  
-        self.m_dict[key] = value; 
+    def __setitem__(self, key, value):
+        self.m_dict[key] = value;
         
     
     # 删除键是'Name'的条目
