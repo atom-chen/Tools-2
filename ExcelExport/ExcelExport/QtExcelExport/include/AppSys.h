@@ -24,8 +24,8 @@ protected:
 	ExcelExport* m_excelExport;
 	QThread* m_pthread;
 
-	string m_outPath;
-	string m_xmlFile;
+	std::string m_outPath;
+	std::string m_xmlFile;
 	Utils* m_pUtils;
 
 public:
@@ -38,7 +38,7 @@ public:
 	void startMultiPack();
 	void startSinglePack();
 
-	void setXml(string outpath, string xmlpath);
+	void setXml(std::string outpath, std::string xmlpath);
 	bool isSetSolution();
 	void initThread(QThread* pthread);
 	void startThread();
@@ -49,5 +49,8 @@ public:
 };
 
 END_NAMESPACE
+
+#define g_pAppSys AppSys::getSingletonPtr()
+#define g_pUtils AppSys::getSingletonPtr()->getUtilsPtr()
 
 #endif
