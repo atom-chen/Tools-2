@@ -1,3 +1,4 @@
 ProtoFilesList=E:/Self/Self/Tools/Tools/ProtocolAnalysis/src/ProtocolAnalysis/ProtoInOut/Proto/TestProto.proto,E:/Self/Self/Tools/Tools/ProtocolAnalysis/src/ProtocolAnalysis/ProtoInOut/Proto/Project
 CSOutPath=E:/Self/Self/Tools/Tools/ProtocolAnalysis/src/ProtocolAnalysis/ProtoInOut/CSharp
 CPPOutPath=E:/Self/Self/Tools/Tools/ProtocolAnalysis/src/ProtocolAnalysis/ProtoInOut/Cpp
+LuaOutPath=E:/Self/Self/Tools/Tools/ProtocolAnalysis/src/ProtocolAnalysis/ProtoInOut/Lua

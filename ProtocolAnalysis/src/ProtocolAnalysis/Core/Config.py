@@ -26,13 +26,15 @@ class Config(object):
         # 注意全部需要初始化，否则如果配置文件不用，并且没有判断是否有这个属性，就会出问题
         self.m_protoFilesList = None    # Prote 文件所在目录，使用逗号分隔，如果有 '.' 就是一个 Proto 文件，如果没有，就说明是一个目录
         self.m_csOutPath = ""           # CS 输出文件目录
-        self.m_cppOutPath = ""          # Cpp 输出目录        
+        self.m_cppOutPath = ""          # Cpp 输出目录     
+        self.m_luaOutPath = ""          # Lua 输出目录   
         
         # 配置文件和自己变量之间的映射
         self.m_cfg2Var = {}
         self.m_cfg2Var["ProtoFilesList"] = "m_protoFilesList"
         self.m_cfg2Var["CSOutPath"] = "m_csOutPath"
         self.m_cfg2Var["CPPOutPath"] = "m_cppOutPath"
+        self.m_cfg2Var["LuaOutPath"] = "m_luaOutPath"
 
 
         #读取初始化数据
@@ -66,4 +68,8 @@ class Config(object):
 
     def getCppOutPath(self):
         return self.m_cppOutPath
+    
+    
+    def getLuaOutPath(self):
+        return self.m_luaOutPath
 
