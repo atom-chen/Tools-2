@@ -29,6 +29,7 @@ class LeftFnWin(QtWidgets.QDockWidget):
         AppSysBase.instance().getLogSysPtr().info('test button')
         AppSysBase.instance().getConfigPtr().getProtoFilesList().parse()
         AppSysBase.instance().getExportCSharpFile().export()
+        AppSysBase.instance().getExportCppFile().export()
     
 
     # 拷贝文件

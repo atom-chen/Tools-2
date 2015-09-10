@@ -8,6 +8,8 @@ class TokenParseBuffer(object):
     '''
     classdocs
     '''
+    # 目前分隔符只有空格、换行、水平制表符，如果需要可以加入其它的分隔符，例如分号 ";" 之类的
+    m_sSplitToken = [" ", "\n", "\t"]
 
 
     def __init__(self):

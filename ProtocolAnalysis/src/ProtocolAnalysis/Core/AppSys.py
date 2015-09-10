@@ -90,6 +90,7 @@ class AppSys(AppSysBase):
         self.m_config = Config()
         self.m_config.readInit('Config/Config.txt')
         self.m_exportCSharpFile = ExportCSharpFile()
+        self.m_exportCppFile = ExportCppFile()
         
         # 单元测试放在最后初始化
         #self.m_testMain = TestMain()
@@ -128,6 +129,10 @@ class AppSys(AppSysBase):
         return self.m_exportCSharpFile
     
     
+    def getExportCppFile(self):
+        return self.m_exportCppFile
+    
+    
     def getClsCSharpExportMessage(self):
         return self.m_clsCSharpExportMessage
     
@@ -149,31 +154,31 @@ class AppSys(AppSysBase):
     
     
     def getClsCppExportMessage(self):
-        self.m_clsCppExportMessage
+        return self.m_clsCppExportMessage
         
         
     def getClsCppExportEnum(self):
-        self.m_clsCppExportEnum
+        return self.m_clsCppExportEnum
 
         
-    def getClsCppExportIncldue(self):
-        self.m_clsCppExportIncldue
+    def getClsCppExportInclude(self):
+        return self.m_clsCppExportInclude
         
         
     def getClsCppExportNS(self):
-        self.m_clsCppExportNS
+        return self.m_clsCppExportNS
         
         
     def getClsCppExportComment(self):
-        self.m_clsCppExportComment
+        return self.m_clsCppExportComment
         
         
     def getClsCppExportPragma(self):
-        self.m_clsCppExportPragma
+        return self.m_clsCppExportPragma
         
         
     def getClsCppExportDefine(self):
-        self.m_clsCppExportDefine
+        return self.m_clsCppExportDefine
 
 
     def getClsUtilFile(self):
