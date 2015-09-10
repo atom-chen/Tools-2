@@ -42,9 +42,9 @@ class CppExportMessage(object):
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         if AppSysBase.instance().getClsUtils().isNullOrEmpty(message.getParentCls()):
-            clsName = "public class {0}".format(message.getTypeName())
+            clsName = "class {0}".format(message.getTypeName())
         else:
-            clsName = "public class {0} : {1}".format(message.getTypeName(), message.getParentCls())
+            clsName = "class {0} : public {1}".format(message.getTypeName(), message.getParentCls())
         fHandle.write(clsName)
         
         # 输入左括号

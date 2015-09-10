@@ -46,6 +46,7 @@ class ExportCppFile():
                     AppSysBase.instance().getClsCppExportEnum().exportEnum(fHandle, protoElem)
                 elif protoElem.getElemType() == eProtoElemType.eComment:
                     AppSysBase.instance().getClsCppExportComment().exportComment(fHandle, protoElem)
+                    
 
             AppSysBase.instance().getClsCSharpExportNS().exportNSEnd(fHandle)
             AppSysBase.instance().getClsCppExportPragma().exportPragmaAfterNS(fHandle, file)

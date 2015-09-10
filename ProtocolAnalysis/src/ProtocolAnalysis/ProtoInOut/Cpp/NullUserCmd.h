@@ -10,16 +10,16 @@ namespace Cmd
 	//////////////////////////////////////////////////////////////
 	// 空指令定义开始
 	//////////////////////////////////////////////////////////////
-	public enum eNullUserCmd
+	enum eNullUserCmd
 	{
 		NULL_USERCMD_PARA = 0,
 	};
 
-	public class stNullUserCmd
+	class stNullUserCmd
 	{
-		public byte byCmd;
-		public byte byParam;
-		public uint dwTimestamp;
+		public BYTE byCmd;
+		public BYTE byParam;
+		public DWORD dwTimestamp;
 
 		public stNullUserCmd()
 		{

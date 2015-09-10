@@ -10,14 +10,14 @@ namespace Game.Msg
 {
 	// 自己测试注释-1
 	
-	public enum CVMsg
+	enum CVMsg
 	{
 		MAX_PASSWORD = 32,
 	};
 
-	public class stBase
+	class stBase
 	{
-		public uint param;	// 基类成员属性测试
+		public DWORD param;	// 基类成员属性测试
 
 		public stBase()
 		{
@@ -27,10 +27,10 @@ namespace Game.Msg
 
 	//自己测试注释-2
 	
-	public class stTest : stBase
+	class stTest : public stBase
 	{
-		public uint time_1;	// 成员属性测试-1
-		public uint time_2;	// 成员属性测试-2
+		public DWORD time_1;	// 成员属性测试-1
+		public DWORD time_2;	// 成员属性测试-2
 		public string strPassword;	// 测试数组成员
 		public int intArr[CVMsg.MAX_PASSWORD];	// 测试整型数组
 
@@ -44,7 +44,7 @@ namespace Game.Msg
 	};
 
 	// 测试枚举
-	public enum eTest
+	enum eTest
 	{
 		eValue_1 = 0,	// 测试枚举值
 	};
@@ -52,9 +52,9 @@ namespace Game.Msg
 	/**
 	 * @brief 多行测试
 	 */
-	public class stTestMulti : stBase
+	class stTestMulti : public stBase
 	{
-		public uint time;	// 成员属性测试
+		public DWORD time;	// 成员属性测试
 
 		public stTestMulti()
 		{

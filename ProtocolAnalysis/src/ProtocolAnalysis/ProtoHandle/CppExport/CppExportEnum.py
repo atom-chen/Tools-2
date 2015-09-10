@@ -20,7 +20,7 @@ class CppExportEnum(object):
     def exportEnum(fHandle, message):
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
-        clsName = "public enum {0}".format(message.getTypeName())
+        clsName = "enum {0}".format(message.getTypeName())
         fHandle.write(clsName)
         
         # 输入左括号

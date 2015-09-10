@@ -31,7 +31,7 @@ class CppPropertyType2PropertyData(object):
     m_sType2PropertyData[PropertyType.eInt8].m_derializeFuncKeyWord = "readInt8"
     
     m_sType2PropertyData[PropertyType.eUint8] = CppPropertyData()
-    m_sType2PropertyData[PropertyType.eUint8].m_propertyTypeKeyWord = "byte"
+    m_sType2PropertyData[PropertyType.eUint8].m_propertyTypeKeyWord = "BYTE"
     m_sType2PropertyData[PropertyType.eUint8].m_serializeFuncKeyWord = "writeUnsignedInt8"
     m_sType2PropertyData[PropertyType.eUint8].m_derializeFuncKeyWord = "readUnsignedInt8"
     
@@ -41,7 +41,7 @@ class CppPropertyType2PropertyData(object):
     m_sType2PropertyData[PropertyType.eInt16].m_derializeFuncKeyWord = "readInt16"
     
     m_sType2PropertyData[PropertyType.eUint16] = CppPropertyData()
-    m_sType2PropertyData[PropertyType.eUint16].m_propertyTypeKeyWord = "ushort"
+    m_sType2PropertyData[PropertyType.eUint16].m_propertyTypeKeyWord = "WORD"
     m_sType2PropertyData[PropertyType.eUint16].m_serializeFuncKeyWord = "writeUnsignedInt16"
     m_sType2PropertyData[PropertyType.eUint16].m_derializeFuncKeyWord = "readUnsignedInt16"
     
@@ -51,7 +51,7 @@ class CppPropertyType2PropertyData(object):
     m_sType2PropertyData[PropertyType.eInt32].m_derializeFuncKeyWord = "readInt32"
     
     m_sType2PropertyData[PropertyType.eUint32] = CppPropertyData()
-    m_sType2PropertyData[PropertyType.eUint32].m_propertyTypeKeyWord = "uint"
+    m_sType2PropertyData[PropertyType.eUint32].m_propertyTypeKeyWord = "DWORD"
     m_sType2PropertyData[PropertyType.eUint32].m_serializeFuncKeyWord = "writeUnsignedInt32"
     m_sType2PropertyData[PropertyType.eUint32].m_derializeFuncKeyWord = "readUnsignedInt32"
     
