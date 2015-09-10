@@ -12,10 +12,11 @@ namespace Game.Msg
 
 	public class stBase
 	{
-		public uint32 param;	// 基类成员属性测试
+		public uint param;	// 基类成员属性测试
 
 		public stBase()
 		{
+			param = 1;
 		}
 
 		override public void serialize(ByteBuffer bu)
@@ -35,12 +36,17 @@ namespace Game.Msg
 	
 	public class stTest : stBase
 	{
-		public uint32 time_1;	// 成员属性测试-1
-		public uint32 time_2;	// 成员属性测试-2
+		public uint time_1;	// 成员属性测试-1
+		public uint time_2;	// 成员属性测试-2
 		public string strPassword;	// 测试数组成员
+		public string intArr;	// 测试整型数组
 
 		public stTest()
 		{
+			time_1 = 1;
+			time_2 = 1;
+			strPassword = ;
+			intArr = ;
 		}
 
 		override public void serialize(ByteBuffer bu)
@@ -49,6 +55,7 @@ namespace Game.Msg
 			bu.writeUnsignedInt32(time_1);
 			bu.writeUnsignedInt32(time_2);
 			bu.writeMultiByte(strPassword, GkEncode.UTF8, CVMsg.MAX_PASSWORD);
+			bu.writeMultiByte(intArr, GkEncode.UTF8, CVMsg.MAX_PASSWORD);
 		}
 
 		override public void derialize(ByteBuffer bu)
@@ -56,7 +63,8 @@ namespace Game.Msg
 			base.derialize(bu)
 			bu.readUnsignedInt32(ref time_1);
 			bu.readUnsignedInt32(ref time_2);
-			bu.readMultiByte(ref strPassword, CVMsg.MAX_PASSWORD, GkEncode.UTF8);
+			bu.readMultiByte(ref strPassword, GkEncode.UTF8, CVMsg.MAX_PASSWORD);
+			bu.readMultiByte(ref intArr, GkEncode.UTF8, CVMsg.MAX_PASSWORD);
 		}
 	}
 
@@ -71,11 +79,12 @@ namespace Game.Msg
 	 */
 	public class stTestMulti : stBase
 	{
-		public uint32 time;	// 成员属性测试
+		public uint time;	// 成员属性测试
 
 		public stTestMulti()
 		{
 			aaa = eTest.eValue_1;	// 定义基类成员的数值，基类成员前面添加 base ，不用写类型
+			time = 1;
 		}
 
 		override public void serialize(ByteBuffer bu)

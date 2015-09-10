@@ -4,6 +4,7 @@
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpPropertyType2PropertyData import CSharpPropertyType2PropertyData
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoTypeMemberBase import PropertyType
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoPropertyTypeKeyWord2Property import ProtoPropertyTypeKeyWord2Property
 
 
 class CSharpExportMessage(object):
@@ -75,12 +76,16 @@ class CSharpExportMessage(object):
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
             
             # 写入变量名字
-            if member.getPropType() == PropertyType.eInt8Array:     # char aaa[] 类型的特殊，直接转换成 string aaa
-                memberStr = "public {0} {1};".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getTypeName()].m_propertyTypeKeyWord, member.getVarName())
-            elif member.getPropType() == PropertyType.eUint8 or member.getPropType() == PropertyType.eInt16 or member.getPropType() == PropertyType.eUint16 or member.getPropType() == PropertyType.eInt32 or member.getPropType() == PropertyType.eUint32:
-                memberStr = "public {0} {1};".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getTypeName()].m_propertyTypeKeyWord, member.getVarName())
+            if member.getPropertyType() == PropertyType.eInt8Array:     # char aaa[] 类型的特殊，直接转换成 string aaa
+                memberStr = "public {0} {1};".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName())
+            elif member.getPropertyType() == PropertyType.eUint8 or \
+                member.getPropertyType() == PropertyType.eInt16 or \
+                member.getPropertyType() == PropertyType.eUint16 or \
+                member.getPropertyType() == PropertyType.eInt32 or \
+                member.getPropertyType() == PropertyType.eUint32:
+                memberStr = "public {0} {1};".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName())
             else:       # 数组处理
-                memberStr = "public {0} {1};".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getTypeName()].m_propertyTypeKeyWord, member.getVarNameAndArray())
+                memberStr = "public {0} {1};".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarNameAndArray())
             
             fHandle.write(memberStr)
             #写入注释
@@ -134,17 +139,17 @@ class CSharpExportMessage(object):
                 selfMember.getPropertyType() == PropertyType.eInt32 or \
                 selfMember.getPropertyType() == PropertyType.eUint32:
                 # 写入变量名字
-                memberStr = "{0} = {1};".format(baseMemberInit.getVarName(), baseMemberInit.getDefaultValue())
+                memberStr = "{0} = {1};".format(selfMember.getVarName(), selfMember.getDefaultValue())
             elif selfMember.getPropertyType() == PropertyType.eInt8Array:
-                memberStr = "{0} = {1};".format(baseMemberInit.getVarName(), "")
+                memberStr = "{0} = {1};".format(selfMember.getVarName(), "")
             else:   # 其它的数组
                 memberStr = "{0} = new {1}[{2}];".format(selfMember.getVarName(), CSharpPropertyType2PropertyData.m_sType2PropertyData[selfMember.getTypeName()].m_propertyTypeKeyWord, selfMember.getArrLen())
                 
             fHandle.write(memberStr)
-            #写入注释
-            if not AppSysBase.instance().getClsUtils().isNullOrEmpty(selfMember.getCommentStr()):   # 如果字符串不为空
-                AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
-                fHandle.write(baseMemberInit.getCommentStr())
+            # 这个注释就不用写了，因为成员的注释已经在成员声明区域输出了
+            #if not AppSysBase.instance().getClsUtils().isNullOrEmpty(selfMember.getCommentStr()):   # 如果字符串不为空
+            #    AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            #    fHandle.write(selfMember.getCommentStr())
             
         
         # 写入构造函数右括号
@@ -219,11 +224,11 @@ class CSharpExportMessage(object):
                 member.getPropertyType() == PropertyType.eUint16 or \
                 member.getPropertyType() == PropertyType.eInt32 or \
                 member.getPropertyType() == PropertyType.eUint32:
-                serializeStr = "bu.{0}({1});".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getTypeName()].m_serializeFuncKeyWord, member.getVarName())
+                serializeStr = "bu.{0}({1});".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_serializeFuncKeyWord, member.getVarName())
             elif member.getPropertyType() == PropertyType.eInt8Array:
-                serializeStr = "bu.{0}({1}, GkEncode.UTF8, {2});".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getTypeName()].m_serializeFuncKeyWord, member.getVarName(), member.getArrLen())
+                serializeStr = "bu.{0}({1}, GkEncode.UTF8, {2});".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_serializeFuncKeyWord, member.getVarName(), member.getArrLen())
             else:       # 数组输出
-                CSharpExportMessage.exportArrSerialize(fHandle, message, member, CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getTypeName()].m_propertyTypeKeyWord, CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getTypeName()].m_serializeFuncKeyWord)
+                CSharpExportMessage.exportArrSerialize(fHandle, message, member, CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_serializeFuncKeyWord)
                 serializeStr = ""
                 
             fHandle.write(serializeStr)
@@ -299,11 +304,11 @@ class CSharpExportMessage(object):
                 member.getPropertyType() == PropertyType.eUint16 or \
                 member.getPropertyType() == PropertyType.eInt32 or \
                 member.getPropertyType() == PropertyType.eUint32:
-                serializeStr = "bu.{0}({1});".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getTypeName()].m_derializeFuncKeyWord, member.getVarName())
+                serializeStr = "bu.{0}(ref {1});".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_derializeFuncKeyWord, member.getVarName())
             elif member.getPropertyType() == PropertyType.eInt8Array:
-                serializeStr = "bu.{0}({1}, GkEncode.UTF8, {2});".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getTypeName()].m_derializeFuncKeyWord, member.getVarName(), member.getArrLen())
+                serializeStr = "bu.{0}(ref {1}, GkEncode.UTF8, {2});".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_derializeFuncKeyWord, member.getVarName(), member.getArrLen())
             else:       # 数组输出
-                CSharpExportMessage.exportArrDerialize(fHandle, message, member, CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getTypeName()].m_propertyTypeKeyWord, CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getTypeName()].m_derializeFuncKeyWord)
+                CSharpExportMessage.exportArrDerialize(fHandle, message, member, CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_derializeFuncKeyWord)
                 serializeStr = ""
 
             
