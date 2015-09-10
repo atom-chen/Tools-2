@@ -3,9 +3,9 @@
 
 #include <string.h>
 
-#include "MemLeakCheck.hxx"
+#include "MemLeakCheck.h"
 
-#include "Platform.hxx"
+#include "Platform.h"
 BEGIN_NAMESPACE
 
 template<class T>
@@ -27,6 +27,6 @@ public:
 
 END_NAMESPACE
 
-//#include "UnMemLeakCheck.hxx"
+//#include "UnMemLeakCheck.h"
 
 #endif				// SINGLETON_H

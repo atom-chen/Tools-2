@@ -5,7 +5,8 @@
 
 //class ExcelTbl;
 
-#include "Platform.hxx"
+#include "Platform.h"
+
 BEGIN_NAMESPACE
 
 class WorkThread : public QThread

@@ -1,15 +1,15 @@
-﻿#include "maindialog.hxx"
+﻿#include "maindialog.h"
 #include "ui_maindialog.h"
-#include "Tools.hxx"
+#include "AppSysPrerequisites.h"
 
 //#include <QtGui/QtGui>
 #include <QtCore/QVector>
-#include "AppData.hxx"	// inlcude app data
-#include "WorkThread.hxx"
-#include "System.hxx"
-#include "TableListItem.hxx"
+#include "AppSys.h"	// inlcude app data
+#include "WorkThread.h"
+#include "System.h"
+#include "TableListItem.h"
 
-#include "MemLeakCheck.hxx"
+#include "MemLeakCheck.h"
 
 MainDialog::MainDialog(QWidget *parent)
 	: QDialog(parent, Qt::FramelessWindowHint), m_ui(new Ui::Dialog)
@@ -46,11 +46,11 @@ MainDialog::MainDialog(QWidget *parent)
 	//m_ui->comboBoxSolution->setEditable(true);
 
 	// init appdata
-	AppData::getSingletonPtr()->initData();
+	g_pAppSys->initData();
 	QThread* pthread = new WorkThread();
-	AppData::getSingletonPtr()->initThread(pthread);
+	g_pAppSys->initThread(pthread);
 	// fill to comboBoxSolution
-	//AppData::getSingletonPtr()->initCombo(m_ui->comboBoxSolution);
+	//g_pAppSys->initCombo(m_ui->comboBoxSolution);
 	// clear select item,must after initCombo
 	//m_ui->comboBoxSolution->setCurrentIndex(-1);
 
@@ -58,9 +58,9 @@ MainDialog::MainDialog(QWidget *parent)
 	//m_excelTbl = new ExcelTbl();
 	//m_excelTbl = new ExcelTblSort();
 	//m_thread.setParam(m_excelTbl);
-	//m_thread.setParam(AppData::getSingletonPtr()->getExcelTbl());
-	Tools::getSingletonPtr()->setParent(this);
-	//Tools::getSingletonPtr()->setTextEdit(ui->m_outTextEdit);
+	//m_thread.setParam(g_pAppSys->getExcelTbl());
+	g_pUtils->setParent(this);
+	//g_pUtils->setTextEdit(ui->m_outTextEdit);
 	// 检测大端小端
 	System::getSingletonPtr()->checkEndian();
 
@@ -84,7 +84,7 @@ void MainDialog::addListItem()
 {
 	TableListItem *listItemUI;
 	QListWidgetItem *listItem;
-	std::vector<Table*>& tableList = AppData::getSingletonPtr()->getTask()->getTableList();
+	std::vector<Table*>& tableList = g_pAppSys->getTask()->getTableList();
 
 	std::vector<Table*>::iterator tableIteVecBegin = tableList.begin();
 	std::vector<Table*>::iterator tableIteVecEnd = tableList.end();
@@ -112,7 +112,7 @@ void MainDialog::btnOutput()
 		dir = QDir::currentPath();
 	}
 
-	QString fileName = Tools::getSingletonPtr()->openDirectoryDialog(dir);
+	QString fileName = g_pUtils->openDirectoryDialog(dir);
 
     if (!fileName.isEmpty()) 
 	{
@@ -134,7 +134,7 @@ void MainDialog::btnXml()
 		dir = m_ui->comboBoxOutputXml->currentText();
 	}
 
-	QString fileName = Tools::getSingletonPtr()->openFileDialog(dir, filter);
+	QString fileName = g_pUtils->openFileDialog(dir, filter);
 
     if (!fileName.isEmpty()) 
 	{
@@ -152,45 +152,45 @@ void MainDialog::btnStart()
 	QString xmlFile = m_ui->comboBoxOutputXml->currentText();
 	//QString xmlsolution = m_ui->comboBoxSolution->currentText();
 
-	//AppData::getSingletonPtr()->setXml(outPath.toLocal8Bit().data(), xmlFile.toLocal8Bit().data(), xmlsolution.toLocal8Bit().data());
-	//AppData::getSingletonPtr()->setXml(Tools::getSingletonPtr()->UNICODEStr2GBKStr(outPath).toLocal8Bit().data(), Tools::getSingletonPtr()->UNICODEStr2GBKStr(xmlFile).toLocal8Bit().data(), Tools::getSingletonPtr()->UNICODEStr2GBKStr(xmlsolution).toLocal8Bit().data());
-	//AppData::getSingletonPtr()->setXml(Tools::getSingletonPtr()->UNICODEStr2GBKStr(outPath).toStdString(), Tools::getSingletonPtr()->UNICODEStr2GBKStr(xmlFile).toStdString(), Tools::getSingletonPtr()->UNICODEStr2GBKStr(xmlsolution).toStdString());
-	//AppData::getSingletonPtr()->setXml(outPath.toStdString(), xmlFile.toStdString(), xmlsolution.toStdString());
+	//g_pAppSys->setXml(outPath.toLocal8Bit().data(), xmlFile.toLocal8Bit().data(), xmlsolution.toLocal8Bit().data());
+	//g_pAppSys->setXml(g_pUtils->UNICODEStr2GBKStr(outPath).toLocal8Bit().data(), g_pUtils->UNICODEStr2GBKStr(xmlFile).toLocal8Bit().data(), g_pUtils->UNICODEStr2GBKStr(xmlsolution).toLocal8Bit().data());
+	//g_pAppSys->setXml(g_pUtils->UNICODEStr2GBKStr(outPath).toStdString(), g_pUtils->UNICODEStr2GBKStr(xmlFile).toStdString(), g_pUtils->UNICODEStr2GBKStr(xmlsolution).toStdString());
+	//g_pAppSys->setXml(outPath.toStdString(), xmlFile.toStdString(), xmlsolution.toStdString());
 
 	//char aaa[256];
-	//Tools::getSingletonPtr()->UTF8ToGBK((unsigned char *)outPath.toUtf8().data(), (unsigned char *)aaa, 256);
-	AppData::getSingletonPtr()->setXml(Tools::getSingletonPtr()->UNICODEStr2LocalChar(outPath), Tools::getSingletonPtr()->UNICODEStr2LocalChar(xmlFile));
+	//g_pUtils->UTF8ToGBK((unsigned char *)outPath.toUtf8().data(), (unsigned char *)aaa, 256);
+	g_pAppSys->setXml(g_pUtils->UNICODEStr2LocalChar(outPath), g_pUtils->UNICODEStr2LocalChar(xmlFile));
 
 	//if((outPath.length() == 0 || xmlFile.length() == 0) && xmlsolution.length() == 0)
 	//{
 	//	QString msg = tr("path is empty");
-	//	Tools::getSingletonPtr()->informationMessage(msg);
+	//	g_pUtils->informationMessage(msg);
 	//}
 	//else
 	//{
 		//pushButtonStart.enable = false;
 
 		//QMessageBox::information(this, tr("QMessageBox::information()"), tr("asdasdf"));
-		if(!Tools::getSingletonPtr()->isRunning())
+		if(!g_pUtils->isRunning())
 		{
 			//m_excelTbl->setXmlPath(xmlFile);
 			//m_excelTbl->setOutputPath(outPath);
 			//m_thread.start();
-			AppData::getSingletonPtr()->startThread();
+			g_pAppSys->startThread();
 			//m_thread.wait();		// 会死锁 
 			//pushButtonStart.enable = false;
 		}
 		else
 		{
-			//Tools::getSingletonPtr()->informationMessage(tr("正在打表"));
-			Tools::getSingletonPtr()->informationMessage(QStringLiteral("正在打表"));
+			//g_pUtils->informationMessage(tr("正在打表"));
+			g_pUtils->informationMessage(QStringLiteral("正在打表"));
 		}
 	//}
 }
 
 void MainDialog::update()
 {
-	QVector<QString>& list = Tools::getSingletonPtr()->getLog();
+	QVector<QString>& list = g_pUtils->getLog();
 	QVector<QString>::Iterator begin = list.begin();
 	while(begin != list.end())
 	{
@@ -200,11 +200,11 @@ void MainDialog::update()
 	}
 
 	// 显示对话框
-	list = Tools::getSingletonPtr()->getLogMsg();
+	list = g_pUtils->getLogMsg();
 	begin = list.begin();
 	if(begin != list.end())
 	{
-		Tools::getSingletonPtr()->informationMessageUI(*begin);
+		g_pUtils->informationMessageUI(*begin);
 	}
 }
 

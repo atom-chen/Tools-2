@@ -9,17 +9,17 @@
 #include <cstring>		// std::string
 #include <cstdio>		// File
 #include <tchar.h>		// _T
-#include "TabelAttr.hxx"
+#include "TabelAttr.h"
 #include <vector>
-#include "PropertyIns.hxx"
-#include "PropertyStr.hxx"
-#include "DataItem.hxx"
+#include "PropertyIns.h"
+#include "PropertyStr.h"
+#include "DataItem.h"
 #include <cwchar>				// wchat_t
 #include <windows.h>			// WCHAR
 
-#include "MemLeakCheck.hxx"
+#include "MemLeakCheck.h"
 
-#include "Platform.hxx"
+#include "Platform.h"
 
 //using namespace tinyxml2;
 

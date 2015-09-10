@@ -1,8 +1,8 @@
 #ifndef _PROPERTYBASE_H
 #define _PROPERTYBASE_H
 
-#include "ByteBuffer.hxx"
-#include "Platform.hxx"
+#include "ByteBuffer.h"
+#include "Platform.h"
 
 BEGIN_NAMESPACE
 

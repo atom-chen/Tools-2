@@ -1,7 +1,8 @@
 #ifndef _SYSENDIAN_H
 #define _SYSENDIAN_H
 
-#include "Platform.hxx"
+#include "Platform.h"
+
 BEGIN_NAMESPACE
 
 /**

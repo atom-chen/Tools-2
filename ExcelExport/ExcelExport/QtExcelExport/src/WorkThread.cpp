@@ -1,20 +1,19 @@
-﻿#include "WorkThread.hxx"
-#include "Tools.hxx"
-#include "AppData.hxx"
+﻿#include "WorkThread.h"
+#include "AppSysPrerequisites.h"
 
 void WorkThread::run()
 {
-	Tools::getSingletonPtr()->setRunning(true);
-	if(AppData::getSingletonPtr()->isSetSolution())
+	g_pUtils->setRunning(true);
+	if(g_pAppSys->isSetSolution())
 	{
-		AppData::getSingletonPtr()->startMultiPack();
+		g_pAppSys->startMultiPack();
 	}
 	else
 	{
 		//m_excelTbl->convExcel2Tbl();
-		AppData::getSingletonPtr()->startSinglePack();
+		g_pAppSys->startSinglePack();
 	}
-	Tools::getSingletonPtr()->setRunning(false);
+	g_pUtils->setRunning(false);
 }
 
 //void WorkThread::setParam(ExcelTbl* para)

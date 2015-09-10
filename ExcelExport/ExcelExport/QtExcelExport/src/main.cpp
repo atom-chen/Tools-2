@@ -9,7 +9,7 @@
 #include <QtWidgets/QApplication>
 //#include <corelib/codecs/qtextcodec.h>
 #include <QtCore/QtCore>
-#include "maindialog.hxx"
+#include "maindialog.h"
 
 // 设置执行编码
 #if defined(_MSC_VER) && (_MSC_VER >= 1600)
@@ -24,7 +24,7 @@
 //	#include <crtdbg.h>
 //#endif
 
-#include "MemLeakCheck.hxx"
+#include "MemLeakCheck.h"
 
 //定义函数：  
 void EnableMemLeakCheck()

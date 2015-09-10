@@ -4,7 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "Platform.hxx"
+#include "Platform.h"
+
 BEGIN_NAMESPACE
 
 class IDRange

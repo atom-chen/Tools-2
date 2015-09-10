@@ -1,11 +1,11 @@
-﻿#include "ExcelExport.hxx"
-#include "Tools.hxx"
+﻿#include "ExcelExport.h"
+#include "AppSysPrerequisites.h"
 //#include <QtGui/QtGui>
-#include "Platform.hxx"
-#include "DataItem.hxx"
+#include "Platform.h"
+#include "DataItem.h"
 #include <direct.h>		// chdir
-#include "Task.hxx"
-#include "ADOWrap.hxx"
+#include "Task.h"
+#include "ADOWrap.h"
 
 ExcelExport::ExcelExport()
 {
@@ -58,12 +58,12 @@ bool ExcelExport::checkAttr(Table* tableItem)
 	// 前置检查    
 	if (0 == tableItem->m_lpszDBTableName.length())
 	{
-		Tools::getSingletonPtr()->informationMessage(QStringLiteral("配置表中 tablename 这个属性为空"));
+		g_pUtils->informationMessage(QStringLiteral("配置表中 tablename 这个属性为空"));
 		return false;
 	}
 	if (tableItem->m_fieldsList.size() == 0)
 	{
-		Tools::getSingletonPtr()->informationMessage(QStringLiteral("配置表中需要导出的字段为空，没有需要导出的"));
+		g_pUtils->informationMessage(QStringLiteral("配置表中需要导出的字段为空，没有需要导出的"));
 		return false;
 	}
 
@@ -123,7 +123,7 @@ bool ExcelExport::exportExcelByTable(Table* tableItem)
 		_strId = field->m_fieldName;			// 第一个字段必然是 id
 
 		// 输出表的定义
-		Tools::getSingletonPtr()->Log(Tools::getSingletonPtr()->LocalChar2UNICODEStr(tableItem->m_strOutput.c_str()));
+		g_pUtils->Log(g_pUtils->LocalChar2UNICODEStr(tableItem->m_strOutput.c_str()));
 
 		while (!adoWrap.isAdoEOF())		// 如果没有结束
 		{   
@@ -200,7 +200,7 @@ bool ExcelExport::exportExcelByTable(Table* tableItem)
 					else
 					{
 						strTmp = (TCHAR*)(_bstr_t)fieldValue.bstrVal;
-						Tools::getSingletonPtr()->informationMessage(QStringLiteral("未能转换的字段"));
+						g_pUtils->informationMessage(QStringLiteral("未能转换的字段"));
 					}
 
 					// 保存数据到 Property vector 
@@ -228,7 +228,7 @@ bool ExcelExport::exportExcelByTable(Table* tableItem)
 						// 如果字符串是  "" 空就不转换了 
 						if (!strTmp.empty())
 						{
-							len = Tools::getSingletonPtr()->GBKToUTF8((char*)strTmp.c_str(), m_bytes, 4096);
+							len = g_pUtils->GBKToUTF8((char*)strTmp.c_str(), m_bytes, 4096);
 							if (len == 0)
 							{
 								throw "转换到UTF-8失败";
@@ -353,7 +353,7 @@ bool ExcelExport::exportExcelByTable(Table* tableItem)
 		// 输出各种警告错误和最终输出的条数
 		warnOrErrorDesc += strStream.str();
 		// 打表成功 
-		Tools::getSingletonPtr()->Log(Tools::getSingletonPtr()->LocalChar2UNICODEStr(warnOrErrorDesc.c_str()));
+		g_pUtils->Log(g_pUtils->LocalChar2UNICODEStr(warnOrErrorDesc.c_str()));
 
 		return true;
 	}
@@ -363,7 +363,7 @@ bool ExcelExport::exportExcelByTable(Table* tableItem)
 		//_bstr_t szError = e.Description();
 		_bstr_t bstr = e.Description();
 		wchar_t* wchar = bstr;
-		char* szError = Tools::getSingletonPtr()->UnicodeToAnsi(wchar);
+		char* szError = g_pUtils->UnicodeToAnsi(wchar);
 
 		if (fieldName != nullptr)
 		{
@@ -371,18 +371,18 @@ bool ExcelExport::exportExcelByTable(Table* tableItem)
 			strStream.str("");
 			strStream << szError << "表中没有查找到这个字段字段: " << fieldName;
 
-			//Tools::getSingletonPtr()->informationMessage(QString::fromLocal8Bit(strStream.str().c_str()));
-			Tools::getSingletonPtr()->informationMessage(Tools::getSingletonPtr()->LocalChar2UNICODEStr(strStream.str().c_str()));
+			//g_pUtils->informationMessage(QString::fromLocal8Bit(strStream.str().c_str()));
+			g_pUtils->informationMessage(g_pUtils->LocalChar2UNICODEStr(strStream.str().c_str()));
 		}
 		else
 		{
-			Tools::getSingletonPtr()->informationMessage(Tools::getSingletonPtr()->LocalChar2UNICODEStr(szError));
+			g_pUtils->informationMessage(g_pUtils->LocalChar2UNICODEStr(szError));
 		}
 		return false;
 	}
 	catch (std::bad_alloc& error)	// 分配内存失败   
 	{
-		Tools::getSingletonPtr()->informationMessage(QString::fromLocal8Bit(error.what()));
+		g_pUtils->informationMessage(QString::fromLocal8Bit(error.what()));
 	}
 }
 
@@ -417,7 +417,7 @@ void ExcelExport::exportPropertyVec2File(const char* lpszOutputFile, std::vector
 	{
 		std::stringstream ss;
 		ss << "[" << lpszOutputFile << "] 文件打开失败 \n";
-		Tools::getSingletonPtr()->Log(Tools::getSingletonPtr()->LocalChar2UNICODEStr(ss.str().c_str()));
+		g_pUtils->Log(g_pUtils->LocalChar2UNICODEStr(ss.str().c_str()));
 	}
 	else
 	{

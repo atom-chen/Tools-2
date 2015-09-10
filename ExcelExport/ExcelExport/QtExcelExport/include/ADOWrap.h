@@ -1,7 +1,7 @@
 #ifndef _ADOWRAP_H
 #define _ADOWRAP_H
 
-#include "Platform.hxx"
+#include "Platform.h"
 #include <string>
 
 #import "C:\Program Files\Common Files\System\ado\msado15.dll" \

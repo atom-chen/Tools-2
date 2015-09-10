@@ -9,16 +9,14 @@
 
 #include <stdio.h>
 #include <windows.h>
-
-#include "Singleton.hxx"
-
-#include "Platform.hxx"
+#include "Singleton.h"
+#include "Platform.h"
 
 class QWidget;
 
 BEGIN_NAMESPACE
 
-class Tools : public Singleton<Tools>
+class Utils
 {
 private:
 	QWidget *m_parent;			// 提示对话框的父窗口 
@@ -45,8 +43,8 @@ private:
 	std::string UTF8ToGBKStr(char * lpUTF8Str);
 
 public:
-	Tools(); 
-	~Tools();
+	Utils(); 
+	~Utils();
 	QString openFileDialog(QString dir, QString filter);
 	std::string  GetFileNameExt(const char* pszFileName);
 	QString openDirectoryDialog(QString path);

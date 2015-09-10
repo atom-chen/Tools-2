@@ -2,10 +2,10 @@
 #define _DATAITEM_H
 
 #include <vector>
-#include "ByteBuffer.hxx"
-#include "PropertyBase.hxx"
+#include "ByteBuffer.h"
+#include "PropertyBase.h"
 
-#include "Platform.hxx"
+#include "Platform.h"
 BEGIN_NAMESPACE
 
 /**

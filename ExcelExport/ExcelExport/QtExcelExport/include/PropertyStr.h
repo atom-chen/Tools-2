@@ -1,10 +1,10 @@
 #ifndef _PROPERTYSTR_H
 #define _PROPERTYSTR_H
 
-#include "PropertyIns.hxx"
+#include "PropertyIns.h"
 #include <string>
+#include "Platform.h"
 
-#include "Platform.hxx"
 BEGIN_NAMESPACE
 
 class PropertyStr : public PropertyIns<std::string>

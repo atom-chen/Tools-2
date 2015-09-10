@@ -1,8 +1,8 @@
-#include "TableListItem.hxx"
+#include "TableListItem.h"
 #include <QtWidgets/QWidget>
-#include "Tools.hxx"
+#include "AppSysPrerequisites.h"
 
-#include "MemLeakCheck.hxx"
+#include "MemLeakCheck.h"
 
 TableListItem::TableListItem(QWidget *parent)
 	: QWidget(parent), m_ui(new Ui::TableListItem)
@@ -15,7 +15,7 @@ TableListItem::TableListItem(QWidget *parent)
 void TableListItem::setTable(Table* table)
 {
 	m_table = table;
-	//m_ui->label->setText(Tools::getSingletonPtr()->GBKChar2UNICODEStr(m_table->m_strExcelDirAndName.c_str()));
+	//m_ui->label->setText(g_pUtils->GBKChar2UNICODEStr(m_table->m_strExcelDirAndName.c_str()));
 	m_ui->label->setText(m_table->m_lpszTableName.c_str());
 }
 

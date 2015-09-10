@@ -1,4 +1,4 @@
-#include "PropertyStr.hxx"
+#include "PropertyStr.h"
 
 void PropertyStr::srz2BU(ByteBuffer& byteBuffer)
 {

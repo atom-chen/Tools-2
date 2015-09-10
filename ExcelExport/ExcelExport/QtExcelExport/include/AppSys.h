@@ -1,21 +1,23 @@
 ﻿#ifndef _APPDATA_H
 #define _APPDATA_H
 
-#include "Task.hxx"
-#include "Singleton.hxx"
+#include "Task.h"
+#include "Singleton.h"
 #include <string>
+
+#include "Platform.h"
+
+BEGIN_NAMESPACE
 
 class QThread;
 class ExcelExport;
 class QComboBox;
-
-#include "Platform.hxx"
-BEGIN_NAMESPACE
+class Utils;
 
 /**
  *@brief appdata
  */
-class AppData : public Singleton<AppData>
+class AppSys : public Singleton<AppSys>
 {
 protected:
 	Task* m_task;			// main thread task, but only one thread
@@ -24,10 +26,11 @@ protected:
 
 	string m_outPath;
 	string m_xmlFile;
+	Utils* m_pUtils;
 
 public:
-	AppData();
-	~AppData();
+	AppSys();
+	~AppSys();
 
 	Task* getTask();
 	void initData();
@@ -41,6 +44,8 @@ public:
 	void startThread();
 
 	void initCombo(QComboBox *comboBoxSolution);
+
+	Utils* getUtilsPtr();
 };
 
 END_NAMESPACE

@@ -1,12 +1,12 @@
 #ifndef _BYTEBUFFER_H
 #define _BYTEBUFFER_H
 
-#include "Common.hxx"
-#include "ByteConverter.hxx"
-#include "Error.hxx"
-#include "SystemEndian.hxx"
-#include "Platform.hxx"
-#include "System.hxx"
+#include "Common.h"
+#include "ByteConverter.h"
+#include "Error.h"
+#include "SystemEndian.h"
+#include "Platform.h"
+#include "System.h"
 
 BEGIN_NAMESPACE
 

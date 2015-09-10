@@ -38,11 +38,11 @@ else(NOT Qt5Widgets_FOUND)
         ./src/maindialog.cpp
         ./src/main.cpp
 		./src/ExcelExport.cpp
-		./src/Tools.cpp
+		./src/Utils.cpp
 		./src/WorkThread.cpp
 		./src/DataItem.cpp
 		./src/TabelAttr.cpp
-		./src/AppData.cpp
+		./src/AppSys.cpp
 		./src/Task.cpp
 		./src/ByteBuffer.cpp
 		./src/System.cpp
@@ -52,36 +52,37 @@ else(NOT Qt5Widgets_FOUND)
     )
 	
 	set(INCS_FILES
-        ./include/maindialog.hxx
-		./include/ExcelExport.hxx
-		./include/Singleton.hxx
-		./include/Tools.hxx
-		./include/WorkThread.hxx
-		./include/DataItem.hxx
-		./include/Platform.hxx
-		./include/TabelAttr.hxx
-		./include/AppData.hxx
-		./include/Task.hxx
-		./include/ByteBuffer.hxx
-		./include/ByteConverter.hxx
-		./include/System.hxx
-		./include/SystemEndian.hxx
-		./include/Common.hxx
-		./include/Error.hxx
-		./include/PropertyBase.hxx
-		./include/PropertyIns.hxx
-		./include/PropertyStr.hxx
-		./include/TableListItem.hxx
-		./include/EnValue.hxx
-		./include/ADOWrap.hxx
-		./include/MemLeakCheck.hxx
-		./include/UnMemLeakCheck.hxx
+        ./include/maindialog.h
+		./include/ExcelExport.h
+		./include/Singleton.h
+		./include/Utils.h
+		./include/WorkThread.h
+		./include/DataItem.h
+		./include/Platform.h
+		./include/TabelAttr.h
+		./include/AppSys.h
+		./include/Task.h
+		./include/ByteBuffer.h
+		./include/ByteConverter.h
+		./include/System.h
+		./include/SystemEndian.h
+		./include/Common.h
+		./include/Error.h
+		./include/PropertyBase.h
+		./include/PropertyIns.h
+		./include/PropertyStr.h
+		./include/TableListItem.h
+		./include/EnValue.h
+		./include/ADOWrap.h
+		./include/MemLeakCheck.h
+		./include/UnMemLeakCheck.h
+		./include/AppSysPrerequisites.h
     )
 
 	#these files need build moc files
     SET(MOC_FILES
-        ./include/maindialog.hxx
-		./include/TableListItem.hxx
+        ./include/maindialog.h
+		./include/TableListItem.h
     )
 	
 	SET(QRC_FILES ./res/qtexcel.qrc)

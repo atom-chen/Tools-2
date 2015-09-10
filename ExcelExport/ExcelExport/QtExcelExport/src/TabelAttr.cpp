@@ -1,4 +1,4 @@
-﻿#include "TabelAttr.hxx"
+﻿#include "TabelAttr.h"
 
 // 解析数据，结构是 "1-100;130-500"
 void TableAttr::parseInRange(std::string idrange)

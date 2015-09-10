@@ -4,7 +4,7 @@
 /** 
  *@brief ByteConverter reverse your byte order.  This is use for cross platform where they have different endians.
  */
-#include "Platform.hxx"
+#include "Platform.h"
 #include <algorithm>
 
 BEGIN_NAMESPACE

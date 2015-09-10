@@ -1,7 +1,7 @@
 ﻿#ifndef _ENVALUE_H
 #define _ENVALUE_H
 
-#include "Platform.hxx"
+#include "Platform.h"
 BEGIN_NAMESPACE
 
 enum EnExcelType

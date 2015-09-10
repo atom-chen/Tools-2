@@ -5,12 +5,10 @@
 #include <deque>
 #include <sstream>
 
-#include "Tools.hxx"
-#include "MemLeakCheck.hxx"
+#include "Utils.h"
+#include "MemLeakCheck.h"
 
-template<> Tools* Singleton<Tools>::msSingleton = 0;
-
-Tools::Tools()
+Utils::Utils()
 {
 	m_parent = NULL;
 	m_running = false;
@@ -19,7 +17,7 @@ Tools::Tools()
 	m_wcsbytes = new wchar_t[4096];
 }
 
-Tools::~Tools()
+Utils::~Utils()
 {
 	m_infoListMutex.lock();
 	m_infoInList.clear();
@@ -32,7 +30,7 @@ Tools::~Tools()
 	m_msgListMutex.unlock();
 }
 
-QString Tools::openFileDialog(QString dir, QString filter)
+QString Utils::openFileDialog(QString dir, QString filter)
 {
     QFileDialog::Options options;
     options |= QFileDialog::DontUseNativeDialog;
@@ -54,7 +52,7 @@ QString Tools::openFileDialog(QString dir, QString filter)
     return fileName;
 }
 
-QString Tools::openDirectoryDialog(QString path)
+QString Utils::openDirectoryDialog(QString path)
 {
 	QString directory;
 	//directory = QFileDialog::getExistingDirectory(NULL, QObject::tr("Find Files"), QDir::currentPath());
@@ -64,7 +62,7 @@ QString Tools::openDirectoryDialog(QString path)
     return directory;
 }
 
-std::string Tools::GetFileNameExt(const char* pszFileName)
+std::string Utils::GetFileNameExt(const char* pszFileName)
 {
 	const char* p = strrchr(pszFileName, '.');
 	if(p && (*p)) return (p + 1);
@@ -72,7 +70,7 @@ std::string Tools::GetFileNameExt(const char* pszFileName)
 }
 
 // 这个就是日志信息，不在 UI 显示信息
-void Tools::informationMessage(QString msg, QString caption, QWidget *parent)
+void Utils::informationMessage(QString msg, QString caption, QWidget *parent)
 {
     //QMessageBox::StandardButton reply;
 	//reply = QMessageBox::information(parent, QObject::tr("QMessageBox::information()"), msg);
@@ -90,7 +88,7 @@ void Tools::informationMessage(QString msg, QString caption, QWidget *parent)
 }
 
 // 这个就是日志信息，不在 UI 显示信息
-void Tools::informationMessageUI(QString msg, QString caption, QWidget *parent)
+void Utils::informationMessageUI(QString msg, QString caption, QWidget *parent)
 {
 	if(parent != NULL)
 	{
@@ -102,23 +100,23 @@ void Tools::informationMessageUI(QString msg, QString caption, QWidget *parent)
 	}
 }
 
-void Tools::setParent(QWidget *parent)
+void Utils::setParent(QWidget *parent)
 {
 	m_parent = parent;
 }
 
-bool Tools::isRunning()
+bool Utils::isRunning()
 {
 	return m_running;
 }
 
-void Tools::setRunning(bool run)
+void Utils::setRunning(bool run)
 {
 	m_running = run;
 }
 
 // 输出日志    
-void Tools::Log(QString desc)
+void Utils::Log(QString desc)
 {
 	m_infoListMutex.lock();
 	// 清除之前的内容  
@@ -130,7 +128,7 @@ void Tools::Log(QString desc)
 	m_infoListMutex.unlock();
 }
 
-QVector<QString>& Tools::getLog()
+QVector<QString>& Utils::getLog()
 {
 	m_infoListMutex.lock();
 	m_infoOutList.clear();
@@ -147,7 +145,7 @@ QVector<QString>& Tools::getLog()
 }
 
 // 输出日志    
-void Tools::LogMsg(QString desc)
+void Utils::LogMsg(QString desc)
 {
 	m_msgListMutex.lock();
 	// 清除之前的内容  
@@ -159,7 +157,7 @@ void Tools::LogMsg(QString desc)
 	m_msgListMutex.unlock();
 }
 
-QVector<QString>& Tools::getLogMsg()
+QVector<QString>& Utils::getLogMsg()
 {
 	m_msgListMutex.lock();
 	m_msgOutList.clear();
@@ -175,14 +173,14 @@ QVector<QString>& Tools::getLogMsg()
 	return m_msgOutList;
 }
 
-//void Tools::setTextEdit(QTextEdit* textEdit)
+//void Utils::setTextEdit(QTextEdit* textEdit)
 //{
 //	m_outTextEdit = textEdit;
 //}
 
 // 全局函数，使用 windows 编码解码
 //GBK编码转换到UTF8编码
-int Tools::GBKToUTF8(char * lpGBKStr, char * lpUTF8Str, int nUTF8StrLen)
+int Utils::GBKToUTF8(char * lpGBKStr, char * lpUTF8Str, int nUTF8StrLen)
 {
 	wchar_t * lpUnicodeStr = NULL;
 	int nRetLen = 0;
@@ -221,7 +219,7 @@ int Tools::GBKToUTF8(char * lpGBKStr, char * lpUTF8Str, int nUTF8StrLen)
 }
 
 // UTF8编码转换到GBK编码
-int Tools::UTF8ToGBK(char * lpUTF8Str, char * lpGBKStr, int nGBKStrLen)
+int Utils::UTF8ToGBK(char * lpUTF8Str, char * lpGBKStr, int nGBKStrLen)
 {
 	wchar_t * lpUnicodeStr = NULL;
 	int nRetLen = 0;
@@ -259,7 +257,7 @@ int Tools::UTF8ToGBK(char * lpUTF8Str, char * lpGBKStr, int nGBKStrLen)
 	return nRetLen;
 }
 
-std::string Tools::UTF8ToGBKStr(char * lpUTF8Str)
+std::string Utils::UTF8ToGBKStr(char * lpUTF8Str)
 {
 	memset(m_bytes, 0, 4096);
 	UTF8ToGBK(lpUTF8Str, m_bytes, 4096);
@@ -280,7 +278,7 @@ std::string Tools::UTF8ToGBKStr(char * lpUTF8Str)
 //}
 
 // 现在运行时是 UNICODE 编码
-QString Tools::UNICODEStr2GBKStr(const QString &inStr)
+QString Utils::UNICODEStr2GBKStr(const QString &inStr)
 {
 	QTextCodec *gbk = QTextCodec::codecForName("GB18030");
 	//QTextCodec *gbk = QTextCodec::codecForName("GBK");
@@ -293,7 +291,7 @@ QString Tools::UNICODEStr2GBKStr(const QString &inStr)
 	return utf2gbk;
 }
 
-bool Tools::UNICODEStr2GBKChar(const QString &inStr, char* ret, int retlen)
+bool Utils::UNICODEStr2GBKChar(const QString &inStr, char* ret, int retlen)
 {
 	QTextCodec *gbk = QTextCodec::codecForName("GB18030");
 	QByteArray gbkby = gbk->fromUnicode(inStr);
@@ -331,7 +329,7 @@ bool Tools::UNICODEStr2GBKChar(const QString &inStr, char* ret, int retlen)
 //	return utf2gbk;
 //}
 
-QString Tools::GBKChar2UNICODEStr(const char* inChar)
+QString Utils::GBKChar2UNICODEStr(const char* inChar)
 {
 	QTextCodec *gbk = QTextCodec::codecForName("GB18030");
 
@@ -340,19 +338,19 @@ QString Tools::GBKChar2UNICODEStr(const char* inChar)
 }
 
 // 凡是 Qt 中的字符串要传给本地 string ，必须使用这个函数
-std::string Tools::UNICODEStr2LocalChar(const QString &inStr)
+std::string Utils::UNICODEStr2LocalChar(const QString &inStr)
 {
 	return UTF8ToGBKStr(inStr.toUtf8().data());
 }
 
 // 这里的 Local 是指本地编码，不是 QTextCodec::setCodecForLocale 设置的 UTF-8 ，因为 VS Local 编码是 GB2312 编码 
 // 凡是本地字符串变量要传递给 Qt ，必须使用这个函数
-QString Tools::LocalChar2UNICODEStr(const char* inChar)
+QString Utils::LocalChar2UNICODEStr(const char* inChar)
 {
 	return GBKChar2UNICODEStr(inChar);
 }
 
-void Tools::convToAbsPath(std::string& srcPath)
+void Utils::convToAbsPath(std::string& srcPath)
 {
 	if (-1 == srcPath.find(':'))		// 如果没有检查到分隔符，就是相对目录
 	{
@@ -365,7 +363,7 @@ void Tools::convToAbsPath(std::string& srcPath)
 }
 
 // 移除目录中的 .. 
-void Tools::remove2Dot(std::string& srcPath)
+void Utils::remove2Dot(std::string& srcPath)
 {
 	std::vector<std::string> pathVec;
 	std::string delim = "/";
@@ -421,7 +419,7 @@ void Tools::remove2Dot(std::string& srcPath)
 }
 
 // 注意：当字符串为空时，也会返回一个空字符串  
-void Tools::split(std::string& s, std::string& delim, std::vector< std::string >* ret)
+void Utils::split(std::string& s, std::string& delim, std::vector< std::string >* ret)
 {
 	size_t last = 0;
 	size_t index = s.find_first_of(delim, last);
@@ -437,7 +435,7 @@ void Tools::split(std::string& s, std::string& delim, std::vector< std::string >
 	}
 }
 
-std::string& Tools::replace_all(std::string& str, const std::string& old_value, const std::string& new_value)
+std::string& Utils::replace_all(std::string& str, const std::string& old_value, const std::string& new_value)
 {
 	while (true)   
 	{
@@ -454,7 +452,7 @@ std::string& Tools::replace_all(std::string& str, const std::string& old_value, 
 	return str;
 }
 
-std::string& Tools::replace_all_distinct(std::string& str, const std::string& old_value, const std::string& new_value)
+std::string& Utils::replace_all_distinct(std::string& str, const std::string& old_value, const std::string& new_value)
 {
 	for (std::string::size_type pos(0); pos != std::string::npos; pos += new_value.length())   
 	{
@@ -470,7 +468,7 @@ std::string& Tools::replace_all_distinct(std::string& str, const std::string& ol
 	return str;
 }
 
-const char* Tools::copyPChar2PChar(const char* pSrc)
+const char* Utils::copyPChar2PChar(const char* pSrc)
 {
 	const char* lpszTmp = nullptr;
 	size_t strLen;
@@ -485,7 +483,7 @@ const char* Tools::copyPChar2PChar(const char* pSrc)
 	return lpszTmp;
 }
 
-const char* Tools::copyPChar2Str(const char* pSrc)
+const char* Utils::copyPChar2Str(const char* pSrc)
 {
 	if (pSrc != nullptr)
 	{
@@ -495,7 +493,7 @@ const char* Tools::copyPChar2Str(const char* pSrc)
 	return "";
 }
 
-wchar_t* Tools::AnsiToUnicode(const char* szStr)
+wchar_t* Utils::AnsiToUnicode(const char* szStr)
 {
 	int nLen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szStr, -1, NULL, 0);
 	if (nLen == 0)
@@ -506,7 +504,7 @@ wchar_t* Tools::AnsiToUnicode(const char* szStr)
 	return m_wcsbytes;
 }
 
-char* Tools::UnicodeToAnsi(const wchar_t* szStr)
+char* Utils::UnicodeToAnsi(const wchar_t* szStr)
 {
 	int nLen = WideCharToMultiByte(CP_ACP, 0, szStr, -1, NULL, 0, NULL, NULL);
 	if (nLen == 0)

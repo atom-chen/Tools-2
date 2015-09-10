@@ -1,4 +1,4 @@
-#include "System.hxx"
+#include "System.h"
 
 template<> System* Singleton<System>::msSingleton = 0;
 

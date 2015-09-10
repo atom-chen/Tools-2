@@ -1,9 +1,9 @@
 #ifndef _PROPERTYINS_H
 #define _PROPERTYINS_H
 
-#include "PropertyBase.hxx"
-#include "ByteBuffer.hxx"
-#include "Platform.hxx"
+#include "PropertyBase.h"
+#include "ByteBuffer.h"
+#include "Platform.h"
 
 BEGIN_NAMESPACE
 

@@ -4,14 +4,15 @@
 #include <string>	// include string
 #include <vector>	// include vector
 #include "tinyxml2.h"	// include xml
-#include "EnValue.hxx"
-#include "TabelAttr.hxx"
+#include "EnValue.h"
+#include "TabelAttr.h"
 
 // import namespace
 using namespace std;
 //using namespace tinyxml2;
 
-#include "Platform.hxx"
+#include "Platform.h"
+
 BEGIN_NAMESPACE
 
 // 输出文件的类型，主要用来区别平台的

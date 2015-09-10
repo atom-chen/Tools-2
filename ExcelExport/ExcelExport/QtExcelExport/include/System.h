@@ -1,10 +1,10 @@
 #ifndef _SYSTEM_H
 #define _SYSTEM_H
 
-#include "SystemEndian.hxx"
-#include "Singleton.hxx"
+#include "SystemEndian.h"
+#include "Singleton.h"
 
-#include "Platform.hxx"
+#include "Platform.h"
 BEGIN_NAMESPACE
 
 class System : public Singleton < System >

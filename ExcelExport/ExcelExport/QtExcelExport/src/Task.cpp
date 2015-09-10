@@ -1,11 +1,11 @@
-﻿#include "Task.hxx"
-#include "Tools.hxx"
+﻿#include "Task.h"
+#include "AppSysPrerequisites.h"
 #include "tinyxml2.h"
 #include <direct.h>		// chdir
 #include <string.h>
 #include <stdio.h>
 
-#include "MemLeakCheck.hxx"
+#include "MemLeakCheck.h"
 
 XmlField::XmlField()
 {
@@ -29,8 +29,8 @@ void Table::parseXML(tinyxml2::XMLElement* pXmlEmtFields)
 		fieldItem = new XmlField();
 		m_fieldsList.push_back(fieldItem);
 
-		fieldItem->m_fieldName = Tools::copyPChar2Str(field->Attribute("name"));
-		fieldItem->m_fieldType = Tools::copyPChar2Str(field->Attribute("type"));
+		fieldItem->m_fieldName = Utils::copyPChar2Str(field->Attribute("name"));
+		fieldItem->m_fieldType = Utils::copyPChar2Str(field->Attribute("type"));
 
 		// 如果 field 是 string 类型，size 配置长度包括结尾符 0 
 		if (field->QueryIntAttribute("size", &fieldItem->m_fieldSize) != tinyxml2::XML_SUCCESS)
@@ -42,7 +42,7 @@ void Table::parseXML(tinyxml2::XMLElement* pXmlEmtFields)
 			fieldItem->m_fieldBase = 10;
 		}
 
-		fieldItem->m_defaultValue = Tools::copyPChar2Str(field->Attribute("default"));
+		fieldItem->m_defaultValue = Utils::copyPChar2Str(field->Attribute("default"));
 		// 默认的类型 
 		if (0 == fieldItem->m_fieldType.length())
 		{
@@ -258,7 +258,7 @@ bool Package::loadTableXml(std::vector<Table*>& tablesList)
 			if (_chdir(tableItem->m_strExcelDir.c_str()) == -1)			// 检查当前目录是否存在
 			{
 				QString msg = "当前目录设置正确";
-				Tools::getSingletonPtr()->informationMessage(NULL, msg);
+				g_pUtils->informationMessage(NULL, msg);
 			}
 
 			if (m_output.empty())
@@ -268,15 +268,15 @@ bool Package::loadTableXml(std::vector<Table*>& tablesList)
 
 			tinyxml2::XMLElement* field;
 
-			tableItem->m_lpszTableName = Tools::copyPChar2Str(table->Attribute("name"));
-			tableItem->m_lpszExcelFile = Tools::copyPChar2Str(table->Attribute("ExcelFile"));
-			tableItem->m_lpszDB = Tools::copyPChar2Str(table->Attribute("db"));
-			tableItem->m_lpszDBTableName = Tools::copyPChar2Str(table->Attribute("tablename"));		// 表单的名字
-			tableItem->m_outType = Tools::copyPChar2Str(table->Attribute("outtype"));				// 输出的类型
-			tableItem->m_lpszCodeFileName = Tools::copyPChar2Str(table->Attribute("codefilename"));	// 输出代码的文件名字
+			tableItem->m_lpszTableName = Utils::copyPChar2Str(table->Attribute("name"));
+			tableItem->m_lpszExcelFile = Utils::copyPChar2Str(table->Attribute("ExcelFile"));
+			tableItem->m_lpszDB = Utils::copyPChar2Str(table->Attribute("db"));
+			tableItem->m_lpszDBTableName = Utils::copyPChar2Str(table->Attribute("tablename"));		// 表单的名字
+			tableItem->m_outType = Utils::copyPChar2Str(table->Attribute("outtype"));				// 输出的类型
+			tableItem->m_lpszCodeFileName = Utils::copyPChar2Str(table->Attribute("codefilename"));	// 输出代码的文件名字
 
 			// 表中配置的 ID 范围
-			tableItem->m_lpId = Tools::copyPChar2Str(table->Attribute("idrange"));
+			tableItem->m_lpId = Utils::copyPChar2Str(table->Attribute("idrange"));
 			if (tableItem->m_lpId.c_str())
 			{
 				tableItem->m_tableAttr.parseInRange(tableItem->m_lpId);
@@ -291,11 +291,11 @@ bool Package::loadTableXml(std::vector<Table*>& tablesList)
 			tableItem->m_strOutput += "//---------------------\r\n";
 			tableItem->m_strStructDef = "";
 			tableItem->m_strExcelDirAndName = tableItem->m_strExcelDir + "/" + tableItem->m_lpszExcelFile;
-			if (stricmp("xls", Tools::getSingletonPtr()->GetFileNameExt(tableItem->m_lpszExcelFile.c_str()).c_str()) == 0)
+			if (stricmp("xls", g_pUtils->GetFileNameExt(tableItem->m_lpszExcelFile.c_str()).c_str()) == 0)
 			{
 				tableItem->m_enExcelType = eXLS;
 			}
-			else if (stricmp("xlsx", Tools::getSingletonPtr()->GetFileNameExt(tableItem->m_lpszExcelFile.c_str()).c_str()) == 0)
+			else if (stricmp("xlsx", g_pUtils->GetFileNameExt(tableItem->m_lpszExcelFile.c_str()).c_str()) == 0)
 			{
 				tableItem->m_enExcelType = eXLSX;
 			}
@@ -303,7 +303,7 @@ bool Package::loadTableXml(std::vector<Table*>& tablesList)
 			{
 				QString tmpmsg = QStringLiteral("不能读取这个文件格式的表格, 文件 ");
 				tmpmsg += tableItem->m_lpszExcelFile.c_str();
-				Tools::getSingletonPtr()->informationMessage(tmpmsg);
+				g_pUtils->informationMessage(tmpmsg);
 			}
 
 			field = table->FirstChildElement("fields");
@@ -317,12 +317,12 @@ bool Package::loadTableXml(std::vector<Table*>& tablesList)
 	}
 	catch (const char* p)
 	{
-		Tools::getSingletonPtr()->informationMessage(Tools::getSingletonPtr()->LocalChar2UNICODEStr(p));
+		g_pUtils->informationMessage(g_pUtils->LocalChar2UNICODEStr(p));
 		return false;
 	}
 	catch (...)
 	{
-		Tools::getSingletonPtr()->informationMessage(QStringLiteral("意外异常"));
+		g_pUtils->informationMessage(QStringLiteral("意外异常"));
 		return false;
 	}
 
@@ -378,8 +378,8 @@ void Solution::initByXml(tinyxml2::XMLElement* elem)
 	m_defaultOutput = elem->Attribute("defaultoutput");
 
 	// 转换目录到绝对目录
-	Tools::getSingletonPtr()->convToAbsPath(m_xmlRootPath);
-	Tools::getSingletonPtr()->convToAbsPath(m_defaultOutput);
+	g_pUtils->convToAbsPath(m_xmlRootPath);
+	g_pUtils->convToAbsPath(m_defaultOutput);
 
 	while(packageXml)
 	{

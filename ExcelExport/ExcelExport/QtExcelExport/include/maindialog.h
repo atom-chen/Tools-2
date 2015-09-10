@@ -4,9 +4,9 @@
 #include <QtWidgets/QDialog>
 #include <iostream>
 #include <QtCore/QTimer>
-//#include "WorkThread.hxx"
-//#include "ExcelTbl.hxx"
-#include "Platform.hxx"
+//#include "WorkThread.h"
+//#include "ExcelTbl.h"
+#include "Platform.h"
 
 using namespace std;
 
