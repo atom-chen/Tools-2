@@ -2,7 +2,7 @@
 #define TABLELISTITEM_H
 
 #include <QWidget>
-#include "CTask.hxx"
+#include "Task.hxx"
 #include "ui_TableListItem.h"
 
 namespace Ui

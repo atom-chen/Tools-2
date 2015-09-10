@@ -4,7 +4,7 @@
 #include "Platform.hxx"
 #include "DataItem.hxx"
 #include <direct.h>		// chdir
-#include "CTask.hxx"
+#include "Task.hxx"
 #include "ADOWrap.hxx"
 
 ExcelExport::ExcelExport()
@@ -33,7 +33,7 @@ void ExcelExport::setOutputPath(std::string path)
 
 bool ExcelExport::exportExcel()
 {
-	CPackage* packItem = new CPackage();
+	Package* packItem = new Package();
 	packItem->setXml(m_xmlPath);
 	packItem->setOutput(m_tblPath);
 

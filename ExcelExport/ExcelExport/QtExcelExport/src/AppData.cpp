@@ -2,43 +2,43 @@
 #include <QtGui/QtGui>
 #include <QtWidgets>
 #include "ExcelExport.hxx"
-#include "CTask.hxx"
+#include "Task.hxx"
 #include "Tools.hxx"
-#include "CAppData.hxx"
+#include "AppData.hxx"
 
 #include "MemLeakCheck.hxx"
 
-template<> CAppData* Singleton<CAppData>::msSingleton = 0;
+template<> AppData* Singleton<AppData>::msSingleton = 0;
 
-CAppData::CAppData()
+AppData::AppData()
 {
 	
 }
 
-CAppData::~CAppData()
+AppData::~AppData()
 {
 
 }
 
-CTask* CAppData::getTask()
+Task* AppData::getTask()
 {
 	return m_task;
 }
 
-void CAppData::initData()
+void AppData::initData()
 {
-	m_task = new CTask();
+	m_task = new Task();
 	m_excelExport = new ExcelExport();
 	m_task->readXML();
 }
 
-ExcelExport* CAppData::getExcelTbl()
+ExcelExport* AppData::getExcelTbl()
 {
 	return m_excelExport;
 }
 
 // start Multi
-void CAppData::startMultiPack()
+void AppData::startMultiPack()
 {
 	// 导出所有的表
 	std::vector<Table*>& tableList = m_task->getTableList();
@@ -60,12 +60,12 @@ void CAppData::startMultiPack()
 }
 
 // start single
-void CAppData::startSinglePack()
+void AppData::startSinglePack()
 {
 	m_excelExport->exportExcel();
 }
 
-void CAppData::setXml(string outpath, string xmlpath)
+void AppData::setXml(string outpath, string xmlpath)
 {
 	m_outPath = outpath;
 	m_xmlFile = xmlpath;
@@ -74,25 +74,25 @@ void CAppData::setXml(string outpath, string xmlpath)
 	m_excelExport->setOutputPath(m_outPath.c_str());
 }
 
-bool CAppData::isSetSolution()
+bool AppData::isSetSolution()
 {
 	return (0 == m_outPath.length() && 0 == m_xmlFile.length());
 }
 
-void CAppData::initThread(QThread* pthread)
+void AppData::initThread(QThread* pthread)
 {
 	m_pthread = pthread;
 }
 
-void CAppData::startThread()
+void AppData::startThread()
 {
 	m_pthread->start();
 }
 
-void CAppData::initCombo(QComboBox *comboBoxSolution)
+void AppData::initCombo(QComboBox *comboBoxSolution)
 {
 	//QString tmp;
-	//std::vector<CSolution*>::iterator ite;
+	//std::vector<Solution*>::iterator ite;
 	//for (ite = m_task.getSolutionLst().begin(); ite != m_task.getSolutionLst().end(); ++ite)
 	//{
 	//	//comboBoxSolution->addItem(QString::fromLocal8Bit((ite->getName().c_str())));

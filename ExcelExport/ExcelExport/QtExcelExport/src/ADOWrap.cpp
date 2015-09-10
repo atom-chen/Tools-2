@@ -1,5 +1,5 @@
 #include "ADOWrap.hxx"
-#include "CTask.hxx"
+#include "Task.hxx"
 #include "Tools.hxx"
 
 ADOWrap::ADOWrap()

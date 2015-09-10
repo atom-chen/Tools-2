@@ -42,8 +42,8 @@ else(NOT Qt5Widgets_FOUND)
 		./src/WorkThread.cpp
 		./src/DataItem.cpp
 		./src/TabelAttr.cpp
-		./src/CAppData.cpp
-		./src/CTask.cpp
+		./src/AppData.cpp
+		./src/Task.cpp
 		./src/ByteBuffer.cpp
 		./src/System.cpp
 		./src/PropertyStr.cpp
@@ -60,8 +60,8 @@ else(NOT Qt5Widgets_FOUND)
 		./include/DataItem.hxx
 		./include/Platform.hxx
 		./include/TabelAttr.hxx
-		./include/CAppData.hxx
-		./include/CTask.hxx
+		./include/AppData.hxx
+		./include/Task.hxx
 		./include/ByteBuffer.hxx
 		./include/ByteConverter.hxx
 		./include/System.hxx

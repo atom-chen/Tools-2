@@ -4,7 +4,7 @@
 
 //#include <QtGui/QtGui>
 #include <QtCore/QVector>
-#include "CAppData.hxx"	// inlcude app data
+#include "AppData.hxx"	// inlcude app data
 #include "WorkThread.hxx"
 #include "System.hxx"
 #include "TableListItem.hxx"
@@ -46,11 +46,11 @@ MainDialog::MainDialog(QWidget *parent)
 	//m_ui->comboBoxSolution->setEditable(true);
 
 	// init appdata
-	CAppData::getSingletonPtr()->initData();
+	AppData::getSingletonPtr()->initData();
 	QThread* pthread = new WorkThread();
-	CAppData::getSingletonPtr()->initThread(pthread);
+	AppData::getSingletonPtr()->initThread(pthread);
 	// fill to comboBoxSolution
-	//CAppData::getSingletonPtr()->initCombo(m_ui->comboBoxSolution);
+	//AppData::getSingletonPtr()->initCombo(m_ui->comboBoxSolution);
 	// clear select item,must after initCombo
 	//m_ui->comboBoxSolution->setCurrentIndex(-1);
 
@@ -58,7 +58,7 @@ MainDialog::MainDialog(QWidget *parent)
 	//m_excelTbl = new ExcelTbl();
 	//m_excelTbl = new ExcelTblSort();
 	//m_thread.setParam(m_excelTbl);
-	//m_thread.setParam(CAppData::getSingletonPtr()->getExcelTbl());
+	//m_thread.setParam(AppData::getSingletonPtr()->getExcelTbl());
 	Tools::getSingletonPtr()->setParent(this);
 	//Tools::getSingletonPtr()->setTextEdit(ui->m_outTextEdit);
 	// 检测大端小端
@@ -84,7 +84,7 @@ void MainDialog::addListItem()
 {
 	TableListItem *listItemUI;
 	QListWidgetItem *listItem;
-	std::vector<Table*>& tableList = CAppData::getSingletonPtr()->getTask()->getTableList();
+	std::vector<Table*>& tableList = AppData::getSingletonPtr()->getTask()->getTableList();
 
 	std::vector<Table*>::iterator tableIteVecBegin = tableList.begin();
 	std::vector<Table*>::iterator tableIteVecEnd = tableList.end();
@@ -152,14 +152,14 @@ void MainDialog::btnStart()
 	QString xmlFile = m_ui->comboBoxOutputXml->currentText();
 	//QString xmlsolution = m_ui->comboBoxSolution->currentText();
 
-	//CAppData::getSingletonPtr()->setXml(outPath.toLocal8Bit().data(), xmlFile.toLocal8Bit().data(), xmlsolution.toLocal8Bit().data());
-	//CAppData::getSingletonPtr()->setXml(Tools::getSingletonPtr()->UNICODEStr2GBKStr(outPath).toLocal8Bit().data(), Tools::getSingletonPtr()->UNICODEStr2GBKStr(xmlFile).toLocal8Bit().data(), Tools::getSingletonPtr()->UNICODEStr2GBKStr(xmlsolution).toLocal8Bit().data());
-	//CAppData::getSingletonPtr()->setXml(Tools::getSingletonPtr()->UNICODEStr2GBKStr(outPath).toStdString(), Tools::getSingletonPtr()->UNICODEStr2GBKStr(xmlFile).toStdString(), Tools::getSingletonPtr()->UNICODEStr2GBKStr(xmlsolution).toStdString());
-	//CAppData::getSingletonPtr()->setXml(outPath.toStdString(), xmlFile.toStdString(), xmlsolution.toStdString());
+	//AppData::getSingletonPtr()->setXml(outPath.toLocal8Bit().data(), xmlFile.toLocal8Bit().data(), xmlsolution.toLocal8Bit().data());
+	//AppData::getSingletonPtr()->setXml(Tools::getSingletonPtr()->UNICODEStr2GBKStr(outPath).toLocal8Bit().data(), Tools::getSingletonPtr()->UNICODEStr2GBKStr(xmlFile).toLocal8Bit().data(), Tools::getSingletonPtr()->UNICODEStr2GBKStr(xmlsolution).toLocal8Bit().data());
+	//AppData::getSingletonPtr()->setXml(Tools::getSingletonPtr()->UNICODEStr2GBKStr(outPath).toStdString(), Tools::getSingletonPtr()->UNICODEStr2GBKStr(xmlFile).toStdString(), Tools::getSingletonPtr()->UNICODEStr2GBKStr(xmlsolution).toStdString());
+	//AppData::getSingletonPtr()->setXml(outPath.toStdString(), xmlFile.toStdString(), xmlsolution.toStdString());
 
 	//char aaa[256];
 	//Tools::getSingletonPtr()->UTF8ToGBK((unsigned char *)outPath.toUtf8().data(), (unsigned char *)aaa, 256);
-	CAppData::getSingletonPtr()->setXml(Tools::getSingletonPtr()->UNICODEStr2LocalChar(outPath), Tools::getSingletonPtr()->UNICODEStr2LocalChar(xmlFile));
+	AppData::getSingletonPtr()->setXml(Tools::getSingletonPtr()->UNICODEStr2LocalChar(outPath), Tools::getSingletonPtr()->UNICODEStr2LocalChar(xmlFile));
 
 	//if((outPath.length() == 0 || xmlFile.length() == 0) && xmlsolution.length() == 0)
 	//{
@@ -176,7 +176,7 @@ void MainDialog::btnStart()
 			//m_excelTbl->setXmlPath(xmlFile);
 			//m_excelTbl->setOutputPath(outPath);
 			//m_thread.start();
-			CAppData::getSingletonPtr()->startThread();
+			AppData::getSingletonPtr()->startThread();
 			//m_thread.wait();		// 会死锁 
 			//pushButtonStart.enable = false;
 		}

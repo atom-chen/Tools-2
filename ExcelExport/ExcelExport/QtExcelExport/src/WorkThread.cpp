@@ -1,18 +1,18 @@
 ﻿#include "WorkThread.hxx"
 #include "Tools.hxx"
-#include "CAppData.hxx"
+#include "AppData.hxx"
 
 void WorkThread::run()
 {
 	Tools::getSingletonPtr()->setRunning(true);
-	if(CAppData::getSingletonPtr()->isSetSolution())
+	if(AppData::getSingletonPtr()->isSetSolution())
 	{
-		CAppData::getSingletonPtr()->startMultiPack();
+		AppData::getSingletonPtr()->startMultiPack();
 	}
 	else
 	{
 		//m_excelTbl->convExcel2Tbl();
-		CAppData::getSingletonPtr()->startSinglePack();
+		AppData::getSingletonPtr()->startSinglePack();
 	}
 	Tools::getSingletonPtr()->setRunning(false);
 }

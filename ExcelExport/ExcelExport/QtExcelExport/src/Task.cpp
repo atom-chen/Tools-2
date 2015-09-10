@@ -1,4 +1,4 @@
-﻿#include "CTask.hxx"
+﻿#include "Task.hxx"
 #include "Tools.hxx"
 #include "tinyxml2.h"
 #include <direct.h>		// chdir
@@ -174,48 +174,48 @@ bool Table::isExportClientTable()
 	return false;
 }
 
-CPackage::CPackage()
+Package::Package()
 {
 
 }
 
-CPackage::~CPackage()
+Package::~Package()
 {
 
 }
 
-string CPackage::getXml()
+string Package::getXml()
 {
 	return m_xml;
 }
 
-string CPackage::getOutput()
+string Package::getOutput()
 {
 	return m_output;
 }
 
-void CPackage::setXml(string xml)
+void Package::setXml(string xml)
 {
 	m_xml = xml;
 }
 
-void CPackage::setOutput(string output)
+void Package::setOutput(string output)
 {
 	m_output = output;
 }
 
-void CPackage::initByXml(tinyxml2::XMLElement* elem)
+void Package::initByXml(tinyxml2::XMLElement* elem)
 {
 	m_xml = elem->Attribute("xml");
 	m_output = elem->Attribute("output");
 }
 
-void CPackage::destroy()
+void Package::destroy()
 {
 
 }
 
-bool CPackage::loadTableXml(std::vector<Table*>& tablesList)
+bool Package::loadTableXml(std::vector<Table*>& tablesList)
 {
 	Table* tableItem;
 
@@ -328,45 +328,45 @@ bool CPackage::loadTableXml(std::vector<Table*>& tablesList)
 
 
 
-CSolution::CSolution()
+Solution::Solution()
 {
 
 }
 
-CSolution::~CSolution()
+Solution::~Solution()
 {
 
 }
 
-string CSolution::getName()
+string Solution::getName()
 {
 	return m_name;
 }
 
-string CSolution::getCmd()
+string Solution::getCmd()
 {
 	return m_cmd;
 }
 
-void CSolution::setName(string name)
+void Solution::setName(string name)
 {
 	m_name = name;
 }
 
-void CSolution::setCmd(string cmd)
+void Solution::setCmd(string cmd)
 {
 	m_cmd = cmd;
 }
 
-vector<CPackage*>& CSolution::getPackLst()
+vector<Package*>& Solution::getPackLst()
 {
 	return m_lstPack;
 }
 
-void CSolution::initByXml(tinyxml2::XMLElement* elem)
+void Solution::initByXml(tinyxml2::XMLElement* elem)
 {
 	tinyxml2::XMLElement* packageXml = NULL;
-	CPackage* ppackage;
+	Package* ppackage;
 
 	packageXml = elem->FirstChildElement("package");
 	m_name = elem->Attribute("name");
@@ -380,7 +380,7 @@ void CSolution::initByXml(tinyxml2::XMLElement* elem)
 
 	while(packageXml)
 	{
-		ppackage = new CPackage();
+		ppackage = new Package();
 		m_lstPack.push_back(ppackage);
 		ppackage->initByXml(packageXml);
 
@@ -400,10 +400,10 @@ void CSolution::initByXml(tinyxml2::XMLElement* elem)
 	}
 }
 
-void CSolution::loadTableXml(std::vector<Table*>& tablesList)
+void Solution::loadTableXml(std::vector<Table*>& tablesList)
 {
-	std::vector<CPackage*>::iterator packIteVecBegin;
-	std::vector<CPackage*>::iterator packIteVecEnd;
+	std::vector<Package*>::iterator packIteVecBegin;
+	std::vector<Package*>::iterator packIteVecEnd;
 
 	packIteVecBegin = m_lstPack.begin();
 	packIteVecEnd = m_lstPack.end();
@@ -414,41 +414,41 @@ void CSolution::loadTableXml(std::vector<Table*>& tablesList)
 	}
 }
 
-void CSolution::destroy()
+void Solution::destroy()
 {
 
 }
 
 
-CTask::CTask()
+Task::Task()
 {
 
 }
 
-CTask::~CTask()
+Task::~Task()
 {
 
 }
 
-CSolution* CTask::getSolution()
+Solution* Task::getSolution()
 {
 	return m_pSolution;
 }
 
-void CTask::destroy()
+void Task::destroy()
 {
 
 }
 
-void CTask::readXML()
+void Task::readXML()
 {
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLElement* configXml = NULL;
 	tinyxml2::XMLElement* solutionXml = NULL;
 	
-	if (doc.LoadFile("config.xml") != tinyxml2::XML_SUCCESS)
+	if (doc.LoadFile("Config.xml") != tinyxml2::XML_SUCCESS)
 	{
-		throw "config.xml 加载失败!";
+		throw "Config.xml 加载失败!";
 	}
 
 	configXml = doc.FirstChildElement("config");
@@ -465,7 +465,7 @@ void CTask::readXML()
 
 	if(solutionXml)
 	{
-		m_pSolution = new CSolution();
+		m_pSolution = new Solution();
 		//m_lstSolution.push_back(soluton);
 		m_pSolution->initByXml(solutionXml);
 		m_pSolution->loadTableXml(m_tablesList);
@@ -473,7 +473,7 @@ void CTask::readXML()
 	}
 }
 
-std::vector<Table*>& CTask::getTableList()
+std::vector<Table*>& Task::getTableList()
 {
 	return m_tablesList;
 }

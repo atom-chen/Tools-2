@@ -1,7 +1,7 @@
-﻿#ifndef _CAPPDATA_H
-#define _CAPPDATA_H
+﻿#ifndef _APPDATA_H
+#define _APPDATA_H
 
-#include "CTask.hxx"
+#include "Task.hxx"
 #include "Singleton.hxx"
 #include <string>
 
@@ -15,10 +15,10 @@ BEGIN_NAMESPACE
 /**
  *@brief appdata
  */
-class CAppData : public Singleton<CAppData>
+class AppData : public Singleton<AppData>
 {
 protected:
-	CTask* m_task;			// main thread task, but only one thread
+	Task* m_task;			// main thread task, but only one thread
 	ExcelExport* m_excelExport;
 	QThread* m_pthread;
 
@@ -26,10 +26,10 @@ protected:
 	string m_xmlFile;
 
 public:
-	CAppData();
-	~CAppData();
+	AppData();
+	~AppData();
 
-	CTask* getTask();
+	Task* getTask();
 	void initData();
 	ExcelExport* getExcelTbl();
 	void startMultiPack();
