@@ -72,7 +72,7 @@ class MessageMember(ProtoTypeMemberBase):
             #if self.m_typeName == ProtoKeyWord.eUint32: 
             #    self.m_propType = PropertyType.eUint32Array
                 
-            arrTypeKeyWord = PropertyData.createTypeArrKeyWord(ProtoKeyWord.eInt8)
+            arrTypeKeyWord = PropertyData.createTypeArrKeyWord(self.m_typeName)
             self.m_propType = ProtoPropertyTypeKeyWord2Property.m_sKeyWord2PropertyData[arrTypeKeyWord].getProtertyType()
         else:
             #if self.m_typeName == ProtoKeyWord.eInt8:

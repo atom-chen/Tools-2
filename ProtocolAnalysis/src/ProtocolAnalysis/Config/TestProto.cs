@@ -39,14 +39,14 @@ namespace Game.Msg
 		public uint time_1;	// 成员属性测试-1
 		public uint time_2;	// 成员属性测试-2
 		public string strPassword;	// 测试数组成员
-		public string intArr;	// 测试整型数组
+		public int intArr[CVMsg.MAX_PASSWORD];	// 测试整型数组
 
 		public stTest()
 		{
 			time_1 = 1;
 			time_2 = 1;
 			strPassword = ;
-			intArr = ;
+			intArr = new int[CVMsg.MAX_PASSWORD];
 		}
 
 		override public void serialize(ByteBuffer bu)
@@ -55,7 +55,11 @@ namespace Game.Msg
 			bu.writeUnsignedInt32(time_1);
 			bu.writeUnsignedInt32(time_2);
 			bu.writeMultiByte(strPassword, GkEncode.UTF8, CVMsg.MAX_PASSWORD);
-			bu.writeMultiByte(intArr, GkEncode.UTF8, CVMsg.MAX_PASSWORD);
+			
+			for(int idx = 0; idx < CVMsg.MAX_PASSWORD; ++idx)
+			{
+				bu.writeInt32(intArr[idx]);
+			}
 		}
 
 		override public void derialize(ByteBuffer bu)
@@ -64,7 +68,11 @@ namespace Game.Msg
 			bu.readUnsignedInt32(ref time_1);
 			bu.readUnsignedInt32(ref time_2);
 			bu.readMultiByte(ref strPassword, GkEncode.UTF8, CVMsg.MAX_PASSWORD);
-			bu.readMultiByte(ref intArr, GkEncode.UTF8, CVMsg.MAX_PASSWORD);
+			
+			for(int idx = 0; idx < CVMsg.MAX_PASSWORD; ++idx)
+			{
+				bu.readInt32(ref intArr[idx]);
+			}
 		}
 	}
 

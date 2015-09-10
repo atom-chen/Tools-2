@@ -143,7 +143,7 @@ class CSharpExportMessage(object):
             elif selfMember.getPropertyType() == PropertyType.eInt8Array:
                 memberStr = "{0} = {1};".format(selfMember.getVarName(), "")
             else:   # 其它的数组
-                memberStr = "{0} = new {1}[{2}];".format(selfMember.getVarName(), CSharpPropertyType2PropertyData.m_sType2PropertyData[selfMember.getTypeName()].m_propertyTypeKeyWord, selfMember.getArrLen())
+                memberStr = "{0} = new {1}[{2}];".format(selfMember.getVarName(), CSharpPropertyType2PropertyData.m_sType2PropertyData[selfMember.getPropertyType()].m_propertyTypeKeyWord, selfMember.getArrLen())
                 
             fHandle.write(memberStr)
             # 这个注释就不用写了，因为成员的注释已经在成员声明区域输出了
@@ -332,7 +332,7 @@ class CSharpExportMessage(object):
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
-        serializeStr = "for(int idx = 0; idx < member.getArrLen(); ++idx)"
+        serializeStr = "for(int idx = 0; idx < {0}; ++idx)".format(member.getArrLen())
         fHandle.write(serializeStr)
         
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
@@ -368,7 +368,7 @@ class CSharpExportMessage(object):
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
-        serializeStr = "for(int idx = 0; idx < member.getArrLen(); ++idx)"
+        serializeStr = "for(int idx = 0; idx < {0}; ++idx)".format(member.getArrLen())
         fHandle.write(serializeStr)
         
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)

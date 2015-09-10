@@ -22,7 +22,7 @@ message stTest : stBase
 	uint32 time_1 = 1; 		// 成员属性测试-1
 	uint32 time_2 = 1; 		// 成员属性测试-2
 	char strPassword[CVMsg.MAX_PASSWORD] = {0};	// 测试数组成员
-	int intArr[CVMsg.MAX_PASSWORD] = {0};		// 测试整型数组
+	int32 intArr[CVMsg.MAX_PASSWORD] = {0};		// 测试整型数组
 };
 
 // 测试枚举
