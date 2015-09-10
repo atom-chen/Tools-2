@@ -1,0 +1,22 @@
+header "zType.h"
+pragma pack(1)
+
+package Cmd;
+
+//////////////////////////////////////////////////////////////
+// 空指令定义开始
+//////////////////////////////////////////////////////////////
+enum eNullUserCmd
+{
+	NULL_USERCMD_PARA = 0;
+};
+
+message stNullUserCmd
+{
+	uint8 byCmd;
+	uint8 byParam;
+	
+	uint32  dwTimestamp;
+};
+
+pragma pack();

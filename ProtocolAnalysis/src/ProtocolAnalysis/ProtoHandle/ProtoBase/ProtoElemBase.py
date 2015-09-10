@@ -8,6 +8,7 @@ class eProtoElemType(object):
     eComment = 3    # 注释
     eHeader = 4     # C++ 的包含头文件
     eImport = 5     # CSharp 包含的名字空间
+    ePragma = 6     # C++ 编译器选项设置
 
 
 class ProtoElemBase(object):

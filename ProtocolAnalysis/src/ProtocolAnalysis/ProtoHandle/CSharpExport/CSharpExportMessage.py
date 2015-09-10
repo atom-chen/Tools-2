@@ -141,7 +141,7 @@ class CSharpExportMessage(object):
                 # 写入变量名字
                 memberStr = "{0} = {1};".format(selfMember.getVarName(), selfMember.getDefaultValue())
             elif selfMember.getPropertyType() == PropertyType.eInt8Array:
-                memberStr = "{0} = {1};".format(selfMember.getVarName(), "")
+                memberStr = "{0} = {1};".format(selfMember.getVarName(), "\"\"")
             else:   # 其它的数组
                 memberStr = "{0} = new {1}[{2}];".format(selfMember.getVarName(), CSharpPropertyType2PropertyData.m_sType2PropertyData[selfMember.getPropertyType()].m_propertyTypeKeyWord, selfMember.getArrLen())
                 

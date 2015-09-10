@@ -10,6 +10,7 @@ from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoPackage import ProtoPackage
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoEnum import ProtoEnum
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoHeader import ProtoHeader
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoImport import ProtoImport
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoPragma import ProtoPragma
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 
 
@@ -55,6 +56,10 @@ class ProtoFile(ProtoFileBase):
                 import_ = ProtoImport()
                 self.m_protoElemList.append(import_)
                 import_.parse(tokenParseBuffer)
+            elif tokenKey == ProtoKeyWord.ePragma:
+                pragma_ = ProtoPragma()
+                self.m_protoElemList.append(pragma_)
+                pragma_.parse(tokenParseBuffer)
             else:   # 只处理注释
                 if AppSysBase.instance().getClsUtils().tokenIsComment(tokenKey):       # 如果当前符号是注释
                     comment = ProtoComment()

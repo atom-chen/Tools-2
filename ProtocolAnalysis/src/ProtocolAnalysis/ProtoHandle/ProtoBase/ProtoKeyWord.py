@@ -8,6 +8,8 @@ class ProtoKeyWord(object):
     eEnum = "enum"
     eHeader = "header"
     eImport = "import"
+    ePragma = "pragma"
+    
     eSingleLineComment = "//"
     eMulLineCommentStart = "/**"
     eMulLineCommentEnd = "*/"
