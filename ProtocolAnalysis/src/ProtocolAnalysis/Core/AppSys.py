@@ -4,12 +4,24 @@
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 from ProtocolAnalysis.Core.Config import Config
 from ProtocolAnalysis.Core.Utils import Utils
+
+
 from ProtocolAnalysis.ProtoHandle.CSharpExport.ExportCSharpFile import ExportCSharpFile
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportComment import CSharpExportComment
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportMessage import CSharpExportMessage
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportEnum import CSharpExportEnum
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportUsing import CSharpExportUsing
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpExportNS import CSharpExportNS
+
+from ProtocolAnalysis.ProtoHandle.CppExport.ExportCppFile import ExportCppFile
+from ProtocolAnalysis.ProtoHandle.CppExport.CppExportComment import CppExportComment
+from ProtocolAnalysis.ProtoHandle.CppExport.CppExportMessage import CppExportMessage
+from ProtocolAnalysis.ProtoHandle.CppExport.CppExportEnum import CppExportEnum
+from ProtocolAnalysis.ProtoHandle.CppExport.CppExportInclude import CppExportInclude
+from ProtocolAnalysis.ProtoHandle.CppExport.CppExportNS import CppExportNS
+from ProtocolAnalysis.ProtoHandle.CppExport.CppExportPragma import CppExportPragma
+from ProtocolAnalysis.ProtoHandle.CppExport.CppExportDefine import CppExportDefine
+
 from ProtocolAnalysis.LogSystem.LogSys import LogSys
 from ProtocolAnalysis.Core.UtilFile import UtilFile
 
@@ -55,11 +67,25 @@ class AppSys(AppSysBase):
         self.m_clsUtilFile = UtilFile
         
         
+        # CSharp 导出
         self.m_clsCSharpExportMessage = CSharpExportMessage
         self.m_clsCSharpExportEnum = CSharpExportEnum
         self.m_clsCSharpExportUsing = CSharpExportUsing
         self.m_clsCSharpExportNS = CSharpExportNS
         self.m_clsCSharpExportComment = CSharpExportComment
+        
+        
+        
+        # Cpp 导出
+        self.m_clsCppExportMessage = CppExportMessage
+        self.m_clsCppExportEnum = CppExportEnum
+        self.m_clsCppExportInclude = CppExportInclude
+        self.m_clsCppExportNS = CppExportNS
+        self.m_clsCppExportComment = CppExportComment
+        self.m_clsCppExportPragma = CppExportPragma
+        self.m_clsCppExportDefine = CppExportDefine
+        
+        
         
         self.m_config = Config()
         self.m_config.readInit('Config/Config.txt')
@@ -120,6 +146,34 @@ class AppSys(AppSysBase):
     
     def getClsCSharpExportNS(self):
         return self.m_clsCSharpExportNS
+    
+    
+    def getClsCppExportMessage(self):
+        self.m_clsCppExportMessage
+        
+        
+    def getClsCppExportEnum(self):
+        self.m_clsCppExportEnum
+
+        
+    def getClsCppExportIncldue(self):
+        self.m_clsCppExportIncldue
+        
+        
+    def getClsCppExportNS(self):
+        self.m_clsCppExportNS
+        
+        
+    def getClsCppExportComment(self):
+        self.m_clsCppExportComment
+        
+        
+    def getClsCppExportPragma(self):
+        self.m_clsCppExportPragma
+        
+        
+    def getClsCppExportDefine(self):
+        self.m_clsCppExportDefine
 
 
     def getClsUtilFile(self):
