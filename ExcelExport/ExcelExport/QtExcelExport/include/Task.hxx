@@ -14,6 +14,10 @@ using namespace std;
 #include "Platform.hxx"
 BEGIN_NAMESPACE
 
+// 输出文件的类型，主要用来区别平台的
+#define OUT_TYPE_CLIENT "client"
+#define OUT_TYPE_SERVER "server"
+
 /**
 * @brief field 字段
 */
@@ -44,8 +48,10 @@ public:
 	std::string m_lpszDBTableName;		// 数据库中表的名字
 	std::string m_lpszOutputFile;		// tbl文件的全路径（包括文件名称）
 	std::string m_lpId;					// id 过滤字段
+	std::string m_lpszCodeFileName;		// 代码输出的文件名字
+	std::string m_outType;				// 输出表的内容，例如 Client、Server 等
 
-	string m_strOutput;					// 临时的表的描述输出字段
+	std::string m_strOutput;			// 临时的表的描述输出字段
 	TableAttr m_tableAttr;				// 定义的表的属性
 
 	std::string m_strStructDef;			// 表的结构体描述

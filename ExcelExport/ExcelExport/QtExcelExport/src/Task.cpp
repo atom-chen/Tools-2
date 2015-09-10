@@ -166,7 +166,8 @@ bool Table::buildTableDefine()
 // 是否是导出客户端表
 bool Table::isExportClientTable()
 {
-	if (-1 != m_lpszTableName.find("client"))
+	//if (-1 != m_lpszTableName.find("client"))
+	if (m_outType == OUT_TYPE_CLIENT)
 	{
 		return true;
 	}
@@ -270,7 +271,9 @@ bool Package::loadTableXml(std::vector<Table*>& tablesList)
 			tableItem->m_lpszTableName = Tools::copyPChar2Str(table->Attribute("name"));
 			tableItem->m_lpszExcelFile = Tools::copyPChar2Str(table->Attribute("ExcelFile"));
 			tableItem->m_lpszDB = Tools::copyPChar2Str(table->Attribute("db"));
-			tableItem->m_lpszDBTableName = Tools::copyPChar2Str(table->Attribute("tablename"));	// 表单的名字
+			tableItem->m_lpszDBTableName = Tools::copyPChar2Str(table->Attribute("tablename"));		// 表单的名字
+			tableItem->m_outType = Tools::copyPChar2Str(table->Attribute("outtype"));				// 输出的类型
+			tableItem->m_lpszCodeFileName = Tools::copyPChar2Str(table->Attribute("codefilename"));	// 输出代码的文件名字
 
 			// 表中配置的 ID 范围
 			tableItem->m_lpId = Tools::copyPChar2Str(table->Attribute("idrange"));
