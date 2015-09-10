@@ -1,5 +1,5 @@
-header "zType.h"
-pragma pack(1)
+header "zType.h";
+pragma pack(1);
 
 package Cmd;
 
@@ -13,10 +13,10 @@ enum eNullUserCmd
 
 message stNullUserCmd
 {
-	uint8 byCmd;
-	uint8 byParam;
+	uint8 byCmd = 0;
+	uint8 byParam = 0;
 	
-	uint32  dwTimestamp;
+	uint32  dwTimestamp = 0;
 };
 
 pragma pack();

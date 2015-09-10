@@ -35,6 +35,6 @@ class ProtoKeyWord(object):
     eUint32 = "uint32"
     
     # 关键字分隔符
-    sKeyWordDelimiter = ["package", "message", "enum", "header", "import"]
+    sKeyWordDelimiter = ["package", "message", "enum", "header", "import", "pragma"]
     
 
