@@ -28,10 +28,12 @@ class CppExportInclude(object):
         for protoElem in file.getProtoElemList():   # 遍历整个文件列表
             if protoElem.getElemType() == eProtoElemType.eHeader:
                 for headerInclude in protoElem.getHeaderList():
-                    if not bFirst:
+                    if bFirst:          # 添加一个间隔空行
                         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
                     
-                    includeStr = "#include {0};".format(headerInclude)
+                    # 下一行写入
+                    AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+                    includeStr = "#include {0}".format(headerInclude)
                     fHandle.write(includeStr)
                     
                     bFirst = False

@@ -60,6 +60,7 @@ class CppExportMessage(object):
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeRBrace2File(fHandle)
+        fHandle.write(";")      # Cpp 需要再类型定义最后写入分号 ";"
 
 
     # 写入成员声明

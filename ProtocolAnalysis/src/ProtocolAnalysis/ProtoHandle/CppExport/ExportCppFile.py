@@ -37,15 +37,15 @@ class ExportCppFile():
             AppSysBase.instance().getClsCppExportDefine().exportHeaderDefineStart(fHandle, fileNameNoExt)
             AppSysBase.instance().getClsCppExportInclude().exportInclude(fHandle, file)
             AppSysBase.instance().getClsCppExportPragma().exportPragmaBeforeNS(fHandle, file)
-            AppSysBase.instance().getClsppExportNS().exportNSStart(fHandle, file)
+            AppSysBase.instance().getClsCppExportNS().exportNSStart(fHandle, file)
             
             for protoElem in file.getProtoElemList():   # 遍历整个文件列表
                 if protoElem.getElemType() == eProtoElemType.eMessage:  # 如果是消息
-                    AppSysBase.instance().getClsCSharpExportMessage().exportMessage(fHandle, protoElem)
+                    AppSysBase.instance().getClsCppExportMessage().exportMessage(fHandle, protoElem)
                 elif protoElem.getElemType() == eProtoElemType.eEnum:
-                    AppSysBase.instance().getClsCSharpExportEnum().exportEnum(fHandle, protoElem)
+                    AppSysBase.instance().getClsCppExportEnum().exportEnum(fHandle, protoElem)
                 elif protoElem.getElemType() == eProtoElemType.eComment:
-                    AppSysBase.instance().getClsCSharpExportComment().exportComment(fHandle, protoElem)
+                    AppSysBase.instance().getClsCppExportComment().exportComment(fHandle, protoElem)
 
             AppSysBase.instance().getClsCSharpExportNS().exportNSEnd(fHandle)
             AppSysBase.instance().getClsCppExportPragma().exportPragmaAfterNS(fHandle, file)

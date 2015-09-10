@@ -31,6 +31,7 @@ class CSharpExportNS(object):
             if protoElem.getElemType() == eProtoElemType.ePackage:
                 nsStr = "namespace {0}".format(protoElem.getTypeName())
                 fHandle.write(nsStr)
+                break
         
         
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
