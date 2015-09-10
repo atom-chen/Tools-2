@@ -3,6 +3,7 @@
 
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoTypeMemberBase import ProtoTypeMemberBase, PropertyType
 from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoKeyWord import ProtoKeyWord
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoPropertyTypeKeyWord2Property import ProtoPropertyTypeKeyWord2Property
 
 
 class MessageMember(ProtoTypeMemberBase):
@@ -56,31 +57,36 @@ class MessageMember(ProtoTypeMemberBase):
             self.m_varName = self.m_varNameAndArray[ : lBraceIdx]
             self.m_arrLen = self.m_varNameAndArray[lBraceIdx + 1 : rBraceidx]
             
-            if self.m_typeName == ProtoKeyWord.eInt8: 
-                self.m_propType = PropertyType.eInt8Array
-            if self.m_typeName == ProtoKeyWord.eUint8: 
-                self.m_propType = PropertyType.eUint8Array
-            if self.m_typeName == ProtoKeyWord.eInt16: 
-                self.m_propType = PropertyType.eInt16Array
-            if self.m_typeName == ProtoKeyWord.eUint16: 
-                self.m_propType = PropertyType.eUint16Array
-            if self.m_typeName == ProtoKeyWord.eInt32: 
-                self.m_propType = PropertyType.eInt32Array
-            if self.m_typeName == ProtoKeyWord.eUint32: 
-                self.m_propType = PropertyType.eUint32Array
+            #if self.m_typeName == ProtoKeyWord.eInt8: 
+            #    self.m_propType = PropertyType.eInt8Array
+            #if self.m_typeName == ProtoKeyWord.eUint8: 
+            #    self.m_propType = PropertyType.eUint8Array
+            #if self.m_typeName == ProtoKeyWord.eInt16: 
+            #    self.m_propType = PropertyType.eInt16Array
+            #if self.m_typeName == ProtoKeyWord.eUint16: 
+            #    self.m_propType = PropertyType.eUint16Array
+            #if self.m_typeName == ProtoKeyWord.eInt32: 
+            #    self.m_propType = PropertyType.eInt32Array
+            #if self.m_typeName == ProtoKeyWord.eUint32: 
+            #    self.m_propType = PropertyType.eUint32Array
+                
+            arrTypeKeyWord = ProtoPropertyTypeKeyWord2Property.createTypeArrKeyWord(ProtoKeyWord.eInt8)
+            self.m_propType = ProtoPropertyTypeKeyWord2Property.m_sKeyWord2PropertyData[arrTypeKeyWord].getProtertyType()
         else:
-            if self.m_typeName == ProtoKeyWord.eInt8:
-                self.m_propType = PropertyType.eInt8
-            if self.m_typeName == ProtoKeyWord.eUint8:
-                self.m_propType = PropertyType.eUint8
-            if self.m_typeName == ProtoKeyWord.eInt16:
-                self.m_propType = PropertyType.eInt16
-            if self.m_typeName == ProtoKeyWord.eUint16:
-                self.m_propType = PropertyType.eUint16
-            if self.m_typeName == ProtoKeyWord.eInt32:
-                self.m_propType = PropertyType.eInt32
-            if self.m_typeName == ProtoKeyWord.eUint32:
-                self.m_propType = PropertyType.eUint32
+            #if self.m_typeName == ProtoKeyWord.eInt8:
+            #    self.m_propType = PropertyType.eInt8
+            #if self.m_typeName == ProtoKeyWord.eUint8:
+            #    self.m_propType = PropertyType.eUint8
+            #if self.m_typeName == ProtoKeyWord.eInt16:
+            #    self.m_propType = PropertyType.eInt16
+            #if self.m_typeName == ProtoKeyWord.eUint16:
+            #    self.m_propType = PropertyType.eUint16
+            #if self.m_typeName == ProtoKeyWord.eInt32:
+            #    self.m_propType = PropertyType.eInt32
+            #if self.m_typeName == ProtoKeyWord.eUint32:
+            #    self.m_propType = PropertyType.eUint32
+                
+            self.m_propType = ProtoPropertyTypeKeyWord2Property.m_sKeyWord2PropertyData[self.m_typeName].getProtertyType()
         
     
     # 分割默认值，数字是没有小数点的，如果有小数点，需要转换成整数才行，类似乘以 100 
