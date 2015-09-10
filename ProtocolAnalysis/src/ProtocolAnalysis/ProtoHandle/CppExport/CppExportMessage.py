@@ -82,7 +82,7 @@ class CppExportMessage(object):
                 member.getPropertyType() == PropertyType.eUint32:
                 memberStr = "public {0} {1};".format(CppPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName())
             else:       # 数组处理
-                memberStr = "public {0} {1};".format(CppPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarNameAndArray())
+                memberStr = "public {0} {1}[{2}];".format(CppPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName(), member.getArrLenAfterDot())
             
             fHandle.write(memberStr)
             #写入注释
@@ -108,6 +108,7 @@ class CppExportMessage(object):
         AppSysBase.instance().getClsUtils().writeLBrace2File(fHandle)
         
         # 写入构造函数内容
+        # 写入父类构造函数内容
         for baseMemberInit in message.getBaseMemberInitList():
             AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
@@ -115,7 +116,7 @@ class CppExportMessage(object):
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
             
             # 写入变量名字
-            memberStr = "{0} = {1};".format(baseMemberInit.getVarName(), baseMemberInit.getDefaultValue())
+            memberStr = "{0} = {1};".format(baseMemberInit.getVarName(), baseMemberInit.getDefaultValueAfterDot())
             
             fHandle.write(memberStr)
             #写入注释
@@ -136,11 +137,11 @@ class CppExportMessage(object):
                 selfMember.getPropertyType() == PropertyType.eInt32 or \
                 selfMember.getPropertyType() == PropertyType.eUint32:
                 # 写入变量名字
-                memberStr = "{0} = {1};".format(selfMember.getVarName(), selfMember.getDefaultValue())
+                memberStr = "{0} = {1};".format(selfMember.getVarName(), selfMember.getDefaultValueAfterDot())
             elif selfMember.getPropertyType() == PropertyType.eInt8Array:
-                memberStr = "{0} = {1};".format(selfMember.getVarName(), "\"\"")
+                memberStr = "{0} = {1};".format(selfMember.getVarName(), selfMember.getDefaultValueAfterDot())
             else:   # 其它的数组
-                memberStr = "{0} = new {1}[{2}];".format(selfMember.getVarName(), CppPropertyType2PropertyData.m_sType2PropertyData[selfMember.getPropertyType()].m_propertyTypeKeyWord, selfMember.getArrLen())
+                memberStr = "{0} = {1};".format(selfMember.getVarName(), selfMember.getDefaultValueAfterDot())
                 
             fHandle.write(memberStr)
             # 这个注释就不用写了，因为成员的注释已经在成员声明区域输出了

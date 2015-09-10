@@ -243,12 +243,29 @@ class TokenParseBuffer(object):
             self.m_curPos = len(self.m_fileBytes)
             
         if len(ret) > 0:    # 如果有注释
-            # 删除最后一个 "\n"
-            lastNextIdx = ret.rfind("\n")
-            if lastNextIdx != -1:
-                ret = ret[:lastNextIdx]
-            strlist = ret.split('\n') 
+            if minIdx < len(self.m_fileBytes):      # 如果是最后的注释，全部取出来，否则需要将注释最后面的 \t ' ' \n 删除
+                # 删除最后一个 "\n"
+                #lastNextIdx = ret.rfind("\n")
+                #if lastNextIdx != -1:
+                #    ret = ret[:lastNextIdx]
+                #strlist = ret.split('\n')
+                ret = self.delTailSplitToken(ret)
+            
+        strlist = ret.split('\n')
         
         #return ret
         return strlist
+    
+    
+    def delTailSplitToken(self, tailStr):
+        if len(tailStr) > 0:
+            for idx in range(len(tailStr) - 1, -1, -1):
+                if idx >= 0:
+                    if not tailStr[idx] in TokenParseBuffer.m_sSplitToken:
+                        break;
+            
+            if idx >= 0:
+                return tailStr[0 : idx + 1]
+        
+        return ""
     

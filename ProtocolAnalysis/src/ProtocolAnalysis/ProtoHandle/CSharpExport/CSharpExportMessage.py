@@ -85,7 +85,7 @@ class CSharpExportMessage(object):
                 member.getPropertyType() == PropertyType.eUint32:
                 memberStr = "public {0} {1};".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName())
             else:       # 数组处理
-                memberStr = "public {0} {1};".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarNameAndArray())
+                memberStr = "public {0}[] {1};".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName())
             
             fHandle.write(memberStr)
             #写入注释

@@ -21,11 +21,11 @@ class MessageMember(ProtoTypeMemberBase):
         self.m_varNameAndArray = ""
         self.m_arrLen = ""
         
-        self.arrLenBeforDot = ""
-        self.arrLenAfterDot = ""
+        self.m_arrLenBeforDot = ""    # 默认值点前面部分，例如 CVMsg.MAX_PASSWORD ，值就是 CVMsg ，如果是 10 ，这个值是 "10"
+        self.m_arrLenAfterDot = ""    # 默认值点前面部分，例如 CVMsg.MAX_PASSWORD ，值就是 CVMsg ，如果是 10 ，这个值是 "10"
         
-        self.defaultValueBeforDot = ""  # 默认值点前面部分，例如 CVMsg.MAX_PASSWORD ，值就是 CVMsg ，如果是 10 ，这个值是 ""
-        self.defaultValueAfterDot = ""  # 默认值点前面部分，例如 CVMsg.MAX_PASSWORD ，值就是 MAX_PASSWORD ，如果是 10 ，这个值是 ""
+        self.m_defaultValueBeforDot = ""  # 默认值点前面部分，例如 CVMsg.MAX_PASSWORD ，值就是 CVMsg ，如果是 10 ，这个值是 "10"
+        self.m_defaultValueAfterDot = ""  # 默认值点前面部分，例如 CVMsg.MAX_PASSWORD ，值就是 MAX_PASSWORD ，如果是 10 ，这个值是 "10"
 
 
     def parse(self, tokenParseBuffer):
@@ -95,16 +95,20 @@ class MessageMember(ProtoTypeMemberBase):
     def splitDefaultValue(self):
         dotIdx = self.m_defaultValue.find(".")
         if dotIdx != -1:
-            self.defaultValueBeforDot = self.m_defaultValue[ : dotIdx]
-            self.defaultValueAfterDot = self.m_defaultValue[dotIdx + 1 : len(self.m_defaultValue)]
+            self.m_defaultValueBeforDot = self.m_defaultValue[ : dotIdx]
+            self.m_defaultValueAfterDot = self.m_defaultValue[dotIdx + 1 : len(self.m_defaultValue)]
+        else:
+            self.m_defaultValueAfterDot = self.m_defaultValue
 
 
     def splitArrLen(self):
         if self.m_propType == PropertyType.eInt8Array:
             dotIdx = self.m_arrLen.find(".")
             if dotIdx != -1:
-                self.arrLenBeforDot = self.m_arrLen[ : dotIdx]
-                self.arrLenAfterDot = self.m_arrLen[dotIdx + 1 : len(self.m_arrLen)]            
+                self.m_arrLenBeforDot = self.m_arrLen[ : dotIdx]
+                self.m_arrLenAfterDot = self.m_arrLen[dotIdx + 1 : len(self.m_arrLen)]
+            else:
+                self.m_arrLenAfterDot = self.m_arrLen
     
     
     def getVarNameAndArray(self):
@@ -116,17 +120,17 @@ class MessageMember(ProtoTypeMemberBase):
         
     
     def getDefaultValueBeforDot(self):
-        return self.defaultValueBeforDot
+        return self.m_defaultValueBeforDot
 
 
     def getDefaultValueAfterDot(self):
-        return self.defaultValueAfterDot
+        return self.m_defaultValueAfterDot
 
 
     def getArrLenBeforDot(self):
-        return self.arrLenBeforDot
+        return self.m_arrLenBeforDot
 
 
     def getArrLenAfterDot(self):
-        return self.arrLenAfterDot
+        return self.m_arrLenAfterDot
 

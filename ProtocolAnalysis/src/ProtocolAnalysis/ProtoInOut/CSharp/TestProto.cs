@@ -4,7 +4,6 @@ using Game.UI;
 namespace Game.Msg
 {
 	// 自己测试注释-1
-	
 	public enum CVMsg
 	{
 		MAX_PASSWORD = 32,
@@ -33,13 +32,12 @@ namespace Game.Msg
 	}
 
 	//自己测试注释-2
-	
 	public class stTest : stBase
 	{
 		public uint time_1;	// 成员属性测试-1
 		public uint time_2;	// 成员属性测试-2
 		public string strPassword;	// 测试数组成员
-		public int intArr[CVMsg.MAX_PASSWORD];	// 测试整型数组
+		public int[] intArr;	// 测试整型数组
 
 		public stTest()
 		{
