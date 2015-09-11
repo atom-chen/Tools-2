@@ -93,6 +93,7 @@ public:
 	bool isExportClientTable();		// 是否是导出客户端表
 
 	void exportCode();		// 导出代码
+	void exportExcel();		// 导出 Excel
 };
 
 class Solution;
@@ -126,7 +127,9 @@ public:
 	void initByXml(tinyxml2::XMLElement* elem);
 	bool loadTableXml();
 	void destroy();
+
 	void exportCode();		// 导出代码
+	void exportExcel();		// 导出 Excel
 };
 
 
@@ -165,7 +168,9 @@ public:
 	std::vector<Package*>& getPackLst();
 	void loadTableXml();
 	void destroy();
+
 	void exportCode();		// 导出代码
+	void exportExcel();		// 导出 Excel
 };
 
 END_NAMESPACE

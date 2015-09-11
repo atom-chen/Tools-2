@@ -7,6 +7,7 @@
 #include "Cfg2Code.h"
 #include "Cfg2CppCode.h"
 #include "MemLeakCheck.h"
+#include "ExcelExport.h"
 
 BEGIN_NAMESPACE
 
@@ -245,6 +246,11 @@ void Table::exportCode()
 	pCfg2Code->exportCode();
 }
 
+void Table::exportExcel()
+{
+	g_pExcelExport->exportExcelByTable(this);
+}
+
 
 Package::Package()
 {
@@ -435,6 +441,14 @@ void Package::exportCode()
 	}
 }
 
+void Package::exportExcel()
+{
+	for (auto table : m_tablesList)
+	{
+		table->exportExcel();
+	}
+}
+
 
 
 Solution::Solution()
@@ -552,6 +566,14 @@ void Solution::destroy()
 }
 
 void Solution::exportCode()
+{
+	for (auto package : m_lstPack)
+	{
+		package->exportCode();
+	}
+}
+
+void Solution::exportExcel()
 {
 	for (auto package : m_lstPack)
 	{

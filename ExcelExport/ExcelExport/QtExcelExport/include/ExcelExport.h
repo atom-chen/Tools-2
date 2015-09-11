@@ -5,7 +5,7 @@
 //#include <AfxWin.h>
 //#include <afx.h>
 #include "tinyxml2.h"
-#include <QtCore/QtCore>
+#include <QtCore>	// QtCore
 #include <cstring>		// std::string
 #include <cstdio>		// File
 #include <tchar.h>		// _T
