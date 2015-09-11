@@ -64,7 +64,7 @@ MainDialog::MainDialog(QWidget *parent)
 	g_pUtils->setParent(this);
 	//g_pUtils->setTextEdit(ui->m_outTextEdit);
 	// 检测大端小端
-	System::getSingletonPtr()->checkEndian();
+	g_pSystem->checkEndian();
 
 	addListItem();
 

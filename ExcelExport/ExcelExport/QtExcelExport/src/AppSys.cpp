@@ -1,10 +1,11 @@
-﻿#include <cstring>
+﻿#include "AppSys.h"
+#include <string.h>
 #include <QtGui/QtGui>
 #include <QtWidgets>
 #include "ExcelExport.h"
 #include "Task.h"
 #include "Utils.h"
-#include "AppSys.h"
+#include "System.h"
 #include "MemLeakCheck.h"
 
 BEGIN_NAMESPACE
@@ -13,12 +14,14 @@ template<> AppSys* Singleton<AppSys>::msSingleton = 0;
 
 AppSys::AppSys()
 {
-	m_pUtils = new Utils();
+	m_pUtils = new Utils;
+	m_pSystem = new System;
 }
 
 AppSys::~AppSys()
 {
 	delete m_pUtils;
+	delete m_pSystem;
 }
 
 Task* AppSys::getTask()
@@ -66,7 +69,7 @@ void AppSys::startSinglePack()
 	m_excelExport->exportExcel();
 }
 
-void AppSys::setXml(string outpath, string xmlpath)
+void AppSys::setXml(std::string outpath, std::string xmlpath)
 {
 	m_outPath = outpath;
 	m_xmlFile = xmlpath;
@@ -105,6 +108,11 @@ void AppSys::initCombo(QComboBox *comboBoxSolution)
 Utils* AppSys::getUtilsPtr()
 {
 	return m_pUtils;
+}
+
+System* AppSys::getSystemPtr()
+{
+	return m_pSystem;
 }
 
 END_NAMESPACE

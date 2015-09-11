@@ -13,6 +13,7 @@ class QThread;
 class ExcelExport;
 class QComboBox;
 class Utils;
+class System;
 
 /**
  *@brief appdata
@@ -27,6 +28,7 @@ protected:
 	std::string m_outPath;
 	std::string m_xmlFile;
 	Utils* m_pUtils;
+	System* m_pSystem;
 
 public:
 	AppSys();
@@ -46,11 +48,13 @@ public:
 	void initCombo(QComboBox *comboBoxSolution);
 
 	Utils* getUtilsPtr();
+	System* getSystemPtr();
 };
 
 END_NAMESPACE
 
 #define g_pAppSys AppSys::getSingletonPtr()
 #define g_pUtils g_pAppSys->getUtilsPtr()
+#define g_pSystem g_pAppSys->getSystemPtr()
 
 #endif

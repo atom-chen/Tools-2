@@ -91,7 +91,7 @@ bool ExcelExport::exportExcelByTable(Table* tableItem)
 
 	int iFieldNum = 0;				// 相当于列号
 	int iRecord = -1;				// 在读取记录过程中，表示当前记录是第几行，zero-based，相当于行号
-	string warnOrErrorDesc;			// 一些警告或者错误
+	std::string warnOrErrorDesc;			// 一些警告或者错误
 
 	// (1) 排序的向量，将所有的内容输入到要排序的向量列表中去        
 	std::vector<DataItem*> _rowList;	// 行数据列表     

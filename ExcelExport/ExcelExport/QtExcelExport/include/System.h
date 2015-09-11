@@ -2,13 +2,11 @@
 #define _SYSTEM_H
 
 #include "SystemEndian.h"
-#include "Singleton.h"
-
 #include "Platform.h"
 
 BEGIN_NAMESPACE
 
-class System : public Singleton < System >
+class System
 {
 protected:
 	SysEndian m_sysEndian;				// 决定系统大小端

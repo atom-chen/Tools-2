@@ -6,7 +6,7 @@
 #include "Error.h"
 #include "SystemEndian.h"
 #include "Platform.h"
-#include "System.h"
+#include "AppSysPrerequisites.h"
 
 BEGIN_NAMESPACE
 
@@ -71,7 +71,7 @@ class ByteBuffer
         template <typename T>
 		void put(size_t pos, T value)
         {
-			if (System::getSingletonPtr()->isEndianDiffFromSys(m_sysEndian))
+			if (g_pSystem->isEndianDiffFromSys(m_sysEndian))
 			{
 				EndianConvert(value);
 			}
@@ -347,7 +347,7 @@ class ByteBuffer
             if (pos + sizeof(T) > size())
                 throw ByteBufferException(false, pos, sizeof(T), size());
             T val = *((T const*)&_storage[pos]);
-			if (System::getSingletonPtr()->isEndianDiffFromSys(m_sysEndian))
+			if (g_pSystem->isEndianDiffFromSys(m_sysEndian))
 			{
 				EndianConvert(val);
 			}
@@ -447,7 +447,7 @@ class ByteBuffer
         template <typename T>
 		void append(T value)
         {
-			if (System::getSingletonPtr()->isEndianDiffFromSys(m_sysEndian))
+			if (g_pSystem->isEndianDiffFromSys(m_sysEndian))
 			{
 				EndianConvert(value);
 			}

@@ -2,8 +2,6 @@
 
 BEGIN_NAMESPACE
 
-template<> System* Singleton<System>::msSingleton = 0;
-
 void System::checkEndian()
 {
 	int testData = 1;
