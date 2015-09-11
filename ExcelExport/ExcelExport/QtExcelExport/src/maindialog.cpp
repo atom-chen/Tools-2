@@ -2,11 +2,8 @@
 #include "ui_maindialog.h"
 #include "AppSysPrerequisites.h"
 
-//#include <QtGui/QtGui>
-#include <QtCore/QVector>
-#include "AppSys.h"	// inlcude app data
-#include "WorkThread.h"
-#include "System.h"
+//#include <QtGui>	// QtGui
+#include <QtCore>	// QVector
 #include "TableListItem.h"
 
 #include "MemLeakCheck.h"
@@ -49,8 +46,8 @@ MainDialog::MainDialog(QWidget *parent)
 
 	// init appdata
 	g_pAppSys->initData();
-	QThread* pthread = new WorkThread();
-	g_pAppSys->initThread(pthread);
+	//QThread* pthread = new WorkThread();
+	//g_pAppSys->initThread(pthread);
 	// fill to comboBoxSolution
 	//g_pAppSys->initCombo(m_ui->comboBoxSolution);
 	// clear select item,must after initCombo

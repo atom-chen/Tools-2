@@ -6,6 +6,7 @@
 #include "Task.h"
 #include "Utils.h"
 #include "System.h"
+#include "WorkThread.h"
 #include "MemLeakCheck.h"
 
 BEGIN_NAMESPACE
@@ -16,12 +17,18 @@ AppSys::AppSys()
 {
 	m_pUtils = new Utils;
 	m_pSystem = new System;
+	m_task = new Task;
+	m_excelExport = new ExcelExport;
+	m_pWorkThread = new WorkThread;
 }
 
 AppSys::~AppSys()
 {
 	delete m_pUtils;
 	delete m_pSystem;
+	delete m_task;
+	delete m_excelExport;
+	delete m_pWorkThread;
 }
 
 Task* AppSys::getTask()
@@ -31,8 +38,6 @@ Task* AppSys::getTask()
 
 void AppSys::initData()
 {
-	m_task = new Task();
-	m_excelExport = new ExcelExport();
 	m_task->readXML();
 }
 
@@ -83,14 +88,14 @@ bool AppSys::isSetSolution()
 	return (0 == m_outPath.length() && 0 == m_xmlFile.length());
 }
 
-void AppSys::initThread(QThread* pthread)
-{
-	m_pthread = pthread;
-}
+//void AppSys::initThread(WorkThread* pthread)
+//{
+//	m_pWorkThread = pthread;
+//}
 
 void AppSys::startThread()
 {
-	m_pthread->start();
+	m_pWorkThread->start();
 }
 
 void AppSys::initCombo(QComboBox *comboBoxSolution)
@@ -103,6 +108,16 @@ void AppSys::initCombo(QComboBox *comboBoxSolution)
 	//	tmp = g_pUtils->GBKChar2UNICODEStr((*ite)->getName().c_str());
 	//	comboBoxSolution->addItem(tmp);
 	//}
+}
+
+ExcelExport* AppSys::getExcelExportPtr()
+{
+	return m_excelExport;
+}
+
+WorkThread* AppSys::getWorkThreadPtr()
+{
+	return m_pWorkThread;
 }
 
 Utils* AppSys::getUtilsPtr()
