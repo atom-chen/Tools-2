@@ -6,6 +6,7 @@
 #include "PropertyBase.h"
 
 #include "Platform.h"
+
 BEGIN_NAMESPACE
 
 /**

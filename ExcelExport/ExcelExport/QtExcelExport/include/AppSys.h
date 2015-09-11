@@ -51,6 +51,6 @@ public:
 END_NAMESPACE
 
 #define g_pAppSys AppSys::getSingletonPtr()
-#define g_pUtils AppSys::getSingletonPtr()->getUtilsPtr()
+#define g_pUtils g_pAppSys->getUtilsPtr()
 
 #endif

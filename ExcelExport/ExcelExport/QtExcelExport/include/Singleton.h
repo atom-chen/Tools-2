@@ -1,11 +1,10 @@
 ﻿#ifndef _SINGLETON_H
 #define _SINGLETON_H
 
-#include <string.h>
-
-#include "MemLeakCheck.h"
+// #include "MemLeakCheck.h"
 
 #include "Platform.h"
+
 BEGIN_NAMESPACE
 
 template<class T>

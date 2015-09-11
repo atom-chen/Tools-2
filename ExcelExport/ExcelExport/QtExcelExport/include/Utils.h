@@ -12,9 +12,9 @@
 #include <windows.h>
 #include "Platform.h"
 
-class QWidget;
-
 BEGIN_NAMESPACE
+
+class QWidget;
 
 class Utils
 {

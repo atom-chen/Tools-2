@@ -2,6 +2,7 @@
 #define _ENVALUE_H
 
 #include "Platform.h"
+
 BEGIN_NAMESPACE
 
 enum EnExcelType

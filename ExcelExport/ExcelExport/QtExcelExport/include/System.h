@@ -5,6 +5,7 @@
 #include "Singleton.h"
 
 #include "Platform.h"
+
 BEGIN_NAMESPACE
 
 class System : public Singleton < System >

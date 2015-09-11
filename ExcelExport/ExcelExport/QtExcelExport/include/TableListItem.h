@@ -5,6 +5,8 @@
 #include "Task.h"
 #include "ui_TableListItem.h"
 
+BEGIN_NAMESPACE
+
 namespace Ui
 {
 	class TableListItem;
@@ -30,5 +32,7 @@ public:
 signals:
 	public slots :
 };
+
+END_NAMESPACE
 
 #endif // TABLELISTITEM_H
