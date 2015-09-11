@@ -92,6 +92,7 @@ public:
 	void parseXML(tinyxml2::XMLElement* pXmlEmtFields);
 	bool buildTableDefine();
 	bool isExportClientTable();		// 是否是导出客户端表
+	void setExportClientTable(bool bExportTable);
 
 	void exportCppCode();		// 导出代码
 	void exportCsCode();
@@ -133,6 +134,7 @@ public:
 	void exportCppCode();		// 导出代码
 	void exportCsCode();
 	void exportExcel();		// 导出 Excel
+	void setAllExportClientTable();
 };
 
 

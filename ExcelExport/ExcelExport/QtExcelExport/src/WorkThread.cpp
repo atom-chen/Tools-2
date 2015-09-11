@@ -34,14 +34,7 @@ void ExcelWorkThread::run()
 {
 	WorkThread::run();
 
-	if (g_pAppSys->isSetSolution())
-	{
-		g_pAppSys->startMultiPack();
-	}
-	else
-	{
-		g_pAppSys->startSinglePack();
-	}
+	g_pAppSys->exportExcel();
 	
 	m_running = false;
 }
@@ -74,22 +67,24 @@ bool CodeWorkThread::getCsCode()
 
 void CodeWorkThread::run()
 {
-	g_pUtils->informationMessage(QStringLiteral("开始输出代码"));
+	g_pUtils->Log(QStringLiteral("开始输出代码"));
 
 	WorkThread::run();
 
 	if (m_bCsCode)
 	{
-		g_pUtils->informationMessage(QStringLiteral("开始输出 cs 代码"));
+		g_pUtils->Log(QStringLiteral("开始输出 cs 代码"));
 		g_pAppSys->exportCsCode();
 	}
 	if (m_bCppCode)
 	{
-		g_pUtils->informationMessage(QStringLiteral("开始输出 c++ 代码"));
+		g_pUtils->Log(QStringLiteral("开始输出 c++ 代码"));
 		g_pAppSys->exportCppCode();
 	}
 
-	g_pUtils->informationMessage(QStringLiteral("结束输出代码"));
+	g_pUtils->Log(QStringLiteral("结束输出代码"));
+
+	m_running = false;
 }
 
 END_NAMESPACE

@@ -247,25 +247,39 @@ bool Table::isExportClientTable()
 	return false;
 }
 
+void Table::setExportClientTable(bool bExportTable)
+{
+	m_bExportTable = bExportTable;
+}
+
 void Table::exportCppCode()
 {
-	Cfg2Code* pCfg2Code = new Cfg2CppCode();
-	pCfg2Code->setTable(this);
-	pCfg2Code->exportCode();
-	delete pCfg2Code;
+	if (this->m_bExportTable)
+	{
+		Cfg2Code* pCfg2Code = new Cfg2CppCode();
+		pCfg2Code->setTable(this);
+		pCfg2Code->exportCode();
+		delete pCfg2Code;
+	}
 }
 
 void Table::exportCsCode()
 {
-	Cfg2Code* pCfg2Code = new Cfg2CsCode();
-	pCfg2Code->setTable(this);
-	pCfg2Code->exportCode();
-	delete pCfg2Code;
+	if (this->m_bExportTable)
+	{
+		Cfg2Code* pCfg2Code = new Cfg2CsCode();
+		pCfg2Code->setTable(this);
+		pCfg2Code->exportCode();
+		delete pCfg2Code;
+	}
 }
 
 void Table::exportExcel()
 {
-	g_pExcelExport->exportExcelByTable(this);
+	if (this->m_bExportTable)
+	{
+		g_pExcelExport->exportExcelByTable(this);
+	}
 }
 
 
@@ -322,6 +336,14 @@ void Package::clearTablesList()
 	}
 
 	m_tablesList.clear();
+}
+
+void Package::setAllExportClientTable()
+{
+	for (auto table : m_tablesList)
+	{
+		table->setExportClientTable(true);
+	}
 }
 
 void Package::initByXml(tinyxml2::XMLElement* elem)

@@ -95,7 +95,7 @@ void Cfg2CppCode::exportCode()
 		}
 	}
 
-	strStream << "\n" << "}";
+	strStream << "\n" << "};";
 	fwrite(strStream.str().c_str(), strStream.str().length(), 1, fp);
 
 	fclose(fp);

@@ -43,6 +43,7 @@ bool ExcelExport::exportExcel()
 	packItem->setOutput(m_tblPath);
 
 	packItem->loadTableXml();
+	packItem->setAllExportClientTable();
 	packItem->exportExcel();
 	//std::vector<Table*>& tablesList = packItem->getTablesList();
 
@@ -55,6 +56,38 @@ bool ExcelExport::exportExcel()
 	//{
 	//	exportExcelByTable(*tableBeginIte);		// 导出表
 	//}
+
+	delete packItem;
+
+	return true;
+}
+
+bool ExcelExport::exportCppCode()
+{
+	Package* packItem = new Package();
+
+	packItem->setXml(m_xmlPath);
+	packItem->setOutput(m_tblPath);
+
+	packItem->loadTableXml();
+	packItem->setAllExportClientTable();
+	packItem->exportCppCode();
+
+	delete packItem;
+
+	return true;
+}
+
+bool ExcelExport::exportCsCode()
+{
+	Package* packItem = new Package();
+
+	packItem->setXml(m_xmlPath);
+	packItem->setOutput(m_tblPath);
+
+	packItem->loadTableXml();
+	packItem->setAllExportClientTable();
+	packItem->exportCsCode();
 
 	delete packItem;
 

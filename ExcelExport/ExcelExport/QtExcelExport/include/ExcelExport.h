@@ -49,6 +49,9 @@ public:
 	bool exportExcel();
 	bool exportExcelByTable(Table* table);		// 导出 Excel 到 Property Vector
 
+	bool exportCsCode();
+	bool exportCppCode();
+
 	// 导出 Property Vector 到文件
 	virtual void exportPropertyVec2File(const char* lpszOutputFile, std::vector<DataItem*>& _rowList, bool isClient);
 	void exportPropertyVec2FileServer(std::vector<DataItem*>& _rowList, ByteBuffer& byteBuffer);

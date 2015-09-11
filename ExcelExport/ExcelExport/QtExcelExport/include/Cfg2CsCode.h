@@ -3,6 +3,7 @@
 
 #include "Platform.h"
 #include "Cfg2Code.h"
+#include <string>
 
 BEGIN_NAMESPACE
 
@@ -11,6 +12,9 @@ BEGIN_NAMESPACE
 */
 class Cfg2CsCode : public Cfg2Code
 {
+public:
+	static std::string convKW2CppKW(std::string fieldType, int fieldSize);
+
 protected:
 
 

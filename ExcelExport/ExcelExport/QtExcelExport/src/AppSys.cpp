@@ -48,21 +48,35 @@ ExcelExport* AppSys::getExcelTbl()
 	return m_excelExport;
 }
 
+void AppSys::exportExcel()
+{
+	if (isSetSolution())
+	{
+		startMultiPack();
+	}
+	else
+	{
+		startSinglePack();
+	}
+}
+
 // start Multi
 void AppSys::startMultiPack()
 {
 	// 导出所有的表
-	std::vector<Table*>& tableList = m_task->getTableList();
+	//std::vector<Table*>& tableList = m_task->getTableList();
 
-	std::vector<Table*>::iterator tableIteVecBegin = tableList.begin();
-	std::vector<Table*>::iterator tableIteVecEnd = tableList.end();
-	for (; tableIteVecBegin != tableIteVecEnd; ++tableIteVecBegin)
-	{
-		if ((*tableIteVecBegin)->m_bExportTable)
-		{
-			(*tableIteVecBegin)->exportExcel();
-		}
-	}
+	//std::vector<Table*>::iterator tableIteVecBegin = tableList.begin();
+	//std::vector<Table*>::iterator tableIteVecEnd = tableList.end();
+	//for (; tableIteVecBegin != tableIteVecEnd; ++tableIteVecBegin)
+	//{
+	//	if ((*tableIteVecBegin)->m_bExportTable)
+	//	{
+	//		(*tableIteVecBegin)->exportExcel();
+	//	}
+	//}
+
+	m_task->getSolution()->exportExcel();
 
 	if (m_task->getSolution()->getCmd().length())
 	{
@@ -78,25 +92,49 @@ void AppSys::startSinglePack()
 
 void AppSys::exportCppCode()
 {
-	std::vector<Table*>& tableList = m_task->getTableList();
+	//std::vector<Table*>& tableList = m_task->getTableList();
 
-	std::vector<Table*>::iterator tableIteVecBegin = tableList.begin();
-	std::vector<Table*>::iterator tableIteVecEnd = tableList.end();
-	for (; tableIteVecBegin != tableIteVecEnd; ++tableIteVecBegin)
+	//std::vector<Table*>::iterator tableIteVecBegin = tableList.begin();
+	//std::vector<Table*>::iterator tableIteVecEnd = tableList.end();
+	//for (; tableIteVecBegin != tableIteVecEnd; ++tableIteVecBegin)
+	//{
+	//	if ((*tableIteVecBegin)->m_bExportTable)
+	//	{
+	//		(*tableIteVecBegin)->exportCppCode();
+	//	}
+	//}
+
+	if (isSetSolution())
 	{
-		(*tableIteVecBegin)->exportCppCode();
+		m_excelExport->exportCppCode();
+	}
+	else
+	{
+		m_task->getSolution()->exportCppCode();
 	}
 }
 
 void AppSys::exportCsCode()
 {
-	std::vector<Table*>& tableList = m_task->getTableList();
+	//std::vector<Table*>& tableList = m_task->getTableList();
 
-	std::vector<Table*>::iterator tableIteVecBegin = tableList.begin();
-	std::vector<Table*>::iterator tableIteVecEnd = tableList.end();
-	for (; tableIteVecBegin != tableIteVecEnd; ++tableIteVecBegin)
+	//std::vector<Table*>::iterator tableIteVecBegin = tableList.begin();
+	//std::vector<Table*>::iterator tableIteVecEnd = tableList.end();
+	//for (; tableIteVecBegin != tableIteVecEnd; ++tableIteVecBegin)
+	//{
+	//	if ((*tableIteVecBegin)->m_bExportTable)
+	//	{
+	//		(*tableIteVecBegin)->exportCsCode();
+	//	}
+	//}
+
+	if (isSetSolution())
 	{
-		(*tableIteVecBegin)->exportCsCode();
+		m_excelExport->exportCsCode();
+	}
+	else
+	{
+		m_task->getSolution()->exportCsCode();
 	}
 }
 

@@ -48,6 +48,7 @@ public:
 
 	void setXml(std::string outpath, std::string xmlpath);
 	bool isSetSolution();
+	void exportExcel();
 
 	void initCombo(QComboBox *comboBoxSolution);
 	void exportCppCode();
