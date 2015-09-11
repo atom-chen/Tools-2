@@ -1,5 +1,7 @@
 ﻿#include "DataItem.h"
 
+BEGIN_NAMESPACE
+
 DataItem::DataItem()
 {
 	m_id = 0;
@@ -133,3 +135,5 @@ bool lessCmp::operator() (DataItem* a, DataItem* b)
 { 
 	return (a->getID() < b->getID());
 }
+
+END_NAMESPACE

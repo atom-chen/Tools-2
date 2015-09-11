@@ -1,5 +1,7 @@
 #include "PropertyStr.h"
 
+BEGIN_NAMESPACE
+
 void PropertyStr::srz2BU(ByteBuffer& byteBuffer)
 {
 	byteBuffer.writeMultiByte(m_propData.c_str(), m_cfgLen);
@@ -23,3 +25,5 @@ void PropertyStr::srz2BUMobile(ByteBuffer& byteBuffer)
 {
 	srz2BUWeb(byteBuffer);
 }
+
+END_NAMESPACE

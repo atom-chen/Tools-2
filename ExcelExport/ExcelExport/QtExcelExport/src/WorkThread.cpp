@@ -1,6 +1,8 @@
 ﻿#include "WorkThread.h"
 #include "AppSysPrerequisites.h"
 
+BEGIN_NAMESPACE
+
 void WorkThread::run()
 {
 	g_pUtils->setRunning(true);
@@ -20,3 +22,5 @@ void WorkThread::run()
 //{
 //	m_excelTbl = para;
 //}
+
+END_NAMESPACE

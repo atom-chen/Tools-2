@@ -1,5 +1,7 @@
 ﻿#include "TabelAttr.h"
 
+BEGIN_NAMESPACE
+
 // 解析数据，结构是 "1-100;130-500"
 void TableAttr::parseInRange(std::string idrange)
 {
@@ -64,3 +66,5 @@ bool TableAttr::bIdInRange(unsigned int id)
 		return true;
 	}
 }
+
+END_NAMESPACE

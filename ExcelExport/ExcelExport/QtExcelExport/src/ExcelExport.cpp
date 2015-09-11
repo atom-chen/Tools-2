@@ -7,6 +7,8 @@
 #include "Task.h"
 #include "ADOWrap.h"
 
+BEGIN_NAMESPACE
+
 ExcelExport::ExcelExport()
 {
 	m_bytes = new char[4096];
@@ -498,3 +500,5 @@ void ExcelExport::deleteFieldsList(std::vector<XmlField*>& fieldsList)
 		delete (*fieldIteVecBegin);
 	}
 }
+
+END_NAMESPACE

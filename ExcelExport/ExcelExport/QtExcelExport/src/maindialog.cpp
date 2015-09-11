@@ -11,6 +11,8 @@
 
 #include "MemLeakCheck.h"
 
+BEGIN_NAMESPACE
+
 MainDialog::MainDialog(QWidget *parent)
 	: QDialog(parent, Qt::FramelessWindowHint), m_ui(new Ui::Dialog)
 {
@@ -242,3 +244,5 @@ void MainDialog::keyPressEvent(QKeyEvent *event)
 		QDialog::keyPressEvent(event);
 	}
 }
+
+END_NAMESPACE

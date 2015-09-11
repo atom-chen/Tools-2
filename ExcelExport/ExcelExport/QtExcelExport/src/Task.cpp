@@ -7,6 +7,8 @@
 
 #include "MemLeakCheck.h"
 
+BEGIN_NAMESPACE
+
 XmlField::XmlField()
 {
 	m_fieldSize = -1;
@@ -480,3 +482,5 @@ std::vector<Table*>& Task::getTableList()
 {
 	return m_tablesList;
 }
+
+END_NAMESPACE

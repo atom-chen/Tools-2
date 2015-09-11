@@ -1,5 +1,7 @@
 #include "System.h"
 
+BEGIN_NAMESPACE
+
 template<> System* Singleton<System>::msSingleton = 0;
 
 void System::checkEndian()
@@ -20,3 +22,5 @@ bool System::isEndianDiffFromSys(SysEndian rhv)
 {
 	return m_sysEndian != rhv;
 }
+
+END_NAMESPACE

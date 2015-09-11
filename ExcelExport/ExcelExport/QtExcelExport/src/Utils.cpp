@@ -8,6 +8,8 @@
 #include "Utils.h"
 #include "MemLeakCheck.h"
 
+BEGIN_NAMESPACE
+
 Utils::Utils()
 {
 	m_parent = NULL;
@@ -514,3 +516,5 @@ char* Utils::UnicodeToAnsi(const wchar_t* szStr)
 	WideCharToMultiByte(CP_ACP, 0, szStr, -1, m_bytes, nLen, NULL, NULL);
 	return m_bytes;
 }
+
+END_NAMESPACE

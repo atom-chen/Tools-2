@@ -1,6 +1,8 @@
 #include "AppSysPrerequisites.h"
 #include "ByteBuffer.h"
 
+BEGIN_NAMESPACE
+
 void ByteBufferException::PrintPosError() const
 {
 	
@@ -69,3 +71,5 @@ void ByteBuffer::writeFile(FILE* file)
 {
 	fwrite((void*)&_storage[0], sizeof(char), this->size(), file);
 }
+
+END_NAMESPACE

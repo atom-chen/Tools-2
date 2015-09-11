@@ -7,6 +7,8 @@
 #include "AppSys.h"
 #include "MemLeakCheck.h"
 
+BEGIN_NAMESPACE
+
 template<> AppSys* Singleton<AppSys>::msSingleton = 0;
 
 AppSys::AppSys()
@@ -104,3 +106,5 @@ Utils* AppSys::getUtilsPtr()
 {
 	return m_pUtils;
 }
+
+END_NAMESPACE

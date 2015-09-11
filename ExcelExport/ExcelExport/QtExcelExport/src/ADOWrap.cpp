@@ -1,6 +1,11 @@
 #include "ADOWrap.h"
 #include "Task.h"
-#include "AppSysPrerequisites.h"
+//#include "AppSysPrerequisites.h"
+#include "AppSys.h"
+#include "Utils.h"
+
+
+BEGIN_NAMESPACE
 
 ADOWrap::ADOWrap()
 {
@@ -54,7 +59,7 @@ bool ADOWrap::opemDB(Table* tableItem)
 	catch (_com_error e)		//捕捉异常		
 	{
 		::CoUninitialize();
-		g_pUtils->informationMessage(QStringLiteral("打开数据库发生异常"));
+		//g_pUtils->informationMessage(QStringLiteral("打开数据库发生异常"));
 		return false;
 	}
 
@@ -79,7 +84,7 @@ bool ADOWrap::opemDB(Table* tableItem)
 	{
 		m_pConnection->Close();
 		::CoUninitialize();
-		g_pUtils->informationMessage(QStringLiteral("打开数据库的第一个表发生异常"));
+		//g_pUtils->informationMessage(QStringLiteral("打开数据库的第一个表发生异常"));
 
 		return false;
 	}
@@ -113,3 +118,5 @@ void ADOWrap::closeDB()
 	m_pConnection->Close();
 	::CoUninitialize();
 }
+
+END_NAMESPACE
