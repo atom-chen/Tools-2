@@ -5,12 +5,14 @@
 #include "Task.h"
 #include "ui_TableListItem.h"
 
-BEGIN_NAMESPACE
+QT_USE_NAMESPACE
 
 namespace Ui
 {
 	class TableListItem;
 }
+
+BEGIN_NAMESPACE
 
 class TableListItem : public QWidget
 {

@@ -1,9 +1,8 @@
 ﻿#ifndef _UTILS_H
 #define _UTILS_H
 
-#include <QtCore/QtCore>
-#include <QtWidgets/QPlainTextEdit>
-#include <QtCore/QVector>
+#include <QtCore>			// QVector QString
+#include <QtWidgets>	// QPlainTextEdit
 
 #include <cstring>
 #include <string>	// include string
@@ -12,9 +11,9 @@
 #include <windows.h>
 #include "Platform.h"
 
-BEGIN_NAMESPACE
+QT_USE_NAMESPACE
 
-class QWidget;
+BEGIN_NAMESPACE
 
 class Utils
 {

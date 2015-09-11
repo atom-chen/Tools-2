@@ -1,11 +1,10 @@
-﻿#include <QtGui/QtGui>
+﻿#include "Utils.h"
+#include <QtGui>
 #include <QtWidgets>
 #include <direct.h>		// getcwd
 #include <mbstring.h>
 #include <deque>
 #include <sstream>
-
-#include "Utils.h"
 #include "MemLeakCheck.h"
 
 BEGIN_NAMESPACE

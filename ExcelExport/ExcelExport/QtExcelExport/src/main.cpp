@@ -25,6 +25,7 @@
 //#endif
 
 #include "MemLeakCheck.h"
+#include "Platform.h"
 
 //定义函数：  
 void EnableMemLeakCheck()
@@ -36,6 +37,8 @@ void EnableMemLeakCheck()
 //#ifdef _DEBUG
 //#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 //#endif
+
+USING_NAMESPACE
 
 int main(int argc, char *argv[])
 {

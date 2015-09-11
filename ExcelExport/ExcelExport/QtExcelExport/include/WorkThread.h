@@ -7,6 +7,8 @@
 
 #include "Platform.h"
 
+QT_FORWARD_DECLARE_CLASS(QThread);
+
 BEGIN_NAMESPACE
 
 class WorkThread : public QThread

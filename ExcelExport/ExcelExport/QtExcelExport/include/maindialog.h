@@ -10,11 +10,14 @@
 
 using namespace std;
 
+QT_USE_NAMESPACE
+
+class QListWidgetItem;
+
 namespace Ui
 {
 	class Dialog;
 }
-class QListWidgetItem;
 
 BEGIN_NAMESPACE
 

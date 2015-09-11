@@ -4,14 +4,17 @@
 #include "Task.h"
 #include "Singleton.h"
 #include <string>
+#include <QtCore>
 
 #include "Platform.h"
 
+QT_USE_NAMESPACE
+
+class QComboBox;
+
 BEGIN_NAMESPACE
 
-class QThread;
 class ExcelExport;
-class QComboBox;
 class Utils;
 class System;
 

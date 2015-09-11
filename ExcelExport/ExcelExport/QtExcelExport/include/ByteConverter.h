@@ -30,6 +30,8 @@ namespace ByteConverter
 
 END_NAMESPACE
 
+USING_NAMESPACE
+
 template<typename T> inline void EndianConvert(T& val) { ByteConverter::apply<T>(&val); }
 template<typename T> void EndianConvert(T*);         // will generate link error
 
