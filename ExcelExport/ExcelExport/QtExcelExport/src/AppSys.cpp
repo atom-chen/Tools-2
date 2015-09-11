@@ -19,7 +19,8 @@ AppSys::AppSys()
 	m_pSystem = new System;
 	m_task = new Task;
 	m_excelExport = new ExcelExport;
-	m_pWorkThread = new WorkThread;
+	m_pExcelWorkThread = new ExcelWorkThread;
+	m_pCodeWorkThread = new CodeWorkThread;
 }
 
 AppSys::~AppSys()
@@ -28,7 +29,8 @@ AppSys::~AppSys()
 	delete m_pSystem;
 	delete m_task;
 	delete m_excelExport;
-	delete m_pWorkThread;
+	delete m_pExcelWorkThread;
+	delete m_pCodeWorkThread;
 }
 
 Task* AppSys::getTask()
@@ -74,6 +76,30 @@ void AppSys::startSinglePack()
 	m_excelExport->exportExcel();
 }
 
+void AppSys::exportCppCode()
+{
+	std::vector<Table*>& tableList = m_task->getTableList();
+
+	std::vector<Table*>::iterator tableIteVecBegin = tableList.begin();
+	std::vector<Table*>::iterator tableIteVecEnd = tableList.end();
+	for (; tableIteVecBegin != tableIteVecEnd; ++tableIteVecBegin)
+	{
+		(*tableIteVecBegin)->exportCppCode();
+	}
+}
+
+void AppSys::exportCsCode()
+{
+	std::vector<Table*>& tableList = m_task->getTableList();
+
+	std::vector<Table*>::iterator tableIteVecBegin = tableList.begin();
+	std::vector<Table*>::iterator tableIteVecEnd = tableList.end();
+	for (; tableIteVecBegin != tableIteVecEnd; ++tableIteVecBegin)
+	{
+		(*tableIteVecBegin)->exportCsCode();
+	}
+}
+
 void AppSys::setXml(std::string outpath, std::string xmlpath)
 {
 	m_outPath = outpath;
@@ -86,16 +112,6 @@ void AppSys::setXml(std::string outpath, std::string xmlpath)
 bool AppSys::isSetSolution()
 {
 	return (0 == m_outPath.length() && 0 == m_xmlFile.length());
-}
-
-//void AppSys::initThread(WorkThread* pthread)
-//{
-//	m_pWorkThread = pthread;
-//}
-
-void AppSys::startThread()
-{
-	m_pWorkThread->start();
 }
 
 void AppSys::initCombo(QComboBox *comboBoxSolution)
@@ -115,9 +131,14 @@ ExcelExport* AppSys::getExcelExportPtr()
 	return m_excelExport;
 }
 
-WorkThread* AppSys::getWorkThreadPtr()
+ExcelWorkThread* AppSys::getExcelWorkThreadPtr()
 {
-	return m_pWorkThread;
+	return m_pExcelWorkThread;
+}
+
+CodeWorkThread* AppSys::getCodeWorkThreadPtr()
+{
+	return m_pCodeWorkThread;
 }
 
 Utils* AppSys::getUtilsPtr()

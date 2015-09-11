@@ -39,6 +39,7 @@ public:
 	std::string getCodeName();
 	std::string getFieldType();
 	int getFieldSize();
+	void parseXML(tinyxml2::XMLElement* field);
 };
 
 
@@ -92,7 +93,8 @@ public:
 	bool buildTableDefine();
 	bool isExportClientTable();		// 是否是导出客户端表
 
-	void exportCode();		// 导出代码
+	void exportCppCode();		// 导出代码
+	void exportCsCode();
 	void exportExcel();		// 导出 Excel
 };
 
@@ -128,7 +130,8 @@ public:
 	bool loadTableXml();
 	void destroy();
 
-	void exportCode();		// 导出代码
+	void exportCppCode();		// 导出代码
+	void exportCsCode();
 	void exportExcel();		// 导出 Excel
 };
 
@@ -169,7 +172,8 @@ public:
 	void loadTableXml();
 	void destroy();
 
-	void exportCode();		// 导出代码
+	void exportCppCode();		// 导出代码
+	void exportCsCode();
 	void exportExcel();		// 导出 Excel
 };
 

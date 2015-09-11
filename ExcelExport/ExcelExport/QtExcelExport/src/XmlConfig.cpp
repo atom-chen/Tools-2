@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "Cfg2Code.h"
 #include "Cfg2CppCode.h"
+#include "Cfg2CsCode.h"
 #include "MemLeakCheck.h"
 #include "ExcelExport.h"
 
@@ -37,6 +38,32 @@ int XmlField::getFieldSize()
 {
 	return m_fieldSize;
 }
+
+void XmlField::parseXML(tinyxml2::XMLElement* field)
+{
+	this->m_fieldName = Utils::copyPChar2Str(field->Attribute("name"));
+	this->m_fieldType = Utils::copyPChar2Str(field->Attribute("type"));
+	this->m_codeName = Utils::copyPChar2Str(field->Attribute("codename"));
+
+	// 如果 field 是 string 类型，size 配置长度包括结尾符 0 
+	if (field->QueryIntAttribute("size", &this->m_fieldSize) != tinyxml2::XML_SUCCESS)
+	{
+		this->m_fieldSize = -1;
+	}
+	if (field->QueryIntAttribute("base", &this->m_fieldBase) != tinyxml2::XML_SUCCESS)
+	{
+		this->m_fieldBase = 10;
+	}
+
+	this->m_defaultValue = Utils::copyPChar2Str(field->Attribute("default"));
+	// 默认的类型 
+	if (0 == this->m_fieldType.length())
+	{
+		this->m_fieldType = "int";
+	}
+}
+
+
 
 Table::Table()
 {
@@ -92,26 +119,7 @@ void Table::parseXML(tinyxml2::XMLElement* pXmlEmtFields)
 	{
 		fieldItem = new XmlField();
 		m_fieldsList.push_back(fieldItem);
-
-		fieldItem->m_fieldName = Utils::copyPChar2Str(field->Attribute("name"));
-		fieldItem->m_fieldType = Utils::copyPChar2Str(field->Attribute("type"));
-
-		// 如果 field 是 string 类型，size 配置长度包括结尾符 0 
-		if (field->QueryIntAttribute("size", &fieldItem->m_fieldSize) != tinyxml2::XML_SUCCESS)
-		{
-			fieldItem->m_fieldSize = -1;
-		}
-		if (field->QueryIntAttribute("base", &fieldItem->m_fieldBase) != tinyxml2::XML_SUCCESS)
-		{
-			fieldItem->m_fieldBase = 10;
-		}
-
-		fieldItem->m_defaultValue = Utils::copyPChar2Str(field->Attribute("default"));
-		// 默认的类型 
-		if (0 == fieldItem->m_fieldType.length())
-		{
-			fieldItem->m_fieldType = "int";
-		}
+		fieldItem->parseXML(field);
 		field = field->NextSiblingElement("field");
 	}
 }
@@ -239,11 +247,20 @@ bool Table::isExportClientTable()
 	return false;
 }
 
-void Table::exportCode()
+void Table::exportCppCode()
 {
 	Cfg2Code* pCfg2Code = new Cfg2CppCode();
 	pCfg2Code->setTable(this);
 	pCfg2Code->exportCode();
+	delete pCfg2Code;
+}
+
+void Table::exportCsCode()
+{
+	Cfg2Code* pCfg2Code = new Cfg2CsCode();
+	pCfg2Code->setTable(this);
+	pCfg2Code->exportCode();
+	delete pCfg2Code;
 }
 
 void Table::exportExcel()
@@ -433,11 +450,19 @@ bool Package::loadTableXml()
 	return true;
 }
 
-void Package::exportCode()
+void Package::exportCppCode()
 {
 	for (auto table : m_tablesList)
 	{
-		table->exportCode();
+		table->exportCppCode();
+	}
+}
+
+void Package::exportCsCode()
+{
+	for (auto table : m_tablesList)
+	{
+		table->exportCsCode();
 	}
 }
 
@@ -522,6 +547,8 @@ void Solution::initByXml(tinyxml2::XMLElement* elem)
 	// 转换目录到绝对目录
 	g_pUtils->convToAbsPath(m_xmlRootPath);
 	g_pUtils->convToAbsPath(m_defaultOutput);
+	g_pUtils->convToAbsPath(m_cppOutPath);
+	g_pUtils->convToAbsPath(m_csOutPath);
 
 	while (packageXml)
 	{
@@ -557,6 +584,7 @@ void Solution::loadTableXml()
 	for (; packIteVecBegin != packIteVecEnd; ++packIteVecBegin)
 	{
 		(*packIteVecBegin)->loadTableXml();
+		m_tablesList.insert(m_tablesList.end(), (*packIteVecBegin)->getTablesList().begin(), (*packIteVecBegin)->getTablesList().end());
 	}
 }
 
@@ -565,11 +593,19 @@ void Solution::destroy()
 	clearTablesList();
 }
 
-void Solution::exportCode()
+void Solution::exportCppCode()
 {
 	for (auto package : m_lstPack)
 	{
-		package->exportCode();
+		package->exportCppCode();
+	}
+}
+
+void Solution::exportCsCode()
+{
+	for (auto package : m_lstPack)
+	{
+		package->exportCsCode();
 	}
 }
 
@@ -577,7 +613,7 @@ void Solution::exportExcel()
 {
 	for (auto package : m_lstPack)
 	{
-		package->exportCode();
+		package->exportExcel();
 	}
 }
 

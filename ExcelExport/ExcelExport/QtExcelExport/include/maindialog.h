@@ -46,6 +46,10 @@ private slots:
 	void onChkAllBtnClk();
 	void onListItemClk(QListWidgetItem *item);
 
+	void onBtnCode();
+	void onCSChkBtnClk();
+	void onCPPChkBtnClk();
+
 protected:
 	void keyPressEvent(QKeyEvent *event);
 };

@@ -20,7 +20,7 @@ class Utils
 private:
 	QWidget *m_parent;			// 提示对话框的父窗口 
 	//QTextEdit* m_outTextEdit;	// 日志窗口    
-	bool	m_running;			// 子线程是否在运行     
+	//bool	m_running;			// 子线程是否在运行     
 	QVector<QString> m_infoInList;		// 所有的信息都存放在这里
 	QVector<QString> m_infoOutList;		// 所有的信息都存放在这里
 	QMutex	m_infoListMutex;	// 信息类表同步
@@ -51,8 +51,8 @@ public:
 	void informationMessageUI(QString msg, QString caption = QObject::tr("QMessageBox::information()"), QWidget *parent = NULL);
 
 	void setParent(QWidget *parent);
-	bool isRunning();
-	void setRunning(bool run);
+	//bool isRunning();
+	//void setRunning(bool run);
 	//void setTextEdit(QTextEdit* textEdit);
 	void Log(QString desc);
 	QVector<QString>& getLog();

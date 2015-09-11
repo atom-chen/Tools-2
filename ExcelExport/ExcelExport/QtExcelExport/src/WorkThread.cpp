@@ -3,24 +3,93 @@
 
 BEGIN_NAMESPACE
 
+WorkThread::WorkThread()
+{
+	m_running = false;
+}
+
+WorkThread::~WorkThread()
+{
+
+}
+
+bool WorkThread::isRunning()
+{
+	return m_running;
+}
+
+void WorkThread::startThread()
+{
+	m_running = true;
+	this->start();
+}
+
 void WorkThread::run()
 {
-	g_pUtils->setRunning(true);
-	if(g_pAppSys->isSetSolution())
+
+}
+
+
+void ExcelWorkThread::run()
+{
+	WorkThread::run();
+
+	if (g_pAppSys->isSetSolution())
 	{
 		g_pAppSys->startMultiPack();
 	}
 	else
 	{
-		//m_excelTbl->convExcel2Tbl();
 		g_pAppSys->startSinglePack();
 	}
-	g_pUtils->setRunning(false);
+	
+	m_running = false;
 }
 
-//void WorkThread::setParam(ExcelTbl* para)
-//{
-//	m_excelTbl = para;
-//}
+CodeWorkThread::CodeWorkThread()
+{
+	m_bCsCode = false;
+	m_bCppCode = false;
+}
+
+void CodeWorkThread::setCppCode(bool bCppCode)
+{
+	m_bCppCode = bCppCode;
+}
+
+bool CodeWorkThread::getCppCode()
+{
+	return m_bCppCode;
+}
+
+void CodeWorkThread::setCsCode(bool bCsCode)
+{
+	m_bCsCode = bCsCode;
+}
+
+bool CodeWorkThread::getCsCode()
+{
+	return m_bCsCode;
+}
+
+void CodeWorkThread::run()
+{
+	g_pUtils->informationMessage(QStringLiteral("开始输出代码"));
+
+	WorkThread::run();
+
+	if (m_bCsCode)
+	{
+		g_pUtils->informationMessage(QStringLiteral("开始输出 cs 代码"));
+		g_pAppSys->exportCsCode();
+	}
+	if (m_bCppCode)
+	{
+		g_pUtils->informationMessage(QStringLiteral("开始输出 c++ 代码"));
+		g_pAppSys->exportCppCode();
+	}
+
+	g_pUtils->informationMessage(QStringLiteral("结束输出代码"));
+}
 
 END_NAMESPACE

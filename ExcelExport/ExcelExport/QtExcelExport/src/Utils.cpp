@@ -12,7 +12,7 @@ BEGIN_NAMESPACE
 Utils::Utils()
 {
 	m_parent = NULL;
-	m_running = false;
+	//m_running = false;
 	//m_outTextEdit = NULL;
 	m_bytes = new char[4096];
 	m_wcsbytes = new wchar_t[4096];
@@ -106,15 +106,15 @@ void Utils::setParent(QWidget *parent)
 	m_parent = parent;
 }
 
-bool Utils::isRunning()
-{
-	return m_running;
-}
+//bool Utils::isRunning()
+//{
+//	return m_running;
+//}
 
-void Utils::setRunning(bool run)
-{
-	m_running = run;
-}
+//void Utils::setRunning(bool run)
+//{
+//	m_running = run;
+//}
 
 // 输出日志    
 void Utils::Log(QString desc)

@@ -3,8 +3,6 @@
 
 #include <QtCore/QtCore>
 
-//class ExcelTbl;
-
 #include "Platform.h"
 
 QT_FORWARD_DECLARE_CLASS(QThread);
@@ -13,14 +11,38 @@ BEGIN_NAMESPACE
 
 class WorkThread : public QThread
 {
-private:
-	//ExcelTbl* m_excelTbl;
+protected:
+	bool m_running;
 
 public:
-	//void setParam(ExcelTbl* para);
+	WorkThread();
+	~WorkThread();
+	bool isRunning();
+	void startThread();
+	virtual void run();
+};
+
+class ExcelWorkThread : public WorkThread
+{
+public:
+	virtual void run();
+};
+
+class CodeWorkThread : public WorkThread
+{
+protected:
+	bool m_bCppCode;
+	bool m_bCsCode;
+
+public:
+	CodeWorkThread();
+	bool getCppCode();
+	void setCppCode(bool bCppCode);
+	bool getCsCode();
+	void setCsCode(bool bCsCode);
 	virtual void run();
 };
 
 END_NAMESPACE
 
-#endif	// WORKTHREAD_H  
+#endif

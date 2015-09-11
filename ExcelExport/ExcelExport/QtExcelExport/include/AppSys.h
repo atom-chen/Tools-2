@@ -17,7 +17,8 @@ BEGIN_NAMESPACE
 class ExcelExport;
 class Utils;
 class System;
-class WorkThread;
+class ExcelWorkThread;
+class CodeWorkThread;
 
 /**
  *@brief appdata
@@ -27,7 +28,8 @@ class AppSys : public Singleton<AppSys>
 protected:
 	Task* m_task;			// main thread task, but only one thread
 	ExcelExport* m_excelExport;
-	WorkThread* m_pWorkThread;
+	ExcelWorkThread* m_pExcelWorkThread;
+	CodeWorkThread* m_pCodeWorkThread;
 
 	std::string m_outPath;
 	std::string m_xmlFile;
@@ -46,13 +48,14 @@ public:
 
 	void setXml(std::string outpath, std::string xmlpath);
 	bool isSetSolution();
-	//void initThread(QThread* pthread);
-	void startThread();
 
 	void initCombo(QComboBox *comboBoxSolution);
+	void exportCppCode();
+	void exportCsCode();
 
 	ExcelExport* getExcelExportPtr();
-	WorkThread* getWorkThreadPtr();
+	ExcelWorkThread* getExcelWorkThreadPtr();
+	CodeWorkThread* getCodeWorkThreadPtr();
 	Utils* getUtilsPtr();
 	System* getSystemPtr();
 };
@@ -61,7 +64,8 @@ END_NAMESPACE
 
 #define g_pAppSys AppSys::getSingletonPtr()
 #define g_pExcelExport g_pAppSys->getExcelExportPtr()
-#define g_pWorkThread g_pAppSys->getWorkThreadPtr()
+#define g_pCodeWorkThread g_pAppSys->getCodeWorkThreadPtr()
+#define g_pExcelWorkThread g_pAppSys->getExcelWorkThreadPtr()
 #define g_pUtils g_pAppSys->getUtilsPtr()
 #define g_pSystem g_pAppSys->getSystemPtr()
 

@@ -134,6 +134,45 @@
     <string>全部选中</string>
    </property>
   </widget>
+  <widget class="QCheckBox" name="m_csCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>90</y>
+     <width>31</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>cs</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="m_cppCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>90</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>c++</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="m_codePushButton">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>90</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>代码</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

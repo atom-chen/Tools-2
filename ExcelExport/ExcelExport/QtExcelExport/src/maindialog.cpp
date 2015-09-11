@@ -27,6 +27,10 @@ MainDialog::MainDialog(QWidget *parent)
 	connect(m_ui->pushButtonStart, SIGNAL(clicked()), this, SLOT(btnStart()));
 	connect(m_ui->checkBox, SIGNAL(clicked()), this, SLOT(onChkAllBtnClk()));
 
+	connect(m_ui->m_codePushButton, SIGNAL(clicked()), this, SLOT(onBtnCode()));
+	connect(m_ui->m_csCheckBox, SIGNAL(clicked()), this, SLOT(onCSChkBtnClk()));
+	connect(m_ui->m_cppCheckBox, SIGNAL(clicked()), this, SLOT(onCPPChkBtnClk()));
+
 	connect(m_ui->TableListWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(onListItemClk(QListWidgetItem*)));
 
 	setWindowTitle(QStringLiteral("Excel打包工具"));
@@ -170,21 +174,32 @@ void MainDialog::btnStart()
 		//pushButtonStart.enable = false;
 
 		//QMessageBox::information(this, tr("QMessageBox::information()"), tr("asdasdf"));
-		if(!g_pUtils->isRunning())
+		if (!g_pExcelWorkThread->isRunning())
 		{
 			//m_excelTbl->setXmlPath(xmlFile);
 			//m_excelTbl->setOutputPath(outPath);
 			//m_thread.start();
-			g_pAppSys->startThread();
+			g_pExcelWorkThread->startThread();
 			//m_thread.wait();		// 会死锁 
 			//pushButtonStart.enable = false;
 		}
 		else
 		{
-			//g_pUtils->informationMessage(tr("正在打表"));
 			g_pUtils->informationMessage(QStringLiteral("正在打表"));
 		}
 	//}
+}
+
+void MainDialog::onBtnCode()
+{
+	if (!g_pCodeWorkThread->isRunning())
+	{
+		g_pCodeWorkThread->startThread();
+	}
+	else
+	{
+		g_pUtils->informationMessage(QStringLiteral("正在导出代码"));
+	}
 }
 
 void MainDialog::update()
@@ -218,6 +233,16 @@ void MainDialog::onChkAllBtnClk()
 		listItemUI->onChkBtnClk();
 		++idx;
 	}
+}
+
+void MainDialog::onCSChkBtnClk()
+{
+	g_pCodeWorkThread->setCsCode(m_ui->m_csCheckBox->isChecked());
+}
+
+void MainDialog::onCPPChkBtnClk()
+{
+	g_pCodeWorkThread->setCppCode(m_ui->m_cppCheckBox->isChecked());
 }
 
 void MainDialog::onListItemClk(QListWidgetItem *item)

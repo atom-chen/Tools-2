@@ -80,6 +80,7 @@ void Cfg2CppCode::exportCode()
 
 	strStream << "class " << m_pTable->getClassName();
 	strStream << "\n" << "{";
+	strStream << "\n" << "public:";
 
 	for (auto field : m_pTable->getFieldsList())
 	{
@@ -88,9 +89,14 @@ void Cfg2CppCode::exportCode()
 		{
 			strStream << "[" << field->getFieldSize() << "];";
 		}
+		else
+		{
+			strStream << ";";
+		}
 	}
 
 	strStream << "\n" << "}";
+	fwrite(strStream.str().c_str(), strStream.str().length(), 1, fp);
 
 	fclose(fp);
 }
