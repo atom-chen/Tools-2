@@ -1,15 +1,15 @@
-﻿#ifndef _TOOLS_H
-#define _TOOLS_H
+﻿#ifndef _UTILS_H
+#define _UTILS_H
 
 #include <QtCore/QtCore>
-#include <cstring>
-#include <string>	// include string
 #include <QtWidgets/QPlainTextEdit>
 #include <QtCore/QVector>
 
+#include <cstring>
+#include <string>	// include string
+
 #include <stdio.h>
 #include <windows.h>
-#include "Singleton.h"
 #include "Platform.h"
 
 class QWidget;
