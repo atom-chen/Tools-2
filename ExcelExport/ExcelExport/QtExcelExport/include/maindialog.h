@@ -1,9 +1,9 @@
 ﻿#ifndef _MAINDIALOG_H
 #define _MAINDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include <QtWidgets>	// QDialog
 #include <iostream>
-#include <QtCore/QTimer>
+#include <QtCore>		// QTimer
 //#include "WorkThread.h"
 //#include "ExcelTbl.h"
 #include "Platform.h"

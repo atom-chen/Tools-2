@@ -1,8 +1,8 @@
 ﻿#ifndef _TASK_H
 #define _TASK_H
 
-#include <string>	// include string
-#include <vector>	// include vector
+#include <string>		// include string
+#include <vector>		// include vector
 #include "tinyxml2.h"	// include xml
 #include "EnValue.h"
 #include "TabelAttr.h"
@@ -18,7 +18,6 @@ class Task
 {
 protected:
 	Solution* m_pSolution;
-	std::vector<Table*> m_tablesList;
 
 public:
 	Task();

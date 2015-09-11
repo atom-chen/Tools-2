@@ -184,7 +184,7 @@ Package::Package()
 
 Package::~Package()
 {
-
+	clearTablesList();
 }
 
 std::string Package::getXml()
@@ -207,6 +207,21 @@ void Package::setOutput(std::string output)
 	m_output = output;
 }
 
+std::vector<Table*>& Package::getTablesList()
+{
+	return m_tablesList;
+}
+
+void Package::clearTablesList()
+{
+	for (auto table : m_tablesList)
+	{
+		delete table;
+	}
+
+	m_tablesList.clear();
+}
+
 void Package::initByXml(tinyxml2::XMLElement* elem)
 {
 	m_xml = elem->Attribute("xml");
@@ -215,10 +230,10 @@ void Package::initByXml(tinyxml2::XMLElement* elem)
 
 void Package::destroy()
 {
-
+	clearTablesList();
 }
 
-bool Package::loadTableXml(std::vector<Table*>& tablesList)
+bool Package::loadTableXml()
 {
 	Table* tableItem;
 
@@ -254,7 +269,7 @@ bool Package::loadTableXml(std::vector<Table*>& tablesList)
 		while (table)
 		{
 			tableItem = new Table();
-			tablesList.push_back(tableItem);
+			m_tablesList.push_back(tableItem);
 
 			tableItem->m_strExcelDir = m_xml.substr(0, iTmp);
 			if (_chdir(tableItem->m_strExcelDir.c_str()) == -1)			// 检查当前目录是否存在
@@ -340,7 +355,7 @@ Solution::Solution()
 
 Solution::~Solution()
 {
-
+	clearTablesList();
 }
 
 std::string Solution::getName()
@@ -363,6 +378,26 @@ void Solution::setCmd(std::string cmd)
 	m_cmd = cmd;
 }
 
+std::string Solution::getCppOutPath()
+{
+	return m_cppOutPath;
+}
+
+std::string Solution::getCsOutPath()
+{
+	return m_csOutPath;
+}
+
+std::vector<Table*>& Solution::getTablesList()
+{
+	return m_tablesList;
+}
+
+void Solution::clearTablesList()
+{
+	m_tablesList.clear();				// 这里面仅仅是保存的是引用，不要在这里面释放 table 指针
+}
+
 std::vector<Package*>& Solution::getPackLst()
 {
 	return m_lstPack;
@@ -378,6 +413,8 @@ void Solution::initByXml(tinyxml2::XMLElement* elem)
 	m_cmd = elem->Attribute("cmd");
 	m_xmlRootPath = elem->Attribute("xmlrootpath");
 	m_defaultOutput = elem->Attribute("defaultoutput");
+	m_cppOutPath = elem->Attribute("cppoutpath");
+	m_csOutPath = elem->Attribute("csoutpath");
 
 	// 转换目录到绝对目录
 	g_pUtils->convToAbsPath(m_xmlRootPath);
@@ -405,7 +442,7 @@ void Solution::initByXml(tinyxml2::XMLElement* elem)
 	}
 }
 
-void Solution::loadTableXml(std::vector<Table*>& tablesList)
+void Solution::loadTableXml()
 {
 	std::vector<Package*>::iterator packIteVecBegin;
 	std::vector<Package*>::iterator packIteVecEnd;
@@ -415,29 +452,13 @@ void Solution::loadTableXml(std::vector<Table*>& tablesList)
 
 	for (; packIteVecBegin != packIteVecEnd; ++packIteVecBegin)
 	{
-		(*packIteVecBegin)->loadTableXml(tablesList);
+		(*packIteVecBegin)->loadTableXml();
 	}
 }
 
 void Solution::destroy()
 {
 
-}
-
-
-Task::Task()
-{
-
-}
-
-Task::~Task()
-{
-
-}
-
-Solution* Task::getSolution()
-{
-	return m_pSolution;
 }
 
 

@@ -12,4 +12,9 @@ Cfg2CppCode::~Cfg2CppCode()
 
 }
 
+void Cfg2CppCode::exportCode()
+{
+
+}
+
 END_NAMESPACE

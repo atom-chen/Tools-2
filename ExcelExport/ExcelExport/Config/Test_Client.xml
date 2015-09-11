@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!-- string 类型中的 size 字段是包括最后一个 0 结尾符的长度，codename 是代码中需要用到的变量 -->
+<config>
+	<table name="base_client.bytes" outtype="client" ExcelFile="Test.xlsx" tablename="测试表" codefilename="BaseObject.cs" idrange="1-100;130-500;7000-8000">
+		<fields>
+			<field name="id" type="int" size="4" codename="varName_0" />
+			<field name="字段2" type="int" size="8" codename="varName_1" />
+			<field name="字段3" type="float" size="4" codename="varName_2" />
+			<field name="字段4" type="string" size="256" codename="varName_3" />
+		</fields>
+	</table>
+</config>

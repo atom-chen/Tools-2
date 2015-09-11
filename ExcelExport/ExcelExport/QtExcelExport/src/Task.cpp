@@ -1,9 +1,25 @@
 ﻿#include "Task.h"
 #include "tinyxml2.h"
+#include "XmlConfig.h"
 
 #include "MemLeakCheck.h"
 
 BEGIN_NAMESPACE
+
+Task::Task()
+{
+
+}
+
+Task::~Task()
+{
+
+}
+
+Solution* Task::getSolution()
+{
+	return m_pSolution;
+}
 
 void Task::destroy()
 {
@@ -38,14 +54,14 @@ void Task::readXML()
 		m_pSolution = new Solution();
 		//m_lstSolution.push_back(soluton);
 		m_pSolution->initByXml(solutionXml);
-		m_pSolution->loadTableXml(m_tablesList);
+		m_pSolution->loadTableXml();
 		//solutionXml = solutionXml->NextSiblingElement("solution");
 	}
 }
 
 std::vector<Table*>& Task::getTableList()
 {
-	return m_tablesList;
+	return m_pSolution->getTablesList();
 }
 
 END_NAMESPACE

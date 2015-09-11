@@ -81,6 +81,7 @@ class Package
 protected:
 	std::string m_xml;		// xml path + name
 	std::string m_output;	// output path
+	std::vector<Table*> m_tablesList;		// 保存包中 Xml 配置列表，可能只有一个，也可能有多个
 
 public:
 	Package();
@@ -89,10 +90,13 @@ public:
 	std::string getXml();
 	std::string getOutput();
 
+	std::vector<Table*>& getTablesList();
+	void clearTablesList();					// 清理内容
+
 	void setXml(std::string xml);
 	void setOutput(std::string output);
 	void initByXml(tinyxml2::XMLElement* elem);
-	bool loadTableXml(std::vector<Table*>& tablesList);
+	bool loadTableXml();
 	void destroy();
 };
 
@@ -109,6 +113,10 @@ protected:
 	std::string m_defaultOutput;		// 默认的输出目录
 	std::vector<Package*> m_lstPack;	// need pack list
 
+	std::string m_cppOutPath;			// C++ 输出目录
+	std::string m_csOutPath;			// CS 输出目录
+	std::vector<Table*> m_tablesList;	// Solution 包括的 Package 中的所有的 table 的列表
+
 public:
 	Solution();
 	~Solution();
@@ -116,11 +124,17 @@ public:
 	std::string getName();
 	std::string getCmd();
 
+	std::string getCppOutPath();
+	std::string getCsOutPath();
+
+	std::vector<Table*>& getTablesList();
+	void clearTablesList();
+
 	void setName(std::string name);
 	void setCmd(std::string cmd);
 	void initByXml(tinyxml2::XMLElement* elem);
 	std::vector<Package*>& getPackLst();
-	void loadTableXml(std::vector<Table*>& tablesList);
+	void loadTableXml();
 	void destroy();
 };
 
