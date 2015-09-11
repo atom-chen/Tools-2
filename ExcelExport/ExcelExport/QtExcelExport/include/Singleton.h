@@ -1,7 +1,7 @@
 ﻿#ifndef _SINGLETON_H
 #define _SINGLETON_H
 
-// #include "MemLeakCheck.h"	// 内存泄露检测头文件不用包含，只要包含源文件就行了
+// #include "MemLeakCheck.h"	// 内存泄露检测头文件不用包含，只要包含源文件就行了，这个地方添加了这个会导致编译不过
 
 #include "Platform.h"
 
