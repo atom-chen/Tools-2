@@ -49,6 +49,10 @@ else(NOT Qt5Widgets_FOUND)
 		./src/PropertyStr.cpp
 		./src/TableListItem.cpp
 		./src/ADOWrap.cpp
+		./src/Cfg2Code.cpp
+		./src/Cfg2CppCode.cpp
+		./src/Cfg2CsCode.cpp
+		./src/XmlConfig.cpp
     )
 	
 	set(INCS_FILES
@@ -77,6 +81,10 @@ else(NOT Qt5Widgets_FOUND)
 		./include/MemLeakCheck.h
 		./include/UnMemLeakCheck.h
 		./include/AppSysPrerequisites.h
+		./include/Cfg2Code.h
+		./include/Cfg2CppCode.h
+		./include/Cfg2CsCode.h
+		./include/XmlConfig.h
     )
 
 	#these files need build moc files
