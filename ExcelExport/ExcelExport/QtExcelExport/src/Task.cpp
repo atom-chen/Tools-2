@@ -32,7 +32,7 @@ void Task::readXML()
 	tinyxml2::XMLElement* configXml = NULL;
 	tinyxml2::XMLElement* solutionXml = NULL;
 	
-	if (doc.LoadFile("Config.xml") != tinyxml2::XML_SUCCESS)
+	if (doc.LoadFile("Config/Config.xml") != tinyxml2::XML_SUCCESS)
 	{
 		throw "Config.xml 加载失败!";
 	}

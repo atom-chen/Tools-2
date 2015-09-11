@@ -38,21 +38,23 @@ bool ExcelExport::exportExcel()
 {
 	// 因为 Package 中已经写了加载流程，因此，这里直接生成一个 Package ，然后加载资源
 	Package* packItem = new Package();
+
 	packItem->setXml(m_xmlPath);
 	packItem->setOutput(m_tblPath);
 
 	packItem->loadTableXml();
-	std::vector<Table*>& tablesList = packItem->getTablesList();
+	packItem->exportExcel();
+	//std::vector<Table*>& tablesList = packItem->getTablesList();
 
-	std::vector<Table*>::iterator tableBeginIte;
-	std::vector<Table*>::iterator tableEndIte;
-	tableBeginIte = tablesList.begin();
-	tableEndIte = tablesList.end();
+	//std::vector<Table*>::iterator tableBeginIte;
+	//std::vector<Table*>::iterator tableEndIte;
+	//tableBeginIte = tablesList.begin();
+	//tableEndIte = tablesList.end();
 
-	for (; tableBeginIte != tableEndIte; ++tableBeginIte)
-	{
-		exportExcelByTable(*tableBeginIte);		// 导出表
-	}
+	//for (; tableBeginIte != tableEndIte; ++tableBeginIte)
+	//{
+	//	exportExcelByTable(*tableBeginIte);		// 导出表
+	//}
 
 	delete packItem;
 

@@ -58,7 +58,7 @@ void AppSys::startMultiPack()
 	{
 		if ((*tableIteVecBegin)->m_bExportTable)
 		{
-			m_excelExport->exportExcelByTable((*tableIteVecBegin));
+			(*tableIteVecBegin)->exportExcel();
 		}
 	}
 
