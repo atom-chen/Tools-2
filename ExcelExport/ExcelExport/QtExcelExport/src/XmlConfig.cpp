@@ -4,7 +4,8 @@
 #include <direct.h>		// chdir
 #include <string.h>
 #include <stdio.h>
-
+#include "Cfg2Code.h"
+#include "Cfg2CppCode.h"
 #include "MemLeakCheck.h"
 
 BEGIN_NAMESPACE
@@ -16,10 +17,70 @@ XmlField::XmlField()
 	m_defaultValue = "10";
 }
 
+XmlField::~XmlField()
+{
+
+}
+
+std::string XmlField::getCodeName()
+{
+	return m_codeName;
+}
+
+std::string XmlField::getFieldType()
+{
+	return m_fieldType;
+}
+
+int XmlField::getFieldSize()
+{
+	return m_fieldSize;
+}
+
 Table::Table()
 {
 	m_bExportTable = false;
 	m_bRecStructDef = true;
+}
+
+Table::~Table()
+{
+	clearFieldsList();
+}
+
+std::vector<XmlField*>& Table::getFieldsList()
+{
+	return m_fieldsList;
+}
+
+void Table::clearFieldsList()
+{
+	for (auto field : m_fieldsList)
+	{
+		delete field;
+	}
+
+	m_fieldsList.clear();
+}
+
+Package* Table::getPackagePtr()
+{
+	return m_pPackage;
+}
+
+void Table::setPackagePtr(Package* pPackage)
+{
+	m_pPackage = pPackage;
+}
+
+std::string Table::getCodeFileName()
+{
+	return m_lpszCodeFileName;
+}
+
+std::string Table::getClassName()
+{
+	return m_className;
 }
 
 void Table::parseXML(tinyxml2::XMLElement* pXmlEmtFields)
@@ -177,6 +238,14 @@ bool Table::isExportClientTable()
 	return false;
 }
 
+void Table::exportCode()
+{
+	Cfg2Code* pCfg2Code = new Cfg2CppCode();
+	pCfg2Code->setTable(this);
+	pCfg2Code->exportCode();
+}
+
+
 Package::Package()
 {
 
@@ -205,6 +274,16 @@ void Package::setXml(std::string xml)
 void Package::setOutput(std::string output)
 {
 	m_output = output;
+}
+
+Solution* Package::getSolutionPtr()
+{
+	return m_pSolution;
+}
+
+void Package::setSolution(Solution* pSolution)
+{
+	m_pSolution = pSolution;
 }
 
 std::vector<Table*>& Package::getTablesList()
@@ -269,6 +348,7 @@ bool Package::loadTableXml()
 		while (table)
 		{
 			tableItem = new Table();
+			tableItem->setPackagePtr(this);
 			m_tablesList.push_back(tableItem);
 
 			tableItem->m_strExcelDir = m_xml.substr(0, iTmp);
@@ -291,6 +371,7 @@ bool Package::loadTableXml()
 			tableItem->m_lpszDBTableName = Utils::copyPChar2Str(table->Attribute("tablename"));		// 表单的名字
 			tableItem->m_outType = Utils::copyPChar2Str(table->Attribute("outtype"));				// 输出的类型
 			tableItem->m_lpszCodeFileName = Utils::copyPChar2Str(table->Attribute("codefilename"));	// 输出代码的文件名字
+			tableItem->m_className = Utils::copyPChar2Str(table->Attribute("classname"));		// 输出的类的名字
 
 			// 表中配置的 ID 范围
 			tableItem->m_lpId = Utils::copyPChar2Str(table->Attribute("idrange"));
@@ -344,6 +425,14 @@ bool Package::loadTableXml()
 	}
 
 	return true;
+}
+
+void Package::exportCode()
+{
+	for (auto table : m_tablesList)
+	{
+		table->exportCode();
+	}
 }
 
 
@@ -423,6 +512,7 @@ void Solution::initByXml(tinyxml2::XMLElement* elem)
 	while (packageXml)
 	{
 		ppackage = new Package();
+		ppackage->setSolution(this);
 		m_lstPack.push_back(ppackage);
 		ppackage->initByXml(packageXml);
 
@@ -458,7 +548,15 @@ void Solution::loadTableXml()
 
 void Solution::destroy()
 {
+	clearTablesList();
+}
 
+void Solution::exportCode()
+{
+	for (auto package : m_lstPack)
+	{
+		package->exportCode();
+	}
 }
 
 

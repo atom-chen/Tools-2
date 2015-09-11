@@ -5,8 +5,12 @@
 
 BEGIN_NAMESPACE
 
-class Solution;
-class Package;
+// 打表配置中几个关键字类型
+#define INT_KW "int"
+#define FLOAT_KW "float"
+#define STRING_KW "string"
+
+class Table;
 
 /**
 *@brief 转换配置文件到代码
@@ -14,16 +18,13 @@ class Package;
 class Cfg2Code
 {
 protected:
-	Solution* m_pSolution;
-	Package* m_pPackage;
+	Table* m_pTable;
 
 public:
 	Cfg2Code();
 	~Cfg2Code();
 
-	void setSolution(Solution* pSolution);
-	void setPackage(Package* pPackage);
-
+	void setTable(Table* pm_pTable);
 	virtual void exportCode();		// 从配置导出代码
 };
 

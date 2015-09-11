@@ -13,14 +13,9 @@ Cfg2Code::~Cfg2Code()
 
 }
 
-void Cfg2Code::setSolution(Solution* pSolution)
+void Cfg2Code::setTable(Table* pTable)
 {
-
-}
-
-void Cfg2Code::setPackage(Package* pPackage)
-{
-
+	m_pTable = pTable;
 }
 
 void Cfg2Code::exportCode()

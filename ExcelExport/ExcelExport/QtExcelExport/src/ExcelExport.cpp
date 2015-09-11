@@ -33,6 +33,7 @@ void ExcelExport::setOutputPath(std::string path)
 	mutex.unlock();
 }
 
+// 这个是通过填写 Xml 路径，进行打包一个 Xml 中所有的 table
 bool ExcelExport::exportExcel()
 {
 	// 因为 Package 中已经写了加载流程，因此，这里直接生成一个 Package ，然后加载资源
@@ -52,6 +53,8 @@ bool ExcelExport::exportExcel()
 	{
 		exportExcelByTable(*tableBeginIte);		// 导出表
 	}
+
+	delete packItem;
 
 	return true;
 }
@@ -74,8 +77,8 @@ bool ExcelExport::checkAttr(Table* tableItem)
 }
 
 /**
-* com 接口
-*/
+ * @brief 通过选择下拉列表中的某一项打包输出内容
+ */
 bool ExcelExport::exportExcelByTable(Table* tableItem)
 {
 	if (!checkAttr(tableItem))

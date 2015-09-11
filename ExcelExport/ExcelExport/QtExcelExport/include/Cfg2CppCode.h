@@ -3,6 +3,8 @@
 
 #include "Platform.h"
 #include "Cfg2Code.h"
+#include <map>
+#include <string>
 
 BEGIN_NAMESPACE
 
@@ -11,6 +13,11 @@ BEGIN_NAMESPACE
 */
 class Cfg2CppCode : public Cfg2Code
 {
+public:
+	//static std::map<std::string, std::string> m_sKW2CppKW;
+	//static void initKWMap();
+	static std::string convKW2CppKW(std::string fieldType, int fieldSize);
+
 protected:
 
 public:

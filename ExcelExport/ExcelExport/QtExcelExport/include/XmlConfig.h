@@ -34,7 +34,15 @@ public:
 
 public:
 	XmlField();
+	~XmlField();
+
+	std::string getCodeName();
+	std::string getFieldType();
+	int getFieldSize();
 };
+
+
+class Package;
 
 /**
 * @brief Table 内容
@@ -64,14 +72,30 @@ public:
 	bool m_bRecStructDef;				// 是否需要生成表的定义
 
 	std::vector<XmlField*> m_fieldsList;
+	Package* m_pPackage;
+	std::string m_className;			// 输出代码的类的名字
 
 public:
 	Table();
+	~Table();
+
+	std::vector<XmlField*>& getFieldsList();
+	void clearFieldsList();
+
+	Package* getPackagePtr();
+	void setPackagePtr(Package* pPackage);
+
+	std::string getCodeFileName();
+	std::string getClassName();
+
 	void parseXML(tinyxml2::XMLElement* pXmlEmtFields);
 	bool buildTableDefine();
-
 	bool isExportClientTable();		// 是否是导出客户端表
+
+	void exportCode();		// 导出代码
 };
+
+class Solution;
 
 /**
 * @brief package a table
@@ -82,6 +106,7 @@ protected:
 	std::string m_xml;		// xml path + name
 	std::string m_output;	// output path
 	std::vector<Table*> m_tablesList;		// 保存包中 Xml 配置列表，可能只有一个，也可能有多个
+	Solution* m_pSolution;
 
 public:
 	Package();
@@ -93,11 +118,15 @@ public:
 	std::vector<Table*>& getTablesList();
 	void clearTablesList();					// 清理内容
 
+	Solution* getSolutionPtr();
+	void setSolution(Solution* pSolution);
+
 	void setXml(std::string xml);
 	void setOutput(std::string output);
 	void initByXml(tinyxml2::XMLElement* elem);
 	bool loadTableXml();
 	void destroy();
+	void exportCode();		// 导出代码
 };
 
 
@@ -107,8 +136,8 @@ public:
 class Solution
 {
 protected:
-	std::string m_name;		// solution name
-	std::string m_cmd;		// excute cmd, usually is a bat file
+	std::string m_name;				// solution name
+	std::string m_cmd;				// excute cmd, usually is a bat file
 	std::string m_xmlRootPath;		// Xml 文件根目录
 	std::string m_defaultOutput;		// 默认的输出目录
 	std::vector<Package*> m_lstPack;	// need pack list
@@ -136,6 +165,7 @@ public:
 	std::vector<Package*>& getPackLst();
 	void loadTableXml();
 	void destroy();
+	void exportCode();		// 导出代码
 };
 
 END_NAMESPACE
