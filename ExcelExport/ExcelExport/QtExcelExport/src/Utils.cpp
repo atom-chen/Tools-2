@@ -1,7 +1,7 @@
 ﻿#include "Utils.h"
 #include <QtGui>
 #include <QtWidgets>
-#include <direct.h>		// getcwd
+#include <direct.h>		// getcwd, chdir
 #include <mbstring.h>
 #include <deque>
 #include <sstream>
@@ -38,14 +38,14 @@ QString Utils::openFileDialog(QString dir, QString filter)
     QString selectedFilter;
 	QString fileName;
     //fileName = QFileDialog::getOpenFileName(NULL,
-	//							QObject::tr("QFileDialog::getOpenFileName()"),
+	//							QStringLiteral("QFileDialog::getOpenFileName()"),
     //                            dir,
-	//							QObject::tr("All Files (*);;Text Files (*.txt)"),
+	//							QStringLiteral("All Files (*);;Text Files (*.txt)"),
     //                            &selectedFilter,
     //                            options);
 
 	fileName = QFileDialog::getOpenFileName(NULL,
-								QObject::tr("Open Files"),
+								QStringLiteral("Open Files"),
                                 dir,
 								filter,
                                 &selectedFilter,
@@ -56,9 +56,9 @@ QString Utils::openFileDialog(QString dir, QString filter)
 QString Utils::openDirectoryDialog(QString path)
 {
 	QString directory;
-	//directory = QFileDialog::getExistingDirectory(NULL, QObject::tr("Find Files"), QDir::currentPath());
+	//directory = QFileDialog::getExistingDirectory(NULL, QStringLiteral("Find Files"), QDir::currentPath());
 
-	directory = QFileDialog::getExistingDirectory(NULL, QObject::tr("Open Directory"), path);
+	directory = QFileDialog::getExistingDirectory(NULL, QStringLiteral("Open Directory"), path);
 
     return directory;
 }
@@ -74,7 +74,7 @@ std::string Utils::GetFileNameExt(const char* pszFileName)
 void Utils::informationMessage(QString msg, QString caption, QWidget *parent)
 {
     //QMessageBox::StandardButton reply;
-	//reply = QMessageBox::information(parent, QObject::tr("QMessageBox::information()"), msg);
+	//reply = QMessageBox::information(parent, QStringLiteral("QMessageBox::information()"), msg);
 
 	//if(parent != NULL)
 	//{
@@ -514,6 +514,12 @@ char* Utils::UnicodeToAnsi(const wchar_t* szStr)
 	memset(m_bytes, 0, 4096);
 	WideCharToMultiByte(CP_ACP, 0, szStr, -1, m_bytes, nLen, NULL, NULL);
 	return m_bytes;
+}
+
+// 修改当前工作目录
+void Utils::changeDir(std::string workPath)
+{
+	_chdir(workPath.c_str());
 }
 
 END_NAMESPACE

@@ -54,8 +54,12 @@ public:
 	// 这些数据一定要申请内存，然后拷贝过来的
 	std::string m_lpszTableName;		// tbl文件名称本身，输出的表的名字，包括扩展名字，没有路径
 	std::string m_lpszExcelFile;		// Excel文件名字和扩展名字（不包括路径）
+	std::string m_strExcelDir;			// Excel 文件所在的目录
+	std::string m_strExcelDirAndName;	// Excel 文件的目录和名字,包括扩展名字
+
 	std::string m_lpszDB;				// 数据库
 	std::string m_lpszDBTableName;		// 数据库中表的名字
+
 	std::string m_lpszOutputFile;		// tbl文件的全路径（包括文件名称）
 	std::string m_lpId;					// id 过滤字段
 	std::string m_lpszCodeFileName;		// 代码输出的文件名字
@@ -65,10 +69,8 @@ public:
 	TableAttr m_tableAttr;				// 定义的表的属性
 
 	std::string m_strStructDef;			// 表的结构体描述
-	std::string m_strExcelDir;			// Excel 文件所在的目录
-	std::string m_strExcelDirAndName;	// Excel 文件的目录和名字
-
 	EnExcelType m_enExcelType;			// 当前编辑的文件是 xls 还是 xlsx
+
 	bool m_bExportTable;				// 是否导出这个表
 	bool m_bRecStructDef;				// 是否需要生成表的定义
 

@@ -47,8 +47,8 @@ public:
 	QString openFileDialog(QString dir, QString filter);
 	std::string  GetFileNameExt(const char* pszFileName);
 	QString openDirectoryDialog(QString path);
-	void informationMessage(QString msg, QString caption = QObject::tr("QMessageBox::information()"), QWidget *parent = NULL);
-	void informationMessageUI(QString msg, QString caption = QObject::tr("QMessageBox::information()"), QWidget *parent = NULL);
+	void informationMessage(QString msg, QString caption = QStringLiteral("QMessageBox::information()"), QWidget *parent = NULL);
+	void informationMessageUI(QString msg, QString caption = QStringLiteral("QMessageBox::information()"), QWidget *parent = NULL);
 
 	void setParent(QWidget *parent);
 	//bool isRunning();
@@ -79,6 +79,8 @@ public:
 
 	wchar_t* AnsiToUnicode(const char* szStr);
 	char* UnicodeToAnsi(const wchar_t* szStr);
+
+	void changeDir(std::string workPath);
 };
 
 END_NAMESPACE
