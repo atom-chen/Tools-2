@@ -32,3 +32,5 @@ add_subdirectory(QtExcelExport)
 #install(FILES 
 #	${CMAKE_SOURCE_DIR}/QtExcelExport/Config/Config.xml DESTINATION "${CMAKE_BINARY_DIR}/QtExcelExport"
 #)
+
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/QtExcelExport/Config" DESTINATION "${CMAKE_BINARY_DIR}/QtExcelExport/Debug/Config")
