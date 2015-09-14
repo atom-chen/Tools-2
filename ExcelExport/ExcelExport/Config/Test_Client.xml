@@ -3,7 +3,7 @@
 <config>
 	<table name="base_client.bytes" outtype="client" ExcelFile="Test.xlsx" tablename="²âÊÔ±í" codefilename="BaseObject.cs" classname="BaseObject_Cls" idrange="1-100;130-500;7000-8000">
 		<fields>
-			<field name="id" type="int" size="4" codename="varName_0" />
+			<field name="±àºÅ" type="int" size="4" codename="varName_0" />
 			<field name="×Ö¶Î2" type="int" size="8" codename="varName_1" />
 			<field name="×Ö¶Î3" type="float" size="4" codename="varName_2" />
 			<field name="×Ö¶Î4" type="string" size="256" codename="varName_3" />

@@ -140,7 +140,8 @@ bool ExcelExport::exportExcelByTable(Table* tableItem)
 			iRecord++;		// 记录当前访问的表中的行数
 
 			// id 段判断，第一个字段一定是 id 才行，否则会出现错误
-			if (!tableItem->m_tableAttr.bIdInRange(adoWrap.getCollectUInt(_strId)))
+			//if (!tableItem->m_tableAttr.bIdInRange(adoWrap.getCollectUInt(_strId)))		// 这个地方使用 Int ，如果使用 Uint ，获取的值就是 0 ，因为在 excel 中数据格式就是 Int
+			if (!tableItem->m_tableAttr.bIdInRange(adoWrap.getCollect(_strId.c_str())))
 			{
 				adoWrap.m_count--;
 				adoWrap.moveNext();			// 移动到下一条数据
