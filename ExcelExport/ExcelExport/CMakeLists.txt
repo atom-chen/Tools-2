@@ -29,6 +29,6 @@ add_subdirectory(tinyxml)
 add_subdirectory(QtExcelExport)
 #add_subdirectory(Extern)
 
-install(FILES 
-	${CMAKE_SOURCE_DIR}/QtExcelExport/Config/Config.xml DESTINATION "${CMAKE_BINARY_DIR}/QtExcelExport"
-)
+#install(FILES 
+#	${CMAKE_SOURCE_DIR}/QtExcelExport/Config/Config.xml DESTINATION "${CMAKE_BINARY_DIR}/QtExcelExport"
+#)

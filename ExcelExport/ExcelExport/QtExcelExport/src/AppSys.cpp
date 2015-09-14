@@ -109,11 +109,11 @@ void AppSys::exportCppCode()
 
 	if (isSetSolution())
 	{
-		m_codeExport->exportCppCode();
+		m_task->getSolution()->exportCppCode();
 	}
 	else
 	{
-		m_task->getSolution()->exportCppCode();
+		m_codeExport->exportCppCode();
 	}
 }
 
@@ -133,11 +133,11 @@ void AppSys::exportCsCode()
 
 	if (isSetSolution())
 	{
-		m_codeExport->exportCsCode();
+		m_task->getSolution()->exportCsCode();
 	}
 	else
 	{
-		m_task->getSolution()->exportCsCode();
+		m_codeExport->exportCsCode();
 	}
 }
 
