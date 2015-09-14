@@ -38,6 +38,7 @@ else(NOT Qt5Widgets_FOUND)
         ./src/maindialog.cpp
         ./src/main.cpp
 		./src/ExcelExport.cpp
+		./src/CodeExport.cpp
 		./src/Utils.cpp
 		./src/WorkThread.cpp
 		./src/DataItem.cpp
@@ -58,6 +59,7 @@ else(NOT Qt5Widgets_FOUND)
 	set(INCS_FILES
         ./include/maindialog.h
 		./include/ExcelExport.h
+		./include/CodeExport.h
 		./include/Singleton.h
 		./include/Utils.h
 		./include/WorkThread.h

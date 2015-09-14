@@ -19,6 +19,7 @@ class Utils;
 class System;
 class ExcelWorkThread;
 class CodeWorkThread;
+class CodeExport;
 
 /**
  *@brief appdata
@@ -28,6 +29,7 @@ class AppSys : public Singleton<AppSys>
 protected:
 	Task* m_task;			// main thread task, but only one thread
 	ExcelExport* m_excelExport;
+	CodeExport* m_codeExport;
 	ExcelWorkThread* m_pExcelWorkThread;
 	CodeWorkThread* m_pCodeWorkThread;
 

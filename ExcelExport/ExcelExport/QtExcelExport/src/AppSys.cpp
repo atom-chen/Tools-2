@@ -8,6 +8,7 @@
 #include "System.h"
 #include "WorkThread.h"
 #include "MemLeakCheck.h"
+#include "CodeExport.h"
 
 BEGIN_NAMESPACE
 
@@ -21,6 +22,7 @@ AppSys::AppSys()
 	m_excelExport = new ExcelExport;
 	m_pExcelWorkThread = new ExcelWorkThread;
 	m_pCodeWorkThread = new CodeWorkThread;
+	m_codeExport = new CodeExport;
 }
 
 AppSys::~AppSys()
@@ -31,6 +33,7 @@ AppSys::~AppSys()
 	delete m_excelExport;
 	delete m_pExcelWorkThread;
 	delete m_pCodeWorkThread;
+	delete m_codeExport;
 }
 
 Task* AppSys::getTask()
@@ -106,7 +109,7 @@ void AppSys::exportCppCode()
 
 	if (isSetSolution())
 	{
-		m_excelExport->exportCppCode();
+		m_codeExport->exportCppCode();
 	}
 	else
 	{
@@ -130,7 +133,7 @@ void AppSys::exportCsCode()
 
 	if (isSetSolution())
 	{
-		m_excelExport->exportCsCode();
+		m_codeExport->exportCsCode();
 	}
 	else
 	{

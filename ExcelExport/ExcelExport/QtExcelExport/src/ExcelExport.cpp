@@ -1,6 +1,6 @@
 ﻿#include "ExcelExport.h"
 #include "AppSysPrerequisites.h"
-//#include <QtGui/QtGui>
+//#include <QtGui>		// QtGui
 #include "Platform.h"
 #include "DataItem.h"
 #include <direct.h>		// chdir
@@ -21,16 +21,16 @@ ExcelExport::~ExcelExport()
 
 void ExcelExport::setXmlPath(std::string file)
 {
-	mutex.lock();
+	m_mutex.lock();
 	m_xmlPath = file;
-	mutex.unlock();
+	m_mutex.unlock();
 }
 
 void ExcelExport::setOutputPath(std::string path)
 {
-	mutex.lock();
+	m_mutex.lock();
 	m_tblPath = path;
-	mutex.unlock();
+	m_mutex.unlock();
 }
 
 // 这个是通过填写 Xml 路径，进行打包一个 Xml 中所有的 table
@@ -56,38 +56,6 @@ bool ExcelExport::exportExcel()
 	//{
 	//	exportExcelByTable(*tableBeginIte);		// 导出表
 	//}
-
-	delete packItem;
-
-	return true;
-}
-
-bool ExcelExport::exportCppCode()
-{
-	Package* packItem = new Package();
-
-	packItem->setXml(m_xmlPath);
-	packItem->setOutput(m_tblPath);
-
-	packItem->loadTableXml();
-	packItem->setAllExportClientTable();
-	packItem->exportCppCode();
-
-	delete packItem;
-
-	return true;
-}
-
-bool ExcelExport::exportCsCode()
-{
-	Package* packItem = new Package();
-
-	packItem->setXml(m_xmlPath);
-	packItem->setOutput(m_tblPath);
-
-	packItem->loadTableXml();
-	packItem->setAllExportClientTable();
-	packItem->exportCsCode();
 
 	delete packItem;
 

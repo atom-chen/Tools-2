@@ -41,6 +41,7 @@ bool ADOWrap::opemDB(Table* tableItem)
 
 	::CoInitialize(NULL);
 	_table_name = tableItem->m_lpszDBTableName.c_str();
+	HRESULT comRet = S_OK;
 
 	// 打开数据库    
 	try
@@ -52,7 +53,12 @@ bool ADOWrap::opemDB(Table* tableItem)
 		_strConnect += ";";
 		_strConnect += extendedProperties;
 
-		m_pConnection->Open(_strConnect, "", "", adModeUnknown);
+		comRet = m_pConnection->Open(_strConnect, "", "", adModeUnknown);
+		if (S_FALSE == comRet)
+		{
+			g_pUtils->informationMessage(QStringLiteral("打开数据库发生异常"));
+			return false;
+		}
 	}
 	catch (_com_error e)		//捕捉异常		
 	{
@@ -73,7 +79,12 @@ bool ADOWrap::opemDB(Table* tableItem)
 
 		// 保证 GetRecordCount 返回正确的结果  
 		m_pRecordset->CursorLocation = adUseClient;
-		m_pRecordset->Open(_bstrSQL, m_pConnection.GetInterfacePtr(), adOpenDynamic, adLockOptimistic, adCmdText);
+		comRet = m_pRecordset->Open(_bstrSQL, m_pConnection.GetInterfacePtr(), adOpenDynamic, adLockOptimistic, adCmdText);
+		if (S_FALSE == comRet)
+		{
+			g_pUtils->informationMessage(QStringLiteral("打开表发生异常"));
+			return false;
+		}
 
 		// 获取记录集的数量 
 		m_count = m_pRecordset->GetRecordCount();

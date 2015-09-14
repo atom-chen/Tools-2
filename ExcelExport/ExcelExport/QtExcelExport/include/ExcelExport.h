@@ -36,7 +36,7 @@ protected:
 	std::string m_tblPath;	// tbl 输出路径
 	std::string m_strOutput;	// 字符串日志输出
 	TableAttr m_tableAttr;	// 定义的表的属性
-	QMutex mutex;
+	QMutex m_mutex;
 	char* m_bytes;
 
 public:
@@ -48,9 +48,6 @@ public:
 	bool checkAttr(Table* tableItem);
 	bool exportExcel();
 	bool exportExcelByTable(Table* table);		// 导出 Excel 到 Property Vector
-
-	bool exportCsCode();
-	bool exportCppCode();
 
 	// 导出 Property Vector 到文件
 	virtual void exportPropertyVec2File(const char* lpszOutputFile, std::vector<DataItem*>& _rowList, bool isClient);
