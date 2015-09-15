@@ -15,11 +15,11 @@ namespace Cmd
 		NULL_USERCMD_PARA = 0,
 	};
 
-	class stNullUserCmd
+	struct stNullUserCmd
 	{
-		public BYTE byCmd;
-		public BYTE byParam;
-		public DWORD dwTimestamp;
+		BYTE byCmd;
+		BYTE byParam;
+		DWORD dwTimestamp;
 
 		public stNullUserCmd()
 		{

@@ -14,9 +14,9 @@ namespace Game.Msg
 		MAX_PASSWORD = 32,
 	};
 
-	class stBase
+	struct stBase
 	{
-		public DWORD param;	// 基类成员属性测试
+		DWORD param;	// 基类成员属性测试
 
 		public stBase()
 		{
@@ -25,12 +25,12 @@ namespace Game.Msg
 	};
 
 	//自己测试注释-2
-	class stTest : public stBase
+	struct stTest : public stBase
 	{
-		public DWORD time_1;	// 成员属性测试-1
-		public DWORD time_2;	// 成员属性测试-2
-		public string strPassword;	// 测试数组成员
-		public int intArr[MAX_PASSWORD];	// 测试整型数组
+		DWORD time_1;	// 成员属性测试-1
+		DWORD time_2;	// 成员属性测试-2
+		string strPassword;	// 测试数组成员
+		int intArr[MAX_PASSWORD];	// 测试整型数组
 
 		public stTest()
 		{
@@ -50,9 +50,9 @@ namespace Game.Msg
 	/**
 	 * @brief 多行测试
 	 */
-	class stTestMulti : public stBase
+	struct stTestMulti : public stBase
 	{
-		public DWORD time;	// 成员属性测试
+		DWORD time;	// 成员属性测试
 
 		public stTestMulti()
 		{
@@ -64,9 +64,9 @@ namespace Game.Msg
 	/**
 	 * @brief 测试结构体数组
 	 */
-	class stObject
+	struct stObject
 	{
-		public int aaa;
+		int aaa;
 
 		public stObject()
 		{
@@ -74,11 +74,11 @@ namespace Game.Msg
 		}
 	};
 
-	class stUserObject
+	struct stUserObject
 	{
-		public DWORD size;
-		public stObject elem;
-		public stObject list[0];
+		stObject elem;
+		DWORD size;
+		stObject list[0];
 
 		public stUserObject()
 		{

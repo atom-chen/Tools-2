@@ -222,4 +222,16 @@ class MessageMember(ProtoTypeMemberBase):
             return True
         
         return False
+    
+    
+    # 默认的值是否是 0
+    def isArrayLenEqualZero(self):
+        return self.m_arrLen == "0"
+    
+    
+    # 数组大小是否是常量值
+    def isArrayLenCV(self):
+        return self.m_arrLen.find(".") != -1      # 看是否有小数点，可能数字中间也有小数点
+    
+    
 

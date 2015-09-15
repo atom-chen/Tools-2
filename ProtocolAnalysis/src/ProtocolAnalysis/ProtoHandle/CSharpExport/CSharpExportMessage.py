@@ -3,7 +3,6 @@
 
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 from ProtocolAnalysis.ProtoHandle.CSharpExport.CSharpPropertyType2PropertyData import CSharpPropertyType2PropertyData
-from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoTypeMemberBase import PropertyType
 
 
 class CSharpExportMessage(object):
@@ -144,8 +143,8 @@ class CSharpExportMessage(object):
                 memberStr = "{0} = {1};".format(selfMember.getVarName(), "\"\"")
             elif selfMember.isUserType():
                 memberStr = "{0} = {1};".format(selfMember.getVarName(), selfMember.getDefaultValue())
-            else:   # 其它的数组
-                memberStr = "{0} = new {1}[{2}];".format(selfMember.getVarName(), CSharpPropertyType2PropertyData.m_sType2PropertyData[selfMember.getPropertyType()].m_propertyTypeKeyWord, selfMember.getArrLen())
+            #else:   # 其它的数组
+            #    memberStr = "{0} = new {1}[{2}];".format(selfMember.getVarName(), CSharpPropertyType2PropertyData.m_sType2PropertyData[selfMember.getPropertyType()].m_propertyTypeKeyWord, selfMember.getArrLen())
                 
             fHandle.write(memberStr)
             # 这个注释就不用写了，因为成员的注释已经在成员声明区域输出了
@@ -225,9 +224,17 @@ class CSharpExportMessage(object):
             elif member.isCharArrayType():
                 serializeStr = "bu.{0}({1}, GkEncode.UTF8, {2});".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_serializeFuncKeyWord, member.getVarName(), member.getArrLen())
             elif member.isUserType():
+                serializeStr = "{0} = new {1}();".format(member.getVarName(), member.getTypeName())
+                fHandle.write(serializeStr)
+                AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+                AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+                AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+                AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+                
                 serializeStr = "{0}.serialize(bu);".format(member.getVarName())
             elif member.isUserArrayType():
                 CSharpExportMessage.exportArrSerialize(fHandle, message, member, "", "")
+                serializeStr = ""
             else:       # 数组输出
                 CSharpExportMessage.exportArrSerialize(fHandle, message, member, CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_serializeFuncKeyWord)
                 serializeStr = ""
@@ -265,6 +272,7 @@ class CSharpExportMessage(object):
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         fHandle.write("base.derialize(bu)")
         
+        preMember = 0
         # 写入序列化的内容
         for member in message.getMemberList():
             AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
@@ -304,15 +312,27 @@ class CSharpExportMessage(object):
             elif member.isCharArrayType():
                 serializeStr = "bu.{0}(ref {1}, GkEncode.UTF8, {2});".format(CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_derializeFuncKeyWord, member.getVarName(), member.getArrLen())
             elif member.isUserType():
+                serializeStr = "{0} = new {1}();".format(member.getVarName(), member.getTypeName())
+                fHandle.write(serializeStr)
+                AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+                AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+                AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+                AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            
                 serializeStr = "{0}.derialize(bu);".format(member.getVarName())
             elif member.isUserArrayType():
+                CSharpExportMessage.exportNewArr(fHandle, member, preMember)
                 CSharpExportMessage.exportArrDerialize(fHandle, message, member, "", "")
+                serializeStr = ""
             else:       # 数组输出
+                CSharpExportMessage.exportNewArr(fHandle, member, preMember)
                 CSharpExportMessage.exportArrDerialize(fHandle, message, member, CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_derializeFuncKeyWord)
                 serializeStr = ""
 
             
             fHandle.write(serializeStr)
+            
+            preMember = member
         
         
         # 写入序列函数的右括号
@@ -332,7 +352,10 @@ class CSharpExportMessage(object):
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
-        serializeStr = "for(int idx = 0; idx < {0}; ++idx)".format(member.getArrLen())
+        if not member.isArrayLenCV():
+            serializeStr = "for(int idx = 0; idx < {0}; ++idx)".format(member.getArrLen())
+        else:
+            serializeStr = "for(int idx = 0; idx < (int){0}; ++idx)".format(member.getArrLen())
         fHandle.write(serializeStr)
         
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
@@ -347,10 +370,17 @@ class CSharpExportMessage(object):
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
-        if member.isBasicArrayType():
-            serializeStr = "bu.{0}({1}[idx]);".format(typeWrite, member.getVarName())
-        else:
-            serializeStr = "{0}[idx].serialize(bu);".format(member.getVarName())
+        #if member.isBasicArrayType():
+        #    serializeStr = "bu.{0}({1}[idx]);".format(typeWrite, member.getVarName())
+        #else:
+        #    serializeStr = "{0}[idx] = new {1}();".format(member.getVarName(), member.getTypeName())
+        #    fHandle.write(serializeStr)
+        #    AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+        #    AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        #    AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        #    AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+        #    AppSysBase.instance().getClsUtils().writeTab2File(fHandle)                        
+        serializeStr = "{0}[idx].serialize(bu);".format(member.getVarName())
         fHandle.write(serializeStr)
         
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
@@ -371,7 +401,10 @@ class CSharpExportMessage(object):
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
-        serializeStr = "for(int idx = 0; idx < {0}; ++idx)".format(member.getArrLen())
+        if not member.isArrayLenCV():
+            serializeStr = "for(int idx = 0; idx < {0}; ++idx)".format(member.getArrLen())
+        else:
+            serializeStr = "for(int idx = 0; idx < (int){0}; ++idx)".format(member.getArrLen())
         fHandle.write(serializeStr)
         
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
@@ -389,7 +422,16 @@ class CSharpExportMessage(object):
         if member.isBasicArrayType():
             serializeStr = "bu.{0}(ref {1}[idx]);".format(typeRead, member.getVarName())
         else:   # 用户数据数组类型
+            serializeStr = "{0}[idx] = new {1}();".format(member.getVarName(), member.getTypeName())
+            fHandle.write(serializeStr)            
+            AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
+            
             serializeStr = "{0}[idx].derialize(bu);".format(member.getVarName())
+            
         
         fHandle.write(serializeStr)
         
@@ -401,4 +443,21 @@ class CSharpExportMessage(object):
         fHandle.write(serializeStr)
         
         
-    
+    @staticmethod
+    def exportNewArr(fHandle, member, preMember):
+        typeName = ""
+        if member.isUserArrayType():            # 用户数组
+            typeName = member.getTypeName()
+        else:       # 基本类型数组
+            typeName = CSharpPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord
+                
+        if member.isArrayLenEqualZero():        # 如果数组长度是 0
+            serializeStr = "{0} = new {1}[{2}];".format(member.getVarName(), typeName, preMember.getVarName())
+        elif member.isArrayLenCV():        # 如果数组长度是 0
+            serializeStr = "{0} = new {1}[(int){2}];".format(member.getVarName(), typeName, member.getArrLen())
+        else:
+            serializeStr = "{0} = new {1}[{2}];".format(member.getVarName(), typeName, member.getArrLen())
+            
+        fHandle.write(serializeStr)
+
+

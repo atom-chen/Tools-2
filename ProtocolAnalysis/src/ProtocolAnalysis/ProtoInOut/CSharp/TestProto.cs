@@ -44,7 +44,7 @@ namespace Game.Msg
 			time_1 = 1;
 			time_2 = 1;
 			strPassword = "";
-			intArr = new int[CVMsg.MAX_PASSWORD];
+			strPassword = "";
 		}
 
 		override public void serialize(ByteBuffer bu)
@@ -54,9 +54,9 @@ namespace Game.Msg
 			bu.writeUnsignedInt32(time_2);
 			bu.writeMultiByte(strPassword, GkEncode.UTF8, CVMsg.MAX_PASSWORD);
 			
-			for(int idx = 0; idx < CVMsg.MAX_PASSWORD; ++idx)
+			for(int idx = 0; idx < (int)CVMsg.MAX_PASSWORD; ++idx)
 			{
-				bu.writeInt32(intArr[idx]);
+				intArr[idx].serialize(bu);
 			}
 		}
 
@@ -66,8 +66,8 @@ namespace Game.Msg
 			bu.readUnsignedInt32(ref time_1);
 			bu.readUnsignedInt32(ref time_2);
 			bu.readMultiByte(ref strPassword, GkEncode.UTF8, CVMsg.MAX_PASSWORD);
-			
-			for(int idx = 0; idx < CVMsg.MAX_PASSWORD; ++idx)
+			intArr = new int[(int)CVMsg.MAX_PASSWORD];
+			for(int idx = 0; idx < (int)CVMsg.MAX_PASSWORD; ++idx)
 			{
 				bu.readInt32(ref intArr[idx]);
 			}
@@ -133,8 +133,8 @@ namespace Game.Msg
 
 	public class stUserObject
 	{
-		public uint size;
 		public stObject elem;
+		public uint size;
 		public stObject[] list;
 
 		public stUserObject()
@@ -145,25 +145,28 @@ namespace Game.Msg
 		override public void serialize(ByteBuffer bu)
 		{
 			base.serialize(bu)
-			bu.writeUnsignedInt32(size);
+			elem = new stObject();
 			elem.serialize(bu);
+			bu.writeUnsignedInt32(size);
 			
 			for(int idx = 0; idx < 0; ++idx)
 			{
 				list[idx].serialize(bu);
-			}elem.serialize(bu);
+			}
 		}
 
 		override public void derialize(ByteBuffer bu)
 		{
 			base.derialize(bu)
-			bu.readUnsignedInt32(ref size);
+			elem = new stObject();
 			elem.derialize(bu);
-			
+			bu.readUnsignedInt32(ref size);
+			list = new stObject[size];
 			for(int idx = 0; idx < 0; ++idx)
 			{
+				list[idx] = new stObject();
 				list[idx].derialize(bu);
-			}elem.derialize(bu);
+			}
 		}
 	}
 

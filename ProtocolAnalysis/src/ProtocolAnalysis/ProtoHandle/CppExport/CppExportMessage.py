@@ -40,9 +40,9 @@ class CppExportMessage(object):
         AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
         AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
         if AppSysBase.instance().getClsUtils().isNullOrEmpty(message.getParentCls()):
-            clsName = "class {0}".format(message.getTypeName())
+            clsName = "struct {0}".format(message.getTypeName())
         else:
-            clsName = "class {0} : public {1}".format(message.getTypeName(), message.getParentCls())
+            clsName = "struct {0} : public {1}".format(message.getTypeName(), message.getParentCls())
         fHandle.write(clsName)
         
         # 输入左括号
@@ -72,15 +72,15 @@ class CppExportMessage(object):
             
             # 写入变量名字
             if member.isBasicType():
-                memberStr = "public {0} {1};".format(CppPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName())
+                memberStr = "{0} {1};".format(CppPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName())
             elif member.isCharArrayType():     # char aaa[] 类型的特殊，直接转换成 string aaa
-                memberStr = "public {0} {1};".format(CppPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName())
+                memberStr = "{0} {1};".format(CppPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName())
             elif member.isUserType():
-                memberStr = "public {0} {1};".format(member.getTypeName(), member.getVarName())
+                memberStr = "{0} {1};".format(member.getTypeName(), member.getVarName())
             elif member.isUserArrayType():
-                memberStr = "public {0} {1}[{2}];".format(member.getTypeName(), member.getVarName(), member.getArrLenAfterDot())
+                memberStr = "{0} {1}[{2}];".format(member.getTypeName(), member.getVarName(), member.getArrLenAfterDot())
             else:       # 数组处理
-                memberStr = "public {0} {1}[{2}];".format(CppPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName(), member.getArrLenAfterDot())
+                memberStr = "{0} {1}[{2}];".format(CppPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName(), member.getArrLenAfterDot())
             
             fHandle.write(memberStr)
             #写入注释

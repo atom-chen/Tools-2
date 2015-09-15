@@ -51,8 +51,8 @@ message stObject
 
 message stUserObject
 {
-	uint32 size = 0;
 	stObject elem;
+	uint32 size = 0;
 	stObject list[0];
 };
 
