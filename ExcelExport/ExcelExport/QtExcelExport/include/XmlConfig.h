@@ -39,6 +39,7 @@ public:
 	std::string getCodeName();
 	std::string getFieldType();
 	int getFieldSize();
+	bool isStringField();
 	void parseXML(tinyxml2::XMLElement* field);
 };
 

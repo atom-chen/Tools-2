@@ -6,51 +6,82 @@
 
 BEGIN_NAMESPACE
 
-//std::map<std::string, std::string> Cfg2CppCode::m_sKW2CppKW;
+std::map<eBaseType, CppKeyWordMap> Cfg2CppCode::m_sKW2CppKW;
 
-//void Cfg2CppCode::initKWMap()
-//{
-//	m_sKW2CppKW[""] = ""
-//}
+void Cfg2CppCode::initKWMap()
+{
+	m_sKW2CppKW[eInt8] = CppKeyWordMap();
+	m_sKW2CppKW[eInt8].m_typeName = "BYTE";
 
-std::string Cfg2CppCode::convKW2CppKW(std::string fieldType, int fieldSize)
+	m_sKW2CppKW[eUInt8] = CppKeyWordMap();
+	m_sKW2CppKW[eUInt8].m_typeName = "BYTE";
+
+	m_sKW2CppKW[eInt16] = CppKeyWordMap();
+	m_sKW2CppKW[eInt16].m_typeName = "WORD";
+
+	m_sKW2CppKW[eUInt16] = CppKeyWordMap();
+	m_sKW2CppKW[eUInt16].m_typeName = "WORD";
+
+	m_sKW2CppKW[eInt32] = CppKeyWordMap();
+	m_sKW2CppKW[eInt32].m_typeName = "DWORD";
+
+	m_sKW2CppKW[eUInt32] = CppKeyWordMap();
+	m_sKW2CppKW[eUInt32].m_typeName = "DWORD";
+
+	m_sKW2CppKW[eInt64] = CppKeyWordMap();
+	m_sKW2CppKW[eInt64].m_typeName = "QWORD";
+
+	m_sKW2CppKW[eUInt64] = CppKeyWordMap();
+	m_sKW2CppKW[eUInt64].m_typeName = "QWORD";
+
+	m_sKW2CppKW[eFloat] = CppKeyWordMap();
+	m_sKW2CppKW[eFloat].m_typeName = "float";
+
+	m_sKW2CppKW[eDouble] = CppKeyWordMap();
+	m_sKW2CppKW[eDouble].m_typeName = "double";
+
+	m_sKW2CppKW[eString] = CppKeyWordMap();
+	m_sKW2CppKW[eString].m_typeName = "char";
+}
+
+CppKeyWordMap& Cfg2CppCode::convKW2CppKW(std::string fieldType, int fieldSize)
 {
 	if (INT_KW == fieldType)
 	{
 		if (1 == fieldSize)
 		{
-			return "BYTE";
+			return m_sKW2CppKW[eUInt8];
 		}
 		if (2 == fieldSize)
 		{
-			return "WORD";
-		}
-		if (3 == fieldSize)
-		{
-			return "DWORD";
+			return m_sKW2CppKW[eUInt16];
 		}
 		if (4 == fieldSize)
 		{
-			return "QWORD";
+			return m_sKW2CppKW[eUInt32];
+		}
+		if (8 == fieldSize)
+		{
+			return m_sKW2CppKW[eUInt64];
 		}
 	}
 	else if (FLOAT_KW == fieldType)
 	{
 		if (4 == fieldSize)
 		{
-			return "float";
+			return m_sKW2CppKW[eFloat];
 		}
 		else if (8 == fieldSize)
 		{
-			return "double";
+			return m_sKW2CppKW[eDouble];
 		}
 	}
 	else if (STRING_KW == fieldType)
 	{
-		return "char";
+		return m_sKW2CppKW[eString];
 	}
 
-	return "BYTE";
+	return m_sKW2CppKW[eUInt8];
 }
 
 Cfg2CppCode::Cfg2CppCode()
@@ -84,7 +115,7 @@ void Cfg2CppCode::exportCode()
 
 	for (auto field : m_pTable->getFieldsList())
 	{
-		strStream << "\n" << "\t" << convKW2CppKW(field->getFieldType(), field->getFieldSize()) << " " << field->getCodeName();
+		strStream << "\n" << "\t" << convKW2CppKW(field->getFieldType(), field->getFieldSize()).m_typeName << " " << field->getCodeName();
 		if (STRING_KW == field->getFieldType())			// Èç¹ûÊÇ×Ö·û´®
 		{
 			strStream << "[" << field->getFieldSize() << "];";

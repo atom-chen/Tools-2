@@ -4,8 +4,16 @@
 #include "Platform.h"
 #include "Cfg2Code.h"
 #include <string>
+#include <map>
 
 BEGIN_NAMESPACE
+
+class CsKeyWordMap
+{
+public:
+	std::string m_typeName;
+	std::string m_readFunc;
+};
 
 /**
 *@brief 转换配置文件到代码
@@ -13,10 +21,9 @@ BEGIN_NAMESPACE
 class Cfg2CsCode : public Cfg2Code
 {
 public:
-	static std::string convKW2CppKW(std::string fieldType, int fieldSize);
-
-protected:
-
+	static std::map<eBaseType, CsKeyWordMap> m_sKW2CsKW;
+	static void initKWMap();
+	static CsKeyWordMap& convKW2CsKW(std::string fieldType, int fieldSize);
 
 public:
 	Cfg2CsCode();

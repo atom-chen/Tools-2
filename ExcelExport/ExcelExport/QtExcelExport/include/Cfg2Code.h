@@ -12,6 +12,21 @@ BEGIN_NAMESPACE
 
 class Table;
 
+enum eBaseType
+{
+	eInt8,
+	eUInt8,
+	eInt16,
+	eUInt16,
+	eInt32,
+	eUInt32,
+	eInt64,
+	eUInt64,
+	eFloat,
+	eDouble,
+	eString,
+};
+
 /**
 *@brief 转换配置文件到代码
 */

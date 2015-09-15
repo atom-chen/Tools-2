@@ -34,6 +34,11 @@ std::string XmlField::getFieldType()
 	return m_fieldType;
 }
 
+bool XmlField::isStringField()
+{
+	return m_fieldType == STRING_KW;
+}
+
 int XmlField::getFieldSize()
 {
 	return m_fieldSize;

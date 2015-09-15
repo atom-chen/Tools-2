@@ -8,15 +8,21 @@
 
 BEGIN_NAMESPACE
 
+class CppKeyWordMap
+{
+public:
+	std::string m_typeName;
+};
+
 /**
 *@brief 转换配置文件到代码
 */
 class Cfg2CppCode : public Cfg2Code
 {
 public:
-	//static std::map<std::string, std::string> m_sKW2CppKW;
-	//static void initKWMap();
-	static std::string convKW2CppKW(std::string fieldType, int fieldSize);
+	static std::map<eBaseType, CppKeyWordMap> m_sKW2CppKW;
+	static void initKWMap();
+	static CppKeyWordMap& convKW2CppKW(std::string fieldType, int fieldSize);
 
 protected:
 
