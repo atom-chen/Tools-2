@@ -3,8 +3,6 @@
 
 from ProtocolAnalysis.Core.AppSysBase import AppSysBase
 from ProtocolAnalysis.ProtoHandle.CppExport.CppPropertyType2PropertyData import CppPropertyType2PropertyData
-from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoTypeMemberBase import PropertyType
-from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoPropertyTypeKeyWord2Property import ProtoPropertyTypeKeyWord2Property
 
 
 class CppExportMessage(object):
@@ -73,14 +71,14 @@ class CppExportMessage(object):
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
             
             # 写入变量名字
-            if member.getPropertyType() == PropertyType.eInt8Array:     # char aaa[] 类型的特殊，直接转换成 string aaa
+            if member.isBasicType():
                 memberStr = "public {0} {1};".format(CppPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName())
-            elif member.getPropertyType() == PropertyType.eUint8 or \
-                member.getPropertyType() == PropertyType.eInt16 or \
-                member.getPropertyType() == PropertyType.eUint16 or \
-                member.getPropertyType() == PropertyType.eInt32 or \
-                member.getPropertyType() == PropertyType.eUint32:
+            elif member.isCharArrayType():     # char aaa[] 类型的特殊，直接转换成 string aaa
                 memberStr = "public {0} {1};".format(CppPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName())
+            elif member.isUserType():
+                memberStr = "public {0} {1};".format(member.getTypeName(), member.getVarName())
+            elif member.isUserArrayType():
+                memberStr = "public {0} {1}[{2}];".format(member.getTypeName(), member.getVarName(), member.getArrLenAfterDot())
             else:       # 数组处理
                 memberStr = "public {0} {1}[{2}];".format(CppPropertyType2PropertyData.m_sType2PropertyData[member.getPropertyType()].m_propertyTypeKeyWord, member.getVarName(), member.getArrLenAfterDot())
             
@@ -126,19 +124,16 @@ class CppExportMessage(object):
                 
         # 写入自己的数据成员
         for selfMember in message.getMemberList():
+            if not selfMember.hasDefaultValue():        # 如果没有默认值
+                continue
             AppSysBase.instance().getClsUtils().writeNewLine2File(fHandle)
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
             AppSysBase.instance().getClsUtils().writeTab2File(fHandle)
-            if selfMember.getPropertyType() == PropertyType.eInt8 or \
-                selfMember.getPropertyType() == PropertyType.eUint8 or \
-                selfMember.getPropertyType() == PropertyType.eInt16 or \
-                selfMember.getPropertyType() == PropertyType.eUint16 or \
-                selfMember.getPropertyType() == PropertyType.eInt32 or \
-                selfMember.getPropertyType() == PropertyType.eUint32:
+            if selfMember.isBasicType():
                 # 写入变量名字
                 memberStr = "{0} = {1};".format(selfMember.getVarName(), selfMember.getDefaultValueAfterDot())
-            elif selfMember.getPropertyType() == PropertyType.eInt8Array:
+            elif selfMember.isCharArrayType():
                 memberStr = "{0} = {1};".format(selfMember.getVarName(), selfMember.getDefaultValueAfterDot())
             else:   # 其它的数组
                 memberStr = "{0} = {1};".format(selfMember.getVarName(), selfMember.getDefaultValueAfterDot())

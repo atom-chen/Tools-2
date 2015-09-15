@@ -41,4 +41,19 @@ message stTestMulti : stBase
 	uint32 time = 1; 		// 成员属性测试
 };
 
+/**
+ * @brief 测试结构体数组
+ */
+message stObject
+{
+	int32 aaa = 0;
+};
+
+message stUserObject
+{
+	uint32 size = 0;
+	stObject elem;
+	stObject list[0];
+};
+
 pragma pack();		// C++ 编译器设置

@@ -1,7 +1,7 @@
 #-*- encoding=utf-8 -*-
 
 
-from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoKeyWord import ProtoKeyWord
+from ProtocolAnalysis.ProtoHandle.ProtoBase.ProtoKeyWord import ProtoKeyWordList
 
 
 class TokenParseBuffer(object):
@@ -230,7 +230,7 @@ class TokenParseBuffer(object):
         #if curIdx >= 0 and minIdx > curIdx:
         #    minIdx = curIdx
         
-        for delimiter in ProtoKeyWord.sKeyWordDelimiter:
+        for delimiter in ProtoKeyWordList.sKeyWordDelimiter:
             curIdx = self.m_fileBytes.find(delimiter, self.m_curPos)     # 关键字查找
             if curIdx >= 0 and minIdx > curIdx:
                 minIdx = curIdx

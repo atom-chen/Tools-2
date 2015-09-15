@@ -17,6 +17,9 @@ class ProtoKeyWord(object):
     #eOptional = "optional"
     #eRepeated = "repeated"
     
+    eEqualToken = "="
+    eSemicolonToken = ";"
+    
     eLeftBrace = "{"
     eRightBrace = "}"
     eSemicolon = ";"
@@ -34,7 +37,13 @@ class ProtoKeyWord(object):
     eInt32 = "int32"
     eUint32 = "uint32"
     
+
+class ProtoKeyWordList(object):
     # 关键字分隔符
-    sKeyWordDelimiter = ["package", "message", "enum", "header", "import", "pragma"]
+    sKeyWordDelimiter = [ProtoKeyWord.ePackage, ProtoKeyWord.eMessage, ProtoKeyWord.eEnum, ProtoKeyWord.eHeader, ProtoKeyWord.eImport, ProtoKeyWord.ePragma]
+    sKeyWordBasicType = [ProtoKeyWord.eInt8, ProtoKeyWord.eUint8, ProtoKeyWord.eInt16, ProtoKeyWord.eUint16, ProtoKeyWord.eInt32, ProtoKeyWord.eUint32]
     
+
+class ProtoCV(object):
+    pass
 

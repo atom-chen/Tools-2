@@ -30,7 +30,7 @@ namespace Game.Msg
 		public DWORD time_1;	// 成员属性测试-1
 		public DWORD time_2;	// 成员属性测试-2
 		public string strPassword;	// 测试数组成员
-		public int intArr[];	// 测试整型数组
+		public int intArr[MAX_PASSWORD];	// 测试整型数组
 
 		public stTest()
 		{
@@ -58,6 +58,31 @@ namespace Game.Msg
 		{
 			aaa = eValue_1;	// 定义基类成员的数值，基类成员前面添加 base ，不用写类型
 			time = 1;
+		}
+	};
+
+	/**
+	 * @brief 测试结构体数组
+	 */
+	class stObject
+	{
+		public int aaa;
+
+		public stObject()
+		{
+			aaa = 0;
+		}
+	};
+
+	class stUserObject
+	{
+		public DWORD size;
+		public stObject elem;
+		public stObject list[0];
+
+		public stUserObject()
+		{
+			size = 0;
 		}
 	};
 

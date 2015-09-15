@@ -89,7 +89,7 @@ namespace Game.Msg
 
 		public stTestMulti()
 		{
-			aaa = eTest.eValue_1;	// 定义基类成员的数值，基类成员前面添加 base ，不用写类型
+			aaa = (int)eTest.eValue_1;	// 定义基类成员的数值，基类成员前面添加 base ，不用写类型
 			time = 1;
 		}
 
@@ -103,6 +103,67 @@ namespace Game.Msg
 		{
 			base.derialize(bu)
 			bu.readUnsignedInt32(ref time);
+		}
+	}
+
+	/**
+	 * @brief 测试结构体数组
+	 */
+	public class stObject
+	{
+		public int aaa;
+
+		public stObject()
+		{
+			aaa = 0;
+		}
+
+		override public void serialize(ByteBuffer bu)
+		{
+			base.serialize(bu)
+			bu.writeInt32(aaa);
+		}
+
+		override public void derialize(ByteBuffer bu)
+		{
+			base.derialize(bu)
+			bu.readInt32(ref aaa);
+		}
+	}
+
+	public class stUserObject
+	{
+		public uint size;
+		public stObject elem;
+		public stObject[] list;
+
+		public stUserObject()
+		{
+			size = 0;
+		}
+
+		override public void serialize(ByteBuffer bu)
+		{
+			base.serialize(bu)
+			bu.writeUnsignedInt32(size);
+			elem.serialize(bu);
+			
+			for(int idx = 0; idx < 0; ++idx)
+			{
+				list[idx].serialize(bu);
+			}elem.serialize(bu);
+		}
+
+		override public void derialize(ByteBuffer bu)
+		{
+			base.derialize(bu)
+			bu.readUnsignedInt32(ref size);
+			elem.derialize(bu);
+			
+			for(int idx = 0; idx < 0; ++idx)
+			{
+				list[idx].derialize(bu);
+			}elem.derialize(bu);
 		}
 	}
 

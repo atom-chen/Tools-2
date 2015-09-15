@@ -16,7 +16,8 @@ class PropertyType(object):
     eInt32Array = 10            # int32 [30]
     eUint32Array = 11           # uint32 [30]
     eUserData = 12              # 用户自定义数据类型
-    eBase = 13                  # base 属性
+    eUserDataArray = 13         # 用户自定义数据数组类型
+    eBase = 14                  # base 属性
 
 
 # 类型成员基本属性
