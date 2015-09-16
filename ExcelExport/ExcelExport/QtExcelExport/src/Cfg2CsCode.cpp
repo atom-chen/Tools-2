@@ -40,7 +40,7 @@ void Cfg2CsCode::initKWMap()
 
 	m_sKW2CsKW[eUInt64] = CsKeyWordMap();
 	m_sKW2CsKW[eUInt64].m_typeName = "ulong";
-	m_sKW2CsKW[eInt8].m_readFunc = "readUnsignedInt64";
+	m_sKW2CsKW[eUInt64].m_readFunc = "readUnsignedInt64";
 
 	m_sKW2CsKW[eFloat] = CsKeyWordMap();
 	m_sKW2CsKW[eFloat].m_typeName = "float";
@@ -120,8 +120,10 @@ void Cfg2CsCode::exportCode()
 	strStream.str("");		// 清空内容
 	strStream.clear();
 
+	// 写入名字空间
 	strStream << "namespace SDK.Lib";
 	strStream << "\n" << "{";
+	// 写入类名字
 	strStream << "\n" << "\t" <<"public class " << m_pTable->getClassName() << " : TableItemBodyBase";
 	strStream << "\n" << "\t" << "{";
 
@@ -134,7 +136,7 @@ void Cfg2CsCode::exportCode()
 	// 输出字段序列化
 	strStream << "\n";
 	strStream << "\n" << "\t\t" << "override public void parseBodyByteBuffer(ByteBuffer bytes, uint offset)";
-	strStream << "\n" << "\t\t";
+	strStream << "\n" << "\t\t" << "{";
 	strStream << "\n" << "\t\t\t" << "bytes.position = offset;";
 	for (auto field : m_pTable->getFieldsList())
 	{
@@ -148,6 +150,11 @@ void Cfg2CsCode::exportCode()
 		}
 	}
 
+	// 写入序列化右括号
+	strStream << "\n" << "\t\t" << "}";
+	// 写入类右括号
+	strStream << "\n" << "\t" << "}";
+	// 写入名字空间右括号
 	strStream << "\n" << "}";
 	fwrite(strStream.str().c_str(), strStream.str().length(), 1, fp);
 
