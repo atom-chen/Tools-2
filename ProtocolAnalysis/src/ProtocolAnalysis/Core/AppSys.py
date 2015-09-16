@@ -24,6 +24,8 @@ from ProtocolAnalysis.ProtoHandle.CppExport.CppExportDefine import CppExportDefi
 
 from ProtocolAnalysis.LogSystem.LogSys import LogSys
 from ProtocolAnalysis.Core.UtilFile import UtilFile
+from ProtocolAnalysis.Core.CppExportProcess import CppExportProcess
+from ProtocolAnalysis.Core.CsExportProcess import CsExportProcess
 
 
 from ProtocolAnalysis.UnitTest.TestMain import TestMain
@@ -91,6 +93,9 @@ class AppSys(AppSysBase):
         self.m_config.readInit('Config/Config.txt')
         self.m_exportCSharpFile = ExportCSharpFile()
         self.m_exportCppFile = ExportCppFile()
+        
+        self.m_exportCppProcess = CppExportProcess()
+        self.m_exportCsProcess = CsExportProcess()
         
         # 单元测试放在最后初始化
         #self.m_testMain = TestMain()
@@ -183,5 +188,15 @@ class AppSys(AppSysBase):
 
     def getClsUtilFile(self):
         return self.m_clsUtilFile
+    
+    
+    def getCppExportProcess(self):
+        return self.m_exportCppProcess
+    
+    
+    def getCsExportProcess(self):
+        return self.m_exportCppProcess
+    
+    
     
     

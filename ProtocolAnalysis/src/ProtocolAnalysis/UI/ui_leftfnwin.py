@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:\Self\Self\unity\unitygame\Tools\ProtocolAnalysis\src\ProtocolAnalysis\UI\LeftFnWin.ui'
+# Form implementation generated from reading ui file 'E:\Self\Self\Tools\Tools\ProtocolAnalysis\src\ProtocolAnalysis\UI\LeftFnWin.ui'
 #
-# Created: Fri Feb 13 14:29:27 2015
+# Created: Wed Sep 16 12:21:31 2015
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,15 +17,18 @@ class Ui_LeftFnWin(object):
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.m_btnCheck = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        self.m_btnCheck.setObjectName("m_btnCheck")
-        self.verticalLayout.addWidget(self.m_btnCheck)
-        self.m_btnVersion = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        self.m_btnVersion.setObjectName("m_btnVersion")
-        self.verticalLayout.addWidget(self.m_btnVersion)
-        self.m_btnVerSwf = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        self.m_btnVerSwf.setObjectName("m_btnVerSwf")
-        self.verticalLayout.addWidget(self.m_btnVerSwf)
+        self.m_pushButtonExportCpp = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.m_pushButtonExportCpp.setObjectName("m_pushButtonExportCpp")
+        self.verticalLayout.addWidget(self.m_pushButtonExportCpp)
+        self.m_pushButtonExportCS = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.m_pushButtonExportCS.setObjectName("m_pushButtonExportCS")
+        self.verticalLayout.addWidget(self.m_pushButtonExportCS)
+        self.m_btnCopyFile = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.m_btnCopyFile.setObjectName("m_btnCopyFile")
+        self.verticalLayout.addWidget(self.m_btnCopyFile)
+        self.m_btnConvFile = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.m_btnConvFile.setObjectName("m_btnConvFile")
+        self.verticalLayout.addWidget(self.m_btnConvFile)
         LeftFnWin.setWidget(self.verticalLayoutWidget)
 
         self.retranslateUi(LeftFnWin)
@@ -34,7 +37,8 @@ class Ui_LeftFnWin(object):
     def retranslateUi(self, LeftFnWin):
         _translate = QtCore.QCoreApplication.translate
         LeftFnWin.setWindowTitle(_translate("LeftFnWin", "function"))
-        self.m_btnCheck.setText(_translate("LeftFnWin", "Test Btn"))
-        self.m_btnVersion.setText(_translate("LeftFnWin", "Copy File"))
-        self.m_btnVerSwf.setText(_translate("LeftFnWin", "Conv File"))
+        self.m_pushButtonExportCpp.setText(_translate("LeftFnWin", "ExportCpp"))
+        self.m_pushButtonExportCS.setText(_translate("LeftFnWin", "ExportCS"))
+        self.m_btnCopyFile.setText(_translate("LeftFnWin", "Copy File"))
+        self.m_btnConvFile.setText(_translate("LeftFnWin", "Conv File"))
 
