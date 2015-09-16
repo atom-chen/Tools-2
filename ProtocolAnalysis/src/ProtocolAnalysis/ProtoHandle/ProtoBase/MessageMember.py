@@ -72,15 +72,15 @@ class MessageMember(ProtoTypeMemberBase):
             #if self.m_typeName == ProtoKeyWord.eInt8: 
             #    self.m_propType = PropertyType.eInt8Array
             #if self.m_typeName == ProtoKeyWord.eUint8: 
-            #    self.m_propType = PropertyType.eUint8Array
+            #    self.m_propType = PropertyType.eUInt8Array
             #if self.m_typeName == ProtoKeyWord.eInt16: 
             #    self.m_propType = PropertyType.eInt16Array
-            #if self.m_typeName == ProtoKeyWord.eUint16: 
-            #    self.m_propType = PropertyType.eUint16Array
+            #if self.m_typeName == ProtoKeyWord.eUInt16: 
+            #    self.m_propType = PropertyType.eUInt16Array
             #if self.m_typeName == ProtoKeyWord.eInt32: 
             #    self.m_propType = PropertyType.eInt32Array
-            #if self.m_typeName == ProtoKeyWord.eUint32: 
-            #    self.m_propType = PropertyType.eUint32Array
+            #if self.m_typeName == ProtoKeyWord.eUInt32: 
+            #    self.m_propType = PropertyType.eUInt32Array
             
             if self.m_typeName in ProtoKeyWordList.sKeyWordBasicType:        # 如果类型在基本类型中
                 arrTypeKeyWord = PropertyData.createTypeArrKeyWord(self.m_typeName)
@@ -94,12 +94,12 @@ class MessageMember(ProtoTypeMemberBase):
             #    self.m_propType = PropertyType.eUint8
             #if self.m_typeName == ProtoKeyWord.eInt16:
             #    self.m_propType = PropertyType.eInt16
-            #if self.m_typeName == ProtoKeyWord.eUint16:
-            #    self.m_propType = PropertyType.eUint16
+            #if self.m_typeName == ProtoKeyWord.eUInt16:
+            #    self.m_propType = PropertyType.eUInt16
             #if self.m_typeName == ProtoKeyWord.eInt32:
             #    self.m_propType = PropertyType.eInt32
-            #if self.m_typeName == ProtoKeyWord.eUint32:
-            #    self.m_propType = PropertyType.eUint32
+            #if self.m_typeName == ProtoKeyWord.eUInt32:
+            #    self.m_propType = PropertyType.eUInt32
 
             if self.m_typeName in ProtoKeyWordList.sKeyWordBasicType:        # 如果类型在基本类型中
                 self.m_propType = ProtoPropertyTypeKeyWord2Property.m_sKeyWord2PropertyData[self.m_typeName].getProtertyType()
@@ -120,11 +120,11 @@ class MessageMember(ProtoTypeMemberBase):
 
     def splitArrLen(self):
         if self.m_propType == PropertyType.eInt8Array or \
-            self.m_propType == PropertyType.eUint8Array or \
+            self.m_propType == PropertyType.eUInt8Array or \
             self.m_propType == PropertyType.eInt16Array or \
-            self.m_propType == PropertyType.eUint16Array or \
+            self.m_propType == PropertyType.eUInt16Array or \
             self.m_propType == PropertyType.eInt32Array or \
-            self.m_propType == PropertyType.eUint32Array or \
+            self.m_propType == PropertyType.eUInt32Array or \
             self.m_propType == PropertyType.eUserDataArray:
             
             dotIdx = self.m_arrLen.find(".")
@@ -177,9 +177,9 @@ class MessageMember(ProtoTypeMemberBase):
         if self.getPropertyType() == PropertyType.eInt8 or \
             self.getPropertyType() == PropertyType.eUint8 or \
             self.getPropertyType() == PropertyType.eInt16 or \
-            self.getPropertyType() == PropertyType.eUint16 or \
+            self.getPropertyType() == PropertyType.eUInt16 or \
             self.getPropertyType() == PropertyType.eInt32 or \
-            self.getPropertyType() == PropertyType.eUint32:
+            self.getPropertyType() == PropertyType.eUInt32:
             
             return True
         
@@ -198,11 +198,11 @@ class MessageMember(ProtoTypeMemberBase):
     # 是否是数组类型
     def isBasicArrayType(self):
         if self.getPropertyType() == PropertyType.eInt8Array or \
-            self.getPropertyType() == PropertyType.eUint8Array or \
+            self.getPropertyType() == PropertyType.eUInt8Array or \
             self.getPropertyType() == PropertyType.eInt16Array or \
-            self.getPropertyType() == PropertyType.eUint16Array or \
+            self.getPropertyType() == PropertyType.eUInt16Array or \
             self.getPropertyType() == PropertyType.eInt32Array or \
-            self.getPropertyType() == PropertyType.eUint32Array:
+            self.getPropertyType() == PropertyType.eUInt32Array:
             return True
         
         return False

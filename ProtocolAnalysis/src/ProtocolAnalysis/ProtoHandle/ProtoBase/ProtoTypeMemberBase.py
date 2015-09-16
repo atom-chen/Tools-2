@@ -5,16 +5,16 @@ class PropertyType(object):
     eInt8 = 0                   # char
     eUint8 = 1                  # uint8
     eInt16 = 2                  # int16
-    eUint16 = 3                 # uint16
+    eUInt16 = 3                 # uint16
     eInt32 = 4                  # uint32
-    eUint32 = 5                 # uint32
+    eUInt32 = 5                 # uint32
     
     eInt8Array = 6              # char [30]
-    eUint8Array = 7             # byte [30]
+    eUInt8Array = 7             # byte [30]
     eInt16Array = 8             # int16 [30]
-    eUint16Array = 9            # uint16 [30]
+    eUInt16Array = 9            # uint16 [30]
     eInt32Array = 10            # int32 [30]
-    eUint32Array = 11           # uint32 [30]
+    eUInt32Array = 11           # uint32 [30]
     eUserData = 12              # 用户自定义数据类型
     eUserDataArray = 13         # 用户自定义数据数组类型
     eBase = 14                  # base 属性
