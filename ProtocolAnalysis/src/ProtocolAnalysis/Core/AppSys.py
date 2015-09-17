@@ -94,8 +94,8 @@ class AppSys(AppSysBase):
         self.m_exportCSharpFile = ExportCSharpFile()
         self.m_exportCppFile = ExportCppFile()
         
-        self.m_exportCppProcess = CppExportProcess()
-        self.m_exportCsProcess = CsExportProcess()
+        self.m_exportCppProcess = CppExportProcess("CppExportProcess")
+        self.m_exportCsProcess = CsExportProcess("CsExportProcess")
         
         # 单元测试放在最后初始化
         #self.m_testMain = TestMain()

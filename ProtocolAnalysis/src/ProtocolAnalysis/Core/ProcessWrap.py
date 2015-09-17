@@ -3,8 +3,9 @@
 
 import multiprocessing
 
-    
-class ProcessWrap(multiprocessing.process):
+
+#class ProcessWrap(multiprocessing.process):         # 这样继承之前是没有问题的，但是现在就有问题了
+class ProcessWrap(object):
     '''
     classdocs
     '''
@@ -13,16 +14,20 @@ class ProcessWrap(multiprocessing.process):
         '''
         Constructor
         '''
-        super(ProcessWrap, self).__init__(name=processName, target = self.run);
+        #super(ProcessWrap, self).__init__(name = processName, target = self.run);
+        self.m_process = multiprocessing.process.BaseProcess(name = processName, target = processRun, args = (self,))
         self.m_runF = func
-        self.m_pid = self.pid
+        #self.m_pid = self.pid
+        self.m_pid = self.m_process.pid
         self.m_bRuning = False
 
-    
+
         # 重载进程的启动，以便设置值，防止互斥操作
     def start(self):
         self.m_bRuning = True
-        super(ProcessWrap, self).start()
+        #super(ProcessWrap, self).start()
+        self.m_process.start()
+        
 
         
     def run(self):
@@ -34,6 +39,11 @@ class ProcessWrap(multiprocessing.process):
 
     def isRuning(self):
         return self.m_bRuning
+    
+
+# 子进程入口函数
+def processRun(pSelf):
+        pSelf.run()
     
     
     
