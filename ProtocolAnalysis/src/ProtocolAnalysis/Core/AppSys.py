@@ -26,6 +26,8 @@ from ProtocolAnalysis.LogSystem.LogSys import LogSys
 from ProtocolAnalysis.Core.UtilFile import UtilFile
 from ProtocolAnalysis.Core.CppExportProcess import CppExportProcess
 from ProtocolAnalysis.Core.CsExportProcess import CsExportProcess
+from ProtocolAnalysis.Core.CppExportThread import CppExportThread
+from ProtocolAnalysis.Core.CsExportThread import CsExportThread
 
 
 from ProtocolAnalysis.UnitTest.TestMain import TestMain
@@ -94,8 +96,11 @@ class AppSys(AppSysBase):
         self.m_exportCSharpFile = ExportCSharpFile()
         self.m_exportCppFile = ExportCppFile()
         
-        self.m_exportCppProcess = CppExportProcess("CppExportProcess")
-        self.m_exportCsProcess = CsExportProcess("CsExportProcess")
+        #self.m_exportCppProcess = CppExportProcess("CppExportProcess")
+        #self.m_exportCsProcess = CsExportProcess("CsExportProcess")
+        
+        self.m_exportCppThread = CppExportThread("CppExportThread")
+        self.m_exportCsThread = CsExportThread("CsExportThread")
         
         # 单元测试放在最后初始化
         #self.m_testMain = TestMain()
@@ -196,6 +201,14 @@ class AppSys(AppSysBase):
     
     def getCsExportProcess(self):
         return self.m_exportCppProcess
+    
+    
+    def getCppExportThread(self):
+        return self.m_exportCppThread
+    
+    
+    def getCsExportThread(self):
+        return self.m_exportCsThread
     
     
     

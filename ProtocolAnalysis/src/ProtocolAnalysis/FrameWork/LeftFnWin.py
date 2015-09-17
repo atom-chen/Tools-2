@@ -26,15 +26,29 @@ class LeftFnWin(QtWidgets.QDockWidget):
 
 
     def onBtnClkExportCpp(self):
-        if not AppSysBase.instance().getCppExportProcess().isRuning():
-            AppSysBase.instance().getCppExportProcess().start()
+        # 子进程实现
+        #if not AppSysBase.instance().getCppExportProcess().isRuning():
+        #    AppSysBase.instance().getCppExportProcess().start()
+        #else:
+        #    AppSysBase.instance().getLogSysPtr().info('CPP Export Is Runing, Please Wait End')
+        
+        # 子线程实现
+        if not AppSysBase.instance().getCppExportThread().isRuning():
+            AppSysBase.instance().getCppExportThread().start()
         else:
             AppSysBase.instance().getLogSysPtr().info('CPP Export Is Runing, Please Wait End')
         
         
     def onBtnClkExportCs(self):
-        if not AppSysBase.instance().getCsExportProcess().isRuning():
-            AppSysBase.instance().getCsExportProcess().start()
+        # 子进程实现
+        #if not AppSysBase.instance().getCsExportProcess().isRuning():
+        #    AppSysBase.instance().getCsExportProcess().start()
+        #else:
+        #    AppSysBase.instance().getLogSysPtr().info('CS Export Is Runing, Please Wait End')
+        
+        # 子线程实现
+        if not AppSysBase.instance().getCsExportThread().isRuning():
+            AppSysBase.instance().getCsExportThread().start()
         else:
             AppSysBase.instance().getLogSysPtr().info('CS Export Is Runing, Please Wait End')
         

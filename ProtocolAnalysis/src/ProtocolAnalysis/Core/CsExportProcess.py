@@ -20,8 +20,8 @@ class CsExportProcess(ProcessWrap):
 
 
     def start(self):
-        super(CsExportProcess, self).start()
         AppSysBase.instance().getConfigPtr().getProtoFilesList().parse()
+        super(CsExportProcess, self).start()
 
 
     def run(self):
