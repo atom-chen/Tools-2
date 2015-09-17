@@ -5,7 +5,8 @@ import multiprocessing
 
 
 #class ProcessWrap(multiprocessing.process):         # 这样继承之前是没有问题的，但是现在就有问题了
-class ProcessWrap(object):
+#class ProcessWrap(object):
+class ProcessWrap(multiprocessing.context.Process):
     '''
     classdocs
     '''
@@ -14,19 +15,19 @@ class ProcessWrap(object):
         '''
         Constructor
         '''
-        #super(ProcessWrap, self).__init__(name = processName, target = self.run);
-        self.m_process = multiprocessing.process.BaseProcess(name = processName, target = processRun, args = (self,))
+        super(ProcessWrap, self).__init__(name = processName, target = self.run);
+        #self.m_process = multiprocessing.context.Process(name = processName, target = processRun, args = (self,))
         self.m_runF = func
-        #self.m_pid = self.pid
-        self.m_pid = self.m_process.pid
+        self.m_pid = self.pid
+        #self.m_pid = self.m_process.pid
         self.m_bRuning = False
 
 
         # 重载进程的启动，以便设置值，防止互斥操作
     def start(self):
         self.m_bRuning = True
-        #super(ProcessWrap, self).start()
-        self.m_process.start()
+        super(ProcessWrap, self).start()
+        #self.m_process.start()
         
 
         
