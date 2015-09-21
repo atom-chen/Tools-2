@@ -14,17 +14,17 @@ class Table;
 
 enum eBaseType
 {
-	eInt8,
-	eUInt8,
-	eInt16,
-	eUInt16,
-	eInt32,
-	eUInt32,
-	eInt64,
-	eUInt64,
-	eFloat,
-	eDouble,
-	eString,
+	eInt8 = 0,
+	eUInt8 = 1,
+	eInt16 = 2,
+	eUInt16 = 3,
+	eInt32 = 4,
+	eUInt32 = 5,
+	eInt64 = 6,
+	eUInt64 = 7,
+	eFloat = 8,
+	eDouble = 9,
+	eString = 10,
 };
 
 /**

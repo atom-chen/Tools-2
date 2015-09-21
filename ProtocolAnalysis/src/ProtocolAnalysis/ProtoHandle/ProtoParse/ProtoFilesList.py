@@ -17,8 +17,9 @@ class ProtoFilesList(object):
         '''
         Constructor
         '''
-        self.m_fileStr = filesStr     # 存放文件字符串
+        self.m_fileStr = filesStr       # 存放文件字符串
         self.m_filesList = []
+        self.m_bParsed = False          # 配置文件是否解析
         
         if len(self.m_fileStr) > 0:
             fileList = self.m_fileStr.split(',')
@@ -36,10 +37,19 @@ class ProtoFilesList(object):
                     
                     
     def parse(self):
-        for file in self.m_filesList:
-            file.parse();
+        if not self.m_bParsed:
+            self.m_bParsed = True
+            for file in self.m_filesList:
+                file.parse();
                     
                     
     def getFilesListPtr(self):
         return self.m_filesList
+    
+    
+    # 返回是否 Proto 配置文件是否解析
+    def getIsParse(self):
+        return self.m_bParsed
+    
+    
 

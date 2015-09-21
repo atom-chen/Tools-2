@@ -40,20 +40,20 @@ class LuaPropertyType2PropertyData(object):
     m_sType2PropertyData[PropertyType.eInt16].m_serializeFuncKeyWord = "writeInt16"
     m_sType2PropertyData[PropertyType.eInt16].m_derializeFuncKeyWord = "readInt16"
     
-    m_sType2PropertyData[PropertyType.eUint16] = LuaPropertyData()
-    m_sType2PropertyData[PropertyType.eUint16].m_propertyTypeKeyWord = "ushort"
-    m_sType2PropertyData[PropertyType.eUint16].m_serializeFuncKeyWord = "writeUnsignedInt16"
-    m_sType2PropertyData[PropertyType.eUint16].m_derializeFuncKeyWord = "readUnsignedInt16"
+    m_sType2PropertyData[PropertyType.eUInt16] = LuaPropertyData()
+    m_sType2PropertyData[PropertyType.eUInt16].m_propertyTypeKeyWord = "ushort"
+    m_sType2PropertyData[PropertyType.eUInt16].m_serializeFuncKeyWord = "writeUnsignedInt16"
+    m_sType2PropertyData[PropertyType.eUInt16].m_derializeFuncKeyWord = "readUnsignedInt16"
     
     m_sType2PropertyData[PropertyType.eInt32] = LuaPropertyData()
     m_sType2PropertyData[PropertyType.eInt32].m_propertyTypeKeyWord = "int"
     m_sType2PropertyData[PropertyType.eInt32].m_serializeFuncKeyWord = "writeInt32"
     m_sType2PropertyData[PropertyType.eInt32].m_derializeFuncKeyWord = "readInt32"
     
-    m_sType2PropertyData[PropertyType.eUint32] = LuaPropertyData()
-    m_sType2PropertyData[PropertyType.eUint32].m_propertyTypeKeyWord = "uint"
-    m_sType2PropertyData[PropertyType.eUint32].m_serializeFuncKeyWord = "writeUnsignedInt32"
-    m_sType2PropertyData[PropertyType.eUint32].m_derializeFuncKeyWord = "readUnsignedInt32"
+    m_sType2PropertyData[PropertyType.eUInt32] = LuaPropertyData()
+    m_sType2PropertyData[PropertyType.eUInt32].m_propertyTypeKeyWord = "uint"
+    m_sType2PropertyData[PropertyType.eUInt32].m_serializeFuncKeyWord = "writeUnsignedInt32"
+    m_sType2PropertyData[PropertyType.eUInt32].m_derializeFuncKeyWord = "readUnsignedInt32"
     
     # char 全部作为 string 处理
     m_sType2PropertyData[PropertyType.eInt8Array] = LuaPropertyData()
@@ -61,30 +61,30 @@ class LuaPropertyType2PropertyData(object):
     m_sType2PropertyData[PropertyType.eInt8Array].m_serializeFuncKeyWord = "writeMultiByte"
     m_sType2PropertyData[PropertyType.eInt8Array].m_derializeFuncKeyWord = "readMultiByte"
     
-    m_sType2PropertyData[PropertyType.eUint8Array] = LuaPropertyData()
-    m_sType2PropertyData[PropertyType.eUint8Array].m_propertyTypeKeyWord = "byte"
-    m_sType2PropertyData[PropertyType.eUint8Array].m_serializeFuncKeyWord = "writeUnsignedByte"
-    m_sType2PropertyData[PropertyType.eUint8Array].m_derializeFuncKeyWord = "readUnsignedByte"
+    m_sType2PropertyData[PropertyType.eUInt8Array] = LuaPropertyData()
+    m_sType2PropertyData[PropertyType.eUInt8Array].m_propertyTypeKeyWord = "byte"
+    m_sType2PropertyData[PropertyType.eUInt8Array].m_serializeFuncKeyWord = "writeUnsignedByte"
+    m_sType2PropertyData[PropertyType.eUInt8Array].m_derializeFuncKeyWord = "readUnsignedByte"
     
     m_sType2PropertyData[PropertyType.eInt16Array] = LuaPropertyData()
     m_sType2PropertyData[PropertyType.eInt16Array].m_propertyTypeKeyWord = "short"
     m_sType2PropertyData[PropertyType.eInt16Array].m_serializeFuncKeyWord = "writeInt16"
     m_sType2PropertyData[PropertyType.eInt16Array].m_derializeFuncKeyWord = "readInt16"
     
-    m_sType2PropertyData[PropertyType.eUint16Array] = LuaPropertyData()
-    m_sType2PropertyData[PropertyType.eUint16Array].m_propertyTypeKeyWord = "ushort"
-    m_sType2PropertyData[PropertyType.eUint16Array].m_serializeFuncKeyWord = "writeUnsignedInt16"
-    m_sType2PropertyData[PropertyType.eUint16Array].m_derializeFuncKeyWord = "readUnsignedInt16"
+    m_sType2PropertyData[PropertyType.eUInt16Array] = LuaPropertyData()
+    m_sType2PropertyData[PropertyType.eUInt16Array].m_propertyTypeKeyWord = "ushort"
+    m_sType2PropertyData[PropertyType.eUInt16Array].m_serializeFuncKeyWord = "writeUnsignedInt16"
+    m_sType2PropertyData[PropertyType.eUInt16Array].m_derializeFuncKeyWord = "readUnsignedInt16"
     
     m_sType2PropertyData[PropertyType.eInt32Array] = LuaPropertyData()
     m_sType2PropertyData[PropertyType.eInt32Array].m_propertyTypeKeyWord = "int"
     m_sType2PropertyData[PropertyType.eInt32Array].m_serializeFuncKeyWord = "writeInt32"
     m_sType2PropertyData[PropertyType.eInt32Array].m_derializeFuncKeyWord = "readInt32"
     
-    m_sType2PropertyData[PropertyType.eUint32Array] = LuaPropertyData()
-    m_sType2PropertyData[PropertyType.eUint32Array].m_propertyTypeKeyWord = "uint"
-    m_sType2PropertyData[PropertyType.eUint32Array].m_serializeFuncKeyWord = "writeUnsignedInt32"
-    m_sType2PropertyData[PropertyType.eUint32Array].m_derializeFuncKeyWord = "readUnsignedInt32"
+    m_sType2PropertyData[PropertyType.eUInt32Array] = LuaPropertyData()
+    m_sType2PropertyData[PropertyType.eUInt32Array].m_propertyTypeKeyWord = "uint"
+    m_sType2PropertyData[PropertyType.eUInt32Array].m_serializeFuncKeyWord = "writeUnsignedInt32"
+    m_sType2PropertyData[PropertyType.eUInt32Array].m_derializeFuncKeyWord = "readUnsignedInt32"
 
 
     def __init__(self):

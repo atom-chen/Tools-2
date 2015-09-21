@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:\Self\Self\unity\unitygame\Tools\ProtocolAnalysis\src\ProtocolAnalysis\UI\MainWindow.ui'
+# Form implementation generated from reading ui file 'E:\Self\Self\Tools\Tools\ProtocolAnalysis\src\ProtocolAnalysis\UI\MainWindow.ui'
 #
-# Created: Fri Feb 13 14:29:27 2015
+# Created: Wed Sep 16 12:21:31 2015
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!

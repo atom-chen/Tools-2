@@ -32,16 +32,16 @@ class ProtoKeyWord(object):
     eUint8 = "uint8"
     
     eInt16 = "int16"
-    eUint16 = "uint16"    
+    eUInt16 = "uint16"    
     
     eInt32 = "int32"
-    eUint32 = "uint32"
+    eUInt32 = "uint32"
     
 
 class ProtoKeyWordList(object):
     # 关键字分隔符
     sKeyWordDelimiter = [ProtoKeyWord.ePackage, ProtoKeyWord.eMessage, ProtoKeyWord.eEnum, ProtoKeyWord.eHeader, ProtoKeyWord.eImport, ProtoKeyWord.ePragma]
-    sKeyWordBasicType = [ProtoKeyWord.eInt8, ProtoKeyWord.eUint8, ProtoKeyWord.eInt16, ProtoKeyWord.eUint16, ProtoKeyWord.eInt32, ProtoKeyWord.eUint32]
+    sKeyWordBasicType = [ProtoKeyWord.eInt8, ProtoKeyWord.eUint8, ProtoKeyWord.eInt16, ProtoKeyWord.eUInt16, ProtoKeyWord.eInt32, ProtoKeyWord.eUInt32]
     
 
 class ProtoCV(object):

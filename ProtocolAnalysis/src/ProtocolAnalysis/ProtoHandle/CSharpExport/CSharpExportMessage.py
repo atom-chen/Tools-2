@@ -197,24 +197,24 @@ class CSharpExportMessage(object):
             #    serializeStr = "bu.writeUnsignedInt8({0});".format(member.getVarName())
             #elif member.getPropertyType() == PropertyType.eInt16:
             #    serializeStr = "bu.writeInt16({0});".format(member.getVarName())
-            #elif member.getPropertyType() == PropertyType.eUint16:
+            #elif member.getPropertyType() == PropertyType.eUInt16:
             #    serializeStr = "bu.writeUnsignedInt16({0});".format(member.getVarName())
             #elif member.getPropertyType() == PropertyType.eInt32:
             #    serializeStr = "bu.writeInt32({0});".format(member.getVarName())
-            #elif member.getPropertyType() == PropertyType.eUint32:
+            #elif member.getPropertyType() == PropertyType.eUInt32:
             #    serializeStr = "bu.writeUnsignedInt32({0});".format(member.getVarName())
             #elif member.getPropertyType() == PropertyType.eInt8Array:
             #    serializeStr = "bu.writeMultiByte({0}, GkEncode.UTF8, {1});".format(member.getVarName(), member.getArrLen())
             #else:       # 各种数组处理
-            #    if member.getPropertyType() == PropertyType.eUint8Array:
+            #    if member.getPropertyType() == PropertyType.eUInt8Array:
             #        CSharpExportMessage.exportArrSerialize(fHandle, message, member, "byte", "8")
             #    if member.getPropertyType() == PropertyType.eInt16Array:
             #        CSharpExportMessage.exportArrSerialize(fHandle, message, member, "short", "16")
-            #    if member.getPropertyType() == PropertyType.eUint16Array:
+            #    if member.getPropertyType() == PropertyType.eUInt16Array:
             #        CSharpExportMessage.exportArrSerialize(fHandle, message, member, "ushort", "16")
             #    if member.getPropertyType() == PropertyType.eInt32Array:
             #        CSharpExportMessage.exportArrSerialize(fHandle, message, member, "int", "32")
-            #    if member.getPropertyType() == PropertyType.eUint32Array:
+            #    if member.getPropertyType() == PropertyType.eUInt32Array:
             #        CSharpExportMessage.exportArrSerialize(fHandle, message, member, "uint", "32")
             #       
             #    serializeStr = ""   # 防止最后输出
@@ -287,24 +287,24 @@ class CSharpExportMessage(object):
             #    serializeStr = "bu.readUnsignedInt8(ref {0});".format(member.getVarName())
             #elif member.getPropertyType() == PropertyType.eInt16: 
             #    serializeStr = "bu.readInt16(ref {0});".format(member.getVarName())
-            #elif member.getPropertyType() == PropertyType.eUint16: 
+            #elif member.getPropertyType() == PropertyType.eUInt16: 
             #    serializeStr = "bu.readUnsignedInt16(ref {0});".format(member.getVarName())
             #elif member.getPropertyType() == PropertyType.eInt32: 
             #    serializeStr = "bu.readInt32(ref {0});".format(member.getVarName())
-            #elif member.getPropertyType() == PropertyType.eUint32:   # 如果是 uint32 
+            #elif member.getPropertyType() == PropertyType.eUInt32:   # 如果是 uint32 
             #    serializeStr = "bu.readUnsignedInt32(ref {0});".format(member.getVarName())
             #elif member.getPropertyType() == PropertyType.eInt8Array:
             #    serializeStr = "bu.readMultiByte(ref {0}, {1}, GkEncode.UTF8);".format(member.getVarName(), member.getArrLen())
             #else:
-            #    if member.getPropertyType() == PropertyType.eUint8Array:
+            #    if member.getPropertyType() == PropertyType.eUInt8Array:
             #        CSharpExportMessage.exportArrDerialize(fHandle, message, member, "byte", "8")
             #    if member.getPropertyType() == PropertyType.eInt16Array:
             #        CSharpExportMessage.exportArrDerialize(fHandle, message, member, "short", "16")
-            #    if member.getPropertyType() == PropertyType.eUint16Array:
+            #    if member.getPropertyType() == PropertyType.eUInt16Array:
             #        CSharpExportMessage.exportArrDerialize(fHandle, message, member, "ushort", "16")
             #    if member.getPropertyType() == PropertyType.eInt32Array:
             #        CSharpExportMessage.exportArrDerialize(fHandle, message, member, "int", "32")
-            #    if member.getPropertyType() == PropertyType.eUint32Array:
+            #    if member.getPropertyType() == PropertyType.eUInt32Array:
             #        CSharpExportMessage.exportArrDerialize(fHandle, message, member, "uint", "32")
             
             if member.isBasicType():

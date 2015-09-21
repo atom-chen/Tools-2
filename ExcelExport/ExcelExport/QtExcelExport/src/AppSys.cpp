@@ -9,6 +9,8 @@
 #include "WorkThread.h"
 #include "MemLeakCheck.h"
 #include "CodeExport.h"
+#include "Cfg2CsCode.h"
+#include "Cfg2CppCode.h"
 
 BEGIN_NAMESPACE
 
@@ -16,6 +18,8 @@ template<> AppSys* Singleton<AppSys>::msSingleton = 0;
 
 AppSys::AppSys()
 {
+	Cfg2CppCode::initKWMap();
+	Cfg2CsCode::initKWMap();
 	m_pUtils = new Utils;
 	m_pSystem = new System;
 	m_task = new Task;

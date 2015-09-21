@@ -109,9 +109,9 @@ void Cfg2CppCode::exportCode()
 	strStream.str("");		// Çå¿ÕÄÚÈİ
 	strStream.clear();
 
-	strStream << "class " << m_pTable->getClassName();
+	strStream << "struct " << m_pTable->getClassName();
 	strStream << "\n" << "{";
-	strStream << "\n" << "public:";
+	//strStream << "\n" << "public:";
 
 	for (auto field : m_pTable->getFieldsList())
 	{

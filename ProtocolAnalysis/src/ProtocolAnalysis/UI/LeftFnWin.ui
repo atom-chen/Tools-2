@@ -16,21 +16,28 @@
   <widget class="QWidget" name="verticalLayoutWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QPushButton" name="m_btnCheck">
+     <widget class="QPushButton" name="m_pushButtonExportCpp">
       <property name="text">
-       <string>Test Btn</string>
+       <string>ExportCpp</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="m_btnVersion">
+     <widget class="QPushButton" name="m_pushButtonExportCS">
+      <property name="text">
+       <string>ExportCS</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="m_btnCopyFile">
       <property name="text">
        <string>Copy File</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="m_btnVerSwf">
+     <widget class="QPushButton" name="m_btnConvFile">
       <property name="text">
        <string>Conv File</string>
       </property>

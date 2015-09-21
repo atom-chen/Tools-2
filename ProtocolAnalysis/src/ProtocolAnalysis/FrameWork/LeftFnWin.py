@@ -19,17 +19,39 @@ class LeftFnWin(QtWidgets.QDockWidget):
         self.ui.setupUi(self)
         
         # 注册事件处理函数
-        self.ui.m_btnCheck.clicked.connect(self.onBtnClkTest)
-        self.ui.m_btnVersion.clicked.connect(self.onBtnClkCopy)
+        self.ui.m_pushButtonExportCpp.clicked.connect(self.onBtnClkExportCpp)
+        self.ui.m_pushButtonExportCS.clicked.connect(self.onBtnClkExportCs)
+        self.ui.m_btnCopyFile.clicked.connect(self.onBtnClkCopy)
+        self.ui.m_btnConvFile.clicked.connect(self.onBtnClkConv)
+
+
+    def onBtnClkExportCpp(self):
+        # 子进程实现
+        #if not AppSysBase.instance().getCppExportProcess().isRuning():
+        #    AppSysBase.instance().getCppExportProcess().start()
+        #else:
+        #    AppSysBase.instance().getLogSysPtr().info('CPP Export Is Runing, Please Wait End')
         
-        self.ui.m_btnVerSwf.clicked.connect(self.onBtnClkConv)
-
-
-    def onBtnClkTest(self):
-        AppSysBase.instance().getLogSysPtr().info('test button')
-        AppSysBase.instance().getConfigPtr().getProtoFilesList().parse()
-        AppSysBase.instance().getExportCSharpFile().export()
-        AppSysBase.instance().getExportCppFile().export()
+        # 子线程实现
+        if not AppSysBase.instance().getCppExportThread().isRuning():
+            AppSysBase.instance().getCppExportThread().start()
+        else:
+            AppSysBase.instance().getLogSysPtr().info('CPP Export Is Runing, Please Wait End')
+        
+        
+    def onBtnClkExportCs(self):
+        # 子进程实现
+        #if not AppSysBase.instance().getCsExportProcess().isRuning():
+        #    AppSysBase.instance().getCsExportProcess().start()
+        #else:
+        #    AppSysBase.instance().getLogSysPtr().info('CS Export Is Runing, Please Wait End')
+        
+        # 子线程实现
+        if not AppSysBase.instance().getCsExportThread().isRuning():
+            AppSysBase.instance().getCsExportThread().start()
+        else:
+            AppSysBase.instance().getLogSysPtr().info('CS Export Is Runing, Please Wait End')
+        
     
 
     # 拷贝文件
