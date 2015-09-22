@@ -10,15 +10,18 @@ bool MGraph::checkFail(Vertex *endVert)
 	{
 		if (!isNeighbor(m_startVert->m_id, m_endVert->m_id))		// 如果不是邻居，必然失败
 		{
-			return false;
+			return true;
 		}
-		else		// 如果是邻居
+		else if (isSlashNeighbor(m_startVert->m_id, m_endVert->m_id))		// 如果是对角邻居
 		{
-
+			if (isBackSlashStopPoint(m_startVert->m_id, m_endVert->m_id))
+			{
+				return true;
+			}
 		}
 	}
 
-	return true;
+	return false;
 }
 
 std::list<Vertex*> MGraph::buildPath(Vertex *endVert)

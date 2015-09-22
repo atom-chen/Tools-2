@@ -136,7 +136,7 @@ float MGraph::adjacentCost(int vertId, int neighborVertId)
 		if (convXYToVertId(nx, ny) == neighborVertId)		// 如果正好是邻居
 		{
 			// 肯定不在阻挡点中，因为如果在阻挡点中，上面已经判断了
-			if (isHorizontalOrVertical(vertId, neighborVertId))		// 如果不是水平或者垂直，是斜线
+			if (isHorizontalOrVerticalNeighbor(vertId, neighborVertId))		// 如果不是水平或者垂直，是斜线
 			{
 				neighborCost = cost[i];
 			}
@@ -162,7 +162,7 @@ void MGraph::addStopPoint(int nx, int ny, StopPoint* pStopPoint)
 	m_id2StopPtMap[vertId] = pStopPoint;
 }
 
-bool MGraph::isHorizontalOrVertical(int vertId, int neighborVertId)
+bool MGraph::isHorizontalOrVerticalNeighbor(int vertId, int neighborVertId)
 {
 	int x, y;
 	int xNeighbor, yNeighbor;
@@ -171,6 +171,51 @@ bool MGraph::isHorizontalOrVertical(int vertId, int neighborVertId)
 
 	if ((std::abs((long)(xNeighbor - x)) == 1 && std::abs((long)(yNeighbor - y)) == 0) ||
 		(std::abs((long)(xNeighbor - x)) == 0 && std::abs((long)(yNeighbor - y)) == 1))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool MGraph::isHorizontalNeighbor(int vertId, int neighborVertId)
+{
+	int x, y;
+	int xNeighbor, yNeighbor;
+	convIdToXY(vertId, &x, &y);
+	convIdToXY(neighborVertId, &xNeighbor, &yNeighbor);
+
+	if ((std::abs((long)(xNeighbor - x)) == 1 && std::abs((long)(yNeighbor - y)) == 0))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool MGraph::isVerticalNeighbor(int vertId, int neighborVertId)
+{
+	int x, y;
+	int xNeighbor, yNeighbor;
+	convIdToXY(vertId, &x, &y);
+	convIdToXY(neighborVertId, &xNeighbor, &yNeighbor);
+
+	if ((std::abs((long)(xNeighbor - x)) == 0 && std::abs((long)(yNeighbor - y)) == 1))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool MGraph::isSlashNeighbor(int vertId, int neighborVertId)
+{
+	int x, y;
+	int xNeighbor, yNeighbor;
+	convIdToXY(vertId, &x, &y);
+	convIdToXY(neighborVertId, &xNeighbor, &yNeighbor);
+
+	if ((std::abs((long)(xNeighbor - x)) == 1 && std::abs((long)(yNeighbor - y)) == 1))			// 斜线
 	{
 		return true;
 	}
@@ -188,6 +233,21 @@ bool MGraph::isNeighbor(int vertId, int neighborVertId)
 	if ((std::abs((long)(xNeighbor - x)) == 1 && std::abs((long)(yNeighbor - y)) == 0) ||		// 水平
 		(std::abs((long)(xNeighbor - x)) == 0 && std::abs((long)(yNeighbor - y)) == 1) ||		// 垂直
 		(std::abs((long)(xNeighbor - x)) == 1 && std::abs((long)(yNeighbor - y)) == 1))			// 斜线
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool MGraph::isBackSlashStopPoint(int vertId, int neighborVertId)
+{
+	int x, y;
+	int xNeighbor, yNeighbor;
+	convIdToXY(vertId, &x, &y);
+	convIdToXY(neighborVertId, &xNeighbor, &yNeighbor);
+
+	if (isInStopPt(x, yNeighbor) || isInStopPt(xNeighbor, y))
 	{
 		return true;
 	}

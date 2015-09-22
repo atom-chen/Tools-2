@@ -51,7 +51,11 @@ private:
 	Vertex *m_startVert, *m_endVert;
 
 protected:
-	bool isHorizontalOrVertical(int vertId, int neighborVertId);		// 判断是它们之间的关系是水平还是垂直关系
+	bool isHorizontalOrVerticalNeighbor(int vertId, int neighborVertId);		// 判断是它们之间的关系是水平还是垂直关系
+	bool isHorizontalNeighbor(int vertId, int neighborVertId);
+	bool isVerticalNeighbor(int vertId, int neighborVertId);
+	bool isSlashNeighbor(int vertId, int neighborVertId);
+	bool isBackSlashStopPoint(int vertId, int neighborVertId);
 	/**
 	 * @brief 两个顶点之间是否是邻居节点，就是两个节点之间相差为 1，只要在如下正方形的四个角，就算是邻居
 	 * a	b
