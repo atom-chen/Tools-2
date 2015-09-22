@@ -52,6 +52,12 @@ private:
 
 protected:
 	bool isHorizontalOrVertical(int vertId, int neighborVertId);		// 判断是它们之间的关系是水平还是垂直关系
+	/**
+	 * @brief 两个顶点之间是否是邻居节点，就是两个节点之间相差为 1，只要在如下正方形的四个角，就算是邻居
+	 * a	b
+	 * c	d
+	 */
+	bool isNeighbor(int vertId, int neighborVertId);
 
 public:
 	MGraph();
@@ -87,6 +93,7 @@ public:
 	std::list<Vertex*> buildPath(Vertex *endVert);
 
 	void initializeNodes(unsigned int startId, unsigned int endId);
+	bool checkFail(Vertex *endVert);			// 检查是否失败
 };
 
 #endif

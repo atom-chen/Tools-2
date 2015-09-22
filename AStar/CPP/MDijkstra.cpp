@@ -4,6 +4,23 @@
 #include <stdexcept>
 #include <list>
 
+bool MGraph::checkFail(Vertex *endVert)
+{
+	if (!endVert->m_nearestVert)	// 如果终点没有前面指向的节点
+	{
+		if (!isNeighbor(m_startVert->m_id, m_endVert->m_id))		// 如果不是邻居，必然失败
+		{
+			return false;
+		}
+		else		// 如果是邻居
+		{
+
+		}
+	}
+
+	return true;
+}
+
 std::list<Vertex*> MGraph::buildPath(Vertex *endVert)
 {
 	std::list<Vertex*> pathList;
@@ -84,6 +101,7 @@ std::list<Vertex*> MGraph::getShortestPath(unsigned int startId, unsigned int en
 			}
 		}
 
+		// 注意起始顶点和第二个顶点之间是没有 m_nearestVert ，因此需要手工将第一个顶点放到路径列表中去
 		pVert = m_verts[k];
 		pVert->m_state = State::Closed; // 将目前找到的最近的顶点置为1
 

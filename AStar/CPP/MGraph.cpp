@@ -177,3 +177,20 @@ bool MGraph::isHorizontalOrVertical(int vertId, int neighborVertId)
 
 	return false;
 }
+
+bool MGraph::isNeighbor(int vertId, int neighborVertId)
+{
+	int x, y;
+	int xNeighbor, yNeighbor;
+	convIdToXY(vertId, &x, &y);
+	convIdToXY(neighborVertId, &xNeighbor, &yNeighbor);
+
+	if ((std::abs((long)(xNeighbor - x)) == 1 && std::abs((long)(yNeighbor - y)) == 0) ||		// 水平
+		(std::abs((long)(xNeighbor - x)) == 0 && std::abs((long)(yNeighbor - y)) == 1) ||		// 垂直
+		(std::abs((long)(xNeighbor - x)) == 1 && std::abs((long)(yNeighbor - y)) == 1))			// 斜线
+	{
+		return true;
+	}
+
+	return false;
+}
