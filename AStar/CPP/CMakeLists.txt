@@ -17,7 +17,6 @@ endif()
 
 set(SRCS_FILES
 	./MDijkstra.cpp
-	./MDijkstra.h
 	./MGraph.h
 	./MGraph.cpp
 	./Test.cpp

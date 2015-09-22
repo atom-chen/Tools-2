@@ -37,8 +37,6 @@ public:
 	typedef std::vector<Vertex*> VertVector;
 	typedef std::map<int, StopPoint*> StopPtMap;
 
-#include "MDijkstra.h"			// 包含 Dijkstra 算法实现
-
 private:
 	VertVector m_verts;			// 所有的定点
 	int m_vertsCount;			// 定点总共数量
@@ -46,6 +44,9 @@ private:
 	int m_yCount;				// Y 顶点数量
 
 	StopPtMap m_id2StopPtMap;
+
+	// Dijkstra 算法需要的数据
+	Vertex *m_startVert, *m_endVert;
 
 public:
 	MGraph();
@@ -71,6 +72,12 @@ public:
 	 *	3	2	1
 	 */
 	float adjacentCost(int vertId, int neighborVertId);
+
+	// Dijkstra 算法需要的数据
+	std::list<Vertex*> getShortestPath(unsigned int startId, unsigned int endId);
+	std::list<Vertex*> buildPath(Vertex *endVert);
+
+	void initializeNodes(unsigned int startId, unsigned int endId);
 };
 
 #endif
