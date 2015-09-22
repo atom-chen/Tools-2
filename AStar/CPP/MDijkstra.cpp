@@ -6,16 +6,16 @@
 
 std::list<Vertex*> MGraph::buildPath(Vertex *endVert)
 {
-	std::list<Vertex*> path;
+	std::list<Vertex*> pathList;
 
 	Vertex *vert = endVert;
 	while (vert != nullptr) 
 	{
-		path.push_front(vert);
+		pathList.push_front(vert);
 		vert = vert->m_nearestVert;
 	}
-
-	return path;
+	pathList.push_front(m_startVert);		// 把最初的顶点放进去
+	return pathList;
 }
 
 void MGraph::initializeNodes(unsigned int startId, unsigned int endId)
@@ -24,18 +24,20 @@ void MGraph::initializeNodes(unsigned int startId, unsigned int endId)
 
 	for (auto pVert : m_verts)
 	{
-		pVert->m_distance = std::numeric_limits<unsigned int>::max();
-		pVert->m_nearestVert = nullptr;
-		pVert->m_state = State::Unknown;
+		pVert->reset();
 
 		if (pVert->m_id == startId) 
 		{
 			m_startVert = pVert;
 		}
-
-		if (pVert->m_id == endId) 
+		else if (pVert->m_id == endId) 
 		{
 			m_endVert = pVert;
+		}
+
+		if (m_startVert != nullptr && m_endVert != nullptr)			// 如果查找到就退出
+		{
+			break;
 		}
 	}
 
@@ -51,8 +53,8 @@ std::list<Vertex*> MGraph::getShortestPath(unsigned int startId, unsigned int en
 {
 	initializeNodes(startId, endId);
 
-	int v0;
-	int v, w, k, min;
+	int v, w, k;
+	float min;
 	int nVer = m_vertsCount;
 	Vertex* pVert = nullptr;
 
@@ -71,7 +73,7 @@ std::list<Vertex*> MGraph::getShortestPath(unsigned int startId, unsigned int en
 	// 开始主循环，每次求得V0到某个V顶点的最短路径
 	for (v = 1; v < nVer; ++v)
 	{
-		min = INFINITY;    // 当前所知离V0顶点最近距离
+		min = std::numeric_limits<float>::max();    // 当前所知离V0顶点最近距离
 		for (w = 0; w < nVer; ++w) // 寻找离V0最近的顶点
 		{
 			pVert = m_verts[w];

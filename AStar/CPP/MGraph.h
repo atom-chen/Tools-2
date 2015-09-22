@@ -27,7 +27,9 @@ struct Vertex
 	unsigned int m_id;
 	State m_state;
 	Vertex* m_nearestVert;
-	unsigned int m_distance;
+	float m_distance;
+
+	void reset();
 };
 
 // 图
@@ -48,6 +50,9 @@ private:
 	// Dijkstra 算法需要的数据
 	Vertex *m_startVert, *m_endVert;
 
+protected:
+	bool isHorizontalOrVertical(int vertId, int neighborVertId);		// 判断是它们之间的关系是水平还是垂直关系
+
 public:
 	MGraph();
 	~MGraph();
@@ -55,8 +60,8 @@ public:
 	Vertex* getVertexById(int vertId);
 	const VertVector& getVerts() const;
 
-	Vertex* getOrAddVert(int id);
-	int getVertsCount();
+	Vertex* getVert(int id);
+	size_t getVertsCount();
 	void init(int xCount, int yCount);
 	// 转换顶点的 Id 到顶点索引
 	void convIdToXY(int vertId, int* x, int* y);
@@ -72,6 +77,10 @@ public:
 	 *	3	2	1
 	 */
 	float adjacentCost(int vertId, int neighborVertId);
+	/**
+	 * @brief 添加一个阻挡点
+	 */
+	void addStopPoint(int nx, int ny, StopPoint* pStopPoint);
 
 	// Dijkstra 算法需要的数据
 	std::list<Vertex*> getShortestPath(unsigned int startId, unsigned int endId);
