@@ -6,11 +6,8 @@
 #include <sstream>
 
 // 测试 0 个阻挡点
-std::list<Vertex*> test0Stop()
+std::list<Vertex*> test0Stop(MGraph* pMGraph)
 {
-	MGraph* pMGraph = new MGraph();
-	pMGraph->init(3, 3);
-
 	std::list<Vertex*> vertList;
 	if (pMGraph->isPathCacheValid(0, 4))
 	{
@@ -27,11 +24,8 @@ std::list<Vertex*> test0Stop()
 }
 
 // 测试 1 个阻挡点
-std::list<Vertex*> test1Stop()
+std::list<Vertex*> test1Stop(MGraph* pMGraph)
 {
-	MGraph* pMGraph = new MGraph();
-	pMGraph->init(3, 3);
-
 	StopPoint* pStopPoint = nullptr;
 
 	pStopPoint = new StopPoint();
@@ -47,17 +41,12 @@ std::list<Vertex*> test1Stop()
 		vertList = pMGraph->getOrCreateShortestPath(0, 8);
 	}
 
-	delete pMGraph;
-
 	return vertList;
 }
 
 // 测试 2 个阻挡点
-std::list<Vertex*> test2Stop()
+std::list<Vertex*> test2Stop(MGraph* pMGraph)
 {
-	MGraph* pMGraph = new MGraph();
-	pMGraph->init(3, 3);
-
 	StopPoint* pStopPoint = nullptr;
 
 	pStopPoint = new StopPoint();
@@ -76,17 +65,12 @@ std::list<Vertex*> test2Stop()
 		vertList = pMGraph->getOrCreateShortestPath(0, 8);
 	}
 
-	delete pMGraph;
-
 	return vertList;
 }
 
 // 测试 3 个阻挡点
-std::list<Vertex*> test3Stop()
+std::list<Vertex*> test3Stop(MGraph* pMGraph)
 {
-	MGraph* pMGraph = new MGraph();
-	pMGraph->init(3, 3);
-
 	StopPoint* pStopPoint = nullptr;
 
 	pStopPoint = new StopPoint();
@@ -108,18 +92,13 @@ std::list<Vertex*> test3Stop()
 		vertList = pMGraph->getOrCreateShortestPath(0, 8);
 	}
 
-	delete pMGraph;
-
 	return vertList;
 }
 
 
 // 测试对角线阻挡点
-std::list<Vertex*> test4Stop()
+std::list<Vertex*> test4Stop(MGraph* pMGraph)
 {
-	MGraph* pMGraph = new MGraph();
-	pMGraph->init(3, 3);
-
 	StopPoint* pStopPoint = nullptr;
 
 	pStopPoint = new StopPoint();
@@ -138,17 +117,12 @@ std::list<Vertex*> test4Stop()
 		vertList = pMGraph->getOrCreateShortestPath(1, 1);
 	}
 
-	delete pMGraph;
-
 	return vertList;
 }
 
 // 测试最长阻挡点
-std::list<Vertex*> test5Stop()
+std::list<Vertex*> test5Stop(MGraph* pMGraph)
 {
-	MGraph* pMGraph = new MGraph();
-	pMGraph->init(3, 3);
-
 	StopPoint* pStopPoint = nullptr;
 
 	pStopPoint = new StopPoint();
@@ -166,8 +140,6 @@ std::list<Vertex*> test5Stop()
 	{
 		vertList = pMGraph->getOrCreateShortestPath(0, 6);
 	}
-
-	delete pMGraph;
 
 	return vertList;
 }
@@ -191,24 +163,36 @@ void serializePath(std::list<Vertex*>& vertList, std::stringstream& strStream)
 
 void main()
 {
+	MGraph* pMGraph = new MGraph();
+	pMGraph->init(3, 3);
+
 	std::list<Vertex*> vertList;
 	FILE* pFile = nullptr;
 	pFile = fopen("E:\\aaa.txt", "w");
 	std::stringstream strStream;
 
-	vertList = test5Stop();
+	vertList = test5Stop(pMGraph);
 	serializePath(vertList, strStream);
+	pMGraph->clearAllStopPoint();
+	pMGraph->clearPath();
 
-	vertList = test4Stop();
+	vertList = test4Stop(pMGraph);
 	serializePath(vertList, strStream);
+	pMGraph->clearAllStopPoint();
+	pMGraph->clearPath();
 
-	vertList = test2Stop();
+	vertList = test2Stop(pMGraph);
 	serializePath(vertList, strStream);
+	pMGraph->clearAllStopPoint();
+	pMGraph->clearPath();
 
-	vertList = test2Stop();
+	vertList = test2Stop(pMGraph);
 	serializePath(vertList, strStream);
+	pMGraph->clearAllStopPoint();
+	pMGraph->clearPath();
 
 	fwrite(strStream.str().c_str(), strStream.str().length(), 1, pFile);
 	fclose(pFile);
+	delete pMGraph;
 	//system("pause");
 }

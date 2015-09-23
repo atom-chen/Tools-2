@@ -33,6 +33,11 @@ MGraph::~MGraph()
 	{
 		delete pVert;
 	}
+
+	for (auto stopPt : m_id2StopPtMap)
+	{
+		delete stopPt.second;
+	}
 }
 
 
@@ -171,19 +176,13 @@ float MGraph::adjacentCost(int vertId, int neighborVertId)
 void MGraph::addStopPoint(int nx, int ny, StopPoint* pStopPoint)
 {
 	int vertId = convXYToVertId(nx, ny);
+	if (m_id2StopPtMap[vertId])		// 如果之前有阻挡点，就删除
+	{
+		delete m_id2StopPtMap[vertId];
+	}
 	m_id2StopPtMap[vertId] = pStopPoint;
 
-	// 需要修改邻居是这个顶点的其它顶点的邻居
-	if (!m_vertsVec[vertId]->m_bNeighborValid)
-	{
-		findNeighborVertIdArr(vertId);
-		m_vertsVec[vertId]->setNeighborVertsId(m_neighborVertIdArr);
-	}
-	
-	for (int neighborIdx = 0; neighborIdx < m_vertsVec[vertId]->m_vertsIdVec.size(); ++neighborIdx)
-	{
-		m_vertsVec[m_vertsVec[vertId]->m_vertsIdVec[neighborIdx]]->m_bNeighborValid = false;
-	}
+	setNeighborInvalidByVertId(vertId);
 }
 
 bool MGraph::isHorizontalOrVerticalNeighbor(int vertId, int neighborVertId)
@@ -312,5 +311,20 @@ void MGraph::findNeighborVertIdArr(int vertId)
 		{
 			m_neighborVertIdArr[i] = -1;
 		}
+	}
+}
+
+void MGraph::setNeighborInvalidByVertId(int vertId)
+{
+	// 需要修改邻居是这个顶点的其它顶点的邻居
+	if (!m_vertsVec[vertId]->m_bNeighborValid)
+	{
+		findNeighborVertIdArr(vertId);
+		m_vertsVec[vertId]->setNeighborVertsId(m_neighborVertIdArr);
+	}
+
+	for (int neighborIdx = 0; neighborIdx < m_vertsVec[vertId]->m_vertsIdVec.size(); ++neighborIdx)
+	{
+		m_vertsVec[m_vertsVec[vertId]->m_vertsIdVec[neighborIdx]]->m_bNeighborValid = false;
 	}
 }

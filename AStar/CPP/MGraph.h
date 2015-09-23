@@ -113,6 +113,11 @@ protected:
 	void convVertIdVec2VertList(std::vector<int>& vertsIdVec);
 	void convVertList2VertIdVec(std::vector<int>& vertsIdVec);
 
+	/**
+	 * @breif 设置与 vertId 为邻居节点的其它顶点的邻居数据无效
+	 */
+	void setNeighborInvalidByVertId(int vertId);
+
 public:
 	MGraph();
 	~MGraph();
@@ -141,6 +146,8 @@ public:
 
 	bool isPathCacheValid(int startId, int endId);
 	std::list<Vertex*>& getShortestPathFromPathCache(int startId, int endId);
+	void clearPath();				// 清理当前的路径
+	void clearAllStopPoint();		// 清理所有的阻挡点
 };
 
 #endif

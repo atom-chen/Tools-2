@@ -74,8 +74,8 @@ void MGraph::resetAllVerts(unsigned int startId)
 	// 初始化数据
 	for (int vertIdx = 0; vertIdx < m_vertsCount; ++vertIdx)
 	{
-		m_startVert->m_state = State::Unknown;    // 全部顶点初始化为未知对短路径状态
 		pVert = m_vertsVec[vertIdx];
+		pVert->m_state = State::Unknown;    // 全部顶点初始化为未知对短路径状态
 		pVert->m_distance = adjacentCost(startId, vertIdx); //将与 startId 点有连线的顶点加上权值
 		pVert->m_nearestVert = nullptr;    // 初始化路径的前一个顶点
 	}
@@ -264,4 +264,23 @@ std::list<Vertex*>& MGraph::getShortestPathFromPathCache(int startId, int endId)
 	}
 
 	return m_pathList;
+}
+
+void MGraph::clearPath()
+{
+	m_pathList.clear();
+}
+
+void MGraph::clearAllStopPoint()
+{
+	for (auto keyValue : m_id2StopPtMap)
+	{
+		if (keyValue.second)		// 可能通过 m_id2StopPtMap[idx] 导致添加数据，因此这里判断
+		{
+			setNeighborInvalidByVertId(keyValue.first);
+			delete keyValue.second;
+		}
+	}
+
+	m_id2StopPtMap.clear();
 }
