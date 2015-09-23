@@ -6,6 +6,20 @@ void Vertex::reset()
 	m_state = State::Unknown;
 	m_nearestVert = nullptr;
 	m_distance = std::numeric_limits<float>::max();
+	m_bNeighborValid = false;
+}
+
+void Vertex::setNeighborVertsId(int* neighborVertIdArr, int len)
+{
+	m_vertsIdVec.clear();
+	m_bNeighborValid = true;
+	for (int idx = 0; idx < len; ++idx)
+	{
+		if (neighborVertIdArr[idx] != -1)
+		{
+			m_vertsIdVec.push_back(neighborVertIdArr[idx]);
+		}
+	}
 }
 
 MGraph::MGraph()
@@ -128,15 +142,18 @@ float MGraph::adjacentCost(int vertId, int neighborVertId)
 		return neighborCost;
 	}
 
+	int nx = 0;
+	int ny = 0;
+
 	for (int i = 0; i<8; ++i)
 	{
-		int nx = x + dx[i];
-		int ny = y + dy[i];
+		nx = x + dx[i];
+		ny = y + dy[i];
 
 		if (convXYToVertId(nx, ny) == neighborVertId)		// 如果正好是邻居
 		{
 			// 肯定不在阻挡点中，因为如果在阻挡点中，上面已经判断了
-			if (isHorizontalOrVerticalNeighbor(vertId, neighborVertId))		// 如果不是水平或者垂直，是斜线
+			if (isHorizontalOrVerticalNeighbor(vertId, neighborVertId))		// 如果是水平或者垂直，是斜线
 			{
 				neighborCost = cost[i];
 			}
@@ -160,6 +177,18 @@ void MGraph::addStopPoint(int nx, int ny, StopPoint* pStopPoint)
 {
 	int vertId = convXYToVertId(nx, ny);
 	m_id2StopPtMap[vertId] = pStopPoint;
+
+	// 需要修改邻居是这个顶点的其它顶点的邻居
+	if (!m_verts[vertId]->m_bNeighborValid)
+	{
+		findNeighborVertIdArr(vertId);
+		m_verts[vertId]->setNeighborVertsId(m_neighborVertIdArr);
+	}
+	
+	for (int neighborIdx = 0; neighborIdx < m_verts[vertId]->m_vertsIdVec.size(); ++neighborIdx)
+	{
+		m_verts[m_verts[vertId]->m_vertsIdVec[neighborIdx]]->m_bNeighborValid = false;
+	}
 }
 
 bool MGraph::isHorizontalOrVerticalNeighbor(int vertId, int neighborVertId)
@@ -253,4 +282,40 @@ bool MGraph::isBackSlashStopPoint(int vertId, int neighborVertId)
 	}
 
 	return false;
+}
+
+void MGraph::findNeighborVertIdArr(int vertId)
+{
+	int x, y;
+	convIdToXY(vertId, &x, &y);
+
+	const int dx[8] = { 1, 1, 0, -1, -1, -1, 0, 1 };
+	const int dy[8] = { 0, 1, 1, 1, 0, -1, -1, -1 };
+
+	int nx = 0;
+	int ny = 0;
+
+	// 遍历 8 个邻居顶点
+	for (int i = 0; i < 8; ++i)
+	{
+		nx = x + dx[i];
+		ny = y + dy[i];
+
+		if (nx >= 0 && nx < m_xCount &&
+			ny >= 0 && ny < m_yCount)		// 如果邻居顶点在范围内
+		{
+			if (!isInStopPt(nx, ny))		// 如果不在阻挡点内
+			{
+				m_neighborVertIdArr[i] = convXYToVertId(nx, ny);
+			}
+			else
+			{
+				m_neighborVertIdArr[i] = -1;
+			}
+		}
+		else
+		{
+			m_neighborVertIdArr[i] = -1;
+		}
+	}
 }

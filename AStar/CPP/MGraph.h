@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cmath>
 #include <list>
+#include <vector>
 
 // 阻挡点
 struct StopPoint
@@ -28,8 +29,11 @@ struct Vertex
 	State m_state;
 	Vertex* m_nearestVert;
 	float m_distance;
+	bool m_bNeighborValid;		// 邻居数据是否有效，因为可能动态修改阻挡点
+	std::vector<int> m_vertsIdVec;			// 保存邻居顶点 Id
 
 	void reset();
+	void setNeighborVertsId(int* neighborVertIdArr, int len = 8);
 };
 
 // 图
@@ -52,6 +56,9 @@ private:
 
 	// 最终路径列表
 	std::list<Vertex*> m_pathList;
+	// 计算中需要用的 8 个邻居顶点索引
+	int m_neighborVertIdArr[8];
+	std::vector<int> m_closedVec;	// 已经确认的队列列表
 
 protected:
 	bool isHorizontalOrVerticalNeighbor(int vertId, int neighborVertId);		// 判断是它们之间的关系是水平还是垂直关系
@@ -72,11 +79,15 @@ protected:
 	/**
 	 * @brief 查找下一个确认的顶点
 	 */
-	bool findNextClosedVert(float& minDist, int& minIdx);
+	bool findNextClosedVert(float& minDist, int& minIdx, std::vector<int>& closedVec);
 	/**
 	 * @brief 修改最短路径
 	 */
 	void modifyVertsDist(float& minDist, int& minIdx);
+	/**
+	 * @brief 查找顶点邻居 Id 数组
+	 */
+	void findNeighborVertIdArr(int vertId);
 
 public:
 	MGraph();
@@ -108,7 +119,7 @@ public:
 	void addStopPoint(int nx, int ny, StopPoint* pStopPoint);
 
 	// Dijkstra 算法需要的数据
-	std::list<Vertex*>& getShortestPath(unsigned int startId, unsigned int endId);
+	std::list<Vertex*>& getShortestPath(int startId, int endId);
 	std::list<Vertex*>& buildPath(Vertex *endVert);
 
 	void initVerts(unsigned int startId, unsigned int endId);

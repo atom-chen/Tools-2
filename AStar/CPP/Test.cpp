@@ -80,7 +80,7 @@ std::list<Vertex*> test3Stop()
 void main()
 {
 	std::list<Vertex*> vertList;
-	vertList = test3Stop();
+	vertList = test2Stop();
 	FILE* pFile = nullptr;
 	pFile = fopen("E:\\aaa.txt", "w");
 	std::stringstream strStream;
