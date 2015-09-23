@@ -141,8 +141,10 @@ bool MGraph::isInStopPt(int nx, int ny)
  */
 float MGraph::adjacentCost(int vertId, int neighborVertId)
 {
-	int x, y;
-	int xNeighbor, yNeighbor;
+	int x = 0;
+	int y = 0;
+	int xNeighbor = 0;
+	int yNeighbor = 0;
 	float neighborCost = std::numeric_limits<float>::max();			// 默认是最大值
 	const int dx[8] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 	const int dy[8] = { -1, -1, 1, 0, 0, 1, 1, 1 };
@@ -210,8 +212,11 @@ void MGraph::addStopPoint(int nx, int ny, StopPoint* pStopPoint)
 
 bool MGraph::isHorizontalOrVerticalNeighbor(int vertId, int neighborVertId)
 {
-	int x, y;
-	int xNeighbor, yNeighbor;
+	int x = 0;
+	int y = 0;
+	int xNeighbor = 0;
+	int yNeighbor = 0;
+
 	convVertIdToXY(vertId, x, y);
 	convVertIdToXY(neighborVertId, xNeighbor, yNeighbor);
 
@@ -226,8 +231,11 @@ bool MGraph::isHorizontalOrVerticalNeighbor(int vertId, int neighborVertId)
 
 bool MGraph::isHorizontalNeighbor(int vertId, int neighborVertId)
 {
-	int x, y;
-	int xNeighbor, yNeighbor;
+	int x = 0;
+	int y = 0;
+	int xNeighbor = 0;
+	int yNeighbor = 0;
+
 	convVertIdToXY(vertId, x, y);
 	convVertIdToXY(neighborVertId, xNeighbor, yNeighbor);
 
@@ -241,8 +249,11 @@ bool MGraph::isHorizontalNeighbor(int vertId, int neighborVertId)
 
 bool MGraph::isVerticalNeighbor(int vertId, int neighborVertId)
 {
-	int x, y;
-	int xNeighbor, yNeighbor;
+	int x = 0;
+	int y = 0;
+	int xNeighbor = 0;
+	int yNeighbor = 0;
+
 	convVertIdToXY(vertId, x, y);
 	convVertIdToXY(neighborVertId, xNeighbor, yNeighbor);
 
@@ -256,8 +267,11 @@ bool MGraph::isVerticalNeighbor(int vertId, int neighborVertId)
 
 bool MGraph::isSlashNeighbor(int vertId, int neighborVertId)
 {
-	int x, y;
-	int xNeighbor, yNeighbor;
+	int x = 0;
+	int y = 0;
+	int xNeighbor = 0;
+	int yNeighbor = 0;
+
 	convVertIdToXY(vertId, x, y);
 	convVertIdToXY(neighborVertId, xNeighbor, yNeighbor);
 
@@ -271,8 +285,11 @@ bool MGraph::isSlashNeighbor(int vertId, int neighborVertId)
 
 bool MGraph::isNeighbor(int vertId, int neighborVertId)
 {
-	int x, y;
-	int xNeighbor, yNeighbor;
+	int x = 0;
+	int y = 0;
+	int xNeighbor = 0;
+	int yNeighbor = 0;
+
 	convVertIdToXY(vertId, x, y);
 	convVertIdToXY(neighborVertId, xNeighbor, yNeighbor);
 
@@ -288,8 +305,11 @@ bool MGraph::isNeighbor(int vertId, int neighborVertId)
 
 bool MGraph::isBackSlashStopPoint(int vertId, int neighborVertId)
 {
-	int x, y;
-	int xNeighbor, yNeighbor;
+	int x = 0;
+	int y = 0;
+	int xNeighbor = 0;
+	int yNeighbor = 0;
+
 	convVertIdToXY(vertId, x, y);
 	convVertIdToXY(neighborVertId, xNeighbor, yNeighbor);
 
@@ -303,7 +323,9 @@ bool MGraph::isBackSlashStopPoint(int vertId, int neighborVertId)
 
 void MGraph::findNeighborVertIdArr(int vertId)
 {
-	int x, y;
+	int x = 0;
+	int y = 0;
+
 	convVertIdToXY(vertId, x, y);
 
 	const int dx[8] = { -1, 0, 1, -1, 1, -1, 0, 1 };
@@ -364,8 +386,6 @@ void MGraph::getVertexCenterByPos(float fx, float fy, float& centerX, float& cen
 {
 	int ix = fx / m_gridWidth;
 	int iy = fx / m_gridHeight;
-
-	m_vertsVec[convXYToVertId(ix, iy)];
 
 	centerX = ix * m_gridWidth + m_gridWidth / 2;
 	centerY = ix * m_gridHeight + m_gridHeight / 2;

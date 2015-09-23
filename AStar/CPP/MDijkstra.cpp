@@ -37,7 +37,7 @@ void MGraph::buildPath(Vertex *endVert)
 	//return m_pathList;
 }
 
-void MGraph::initVerts(unsigned int startId, unsigned int endId)
+void MGraph::initVerts(int startId, int endId)
 {
 	m_startVert = nullptr;
 	m_endVert = nullptr;
@@ -68,7 +68,7 @@ void MGraph::initVerts(unsigned int startId, unsigned int endId)
 	m_startVert->m_distance = 0;
 }
 
-void MGraph::resetAllVerts(unsigned int startId)
+void MGraph::resetAllVerts(int startId)
 {
 	Vertex* pVert = nullptr;
 	// 初始化数据
@@ -177,7 +177,6 @@ void MGraph::createShortestPath(int startId, int endId)
 	initVerts(startId, endId);
 
 	int openVertIdx = 0;		// 还未确定添加到队列中的顶点遍历的索引
-	int neighborVertIdx = 0;
 	int minIdx = 0;
 	float minDist = 0;
 	Vertex* pVert = nullptr;

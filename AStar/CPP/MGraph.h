@@ -94,7 +94,7 @@ protected:
 	/**
 	 * @brief重置所有的顶点数据
 	 */
-	void resetAllVerts(unsigned int startId);
+	void resetAllVerts(int startId);
 	/**
 	 * @brief 查找下一个确认的顶点
 	 */
@@ -110,7 +110,7 @@ protected:
 	/**
 	 * @brief 根据顶点 Id 获取对应的顶点的数据
 	 */
-	void initVerts(unsigned int startId, unsigned int endId);
+	void initVerts(int startId, int endId);
 	//bool checkFail(Vertex *endVert);			// 检查是否失败
 	void buildPath(Vertex *endVert);
 	/**

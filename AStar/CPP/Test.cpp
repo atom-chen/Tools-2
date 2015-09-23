@@ -18,8 +18,6 @@ std::list<Vertex*> test0Stop(MGraph* pMGraph)
 		vertList = pMGraph->getOrCreateShortestPath(0, 4);
 	}
 
-	delete pMGraph;
-
 	return vertList;
 }
 
