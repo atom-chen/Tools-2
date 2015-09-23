@@ -12,7 +12,16 @@ std::list<Vertex*> test0Stop()
 	pMGraph->init(3, 3);
 
 	std::list<Vertex*> vertList;
-	vertList = pMGraph->getOrCreateShortestPath(0, 4);
+	if (pMGraph->isPathCacheValid(0, 4))
+	{
+		vertList = pMGraph->getShortestPathFromPathCache(0, 4);
+	}
+	else
+	{
+		vertList = pMGraph->getOrCreateShortestPath(0, 4);
+	}
+
+	delete pMGraph;
 
 	return vertList;
 }
@@ -29,7 +38,16 @@ std::list<Vertex*> test1Stop()
 	pMGraph->addStopPoint(1, 0, pStopPoint);
 
 	std::list<Vertex*> vertList;
-	vertList = pMGraph->getOrCreateShortestPath(0, 8);
+	if (pMGraph->isPathCacheValid(0, 8))
+	{
+		vertList = pMGraph->getShortestPathFromPathCache(0, 8);
+	}
+	else
+	{
+		vertList = pMGraph->getOrCreateShortestPath(0, 8);
+	}
+
+	delete pMGraph;
 
 	return vertList;
 }
@@ -49,7 +67,16 @@ std::list<Vertex*> test2Stop()
 	pMGraph->addStopPoint(1, 1, pStopPoint);
 
 	std::list<Vertex*> vertList;
-	vertList = pMGraph->getOrCreateShortestPath(0, 8);
+	if (pMGraph->isPathCacheValid(0, 8))
+	{
+		vertList = pMGraph->getShortestPathFromPathCache(0, 8);
+	}
+	else
+	{
+		vertList = pMGraph->getOrCreateShortestPath(0, 8);
+	}
+
+	delete pMGraph;
 
 	return vertList;
 }
@@ -72,7 +99,16 @@ std::list<Vertex*> test3Stop()
 	pMGraph->addStopPoint(1, 2, pStopPoint);
 
 	std::list<Vertex*> vertList;
-	vertList = pMGraph->getOrCreateShortestPath(0, 8);
+	if (pMGraph->isPathCacheValid(0, 8))
+	{
+		vertList = pMGraph->getShortestPathFromPathCache(0, 8);
+	}
+	else
+	{
+		vertList = pMGraph->getOrCreateShortestPath(0, 8);
+	}
+
+	delete pMGraph;
 
 	return vertList;
 }
@@ -93,7 +129,16 @@ std::list<Vertex*> test4Stop()
 	pMGraph->addStopPoint(0, 1, pStopPoint);
 
 	std::list<Vertex*> vertList;
-	vertList = pMGraph->getOrCreateShortestPath(1, 1);
+	if (pMGraph->isPathCacheValid(1, 1))
+	{
+		vertList = pMGraph->getShortestPathFromPathCache(1, 1);
+	}
+	else
+	{
+		vertList = pMGraph->getOrCreateShortestPath(1, 1);
+	}
+
+	delete pMGraph;
 
 	return vertList;
 }
@@ -113,20 +158,22 @@ std::list<Vertex*> test5Stop()
 	pMGraph->addStopPoint(0, 1, pStopPoint);
 
 	std::list<Vertex*> vertList;
-	vertList = pMGraph->getOrCreateShortestPath(0, 6);
+	if (pMGraph->isPathCacheValid(0, 6))
+	{
+		vertList = pMGraph->getShortestPathFromPathCache(0, 6);
+	}
+	else
+	{
+		vertList = pMGraph->getOrCreateShortestPath(0, 6);
+	}
+
+	delete pMGraph;
 
 	return vertList;
 }
 
-
-void main()
+void serializePath(std::list<Vertex*>& vertList, std::stringstream& strStream)
 {
-	std::list<Vertex*> vertList;
-	vertList = test5Stop();
-	FILE* pFile = nullptr;
-	pFile = fopen("E:\\aaa.txt", "w");
-	std::stringstream strStream;
-
 	if (vertList.size() > 0)
 	{
 		for (auto pVert : vertList)
@@ -137,10 +184,31 @@ void main()
 	}
 	else
 	{
-		strStream << "can not find path";
+		strStream << "can not find path" << "\n";
 	}
+}
+
+
+void main()
+{
+	std::list<Vertex*> vertList;
+	FILE* pFile = nullptr;
+	pFile = fopen("E:\\aaa.txt", "w");
+	std::stringstream strStream;
+
+	vertList = test5Stop();
+	serializePath(vertList, strStream);
+
+	vertList = test4Stop();
+	serializePath(vertList, strStream);
+
+	vertList = test2Stop();
+	serializePath(vertList, strStream);
+
+	vertList = test2Stop();
+	serializePath(vertList, strStream);
 
 	fwrite(strStream.str().c_str(), strStream.str().length(), 1, pFile);
 	fclose(pFile);
-	system("pause");
+	//system("pause");
 }
