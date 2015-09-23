@@ -164,7 +164,7 @@ void serializePath(std::list<Vertex*>& vertList, std::stringstream& strStream)
 void main()
 {
 	MGraph* pMGraph = new MGraph();
-	pMGraph->init(3, 3);
+	pMGraph->init(3, 3, 1, 1);
 
 	std::list<Vertex*> vertList;
 	FILE* pFile = nullptr;

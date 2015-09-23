@@ -273,14 +273,13 @@ void MGraph::clearPath()
 
 void MGraph::clearAllStopPoint()
 {
-	for (auto keyValue : m_id2StopPtMap)
+	for (auto vert : m_vertsVec)
 	{
-		if (keyValue.second)		// 可能通过 m_id2StopPtMap[idx] 导致添加数据，因此这里判断
+		if (vert->m_pStopPoint)		// 可能通过 m_id2StopPtMap[idx] 导致添加数据，因此这里判断
 		{
-			setNeighborInvalidByVertId(keyValue.first);
-			delete keyValue.second;
+			setNeighborInvalidByVertId(vert->m_id);
+			delete vert->m_pStopPoint;
+			vert->m_pStopPoint = nullptr;
 		}
 	}
-
-	m_id2StopPtMap.clear();
 }

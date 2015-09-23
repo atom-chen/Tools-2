@@ -1,5 +1,29 @@
 #include "MGraph.h"
 
+StopPoint::StopPoint()
+{
+
+}
+
+StopPoint::~StopPoint()
+{
+
+}
+
+Vertex::Vertex()
+{
+	reset();
+}
+
+Vertex::~Vertex()
+{
+	if (m_pStopPoint)
+	{
+		delete m_pStopPoint;
+		m_pStopPoint = nullptr;
+	}
+}
+
 void Vertex::reset()
 {
 	//m_id = 0;
@@ -7,6 +31,8 @@ void Vertex::reset()
 	m_nearestVert = nullptr;
 	m_distance = std::numeric_limits<float>::max();
 	m_bNeighborValid = false;
+	m_pStopPoint = nullptr;
+	m_vertsIdVec.clear();
 }
 
 void Vertex::setNeighborVertsId(int* neighborVertIdArr, int len)
@@ -33,11 +59,6 @@ MGraph::~MGraph()
 	{
 		delete pVert;
 	}
-
-	for (auto stopPt : m_id2StopPtMap)
-	{
-		delete stopPt.second;
-	}
 }
 
 
@@ -61,10 +82,13 @@ size_t MGraph::getVertsCount()
 	return m_vertsVec.size();
 }
 
-void MGraph::init(int xCount, int yCount)
+void MGraph::init(int xCount, int yCount, float gridWidth, float gridHeight)
 {
 	m_xCount = xCount;
 	m_yCount = yCount;
+	m_gridWidth = gridWidth;
+	m_gridHeight = gridHeight;
+
 	m_vertsCount = m_xCount * m_yCount;
 
 	int idx = 0;
@@ -98,7 +122,7 @@ bool MGraph::isInStopPt(int nx, int ny)
 		&& ny >= 0 && ny < m_yCount)
 	{
 		int index = ny * m_xCount + nx;
-		if (m_id2StopPtMap[index])			// 如果有阻挡点
+		if (m_vertsVec[index]->m_pStopPoint)			// 如果有阻挡点
 		{
 			return true;
 		}
@@ -176,11 +200,11 @@ float MGraph::adjacentCost(int vertId, int neighborVertId)
 void MGraph::addStopPoint(int nx, int ny, StopPoint* pStopPoint)
 {
 	int vertId = convXYToVertId(nx, ny);
-	if (m_id2StopPtMap[vertId])		// 如果之前有阻挡点，就删除
+	if (m_vertsVec[vertId]->m_pStopPoint)		// 如果之前有阻挡点，就删除
 	{
-		delete m_id2StopPtMap[vertId];
+		delete m_vertsVec[vertId]->m_pStopPoint;
 	}
-	m_id2StopPtMap[vertId] = pStopPoint;
+	m_vertsVec[vertId]->m_pStopPoint = pStopPoint;
 
 	setNeighborInvalidByVertId(vertId);
 }
@@ -327,4 +351,23 @@ void MGraph::setNeighborInvalidByVertId(int vertId)
 	{
 		m_vertsVec[m_vertsVec[vertId]->m_vertsIdVec[neighborIdx]]->m_bNeighborValid = false;
 	}
+}
+
+Vertex* MGraph::getVertexByPos(float fx, float fy)
+{
+	int ix = fx / m_gridWidth;
+	int iy = fx / m_gridHeight;
+
+	return m_vertsVec[convXYToVertId(ix, iy)];
+}
+
+void MGraph::getVertexCenterByPos(float fx, float fy, float& centerX, float& centerY)
+{
+	int ix = fx / m_gridWidth;
+	int iy = fx / m_gridHeight;
+
+	m_vertsVec[convXYToVertId(ix, iy)];
+
+	centerX = ix * m_gridWidth + m_gridWidth / 2;
+	centerY = ix * m_gridHeight + m_gridHeight / 2;
 }

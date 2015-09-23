@@ -2,7 +2,7 @@
 #define __MGRAPH_H_
 
 #include <vector>
-#include <map>
+//#include <map>
 #include <algorithm>
 #include <cmath>
 #include <list>
@@ -10,9 +10,11 @@
 #include "PathCache.h"
 
 // 阻挡点
-struct StopPoint
+class StopPoint
 {
-
+public:
+	StopPoint();
+	~StopPoint();
 };
 
 // 当前顶点的状态
@@ -24,33 +26,45 @@ enum class State
 };
 
 // 顶点数据
-struct Vertex
+class Vertex
 {
+public:
 	unsigned int m_id;
 	State m_state;
 	Vertex* m_nearestVert;
 	float m_distance;
 	bool m_bNeighborValid;		// 邻居数据是否有效，因为可能动态修改阻挡点
 	std::vector<int> m_vertsIdVec;			// 保存邻居顶点 Id，这个数值只有在使用的时候才会动态生成，初始化的时候并不生成
+	StopPoint* m_pStopPoint;			// 阻挡点信息
+
+	Vertex();
+	~Vertex();
 
 	void reset();
 	void setNeighborVertsId(int* neighborVertIdArr, int len = 8);
 };
 
-// 图
+/**
+ * @brief 图，其实 Vertex 就是格子的中心点
+ * 0	1	2
+ * 3	4	5
+ * 6	7	8
+ */
 class MGraph 
 {
 public:
 	typedef std::vector<Vertex*> VertVector;
-	typedef std::map<int, StopPoint*> StopPtMap;
+	//typedef std::map<int, StopPoint*> StopPtMap;
 
 private:
-	VertVector m_vertsVec;			// 所有的顶点，启动的时候，所有的顶点全部创建，不是需要的时候再创建，如果需要的时候再创建，就需要各种判断
+	VertVector m_vertsVec;		// 所有的顶点，启动的时候，所有的顶点全部创建，不是需要的时候再创建，如果需要的时候再创建，就需要各种判断
 	int m_vertsCount;			// 定点总共数量
 	int m_xCount;				// X 顶点数量
 	int m_yCount;				// Y 顶点数量
+	float m_gridWidth;			// 格子宽度
+	float m_gridHeight;			// 格子高度
 
-	StopPtMap m_id2StopPtMap;
+	//StopPtMap m_id2StopPtMap;
 
 	// Dijkstra 算法需要的数据
 	Vertex *m_startVert, *m_endVert;
@@ -125,7 +139,7 @@ public:
 	Vertex* getVertexById(int vertId);
 	const VertVector& getVertsVec() const;
 	size_t getVertsCount();
-	void init(int xCount, int yCount);
+	void init(int xCount, int yCount, float gridWidth, float gridHeight);
 	// 转换顶点的 Id 到顶点索引
 	void convVertIdToXY(int vertId, int& x, int& y);
 	int convXYToVertId(int x, int y);
@@ -148,6 +162,8 @@ public:
 	std::list<Vertex*>& getShortestPathFromPathCache(int startId, int endId);
 	void clearPath();				// 清理当前的路径
 	void clearAllStopPoint();		// 清理所有的阻挡点
+	Vertex* getVertexByPos(float fx, float fy);		// 通过坐标获取顶点
+	void getVertexCenterByPos(float fx, float fy, float& centerX, float& centerY);	// 获取一个顶点的位置，其实就是一个格子的中心点的位置
 };
 
 #endif
