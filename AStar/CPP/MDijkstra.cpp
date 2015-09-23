@@ -4,11 +4,6 @@
 #include <stdexcept>
 #include <list>
 
-std::list<Vertex*>& MGraph::getPath()
-{
-	return m_pathList;
-}
-
 //bool MGraph::checkFail(Vertex *endVert)
 //{
 //	if (!endVert->m_nearestVert)	// 如果终点没有前面指向的节点
@@ -169,6 +164,11 @@ void MGraph::modifyVertsDist(float& minDist, int& minIdx)
 	}
 }
 
+std::list<Vertex*>& MGraph::getShortestPath()
+{
+	return m_pathList;
+}
+
 void MGraph::createShortestPath(int startId, int endId)
 {
 	m_pathList.clear();
@@ -215,7 +215,8 @@ void MGraph::createShortestPath(int startId, int endId)
 
 	if (bFindShortestPath)
 	{
-		buildPath(m_endVert);
+		buildPath(m_endVert);	// 生成路径列表
+		convVertList2VertIdVec(m_pathCache.getAndAddPathCache(startId, endId)->m_vertsIdVec);		// 缓存目录
 	}
 }
 
@@ -224,6 +225,42 @@ std::list<Vertex*>& MGraph::getOrCreateShortestPath(int startId, int endId)
 	if (!m_pathList.size())
 	{
 		createShortestPath(startId, endId);
+	}
+
+	return m_pathList;
+}
+
+void MGraph::convVertIdVec2VertList(std::vector<int>& vertsIdVec)
+{
+	m_pathList.clear();
+	for (auto vertId : vertsIdVec)
+	{
+		m_pathList.push_back(m_vertsVec[vertId]);
+	}
+}
+
+void MGraph::convVertList2VertIdVec(std::vector<int>& vertsIdVec)
+{
+	for (auto vert : m_pathList)
+	{
+		vertsIdVec.push_back(vert->m_id);
+	}
+}
+
+bool MGraph::isPathCacheValid(int startId, int endId)
+{
+	return m_pathCache.isPathValid(startId, endId);
+}
+
+std::list<Vertex*>& MGraph::getShortestPathFromPathCache(int startId, int endId)
+{
+	if (isPathCacheValid(startId, endId))
+	{
+		convVertIdVec2VertList(m_pathCache.getPathCache(startId, endId)->m_vertsIdVec);
+	}
+	else
+	{
+		m_pathList.clear();
 	}
 
 	return m_pathList;

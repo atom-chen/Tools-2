@@ -38,22 +38,17 @@ MGraph::~MGraph()
 
 Vertex* MGraph::getVertexById(int vertId)
 {
-	return m_vertsVec[vertId];
-}
-
-const MGraph::VertVector& MGraph::getVerts() const
-{
-	return m_vertsVec;
-}
-
-Vertex* MGraph::getVert(int id)
-{
-	if (id < m_vertsVec.size())
+	if (vertId < m_vertsVec.size())
 	{
-		return m_vertsVec[id];
+		return m_vertsVec[vertId];
 	}
 
 	return nullptr;
+}
+
+const MGraph::VertVector& MGraph::getVertsVec() const
+{
+	return m_vertsVec;
 }
 
 size_t MGraph::getVertsCount()
