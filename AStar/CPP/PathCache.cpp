@@ -35,10 +35,10 @@ CacheItem* PathCache::getPathCache(int startId, int endId)
 
 bool PathCache::isPathValid(int startId, int endId)
 {
-	if (!m_rowCol2PathMap[startId][endId] || m_rowCol2PathMap[startId][endId]->m_bValid)
+	if (m_rowCol2PathMap[startId][endId] && m_rowCol2PathMap[startId][endId]->m_bValid)
 	{
 		return false;
 	}
 
-	return true;
+	return false;
 }
