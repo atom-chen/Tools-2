@@ -9,27 +9,27 @@ std::list<Vertex*>& MGraph::getPath()
 	return m_pathList;
 }
 
-bool MGraph::checkFail(Vertex *endVert)
-{
-	if (!endVert->m_nearestVert)	// 如果终点没有前面指向的节点
-	{
-		if (!isNeighbor(m_startVert->m_id, m_endVert->m_id))		// 如果不是邻居，必然失败
-		{
-			return true;
-		}
-		else if (isSlashNeighbor(m_startVert->m_id, m_endVert->m_id))		// 如果是对角邻居
-		{
-			if (isBackSlashStopPoint(m_startVert->m_id, m_endVert->m_id))
-			{
-				return true;
-			}
-		}
-	}
+//bool MGraph::checkFail(Vertex *endVert)
+//{
+//	if (!endVert->m_nearestVert)	// 如果终点没有前面指向的节点
+//	{
+//		if (!isNeighbor(m_startVert->m_id, m_endVert->m_id))		// 如果不是邻居，必然失败
+//		{
+//			return true;
+//		}
+//		else if (isSlashNeighbor(m_startVert->m_id, m_endVert->m_id))		// 如果是对角邻居
+//		{
+//			if (isBackSlashStopPoint(m_startVert->m_id, m_endVert->m_id))
+//			{
+//				return true;
+//			}
+//		}
+//	}
+//
+//	return false;
+//}
 
-	return false;
-}
-
-std::list<Vertex*>& MGraph::buildPath(Vertex *endVert)
+void MGraph::buildPath(Vertex *endVert)
 {
 	Vertex *vert = endVert;
 	while (vert != nullptr)
@@ -39,36 +39,36 @@ std::list<Vertex*>& MGraph::buildPath(Vertex *endVert)
 	}
 	m_pathList.push_front(m_startVert);		// 把最初的顶点放进去
 
-	return m_pathList;
+	//return m_pathList;
 }
 
 void MGraph::initVerts(unsigned int startId, unsigned int endId)
 {
-	m_startVert = m_endVert = nullptr;
+	m_startVert = nullptr;
+	m_endVert = nullptr;
 
-	for (auto pVert : m_verts)
+	int nx = 0;
+	int ny = 0;
+
+	convVertIdToXY(startId, nx, ny);
+	if (nx >= 0 && nx < m_xCount
+		&& ny >= 0 && ny < m_yCount)
 	{
-		pVert->reset();
+		m_startVert = m_vertsVec[startId];
+	}
 
-		if (pVert->m_id == startId) 
-		{
-			m_startVert = pVert;
-		}
-		else if (pVert->m_id == endId) 
-		{
-			m_endVert = pVert;
-		}
-
-		if (m_startVert != nullptr && m_endVert != nullptr)			// 如果查找到就退出
-		{
-			break;
-		}
+	convVertIdToXY(endId, nx, ny);
+	if (nx >= 0 && nx < m_xCount
+		&& ny >= 0 && ny < m_yCount)
+	{
+		m_endVert = m_vertsVec[startId];
 	}
 
 	if (m_startVert == nullptr || m_endVert == nullptr) 
 	{
 		throw std::runtime_error("Failed to find the start/end node(s)!");
 	}
+
 
 	m_startVert->m_distance = 0;
 }
@@ -80,7 +80,7 @@ void MGraph::resetAllVerts(unsigned int startId)
 	for (int vertIdx = 0; vertIdx < m_vertsCount; ++vertIdx)
 	{
 		m_startVert->m_state = State::Unknown;    // 全部顶点初始化为未知对短路径状态
-		pVert = m_verts[vertIdx];
+		pVert = m_vertsVec[vertIdx];
 		pVert->m_distance = adjacentCost(startId, vertIdx); //将与 startId 点有连线的顶点加上权值
 		pVert->m_nearestVert = nullptr;    // 初始化路径的前一个顶点
 	}
@@ -99,7 +99,7 @@ bool MGraph::findNextClosedVert(float& minDist, int& minIdx, std::vector<int>& c
 	// 遍历所有顶点，查找最近路径，但是格子寻路比较特殊，只有附近 8 个顶点是可以到达的，其它的都是不可以直接到达的
 	//for (neighborVertIdx = 0; neighborVertIdx < m_vertsCount; ++neighborVertIdx) // 寻找离 startId 最近的顶点
 	//{
-	//	pVert = m_verts[neighborVertIdx];
+	//	pVert = m_vertsVec[neighborVertIdx];
 	//	if (pVert->m_state != State::Closed && pVert->m_distance < minDist)
 	//	{
 	//		minDist = pVert->m_distance; // w顶点离 startId 顶点更近
@@ -111,19 +111,19 @@ bool MGraph::findNextClosedVert(float& minDist, int& minIdx, std::vector<int>& c
 	// 只要遍历周围 8 个顶点就可以了，因为格子寻路只能是和自己周围的 8 个格子才有权重，和其它的格子是没有权重的
 	for (closedIdx = 0; closedIdx < closedVec.size(); ++closedIdx)
 	{
-		if (!m_verts[closedVec[closedIdx]]->m_bNeighborValid)		// 如果邻居数据是无效的
+		if (!m_vertsVec[closedVec[closedIdx]]->m_bNeighborValid)		// 如果邻居数据是无效的
 		{
 			findNeighborVertIdArr(closedVec[closedIdx]);
-			m_verts[closedVec[closedIdx]]->setNeighborVertsId(m_neighborVertIdArr);
+			m_vertsVec[closedVec[closedIdx]]->setNeighborVertsId(m_neighborVertIdArr);
 		}
 
-		for (neighborVertIdx = 0; neighborVertIdx < m_verts[closedVec[closedIdx]]->m_vertsIdVec.size(); ++neighborVertIdx)
+		for (neighborVertIdx = 0; neighborVertIdx < m_vertsVec[closedVec[closedIdx]]->m_vertsIdVec.size(); ++neighborVertIdx)
 		{
-			pVert = m_verts[m_verts[closedVec[closedIdx]]->m_vertsIdVec[neighborVertIdx]];
+			pVert = m_vertsVec[m_vertsVec[closedVec[closedIdx]]->m_vertsIdVec[neighborVertIdx]];
 			if (pVert->m_state != State::Closed && pVert->m_distance < minDist)
 			{
 				minDist = pVert->m_distance; // w顶点离 startId 顶点更近
-				minIdx = m_verts[closedVec[closedIdx]]->m_vertsIdVec[neighborVertIdx];
+				minIdx = m_vertsVec[closedVec[closedIdx]]->m_vertsIdVec[neighborVertIdx];
 				bFindNextClosedVert = true;				// 说明查找到了
 			}
 		}
@@ -140,36 +140,36 @@ void MGraph::modifyVertsDist(float& minDist, int& minIdx)
 	// 遍历所有顶点，因为通常的算法是权重存储在矩阵中的，如果顶点中直接存储邻居顶点，就可以只遍历邻居顶点
 	//for (neighborVertIdx = 0; neighborVertIdx < m_vertsCount; ++neighborVertIdx) // 修正当前最短路径距离
 	//{
-	//	pVert = m_verts[neighborVertIdx];
+	//	pVert = m_vertsVec[neighborVertIdx];
 		// 如果经过V顶点的路径比现在这条路径的长度短的话
 	//	if (pVert->m_state != State::Closed && (minDist + adjacentCost(minIdx, neighborVertIdx) < pVert->m_distance))
 	//	{
 			// 说明找到了最短的路径，修改D[w] 和 p[w]
 	//		pVert->m_distance = minDist + adjacentCost(minIdx, neighborVertIdx); // 修改当前路径长度
-	//		pVert->m_nearestVert = m_verts[minIdx];
+	//		pVert->m_nearestVert = m_vertsVec[minIdx];
 	//	}
 	//}
 
 	// 只需要遍历最新加入 closed 的顶点的邻居顶点
-	if (!m_verts[minIdx]->m_bNeighborValid)		// 如果邻居数据是无效的
+	if (!m_vertsVec[minIdx]->m_bNeighborValid)		// 如果邻居数据是无效的
 	{
 		findNeighborVertIdArr(minIdx);
-		m_verts[minIdx]->setNeighborVertsId(m_neighborVertIdArr);
+		m_vertsVec[minIdx]->setNeighborVertsId(m_neighborVertIdArr);
 	}
-	for (neighborVertIdx = 0; neighborVertIdx < m_verts[minIdx]->m_vertsIdVec.size(); ++neighborVertIdx) // 修正当前最短路径距离
+	for (neighborVertIdx = 0; neighborVertIdx < m_vertsVec[minIdx]->m_vertsIdVec.size(); ++neighborVertIdx) // 修正当前最短路径距离
 	{
-		pVert = m_verts[m_verts[minIdx]->m_vertsIdVec[neighborVertIdx]];
+		pVert = m_vertsVec[m_vertsVec[minIdx]->m_vertsIdVec[neighborVertIdx]];
 		// 如果经过V顶点的路径比现在这条路径的长度短的话
-		if (pVert->m_state != State::Closed && (minDist + adjacentCost(minIdx, m_verts[minIdx]->m_vertsIdVec[neighborVertIdx]) < pVert->m_distance))
+		if (pVert->m_state != State::Closed && (minDist + adjacentCost(minIdx, m_vertsVec[minIdx]->m_vertsIdVec[neighborVertIdx]) < pVert->m_distance))
 		{
 			// 说明找到了最短的路径，修改D[w] 和 p[w]
-			pVert->m_distance = minDist + adjacentCost(minIdx, m_verts[minIdx]->m_vertsIdVec[neighborVertIdx]); // 修改当前路径长度
-			pVert->m_nearestVert = m_verts[minIdx];
+			pVert->m_distance = minDist + adjacentCost(minIdx, m_vertsVec[minIdx]->m_vertsIdVec[neighborVertIdx]); // 修改当前路径长度
+			pVert->m_nearestVert = m_vertsVec[minIdx];
 		}
 	}
 }
 
-std::list<Vertex*>& MGraph::getShortestPath(int startId, int endId)
+void MGraph::createShortestPath(int startId, int endId)
 {
 	m_pathList.clear();
 	m_closedVec.clear();
@@ -190,10 +190,11 @@ std::list<Vertex*>& MGraph::getShortestPath(int startId, int endId)
 	// 总共就 nVerts 个顶点，第 startId 个已经确认，只需要确认剩下的 nVerts - 1 就可以了
 	for (openVertIdx = 1; openVertIdx < m_vertsCount; ++openVertIdx)
 	{
+		// 要遍历 m_closedVec 中的点，不能只遍历 minIdx 附近的点，可能有些路径开始权重比较小，后面权重比较大，但是有些路径开始权重比较大，后期权重比较小
 		if (findNextClosedVert(minDist, minIdx, m_closedVec))	// 如果查找到了下一个最短的未确认的索引
 		{
 			// 注意起始顶点和第二个顶点之间是没有 m_nearestVert ，因此需要手工将第一个顶点放到路径列表中去
-			pVert = m_verts[minIdx];
+			pVert = m_vertsVec[minIdx];
 			pVert->m_state = State::Closed; // 将目前找到的最近的顶点置为 State::Closed 
 			m_closedVec.push_back(minIdx);
 
@@ -214,10 +215,16 @@ std::list<Vertex*>& MGraph::getShortestPath(int startId, int endId)
 
 	if (bFindShortestPath)
 	{
-		return buildPath(m_endVert);
+		buildPath(m_endVert);
 	}
-	else
+}
+
+std::list<Vertex*>& MGraph::getOrCreateShortestPath(int startId, int endId)
+{
+	if (!m_pathList.size())
 	{
-		return m_pathList;
+		createShortestPath(startId, endId);
 	}
+
+	return m_pathList;
 }

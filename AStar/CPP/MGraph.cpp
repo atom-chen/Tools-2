@@ -29,7 +29,7 @@ MGraph::MGraph()
 
 MGraph::~MGraph()
 {
-	for (auto pVert : m_verts)
+	for (auto pVert : m_vertsVec)
 	{
 		delete pVert;
 	}
@@ -38,19 +38,19 @@ MGraph::~MGraph()
 
 Vertex* MGraph::getVertexById(int vertId)
 {
-	return m_verts[vertId];
+	return m_vertsVec[vertId];
 }
 
 const MGraph::VertVector& MGraph::getVerts() const
 {
-	return m_verts;
+	return m_vertsVec;
 }
 
 Vertex* MGraph::getVert(int id)
 {
-	if (id < m_verts.size())
+	if (id < m_vertsVec.size())
 	{
-		return m_verts[id];
+		return m_vertsVec[id];
 	}
 
 	return nullptr;
@@ -58,7 +58,7 @@ Vertex* MGraph::getVert(int id)
 
 size_t MGraph::getVertsCount()
 {
-	return m_verts.size();
+	return m_vertsVec.size();
 }
 
 void MGraph::init(int xCount, int yCount)
@@ -73,17 +73,17 @@ void MGraph::init(int xCount, int yCount)
 	for (idx = 0; idx < m_vertsCount; ++idx)
 	{
 		pVertex = new Vertex();
-		m_verts.push_back(pVertex);
+		m_vertsVec.push_back(pVertex);
 		pVertex->reset();
 		pVertex->m_id = idx;
 	}
 }
 
 // 转换顶点的 Id 到顶点索引
-void MGraph::convIdToXY(int vertId, int* x, int* y)
+void MGraph::convVertIdToXY(int vertId, int& x, int& y)
 {
-	*y = vertId / m_xCount;
-	*x = vertId - *y * m_xCount;
+	y = vertId / m_xCount;
+	x = vertId - y * m_xCount;
 }
 
 int MGraph::convXYToVertId(int x, int y)
@@ -130,13 +130,13 @@ float MGraph::adjacentCost(int vertId, int neighborVertId)
 		return 0;
 	}
 
-	convIdToXY(neighborVertId, &xNeighbor, &yNeighbor);
+	convVertIdToXY(neighborVertId, xNeighbor, yNeighbor);
 	if (isInStopPt(xNeighbor, yNeighbor))		// 如果邻居在阻挡点中
 	{
 		return neighborCost;
 	}
 
-	convIdToXY(vertId, &x, &y);
+	convVertIdToXY(vertId, x, y);
 	if (std::abs((long)(xNeighbor - x)) > 1 || std::abs((long)(yNeighbor - y)) > 1)	// 如果相差不是 1 ，就说明中间有间隔，不能直接到达
 	{
 		return neighborCost;
@@ -179,15 +179,15 @@ void MGraph::addStopPoint(int nx, int ny, StopPoint* pStopPoint)
 	m_id2StopPtMap[vertId] = pStopPoint;
 
 	// 需要修改邻居是这个顶点的其它顶点的邻居
-	if (!m_verts[vertId]->m_bNeighborValid)
+	if (!m_vertsVec[vertId]->m_bNeighborValid)
 	{
 		findNeighborVertIdArr(vertId);
-		m_verts[vertId]->setNeighborVertsId(m_neighborVertIdArr);
+		m_vertsVec[vertId]->setNeighborVertsId(m_neighborVertIdArr);
 	}
 	
-	for (int neighborIdx = 0; neighborIdx < m_verts[vertId]->m_vertsIdVec.size(); ++neighborIdx)
+	for (int neighborIdx = 0; neighborIdx < m_vertsVec[vertId]->m_vertsIdVec.size(); ++neighborIdx)
 	{
-		m_verts[m_verts[vertId]->m_vertsIdVec[neighborIdx]]->m_bNeighborValid = false;
+		m_vertsVec[m_vertsVec[vertId]->m_vertsIdVec[neighborIdx]]->m_bNeighborValid = false;
 	}
 }
 
@@ -195,8 +195,8 @@ bool MGraph::isHorizontalOrVerticalNeighbor(int vertId, int neighborVertId)
 {
 	int x, y;
 	int xNeighbor, yNeighbor;
-	convIdToXY(vertId, &x, &y);
-	convIdToXY(neighborVertId, &xNeighbor, &yNeighbor);
+	convVertIdToXY(vertId, x, y);
+	convVertIdToXY(neighborVertId, xNeighbor, yNeighbor);
 
 	if ((std::abs((long)(xNeighbor - x)) == 1 && std::abs((long)(yNeighbor - y)) == 0) ||
 		(std::abs((long)(xNeighbor - x)) == 0 && std::abs((long)(yNeighbor - y)) == 1))
@@ -211,8 +211,8 @@ bool MGraph::isHorizontalNeighbor(int vertId, int neighborVertId)
 {
 	int x, y;
 	int xNeighbor, yNeighbor;
-	convIdToXY(vertId, &x, &y);
-	convIdToXY(neighborVertId, &xNeighbor, &yNeighbor);
+	convVertIdToXY(vertId, x, y);
+	convVertIdToXY(neighborVertId, xNeighbor, yNeighbor);
 
 	if ((std::abs((long)(xNeighbor - x)) == 1 && std::abs((long)(yNeighbor - y)) == 0))
 	{
@@ -226,8 +226,8 @@ bool MGraph::isVerticalNeighbor(int vertId, int neighborVertId)
 {
 	int x, y;
 	int xNeighbor, yNeighbor;
-	convIdToXY(vertId, &x, &y);
-	convIdToXY(neighborVertId, &xNeighbor, &yNeighbor);
+	convVertIdToXY(vertId, x, y);
+	convVertIdToXY(neighborVertId, xNeighbor, yNeighbor);
 
 	if ((std::abs((long)(xNeighbor - x)) == 0 && std::abs((long)(yNeighbor - y)) == 1))
 	{
@@ -241,8 +241,8 @@ bool MGraph::isSlashNeighbor(int vertId, int neighborVertId)
 {
 	int x, y;
 	int xNeighbor, yNeighbor;
-	convIdToXY(vertId, &x, &y);
-	convIdToXY(neighborVertId, &xNeighbor, &yNeighbor);
+	convVertIdToXY(vertId, x, y);
+	convVertIdToXY(neighborVertId, xNeighbor, yNeighbor);
 
 	if ((std::abs((long)(xNeighbor - x)) == 1 && std::abs((long)(yNeighbor - y)) == 1))			// 斜线
 	{
@@ -256,8 +256,8 @@ bool MGraph::isNeighbor(int vertId, int neighborVertId)
 {
 	int x, y;
 	int xNeighbor, yNeighbor;
-	convIdToXY(vertId, &x, &y);
-	convIdToXY(neighborVertId, &xNeighbor, &yNeighbor);
+	convVertIdToXY(vertId, x, y);
+	convVertIdToXY(neighborVertId, xNeighbor, yNeighbor);
 
 	if ((std::abs((long)(xNeighbor - x)) == 1 && std::abs((long)(yNeighbor - y)) == 0) ||		// 水平
 		(std::abs((long)(xNeighbor - x)) == 0 && std::abs((long)(yNeighbor - y)) == 1) ||		// 垂直
@@ -273,8 +273,8 @@ bool MGraph::isBackSlashStopPoint(int vertId, int neighborVertId)
 {
 	int x, y;
 	int xNeighbor, yNeighbor;
-	convIdToXY(vertId, &x, &y);
-	convIdToXY(neighborVertId, &xNeighbor, &yNeighbor);
+	convVertIdToXY(vertId, x, y);
+	convVertIdToXY(neighborVertId, xNeighbor, yNeighbor);
 
 	if (isInStopPt(x, yNeighbor) || isInStopPt(xNeighbor, y))
 	{
@@ -287,7 +287,7 @@ bool MGraph::isBackSlashStopPoint(int vertId, int neighborVertId)
 void MGraph::findNeighborVertIdArr(int vertId)
 {
 	int x, y;
-	convIdToXY(vertId, &x, &y);
+	convVertIdToXY(vertId, x, y);
 
 	const int dx[8] = { 1, 1, 0, -1, -1, -1, 0, 1 };
 	const int dy[8] = { 0, 1, 1, 1, 0, -1, -1, -1 };

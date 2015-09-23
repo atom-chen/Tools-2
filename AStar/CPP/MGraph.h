@@ -30,7 +30,7 @@ struct Vertex
 	Vertex* m_nearestVert;
 	float m_distance;
 	bool m_bNeighborValid;		// 邻居数据是否有效，因为可能动态修改阻挡点
-	std::vector<int> m_vertsIdVec;			// 保存邻居顶点 Id
+	std::vector<int> m_vertsIdVec;			// 保存邻居顶点 Id，这个数值只有在使用的时候才会动态生成，初始化的时候并不生成
 
 	void reset();
 	void setNeighborVertsId(int* neighborVertIdArr, int len = 8);
@@ -44,7 +44,7 @@ public:
 	typedef std::map<int, StopPoint*> StopPtMap;
 
 private:
-	VertVector m_verts;			// 所有的定点
+	VertVector m_vertsVec;			// 所有的定点
 	int m_vertsCount;			// 定点总共数量
 	int m_xCount;				// X 顶点数量
 	int m_yCount;				// Y 顶点数量
@@ -55,7 +55,7 @@ private:
 	Vertex *m_startVert, *m_endVert;
 
 	// 最终路径列表
-	std::list<Vertex*> m_pathList;
+	std::list<Vertex*> m_pathList;	// 使用 List ，主要是使用 push_front 这个接口
 	// 计算中需要用的 8 个邻居顶点索引
 	int m_neighborVertIdArr[8];
 	std::vector<int> m_closedVec;	// 已经确认的队列列表
@@ -100,7 +100,7 @@ public:
 	size_t getVertsCount();
 	void init(int xCount, int yCount);
 	// 转换顶点的 Id 到顶点索引
-	void convIdToXY(int vertId, int* x, int* y);
+	void convVertIdToXY(int vertId, int& x, int& y);
 	int convXYToVertId(int x, int y);
 	// 是否在阻挡点内
 	bool isInStopPt(int nx, int ny);
@@ -119,15 +119,16 @@ public:
 	void addStopPoint(int nx, int ny, StopPoint* pStopPoint);
 
 	// Dijkstra 算法需要的数据
-	std::list<Vertex*>& getShortestPath(int startId, int endId);
-	std::list<Vertex*>& buildPath(Vertex *endVert);
+	/**
+	* @brief 获取最短路径
+	*/
+	std::list<Vertex*>& getPath();
+	void createShortestPath(int startId, int endId);
+	std::list<Vertex*>& getOrCreateShortestPath(int startId, int endId);
+	void buildPath(Vertex *endVert);
 
 	void initVerts(unsigned int startId, unsigned int endId);
-	bool checkFail(Vertex *endVert);			// 检查是否失败
-	/**
-	 * @brief 获取最短路径
-	 */
-	std::list<Vertex*>& getPath();
+	//bool checkFail(Vertex *endVert);			// 检查是否失败
 };
 
 #endif
