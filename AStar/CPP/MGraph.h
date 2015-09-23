@@ -50,6 +50,9 @@ private:
 	// Dijkstra 算法需要的数据
 	Vertex *m_startVert, *m_endVert;
 
+	// 最终路径列表
+	std::list<Vertex*> m_pathList;
+
 protected:
 	bool isHorizontalOrVerticalNeighbor(int vertId, int neighborVertId);		// 判断是它们之间的关系是水平还是垂直关系
 	bool isHorizontalNeighbor(int vertId, int neighborVertId);
@@ -62,6 +65,18 @@ protected:
 	 * c	d
 	 */
 	bool isNeighbor(int vertId, int neighborVertId);
+	/**
+	 * @brief重置所有的顶点数据
+	 */
+	void resetAllVerts(unsigned int startId);
+	/**
+	 * @brief 查找下一个确认的顶点
+	 */
+	bool findNextClosedVert(float& minDist, int& minIdx);
+	/**
+	 * @brief 修改最短路径
+	 */
+	void modifyVertsDist(float& minDist, int& minIdx);
 
 public:
 	MGraph();
@@ -93,11 +108,15 @@ public:
 	void addStopPoint(int nx, int ny, StopPoint* pStopPoint);
 
 	// Dijkstra 算法需要的数据
-	std::list<Vertex*> getShortestPath(unsigned int startId, unsigned int endId);
-	std::list<Vertex*> buildPath(Vertex *endVert);
+	std::list<Vertex*>& getShortestPath(unsigned int startId, unsigned int endId);
+	std::list<Vertex*>& buildPath(Vertex *endVert);
 
-	void initializeNodes(unsigned int startId, unsigned int endId);
+	void initVerts(unsigned int startId, unsigned int endId);
 	bool checkFail(Vertex *endVert);			// 检查是否失败
+	/**
+	 * @brief 获取最短路径
+	 */
+	std::list<Vertex*>& getPath();
 };
 
 #endif

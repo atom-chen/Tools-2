@@ -5,6 +5,12 @@ cmake_minimum_required(VERSION 2.8.10)
 #set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE)
 #cmake_policy(SET CMP0003 NEW)
 
+if(MSVC)
+	add_definitions(-D_SCL_SECURE_NO_WARNINGS)
+	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+	add_definitions(-DNOMINMAX)
+endif(MSVC)
+
 #set (CMAKE_MODULE_PATH "C:/Program Files (x86)/Windows Kits/8.1/Lib/winv6.3/um/x64")
 set (CMAKE_PREFIX_PATH "F:/Program Files (x86)/Windows Kits/8.1/Lib/winv6.3/um/x64" ${CMAKE_PREFIX_PATH})
 
