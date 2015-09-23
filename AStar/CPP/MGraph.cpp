@@ -132,21 +132,20 @@ bool MGraph::isInStopPt(int nx, int ny)
 }
 
 /**
-* @brief 邻居格子成本
-* @param vertId 起始顶点 Id
-* @Param neighborVertId 邻居顶点 Id
-*	5	6	7
-*	4		0
-*	3	2	1
-*/
+ * @brief 邻居格子成本
+ * @param vertId 起始顶点 Id
+ * @Param neighborVertId 邻居顶点 Id
+ *	0	1	2
+ *	3		4
+ *	5	6	7
+ */
 float MGraph::adjacentCost(int vertId, int neighborVertId)
 {
 	int x, y;
 	int xNeighbor, yNeighbor;
 	float neighborCost = std::numeric_limits<float>::max();			// 默认是最大值
-	const int dx[8] = { 1, 1, 0, -1, -1, -1, 0, 1 };
-	const int dy[8] = { 0, 1, 1, 1, 0, -1, -1, -1 };
-	//const float cost[8] = { 1.0f, 1.41f, 1.0f, 1.41f, 1.0f, 1.41f, 1.0f, 1.41f };
+	const int dx[8] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+	const int dy[8] = { -1, -1, 1, 0, 0, 1, 1, 1 };
 	const float cost[8] = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
 
 	if (vertId == neighborVertId)		// 如果是自己，就返回 0
@@ -307,8 +306,8 @@ void MGraph::findNeighborVertIdArr(int vertId)
 	int x, y;
 	convVertIdToXY(vertId, x, y);
 
-	const int dx[8] = { 1, 1, 0, -1, -1, -1, 0, 1 };
-	const int dy[8] = { 0, 1, 1, 1, 0, -1, -1, -1 };
+	const int dx[8] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+	const int dy[8] = { -1, -1, 1, 0, 0, 1, 1, 1 };
 
 	int nx = 0;
 	int ny = 0;

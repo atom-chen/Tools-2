@@ -29,7 +29,7 @@ enum class State
 class Vertex
 {
 public:
-	unsigned int m_id;
+	int m_id;
 	State m_state;
 	Vertex* m_nearestVert;
 	float m_distance;
@@ -56,7 +56,7 @@ public:
 	typedef std::vector<Vertex*> VertVector;
 	//typedef std::map<int, StopPoint*> StopPtMap;
 
-private:
+protected:
 	VertVector m_vertsVec;		// 所有的顶点，启动的时候，所有的顶点全部创建，不是需要的时候再创建，如果需要的时候再创建，就需要各种判断
 	int m_vertsCount;			// 定点总共数量
 	int m_xCount;				// X 顶点数量
@@ -67,7 +67,8 @@ private:
 	//StopPtMap m_id2StopPtMap;
 
 	// Dijkstra 算法需要的数据
-	Vertex *m_startVert, *m_endVert;
+	Vertex* m_startVert;
+	Vertex* m_endVert;
 
 	// 最终路径列表
 	std::list<Vertex*> m_pathList;	// 使用 List ，主要是使用 push_front 这个接口
