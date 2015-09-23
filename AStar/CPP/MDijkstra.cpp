@@ -61,7 +61,7 @@ void MGraph::initVerts(unsigned int startId, unsigned int endId)
 	if (nx >= 0 && nx < m_xCount
 		&& ny >= 0 && ny < m_yCount)
 	{
-		m_endVert = m_vertsVec[startId];
+		m_endVert = m_vertsVec[endId];
 	}
 
 	if (m_startVert == nullptr || m_endVert == nullptr) 
@@ -123,7 +123,7 @@ bool MGraph::findNextClosedVert(float& minDist, int& minIdx, std::vector<int>& c
 			if (pVert->m_state != State::Closed && pVert->m_distance < minDist)
 			{
 				minDist = pVert->m_distance; // w顶点离 startId 顶点更近
-				minIdx = m_vertsVec[closedVec[closedIdx]]->m_vertsIdVec[neighborVertIdx];
+				minIdx = pVert->m_id;
 				bFindNextClosedVert = true;				// 说明查找到了
 			}
 		}
@@ -160,10 +160,10 @@ void MGraph::modifyVertsDist(float& minDist, int& minIdx)
 	{
 		pVert = m_vertsVec[m_vertsVec[minIdx]->m_vertsIdVec[neighborVertIdx]];
 		// 如果经过V顶点的路径比现在这条路径的长度短的话
-		if (pVert->m_state != State::Closed && (minDist + adjacentCost(minIdx, m_vertsVec[minIdx]->m_vertsIdVec[neighborVertIdx]) < pVert->m_distance))
+		if (pVert->m_state != State::Closed && (minDist + adjacentCost(minIdx, pVert->m_id) < pVert->m_distance))
 		{
 			// 说明找到了最短的路径，修改D[w] 和 p[w]
-			pVert->m_distance = minDist + adjacentCost(minIdx, m_vertsVec[minIdx]->m_vertsIdVec[neighborVertIdx]); // 修改当前路径长度
+			pVert->m_distance = minDist + adjacentCost(minIdx, pVert->m_id); // 修改当前路径长度
 			pVert->m_nearestVert = m_vertsVec[minIdx];
 		}
 	}

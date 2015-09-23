@@ -122,7 +122,7 @@ std::list<Vertex*> test5Stop()
 void main()
 {
 	std::list<Vertex*> vertList;
-	vertList = test4Stop();
+	vertList = test5Stop();
 	FILE* pFile = nullptr;
 	pFile = fopen("E:\\aaa.txt", "w");
 	std::stringstream strStream;
