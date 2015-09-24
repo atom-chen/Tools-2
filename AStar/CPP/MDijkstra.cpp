@@ -296,15 +296,16 @@ void MGraph::smoothPath()
 
 		Vertex* startVert = nullptr;		// 这个是平滑的开始点
 		Vertex* endVert = nullptr;			// 这个是平滑的结束点
-		startVert = m_pathList.front();
-		m_pathList.pop_front();			// 删除第一个顶点
-		endVert = m_pathList.front();	// 保存第二个顶点
-		m_pathList.pop_front();			// 删除第二个顶点，因为第二个顶点必然是直线通过
 
 		std::list<Vertex*>::iterator iteBegin;
 		std::list<Vertex*>::iterator iteEnd;
 		iteBegin = m_pathList.begin();
 		iteEnd = m_pathList.end();
+
+		startVert = *iteBegin;	// 保存第一个顶点
+		std::advance(iteBegin, 1);	// 指向第二个顶点
+		endVert = *iteBegin;	// 保存第二个顶点
+		std::advance(iteBegin, 1); // 指向第三个顶点
 
 		for (; iteBegin != iteEnd; ++iteBegin)
 		{
