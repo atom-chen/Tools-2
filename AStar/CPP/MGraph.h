@@ -163,7 +163,12 @@ public:
 	std::list<Vertex*>& getShortestPathFromPathCache(int startId, int endId);
 	void clearPath();				// 清理当前的路径
 	void clearAllStopPoint();		// 清理所有的阻挡点
-	Vertex* getVertexByPos(float fx, float fy);		// 通过坐标获取顶点
+
+	/**
+	 * @brief 通过坐标获取顶点
+	 * @Param fx 不能为负数，如果是负数，例如 -3.7 ，求出来是 -4
+	 */
+	Vertex* getVertexByPos(float fx, float fy);
 	void getVertexCenterByPos(float fx, float fy, float& centerX, float& centerY);	// 获取一个顶点的位置，其实就是一个格子的中心点的位置
 };
 

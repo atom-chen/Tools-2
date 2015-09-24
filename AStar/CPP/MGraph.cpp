@@ -48,9 +48,19 @@ void Vertex::setNeighborVertsId(int* neighborVertIdArr, int len)
 	}
 }
 
+/**
+* @brief 邻居数据信息
+*	0	1	2
+*	3		4
+*	5	6	7
+*/
+const int m_dx[8] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+const int m_dy[8] = { -1, -1, 1, 0, 0, 1, 1, 1 };
+const float m_cost[8] = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+
 MGraph::MGraph()
 {
-
+	
 }
 
 MGraph::~MGraph()
@@ -146,9 +156,6 @@ float MGraph::adjacentCost(int vertId, int neighborVertId)
 	int xNeighbor = 0;
 	int yNeighbor = 0;
 	float neighborCost = std::numeric_limits<float>::max();			// 默认是最大值
-	const int dx[8] = { -1, 0, 1, -1, 1, -1, 0, 1 };
-	const int dy[8] = { -1, -1, 1, 0, 0, 1, 1, 1 };
-	const float cost[8] = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
 
 	if (vertId == neighborVertId)		// 如果是自己，就返回 0
 	{
@@ -172,22 +179,22 @@ float MGraph::adjacentCost(int vertId, int neighborVertId)
 
 	for (int i = 0; i<8; ++i)
 	{
-		nx = x + dx[i];
-		ny = y + dy[i];
+		nx = x + m_dx[i];
+		ny = y + m_dy[i];
 
 		if (convXYToVertId(nx, ny) == neighborVertId)		// 如果正好是邻居
 		{
 			// 肯定不在阻挡点中，因为如果在阻挡点中，上面已经判断了
 			if (isHorizontalOrVerticalNeighbor(vertId, neighborVertId))		// 如果是水平或者垂直，是斜线
 			{
-				neighborCost = cost[i];
+				neighborCost = m_cost[i];
 			}
 			else
 			{
 				// 需要判断斜线上的另一个斜线的两个格子是否是阻挡点
 				if (!isInStopPt(x, yNeighbor) && !isInStopPt(xNeighbor, y))		// 如果对角线上的两个格子都不是阻挡点
 				{
-					neighborCost = cost[i];
+					neighborCost = m_cost[i];
 				}
 			}
 
@@ -328,17 +335,14 @@ void MGraph::findNeighborVertIdArr(int vertId)
 
 	convVertIdToXY(vertId, x, y);
 
-	const int dx[8] = { -1, 0, 1, -1, 1, -1, 0, 1 };
-	const int dy[8] = { -1, -1, 1, 0, 0, 1, 1, 1 };
-
 	int nx = 0;
 	int ny = 0;
 
 	// 遍历 8 个邻居顶点
 	for (int i = 0; i < 8; ++i)
 	{
-		nx = x + dx[i];
-		ny = y + dy[i];
+		nx = x + m_dx[i];
+		ny = y + m_dy[i];
 
 		if (nx >= 0 && nx < m_xCount &&
 			ny >= 0 && ny < m_yCount)		// 如果邻居顶点在范围内
@@ -374,18 +378,19 @@ void MGraph::setNeighborInvalidByVertId(int vertId)
 	}
 }
 
+// fx， fy 不能为负数
 Vertex* MGraph::getVertexByPos(float fx, float fy)
 {
-	int ix = fx / m_gridWidth;
-	int iy = fx / m_gridHeight;
+	int ix = (int)std::floor(fx / m_gridWidth);
+	int iy = (int)std::floor(fx / m_gridHeight);
 
 	return m_vertsVec[convXYToVertId(ix, iy)];
 }
 
 void MGraph::getVertexCenterByPos(float fx, float fy, float& centerX, float& centerY)
 {
-	int ix = fx / m_gridWidth;
-	int iy = fx / m_gridHeight;
+	int ix = (int)std::floor(fx / m_gridWidth);
+	int iy = (int)std::floor(fx / m_gridHeight);
 
 	centerX = ix * m_gridWidth + m_gridWidth / 2;
 	centerY = ix * m_gridHeight + m_gridHeight / 2;
