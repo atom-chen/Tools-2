@@ -3,6 +3,7 @@
 #include <numeric>
 #include <stdexcept>
 #include <list>
+#include <algorithm>
 
 //bool MGraph::checkFail(Vertex *endVert)
 //{
@@ -215,6 +216,7 @@ void MGraph::createShortestPath(int startId, int endId)
 	if (bFindShortestPath)
 	{
 		buildPath(m_endVert);	// 生成路径列表
+		smoothPath();
 		convVertList2VertIdVec(m_pathCache.getAndAddPathCache(startId, endId)->m_vertsIdVec);		// 缓存目录
 	}
 }
@@ -281,4 +283,94 @@ void MGraph::clearAllStopPoint()
 			vert->m_pStopPoint = nullptr;
 		}
 	}
+}
+
+void MGraph::smoothPath()
+{
+	m_smoothPathList.clear();
+
+	if (m_pathList.size() > 2)
+	{
+		// 暂时采用遍历要平滑两个点组成的矩形中所有的顶点，判断阻挡点
+		m_smoothPathList.push_back(m_pathList.front());
+
+		Vertex* startVert = nullptr;		// 这个是平滑的开始点
+		Vertex* endVert = nullptr;			// 这个是平滑的结束点
+		startVert = m_pathList.front();
+		m_pathList.pop_front();			// 删除第一个顶点
+		endVert = m_pathList.front();	// 保存第二个顶点
+		m_pathList.pop_front();			// 删除第二个顶点，因为第二个顶点必然是直线通过
+
+		std::list<Vertex*>::iterator iteBegin;
+		std::list<Vertex*>::iterator iteEnd;
+		iteBegin = m_pathList.begin();
+		iteEnd = m_pathList.end();
+
+		for (; iteBegin != iteEnd; ++iteBegin)
+		{
+			if (isStraightBetweenVert(startVert, *iteBegin))		// 如果两个点之间是直线，就直接可以通过
+			{
+				endVert = *iteBegin;
+				if (1 == std::distance(iteBegin, iteEnd))		// 如果这个是最后一个顶点，直接添加进入
+				{
+					m_smoothPathList.push_back(endVert);
+				}
+			}
+			else			// 如果两个点之间不是直线，需要进行下一段路径的判断
+			{
+				m_smoothPathList.push_back(endVert);
+				startVert = endVert;
+
+				if (std::distance(iteBegin, iteEnd) > 1)	// 如果剩余的顶点至少还有两个
+				{
+					endVert = *iteBegin;	// 保存下一个元素，注意 for 循环还会 ++ 迭代器，导致迭代器再次移动一个元素
+				}
+				else	// 剩余的元素只有一个
+				{
+					m_smoothPathList.push_back(*iteBegin);
+				}
+			}
+		}
+	}
+	else
+	{
+		m_smoothPathList.assign(m_pathList.begin(), m_pathList.end());
+	}
+}
+
+bool MGraph::isStraightBetweenVert(Vertex* startVert, Vertex* endVert)
+{
+	int minX = std::numeric_limits<int>::max();
+	int minY = std::numeric_limits<int>::max();
+	int maxX = std::numeric_limits<int>::min();
+	int maxY = std::numeric_limits<int>::min();
+
+	int startX = 0;
+	int startY = 0;
+	int endX = 0;
+	int endY = 0;
+
+	int curId = 0;
+	
+	convVertIdToXY(startVert->m_id, startX, startY);
+	convVertIdToXY(endVert->m_id, endX, endY);
+
+	minX = std::min(startX, endX);
+	minY = std::min(startY, endY);
+	maxX = std::max(startX, endX);
+	maxY = std::max(startY, endY);
+
+	for (int yIdx = minY; yIdx <= maxY; ++yIdx)
+	{
+		for (int xIdx = minX; xIdx <= maxX; ++xIdx)
+		{
+			curId = convXYToVertId(xIdx, yIdx);
+			if (m_vertsVec[curId]->m_pStopPoint != nullptr)		// 如果有阻挡点
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
 }

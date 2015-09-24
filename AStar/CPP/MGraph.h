@@ -72,6 +72,7 @@ protected:
 
 	// 最终路径列表
 	std::list<Vertex*> m_pathList;	// 使用 List ，主要是使用 push_front 这个接口
+	std::list<Vertex*> m_smoothPathList;		// 这个是平滑后的路径列表
 	// 计算中需要用的 8 个邻居顶点索引
 	int m_neighborVertIdArr[8];
 	std::vector<int> m_closedVec;	// 已经确认的队列列表
@@ -132,6 +133,17 @@ protected:
 	 * @breif 设置与 vertId 为邻居节点的其它顶点的邻居数据无效
 	 */
 	void setNeighborInvalidByVertId(int vertId);
+	/**
+	 * @brief 平滑曲线，至少有 3 个顶点才行
+	 * @example 下面这种路线，如果 0 - 3 直接可以通过，直接过去就行了，不用必须走 0 - 1 - 2 - 3 这条路线
+	 *		0	
+	 *			1
+	 *			2
+	 *			3
+	 */
+	void smoothPath();
+	// 判断两个顶点之间是否可以直接到达
+	bool isStraightBetweenVert(Vertex* startVert, Vertex* endVert);
 
 public:
 	MGraph();
