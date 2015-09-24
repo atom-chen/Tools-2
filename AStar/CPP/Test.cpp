@@ -142,6 +142,23 @@ std::list<Vertex*> test5Stop(MGraph* pMGraph)
 	return vertList;
 }
 
+// ²âÊÔÐ±ÏßÂ·¾¶Æ½»¬
+std::list<Vertex*> test6Stop(MGraph* pMGraph)
+{
+	std::list<Vertex*> vertList;
+	if (pMGraph->isPathCacheValid(0, 7))
+	{
+		vertList = pMGraph->getShortestPathFromPathCache(0, 7);
+	}
+	else
+	{
+		vertList = pMGraph->getOrCreateShortestPath(0, 7);
+	}
+
+	return vertList;
+}
+
+
 void serializePath(std::list<Vertex*>& vertList, std::stringstream& strStream)
 {
 	if (vertList.size() > 0)
@@ -169,22 +186,27 @@ void main()
 	pFile = fopen("E:\\aaa.txt", "w");
 	std::stringstream strStream;
 
-	vertList = test5Stop(pMGraph);
-	serializePath(vertList, strStream);
-	pMGraph->clearAllStopPoint();
-	pMGraph->clearPath();
+	//vertList = test5Stop(pMGraph);
+	//serializePath(vertList, strStream);
+	//pMGraph->clearAllStopPoint();
+	//pMGraph->clearPath();
 
-	vertList = test4Stop(pMGraph);
-	serializePath(vertList, strStream);
-	pMGraph->clearAllStopPoint();
-	pMGraph->clearPath();
+	//vertList = test4Stop(pMGraph);
+	//serializePath(vertList, strStream);
+	//pMGraph->clearAllStopPoint();
+	//pMGraph->clearPath();
 
-	vertList = test2Stop(pMGraph);
-	serializePath(vertList, strStream);
-	pMGraph->clearAllStopPoint();
-	pMGraph->clearPath();
+	//vertList = test2Stop(pMGraph);
+	//serializePath(vertList, strStream);
+	//pMGraph->clearAllStopPoint();
+	//pMGraph->clearPath();
 
-	vertList = test2Stop(pMGraph);
+	//vertList = test2Stop(pMGraph);
+	//serializePath(vertList, strStream);
+	//pMGraph->clearAllStopPoint();
+	//pMGraph->clearPath();
+
+	vertList = test6Stop(pMGraph);
 	serializePath(vertList, strStream);
 	pMGraph->clearAllStopPoint();
 	pMGraph->clearPath();
