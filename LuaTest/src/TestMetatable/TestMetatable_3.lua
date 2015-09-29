@@ -4,18 +4,14 @@
 
 Window = {}
 
+
 Window.prototype = {x = 0, y = 0, width = 100, height = 100}
 Window.mt = {}
 
+
 function Window.new(o)
-    -- setmetatable(o, Window.mt)
     o.__index = Window.prototype
     return o
-end
-
---现在定义一个元方法
-Window.mt.__index = function(table, key)
-    return Window.prototype[key]
 end
 
 
