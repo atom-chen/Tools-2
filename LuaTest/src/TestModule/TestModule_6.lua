@@ -14,7 +14,7 @@ end
 local M = {}    -- 局部的变量
 _G[moduleName] = M     -- 将这个局部变量最终赋值给模块名
 complex = M
- 
+
 function M.new(r, i) return {r = r, i = i} end
  
 -- 定义一个常量i
