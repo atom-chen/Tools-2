@@ -84,7 +84,7 @@ else(NOT Qt5Widgets_FOUND)
     source_group("Ui Files" FILES ${UI_SRCS} ${UI_FILES})
 	source_group("Qrc Files" FILES ${QRC_SRCS} ${QRC_FILES})
 	
-	file(GLOB RC_FILES ./Res/*.rc)
+	file(GLOB RC_FILES ./*.rc)
 	source_group("Rc Files" FILES ${RC_FILES})
 	
     source_group("Base" FILES ${SRCS_FILES})
