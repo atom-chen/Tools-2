@@ -7,13 +7,15 @@
 #include "lua.hpp"
 #include "LuaCTable.h"
 #include "LuaCustomLoader.h"
+#include <string>
 
 LuaCScriptMgr* g_pLuaCScriptMgr = new LuaCScriptMgr;
 
 void LuaCTestWrap_Bind()
 {
 	//testBind8f();
-	testLoadLua();
+	//testLoadLua();
+	printPackage();
 }
 
 void testBind1f()
@@ -161,4 +163,15 @@ int LuaCTestWrap_cppHelloWorld(lua_State* L)
 	pLuaCTest->sayHello(pParam);
 	//此处的n是C++向栈中压入的参数个数，如果和压入栈个数不一致，可能导致栈失衡
 	return 0;
+}
+
+void printPackage()
+{
+	std::string strPath = "package.path = string.format(\"%s; %s / ? .lua\", package.path, \"D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript\")";
+	g_pLuaCScriptMgr->getLuaCVM()->doString(strPath);
+	std::string strFile = "D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript/Dump.lua";
+	g_pLuaCScriptMgr->getLuaCVM()->doFile(strFile);
+
+	strFile = "D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript/DumpPackage.lua";
+	g_pLuaCScriptMgr->getLuaCVM()->doFile(strFile);
 }

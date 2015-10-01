@@ -19,8 +19,7 @@ LuaCVM::~LuaCVM()
 void LuaCVM::openLua()
 {
 	/* initialize Lua */
-	// L = lua_open();		// Lua5.1
-	// L = lua_newstate();	// Lua5.3
+	// L = lua_open();			// Lua5.1
 	L = luaL_newstate();		// Lua5.3
 	/* load Lua libraries */
 	luaL_openlibs(L);

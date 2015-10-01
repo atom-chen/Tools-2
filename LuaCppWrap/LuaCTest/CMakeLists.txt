@@ -18,7 +18,7 @@ set(ALLSRCS ${SRC_FILES})
 
 ADD_EXECUTABLE(${PROJECT_NAME} WIN32 ${ALLSRCS})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX _d LINK_FLAGS "/ENTRY:\"mainCRTStartup\"")
+set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX _d LINK_FLAGS "SubSystem:\"Console\"" "/ENTRY:\"mainCRTStartup\"")
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} Lua LuaCBridge)
 

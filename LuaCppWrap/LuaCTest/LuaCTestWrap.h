@@ -19,6 +19,8 @@ int LuaCTestWrap_cHelloWorld(lua_State* L);
 int LuaCTestWrap_cTableHelloWorld(lua_State* L);
 int LuaCTestWrap_cppHelloWorld(lua_State* L);
 
+void printPackage();
+
 extern LuaCScriptMgr* g_pLuaCScriptMgr;
 
 #endif
