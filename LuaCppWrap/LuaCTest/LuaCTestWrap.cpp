@@ -11,7 +11,7 @@ LuaCScriptMgr* g_pLuaCScriptMgr = new LuaCScriptMgr;
 
 void LuaCTestWrap_Bind()
 {
-	testBind7f();
+	testBind5f();
 }
 
 void testBind1f()
@@ -84,7 +84,7 @@ void testBind5f()
 	lua_pushlightuserdata(g_pLuaCScriptMgr->getLuaCVM()->L, pLuaCTest);
 	lua_setglobal(g_pLuaCScriptMgr->getLuaCVM()->L, "asdf");
 
-	const char* testCPPFunc = "asdf:cppHelloWorld(asdf, \"asasas\")";
+	const char* testCPPFunc = "asdf:cppHelloWorld(\"asasas\")";
 	g_pLuaCScriptMgr->doString(testCPPFunc);
 }
 

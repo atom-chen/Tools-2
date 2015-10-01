@@ -896,13 +896,13 @@ void LuaCScriptMgr::RegisterLib(lua_State* L, std::string libName, std::string c
 	}
 
 
-	//LuaDLL.lua_pushstring(L, "__index");
-	//LuaDLL.lua_pushvalue(L, -2);
+	lua_pushstring(L, "__index");
+	lua_pushvalue(L, -2);
 	//LuaDLL.lua_pushstring(L, "ToLua_Index");
 	//LuaDLL.lua_rawget(L, (int)LuaIndexes.LUA_REGISTRYINDEX);                 
 	////LuaDLL.lua_pushvalue(L, -2);
 	////LuaDLL.lua_pushstdcallcfunction(L, tolua_index, 1);        
-	//LuaDLL.lua_rawset(L, -3);
+	lua_rawset(L, -3);
 	//tolua_setindex(L);
 
 	//LuaDLL.lua_pushstring(L, "__newindex");
