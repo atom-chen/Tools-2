@@ -6,12 +6,14 @@
 #include "LuaCMember.h"
 #include "lua.hpp"
 #include "LuaCTable.h"
+#include "LuaCustomLoader.h"
 
 LuaCScriptMgr* g_pLuaCScriptMgr = new LuaCScriptMgr;
 
 void LuaCTestWrap_Bind()
 {
-	testBind5f();
+	//testBind8f();
+	testLoadLua();
 }
 
 void testBind1f()
@@ -77,6 +79,7 @@ void testBind4f()
 	pTable->setField("nihao", pObject);
 }
 
+// 冒号在 lua 中使用，一定是[表 : 成员]
 void testBind5f()
 {
 	lua_register(g_pLuaCScriptMgr->getLuaCVM()->L, "cppHelloWorld", LuaCTestWrap_cppHelloWorld);	// 全局注册函数请使用这个
@@ -108,10 +111,43 @@ void testBind7f()
 	g_pLuaCScriptMgr->doString(testfunc);
 }
 
+void testBind8f()
+{
+	g_pLuaCScriptMgr->getLuaCVM()->NewTable("TestStaticHandle");
+
+	std::vector<LuaMethod*> methodList;
+	methodList.push_back(new LuaMethod("cHelloWorld", LuaCTestWrap_cTableHelloWorld));
+	std::vector<LuaField*> fieldList;
+	g_pLuaCScriptMgr->RegisterLib(g_pLuaCScriptMgr->getLuaCVM()->L, "TestStaticHandle", "LuaCTest", methodList, fieldList, "");
+
+	const char* testfunc = "TestStaticHandle:cHelloWorld(\"ninhoa\")";
+	g_pLuaCScriptMgr->doString(testfunc);
+}
+
+void testLoadLua()
+{
+	//InitManualFunction(g_pLuaCScriptMgr->getLuaCVM()->L);
+	AddLoader(g_pLuaCScriptMgr->getLuaCVM()->L);
+	//luaL_dofile
+	luaL_loadfile(g_pLuaCScriptMgr->getLuaCVM()->L, "aaa.lua");
+}
+
 int LuaCTestWrap_cHelloWorld(lua_State* L)
 {
 	LuaCScriptMgr::CheckArgsCount(L, 1);
 	const char* pParam = lua_tostring(L, 1);
+	//此处的n是C++向栈中压入的参数个数，如果和压入栈个数不一致，可能导致栈失衡
+	return 0;
+}
+
+int LuaCTestWrap_cTableHelloWorld(lua_State* L)
+{
+	LuaCScriptMgr::CheckArgsCount(L, 2);
+	if (lua_istable(L, 1))
+	{
+
+	}
+	const char* pParam = lua_tostring(L, 2);
 	//此处的n是C++向栈中压入的参数个数，如果和压入栈个数不一致，可能导致栈失衡
 	return 0;
 }

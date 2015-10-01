@@ -24,6 +24,8 @@ set(SRC_FILES
 	./LuaCVM.cpp
 	./LuaScriptException.h
 	./LuaScriptException.cpp
+	./LuaCustomLoader.h
+	./LuaCustomLoader.cpp
 )
 
 source_group("Src" FILES ${SRC_FILES})
