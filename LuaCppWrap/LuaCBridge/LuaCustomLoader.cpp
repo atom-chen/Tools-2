@@ -25,12 +25,13 @@ void InitManualFunction(lua_State *L)
 	int type = 0;
 	lua_getglobal(L, "package");
 	type = lua_type(L, -1);
-	lua_getfield(L, -1, "loaders");	//package.loaders
+	//lua_getfield(L, -1, "loaders");	//lua5.1 package.loaders
+	lua_getfield(L, -1, "searchers");	//lua5.3 package.searchers
 	type = lua_type(L, -1);
 	lua_pushnumber(L, 2);
 	lua_gettable(L, -2);			//package.loader[2]
 	lua_pushnumber(L, 2);			//先把索引压栈，用来设置C函数到这个索引位置
-	lua_pushcfunction(L, lua_file_from_manual_func);	//压入自己的C函数
+	lua_pushcfunction(L, MyLoader);	//压入自己的C函数
 	lua_settable(L, -4);	//替换旧函数
 	lua_pop(L, 3);			//清理堆栈
 }
@@ -39,6 +40,7 @@ std::string g_searchsRootPath = "D:/file/opensource/unity-game-git/unitygame/Too
 
 int MyLoader(lua_State* pState)
 {
+	//const char *name = luaL_checkstring(pState, 1);
 	std::string module = lua_tostring(pState, 1);
 	module += ".lua";
 	module = g_searchsRootPath + "/" + module;
@@ -52,10 +54,15 @@ int MyLoader(lua_State* pState)
 
 	if (size > 0)
 	{
-		unsigned char* buffer = new unsigned char[size + 1];
-		memset(buffer, 0, size + 1);
+		char* buffer = new char[size];
+		memset(buffer, 0, size);
 		fread(buffer, size, 1, hFile);
-		luaL_loadbuffer(pState, (const char*)buffer, size, fullPath);
+		//int status = luaL_loadbuffer(pState, (const char*)buffer, size, fullPath);
+		int status = luaL_dostring(pState, buffer);
+		if (status == LUA_OK)
+		{
+
+		}
 	}
 	else
 	{

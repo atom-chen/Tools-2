@@ -15,6 +15,7 @@ void testBind6f();
 void testBind7f();
 void testBind8f();
 void testLoadLua();
+void testLoadLuaStr();
 int LuaCTestWrap_cHelloWorld(lua_State* L);
 int LuaCTestWrap_cTableHelloWorld(lua_State* L);
 int LuaCTestWrap_cppHelloWorld(lua_State* L);
