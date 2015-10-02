@@ -1,5 +1,6 @@
 #include "LuaCustomLoader.h"
 #include <string>
+#include <string.h>
 #include <stdio.h>
 
 void loaderror(lua_State *L, const char *filename)
@@ -24,7 +25,7 @@ void InitManualFunction(lua_State *L)
 	int type = 0;
 	lua_getglobal(L, "package");
 	type = lua_type(L, -1);
-	lua_getfield(L, -1, "loader");	//package.loader
+	lua_getfield(L, -1, "loaders");	//package.loaders
 	type = lua_type(L, -1);
 	lua_pushnumber(L, 2);
 	lua_gettable(L, -2);			//package.loader[2]
@@ -34,10 +35,13 @@ void InitManualFunction(lua_State *L)
 	lua_pop(L, 3);			//ÇåÀí¶ÑÕ»
 }
 
+std::string g_searchsRootPath = "D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript";
+
 int MyLoader(lua_State* pState)
 {
 	std::string module = lua_tostring(pState, 1);
 	module += ".lua";
+	module = g_searchsRootPath + "/" + module;
 
 	const char* fullPath = module.c_str();
 	FILE* hFile = nullptr;
@@ -48,7 +52,8 @@ int MyLoader(lua_State* pState)
 
 	if (size > 0)
 	{
-		unsigned char* buffer = new unsigned char[size];
+		unsigned char* buffer = new unsigned char[size + 1];
+		memset(buffer, 0, size + 1);
 		fread(buffer, size, 1, hFile);
 		luaL_loadbuffer(pState, (const char*)buffer, size, fullPath);
 	}
@@ -65,8 +70,13 @@ int MyLoader(lua_State* pState)
 
 void AddLoader(lua_State *L)
 {
+	int type = 0;
 	lua_getglobal(L, "package");	// push "package"
-	lua_getfield(L, -1, "loaders");					// push "package.loaders"
+	type = lua_type(L, -1);
+	// lua_getfield(L, -1, "loaders");					// lua5.1 push "package.loaders"
+	//lua_getfield(L, lua_upvalueindex(1), "searchers");					// lua5.3 push "package.searchers"
+	lua_getfield(L, -1, "searchers");					// lua5.3 push "package.searchers"
+	type = lua_type(L, -1);
 	lua_remove(L, -2);								// remove "package"
 	// Count the number of entries in package.loaders.
 	// Table is now at index -2, since 'nil' is right on top of it.

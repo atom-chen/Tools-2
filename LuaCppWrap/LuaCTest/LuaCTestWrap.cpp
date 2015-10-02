@@ -14,8 +14,8 @@ LuaCScriptMgr* g_pLuaCScriptMgr = new LuaCScriptMgr;
 void LuaCTestWrap_Bind()
 {
 	//testBind8f();
-	//testLoadLua();
-	printPackage();
+	testLoadLua();
+	//printPackage();
 }
 
 void testBind1f()
@@ -131,7 +131,9 @@ void testLoadLua()
 	//InitManualFunction(g_pLuaCScriptMgr->getLuaCVM()->L);
 	AddLoader(g_pLuaCScriptMgr->getLuaCVM()->L);
 	//luaL_dofile
-	luaL_loadfile(g_pLuaCScriptMgr->getLuaCVM()->L, "aaa.lua");
+	//luaL_loadfile(g_pLuaCScriptMgr->getLuaCVM()->L, "aaa.lua");
+	std::string strFile = "D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript/TestDump.lua";
+	g_pLuaCScriptMgr->getLuaCVM()->doFile(strFile);
 }
 
 int LuaCTestWrap_cHelloWorld(lua_State* L)
@@ -167,11 +169,10 @@ int LuaCTestWrap_cppHelloWorld(lua_State* L)
 
 void printPackage()
 {
-	std::string strPath = "package.path = string.format(\"%s; %s / ? .lua\", package.path, \"D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript\")";
+	std::string strPath = "package.path = string.format(\"%s;%s/?.lua\", package.path, \"D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript\")";
 	g_pLuaCScriptMgr->getLuaCVM()->doString(strPath);
-	std::string strFile = "D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript/Dump.lua";
-	g_pLuaCScriptMgr->getLuaCVM()->doFile(strFile);
+	std::string strFile = "";
 
-	strFile = "D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript/DumpPackage.lua";
+	strFile = "D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript/TestDump.lua";
 	g_pLuaCScriptMgr->getLuaCVM()->doFile(strFile);
 }

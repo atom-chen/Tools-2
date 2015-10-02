@@ -1,4 +1,5 @@
 -- test.lua
+require "Dump"
 
 local obj = {
     string1 = "Hi! My name is LiXianlin",
