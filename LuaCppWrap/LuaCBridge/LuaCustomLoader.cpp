@@ -57,12 +57,13 @@ int MyLoader(lua_State* pState)
 		char* buffer = new char[size];
 		memset(buffer, 0, size);
 		fread(buffer, size, 1, hFile);
-		//int status = luaL_loadbuffer(pState, (const char*)buffer, size, fullPath);
-		int status = luaL_dostring(pState, buffer);
-		if (status == LUA_OK)
-		{
-
-		}
+		int status = luaL_loadbuffer(pState, (const char*)buffer, size, fullPath);
+		//int status = luaL_dostring(pState, buffer);
+		//if (status == LUA_OK)
+		//{
+		//
+		//}
+		//return checkload(pState, (luaL_loadfile(pState, fullPath) == LUA_OK), fullPath);
 	}
 	else
 	{
