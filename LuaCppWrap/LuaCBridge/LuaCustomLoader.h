@@ -14,5 +14,6 @@ void InitManualFunction(lua_State *L);
 extern std::string g_searchsRootPath;
 int MyLoader(lua_State* pState);
 void AddLoader(lua_State *L);
+int loadLua(lua_State *L);
 
 #endif

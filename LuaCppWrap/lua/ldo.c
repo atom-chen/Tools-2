@@ -335,9 +335,13 @@ int luaD_precall (lua_State *L, StkId func, int nresults) {
         luaD_hook(L, LUA_HOOKCALL, -1);
       lua_unlock(L);
       n = (*f)(L);  /* do the actual call */
+	  int top = lua_gettop(L);
       lua_lock(L);
+	  top = lua_gettop(L);
       api_checknelems(L, n);
+	  top = lua_gettop(L);
       luaD_poscall(L, L->top - n);
+	  top = lua_gettop(L);
       return 1;
     }
     case LUA_TLCL: {  /* Lua function: prepare its call */
@@ -422,6 +426,7 @@ void luaD_call (lua_State *L, StkId func, int nResults, int allowyield) {
     luaV_execute(L);  /* call it */
   if (!allowyield) L->nny--;
   L->nCcalls--;
+  int top = lua_gettop(L);
 }
 
 

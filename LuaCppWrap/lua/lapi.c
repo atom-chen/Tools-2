@@ -896,6 +896,7 @@ LUA_API void lua_callk (lua_State *L, int nargs, int nresults,
     luaD_call(L, func, nresults, 0);  /* just do the call */
   adjustresults(L, nresults);
   lua_unlock(L);
+  int top = lua_gettop(L);
 }
 
 

@@ -542,6 +542,8 @@ static void findloader (lua_State *L, const char *name) {
     }
     lua_pushstring(L, name);
     lua_call(L, 1, 2);  /* call it */
+	int top = lua_gettop(L);
+	int type = lua_type(L, -2);
     if (lua_isfunction(L, -2))  /* did it find a loader? */
       return;  /* module loader found */
     else if (lua_isstring(L, -2)) {  /* searcher returned error message? */

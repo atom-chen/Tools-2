@@ -40,6 +40,9 @@ std::string g_searchsRootPath = "D:/file/opensource/unity-game-git/unitygame/Too
 
 int MyLoader(lua_State* pState)
 {
+	int top = 0;
+	int type = 0;
+
 	//const char *name = luaL_checkstring(pState, 1);
 	std::string module = lua_tostring(pState, 1);
 	module += ".lua";
@@ -57,13 +60,19 @@ int MyLoader(lua_State* pState)
 		char* buffer = new char[size];
 		memset(buffer, 0, size);
 		fread(buffer, size, 1, hFile);
+		top = lua_gettop(pState);
 		int status = luaL_loadbuffer(pState, (const char*)buffer, size, fullPath);
 		//int status = luaL_dostring(pState, buffer);
 		//if (status == LUA_OK)
-		//{
-		//
-		//}
+		{
+			lua_pushcfunction(pState, loadLua);
+			top = lua_gettop(pState);
+			type = lua_type(pState, -1);
+			//lua_pushstring(pState, fullPath);
+			//top = lua_gettop(pState);
+		}
 		//return checkload(pState, (luaL_loadfile(pState, fullPath) == LUA_OK), fullPath);
+		return 2;
 	}
 	else
 	{
@@ -74,6 +83,12 @@ int MyLoader(lua_State* pState)
 	}
 
 	return 1;
+}
+
+int loadLua(lua_State *L)
+{
+	// 此处的n是C++向栈中压入的参数个数，如果和压入栈个数不一致，可能导致栈失衡
+	return 0;
 }
 
 void AddLoader(lua_State *L)
