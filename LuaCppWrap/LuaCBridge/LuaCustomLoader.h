@@ -16,4 +16,8 @@ int MyLoader(lua_State* pState);
 void AddLoader(lua_State *L);
 int loadLua(lua_State *L);
 
+void dotAddLoader(lua_State *L);
+int dotLoadLua(lua_State *L);
+int traceback(lua_State *L);
+
 #endif

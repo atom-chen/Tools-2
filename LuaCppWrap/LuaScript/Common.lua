@@ -1,1 +1,1 @@
-aaa = 10
+function add(a, b) 					   			return 10 											end

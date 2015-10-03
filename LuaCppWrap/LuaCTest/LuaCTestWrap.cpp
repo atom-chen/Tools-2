@@ -130,7 +130,8 @@ void testBind8f()
 void testLoadLua()
 {
 	//InitManualFunction(g_pLuaCScriptMgr->getLuaCVM()->L);
-	AddLoader(g_pLuaCScriptMgr->getLuaCVM()->L);
+	//AddLoader(g_pLuaCScriptMgr->getLuaCVM()->L);
+	dotAddLoader(g_pLuaCScriptMgr->getLuaCVM()->L);
 	//luaL_dofile
 	//luaL_loadfile(g_pLuaCScriptMgr->getLuaCVM()->L, "aaa.lua");
 	std::string strFile = "D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript/TestCustomLoad.lua";
@@ -219,6 +220,11 @@ function debug.dump(obj) \
 	str = "function add(a, b) \
 		  		return a + b \
 						end";
+
+	str = "function add(a, b) \
+		  		return 10 \
+						end";
+
 	luaL_dostring(g_pLuaCScriptMgr->getLuaCVM()->L, str.c_str());
 }
 
@@ -259,6 +265,7 @@ void printPackage()
 	g_pLuaCScriptMgr->getLuaCVM()->doString(strPath);
 	std::string strFile = "";
 
-	strFile = "D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript/TestDump.lua";
+	//strFile = "D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript/TestDump.lua";
+	strFile = "D:/file/opensource/unity-game-git/unitygame/Tools/LuaCppWrap/LuaScript/TestCustomLoad.lua";
 	g_pLuaCScriptMgr->getLuaCVM()->doFile(strFile);
 }
