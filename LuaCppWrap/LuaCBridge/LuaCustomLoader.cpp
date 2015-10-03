@@ -165,17 +165,54 @@ int dotLoadLua(lua_State *L)
 	}
 
 	fseek(hFile, 0, SEEK_END);
-	int size = ftell(hFile);
+	int size = ftell(hFile);		// 这个地方是 31 ,明明是 29
 	fseek(hFile, 0, SEEK_SET);
 	if (size > 0)
 	{
 		char* buffer = new char[size];
 		memset(buffer, 0, size);
 		fread(buffer, size, 1, hFile);
-		//char* buffer = "function add(a, b) \
-					   			return 10 \
+
+		//fseek(hFile, 0, SEEK_SET);
+		//std::string getStr = "";
+		//char c;
+		//int size_2 = 0;
+		//while (!feof(hFile))
+		//{
+		//	c = fgetc(hFile);
+		//	getStr += c;
+		//	++size_2;
+		//}
+
+		for (int idx = size - 1; idx >= 0; --idx)
+		{
+			if (buffer[idx] == 0 || buffer[idx] == -1)	// 将最后的 0 或者 -1 减掉, luaL_loadbuffer 长度必须和字符数量相等,并且不能有 0 或者 -1, -1 在 fgetc 读取文件的时候,最后竟然将结束符 -1 也读取出来了,然后 feof 才为 true,奇怪
+			{
+				--size;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		fclose(hFile);
+		//char* buffer = "function add(a, b)\r\n\t \
+					   			return 10\r\n \
 											end";
-		//size = strlen(buffer);
+		//char* buffer1 = "function add()\n\treturn 10\nend";
+		//int size1 = strlen(buffer1);
+
+		//int idx = 0;
+		//for (idx = 0; idx < size1; ++idx)
+		//{
+		//	if (buffer[idx] != buffer1[idx])
+		//	{
+		//		break;
+		//	}
+		//}
+
+		// 不知道为什么,从文件读取进来的字符内容 "function add()\n\treturn 10\nend" ,但是文件检查大小竟然是 31,明明是 29,最后多了两个  "\0\0" ,只要把 size 改成 29 就可以正确执行了
 
 		if (luaL_loadbuffer(L, buffer, size, fileName.c_str()) != LUA_OK)
 		{
@@ -185,17 +222,24 @@ int dotLoadLua(lua_State *L)
 		//delete buffer;
 	}
 
-	int top = lua_gettop(L);
-	int type = lua_type(L, -1);		// LUA_TFUNCTION
+	//int top = lua_gettop(L);
+	//int type = lua_type(L, -1);		// LUA_TFUNCTION
 	return 1;
 }
 
 int traceback(lua_State *L)
 {
+	// debug.traceback ([thread,] [message])
 	lua_getglobal(L, "debug");
 	lua_getfield(L, -1, "traceback");
 	lua_pushvalue(L, 1);
 	lua_pushnumber(L, 2);
 	lua_call(L, 2, 1);
+
+	char* error;
+	if (lua_type(L, -1) == LUA_TSTRING)
+	{
+		error = (char*)lua_tostring(L, -1);
+	}
 	return 1;
 }

@@ -1,1 +1,3 @@
-function add(a, b) 					   			return 10 											end
+function add(a, b)
+	return a + b
+end
