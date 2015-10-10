@@ -53,7 +53,7 @@ std::vector<LuaCObject*> LuaCFunction::call(std::vector<LuaCObject*> args, std::
 		//throw new LuaScriptException(err, "");
 	}
 
-	std::vector<LuaCObject*> ret = returnTypes.size() > 0 ? m_luavm->translator->popValues(oldTop, returnTypes) : m_luavm->translator->popValues(oldTop);
+	std::vector<LuaCObject*> ret = returnTypes.size() > 0 ? m_luavm->m_translator->popValues(oldTop, returnTypes) : m_luavm->m_translator->popValues(oldTop);
 	lua_settop(L, oldTop - 1);
 	return ret;
 }
@@ -129,7 +129,7 @@ bool LuaCFunction::PCall(int oldTop, int args)
 
 std::vector<LuaCObject*> LuaCFunction::PopValues(int oldTop)
 {
-	std::vector<LuaCObject*> ret = m_luavm->translator->popValues(oldTop);
+	std::vector<LuaCObject*> ret = m_luavm->m_translator->popValues(oldTop);
 	return ret;
 }
 

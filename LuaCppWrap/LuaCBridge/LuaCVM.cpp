@@ -12,11 +12,11 @@
 
 LuaCVM::LuaCVM()
 {
-	translator = new LuaCObjectTranslator;
+	m_translator = new LuaCObjectTranslator();
 	openLua();
 
 
-	luaIndex = 
+	m_luaIndex =
 		"        \
 		local rawget = rawget \
 		local rawset = rawset \
@@ -57,7 +57,7 @@ LuaCVM::LuaCVM()
 						return index";
 	
 	
-	luaNewIndex =
+	m_luaNewIndex =
 		" \
 		local rawget = rawget \
 		local getmetatable = getmetatable \
@@ -87,7 +87,7 @@ LuaCVM::LuaCVM()
 						end \
 						return newindex";
 	
-	luaTableCall =
+	m_luaTableCall =
 		" \
 		local rawget = rawget \
 		local getmetatable = getmetatable \
@@ -106,7 +106,7 @@ LuaCVM::LuaCVM()
 		return call \
 		";
 	
-	luaEnumIndex =
+	m_luaEnumIndex =
 		" \
 		local rawget = rawget \
 		local getmetatable = getmetatable \
@@ -134,19 +134,19 @@ LuaCVM::LuaCVM()
 			";
 	
 	lua_pushstring(L, "ToLua_Index");
-	luaL_dostring(L, luaIndex.c_str());
+	luaL_dostring(L, m_luaIndex.c_str());
 	lua_rawset(L, LUA_REGISTRYINDEX);
 	
 	lua_pushstring(L, "ToLua_NewIndex");
-	luaL_dostring(L, luaNewIndex.c_str());
+	luaL_dostring(L, m_luaNewIndex.c_str());
 	lua_rawset(L, LUA_REGISTRYINDEX);
 	
 	lua_pushstring(L, "ToLua_TableCall");
-	luaL_dostring(L, luaTableCall.c_str());
+	luaL_dostring(L, m_luaTableCall.c_str());
 	lua_rawset(L, LUA_REGISTRYINDEX);
 	
 	lua_pushstring(L, "ToLua_EnumIndex");
-	luaL_dostring(L, luaEnumIndex.c_str());
+	luaL_dostring(L, m_luaEnumIndex.c_str());
 	lua_rawset(L, LUA_REGISTRYINDEX);
 	
 	//Bind();
@@ -224,7 +224,7 @@ LuaCObject* LuaCVM::getLuaObject(std::string fullPath)
 	LuaCUtil::split(fullPath, delim, &path);
 
 	lua_getglobal(L, path[0].c_str());
-	returnValue = translator->getObject(-1);
+	returnValue = m_translator->getObject(-1);
 	if (path.size() > 1)
 	{
 		std::vector<std::string> remainingPath;
@@ -244,7 +244,7 @@ void LuaCVM::setLuaObject(std::string fullPath, LuaCObject* value)
 
 	if (path.size() == 1)
 	{
-		translator->push(value);
+		m_translator->push(value);
 		lua_setglobal(L, fullPath.c_str());
 	}
 	else
@@ -275,7 +275,7 @@ LuaCObject* LuaCVM::getObject(std::vector<std::string>& remainingPath)
 	{
 		lua_pushstring(L, remainingPath[i].c_str());
 		lua_gettable(L, -2);
-		returnValue = translator->getObject(-1);
+		returnValue = m_translator->getObject(-1);
 		if (returnValue == nullptr) break;
 	}
 	return returnValue;
@@ -308,7 +308,7 @@ void LuaCVM::setObject(std::vector<std::string>& remainingPath, LuaCObject* val)
 	//    }
 	//}
 
-	translator->push(val);
+	m_translator->push(val);
 	lua_settable(L, -3);
 }
 
@@ -344,7 +344,7 @@ LuaCTable* LuaCVM::NewTable()
 	int oldTop = lua_gettop(L);
 
 	lua_newtable(L);
-	LuaCTable* returnVal = (LuaCTable*)translator->getObject(-1);
+	LuaCTable* returnVal = (LuaCTable*)m_translator->getObject(-1);
 
 	lua_settop(L, oldTop);
 	return returnVal;
@@ -356,7 +356,7 @@ LuaCObject* LuaCVM::rawGetObject(int reference, std::string field)
 	lua_getref(L, reference);
 	lua_pushstring(L, field.c_str());
 	lua_rawget(L, -2);
-	LuaCObject* obj = translator->getObject(-1);
+	LuaCObject* obj = m_translator->getObject(-1);
 	lua_settop(L, oldTop);
 	return obj;
 }
@@ -383,9 +383,9 @@ LuaCObject* LuaCVM::getObject(int reference, LuaCObject* field)
 {
 	int oldTop = lua_gettop(L);
 	lua_getref(L, reference);
-	translator->push(field);
+	m_translator->push(field);
 	lua_gettable(L, -2);
-	LuaCObject* returnValue = translator->getObject(-1);
+	LuaCObject* returnValue = m_translator->getObject(-1);
 	lua_settop(L, oldTop);
 	return returnValue;
 }
@@ -413,8 +413,8 @@ void LuaCVM::setObject(int reference, LuaCObject* field, LuaCObject* val)
 {
 	int oldTop = lua_gettop(L);
 	lua_getref(L, reference);
-	translator->push(field);
-	translator->push(val);
+	m_translator->push(field);
+	m_translator->push(val);
 	lua_settable(L, -3);
 	lua_settop(L, oldTop);
 }
@@ -624,7 +624,7 @@ LuaCObject* LuaCVM::GetVarTable(int stackPos)
 
 LuaCObjectTranslator* LuaCVM::GetTranslator()
 {
-	return translator;
+	return m_translator;
 }
 
 //压入一个object变量
@@ -810,7 +810,7 @@ std::vector<LuaCObject*> LuaCVM::CallLuaFunction(std::string name, std::vector<L
 	std::vector<LuaCObject*> objs;
 	LuaCBase* lb = nullptr;
 
-	if (dict.find(name) != dict.end())
+	if (m_dict.find(name) != m_dict.end())
 	{
 		LuaCFunction* func = (LuaCFunction*)lb;
 		return func->Call(args);
@@ -841,9 +841,9 @@ LuaCFunction* LuaCVM::GetLuaFunction(std::string name)
 {
 	LuaCBase* func = nullptr;
 
-	if (dict.find(name) == dict.end())
+	if (m_dict.find(name) == m_dict.end())
 	{
-		func = dict[name];
+		func = m_dict[name];
 		int oldTop = lua_gettop(L);
 
 		if (PushLuaFunction(name))
@@ -851,7 +851,7 @@ LuaCFunction* LuaCVM::GetLuaFunction(std::string name)
 			int reference = luaL_ref(L, LUA_REGISTRYINDEX);
 			func = new LuaCFunction(reference, this);
 			func->m_name = name;
-			dict[name] = func;
+			m_dict[name] = func;
 		}
 		else
 		{
@@ -944,13 +944,13 @@ bool LuaCVM::PushLuaFunction(std::string fullPath)
 void LuaCVM::PushTraceBack()
 {
 #if !MULTI_STATE
-	if (traceback == nullptr)
+	if (m_traceback == nullptr)
 	{
 		lua_getglobal(L, "traceback");
 		return;
 	}
 
-	traceback->push();
+	m_traceback->push();
 #else
 	lua_getglobal(L, "traceback");
 #endif
@@ -1274,7 +1274,7 @@ LuaCTable* LuaCVM::GetLuaTable(std::string tableName)
 {
 	LuaCBase* lt = nullptr;
 
-	if (dict.find(tableName) == dict.end())
+	if (m_dict.find(tableName) == m_dict.end())
 	{
 		int oldTop = lua_gettop(L);
 
@@ -1283,7 +1283,7 @@ LuaCTable* LuaCVM::GetLuaTable(std::string tableName)
 			int reference = luaL_ref(L, LUA_REGISTRYINDEX);
 			lt = new LuaCTable(reference, this);
 			lt->m_name = tableName;
-			dict[tableName] = lt;
+			m_dict[tableName] = lt;
 		}
 
 		lua_settop(L, oldTop);
@@ -1298,10 +1298,10 @@ LuaCTable* LuaCVM::GetLuaTable(std::string tableName)
 
 void LuaCVM::RemoveLuaRes(std::string name)
 {
-	mapIte ite = dict.find(name);
-	if (ite != dict.end())
+	mapIte ite = m_dict.find(name);
+	if (ite != m_dict.end())
 	{
-		dict.erase(ite);
+		m_dict.erase(ite);
 	}
 }
 

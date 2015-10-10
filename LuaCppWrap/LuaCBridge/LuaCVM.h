@@ -22,16 +22,16 @@ class LuaCVM
 {
 protected:
 	typedef std::map<std::string, LuaCBase*>::iterator mapIte;
-	std::map<std::string, LuaCBase*> dict;
-	std::string luaIndex;
-	std::string luaNewIndex;
-	std::string luaTableCall;
-	std::string luaEnumIndex;
+	std::map<std::string, LuaCBase*> m_dict;
+	std::string m_luaIndex;
+	std::string m_luaNewIndex;
+	std::string m_luaTableCall;
+	std::string m_luaEnumIndex;
 
 public:
 	lua_State* L;
-	LuaCFunction* traceback;
-	LuaCObjectTranslator* translator;
+	LuaCFunction* m_traceback;
+	LuaCObjectTranslator* m_translator;
 
 public:
 	LuaCVM();
