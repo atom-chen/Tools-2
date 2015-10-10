@@ -14,7 +14,6 @@ public:
 	bool _Disposed;
 	int _Reference;
 	LuaCVM* _Interpreter;
-	LuaCObjectTranslator* translator;
 
 	std::string name;
 	int count;
@@ -23,7 +22,7 @@ public:
 	LuaCBase();
 	~LuaCBase();
 
-	void PushArgs(lua_State* L, LuaCObject* o);
+	void PushArgs(LuaCObject* o);
 	int getRef();
 	void AddRef();
 };

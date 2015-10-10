@@ -8,7 +8,6 @@ LuaCTable::LuaCTable(int reference, LuaCVM* interpreter)
 {
 	_Reference = reference;
 	_Interpreter = interpreter;
-	translator = interpreter->translator;
 }
 
 LuaCTable::~LuaCTable()
@@ -71,7 +70,7 @@ void LuaCTable::Set(std::string key, LuaCObject* o)
 	lua_State* L = _Interpreter->L;
 	push(L);
 	lua_pushstring(L, key.c_str());
-	PushArgs(L, o);
+	PushArgs(o);
 	lua_rawset(L, -3);
 	lua_settop(L, 0);
 }

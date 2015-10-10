@@ -10,14 +10,6 @@ LuaCFunction::LuaCFunction(int reference, LuaCVM* interpreter)
 	_Interpreter = interpreter;
 }
 
-LuaCFunction::LuaCFunction(int reference, lua_State* l)
-{
-	_Reference = reference;
-	L = l;
-	translator = LuaCObjectTranslator::FromState(L);
-	_Interpreter = translator->interpreter;
-}
-
 LuaCFunction::~LuaCFunction()
 {
 
@@ -30,7 +22,7 @@ LuaCFunction::~LuaCFunction()
 std::vector<LuaCObject*> LuaCFunction::call(std::vector<LuaCObject*> args, std::vector<int> returnTypes)
 {
 	int nArgs = 0;
-	LuaCScriptMgr::PushTraceBack(L);
+	_Interpreter->PushTraceBack();
 	int oldTop = lua_gettop(L);
 
 	if (!lua_checkstack(L, (int)args.size() + 6))
@@ -47,7 +39,7 @@ std::vector<LuaCObject*> LuaCFunction::call(std::vector<LuaCObject*> args, std::
 
 		for (int i = 0; i < args.size(); i++)
 		{
-			PushArgs(L, args[i]);
+			PushArgs(args[i]);
 		}
 	}
 
@@ -61,7 +53,7 @@ std::vector<LuaCObject*> LuaCFunction::call(std::vector<LuaCObject*> args, std::
 		//throw new LuaScriptException(err, "");
 	}
 
-	std::vector<LuaCObject*> ret = returnTypes.size() > 0 ? translator->popValues(L, oldTop, returnTypes) : translator->popValues(L, oldTop);
+	std::vector<LuaCObject*> ret = returnTypes.size() > 0 ? _Interpreter->translator->popValues(oldTop, returnTypes) : _Interpreter->translator->popValues(oldTop);
 	lua_settop(L, oldTop - 1);
 	return ret;
 }
@@ -116,7 +108,7 @@ int beginPos = -1;
 
 int LuaCFunction::BeginPCall()
 {
-	LuaCScriptMgr::PushTraceBack(L);
+	_Interpreter->PushTraceBack();
 	beginPos = lua_gettop(L);
 	push(L);
 	return beginPos;
@@ -137,7 +129,7 @@ bool LuaCFunction::PCall(int oldTop, int args)
 
 std::vector<LuaCObject*> LuaCFunction::PopValues(int oldTop)
 {
-	std::vector<LuaCObject*> ret = translator->popValues(L, oldTop);
+	std::vector<LuaCObject*> ret = _Interpreter->translator->popValues(oldTop);
 	return ret;
 }
 

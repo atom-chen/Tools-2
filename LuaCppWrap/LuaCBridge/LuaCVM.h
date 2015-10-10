@@ -4,23 +4,33 @@
 #include "lua.hpp"
 #include <string>
 #include <vector>
+#include <map>
 
 class LuaCObjectTranslator;
 class LuaCObject;
 class LuaCTable;
 class LuaCFunction;
 class LuaCScriptMgr;
+class LuaCBase;
+class LuaMethod;
+class LuaField;
 
 /**
  *@brief 表示一个 Lua 中的表，等价于 Lua 源代码的 ltable.h
  */
 class LuaCVM
 {
-public:
-	lua_State* L;
-	LuaCScriptMgr* m_pLuaCScriptMgr;
+protected:
+	typedef std::map<std::string, LuaCBase*>::iterator mapIte;
+	std::map<std::string, LuaCBase*> dict;
+	std::string luaIndex;
+	std::string luaNewIndex;
+	std::string luaTableCall;
+	std::string luaEnumIndex;
 
 public:
+	lua_State* L;
+	LuaCFunction* traceback;
 	LuaCObjectTranslator* translator;
 
 public:
@@ -46,6 +56,49 @@ public:
 	void setObject(int reference, std::string field, LuaCObject* val);
 	void setObject(int reference, LuaCObject* field, LuaCObject* val);
 	LuaCFunction* RegisterFunction(std::string fullPath, lua_CFunction function);
+
+
+
+	void setLuaFilePath(std::string path);	// 设置 Lua 文件的查找目录
+	void setCFilePath(std::string path);	// 设置 C 库的查找目录
+
+	std::vector<LuaCObject*> CallLuaFunction(std::string name, std::vector<LuaCObject*>& args);
+	lua_State* GetL();
+	void PrintLua(std::vector<std::string> param);
+	void LuaGC(std::vector<std::string> param);
+	void LuaMem(std::vector<std::string> param);
+	LuaCFunction* GetLuaFunction(std::string name);
+	int GetFunctionRef(std::string name);
+	bool IsFuncExists(std::string name);
+	LuaCTable* GetLuaTable(std::string tableName);
+	void RemoveLuaRes(std::string name);
+	double GetNumber(int stackPos);
+	bool GetBoolean(int stackPos);
+	std::string GetString(int stackPos);
+	LuaCFunction* GetFunction(int stackPos);
+	LuaCFunction* ToLuaFunction(int stackPos);
+	LuaCFunction* GetLuaFunction(int stackPos);
+	LuaCTable* ToLuaTable(int stackPos);
+	LuaCTable* GetTable(int stackPos);
+	LuaCTable* GetLuaTable(int stackPos);
+	LuaCObject* GetLuaObject(int stackPos);
+
+	void CheckArgsCount(int count);
+	LuaCObject* GetVarObject(int stackPos);
+	LuaCObject* GetVarTable(int stackPos);
+	void PushVarObject(LuaCObject* o);
+	LuaCObjectTranslator* GetTranslator();
+	bool PushLuaFunction(std::string fullPath);
+	void PushTraceBack();
+	bool PushLuaTable(std::string fullPath);
+	void RegisterLib(std::string libName, std::string className, std::vector<LuaMethod*> regs, std::vector<LuaField*> fields, std::string baseClassName);
+	void CreateTable(std::string fullPath);
+	static int garbageCollection(lua_State* L);
+	void ThrowLuaException(lua_State* L);
+	LuaCScriptMgr* GetMgrFromLuaState(lua_State* L);
+	void RegisterLib(std::string libName, std::vector<LuaMethod*> regs);
+	void RegisterLib(std::string libName, std::string className, std::vector<LuaMethod*> regs);
+	std::string GetLuaString(int stackPos);
 };
 
 #endif

@@ -1,11 +1,11 @@
 #include "LuaCBase.h"
 #include "LuaCScriptMgr.h"
 #include "LuaCObject.h"
+#include "LuaCVM.h"
 
 LuaCBase::LuaCBase()
 {
 	_Interpreter = nullptr;
-	translator = nullptr;
 	name = "";
 	count = 1;
 }
@@ -15,9 +15,9 @@ LuaCBase::~LuaCBase()
 	//GC.SuppressFinalize(this);
 }
 
-void LuaCBase::PushArgs(lua_State* L, LuaCObject* o)
+void LuaCBase::PushArgs(LuaCObject* o)
 {
-	LuaCScriptMgr::PushVarObject(L, o);
+	_Interpreter->PushVarObject(o);
 }
 
 int LuaCBase::getRef()
