@@ -5,7 +5,6 @@
 #include <string>
 
 class LuaCVM;
-class LuaCObjectTranslator;
 class LuaCObject;
 
 class LuaCBase
