@@ -850,7 +850,7 @@ LuaCFunction* LuaCVM::GetLuaFunction(std::string name)
 		{
 			int reference = luaL_ref(L, LUA_REGISTRYINDEX);
 			func = new LuaCFunction(reference, this);
-			func->name = name;
+			func->m_name = name;
 			dict[name] = func;
 		}
 		else
@@ -1282,7 +1282,7 @@ LuaCTable* LuaCVM::GetLuaTable(std::string tableName)
 		{
 			int reference = luaL_ref(L, LUA_REGISTRYINDEX);
 			lt = new LuaCTable(reference, this);
-			lt->name = tableName;
+			lt->m_name = tableName;
 			dict[tableName] = lt;
 		}
 

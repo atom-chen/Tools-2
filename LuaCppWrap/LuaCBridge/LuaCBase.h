@@ -11,12 +11,12 @@ class LuaCObject;
 class LuaCBase
 {
 public:
-	bool _Disposed;
-	int _Reference;
-	LuaCVM* _Interpreter;
+	bool m_disposed;
+	int m_ref;
+	LuaCVM* m_luavm;
 
-	std::string name;
-	int count;
+	std::string m_name;
+	int m_count;
 
 public:
 	LuaCBase();

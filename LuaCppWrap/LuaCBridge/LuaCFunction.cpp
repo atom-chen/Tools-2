@@ -6,8 +6,8 @@
 
 LuaCFunction::LuaCFunction(int reference, LuaCVM* interpreter)
 {
-	_Reference = reference;
-	_Interpreter = interpreter;
+	m_ref = reference;
+	m_luavm = interpreter;
 }
 
 LuaCFunction::~LuaCFunction()
@@ -22,7 +22,7 @@ LuaCFunction::~LuaCFunction()
 std::vector<LuaCObject*> LuaCFunction::call(std::vector<LuaCObject*> args, std::vector<int> returnTypes)
 {
 	int nArgs = 0;
-	_Interpreter->PushTraceBack();
+	m_luavm->PushTraceBack();
 	int oldTop = lua_gettop(L);
 
 	if (!lua_checkstack(L, (int)args.size() + 6))
@@ -53,7 +53,7 @@ std::vector<LuaCObject*> LuaCFunction::call(std::vector<LuaCObject*> args, std::
 		//throw new LuaScriptException(err, "");
 	}
 
-	std::vector<LuaCObject*> ret = returnTypes.size() > 0 ? _Interpreter->translator->popValues(oldTop, returnTypes) : _Interpreter->translator->popValues(oldTop);
+	std::vector<LuaCObject*> ret = returnTypes.size() > 0 ? m_luavm->translator->popValues(oldTop, returnTypes) : m_luavm->translator->popValues(oldTop);
 	lua_settop(L, oldTop - 1);
 	return ret;
 }
@@ -108,7 +108,7 @@ int beginPos = -1;
 
 int LuaCFunction::BeginPCall()
 {
-	_Interpreter->PushTraceBack();
+	m_luavm->PushTraceBack();
 	beginPos = lua_gettop(L);
 	push(L);
 	return beginPos;
@@ -129,7 +129,7 @@ bool LuaCFunction::PCall(int oldTop, int args)
 
 std::vector<LuaCObject*> LuaCFunction::PopValues(int oldTop)
 {
-	std::vector<LuaCObject*> ret = _Interpreter->translator->popValues(oldTop);
+	std::vector<LuaCObject*> ret = m_luavm->translator->popValues(oldTop);
 	return ret;
 }
 
@@ -148,25 +148,25 @@ lua_State* LuaCFunction::GetLuaState()
 */
 void LuaCFunction::push(lua_State* luaState)
 {
-	if (_Reference != 0)
+	if (m_ref != 0)
 	{
-		lua_getref(luaState, _Reference);
+		lua_getref(luaState, m_ref);
 	}
 	else
 	{
-		//_Interpreter.pushCSFunction(function);
+		//m_luavm.pushCSFunction(function);
 	}
 }
 
 void LuaCFunction::push()
 {
-	if (_Reference != 0)
+	if (m_ref != 0)
 	{
-		lua_getref(L, _Reference);
+		lua_getref(L, m_ref);
 	}
 	else
 	{
-		//_Interpreter.pushCSFunction(function);
+		//m_luavm.pushCSFunction(function);
 	}
 }
 
@@ -177,5 +177,5 @@ std::string LuaCFunction::ToString()
 
 int LuaCFunction::GetReference()
 {
-	return _Reference;
+	return m_ref;
 }

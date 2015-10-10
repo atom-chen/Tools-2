@@ -5,9 +5,9 @@
 
 LuaCBase::LuaCBase()
 {
-	_Interpreter = nullptr;
-	name = "";
-	count = 1;
+	m_luavm = nullptr;
+	m_name = "";
+	m_count = 1;
 }
 
 LuaCBase::~LuaCBase()
@@ -17,15 +17,15 @@ LuaCBase::~LuaCBase()
 
 void LuaCBase::PushArgs(LuaCObject* o)
 {
-	_Interpreter->PushVarObject(o);
+	m_luavm->PushVarObject(o);
 }
 
 int LuaCBase::getRef()
 {
-	return _Reference;
+	return m_ref;
 }
 
 void LuaCBase::AddRef()
 {
-	++count;
+	++m_count;
 }

@@ -12,7 +12,7 @@ public:
 	static LuaCScriptMgr* Instance;
 
 protected:
-	LuaCVM* m_pLuaCVM;
+	LuaCVM* m_luavm;
 
 public:
 	LuaCScriptMgr();

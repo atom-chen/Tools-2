@@ -5,15 +5,15 @@ LuaCScriptMgr* LuaCScriptMgr::Instance = nullptr;
 
 LuaCScriptMgr::LuaCScriptMgr()
 {
-	m_pLuaCVM = new LuaCVM();
+	m_luavm = new LuaCVM();
 }
 
 LuaCScriptMgr::~LuaCScriptMgr()
 {
-	m_pLuaCVM->closeLua();
+	m_luavm->closeLua();
 }
 
 LuaCVM* LuaCScriptMgr::getLuaCVM()
 {
-	return m_pLuaCVM;
+	return m_luavm;
 }
