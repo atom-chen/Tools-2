@@ -8,13 +8,15 @@
 #include "LuaScriptException.h"
 #include <sstream>
 #include <string>
-#include <LuaCUtil.h>
+#include <Util.h>
+
+#include "MemPool.h"
 
 LuaCVM::LuaCVM()
 {
 	m_translator = new LuaCObjectTranslator();
+	m_memPool = new MemPool();
 	openLua();
-
 
 	m_luaIndex =
 		"        \
@@ -221,7 +223,7 @@ LuaCObject* LuaCVM::getLuaObject(std::string fullPath)
 	int oldTop = lua_gettop(L);
 	std::vector<std::string> path;
 	std::string delim = ".";
-	LuaCUtil::split(fullPath, delim, &path);
+	Util::split(fullPath, delim, &path);
 
 	lua_getglobal(L, path[0].c_str());
 	returnValue = m_translator->getObject(-1);
@@ -240,7 +242,7 @@ void LuaCVM::setLuaObject(std::string fullPath, LuaCObject* value)
 	int oldTop = lua_gettop(L);
 	std::vector<std::string> path;
 	std::string delim = ".";
-	LuaCUtil::split(fullPath, delim, &path);
+	Util::split(fullPath, delim, &path);
 
 	if (path.size() == 1)
 	{
@@ -316,7 +318,7 @@ void LuaCVM::NewTable(std::string fullPath)
 {
 	std::vector<std::string> path;
 	std::string delim = ".";
-	LuaCUtil::split(fullPath, delim, &path);
+	Util::split(fullPath, delim, &path);
 
 	int oldTop = lua_gettop(L);
 	if (path.size() == 1)
@@ -370,7 +372,7 @@ LuaCObject* LuaCVM::getObject(int reference, std::string field)
 
 	std::vector<std::string> path;
 	std::string delim = ".";
-	LuaCUtil::split(field, delim, &path);
+	Util::split(field, delim, &path);
 
 	LuaCObject* returnValue = getObject(path);
 	lua_settop(L, oldTop);
@@ -400,7 +402,7 @@ void LuaCVM::setObject(int reference, std::string field, LuaCObject* val)
 
 	std::vector<std::string> path;
 	std::string delim = ".";
-	LuaCUtil::split(field, delim, &path);
+	Util::split(field, delim, &path);
 
 	setObject(path, val);
 	lua_settop(L, oldTop);
@@ -427,7 +429,7 @@ LuaCFunction* LuaCVM::RegisterFunction(std::string fullPath, lua_CFunction funct
 
 	std::vector<std::string> path;
 	std::string delim = ".";
-	LuaCUtil::split(fullPath, delim, &path);
+	Util::split(fullPath, delim, &path);
 
 	// ×¢²áµ½±íÖÐ
 	if (path.size() > 1)
@@ -961,7 +963,7 @@ bool LuaCVM::PushLuaTable(std::string fullPath)
 	//string[] path = fullPath.Split(new char[] { '.' });
 	std::vector<std::string> path;
 	std::string delim = ".";
-	LuaCUtil::split(fullPath, delim, &path);
+	Util::split(fullPath, delim, &path);
 
 	int oldTop = lua_gettop(L);
 	// Lua 5.3
@@ -1019,7 +1021,7 @@ void LuaCVM::CreateTable(std::string fullPath)
 	//string[] path = fullPath.Split(new char[] { '.' });
 	std::vector<std::string> path;
 	std::string delim = ".";
-	LuaCUtil::split(fullPath, delim, &path);
+	Util::split(fullPath, delim, &path);
 
 	int oldTop = lua_gettop(L);
 

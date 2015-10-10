@@ -26,6 +26,10 @@ set(SRC_FILES
 	./LuaScriptException.cpp
 	./LuaCustomLoader.h
 	./LuaCustomLoader.cpp
+	./Util.h
+	./Util.cpp
+	./MemPool.h
+	./MemPool.cpp
 )
 
 source_group("Src" FILES ${SRC_FILES})

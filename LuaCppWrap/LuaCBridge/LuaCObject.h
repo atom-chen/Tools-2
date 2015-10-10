@@ -47,6 +47,9 @@ public:
 	LuaCObject();
 	~LuaCObject();
 	int GetType();
+
+	static LuaCObject* newObject();
+	static void deleteObject(LuaCObject*);
 };
 
 #endif

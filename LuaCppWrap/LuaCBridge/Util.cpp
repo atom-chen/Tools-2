@@ -1,6 +1,6 @@
-#include "LuaCUtil.h"
+#include "Util.h"
 
-void LuaCUtil::split(std::string& s, std::string& delim, std::vector<std::string>* ret)
+void Util::split(std::string& s, std::string& delim, std::vector<std::string>* ret)
 {
 	size_t last = 0;
 	size_t index = s.find_first_of(delim, last);

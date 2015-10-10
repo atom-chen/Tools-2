@@ -10,10 +10,11 @@ class LuaCObjectTranslator;
 class LuaCObject;
 class LuaCTable;
 class LuaCFunction;
-class LuaCScriptMgr;
 class LuaCBase;
 class LuaMethod;
 class LuaField;
+
+class MemPool;
 
 /**
  *@brief 表示一个 Lua 中的表，等价于 Lua 源代码的 ltable.h
@@ -32,6 +33,7 @@ public:
 	lua_State* L;
 	LuaCFunction* m_traceback;
 	LuaCObjectTranslator* m_translator;
+	MemPool* m_memPool;
 
 public:
 	LuaCVM();
@@ -45,9 +47,9 @@ public:
 	LuaCObject* getLuaObject(std::string fullPath);
 	void setLuaObject(std::string fullPath, LuaCObject* value);
 	LuaCObject* getObject(std::vector<std::string>& remainingPath);
-	void split(std::string& s, std::string& delim, std::vector<std::string>* ret);
 	void setObject(std::vector<std::string>& remainingPath, LuaCObject* value);
 
+	// 表操作
 	void NewTable(std::string fullPath);
 	LuaCTable* NewTable();
 	LuaCObject* rawGetObject(int reference, std::string field);
@@ -57,8 +59,7 @@ public:
 	void setObject(int reference, LuaCObject* field, LuaCObject* val);
 	LuaCFunction* RegisterFunction(std::string fullPath, lua_CFunction function);
 
-
-
+	// 设置 C 和 Lua 查找目录
 	void setLuaFilePath(std::string path);	// 设置 Lua 文件的查找目录
 	void setCFilePath(std::string path);	// 设置 C 库的查找目录
 
@@ -95,7 +96,6 @@ public:
 	void CreateTable(std::string fullPath);
 	static int garbageCollection(lua_State* L);
 	void ThrowLuaException(lua_State* L);
-	LuaCScriptMgr* GetMgrFromLuaState(lua_State* L);
 	void RegisterLib(std::string libName, std::vector<LuaMethod*> regs);
 	void RegisterLib(std::string libName, std::string className, std::vector<LuaMethod*> regs);
 	std::string GetLuaString(int stackPos);
