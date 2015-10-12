@@ -5,6 +5,7 @@
 
 class LuaCTable;
 class LuaCFunction;
+class LuaCVM;
 
 /**
 *@brief 等价 Lua 源代码中的 lua.h ，#define LUA_TNIL		0
@@ -29,8 +30,6 @@ class LuaCFunction;
 class LuaCObject
 {
 public:
-	int m_type;
-
 	union
 	{
 		lua_Integer m_int;				// 整形
@@ -43,13 +42,16 @@ public:
 		LuaCFunction* m_pLuaCFunction;	// 函数
 	};
 
+	// 这个应该放在后面，前面的内存对齐，直接转换成对应的类型
+	int m_type;
+
 public:
 	LuaCObject();
 	~LuaCObject();
 	int GetType();
 
-	static LuaCObject* newObject();
-	static void deleteObject(LuaCObject*);
+	//static LuaCObject* newObject(LuaCVM* luavm);
+	//static void deleteObject(LuaCVM* luavm, LuaCObject* ptr);
 };
 
 #endif
