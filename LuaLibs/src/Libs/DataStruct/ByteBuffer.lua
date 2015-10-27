@@ -1,5 +1,5 @@
 --[[字节缓冲区]]
-require "DataStruct.Class"
+require "Core.Class"
 
 --ByteBuffer = {}
 ByteBuffer = class()    -- 定义一个类，必须从返回的类中添加成员
