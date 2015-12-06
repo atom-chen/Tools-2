@@ -3,3 +3,6 @@ GlobalNS = {}
 
 GlobalNS.Class = nil
 GlobalNS.GObject = nil
+GlobalNS.Array = nil
+GlobalNS.MList = nil
+GlobalNS.EventDispatchFunctionObject = nil

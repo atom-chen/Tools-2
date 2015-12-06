@@ -1,12 +1,14 @@
 --[[列表，使用表实现]]
-require "Core.Class"
 
-MList = class()
+local MList = GlobalNS.Class()
+local M = MList
 
-function MList:ctor()
+function M:ctor()
     self.m_list = {}
 end
 
-function Add(item)
-    self.m_list
+function M:Add(item)
+    
 end
+
+return M
