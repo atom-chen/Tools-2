@@ -1,0 +1,5 @@
+-- 全局名字表，自己的所有的数据都加在到这个表中
+GlobalNS = {}
+
+GlobalNS.Class = nil
+GlobalNS.GObject = nil
