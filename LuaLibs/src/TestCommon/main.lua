@@ -1,9 +1,11 @@
-package.path = string.format("%s;%s/?.lua", package.path, "D:/File/OpenSource/Unity/Tools/LuaLibs/src")
+-- package.path = string.format("%s;%s/?.lua", package.path, "D:/File/OpenSource/Unity/Tools/LuaLibs/src")
+package.path = string.format("%s;%s/?.lua", package.path, "E:/Self/Self/Tools/Tools/LuaLibs/src")
 require "Libs.Core.Prerequisites"
 
 local function main()
-    testArray()
+    -- testArray()
     -- testLen()
+    testFuncEnv()
 end
 
 function testArray()
@@ -22,6 +24,11 @@ function testLen()
     local len = #tbs
     len = table.getn(tbs)
     print(len)
+end
+
+function testFuncEnv()
+    require "TestEnv.TestEnv"
+    local aaa = 411
 end
 
 main()

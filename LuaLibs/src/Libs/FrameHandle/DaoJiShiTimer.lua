@@ -1,42 +1,36 @@
-﻿namespace SDK.Lib
-{
-    /**
-     * @brief 倒计时定时器
-     */
-    public class DaoJiShiTimer : TimerItemBase
-    {
-        public override void OnTimer(float delta)
-        {
-            if (m_disposed)
-            {
-                return;
-            }
+--[[
+    @brief 倒计时定时器
+]]
+local M = GlobalNS.Class(GlobalNS.TimerItemBase)
+GlobalNS["DaoJiShiTimer"] = M
 
-            m_curTime -= delta;
-            m_curLeftTimer += delta;
+function M:ctor()
 
-            if (m_bInfineLoop)
-            {
-                checkAndDisp();
-            }
-            else
-            {
-                if (m_curTime <= 0)
-                {
-                    disposeAndDisp();
-                }
-                else
-                {
-                    checkAndDisp();
-                }
-            }
-        }
+end
 
-        public override void reset()
-        {
-            m_curTime = m_totalTime;
-            m_curLeftTimer = 0;
-            m_disposed = false;
-        }
-    }
-}
+function OnTimer(delta)
+    if self.m_disposed then
+        return;
+    end
+
+    self.m_curTime = self.m_curTime - delta;
+    self.m_curLeftTimer = self.m_curLeftTimer + delta;
+
+    if self.m_bInfineLoop then
+        self.checkAndDisp();
+    else
+        if self.m_curTime <= 0 then
+            self.disposeAndDisp();
+        else
+            self.checkAndDisp();
+        end
+    end
+end
+
+function reset()
+    self.m_curTime = m_totalTime;
+    self.m_curLeftTimer = 0;
+    self.m_disposed = false;
+end
+
+return M

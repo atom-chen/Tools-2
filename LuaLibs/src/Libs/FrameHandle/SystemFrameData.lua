@@ -1,26 +1,23 @@
-﻿namespace SDK.Lib
-{
-    public class SystemFrameData
-    {
-        protected uint m_totalFrameCount;       // 当前帧数
-        protected uint m_curFrameCount;         // 当前帧数
-        protected float m_curTime;          // 当前一秒内时间
-        protected int m_fps;                // 帧率
+local M = GlobalNS.Class()
+GlobalNS["SystemFrameData"] = M
 
-        public void nextFrame(float delta)
-        {
-            ++m_totalFrameCount;
-            ++m_curFrameCount;
-            m_curTime += delta;
+function M:ctor(delta)
+    self.m_totalFrameCount = 0;      -- 当前帧数
+    self.m_curFrameCount = 0;        -- 当前帧数
+    self.m_curTime = 0;              -- 当前一秒内时间
+    self.m_fps = 0;                  -- 帧率
+end
 
-            if(m_curTime > 1.0f)
-            {
-                m_fps = (int)(m_curFrameCount / m_curTime);
-                m_curFrameCount = 0;
-                m_curTime = 0;
+function M:nextFrame(delta)
+    self.m_totalFrameCount = self.m_totalFrameCount + 1;
+    self.m_curFrameCount = self.m_curFrameCount + 1;
+    self.m_curTime = self.m_curTime + delta;
 
-                //Ctx.m_instance.m_logSys.log(string.Format("当前帧率 {0}", m_fps));
-            }
-        }
-    }
-}
+    if self.m_curTime > 1 then
+        self.m_fps = self.m_curFrameCount / self.m_curTime;
+        self.m_curFrameCount = 0;
+        self.m_curTime = 0;
+    end
+end
+
+return M

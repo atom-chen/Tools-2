@@ -1,101 +1,65 @@
-﻿using System;
+--[[
+    @brief 定时器，这个是不断增长的
+]]
 
-namespace SDK.Lib
-{
-    /**
-     * @brief 定时器，这个是不断增长的
-     */
-    public class FrameTimerItem : IDelayHandleItem
-    {
-        public int m_internal;              // 帧数间隔
-        public int m_totalFrameCount;       // 总共次数
-        public int m_curFrame;              // 当前已经调用的定时器的时间
-        public int m_curLeftFrame;          // 剩余帧数
-        public bool m_bInfineLoop;      // 是否是无限循环
-        public Action<FrameTimerItem> m_timerDisp;       // 定时器分发
-        public bool m_disposed;             // 是否已经被释放
+local M = GlobalNS.Class(GlobalNS.IDelayHandleItem)
+GlobalNS["FrameTimerItem"] = M
 
-        //protected int m_preFrame = 0;
+function M:ctor()
+    self.m_internal = 1;
+    self.m_totalFrameCount = 1;
+    self.m_curFrame = 0;
+    self.m_bInfineLoop = false;
+    self.m_curLeftFrame = 0;
+    self.m_timerDisp = nil;
+    self.m_disposed = false;
+end
 
-        public FrameTimerItem()
-        {
-            m_internal = 1;
-            m_totalFrameCount = 1;
-            m_curFrame = 0;
-            m_bInfineLoop = false;
-            m_curLeftFrame = 0;
-            m_timerDisp = null;
-            m_disposed = false;
-        }
+function M:OnFrameTimer()
+    if self.m_disposed then
+        return;
+    end
 
-        public virtual void OnFrameTimer()
-        {
-            if (m_disposed)
-            {
-                return;
-            }
+    ++self.m_curFrame;
+    ++self.m_curLeftFrame;
 
-            ++m_curFrame;
-            ++m_curLeftFrame;
+    if self.m_bInfineLoop then
+        if self.m_curLeftFrame == m_internal then
+            self.m_curLeftFrame = 0;
 
-            //if (m_preFrame == m_curFrame)
-            //{
-            //    Ctx.m_instance.m_logSys.log("aaaaaaaafadfsasdf");
-            //}
+            if self.m_timerDisp ~= nil then
+                self.m_timerDisp(self);
+            end
+        end
+    else
+        if self.m_curFrame == self.m_totalFrameCount then
+            self.m_disposed = true;
+            if self.m_timerDisp ~= nil then
+                self.m_timerDisp(this);
+            end
+        else
+            if self.m_curLeftFrame == m_internal then
+                self.m_curLeftFrame = 0;
+                if self.m_timerDisp ~= nil then
+                    self.m_timerDisp(this);
+                end
+            end
+        end
+    end
+end
 
-            //m_curFrame = m_preFrame;
+function M:reset()
+    self.m_curFrame = 0;
+    self.m_curLeftFrame = 0;
+    self.m_disposed = false;
+end
 
-            if (m_bInfineLoop)
-            {
-                if (m_curLeftFrame == m_internal)
-                {
-                    m_curLeftFrame = 0;
+function M:setClientDispose()
 
-                    if (m_timerDisp != null)
-                    {
-                        m_timerDisp(this);
-                    }
-                }
-            }
-            else
-            {
-                if (m_curFrame == m_totalFrameCount)
-                {
-                    m_disposed = true;
-                    if (m_timerDisp != null)
-                    {
-                        m_timerDisp(this);
-                    }
-                }
-                else
-                {
-                    if (m_curLeftFrame == m_internal)
-                    {
-                        m_curLeftFrame = 0;
-                        if (m_timerDisp != null)
-                        {
-                            m_timerDisp(this);
-                        }
-                    }
-                }
-            }
-        }
+end
 
-        public virtual void reset()
-        {
-            m_curFrame = 0;
-            m_curLeftFrame = 0;
-            m_disposed = false;
-        }
+function M:getClientDispose()
+    return false;
+end
 
-        public void setClientDispose()
-        {
-
-        }
-
-        public bool getClientDispose()
-        {
-            return false;
-        }
-    }
-}
+return M

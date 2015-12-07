@@ -1,78 +1,56 @@
-﻿using System.Collections.Generic;
+﻿--[[
+    @brief 定时器管理器
+]]
 
-/**
- * @brief 定时器管理器
- */
-namespace SDK.Lib
-{
-    public class FrameTimerMgr : DelayHandleMgrBase
-    {
-        protected List<FrameTimerItem> m_timerLists;     // 当前所有的定时器列表
-        protected List<FrameTimerItem> m_delLists;       // 当前需要删除的定时器
+local M = GlobalNS.Class(GlobalNS.DelayHandleMgrBase)
+GlobalNS["FrameTimerMgr"] = M
 
-        public FrameTimerMgr()
-        {
-            m_timerLists = new List<FrameTimerItem>();
-            m_delLists = new List<FrameTimerItem>();
-        }
+function M:ctor()
+    self.m_timerLists = GlobalNS.MList:new();
+    self.m_delLists = GlobalNS.MList:new();
+end
 
-        public override void addObject(IDelayHandleItem delayObject, float priority = 0.0f)
-        {
-            // 检查当前是否已经在队列中
-            if (m_timerLists.IndexOf(delayObject as FrameTimerItem) == -1)
-            {
-                if (bInDepth())
-                {
-                    base.addObject(delayObject, priority);
-                }
-                else
-                {
-                    m_timerLists.Add(delayObject as FrameTimerItem);
-                }
-            }
-        }
+function addObject(delayObject, priority)
+    -- 检查当前是否已经在队列中
+    if self.m_timerLists.IndexOf(delayObject) == -1 then
+        if self.bInDepth() then
+            super.addObject(delayObject, priority);
+        else
+            m_timerLists.Add(delayObject as FrameTimerItem);
+        end
+    end
+end
 
-        public override void delObject(IDelayHandleItem delayObject)
-        {
-            // 检查当前是否在队列中
-            if (m_timerLists.IndexOf(delayObject as FrameTimerItem) != -1)
-            {
-                (delayObject as FrameTimerItem).m_disposed = true;
-                if (bInDepth())
-                {
-                    base.addObject(delayObject);
-                }
-                else
-                {
-                    foreach (FrameTimerItem item in m_timerLists)
-                    {
-                        if (UtilApi.isAddressEqual(item, delayObject))
-                        {
-                            m_timerLists.Remove(item);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+function delObject(delayObject)
+    -- 检查当前是否在队列中
+    if self.m_timerLists.IndexOf(delayObject) != -1 then
+        delayObject.m_disposed = true;
+        if self.bInDepth() then
+            super.addObject(delayObject);
+        else
+            for key, item in ipairs(m_timerLists.list()) do
+                if item == delayObject then
+                    self.m_timerLists.Remove(item);
+                    break;
+                end
+            end
+        end
+    end
+end
 
-        public void Advance(float delta)
-        {
-            incDepth();
+function Advance(delta)
+    self.incDepth();
 
-            foreach (FrameTimerItem timerItem in m_timerLists)
-            {
-                if (!timerItem.getClientDispose())
-                {
-                    timerItem.OnFrameTimer();
-                }
-                if (timerItem.m_disposed)
-                {
-                    delObject(timerItem);
-                }
-            }
+    for key, timerItem in ipairs(m_timerLists.list()) do
+        if not timerItem.getClientDispose() then
+            timerItem.OnFrameTimer();
+        end
+        if timerItem.m_disposed then
+            self.delObject(timerItem);
+        end
+    end
 
-            decDepth();
-        }
-    }
-}
+    self.decDepth();
+end
+
+return M

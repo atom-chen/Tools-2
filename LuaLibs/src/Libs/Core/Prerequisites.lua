@@ -5,4 +5,4 @@ GlobalNS.Class = require "Libs.Core.Class"
 GlobalNS.GObject = require "Libs.Core.GObject"
 GlobalNS.Array = require "Libs.DataStruct.Array"
 GlobalNS.MList = GlobalNS.Array
-GlobalNS.EventDispatchFunctionObject = require "Libs.DataStruct.EventDispatchFunctionObject"
+GlobalNS.EventDispatchFunctionObject = require "Libs.EventHandle.EventDispatchFunctionObject"

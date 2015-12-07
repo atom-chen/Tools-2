@@ -63,6 +63,24 @@ function M:at(index)
     return nil
 end
 
+function M:IndexOf(value)
+    local idx = 1
+    while( idx < self:getLen() + 1 )
+    do
+        if self.m_data[idx] == value then
+            table.remove(self.m_data, idx)
+            break;
+        end
+        idx = idx + 1
+    end
+    
+    if idx < self:getLen() + 1 then
+        return idx - 1      -- 返回的是从 0 开始的下表
+    else
+        return -1
+    end
+end
+
 function M:Clear()
     self.m_data = {}
 end

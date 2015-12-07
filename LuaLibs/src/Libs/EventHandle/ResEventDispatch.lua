@@ -5,6 +5,10 @@ function M:ctor()
     
 end
 
+function M:dtor()
+
+end
+
 function dispatchEvent(dispatchObject)
     super.dispatchEvent(dispatchObject)
     self.clearEventHandle();

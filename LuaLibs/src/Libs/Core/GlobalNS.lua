@@ -5,7 +5,6 @@ GlobalNS.Class = nil
 GlobalNS.GObject = nil
 GlobalNS.Array = nil
 GlobalNS.MList = nil
-GlobalNS.
 GlobalNS.EventDispatchFunctionObject = nil
 GlobalNS.DelayHandleParamBase = nil
 GlobalNS.DelayAddParam = nil
