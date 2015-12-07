@@ -20,8 +20,8 @@ function M:OnFrameTimer()
         return;
     end
 
-    ++self.m_curFrame;
-    ++self.m_curLeftFrame;
+    self.m_curFrame = self.m_curFrame + 1;
+    self.m_curLeftFrame = self.m_curLeftFrame + 1;
 
     if self.m_bInfineLoop then
         if self.m_curLeftFrame == m_internal then

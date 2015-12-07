@@ -54,21 +54,12 @@ end
 
 -- 获取长度
 function ByteBuffer:length()
-    if self == nil then
-        self:log("self nil")
-    end
-    if self.m_buff == nil then
-        self:log("buff nil")
-    end
-    self:log("buff len " .. #self.m_buff)
-	self:log("buff len size " .. self.m_size)
     --return #self.m_buff + 1 	-- 这个返回的从 0 开始的索引，需要加 1 才行
 	return self.m_size
 end
 
 -- 清理数据
 function ByteBuffer:clear()
-	self:log("clear ByteBuffer")
     self.m_buff = {}
     self.m_position = 0
 end
@@ -111,14 +102,7 @@ end
 function ByteBuffer:readUnsignedInt16()
     local retData = 0
     local bitsLen = 16
-	
-    self:log("self.m_endian " .. self.m_endian)
-    self:log("self.ENDIAN_BIG " .. self.ENDIAN_BIG)
-    self:log("self.m_position " .. self.m_position)
-	
-    self:log("string.byte(self.m_buff[self.m_position]) " .. self.m_buff[self.m_position])
-    self:log("string.byte(self.m_buff[self.m_position + 1]) " .. self.m_buff[self.m_position + 1])
-	
+
     if self:canRead(2) then
         if self.m_endian == self.ENDIAN_BIG then-- 如果是小端字节序
             retData = self.m_buff[self.m_position] * 256 + self.m_buff[self.m_position + 1]
@@ -143,13 +127,10 @@ end
 function ByteBuffer:readUnsignedInt32()
     local retData = 0
     if self:canRead(4) then
-		self:log("2222 ")
         if self.m_endian == self.ENDIAN_BIG then-- 如果是小端字节序
             retData = self.m_buff[self.m_position] * 256 * 256 * 256 + self.m_buff[self.m_position + 1] * 256 * 256 + self.m_buff[self.m_position + 2] * 256 + self.m_buff[self.m_position + 3]
-			self:log("3333 ")
         else
             retData = self.m_buff[self.m_position + 3] * 256 * 256 * 256 + self.m_buff[self.m_position + 2] * 256 * 256 + self.m_buff[self.m_position + 1] * 256 + self.m_buff[self.m_position]
-			self:log("4444 ")
         end
         self:advPos(4);
     end
@@ -190,24 +171,15 @@ end
 
 -- 读取 utf-8 字符串
 function ByteBuffer:readMultiByte(len_)
-    self:log("len_ " .. len_)
-    self:log("m_position " .. self.m_position)
-    self:log("m_size " .. self.m_size)
-
     local utf8Str
     if self:canRead(len_) then
-        idx = 0
-		
-		self:log("aaaaaaaaa")
-		
+        local idx = 0
         while(idx < len_)
         do
             if utf8Str == nil then
                 utf8Str = string.char(self.m_buff[self.m_position + idx])
-				self:log("bbbbbbbbbbbb")
             else
                 utf8Str = utf8Str .. string.char(self.m_buff[self.m_position + idx])
-				self:log("fffffffffff")
             end
             
             idx = idx + 1
@@ -224,12 +196,7 @@ function ByteBuffer:writeInt8(retData)
 end
 
 function ByteBuffer:writeUnsignedInt8(retData)
-    self:log("writeInt8 " .. retData)
-	
     self.m_buff[self.m_position] = retData
-	
-    self:log("self.m_buff[self.m_position] " .. self.m_buff[self.m_position])
-	
     self:advPosAndLen(1);
 end
 
@@ -238,7 +205,6 @@ function ByteBuffer.writeInt16(retData)
 end
 
 function ByteBuffer.writeUnsignedInt16(retData)
-	self:log("writeInt16 " .. retData)
     local oneByte = retData % 256
     local twoByte = retData / 256
 
@@ -317,12 +283,9 @@ end
 
 -- 输出缓冲区所有的字节
 function ByteBuffer:dumpAllBytes()
-    self:log("dumpAllBytes " .. self:length())
     for idx = 0, #(self.m_buff) do
         self:log(tostring(self.m_buff[idx]))
     end
-    
-    self:log("self.m_sysEndian " .. self.m_sysEndian)
 end
 
 function ByteBuffer:log(msg)
