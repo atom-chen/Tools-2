@@ -1,97 +1,75 @@
-﻿using System.Collections.Generic;
+--[[
+    @brief 心跳管理器
+]]
 
-/**
- * @brief 心跳管理器
- */
-namespace SDK.Lib
+﻿local M = GlobalNS.Class(GlobalNS.DelayHandleMgrBase)
+GlobalNS["TickMgr"] = M
+
+function M:ctor()
 {
-    public class TickMgr : DelayHandleMgrBase
-    {
-        protected List<TickProcessObject> m_tickLst;
-
-        public TickMgr()
-        {
-            m_tickLst = new List<TickProcessObject>();
-        }
-
-        public void addTick(ITickedObject tickObj, float priority = 0.0f)
-        {
-            addObject(tickObj as IDelayHandleItem, priority);
-        }
-
-        public override void addObject(IDelayHandleItem delayObject, float priority = 0.0f)
-        {
-            if (bInDepth())
-            {
-                base.addObject(delayObject, priority);
-            }
-            else
-            {
-                int position = -1;
-                for (int i = 0; i < m_tickLst.Count; i++)
-                {
-                    if (m_tickLst[i] == null)
-                        continue;
-
-                    if (m_tickLst[i].m_tickObject == delayObject)
-                    {
-                        return;
-                    }
-
-                    if (m_tickLst[i].m_priority < priority)
-                    {
-                        position = i;
-                        break;
-                    }
-                }
-
-                TickProcessObject processObject = new TickProcessObject();
-                processObject.m_tickObject = delayObject as ITickedObject;
-                processObject.m_priority = priority;
-
-                if (position < 0 || position >= m_tickLst.Count)
-                {
-                    m_tickLst.Add(processObject);
-                }
-                else
-                {
-                    m_tickLst.Insert(position, processObject);
-                }
-            }
-        }
-
-        public override void delObject(IDelayHandleItem delayObject)
-        {
-            if (bInDepth())
-            {
-                base.delObject(delayObject);
-            }
-            else
-            {
-                foreach (TickProcessObject item in m_tickLst)
-                {
-                    if (UtilApi.isAddressEqual(item.m_tickObject, delayObject))
-                    {
-                        m_tickLst.Remove(item);
-                        break;
-                    }
-                }
-            }
-        }
-
-        public void Advance(float delta)
-        {
-            incDepth();
-
-            foreach (TickProcessObject tk in m_tickLst)
-            {
-                if (!(tk.m_tickObject as IDelayHandleItem).getClientDispose())
-                {
-                    (tk.m_tickObject as ITickedObject).onTick(delta);
-                }
-            }
-
-            decDepth();
-        }
-    }
+    self:m_tickLst = GlobalNS.MList:new();
 }
+
+function M:addTick(tickObj, priority)
+    self.addObject(tickObj, priority);
+end
+
+function M:addObject(delayObject, priority)
+    if self.bInDepth() then
+        super.addObject(delayObject, priority);
+    else
+        local position = -1;
+        local i = 0
+        for (i = 0, i < m_tickLst.Count, 1) do
+            if m_tickLst[i] == nil then
+                continue;
+            end
+
+            if m_tickLst[i].m_tickObject == delayObject then
+                return;
+            end
+
+            if m_tickLst[i].m_priority < priority then
+                position = i;
+                break;
+            end
+        end
+
+        processObject = GlobalNS.TickProcessObject:new();
+        processObject.m_tickObject = delayObject;
+        processObject.m_priority = priority;
+
+        if position < 0 or position >= m_tickLst.Count then
+            self.m_tickLst.Add(processObject);
+        else
+            self.m_tickLst.Insert(position, processObject);
+        end
+    end
+end
+
+function delObject(delayObject)
+    if self.bInDepth() then
+        super.delObject(delayObject);
+    else
+        for key, item in ipairs(m_tickLst.list()) do
+            if item.m_tickObject == delayObject then
+                self.m_tickLst.Remove(item);
+                break;
+            end
+        end
+    end
+end
+
+function Advance(delta)
+    self.incDepth();
+
+    for key, tk in ipairs(m_tickLst.list()) do
+        if not tk.m_tickObject.getClientDispose() then
+            tk.m_tickObject.onTick(delta);
+        end
+    end
+
+    self.decDepth();
+}
+
+return M

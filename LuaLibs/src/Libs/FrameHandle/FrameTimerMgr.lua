@@ -16,14 +16,14 @@ function addObject(delayObject, priority)
         if self.bInDepth() then
             super.addObject(delayObject, priority);
         else
-            m_timerLists.Add(delayObject as FrameTimerItem);
+            m_timerLists.Add(delayObject);
         end
     end
 end
 
 function delObject(delayObject)
     -- 检查当前是否在队列中
-    if self.m_timerLists.IndexOf(delayObject) != -1 then
+    if not self.m_timerLists.IndexOf(delayObject) == -1 then
         delayObject.m_disposed = true;
         if self.bInDepth() then
             super.addObject(delayObject);

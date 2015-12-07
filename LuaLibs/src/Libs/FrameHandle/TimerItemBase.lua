@@ -1,95 +1,72 @@
-﻿using System;
+--[[
+    @brief 定时器，这个是不断增长的
+]]
 
-namespace SDK.Lib
+﻿local M = GlobalNS.Class(GlobalNS.IDelayHandleItem)
+GlobalNS["TimerItemBase"] = M
+
+function M:TimerItemBase()
 {
-    /**
-     * @brief 定时器，这个是不断增长的
-     */
-    public class TimerItemBase : IDelayHandleItem
+    self.m_internal = 1;            -- 定时器间隔
+    self.m_totalTime = 1;           -- 总共定时器时间
+    self.m_curTime = 0;             -- 当前已经调用的定时器的时间
+    self.m_bInfineLoop = false;     -- 是否是无限循环
+    self.m_curLeftTimer = 0;        -- 当前定时器剩余的次数
+    self.m_timerDisp = nil;         -- 定时器分发
+    self.m_disposed = false;        -- 是否已经被释放
+}
+
+function OnTimer(delta)
+    if self.m_disposed then
+        return;
+    end
+
+    self.m_curTime += delta;
+    self.m_curLeftTimer += delta;
+
+    if self.m_bInfineLoop then
+        self.checkAndDisp();
+    else
+        if m_curTime >= m_totalTime then
+            self.disposeAndDisp();
+        else
+            self.checkAndDisp();
+        end
+    end
+end
+
+function disposeAndDisp()
+    self.m_disposed = true;
+    if self.m_timerDisp != nil then
+        self.m_timerDisp(this);
+    end
+end
+
+function checkAndDisp()
+    if m_curLeftTimer >= m_internal then
     {
-        public float m_internal;        // 定时器间隔
-        public float m_totalTime;       // 总共定时器时间
-        public float m_curTime;         // 当前已经调用的定时器的时间
-        public bool m_bInfineLoop;      // 是否是无限循环
-        public float m_curLeftTimer;    // 当前定时器剩余的次数
-        public Action<TimerItemBase> m_timerDisp;       // 定时器分发
-        public bool m_disposed;             // 是否已经被释放
+        m_curLeftTimer = m_curLeftTimer - m_internal;
 
-        public TimerItemBase()
+        if (m_timerDisp != null)
         {
-            m_internal = 1;
-            m_totalTime = 1;
-            m_curTime = 0;
-            m_bInfineLoop = false;
-            m_curLeftTimer = 0;
-            m_timerDisp = null;
-            m_disposed = false;
-        }
-
-        public virtual void OnTimer(float delta)
-        {
-            if (m_disposed)
-            {
-                return;
-            }
-
-            m_curTime += delta;
-            m_curLeftTimer += delta;
-
-            if (m_bInfineLoop)
-            {
-                checkAndDisp();
-            }
-            else
-            {
-                if (m_curTime >= m_totalTime)
-                {
-                    disposeAndDisp();
-                }
-                else
-                {
-                    checkAndDisp();
-                }
-            }
-        }
-
-        public virtual void disposeAndDisp()
-        {
-            m_disposed = true;
-            if (m_timerDisp != null)
-            {
-                m_timerDisp(this);
-            }
-        }
-
-        public virtual void checkAndDisp()
-        {
-            if (m_curLeftTimer >= m_internal)
-            {
-                m_curLeftTimer = m_curLeftTimer - m_internal;
-
-                if (m_timerDisp != null)
-                {
-                    m_timerDisp(this);
-                }
-            }
-        }
-
-        public virtual void reset()
-        {
-            m_curTime = 0;
-            m_curLeftTimer = 0;
-            m_disposed = false;
-        }
-
-        public void setClientDispose()
-        {
-
-        }
-
-        public bool getClientDispose()
-        {
-            return false;
+            m_timerDisp(this);
         }
     }
+}
+
+public virtual void reset()
+{
+    m_curTime = 0;
+    m_curLeftTimer = 0;
+    m_disposed = false;
+}
+
+public void setClientDispose()
+{
+
+}
+
+public bool getClientDispose()
+{
+    return false;
 }
