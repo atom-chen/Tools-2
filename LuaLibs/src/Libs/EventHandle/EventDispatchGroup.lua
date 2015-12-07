@@ -1,94 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
+local EventDispatchGroup = GlobalNS.Class()
+local M = EventDispatchGroup
 
-namespace SDK.Lib
-{
-    public class EventDispatchGroup
-    {
-        protected Dictionary<int, EventDispatch> m_groupID2DispatchDic;
-        protected bool m_bInLoop;       // 是否是在循环遍历中
+function M:ctor()
+    self.m_groupID2DispatchDic = GlobalNS.Dictionary:new()
+    self.m_bInLoop = false;
+end
 
-        public EventDispatchGroup()
-        {
-            m_groupID2DispatchDic = new Dictionary<int, EventDispatch>();
-            m_bInLoop = false;
-        }
+-- 添加分发器
+function M:addEventDispatch(groupID, disp)
+    if not self.m_groupID2DispatchDic.ContainsKey(groupID) then
+        self.m_groupID2DispatchDic.Add(groupID, disp);
+    end
+end
 
-        // 添加分发器
-        public void addEventDispatch(int groupID, EventDispatch disp)
-        {
-            if (!m_groupID2DispatchDic.ContainsKey(groupID))
-            {
-                m_groupID2DispatchDic[groupID] = disp;
-            }
-        }
+function addEventHandle(groupID, handle)
+    self.m_groupID2DispatchDic.value(groupID).addEventHandle(handle)
+end
 
-        public void addEventHandle(int groupID, Action<IDispatchObject> handle)
-        {
-            m_groupID2DispatchDic[groupID].addEventHandle(handle);
-        }
+function removeEventHandle(groupID, handle)
+    if self.m_groupID2DispatchDic.ContainsKey(groupID) then
+        self.m_groupID2DispatchDic.value(groupID).removeEventHandle(handle)
+    else
+        -- 日志
+    end
+end
 
-        public void removeEventHandle(int groupID, Action<IDispatchObject> handle)
-        {
-            if (m_groupID2DispatchDic.ContainsKey(groupID))
-            {
-                m_groupID2DispatchDic[groupID].removeEventHandle(handle);
-            }
-            else
-            {
-                Ctx.m_instance.m_logSys.log("Event Dispatch Group not exist");
-            }
-        }
+function dispatchEvent(groupID,  dispatchObject)
+    self.m_bInLoop = true;
+    if self.m_groupID2DispatchDic.ContainsKey(groupID) then
+        self.m_groupID2DispatchDic.value(groupID).dispatchEvent(dispatchObject)
+    else
+        -- 日志
+    end
+    self.m_bInLoop = false;
+end
 
-        public void dispatchEvent(int groupID,  IDispatchObject dispatchObject)
-        {
-            m_bInLoop = true;
-            if (m_groupID2DispatchDic.ContainsKey(groupID))
-            {
-                m_groupID2DispatchDic[groupID].dispatchEvent(dispatchObject);
-            }
-            else
-            {
-                Ctx.m_instance.m_logSys.log("Event Dispatch Group not exist");
-            }
-            m_bInLoop = false;
-        }
+function M:clearAllEventHandle()
+    if not m_bInLoop then
+        for _, dispatch in pairs(m_groupID2DispatchDic) do
+            dispatch.clearEventHandle()
+        end
 
-        public void clearAllEventHandle()
-        {
-            if (!m_bInLoop)
-            {
-                foreach (EventDispatch dispatch in m_groupID2DispatchDic.Values)
-                {
-                    dispatch.clearEventHandle();
-                }
+        m_groupID2DispatchDic.Clear()
+    else
+        -- 日志
+    end
+end
 
-                m_groupID2DispatchDic.Clear();
-            }
-            else
-            {
-                Ctx.m_instance.m_logSys.log("looping cannot delete element");
-            }
-        }
+function clearGroupEventHandle(groupID)
+    if not self.m_bInLoop then
+        if self.m_groupID2DispatchDic.ContainsKey(groupID) then
+            self.m_groupID2DispatchDic.value(groupID).clearEventHandle();
+            self.m_groupID2DispatchDic.Remove(groupID);
+        else
+            -- 日志
+        end
+    else
+        -- 日志
+    end
+end
 
-        public void clearGroupEventHandle(int groupID)
-        {
-            if (!m_bInLoop)
-            {
-                if (m_groupID2DispatchDic.ContainsKey(groupID))
-                {
-                    m_groupID2DispatchDic[groupID].clearEventHandle();
-                    m_groupID2DispatchDic.Remove(groupID);
-                }
-                else
-                {
-                    Ctx.m_instance.m_logSys.log("Event Dispatch Group not exist");
-                }
-            }
-            else
-            {
-                Ctx.m_instance.m_logSys.log("looping cannot delete element");
-            }
-        }
-    }
-}
+return M

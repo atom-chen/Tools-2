@@ -1,16 +1,13 @@
-﻿namespace SDK.Lib
-{
-    public class ResEventDispatch : EventDispatch
-    {
-        public ResEventDispatch()
-        {
+local ResEventDispatch = GlobalNS.Class(GlobalNS.EventDispatch)
+local M = ResEventDispatch
 
-        }
+function M:ctor()
+    
+end
 
-        override public void dispatchEvent(IDispatchObject dispatchObject)
-        {
-            base.dispatchEvent(dispatchObject);
-            clearEventHandle();
-        }
-    }
-}
+function dispatchEvent(dispatchObject)
+    super.dispatchEvent(dispatchObject)
+    self.clearEventHandle();
+end
+
+return M

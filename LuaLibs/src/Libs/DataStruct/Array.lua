@@ -64,7 +64,7 @@ function M:at(index)
 end
 
 function M:Clear()
-
+    self.m_data = {}
 end
 
 return M

@@ -1,19 +1,17 @@
-﻿namespace SDK.Lib
-{
-    /**
-     * @brief 一次事件分发，分发一次就清理
-     */
-    public class CallOnceEventDispatch : EventDispatch
-    {
-        public CallOnceEventDispatch()
-        {
+--[[
+    @brief 一次事件分发，分发一次就清理
+]]
 
-        }
+local CallOnceEventDispatch = GlobalNS.Class(GlobalNS.EventDispatch)
+local M = CallOnceEventDispatch
 
-        override public void dispatchEvent(IDispatchObject dispatchObject)
-        {
-            base.dispatchEvent(dispatchObject);
-            clearEventHandle();
-        }
-    }
-}
+function M:ctor()
+
+end
+
+function dispatchEvent(dispatchObject)
+    super.dispatchEvent(dispatchObject);
+    selfclearEventHandle();
+end
+
+return M

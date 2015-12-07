@@ -1,7 +1,8 @@
-﻿namespace SDK.Lib
-{
-    public class DelayHandleParamBase
-    {
+local DelayHandleParamBase = GlobalNS.Class()
+local M = DelayHandleParamBase
 
-    }
-}
+function M:ctor()
+    
+end
+
+return M

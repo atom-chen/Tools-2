@@ -1,21 +1,19 @@
-﻿using System;
+local AddOnceAndCallOnceEventDispatch = GlobalNS.Class(GlobalNS.EventDispatch)
+local M = AddOnceAndCallOnceEventDispatch
 
-namespace SDK.Lib
-{
-    public class AddOnceAndCallOnceEventDispatch : EventDispatch
-    {
-        override public void addEventHandle(Action<IDispatchObject> handle)
-        {
-            if (!existEventHandle(handle))
-            {
-                base.addEventHandle(handle);
-            }
-        }
+function M:ctor()
+    
+end
 
-        override public void dispatchEvent(IDispatchObject dispatchObject)
-        {
-            base.dispatchEvent(dispatchObject);
-            clearEventHandle();
-        }
-    }
-}
+function M:addEventHandle(handle)
+    if not self.existEventHandle(handle) then
+        super.addEventHandle(handle)
+    end
+end
+
+function M:dispatchEvent(dispatchObject)
+    super.dispatchEvent(dispatchObject)
+    self.clearEventHandle()
+end
+
+return M
