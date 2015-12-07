@@ -10,3 +10,5 @@ function M:readString(bytes, tmpStr)
     bytes.readUnsignedInt16(m_sCnt);
     bytes.readMultiByte(tmpStr, m_sCnt, GkEncode.UTF8);
 end
+
+return M

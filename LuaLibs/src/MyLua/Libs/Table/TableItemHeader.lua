@@ -11,3 +11,5 @@ function M:parseHeaderByteBuffer(bytes)
     bytes.readUnsignedInt32(m_uID);
     bytes.readUnsignedInt32(m_offset);
 end
+
+return M

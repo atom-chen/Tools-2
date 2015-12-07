@@ -5,3 +5,5 @@ GlobalNS["TableItemBodyBase"] = M
 function parseBodyByteBuffer(bytes, offset)
     
 end
+
+return M

@@ -54,18 +54,18 @@ end
 function loadOneTable(tableID)
 	table = m_dicTable.value(tableID);
 
-    LoadParam param = Ctx.m_instance.m_poolSys.newObject<LoadParam>();
-    LocalFileSys.modifyLoadParam(Path.Combine(Ctx.m_instance.m_cfg.m_pathLst[(int)ResPathType.ePathTablePath], table.m_resName), param);
-    param.m_loadEventHandle = onLoadEventHandle;
-    param.m_loadNeedCoroutine = false;
-    param.m_resNeedCoroutine = false;
-    Ctx.m_instance.m_resLoadMgr.loadResources(param);
-    Ctx.m_instance.m_poolSys.deleteObj(param);
+    --LoadParam param = Ctx.m_instance.m_poolSys.newObject<LoadParam>();
+    --LocalFileSys.modifyLoadParam(Path.Combine(Ctx.m_instance.m_cfg.m_pathLst[(int)ResPathType.ePathTablePath], table.m_resName), param);
+    --param.m_loadEventHandle = onLoadEventHandle;
+    --param.m_loadNeedCoroutine = false;
+    --param.m_resNeedCoroutine = false;
+    --Ctx.m_instance.m_resLoadMgr.loadResources(param);
+    --Ctx.m_instance.m_poolSys.deleteObj(param);
 end
 
 -- 加载一个表完成
-public void onLoadEventHandle(IDispatchObject dispObj)
-{
+function onLoadEventHandle(dispObj)
+--[[
     m_res = dispObj as ResItem;
     if (m_res.refCountResLoadResultNotify.resLoadState.hasSuccessLoaded())
     {
@@ -88,12 +88,13 @@ public void onLoadEventHandle(IDispatchObject dispObj)
 
     // 卸载资源
     Ctx.m_instance.m_resLoadMgr.unload(m_res.GetPath(), onLoadEventHandle);
-}
+]]
+end
 
 -- 根据路径查找表的 ID
-function getTableIDByPath path)
+function getTableIDByPath(path)
     for key, value in pairs(m_dicTable) do
-        if (Ctx.m_instance.m_cfg.m_pathLst[(int)ResPathType.ePathTablePath] + kv.Value.m_resName == path) then
+        if (Ctx.m_instance.m_cfg.m_pathLst[ResPathType.ePathTablePath] + kv.Value.m_resName == path) then
             return kv.Key;
         end
     end
@@ -102,108 +103,76 @@ function getTableIDByPath path)
 end
 
 -- 加载一个表中一项的所有内容
-function void loadOneTableOneItemAll(TableID tableID, TableBase table, TableItemBase itemBase)
-{
-    if (TableID.TABLE_OBJECT == tableID)
-    {
-        itemBase.parseBodyByteBuffer<TableObjectItemBody>(table.m_byteBuffer, itemBase.m_itemHeader.m_offset);
-    }
-    else if (TableID.TABLE_CARD == tableID)
-    {
-        itemBase.parseBodyByteBuffer<TableCardItemBody>(table.m_byteBuffer, itemBase.m_itemHeader.m_offset);
-    }
-    else if (TableID.TABLE_SKILL == tableID)  // 添加一个表的步骤四
-    {
-        itemBase.parseBodyByteBuffer<TableSkillItemBody>(table.m_byteBuffer, itemBase.m_itemHeader.m_offset);
-    }
-    else if (TableID.TABLE_JOB == tableID)
-    {
-        itemBase.parseBodyByteBuffer<TableJobItemBody>(table.m_byteBuffer, itemBase.m_itemHeader.m_offset);
-    }
-    else if (TableID.TABLE_SPRITEANI == tableID)
-    {
-        itemBase.parseBodyByteBuffer<TableSpriteAniItemBody>(table.m_byteBuffer, itemBase.m_itemHeader.m_offset);
-    }
-    else if (TableID.TABLE_RACE == tableID)
-    {
-        itemBase.parseBodyByteBuffer<TableRaceItemBody>(table.m_byteBuffer, itemBase.m_itemHeader.m_offset);
-    }
-    else if (TableID.TABLE_STATE == tableID)
-    {
-        itemBase.parseBodyByteBuffer<TableStateItemBody>(table.m_byteBuffer, itemBase.m_itemHeader.m_offset);
-    }
-}
+function loadOneTableOneItemAll(tableID, table, itemBase)
+    if (GlobalNS.TableID.TABLE_OBJECT == tableID) then
+        itemBase.parseBodyByteBuffer(table.m_byteBuffer, itemBase.m_itemHeader.m_offset, TableObjectItemBody);
+    else if (GlobalNS.TableID.TABLE_CARD == tableID) then
+        itemBase.parseBodyByteBuffer(table.m_byteBuffer, itemBase.m_itemHeader.m_offset, TableCardItemBody);
+    else if (GlobalNS.TableID.TABLE_SKILL == tableID) then  -- 添加一个表的步骤四
+        itemBase.parseBodyByteBuffer(table.m_byteBuffer, itemBase.m_itemHeader.m_offset, TableSkillItemBody);
+    else if (GlobalNS.TableID.TABLE_JOB == tableID) then
+        itemBase.parseBodyByteBuffer(table.m_byteBuffer, itemBase.m_itemHeader.m_offset, TableJobItemBody);
+    else if (GlobalNS.TableID.TABLE_SPRITEANI == tableID) then
+        itemBase.parseBodyByteBuffer(table.m_byteBuffer, itemBase.m_itemHeader.m_offset, TableSpriteAniItemBody);
+    else if (GlobalNS.TableID.TABLE_RACE == tableID) then
+        itemBase.parseBodyByteBuffer(table.m_byteBuffer, itemBase.m_itemHeader.m_offset, TableRaceItemBody);
+    else if (GlobalNS.TableID.TABLE_STATE == tableID) then
+        itemBase.parseBodyByteBuffer(table.m_byteBuffer, itemBase.m_itemHeader.m_offset, TableStateItemBody);
+    end
+end
 
-// 获取一个表的名字
-function string getTableName(TableID tableID)
-{
-	TableBase table = m_dicTable[tableID];
-	if (null != table)
-	{
+-- 获取一个表的名字
+function getTableName(tableID)
+	table = m_dicTable.value(tableID);
+	if (nil ~= table) then
 		return table.m_tableName;
-	}			
+	end
 	return "";
-}
+end
 
-// 读取一个表，仅仅读取表头
-function void readTable(TableID tableID, ByteBuffer bytes)
-{
-    TableBase table = m_dicTable[tableID];
+-- 读取一个表，仅仅读取表头
+function readTable(tableID, bytes)
+    table = m_dicTable.value(tableID);
     table.m_byteBuffer = bytes;
 
     bytes.setEndian(EEndian.eLITTLE_ENDIAN);
-    uint len = 0;
-    bytes.readUnsignedInt32(ref len);
-    uint i = 0;
-    TableItemBase item = null;
-    for (i = 0; i < len; i++)
-    {
-        //if (TableID.TABLE_OBJECT == tableID)
-        //{
-        //    item = new TableItemObject();
-        //}
-        item = new TableItemBase();
+    local len = 0;
+    bytes.readUnsignedInt32(len);
+    local i = 0;
+    item = nil;
+    for i = 0, i < len, 1 do
+        item = GlobalNS.TableItemBase:new();
         item.parseHeaderByteBuffer(bytes);
-        // 加载完整数据
-        //loadOneTableOneItemAll(tableID, table, item);
-        //if (TableID.TABLE_OBJECT == tableID)
-        //{
-            //item.parseAllByteBuffer<TableObjectItemBody>(bytes);
-        //}
         table.m_List.Add(item);
-    }
-}
+    end
+end
 
-// 查找表中的一项
-function public TableItemBase findDataItem(TableBase table, uint id)
-{
-	int size = table.m_List.Count;
-	int low = 0;
-	int high = size - 1;
-	int middle = 0;
-	uint idCur = 0;
+-- 查找表中的一项
+function findDataItem(table, id)
+	local size = table.m_List.Count();
+	local low = 0;
+	local high = size - 1;
+	local middle = 0;
+	local idCur = 0;
 	
 	while (low <= high)
-	{
+	do
 		middle = (low + high) / 2;
-        idCur = table.m_List[middle].m_itemHeader.m_uID;
-		if (idCur == id)
-		{
+        idCur = table.m_List.at(middle).m_itemHeader.m_uID;
+		if (idCur == id) then
 			break;
-		}
-		if (id < idCur)
-		{
+		end
+		if (id < idCur)then
 			high = middle - 1;
-		}
 		else
-		{
 			low = middle + 1;
-		}
-	}
+		end
+	end
 	
-	if (low <= high)
-	{
+	if (low <= high) then
         return table.m_List[middle];
-	}
-	return null;
-}
+	end
+	return nil;
+end
+
+return M
