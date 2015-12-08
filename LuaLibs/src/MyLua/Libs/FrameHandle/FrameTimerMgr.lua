@@ -1,7 +1,3 @@
-﻿--[[
-    @brief 定时器管理器
-]]
-
 local M = GlobalNS.Class(GlobalNS.DelayHandleMgrBase)
 M.clsName = "FrameTimerMgr"
 GlobalNS[M.clsName] = M

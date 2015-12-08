@@ -1,7 +1,3 @@
---[[
-    @brief 心跳管理器
-]]
-
 ﻿local M = GlobalNS.Class(GlobalNS.DelayHandleMgrBase)
 M.clsName = "TickMgr"
 GlobalNS[M.clsName] = M
@@ -11,7 +7,7 @@ function M:ctor()
 end
 
 function M:addTick(tickObj, priority)
-    self.addObject(tickObj, priority);
+    self:addObject(tickObj, priority);
 end
 
 function M:addObject(delayObject, priority)
@@ -20,7 +16,7 @@ function M:addObject(delayObject, priority)
     else
         local position = -1;
         local i = 0
-        for i = 0, i < self.m_tickLst.Count, 1 do
+        for i = 0, i < self.m_tickLst:Count(), 1 do
             if self.m_tickLst[i] == nil then
                 continue;
             end
@@ -39,7 +35,7 @@ function M:addObject(delayObject, priority)
         processObject.m_tickObject = delayObject;
         processObject.m_priority = priority;
 
-        if position < 0 or position >= m_tickLst.Count then
+        if position < 0 or position >= m_tickLst:Count() then
             self.m_tickLst:Add(processObject);
         else
             self.m_tickLst:Insert(position, processObject);
@@ -51,7 +47,7 @@ function M:delObject(delayObject)
     if self:bInDepth() then
         self.super.delObject(self, delayObject);
     else
-        for key, item in ipairs(m_tickLst.list()) do
+        for key, item in ipairs(m_tickLst:list()) do
             if item.m_tickObject == delayObject then
                 self.m_tickLst:Remove(item);
                 break;
@@ -61,10 +57,10 @@ function M:delObject(delayObject)
 end
 
 function M:Advance(delta)
-    self.incDepth();
+    self:incDepth();
 
-    for key, tk in ipairs(m_tickLst.list()) do
-        if not tk.m_tickObject.getClientDispose() then
+    for key, tk in ipairs(self.m_tickLst:list()) do
+        if not tk.m_tickObject:getClientDispose() then
             tk.m_tickObject:onTick(delta);
         end
     end

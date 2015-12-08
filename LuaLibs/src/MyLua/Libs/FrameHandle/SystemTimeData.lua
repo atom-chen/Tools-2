@@ -1,4 +1,4 @@
-﻿local M = GlobalNS.Class()
+local M = GlobalNS.Class()
 M.clsName = "SystemTimeData"
 GlobalNS[M.clsName] = M
 
