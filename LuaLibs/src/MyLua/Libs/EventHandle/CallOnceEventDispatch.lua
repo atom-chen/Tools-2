@@ -11,7 +11,7 @@ function M:ctor()
 end
 
 function M:dispatchEvent(dispatchObject)
-    super.dispatchEvent(self, dispatchObject);
+    self.super.dispatchEvent(self, dispatchObject);
     self:clearEventHandle();
 end
 

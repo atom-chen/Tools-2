@@ -8,12 +8,12 @@ end
 
 function M:addEventHandle(handle)
     if not self.existEventHandle(handle) then
-        super.addEventHandle(self, handle)
+        self.super.addEventHandle(self, handle)
     end
 end
 
 function M:dispatchEvent(dispatchObject)
-    super.dispatchEvent(self, dispatchObject)
+    self.super.dispatchEvent(self, dispatchObject)
     self.clearEventHandle()
 end
 

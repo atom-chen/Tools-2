@@ -42,7 +42,7 @@ end
 
 function M:addObject(delayObject, priority)
     if self.bInDepth() then
-        super.addObject(self, delayObject, priority);
+        self.super.addObject(self, delayObject, priority);
     else
         -- 这个判断说明相同的函数只能加一次，但是如果不同资源使用相同的回调函数就会有问题，但是这个判断可以保证只添加一次函数，值得，因此不同资源需要不同回调函数
         self.m_handleList.Add(delayObject);
@@ -65,7 +65,7 @@ end
 
 function M:delObject(delayObject)
     if self.bInDepth() then
-        super.delObject(self, delayObject);
+        self.super.delObject(self, delayObject);
     else
         if self.m_handleList.Remove(delayObject) == false then
             -- 日志

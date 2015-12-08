@@ -16,7 +16,7 @@ end
 
 function M:addObject(delayObject, priority)
     if self.bInDepth() then
-        super.addObject(self, delayObject, priority);
+        self.super.addObject(self, delayObject, priority);
     else
         local position = -1;
         local i = 0
@@ -49,7 +49,7 @@ end
 
 function M:delObject(delayObject)
     if self.bInDepth() then
-        super.delObject(self, delayObject);
+        self.super.delObject(self, delayObject);
     else
         for key, item in ipairs(m_tickLst.list()) do
             if item.m_tickObject == delayObject then

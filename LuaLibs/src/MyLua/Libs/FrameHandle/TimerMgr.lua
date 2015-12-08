@@ -14,7 +14,7 @@ function M:addObject(delayObject, priority)
     -- 检查当前是否已经在队列中
     if self.m_timerLists.IndexOf(delayObject) == -1 then
         if (self.bInDepth()) then
-            super.addObject(self, delayObject, priority);
+            self.super.addObject(self, delayObject, priority);
         else
             self.m_timerLists.Add(delayObject);
         end
@@ -26,7 +26,7 @@ function M:delObject(delayObject)
     if (self.m_timerLists.IndexOf(delayObject) ~= -1) then
         delayObject.m_disposed = true;
         if (self.bInDepth()) then
-            super.delObject(self, delayObject);
+            self.super.delObject(self, delayObject);
         else
             for key, item in ipairs(self.m_timerLists.list()) do
                 if (item == delayObject) then
