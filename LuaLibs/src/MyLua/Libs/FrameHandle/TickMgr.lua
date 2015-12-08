@@ -1,4 +1,4 @@
-﻿local M = GlobalNS.Class(GlobalNS.DelayHandleMgrBase)
+local M = GlobalNS.Class(GlobalNS.DelayHandleMgrBase)
 M.clsName = "TickMgr"
 GlobalNS[M.clsName] = M
 
