@@ -12,7 +12,7 @@ end
 
 function M:dispatchEvent(dispatchObject)
     self.super.dispatchEvent(self, dispatchObject)
-    self.clearEventHandle();
+    self:clearEventHandle();
 end
 
 return M

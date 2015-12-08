@@ -16,10 +16,11 @@ function M:dtor()
 end
 
 function M:call(dispObj)
-    if(nil ~= m_pThis and nil ~=  m_handle) then
-        m_pThis:m_handle(dispObj);
+    if(nil ~= self.m_pThis and nil ~= self.m_handle) then
+        -- self.m_pThis:self.m_handle(dispObj);     -- 这么写好像不行
+        self.m_handle(self.m_pThis, dispObj);
     else
-        m_handle(dispObj);
+        self.m_handle(dispObj);
     end
 end
 

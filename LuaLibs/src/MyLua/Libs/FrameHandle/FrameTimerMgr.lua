@@ -9,25 +9,25 @@ end
 
 function M:addObject(delayObject, priority)
     -- 检查当前是否已经在队列中
-    if self.m_timerLists.IndexOf(delayObject) == -1 then
-        if self.bInDepth() then
+    if self.m_timerLists:IndexOf(delayObject) == -1 then
+        if self:bInDepth() then
             self.super.addObject(self, delayObject, priority);
         else
-            m_timerLists.Add(delayObject);
+            self.m_timerLists:Add(delayObject);
         end
     end
 end
 
 function M:delObject(delayObject)
     -- 检查当前是否在队列中
-    if not self.m_timerLists.IndexOf(delayObject) == -1 then
+    if not self.m_timerLists:IndexOf(delayObject) == -1 then
         delayObject.m_disposed = true;
         if self:bInDepth() then
             self.super.addObject(self, delayObject);
         else
             for key, item in ipairs(m_timerLists.list()) do
                 if item == delayObject then
-                    self.m_timerLists.Remove(item);
+                    self.m_timerLists:Remove(item);
                     break;
                 end
             end
@@ -39,15 +39,15 @@ function M:Advance(delta)
     self.incDepth();
 
     for key, timerItem in ipairs(m_timerLists.list()) do
-        if not timerItem.getClientDispose() then
-            timerItem.OnFrameTimer();
+        if not timerItem:getClientDispose() then
+            timerItem:OnFrameTimer();
         end
         if timerItem.m_disposed then
-            self.delObject(timerItem);
+            self:delObject(timerItem);
         end
     end
 
-    self.decDepth();
+    self:decDepth();
 end
 
 return M

@@ -9,23 +9,23 @@ function M:ctor()
 end
 
 function M:getDeltaSec()
-    return m_deltaSec
+    return self.m_deltaSec
 end
 
 function M:setDeltaSec(value)
-    m_deltaSec = value
+    self.m_deltaSec = value
 end
 
 function M:getCurTime()
-    return m_curTime
+    return self.m_curTime
 end
 
 function M:setCurTime(value)
-    m_curTime = value;
+    self.m_curTime = value;
 end
 
 function M:nextFrame()
-    m_preTime = m_curTime;
+    self.m_preTime = self.m_curTime;
 end
 
 return M

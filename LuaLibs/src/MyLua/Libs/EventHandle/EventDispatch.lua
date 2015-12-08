@@ -51,7 +51,7 @@ end
 
 function M:removeEventHandle(handle, pThis)
     local idx = 0;
-    for idx = 0, idx < self.m_handleList.Count(), 1 do
+    for idx = 0, idx < self.m_handleList:Count(), 1 do
         if self.m_handleList:at(idx).m_handle == handle and self.m_handleList.at(idx).m_pThis == pThis then
             break;
         end
@@ -76,17 +76,17 @@ end
 function M:dispatchEvent(dispatchObject)
     self:incDepth();
 
-    for _, handle in ipairs(self.m_handleList.list()) do
+    for _, handle in ipairs(self.m_handleList:list()) do
         if handle.m_bClientDispose == false then
             handle:call(dispatchObject);
         end
     end
 
-    self.decDepth();
+    self:decDepth();
 end
 
 function M:clearEventHandle()
-    if (self.bInDepth()) then
+    if (self:bInDepth()) then
         for _, item in ipairs(self.m_handleList:list()) do
             self:delObject(item);
         end
@@ -99,7 +99,7 @@ end
 function M:existEventHandle(handle)
     local bFinded = false;
     for _, item in ipairs(self.m_handleList:list()) do
-        if (UtilApi.isAddressEqual(item.m_handle, handle)) then
+        if (item.m_handle == handle) then
             bFinded = true;
             break;
         end

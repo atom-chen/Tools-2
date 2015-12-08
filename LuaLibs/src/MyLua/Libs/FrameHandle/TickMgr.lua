@@ -18,15 +18,15 @@ function M:addObject(delayObject, priority)
         local i = 0
         for i = 0, i < self.m_tickLst:Count(), 1 do
             while true do
-                if self.m_tickLst[i] == nil then
+                if self.m_tickLst.at(i) == nil then
                     break;
                 end
     
-                if self.m_tickLst[i].m_tickObject == delayObject then
+                if self.m_tickLst.at(i).m_tickObject == delayObject then
                     return;
                 end
     
-                if self.m_tickLst[i].m_priority < priority then
+                if self.m_tickLst.at(i).m_priority < priority then
                     position = i;
                     break;
                 end
@@ -39,7 +39,7 @@ function M:addObject(delayObject, priority)
         processObject.m_tickObject = delayObject;
         processObject.m_priority = priority;
 
-        if position < 0 or position >= m_tickLst:Count() then
+        if position < 0 or position >= self.m_tickLst:Count() then
             self.m_tickLst:Add(processObject);
         else
             self.m_tickLst:Insert(position, processObject);

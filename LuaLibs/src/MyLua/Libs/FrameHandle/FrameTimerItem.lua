@@ -29,20 +29,20 @@ function M:OnFrameTimer()
             self.m_curLeftFrame = 0;
 
             if self.m_timerDisp ~= nil then
-                self.m_timerDisp(self);
+                self:m_timerDisp(self);
             end
         end
     else
         if self.m_curFrame == self.m_totalFrameCount then
             self.m_disposed = true;
             if self.m_timerDisp ~= nil then
-                self.m_timerDisp(this);
+                self:m_timerDisp(this);
             end
         else
             if self.m_curLeftFrame == m_internal then
                 self.m_curLeftFrame = 0;
                 if self.m_timerDisp ~= nil then
-                    self.m_timerDisp(this);
+                    self:m_timerDisp(this);
                 end
             end
         end

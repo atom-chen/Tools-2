@@ -25,12 +25,12 @@ function M:OnTimer(delta)
     self.m_curLeftTimer = self.m_curLeftTimer + delta;
 
     if self.m_bInfineLoop then
-        self.checkAndDisp();
+        self:checkAndDisp();
     else
         if m_curTime >= m_totalTime then
-            self.disposeAndDisp();
+            self:disposeAndDisp();
         else
-            self.checkAndDisp();
+            self:checkAndDisp();
         end
     end
 end
@@ -38,16 +38,16 @@ end
 function M:disposeAndDisp()
     self.m_disposed = true;
     if self.m_timerDisp ~= nil then
-        self.m_timerDisp(this);
+        self:m_timerDisp(this);
     end
 end
 
 function M:checkAndDisp()
-    if m_curLeftTimer >= m_internal then
-        m_curLeftTimer = m_curLeftTimer - m_internal;
+    if self.m_curLeftTimer >= self.m_internal then
+        self.m_curLeftTimer = self.m_curLeftTimer - self.m_internal;
 
-        if (m_timerDisp ~= null) then
-            m_timerDisp(this);
+        if (self.m_timerDisp ~= nil) then
+            self.m_timerDisp(this);
         end
     end
 end

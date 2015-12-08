@@ -19,12 +19,12 @@ function M:OnTimer(delta)
     self.m_curLeftTimer = self.m_curLeftTimer + delta;
 
     if self.m_bInfineLoop then
-        self.checkAndDisp();
+        self:checkAndDisp();
     else
         if self.m_curTime <= 0 then
-            self.disposeAndDisp();
+            self:disposeAndDisp();
         else
-            self.checkAndDisp();
+            self:checkAndDisp();
         end
     end
 end

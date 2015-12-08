@@ -22,12 +22,16 @@ function M:getLen()
     return 0
 end
 
+function M:Count()
+    return self:getLen()
+end
+
 function M:list()
     return self.m_data
 end
 
 function M:Add(value)
-    self.add(value)
+    self:add(value)
 end
 
 function M:add(value)
@@ -35,7 +39,7 @@ function M:add(value)
 end
 
 function M:Remove(value)
-    return self.remove(value)
+    return self:remove(value)
 end 
 
 function M:remove(value)
@@ -57,7 +61,7 @@ function M:remove(value)
 end
 
 function M:at(index)
-    if index < getLen() then
+    if index < self:getLen() then
         return self.m_data[index]
     end
     
