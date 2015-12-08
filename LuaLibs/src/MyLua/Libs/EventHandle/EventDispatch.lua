@@ -29,9 +29,10 @@ function M:setUniqueId(value)
     --self.m_handleList.uniqueId = m_uniqueId;
 end
 
-function M:addEventHandle(handle)
+function M:addEventHandle(handle, pThis)
     local funcObject = GlobalNS.EventDispatchFunctionObject:new()
     funcObject.m_handle = handle;
+    funcObject.m_pThis = pThis;
     if (nil ~= handle) then
         self.addObject(funcObject);
     else
@@ -48,10 +49,10 @@ function M:addObject(delayObject, priority)
     end
 end
 
-function M:removeEventHandle(handle)
+function M:removeEventHandle(handle, pThis)
     local idx = 0;
     for idx = 0, idx < self.m_handleList.Count(), 1 do
-        if self.m_handleList.at(idx).m_handle == handle then
+        if self.m_handleList.at(idx).m_handle == handle and self.m_handleList.at(idx).m_pThis == pThis then
             break;
         end
     end
@@ -77,7 +78,7 @@ function M:dispatchEvent(dispatchObject)
 
     for _, handle in ipairs(self.m_handleList.list()) do
         if handle.m_bClientDispose == false then
-            handle.m_handle(dispatchObject);
+            handle.call(dispatchObject);
         end
     end
 

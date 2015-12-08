@@ -12,7 +12,7 @@ end
 
 function M:dispatchEvent(dispatchObject)
     super.dispatchEvent(self, dispatchObject);
-    selfclearEventHandle();
+    self:clearEventHandle();
 end
 
 return M
