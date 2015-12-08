@@ -1,6 +1,8 @@
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
+require "MyLua.Libs.Core.GObject"
 
-local M = GlobalNS.Class()
+local M = GlobalNS.Class(GlobalNS.GObject:new())
 M.clsName = "TableItemHeader"
 GlobalNS[M.clsName] = M
 
@@ -11,8 +13,8 @@ end
 
 -- 解析头部
 function M:parseHeaderByteBuffer(bytes)
-    bytes.readUnsignedInt32(m_uID);
-    bytes.readUnsignedInt32(m_offset);
+    bytes.readUnsignedInt32(self.m_uID);
+    bytes.readUnsignedInt32(self.m_offset);
 end
 
 return M

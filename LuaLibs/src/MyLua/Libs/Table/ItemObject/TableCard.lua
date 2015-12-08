@@ -3,6 +3,7 @@
 ]]
 
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
 
 local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
 M.clsName = "TableCardAttrName"
@@ -65,47 +66,47 @@ end
 function M:parseBodyByteBuffer(bytes, offset)
     local UtilTable
     bytes:setPos(offset);
-    UtilTable.readString(bytes, m_name);
+    UtilTable.readString(bytes, self.m_name);
 
-    bytes:readInt32(m_type);
-    bytes:readInt32(m_career);
-    bytes:readInt32(m_race);
-    bytes:readInt32(m_quality);
-    bytes:readInt32(m_magicConsume);
+    bytes:readInt32(self.m_type);
+    bytes:readInt32(self.m_career);
+    bytes:readInt32(self.m_race);
+    bytes:readInt32(self.m_quality);
+    bytes:readInt32(self.m_magicConsume);
 
-    bytes:readInt32(m_attack);
-    bytes:readInt32(m_hp);
-    bytes:readInt32(m_Durable);
+    bytes:readInt32(self.m_attack);
+    bytes:readInt32(self.m_hp);
+    bytes:readInt32(self.m_Durable);
 
-    bytes:readInt32(m_chaoFeng);
-    bytes:readInt32(m_chongFeng);
-    bytes:readInt32(m_fengNu);
-    bytes:readInt32(m_qianXing);
-    bytes:readInt32(m_shengDun);
-    bytes:readInt32(m_mpAdded);
-    bytes:readInt32(m_guoZai);
-    bytes:readInt32(m_faShu);
-    bytes:readInt32(m_zhanHou);
-    bytes:readUnsignedInt8(m_bNeedFaShuTarget);
-    bytes:readInt32(m_bNeedZhanHouTarget);
-    UtilTable.readString(bytes, m_cardDesc);
-    UtilTable.readString(bytes, m_cardHeader);
-    bytes:readUnsignedInt32(m_skillPrepareEffect);
+    bytes:readInt32(self.m_chaoFeng);
+    bytes:readInt32(self.m_chongFeng);
+    bytes:readInt32(self.m_fengNu);
+    bytes:readInt32(self.m_qianXing);
+    bytes:readInt32(self.m_shengDun);
+    bytes:readInt32(self.m_mpAdded);
+    bytes:readInt32(self.m_guoZai);
+    bytes:readInt32(self.m_faShu);
+    bytes:readInt32(self.m_zhanHou);
+    bytes:readUnsignedInt8(self.m_bNeedFaShuTarget);
+    bytes:readInt32(self.m_bNeedZhanHouTarget);
+    UtilTable.readString(bytes, self.m_cardDesc);
+    UtilTable.readString(bytes, self.m_cardHeader);
+    bytes:readUnsignedInt32(self.m_skillPrepareEffect);
 
-    initDefaultValue();
+    self:initDefaultValue();
 end
 
 function M:initDefaultValue()
-    if (string.IsNullOrEmpty(m_cardHeader)) then
-        m_cardHeader = "gaibangzhutu_kapai";
+    if (self.m_cardHeader == nil) then
+        self.m_cardHeader = "gaibangzhutu_kapai";
     end
 
-    m_cardSetCardHeader = string.Format("{0}_2", m_cardHeader);
-    m_dzCardHeader = string.Format("{0}_3", m_cardHeader);
-    m_cardHeader = string.Format("{0}_1", m_cardHeader);
+    self.m_cardSetCardHeader = string.format("%s_2", self.m_cardHeader);
+    self.m_dzCardHeader = string.format("%s_3", self.m_cardHeader);
+    self.m_cardHeader = string.format("%s_1", self.m_cardHeader);
 
-    if (m_skillPrepareEffect == 0) then
-        m_skillPrepareEffect = 4;
+    if (self.m_skillPrepareEffect == 0) then
+        self.m_skillPrepareEffect = 4;
     end
 end
 

@@ -4,6 +4,7 @@
 ]]
 
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
 
 local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
 M.clsName = "TableSkillItemBody"
@@ -20,12 +21,12 @@ end
 function M:parseBodyByteBuffer(bytes, offset)
     local UtilTable = nil
     bytes:setPos(offset);
-    UtilTable.readString(bytes, m_name);
-    UtilTable.readString(bytes, m_effect);
-    bytes:readUnsignedInt32(m_skillAttackEffect);
-    bytes:readInt32(m_bNeedMove);
+    UtilTable.readString(bytes, self.m_name);
+    UtilTable.readString(bytes, self.m_effect);
+    bytes:readUnsignedInt32(self.m_skillAttackEffect);
+    bytes:readInt32(self.m_bNeedMove);
 
-    self.initDefaultValue();
+    self:initDefaultValue();
 end
 
 function M:initDefaultValue()

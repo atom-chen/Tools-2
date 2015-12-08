@@ -3,6 +3,7 @@
 ]]
 
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
 require "MyLua.Libs.FrameHandle.TimerItemBase"
 
 local M = GlobalNS.Class(GlobalNS.TimerItemBase)

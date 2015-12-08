@@ -1,6 +1,8 @@
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
+require "MyLua.Libs.Core.GObject"
 
-local M = GlobalNS.Class()
+local M = GlobalNS.Class(GlobalNS.GObject:new())
 M.clsName = "TableItemBase"
 GlobalNS[M.clsName] = M
 
@@ -16,7 +18,7 @@ function M:parseHeaderByteBuffer(bytes)
     self.m_itemHeader.parseHeaderByteBuffer(bytes);
 end
 
-function parseBodyByteBuffer(bytes, offset, cls)
+function M:parseBodyByteBuffer(bytes, offset, cls)
     if nil == self.m_itemBody then
         self.m_itemBody = cls:new();
     end
@@ -24,7 +26,7 @@ function parseBodyByteBuffer(bytes, offset, cls)
     self.m_itemBody.parseBodyByteBuffer(bytes, offset);
 end
 
-function parseAllByteBuffer(bytes, cls)
+function M:parseAllByteBuffer(bytes, cls)
     -- 解析头
     self.parseHeaderByteBuffer(bytes);
     -- 保存下一个 Item 的头位置

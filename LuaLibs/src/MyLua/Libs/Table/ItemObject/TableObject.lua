@@ -3,6 +3,7 @@
 ]]
 
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
 
 local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
 M.clsName = "TableObjectItemBody"
@@ -19,11 +20,11 @@ end
 function M:parseBodyByteBuffer(bytes, offset)
     local UtilTable = nil
     bytes:setPos(offset);  -- 从偏移处继续读取真正的内容
-    UtilTable.readString(bytes, m_name);
-    bytes:readInt32(m_maxNum);
-    bytes:readInt32(m_type);
-    bytes:readInt32(m_color);
-    UtilTable.readString(bytes, m_objResName);
+    UtilTable.readString(bytes, self.m_name);
+    bytes:readInt32(self.m_maxNum);
+    bytes:readInt32(self.m_type);
+    bytes:readInt32(self.m_color);
+    UtilTable.readString(bytes, self.m_objResName);
 end
 
 return M

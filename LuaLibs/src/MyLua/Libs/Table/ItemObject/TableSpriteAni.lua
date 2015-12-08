@@ -3,6 +3,7 @@
 ]]
 
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
 
 local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
 M.clsName = "TableSpriteAniItemBody"
@@ -19,15 +20,16 @@ function M:ctor()
 end
 
 function M:parseBodyByteBuffer(bytes, offset)
+    local UtilTable = nil
     bytes.position = offset;
-    bytes:readInt32(m_frameRate);
-    bytesLreadInt32(m_frameCount);
-    UtilTable.readString(bytes, m_aniResNameNoExt);
+    bytes:readInt32(self.m_frameRate);
+    bytes:readInt32(self.m_frameCount);
+    UtilTable.readString(bytes, self.m_aniResNameNoExt);
 
-    m_invFrameRate = 1 / m_frameRate;
-    m_aniResName = string.Format("{0}.asset", m_aniResNameNoExt);
+    self.m_invFrameRate = 1 / self.m_frameRate;
+    self.m_aniResName = string.format("%s.asset", self.m_aniResNameNoExt);
 
-    m_aniPrefabName = string.Format("{0}prefab.prefab", m_aniResNameNoExt);
+    self.m_aniPrefabName = string.format("%sprefab.prefab", self.m_aniResNameNoExt);
 end
 
 return M

@@ -1,14 +1,13 @@
--- 静态类
+-- 静态类，不能继承
 
 require "MyLua.Libs.Core.GlobalNS"
 
-local M = {}
-M.clsName = "StaticClass"
-GlobalNS[M.clsName] = M
-
--- 
-function M:ctor()
-    
+local StaticClass = function (...)
+    local classType = {}        -- 返回的类表
+    classType.tableType = "Class"   -- 表的类型
+    return classType
 end
 
-return M
+GlobalNS["StaticClass"] = StaticClass
+
+return StaticClass

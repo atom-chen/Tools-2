@@ -1,6 +1,7 @@
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
 
-local M = GlobalNS.Class()
+local M = GlobalNS.StaticClass()
 M.clsName = "TableID"
 GlobalNS[M.clsName] = M
 
