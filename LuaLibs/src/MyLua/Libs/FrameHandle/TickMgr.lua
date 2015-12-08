@@ -17,17 +17,21 @@ function M:addObject(delayObject, priority)
         local position = -1;
         local i = 0
         for i = 0, i < self.m_tickLst:Count(), 1 do
-            if self.m_tickLst[i] == nil then
-                continue;
-            end
-
-            if self.m_tickLst[i].m_tickObject == delayObject then
-                return;
-            end
-
-            if self.m_tickLst[i].m_priority < priority then
-                position = i;
-                break;
+            while true do
+                if self.m_tickLst[i] == nil then
+                    break;
+                end
+    
+                if self.m_tickLst[i].m_tickObject == delayObject then
+                    return;
+                end
+    
+                if self.m_tickLst[i].m_priority < priority then
+                    position = i;
+                    break;
+                end
+                
+                break
             end
         end
 
