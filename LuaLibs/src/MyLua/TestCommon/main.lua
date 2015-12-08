@@ -35,8 +35,8 @@ end
 
 function testDispatcher()
     local callOnceEventDispatch = GlobalNS.CallOnceEventDispatch:new()
-    callOnceEventDispatch.addEventHandle(eventCall)
-    callOnceEventDispatch.dispatchEvent(nil)
+    callOnceEventDispatch:addEventHandle(eventCall)
+    callOnceEventDispatch:dispatchEvent(nil)
 end
 
 function eventCall(dispObj)

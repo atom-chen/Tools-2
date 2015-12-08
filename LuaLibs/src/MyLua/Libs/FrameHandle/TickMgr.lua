@@ -15,7 +15,7 @@ function M:addTick(tickObj, priority)
 end
 
 function M:addObject(delayObject, priority)
-    if self.bInDepth() then
+    if self:bInDepth() then
         self.super.addObject(self, delayObject, priority);
     else
         local position = -1;
@@ -40,20 +40,20 @@ function M:addObject(delayObject, priority)
         processObject.m_priority = priority;
 
         if position < 0 or position >= m_tickLst.Count then
-            self.m_tickLst.Add(processObject);
+            self.m_tickLst:Add(processObject);
         else
-            self.m_tickLst.Insert(position, processObject);
+            self.m_tickLst:Insert(position, processObject);
         end
     end
 end
 
 function M:delObject(delayObject)
-    if self.bInDepth() then
+    if self:bInDepth() then
         self.super.delObject(self, delayObject);
     else
         for key, item in ipairs(m_tickLst.list()) do
             if item.m_tickObject == delayObject then
-                self.m_tickLst.Remove(item);
+                self.m_tickLst:Remove(item);
                 break;
             end
         end
@@ -65,11 +65,11 @@ function M:Advance(delta)
 
     for key, tk in ipairs(m_tickLst.list()) do
         if not tk.m_tickObject.getClientDispose() then
-            tk.m_tickObject.onTick(delta);
+            tk.m_tickObject:onTick(delta);
         end
     end
 
-    self.decDepth();
+    self:decDepth();
 end
 
 return M
