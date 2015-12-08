@@ -1,7 +1,8 @@
 --[[列表，使用表实现]]
 
 local M = GlobalNS.Class()
-GlobalNS["MList"] = M
+M.clsName = "MList"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_list = {}

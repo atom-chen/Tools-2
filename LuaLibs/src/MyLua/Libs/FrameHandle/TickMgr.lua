@@ -3,12 +3,12 @@
 ]]
 
 ﻿local M = GlobalNS.Class(GlobalNS.DelayHandleMgrBase)
-GlobalNS["TickMgr"] = M
+M.clsName = "TickMgr"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
-{
-    self:m_tickLst = GlobalNS.MList:new();
-}
+    self.m_tickLst = GlobalNS.MList:new();
+end
 
 function M:addTick(tickObj, priority)
     self.addObject(tickObj, priority);
@@ -16,20 +16,20 @@ end
 
 function M:addObject(delayObject, priority)
     if self.bInDepth() then
-        super.addObject(delayObject, priority);
+        super.addObject(self, delayObject, priority);
     else
         local position = -1;
         local i = 0
-        for (i = 0, i < m_tickLst.Count, 1) do
-            if m_tickLst[i] == nil then
+        for i = 0, i < self.m_tickLst.Count, 1 do
+            if self.m_tickLst[i] == nil then
                 continue;
             end
 
-            if m_tickLst[i].m_tickObject == delayObject then
+            if self.m_tickLst[i].m_tickObject == delayObject then
                 return;
             end
 
-            if m_tickLst[i].m_priority < priority then
+            if self.m_tickLst[i].m_priority < priority then
                 position = i;
                 break;
             end
@@ -49,7 +49,7 @@ end
 
 function M:delObject(delayObject)
     if self.bInDepth() then
-        super.delObject(delayObject);
+        super.delObject(self, delayObject);
     else
         for key, item in ipairs(m_tickLst.list()) do
             if item.m_tickObject == delayObject then
@@ -70,6 +70,6 @@ function M:Advance(delta)
     end
 
     self.decDepth();
-}
+end
 
 return M

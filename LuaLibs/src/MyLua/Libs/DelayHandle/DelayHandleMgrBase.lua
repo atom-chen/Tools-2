@@ -1,5 +1,6 @@
 local M = GlobalNS.Class()
-GlobalNS["DelayHandleMgrBase"] = M
+M.clsName = "DelayHandleMgrBase"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_deferredAddQueue = GlobalNS.MList:new();

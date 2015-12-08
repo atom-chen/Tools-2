@@ -1,5 +1,6 @@
 local M = GlobalNS.Class()
-GlobalNS["TickProcessObject"] = M
+M.clsName = "TickProcessObject"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_tickObject = nil;

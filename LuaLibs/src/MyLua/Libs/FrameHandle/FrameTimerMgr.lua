@@ -3,7 +3,8 @@
 ]]
 
 local M = GlobalNS.Class(GlobalNS.DelayHandleMgrBase)
-GlobalNS["FrameTimerMgr"] = M
+M.clsName = "FrameTimerMgr"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_timerLists = GlobalNS.MList:new();
@@ -14,7 +15,7 @@ function addObject(delayObject, priority)
     -- 检查当前是否已经在队列中
     if self.m_timerLists.IndexOf(delayObject) == -1 then
         if self.bInDepth() then
-            super.addObject(delayObject, priority);
+            super.addObject(self, delayObject, priority);
         else
             m_timerLists.Add(delayObject);
         end
@@ -26,7 +27,7 @@ function delObject(delayObject)
     if not self.m_timerLists.IndexOf(delayObject) == -1 then
         delayObject.m_disposed = true;
         if self.bInDepth() then
-            super.addObject(delayObject);
+            super.addObject(self, delayObject);
         else
             for key, item in ipairs(m_timerLists.list()) do
                 if item == delayObject then

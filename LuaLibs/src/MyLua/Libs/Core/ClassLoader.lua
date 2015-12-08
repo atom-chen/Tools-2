@@ -1,6 +1,7 @@
 -- 类加载器，加载类使用
 local M = {}
-GlobalNS["ClassLoader"] = M
+M.clsName = "ClassLoader"     -- 记录类的名字，方便调试
+GlobalNS[M.clsName] = M
 
 function M:loadClass(path)
     -- require path -- 竟然会报错

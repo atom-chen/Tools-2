@@ -7,7 +7,8 @@
 ]]
 
 local M = GlobalNS.Class()
-GlobalNS["TableSys"] = M
+M.clsName = "TableSys"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
 	self.m_dicTable = GlobalNS.Dictionary:new();

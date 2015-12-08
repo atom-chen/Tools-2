@@ -1,5 +1,6 @@
 local M = GlobalNS.Class()
-GlobalNS["TableID"] = M
+M.clsName = "TableID"
+GlobalNS[M.clsName] = M
 
 M.TABLE_OBJECT = 0           -- 道具基本表
 M.TABLE_CARD = 1             -- 卡牌基本表

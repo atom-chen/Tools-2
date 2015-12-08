@@ -3,7 +3,8 @@
 ]]
 
 local M = GlobalNS.Class()
-GlobalNS["Array"] = M
+M.clsName = "Array"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_data = {}

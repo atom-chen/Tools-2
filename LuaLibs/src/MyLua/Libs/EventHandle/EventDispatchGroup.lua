@@ -1,5 +1,6 @@
 local M = GlobalNS.Class()
-GlobalNS["EventDispatchGroup"] = M
+M.clsName = "EventDispatchGroup"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_groupID2DispatchDic = GlobalNS.Dictionary:new()

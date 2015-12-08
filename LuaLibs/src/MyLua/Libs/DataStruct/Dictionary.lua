@@ -3,7 +3,8 @@
 ]]
 
 local M = GlobalNS.Class()
-GlobalNS["Dictionary"] = M
+M.clsName = "Dictionary"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_data = {}

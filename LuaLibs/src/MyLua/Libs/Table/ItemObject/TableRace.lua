@@ -1,13 +1,15 @@
-﻿namespace SDK.Lib
-{
-    public class TableRaceItemBody : TableItemBodyBase
-    {
-        public string m_raceName;                // 种族名称
+local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
+M.clsName = "TableRaceItemBody"
+GlobalNS[M.clsName] = M
 
-        override public void parseBodyByteBuffer(ByteBuffer bytes, uint offset)
-        {
-            bytes.position = offset;
-            UtilTable.readString(bytes, ref m_raceName);
-        }
-    }
-}
+function M:ctor()
+    self.m_raceName = ""
+end
+
+function M:parseBodyByteBuffer(bytes, offset)
+    local UtilTable = nil
+    bytes.position = offset;
+    UtilTable.readString(bytes, m_raceName);
+end
+
+return M

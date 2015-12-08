@@ -1,5 +1,6 @@
 local M = GlobalNS.Class(GlobalNS.EventDispatch)
-GlobalNS["ResEventDispatch"] = M
+M.clsName = "ResEventDispatch"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     
@@ -10,7 +11,7 @@ function M:dtor()
 end
 
 function M:dispatchEvent(dispatchObject)
-    super.dispatchEvent(dispatchObject)
+    super.dispatchEvent(self, dispatchObject)
     self.clearEventHandle();
 end
 

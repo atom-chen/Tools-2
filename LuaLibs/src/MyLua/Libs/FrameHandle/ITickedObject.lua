@@ -1,5 +1,6 @@
 local M = GlobalNS.Class()
-GlobalNS["ITickedObject"] = M
+M.clsName = "ITickedObject"
+GlobalNS[M.clsName] = M
 
 function M:onTick(delta)
 

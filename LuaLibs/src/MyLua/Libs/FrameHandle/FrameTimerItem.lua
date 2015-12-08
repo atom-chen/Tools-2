@@ -3,7 +3,8 @@
 ]]
 
 local M = GlobalNS.Class(GlobalNS.IDelayHandleItem)
-GlobalNS["FrameTimerItem"] = M
+M.clsName = "FrameTimerItem"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_internal = 1;

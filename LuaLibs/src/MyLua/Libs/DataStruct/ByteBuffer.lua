@@ -1,19 +1,21 @@
 --[[
     @brief 字节缓冲区
 ]]
-ByteBuffer = GlobalNS.Class()    -- 定义一个类，必须从返回的类中添加成员
+local M = GlobalNS.Class()    -- 定义一个类，必须从返回的类中添加成员
+M.clsName = "ByteBuffer"
+GlobalNS[M.clsName] = M
 
 -- 只读属性，所有的类共享一份，所有这里定义的属性都放在类的 vtbl 表中，不是放在类自己表中
-ByteBuffer.ENDIAN_LITTLE = 0    -- 小端字节序是 0
-ByteBuffer.ENDIAN_BIG = 1       -- 大端字节序是 0
+M.ENDIAN_LITTLE = 0    -- 小端字节序是 0
+M.ENDIAN_BIG = 1       -- 大端字节序是 0
 
-ByteBuffer.m_sysEndian = ByteBuffer.ENDIAN_LITTLE -- 系统字节序
+M.m_sysEndian = M.ENDIAN_LITTLE -- 系统字节序
 
-function ByteBuffer:setSysEndian(endian_)
+function M:setSysEndian(endian_)
     self.m_sysEndian = endian_
 end
 
-function ByteBuffer:ctor()  -- 定义 ByteBuffer 的构造函数
+function M:ctor()  -- 定义 ByteBuffer 的构造函数
     -- 一定要重新赋值不共享的数据成员，否则会直接从父类表中获取同名字的成员
     self.m_endian = self.ENDIAN_LITTLE -- 自己字节序
     self.m_buff = {}  -- 字节缓冲区
@@ -22,7 +24,7 @@ function ByteBuffer:ctor()  -- 定义 ByteBuffer 的构造函数
 end
 
 -- 是否有足够的字节可以读取
-function ByteBuffer:canRead(len)
+function M:canRead(len)
     if self.m_position + len > self:length() then
         return false
     end
@@ -31,41 +33,41 @@ function ByteBuffer:canRead(len)
 end
 
 -- 设置读写位置
-function ByteBuffer:setPos(pos_)
+function M:setPos(pos_)
     self.m_position = pos_
 end
 
-function ByteBuffer:setSize(size_)
+function M:setSize(size_)
     self.m_size = size_
 end
 
-function ByteBuffer:setEndian(endian)
+function M:setEndian(endian)
     self.m_endian = endian
 end
 
-function ByteBuffer:advPos(num)
+function M:advPos(num)
     self.m_position = self.m_position + num;
 end
 
-function ByteBuffer:advPosAndLen(num)
+function M:advPosAndLen(num)
     self.m_position = self.m_position + num;
 	self.m_size = self.m_size + num
 end
 
 -- 获取长度
-function ByteBuffer:length()
+function M:length()
     --return #self.m_buff + 1 	-- 这个返回的从 0 开始的索引，需要加 1 才行
 	return self.m_size
 end
 
 -- 清理数据
-function ByteBuffer:clear()
+function M:clear()
     self.m_buff = {}
     self.m_position = 0
 end
 
 -- 判断字节序和系统字节序是否相同
-function ByteBuffer:isEqualEndian()
+function M:isEqualEndian()
     return self.m_endian == self.m_sysEndian
 end
 
@@ -76,14 +78,14 @@ end
 or retData 就是保证如果 (retData > 2^(bitsLen-1) -1) 判断后是整数，就返回 or retData 中的 retData
 ]]
 -- 读取一个字节
-function ByteBuffer:readInt8()
+function M:readInt8()
     local retData = self:readUnsignedInt8()
 	local bitsLen = 8
 	retData = (retData > 2^(bitsLen-1) -1) and (retData - 2^bitsLen) or retData
     return retData
 end
 
-function ByteBuffer:readUnsignedInt8()
+function M:readUnsignedInt8()
     local elem = self.m_buff[self.m_position]
     local retData = elem
     self:advPos(1);
@@ -92,14 +94,14 @@ end
 
 -- 读取和写入的时候只看存储时候的字节序就行了，不用管系统字节序，因为是自组合成本地数据的
 -- 读取两个字节
-function ByteBuffer:readInt16()
+function M:readInt16()
     local retData = self:readUnsignedInt16()
     local bitsLen = 16
     retData = (retData > 2^(bitsLen-1) -1) and (retData - 2^bitsLen) or retData
     return retData
 end
 
-function ByteBuffer:readUnsignedInt16()
+function M:readUnsignedInt16()
     local retData = 0
     local bitsLen = 16
 
@@ -117,14 +119,14 @@ function ByteBuffer:readUnsignedInt16()
     return retData
 end
 
-function ByteBuffer:readInt32()
+function M:readInt32()
     local retData = self:readUnsignedInt32()
 	local bitsLen = 32
     retData = (retData > 2^(bitsLen-1) -1) and (retData - 2^bitsLen) or retData
     return retData
 end
 
-function ByteBuffer:readUnsignedInt32()
+function M:readUnsignedInt32()
     local retData = 0
     if self:canRead(4) then
         if self.m_endian == self.ENDIAN_BIG then-- 如果是小端字节序
@@ -138,14 +140,14 @@ function ByteBuffer:readUnsignedInt32()
     return retData
 end
 
-function ByteBuffer:readDouble()
+function M:readDouble()
     local retData = self:readUnsignedDouble()
 	local bitsLen = 64
     retData = (retData > 2^(bitsLen-1) -1) and (retData - 2^bitsLen) or retData
     return retData
 end
 
-function ByteBuffer:readUnsignedDouble()
+function M:readUnsignedDouble()
     local retData = 0
 	
     if self:canRead(8) then
@@ -170,7 +172,7 @@ function ByteBuffer:readUnsignedDouble()
 end
 
 -- 读取 utf-8 字符串
-function ByteBuffer:readMultiByte(len_)
+function M:readMultiByte(len_)
     local utf8Str
     if self:canRead(len_) then
         local idx = 0
@@ -191,20 +193,20 @@ function ByteBuffer:readMultiByte(len_)
     return utf8Str
 end
 
-function ByteBuffer:writeInt8(retData)
+function M:writeInt8(retData)
     self:writeUnsignedInt8(retData)
 end
 
-function ByteBuffer:writeUnsignedInt8(retData)
+function M:writeUnsignedInt8(retData)
     self.m_buff[self.m_position] = retData
     self:advPosAndLen(1);
 end
 
-function ByteBuffer.writeInt16(retData)
+function M.writeInt16(retData)
 	self:writeUnsignedInt16(retData)
 end
 
-function ByteBuffer.writeUnsignedInt16(retData)
+function M.writeUnsignedInt16(retData)
     local oneByte = retData % 256
     local twoByte = retData / 256
 
@@ -219,11 +221,11 @@ function ByteBuffer.writeUnsignedInt16(retData)
     self:advPosAndLen(2);
 end
 
-function ByteBuffer:writeInt32(retData)
+function M:writeInt32(retData)
     self:writeUnsignedInt32(retData)
 end
 
-function ByteBuffer:writeUnsignedInt32(retData)
+function M:writeUnsignedInt32(retData)
     local oneByte = retData % 256
     local twoByte = math.floor((retData / 256) % 256)
     local threeByte = math.floor((retData / (256 * 256)) % 256)
@@ -265,7 +267,7 @@ function ByteBuffer:writeUnsignedDouble(retData)
 end
 
 -- 写 utf-8 字节字符串，必须是 utf-8 的
-function ByteBuffer:writeMultiByte(value)
+function M:writeMultiByte(value)
     if value ~= nil then
         idx = 1
         while(idx <= string.len(value))
@@ -282,7 +284,7 @@ function ByteBuffer:writeMultiByte(value)
 end
 
 -- 输出缓冲区所有的字节
-function ByteBuffer:dumpAllBytes()
+function M:dumpAllBytes()
     for idx = 0, #(self.m_buff) do
         self:log(tostring(self.m_buff[idx]))
     end
@@ -293,6 +295,8 @@ function ByteBuffer:log(msg)
 end
 
 -- 测试通过 . 获取表中的函数
-function ByteBuffer.tableFunc()
+function M.tableFunc()
 	
 end
+
+return M

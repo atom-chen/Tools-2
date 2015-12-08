@@ -1,5 +1,6 @@
 ﻿local M = GlobalNS.Class()
-GlobalNS["DelayHandleObject"] = M
+M.clsName = "DelayHandleObject"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_delayObject = nil;

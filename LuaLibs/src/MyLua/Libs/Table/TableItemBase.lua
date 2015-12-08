@@ -1,5 +1,6 @@
 local M = GlobalNS.Class()
-GlobalNS["TableItemBase"] = M
+M.clsName = "TableItemBase"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_itemHeader = nil

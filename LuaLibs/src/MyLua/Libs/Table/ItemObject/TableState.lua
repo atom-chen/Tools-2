@@ -1,27 +1,27 @@
-﻿namespace SDK.Lib
-{
-    public class TableStateItemBody : TableItemBodyBase
-    {
-        public string m_name;           // 名称
-        public string m_res;            // 资源
-        public int m_effectId;          // 特效 Id
+local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
+M.clsName = "TableStateItemBody"
+GlobalNS[M.clsName] = M
 
-        override public void parseBodyByteBuffer(ByteBuffer bytes, uint offset)
-        {
-            bytes.position = offset;
-            UtilTable.readString(bytes, ref m_name);
-            UtilTable.readString(bytes, ref m_res);
-            bytes.readInt32(ref m_effectId);
+function M:ctor()
+    self.m_name = "";           -- 名称
+    self.m_res = "";            -- 资源
+    self.m_effectId = 0;        -- 特效 Id
+end
 
-            initDefaultValue();
-        }
+function M:parseBodyByteBuffer(bytes, offset)
+    local UtilTable = nil 
+    bytes.position = offset;
+    UtilTable.readString(bytes, m_name);
+    UtilTable.readString(bytes, m_res);
+    bytes.readInt32(m_effectId);
 
-        protected void initDefaultValue()
-        {
-            if(m_effectId == 0)
-            {
-                m_effectId = 0;
-            }
-        }
-    }
-}
+    self.initDefaultValue();
+end
+
+function M:initDefaultValue()
+    if(m_effectId == 0) then
+        m_effectId = 0;
+    end
+end
+
+return M

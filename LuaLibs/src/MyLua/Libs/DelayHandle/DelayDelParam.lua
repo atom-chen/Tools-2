@@ -1,5 +1,6 @@
 local M = GlobalNS.Class(GlobalNS.DelayHandleParamBase)
-GlobalNS["DelayDelParam"] = M
+M.clsName = "DelayDelParam"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     

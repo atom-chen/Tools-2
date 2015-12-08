@@ -1,5 +1,6 @@
 local M = GlobalNS.Class(GlobalNS.DelayHandleParamBase)
-GlobalNS["DelayAddParam"] = M
+M.clsName = "DelayAddParam"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_priority = 0;

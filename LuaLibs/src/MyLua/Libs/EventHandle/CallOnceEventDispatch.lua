@@ -3,14 +3,15 @@
 ]]
 
 local M = GlobalNS.Class(GlobalNS.EventDispatch)
-GlobalNS["CallOnceEventDispatch"] = M
+M.clsName = "CallOnceEventDispatch"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
 
 end
 
 function M:dispatchEvent(dispatchObject)
-    super.dispatchEvent(dispatchObject);
+    super.dispatchEvent(self, dispatchObject);
     selfclearEventHandle();
 end
 

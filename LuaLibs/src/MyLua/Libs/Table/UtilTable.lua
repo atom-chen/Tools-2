@@ -1,5 +1,6 @@
 local M = GlobalNS.Class()
-GlobalNS["UtilTable"] = M
+M.clsName = "UtilTable"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_prePos = 0;        -- 记录之前的位置

@@ -1,5 +1,6 @@
 local M = GlobalNS.Class()
-GlobalNS["TableItemHeader"] = M
+M.clsName = "TableItemHeader"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_uID = 0;              -- 唯一 ID

@@ -1,37 +1,36 @@
-﻿namespace SDK.Lib
-{
-    /**
-     * @brief 技能基本表
-     * // 添加一个表的步骤一
-     */
-    public class TableSkillItemBody : TableItemBodyBase
-    {
-        public string m_name;               // 名称
-        public string m_effect;             // 效果
-        public uint m_skillAttackEffect;    // 技能攻击特效
-        public float m_effectMoveTime;      // 移动
-        public int m_bNeedMove;             // 是否弹道特效, 0 不需要 1 需要
+--[[
+    @brief 技能基本表
+    // 添加一个表的步骤一
+]]
+local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
+M.clsName = "TableSkillItemBody"
+GlobalNS[M.clsName] = M
 
-        override public void parseBodyByteBuffer(ByteBuffer bytes, uint offset)
-        {
-            bytes.setPos(offset);
-            UtilTable.readString(bytes, ref m_name);
-            UtilTable.readString(bytes, ref m_effect);
-            bytes.readUnsignedInt32(ref m_skillAttackEffect);
-            bytes.readInt32(ref m_bNeedMove);
+function M:ctor()
+    self.m_name = "";               -- 名称
+    self.m_effect = "";             -- 效果
+    self.m_skillAttackEffect = 0;       -- 技能攻击特效
+    self.m_effectMoveTime = 0;      -- 移动
+    self.m_bNeedMove = 0;             -- 是否弹道特效, 0 不需要 1 需要
+end
 
-            initDefaultValue();
-        }
+function M:parseBodyByteBuffer(bytes, offset)
+    local UtilTable = nil
+    bytes:setPos(offset);
+    UtilTable.readString(bytes, m_name);
+    UtilTable.readString(bytes, m_effect);
+    bytes:readUnsignedInt32(m_skillAttackEffect);
+    bytes:readInt32(m_bNeedMove);
 
-        protected void initDefaultValue()
-        {
-            if (m_skillAttackEffect == 0)
-            {
-                m_skillAttackEffect = 8;
-            }
+    self.initDefaultValue();
+end
 
-            m_effectMoveTime = 1;
-            //m_bNeedMove = 1;
-        }
-    }
-}
+function M:initDefaultValue()
+    if (self.m_skillAttackEffect == 0) then
+        self.m_skillAttackEffect = 8;
+    end
+
+    self.m_effectMoveTime = 1;
+end
+
+return M

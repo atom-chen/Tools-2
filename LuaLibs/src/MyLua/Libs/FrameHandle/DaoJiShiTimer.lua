@@ -1,8 +1,10 @@
 --[[
     @brief 倒计时定时器
 ]]
+
 local M = GlobalNS.Class(GlobalNS.TimerItemBase)
-GlobalNS["DaoJiShiTimer"] = M
+M.clsName = "DaoJiShiTimer"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
 

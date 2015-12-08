@@ -1,5 +1,6 @@
 ﻿local M = GlobalNS.Class()
-GlobalNS["SystemTimeData"] = M
+M.clsName = "SystemTimeData"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_preTime = 0              -- 上一次更新时的秒数

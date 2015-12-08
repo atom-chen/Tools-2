@@ -3,7 +3,8 @@
 ]]
 
 local M = GlobalNS.Class(GlobalNS.EventDispatch)
-GlobalNS["IDispatchObject"] = M
+M.clsName = "IDispatchObject"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
 

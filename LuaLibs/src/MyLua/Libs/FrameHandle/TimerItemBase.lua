@@ -3,7 +3,8 @@
 ]]
 
 local M = GlobalNS.Class(GlobalNS.IDelayHandleItem)
-GlobalNS["TimerItemBase"] = M
+M.clsName = "TimerItemBase"
+GlobalNS[M.clsName] = M
 
 function M:TimerItemBase()
     self.m_internal = 1;            -- 定时器间隔

@@ -1,5 +1,6 @@
 local M = GlobalNS.Class()
-GlobalNS["TableBase"] = M
+M.clsName = "TableBase"
+GlobalNS[M.clsName] = M
 
 function M:ctor(resName, tablename)
     m_resName = resName;

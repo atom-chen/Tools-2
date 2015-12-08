@@ -1,5 +1,6 @@
 local M = GlobalNS.Class()
-GlobalNS["SystemFrameData"] = M
+M.clsName = "SystemFrameData"
+GlobalNS[M.clsName] = M
 
 function M:ctor(delta)
     self.m_totalFrameCount = 0;      -- 当前帧数

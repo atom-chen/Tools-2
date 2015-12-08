@@ -1,108 +1,110 @@
-﻿namespace SDK.Lib
-{
-    /**
-     * @brief 卡表中的属性名字
-     */
-    public class TableCardAttrName
-    {
-        public const string ChaoFeng = "嘲讽";
-        public const string ChongFeng = "冲锋";
-        public const string FengNu = "风怒";
-        public const string QianXing = "潜行";
-        public const string ShengDun = "圣盾";
+--[[
+    @brief 卡表中的属性名字
+]]
 
-        public const string MoFaXiaoHao = "魔法消耗";
-        public const string GongJiLi = "攻击力";
-        public const string Xueliang = "血量";
-        public const string NaiJiu = "耐久";
-        public const string FaShuShangHai = "法术伤害增加";
-        public const string GuoZai = "过载";
-    }
+local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
+M.clsName = "TableCardAttrName"
+GlobalNS[M.clsName] = M
 
-    /**
-     * @brief 卡牌基本表
-     */
-    public class TableCardItemBody : TableItemBodyBase
-    {
-        public string m_name;        // 名称
-        public int m_type;           // 类型
-        public int m_career;         // 职业
-        public int m_race;           // 种族
-        public int m_quality;        // 品质
+M.ChaoFeng = "嘲讽";
+M.ChongFeng = "冲锋";
+M.FengNu = "风怒";
+M.QianXing = "潜行";
+M.ShengDun = "圣盾";
 
-        public int m_magicConsume;   // 魔法消耗
-        public int m_attack;         // 攻击力
-        public int m_hp;             // 血量
-        public int m_Durable;        // 耐久
+M.MoFaXiaoHao = "魔法消耗";
+M.GongJiLi = "攻击力";
+M.Xueliang = "血量";
+M.NaiJiu = "耐久";
+M.FaShuShangHai = "法术伤害增加";
+M.GuoZai = "过载";
 
-        public int m_chaoFeng;      // 嘲讽
-        public int m_chongFeng;     // 冲锋
-        public int m_fengNu;        // 风怒
-        public int m_qianXing;      // 潜行
-        public int m_shengDun;      // 圣盾
 
-        public int m_mpAdded;       // 魔法伤害增加
-        public int m_guoZai;        // 过载
+--[[
+    @brief 卡牌基本表
+]]
+M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
+M.clsName = "TableCardItemBody"
+GlobalNS[M.clsName] = M
 
-        public int m_faShu;         // 法术
-        public int m_zhanHou;       // 战吼
-        public byte m_bNeedFaShuTarget;     // 是否需要法术目标，这个是出牌后是否需要选择目录，这个技能是否需要在目标位置释放，需要看技能表
-        public int m_bNeedZhanHouTarget;    // 战吼需要目标
-        public string m_cardDesc;           // 卡牌描述
-        public string m_cardHeader;         // 卡牌头像贴图路径，卡牌模型中头像
+function M:ctor()
+    self.m_name = "";        -- 名称
+    self.m_type = 0;           -- 类型
+    self.m_career = 0;         -- 职业
+    self.m_race = 0;           -- 种族
+    self.m_quality = 0;        -- 品质
+    
+    self.m_magicConsume = 0;   -- 魔法消耗
+    self.m_attack = 0;         -- 攻击力
+    self.m_hp = 0;             -- 血量
+    self.m_Durable = 0;        -- 耐久
+    
+    self.m_chaoFeng = 0;      -- 嘲讽
+    self.m_chongFeng = 0;     -- 冲锋
+    self.m_fengNu = 0;        -- 风怒
+    self.m_qianXing = 0;      -- 潜行
+    self.m_shengDun = 0;      -- 圣盾
+    
+    self.m_mpAdded = 0;       -- 魔法伤害增加
+    self.m_guoZai = 0;        -- 过载
+    
+    self.m_faShu = 0;         -- 法术
+    self.m_zhanHou = 0;       -- 战吼
+    self.m_bNeedFaShuTarget = 0;     -- 是否需要法术目标，这个是出牌后是否需要选择目录，这个技能是否需要在目标位置释放，需要看技能表
+    self.m_bNeedZhanHouTarget = 0;    -- 战吼需要目标
+    self.m_cardDesc = "";           -- 卡牌描述
+    self.m_cardHeader = "";         -- 卡牌头像贴图路径，卡牌模型中头像
+    
+    self.m_cardSetCardHeader = "";    -- 卡牌头像贴图路径，卡组中卡牌资源
+    self.m_dzCardHeader = "";         -- 卡牌头像贴图路径，对战中卡牌图像
+    self.m_skillPrepareEffect = 0;     -- 技能攻击准备特效
+end
 
-        public string m_cardSetCardHeader;    // 卡牌头像贴图路径，卡组中卡牌资源
-        public string m_dzCardHeader;         // 卡牌头像贴图路径，对战中卡牌图像
-        public uint m_skillPrepareEffect;     // 技能攻击准备特效
+function M:parseBodyByteBuffer(bytes, offset)
+    local UtilTable
+    bytes:setPos(offset);
+    UtilTable.readString(bytes, m_name);
 
-        override public void parseBodyByteBuffer(ByteBuffer bytes, uint offset)
-        {
-            bytes.setPos(offset);
-            UtilTable.readString(bytes, ref m_name);
+    bytes:readInt32(m_type);
+    bytes:readInt32(m_career);
+    bytes:readInt32(m_race);
+    bytes:readInt32(m_quality);
+    bytes:readInt32(m_magicConsume);
 
-            bytes.readInt32(ref m_type);
-            bytes.readInt32(ref m_career);
-            bytes.readInt32(ref m_race);
-            bytes.readInt32(ref m_quality);
-            bytes.readInt32(ref m_magicConsume);
+    bytes:readInt32(m_attack);
+    bytes:readInt32(m_hp);
+    bytes:readInt32(m_Durable);
 
-            bytes.readInt32(ref m_attack);
-            bytes.readInt32(ref m_hp);
-            bytes.readInt32(ref m_Durable);
+    bytes:readInt32(m_chaoFeng);
+    bytes:readInt32(m_chongFeng);
+    bytes:readInt32(m_fengNu);
+    bytes:readInt32(m_qianXing);
+    bytes:readInt32(m_shengDun);
+    bytes:readInt32(m_mpAdded);
+    bytes:readInt32(m_guoZai);
+    bytes:readInt32(m_faShu);
+    bytes:readInt32(m_zhanHou);
+    bytes:readUnsignedInt8(m_bNeedFaShuTarget);
+    bytes:readInt32(m_bNeedZhanHouTarget);
+    UtilTable.readString(bytes, m_cardDesc);
+    UtilTable.readString(bytes, m_cardHeader);
+    bytes:readUnsignedInt32(m_skillPrepareEffect);
 
-            bytes.readInt32(ref m_chaoFeng);
-            bytes.readInt32(ref m_chongFeng);
-            bytes.readInt32(ref m_fengNu);
-            bytes.readInt32(ref m_qianXing);
-            bytes.readInt32(ref m_shengDun);
-            bytes.readInt32(ref m_mpAdded);
-            bytes.readInt32(ref m_guoZai);
-            bytes.readInt32(ref m_faShu);
-            bytes.readInt32(ref m_zhanHou);
-            bytes.readUnsignedInt8(ref m_bNeedFaShuTarget);
-            bytes.readInt32(ref m_bNeedZhanHouTarget);
-            UtilTable.readString(bytes, ref m_cardDesc);
-            UtilTable.readString(bytes, ref m_cardHeader);
-            bytes.readUnsignedInt32(ref m_skillPrepareEffect);
+    initDefaultValue();
+end
 
-            initDefaultValue();
-        }
+function M:initDefaultValue()
+    if (string.IsNullOrEmpty(m_cardHeader)) then
+        m_cardHeader = "gaibangzhutu_kapai";
+    end
 
-        protected void initDefaultValue()
-        {
-            if (string.IsNullOrEmpty(m_cardHeader))
-            {
-                m_cardHeader = "gaibangzhutu_kapai";
-            }
+    m_cardSetCardHeader = string.Format("{0}_2", m_cardHeader);
+    m_dzCardHeader = string.Format("{0}_3", m_cardHeader);
+    m_cardHeader = string.Format("{0}_1", m_cardHeader);
 
-            m_cardSetCardHeader = string.Format("{0}_2", m_cardHeader);
-            m_dzCardHeader = string.Format("{0}_3", m_cardHeader);
-            m_cardHeader = string.Format("{0}_1", m_cardHeader);
+    if (m_skillPrepareEffect == 0) then
+        m_skillPrepareEffect = 4;
+    end
+end
 
-            if (m_skillPrepareEffect == 0)
-            {
-                m_skillPrepareEffect = 4;
-            }
-        }
-    }
-}
+return M

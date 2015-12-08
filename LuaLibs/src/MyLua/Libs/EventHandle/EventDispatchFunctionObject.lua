@@ -2,7 +2,8 @@
     @brief 
 ]]
 local M = GlobalNS.Class()
-GlobalNS["EventDispatchFunctionObject"] = M
+M.clsName = "EventDispatchFunctionObject"
+GlobalNS[M.clsName] = M
 
 function M:ctor()
     self.m_bClientDispose = false       -- 是否释放了资源

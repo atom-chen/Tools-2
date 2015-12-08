@@ -1,5 +1,6 @@
 local M = GlobalNS.Class()
-GlobalNS["TableItemBodyBase"] = M
+M.clsName = "TableItemBodyBase"
+GlobalNS[M.clsName] = M
 
 -- 解析主要数据部分
 function parseBodyByteBuffer(bytes, offset)
