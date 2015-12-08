@@ -2,6 +2,9 @@
     @brief 定时器，这个是不断增长的
 ]]
 
+require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.DelayHandle.IDelayHandleItem"
+
 local M = GlobalNS.Class(GlobalNS.IDelayHandleItem)
 M.clsName = "TimerItemBase"
 GlobalNS[M.clsName] = M
@@ -13,6 +16,7 @@ function M:TimerItemBase()
     self.m_bInfineLoop = false;     -- 是否是无限循环
     self.m_curLeftTimer = 0;        -- 当前定时器剩余的次数
     self.m_timerDisp = nil;         -- 定时器分发
+    self.m_pThis = nil
     self.m_disposed = false;        -- 是否已经被释放
 end
 
@@ -27,7 +31,7 @@ function M:OnTimer(delta)
     if self.m_bInfineLoop then
         self:checkAndDisp();
     else
-        if m_curTime >= m_totalTime then
+        if self.m_curTime >= self.m_totalTime then
             self:disposeAndDisp();
         else
             self:checkAndDisp();
@@ -38,7 +42,7 @@ end
 function M:disposeAndDisp()
     self.m_disposed = true;
     if self.m_timerDisp ~= nil then
-        self:m_timerDisp(this);
+        self.m_timerDisp(self.m_pThis);
     end
 end
 
@@ -47,7 +51,7 @@ function M:checkAndDisp()
         self.m_curLeftTimer = self.m_curLeftTimer - self.m_internal;
 
         if (self.m_timerDisp ~= nil) then
-            self.m_timerDisp(this);
+            self.m_timerDisp(self.m_pThis);
         end
     end
 end

@@ -1,3 +1,5 @@
+require "MyLua.Libs.Core.GlobalNS"
+
 local M = GlobalNS.Class()
 M.clsName = "SystemTimeData"
 GlobalNS[M.clsName] = M

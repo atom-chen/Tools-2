@@ -6,6 +6,8 @@
  * // 添加一个表的步骤四
 ]]
 
+require "MyLua.Libs.Core.GlobalNS"
+
 local M = GlobalNS.Class()
 M.clsName = "TableSys"
 GlobalNS[M.clsName] = M

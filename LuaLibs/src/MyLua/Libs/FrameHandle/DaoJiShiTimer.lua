@@ -2,6 +2,9 @@
     @brief 倒计时定时器
 ]]
 
+require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.FrameHandle.TimerItemBase"
+
 local M = GlobalNS.Class(GlobalNS.TimerItemBase)
 M.clsName = "DaoJiShiTimer"
 GlobalNS[M.clsName] = M
@@ -30,7 +33,7 @@ function M:OnTimer(delta)
 end
 
 function M:reset()
-    self.m_curTime = m_totalTime;
+    self.m_curTime = self.m_totalTime;
     self.m_curLeftTimer = 0;
     self.m_disposed = false;
 end

@@ -2,6 +2,8 @@
     @brief 职业表
 ]]
 
+require "MyLua.Libs.Core.GlobalNS"
+
 local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
 M.clsName = "TableJobItemBody"
 GlobalNS[M.clsName] = M

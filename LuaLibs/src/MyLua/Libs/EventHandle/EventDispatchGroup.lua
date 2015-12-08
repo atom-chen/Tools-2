@@ -1,3 +1,6 @@
+require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.DataStruct.Dictionary"
+
 local M = GlobalNS.Class()
 M.clsName = "EventDispatchGroup"
 GlobalNS[M.clsName] = M
@@ -38,11 +41,11 @@ end
 
 function M:clearAllEventHandle()
     if not m_bInLoop then
-        for _, dispatch in pairs(m_groupID2DispatchDic) do
+        for _, dispatch in pairs(self.m_groupID2DispatchDic) do
             dispatch:clearEventHandle()
         end
 
-        m_groupID2DispatchDic:Clear()
+        self.m_groupID2DispatchDic:Clear()
     else
         -- 日志
     end

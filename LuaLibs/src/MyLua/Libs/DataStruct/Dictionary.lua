@@ -2,6 +2,8 @@
     @brief 字典实现
 ]]
 
+require "MyLua.Libs.Core.GlobalNS"
+
 local M = GlobalNS.Class()
 M.clsName = "Dictionary"
 GlobalNS[M.clsName] = M

@@ -1,6 +1,9 @@
 --[[
     @brief 字节缓冲区
 ]]
+
+require "MyLua.Libs.Core.GlobalNS"
+
 local M = GlobalNS.Class()    -- 定义一个类，必须从返回的类中添加成员
 M.clsName = "ByteBuffer"
 GlobalNS[M.clsName] = M

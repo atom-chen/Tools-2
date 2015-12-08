@@ -1,4 +1,7 @@
 -- 类加载器，加载类使用
+
+require "MyLua.Libs.Core.GlobalNS"
+
 local M = {}
 M.clsName = "ClassLoader"     -- 记录类的名字，方便调试
 GlobalNS[M.clsName] = M

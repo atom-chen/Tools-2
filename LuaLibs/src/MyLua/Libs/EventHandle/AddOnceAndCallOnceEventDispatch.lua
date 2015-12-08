@@ -1,3 +1,6 @@
+require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.EventHandle.EventDispatch"
+
 local M = GlobalNS.Class(GlobalNS.EventDispatch)
 M.clsName = "AddOnceAndCallOnceEventDispatch"
 GlobalNS[M.clsName] = M

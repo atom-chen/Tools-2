@@ -1,3 +1,7 @@
+require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.DataStruct.MList"
+require "MyLua.Libs.DelayHandle.DelayHandleMgrBase"
+
 local M = GlobalNS.Class(GlobalNS.DelayHandleMgrBase)
 M.clsName = "FrameTimerMgr"
 GlobalNS[M.clsName] = M
@@ -25,7 +29,7 @@ function M:delObject(delayObject)
         if self:bInDepth() then
             self.super.addObject(self, delayObject);
         else
-            for key, item in ipairs(m_timerLists.list()) do
+            for key, item in ipairs(self.m_timerLists.list()) do
                 if item == delayObject then
                     self.m_timerLists:Remove(item);
                     break;
@@ -38,7 +42,7 @@ end
 function M:Advance(delta)
     self.incDepth();
 
-    for key, timerItem in ipairs(m_timerLists.list()) do
+    for key, timerItem in ipairs(self.m_timerLists.list()) do
         if not timerItem:getClientDispose() then
             timerItem:OnFrameTimer();
         end

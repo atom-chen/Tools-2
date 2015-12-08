@@ -1,6 +1,9 @@
 --[[
     @brief 
 ]]
+
+require "MyLua.Libs.Core.GlobalNS"
+
 local M = GlobalNS.Class()
 M.clsName = "EventDispatchFunctionObject"
 GlobalNS[M.clsName] = M
@@ -29,7 +32,7 @@ function M:setClientDispose()
 end
 
 function M:getClientDispose()
-    return m_bClientDispose;
+    return self.m_bClientDispose;
 end
 
 return M

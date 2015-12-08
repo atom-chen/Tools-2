@@ -1,3 +1,5 @@
+require "MyLua.Libs.Core.GlobalNS"
+
 local M = GlobalNS.Class()
 M.clsName = "TableItemHeader"
 GlobalNS[M.clsName] = M

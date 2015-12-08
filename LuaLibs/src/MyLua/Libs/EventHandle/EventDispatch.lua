@@ -2,6 +2,10 @@
     @brief 事件分发器
 ]]
 
+require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.DataStruct.MList"
+require "MyLua.Libs.EventHandle.EventDispatchFunctionObject"
+
 local M = GlobalNS.Class(GlobalNS.DelayHandleMgrBase)
 M.clsName = "EventDispatch"
 GlobalNS[M.clsName] = M

@@ -2,6 +2,9 @@
     @brief 技能基本表
     // 添加一个表的步骤一
 ]]
+
+require "MyLua.Libs.Core.GlobalNS"
+
 local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
 M.clsName = "TableSkillItemBody"
 GlobalNS[M.clsName] = M

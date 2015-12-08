@@ -8,8 +8,7 @@ require "MyLua.Libs.Core.StaticClass"
 require "MyLua.Libs.Core.ClassLoader"
 
 -- 数据结构
-require "MyLua.Libs.DataStruct.Array"
-GlobalNS.MList = GlobalNS.Array
+require "MyLua.Libs.DataStruct.MList"
 require "MyLua.Libs.DataStruct.Dictionary"
 
 

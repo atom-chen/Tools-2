@@ -10,7 +10,7 @@ local function main()
 end
 
 function testArray()
-    local array = GlobalNS.Array:new()
+    local array = GlobalNS.MList:new()
     local metatable = array.metatable   -- 在 lua 中是不能直接这样取值的
     array:add(1)
     array:add(2)

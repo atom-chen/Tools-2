@@ -1,3 +1,7 @@
+require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.DataStruct.MList"
+require "MyLua.Libs.DelayHandle.DelayHandleMgrBase"
+
 local M = GlobalNS.Class(GlobalNS.DelayHandleMgrBase)
 M.clsName = "TimerMgr"
 GlobalNS[M.clsName] = M

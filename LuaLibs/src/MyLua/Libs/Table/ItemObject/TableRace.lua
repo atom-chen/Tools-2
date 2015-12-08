@@ -1,3 +1,5 @@
+require "MyLua.Libs.Core.GlobalNS"
+
 local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
 M.clsName = "TableRaceItemBody"
 GlobalNS[M.clsName] = M

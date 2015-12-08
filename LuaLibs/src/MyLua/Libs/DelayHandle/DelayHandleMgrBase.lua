@@ -1,3 +1,9 @@
+require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.DataStruct.MList"
+require "MyLua.Libs.DelayHandle.DelayHandleObject"
+require "MyLua.Libs.DelayHandle.DelayAddParam"
+require "MyLua.Libs.DelayHandle.DelayDelParam"
+
 local M = GlobalNS.Class()
 M.clsName = "DelayHandleMgrBase"
 GlobalNS[M.clsName] = M
@@ -73,7 +79,7 @@ end
 function M:delFromDelayAddList(delayObject)
     for _, item in ipairs(self.m_deferredAddQueue:list()) do
         if item.m_delayObject == delayObject then
-            m_deferredAddQueue:Remove(item);
+            self.m_deferredAddQueue:Remove(item);
         end
     end
 end
@@ -92,7 +98,7 @@ function M:processDelayObjects()
         if self.m_deferredAddQueue:Count() > 0 then
             local idx = 0
             for idx = 0, idx < self.m_deferredAddQueue:Count(), 1 do
-                addObject(self.m_deferredAddQueue:at(idx).m_delayObject, self.m_deferredAddQueue:at(idx).m_delayParam.m_priority)
+                self:addObject(self.m_deferredAddQueue:at(idx).m_delayObject, self.m_deferredAddQueue:at(idx).m_delayParam.m_priority)
             end
 
             self.m_deferredAddQueue:Clear();
@@ -101,7 +107,7 @@ function M:processDelayObjects()
         if self.m_deferredDelQueue:Count() > 0 then
             local idx = 0
             for idx = 0, idx < self.m_deferredDelQueue:Count(), 1 do
-                self:delObject(m_deferredDelQueue:at(idx).m_delayObject);
+                self:delObject(self.m_deferredDelQueue:at(idx).m_delayObject);
             end
 
             self.m_deferredDelQueue:Clear();

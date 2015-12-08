@@ -1,4 +1,7 @@
 -- 定义一个类表
+
+require "MyLua.Libs.Core.GlobalNS"
+
 local Class = function (super)
     local classType = {}        -- 返回的类表
     classType.ctor = false      -- 默认是没有构造函数的

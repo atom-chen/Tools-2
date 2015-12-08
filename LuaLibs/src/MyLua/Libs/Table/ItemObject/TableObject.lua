@@ -2,6 +2,8 @@
     @brief 道具基本表   
 ]]
 
+require "MyLua.Libs.Core.GlobalNS"
+
 local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
 M.clsName = "TableObjectItemBody"
 GlobalNS[M.clsName] = M

@@ -1,3 +1,6 @@
+require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.DelayHandle.DelayHandleParamBase"
+
 local M = GlobalNS.Class(GlobalNS.DelayHandleParamBase)
 M.clsName = "DelayDelParam"
 GlobalNS[M.clsName] = M

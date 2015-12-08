@@ -2,6 +2,8 @@
     @brief 卡表中的属性名字
 ]]
 
+require "MyLua.Libs.Core.GlobalNS"
+
 local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
 M.clsName = "TableCardAttrName"
 GlobalNS[M.clsName] = M

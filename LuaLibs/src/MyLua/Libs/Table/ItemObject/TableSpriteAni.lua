@@ -1,6 +1,9 @@
 --[[
     @brief 精灵动画配置
 ]]
+
+require "MyLua.Libs.Core.GlobalNS"
+
 local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
 M.clsName = "TableSpriteAniItemBody"
 GlobalNS[M.clsName] = M
