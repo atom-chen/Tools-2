@@ -3,6 +3,7 @@
 ]]
 
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
 require "MyLua.Libs.DelayHandle.IDelayHandleItem"
 
 local M = GlobalNS.Class(GlobalNS.IDelayHandleItem)

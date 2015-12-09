@@ -3,6 +3,7 @@
 ]]
 
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
 
 local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
 M.clsName = "TableJobItemBody"
@@ -26,42 +27,42 @@ end
 function M:parseBodyByteBuffer(bytes, offset)
     local UtilTable = nil
     bytes.position = offset;
-    UtilTable.readString(bytes, m_jobName);
-    UtilTable.readString(bytes, m_jobDesc);
-    UtilTable.readString(bytes, m_frameImage);
-    UtilTable.readString(bytes, m_yaoDaiImage);
+    UtilTable.readString(bytes, self.m_jobName);
+    UtilTable.readString(bytes, self.m_jobDesc);
+    UtilTable.readString(bytes, self.m_frameImage);
+    UtilTable.readString(bytes, self.m_yaoDaiImage);
 
-    UtilTable.readString(bytes, m_jobRes);
-    UtilTable.readString(bytes, m_cardSetRes);
-    UtilTable.readString(bytes, m_skillName);
-    UtilTable.readString(bytes, m_skillDesc);
-    UtilTable.readString(bytes, m_skillRes);
+    UtilTable.readString(bytes, self.m_jobRes);
+    UtilTable.readString(bytes, self.m_cardSetRes);
+    UtilTable.readString(bytes, self.m_skillName);
+    UtilTable.readString(bytes, self.m_skillDesc);
+    UtilTable.readString(bytes, self.m_skillRes);
 
-    self.initDefaultValue();
+    self:initDefaultValue();
 end
 
 function M:initDefaultValue()
-    if (string.IsNullOrEmpty(m_frameImage)) then
-        m_frameImage = "paidi_kapai";
+    if (self.m_frameImage == nil) then
+        self.m_frameImage = "paidi_kapai";
     end
-    if (string.IsNullOrEmpty(m_yaoDaiImage)) then
-        m_yaoDaiImage = "mingzidi_kapai";
+    if (self.m_yaoDaiImage == nil) then
+        self.m_yaoDaiImage = "mingzidi_kapai";
     end
-    if (string.IsNullOrEmpty(m_cardSetRes)) then
-        m_cardSetRes = "emei_taopai";
+    if (self.m_cardSetRes == nil) then
+        self.m_cardSetRes = "emei_taopai";
     end
-    if (string.IsNullOrEmpty(m_skillRes)) then
-        m_skillRes = "emeibiao_zhiye";
+    if (self.m_skillRes == nil) then
+        self.m_skillRes = "emeibiao_zhiye";
     end
-    if (string.IsNullOrEmpty(m_jobRes)) then
-        m_jobNameRes = "emei_zhiye";
-        m_jobBtnRes = "gaibang_paizu";
+    if (self.m_jobRes == nil) then
+        self.m_jobNameRes = "emei_zhiye";
+        self.m_jobBtnRes = "gaibang_paizu";
     else
-        m_jobNameRes = string.Format("{0}_name", m_jobRes);
-        m_jobBtnRes = string.Format("{0}_btn", m_jobRes);
+        self.m_jobNameRes = string.format("%s_name", self.m_jobRes);
+        self.m_jobBtnRes = string.format("%s_btn", self.m_jobRes);
     end
-    if (string.IsNullOrEmpty(m_jobRes)) then
-        m_jobRes = "emei_zhiyepai";
+    if (string.IsNullOrEmpty(self.m_jobRes)) then
+        self.m_jobRes = "emei_zhiyepai";
     end
 end
 

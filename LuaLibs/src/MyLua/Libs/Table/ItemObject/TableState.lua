@@ -1,4 +1,5 @@
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
 
 local M = GlobalNS.Class(GlobalNS.TableItemBodyBase)
 M.clsName = "TableStateItemBody"
@@ -13,16 +14,16 @@ end
 function M:parseBodyByteBuffer(bytes, offset)
     local UtilTable = nil 
     bytes.position = offset;
-    UtilTable.readString(bytes, m_name);
-    UtilTable.readString(bytes, m_res);
-    bytes.readInt32(m_effectId);
+    UtilTable.readString(bytes, self.m_name);
+    UtilTable.readString(bytes, self.m_res);
+    bytes:readInt32(self.m_effectId);
 
-    self.initDefaultValue();
+    self:initDefaultValue();
 end
 
 function M:initDefaultValue()
-    if(m_effectId == 0) then
-        m_effectId = 0;
+    if(self.m_effectId == 0) then
+        self.m_effectId = 0;
     end
 end
 

@@ -1,10 +1,12 @@
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
+require "MyLua.Libs.Core.GObject"
 require "MyLua.Libs.DataStruct.MList"
 require "MyLua.Libs.DelayHandle.DelayHandleObject"
 require "MyLua.Libs.DelayHandle.DelayAddParam"
 require "MyLua.Libs.DelayHandle.DelayDelParam"
 
-local M = GlobalNS.Class()
+local M = GlobalNS.Class(GlobalNS.GObject:new())
 M.clsName = "DelayHandleMgrBase"
 GlobalNS[M.clsName] = M
 

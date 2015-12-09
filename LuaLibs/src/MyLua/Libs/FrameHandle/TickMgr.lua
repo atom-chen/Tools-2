@@ -1,4 +1,5 @@
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
 require "MyLua.Libs.DataStruct.MList"
 require "MyLua.Libs.DelayHandle.DelayHandleMgrBase"
 require "MyLua.Libs.FrameHandle.TickProcessObject"

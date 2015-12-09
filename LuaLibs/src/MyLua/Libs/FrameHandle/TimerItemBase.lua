@@ -3,13 +3,14 @@
 ]]
 
 require "MyLua.Libs.Core.GlobalNS"
+require "MyLua.Libs.Core.Class"
 require "MyLua.Libs.DelayHandle.IDelayHandleItem"
 
 local M = GlobalNS.Class(GlobalNS.IDelayHandleItem)
 M.clsName = "TimerItemBase"
 GlobalNS[M.clsName] = M
 
-function M:TimerItemBase()
+function M:ctor()
     self.m_internal = 1;            -- 定时器间隔
     self.m_totalTime = 1;           -- 总共定时器时间
     self.m_curTime = 0;             -- 当前已经调用的定时器的时间
