@@ -1,0 +1,18 @@
+进入人物打包子进程
+创建目录E:/e/image/test10\c214
+82 dir E:/e/image/test10\c214\等待
+E:\e\work\art-new-svn\角色\地上物\皇榜\等待\右
+93 dir E:/e/image/test10\c214\等待\右
+裁剪图片 E:\e\work\art-new-svn\角色\地上物\皇榜\等待\右\1001.png 完成
+裁剪图片 E:\e\work\art-new-svn\角色\地上物\皇榜\等待\右\1002.png 完成
+裁剪图片 E:\e\work\art-new-svn\角色\地上物\皇榜\等待\右\1003.png 完成
+裁剪图片 E:\e\work\art-new-svn\角色\地上物\皇榜\等待\右\1004.png 完成
+获取 E:\e\work\art-new-svn\角色\地上物\皇榜\等待\右 图片信息完成
+获取 E:\e\work\art-new-svn\角色\地上物\皇榜\等待 图片信息完成
+获取全部裁剪图片信息完成。
+开始创建模型配置文件
+建模型配置文件完成
+打xml包 xc214.swf 完成
+恭喜打包c214全部完成!!!
+恭喜打包成功！！！！！！
+退出人物打包子进程
