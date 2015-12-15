@@ -1,12 +1,12 @@
 [common]
-CONVERTCMD=D:\ProgramFiles\ImageMagick-6.8.8-Q16/convertim.exe
-CONVERTIDENT=D:\ProgramFiles\ImageMagick-6.8.8-Q16/identify.exe
+CONVERTCMD=D:\ProgramFiles\ImageMagick-6.9.2-Q16/convertim.exe
+CONVERTIDENT=D:\ProgramFiles\ImageMagick-6.9.2-Q16/identify.exe
 z7z=D:\ProgramFiles\7-Zip/7z.exe
 jar=D:\ProgramFiles\swift/Swift.jar
 pngout=D:\ProgramFiles\pngout/pngout.exe
 flashcs=D:\ProgramFiles\Adobe\Adobe Flash CC\Flash.exe
 serverid=E:\e\work\client-new-0212\client_maintrunk\client\bin\asset\scene
-MONTAGE=D:\ProgramFiles\ImageMagick-6.8.8-Q16/montage.exe
+MONTAGE=D:\ProgramFiles\ImageMagick-6.9.2-Q16/montage.exe
 python=D:\ProgramFiles\Python33\python.exe
 swf2xmltool=D:\ProgramFiles\swf2xml\swf2xml.exe
 jsflstartparam=-AlwaysRunJSFL

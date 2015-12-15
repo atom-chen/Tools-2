@@ -39,31 +39,31 @@ setup(
     executables = [
         # tool
         Executable(
-            "pack/main.py",
+            "Pack/Main.py",
             base = GUI_BASE_APP,
-            targetName = "tool" + EXECUTABLE_EXTENSION,
-            icon = "pack/data/icons/application_icon.ico"
+            targetName = "Tool" + EXECUTABLE_EXTENSION,
+            icon = "Pack/data/icons/application_icon.ico"
         ),
         # effect
         Executable(
-            "pack/eff/maineff.py",
+            "Pack/Effect/MainEffect.py",
             base = GUI_BASE_APP,
-            targetName = "effpack" + EXECUTABLE_EXTENSION,
-            icon = "pack/data/icons/effect_icon.ico"
+            targetName = "EffectPack" + EXECUTABLE_EXTENSION,
+            icon = "Pack/data/icons/effect_icon.ico"
         ),
         # character
         Executable(
-            "pack/char/mainchar.py",
+            "Pack/Character/MainCharacter.py",
             base = GUI_BASE_APP,
-            targetName = "charpack" + EXECUTABLE_EXTENSION,
-            icon = "pack/data/icons/char_icon.ico"
+            targetName = "CharacterPack" + EXECUTABLE_EXTENSION,
+            icon = "Pack/data/icons/char_icon.ico"
         ),
         # terrain
         Executable(
-            "pack/terrain/mainter.py",
+            "Pack/Terrain/MainTerrain.py",
             base = GUI_BASE_APP,
-            targetName = "terpack" + EXECUTABLE_EXTENSION,
-            icon = "pack/data/icons/ter_icon.ico"
+            targetName = "TerrainPack" + EXECUTABLE_EXTENSION,
+            icon = "Pack/data/icons/ter_icon.ico"
         )
     ]
 )

@@ -395,9 +395,9 @@ class Config(object):
     def initPath(self, starttype):
         self.startType = starttype
         if starttype == Config.MainExe:
-            self.effExePath = 'effpack.exe'
-            self.charExePath = 'charpack.exe'
-            self.terExePath = 'terpack.exe'
+            self.effExePath = 'EffectPack.exe'
+            self.charExePath = 'CharacterPack.exe'
+            self.terExePath = 'TerrainPack.exe'
             self.configFile = 'Config/Config.txt'
             self.effNameFile = 'Config/EffectName.txt'
             self.charNameFile = 'Config/CharacterName.txt'
@@ -411,14 +411,14 @@ class Config(object):
             self.charNameFile = 'Config/CharacterName.txt'
             self.terNameFile = 'Config/TerrainName.txt'
         elif starttype == Config.EffPy:
-            self.configFile = '../config.txt'
-            self.effNameFile = '../effname.txt'
+            self.configFile = '../Config/Config.txt'
+            self.effNameFile = '../Config/EffectName.txt'
         elif starttype == Config.CharPy:
-            self.configFile = '../config.txt'
-            self.charNameFile = '../charname.txt'
+            self.configFile = '../Config/Config.txt'
+            self.charNameFile = '../Config/CharacterName.txt'
         elif starttype == Config.TerPy:
-            self.configFile = '../config.txt'
-            self.terNameFile = '../tername.txt'
+            self.configFile = '../Config/Config.txt'
+            self.terNameFile = '../Config/TerrainName.txt'
 
     #读取初始化数据
     def readInit(self, filename):
