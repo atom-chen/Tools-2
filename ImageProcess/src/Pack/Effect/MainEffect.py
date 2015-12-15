@@ -39,3 +39,4 @@ def main():
     Logger.instance().loggerECloseSubPro()
 
 main()
+
