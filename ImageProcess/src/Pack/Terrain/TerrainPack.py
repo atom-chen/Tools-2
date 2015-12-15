@@ -141,7 +141,7 @@ class ParamInfo(object):
         
         # 生成的图像大小配置文件句柄
         self.m_handleImageWH = None
-        self.m_strImageWHFileName = 'imagewh.txt'
+        self.m_strImageWHFileName = 'Config/ImageWH.txt'
         self.m_firImage = True     # 是否是第一行配置
         
     # 当前裁剪图片的恩见完整路径
@@ -697,6 +697,8 @@ def startPackTer():
     ParamInfo.pInstance.m_thumbnailsscale = Config.instance().m_terCfg.m_thumbnailsscale
     ParamInfo.pInstance.m_thumbnailsquality = Config.instance().m_terCfg.m_thumbnailsquality
     ParamInfo.pInstance.m_floorperpack = Config.instance().m_terCfg.m_floorperpack
+    
+    ParamInfo.pInstance.m_strImageWHFileName = Config.instance().m_terCfg.getImageWHFileName();
     
     #初始化目录
     if not os.path.exists(ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.xmlFolderName):

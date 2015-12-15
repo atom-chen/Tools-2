@@ -262,6 +262,21 @@ class TerConfig(object):
         self.m_gridHeight = 32
         # 每一个包中 floor 的个数
         self.m_floorperpack = 4
+        
+        self.m_strImageWHFileName = 'Config/ImageWH.txt'    # 输出图片详细信息的文件
+        
+    def initPath(self, starttype):
+        if starttype == Config.MainExe:
+            self.m_strImageWHFileName = 'Config/ImageWH.txt'
+        elif starttype == Config.MainPy:
+            self.m_strImageWHFileName = 'Config/ImageWH.txt'
+        elif starttype == Config.EffPy:
+            self.m_strImageWHFileName = '../Config/ImageWH.txt'
+        elif starttype == Config.CharPy:
+            self.m_strImageWHFileName = '../Config/ImageWH.txt'
+        elif starttype == Config.TerPy:
+            self.m_strImageWHFileName = '../Config/ImageWH.txt'
+
     
     def parseKeyValue(self, lst):
         if(lst[0] == 'srcrootdir'):
@@ -331,6 +346,10 @@ class TerConfig(object):
         fHandle.write('thumbnailsquality=' + str(self.m_thumbnailsquality) + '\n')
         fHandle.write('thumbnailsjsfl=' + self.m_thumbnailsjsfl + '\n')
         fHandle.write('jsfl=' + self.jsfl)
+        
+        
+    def getImageWHFileName(self):
+        return self.m_strImageWHFileName
     
 '''
 '''
@@ -340,7 +359,7 @@ class TerItemConfig(object):
         self.m_tplFileName = ''         #地形材质文件名字
         self.m_terFileName = ''         #地形文件名字
         self.m_fog = False              # 是否显示 fog
-        self.m_nobgpic = False             # 是否加载显示地图的图片资源，有些地图是不需要加载地图图片资源的，因为这个地图是永远看不见的，但是却能进入
+        self.m_nobgpic = False          # 是否加载显示地图的图片资源，有些地图是不需要加载地图图片资源的，因为这个地图是永远看不见的，但是却能进入
 
 '''
 '''
@@ -419,6 +438,11 @@ class Config(object):
         elif starttype == Config.TerPy:
             self.configFile = '../Config/Config.txt'
             self.terNameFile = '../Config/TerrainName.txt'
+            
+        
+        # 地图文件配置文件初始化
+        self.m_terCfg.initPath(starttype)
+        
 
     #读取初始化数据
     def readInit(self, filename):
@@ -594,7 +618,7 @@ class Config(object):
 
     # 保存数据
     def saveCFG(self):
-        filename = 'config.txt'
+        filename = 'Config/Config.txt'
         fHandle = open(filename, 'w', encoding='utf-8')
         
         self.m_commonCfg.saveCFG(fHandle)
