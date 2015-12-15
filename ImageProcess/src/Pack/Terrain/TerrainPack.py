@@ -117,7 +117,7 @@ class ParamInfo(object):
         #self.m_thumbnailsHeight = 32  # 缩略图高度
         self.m_thumbnailsscale = 20 # 图像缩放比例
         self.m_thumbnailsquality = 80 # 缩略图 imagemagic 压缩质量
-        self.m_thumbnailsFolderName = 'tthumbnails'  # 缩略图图片所在的目录
+        self.m_thumbnailsFolderName = 'ThumbNails'  # 缩略图图片所在的目录
         
         # 每一个包中 floor 的个数
         self.m_floorperpack = 4
@@ -230,7 +230,7 @@ class TerrainCrop(object):
         #piccntperone=4
         piccntperone = ParamInfo.pInstance.m_floorperpack
         
-        filehandle.write('<definitions>\n')
+        filehandle.write('<defines>\n')
         
         #每一个资源包四个图片，都是横着的
         #第一级遍历   
@@ -238,12 +238,11 @@ class TerrainCrop(object):
             #第二级遍历 
             for x in range(xcnt):
                 if not nobgpic:
-                    filehandle.write('    <materialDefinition name=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" type=\"tile\" media="' + oneparam + '_' + str(packidx) + '.swf\">\n')
-                    #filehandle.write('        <diffuse>art.scene.t' + str(packpicidx) + '</diffuse>\n')
-                    filehandle.write('        <diffuse>art.scene.' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '</diffuse>\n')
+                    filehandle.write('    <matDef name=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" media="' + oneparam + '_' + str(packidx) + '.swf\">\n')
+                    filehandle.write('        <diffuse>' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '</diffuse>\n')
                 else:
-                    filehandle.write('    <materialDefinition name=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" type=\"tile\" media=\"\">\n')
-                filehandle.write('    </materialDefinition>\n')
+                    filehandle.write('    <matDef name=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" media=\"\">\n')
+                filehandle.write('    </matDef>\n')
                 
                 #如果 picidx == 0 就不处理了 
                 packpicidx += 1
@@ -268,7 +267,7 @@ class TerrainCrop(object):
                         if y != ycnt - 1:
                             filehandle.write('\n')
 
-        filehandle.write('</definitions>')
+        filehandle.write('</defines>')
         
         filehandle.close()
 
@@ -350,24 +349,10 @@ class TerrainCrop(object):
         filehandle = open(base_dir + '/' + filename, 'w')
         
         if bfog:
-            filehandle.write('<scene gridsize=\"' + str(ParamInfo.pInstance.m_gridWidth) + '\" levelsize=\"20\" cubeSize=\"2000\" floorwidth=\"' + str(ParamInfo.pInstance.m_cropWidth) + '\" floordepth=\"' + str(ParamInfo.pInstance.m_cropHeight) + '\" fog=\"true\" isometric=\"2\" xoff=\"' + str(xoff) + '\" yoff=\"0\" pixelwidth=\"' + str(threeparam) + '\" pixelheight=\"' + str(fourparam) + '\" version=\"1\">\n')
+            filehandle.write('<scene gridsize=\"' + str(ParamInfo.pInstance.m_gridWidth) + '\" floorwidth=\"' + str(ParamInfo.pInstance.m_cropWidth) + '\" floordepth=\"' + str(ParamInfo.pInstance.m_cropHeight) + '\" xoff=\"' + str(xoff) + '\" yoff=\"0\" pixelwidth=\"' + str(threeparam) + '\" pixelheight=\"' + str(fourparam) + '\" version=\"1\">\n')
         else:
-            filehandle.write('<scene gridsize=\"' + str(ParamInfo.pInstance.m_gridWidth) + '\" levelsize=\"20\" cubeSize=\"2000\" floorwidth=\"' + str(ParamInfo.pInstance.m_cropWidth) + '\" floordepth=\"' + str(ParamInfo.pInstance.m_cropHeight) + '\" fog=\"false\" isometric=\"2\" xoff=\"' + str(xoff) + '\" yoff=\"0\" pixelwidth=\"' + str(threeparam) + '\" pixelheight=\"' + str(fourparam) + '\" version=\"1\">\n')
-        filehandle.write('    <head>\n')
-        if not nobgpic:
-            filehandle.write('        <definitions src=\"ttb' + oneparam[1:] + '\"/>\n')    # 地形缩略图
-            filehandle.write('        <definitions src=\"x' + oneparam + '\"/>\n')
-        filehandle.write('        <definitions src=\"xct0\"/>\n')
-        filehandle.write('        <definitions src=\"xet0\"/>\n')
-        
-        if ParamInfo.pInstance.m_bStopPt:
-            filehandle.write('        <definitions src=\"s' + twoparam + '\"/>\n')
-            
-        filehandle.write('        <light id=\"Global light\" color=\"#FFFFFF\" intensity=\"100\"/>\n')
-        filehandle.write('    </head>\n')
-        filehandle.write('\n')
+            filehandle.write('<scene gridsize=\"' + str(ParamInfo.pInstance.m_gridWidth) + '\" floorwidth=\"' + str(ParamInfo.pInstance.m_cropWidth) + '\" floordepth=\"' + str(ParamInfo.pInstance.m_cropHeight) + '\" xoff=\"' + str(xoff) + '\" yoff=\"0\" pixelwidth=\"' + str(threeparam) + '\" pixelheight=\"' + str(fourparam) + '\" version=\"1\">\n')
         filehandle.write('    <body>\n')
-        filehandle.write('        <fog id=\"f1\" radius=\"300\" blurx=\"15\" blury=\"15\" border=\"50\"/>\n')
         
         #每一个资源包四个图片，都是横着的
         #第一级遍历   
