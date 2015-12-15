@@ -159,6 +159,10 @@ class TerrainCrop(object):
     '''
     crop all terrain
     '''
+    
+    # 保存资源 Id 到文件名字的映射
+    ResId2FileNameDic = {}
+    
     @staticmethod
     def terraincrop():
         #allfiles = os.listdir(ParamInfo.pInstance.m_srcRootPath)
@@ -227,7 +231,6 @@ class TerrainCrop(object):
         #包中图片索引 0 1 2 3 
         packpicidx=0
         #每一个包图片数  
-        #piccntperone=4
         piccntperone = ParamInfo.pInstance.m_floorperpack
         
         filehandle.write('<defines>\n')
@@ -238,19 +241,17 @@ class TerrainCrop(object):
             #第二级遍历 
             for x in range(xcnt):
                 if not nobgpic:
-                    filehandle.write('    <matDef name=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" media="' + oneparam + '_' + str(packidx) + '.swf\">\n')
+                    filehandle.write('    <matDef name=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" pak="' + oneparam + '_' + str(packidx) + '.pak\">\n')
                     filehandle.write('        <diffuse>' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '</diffuse>\n')
                 else:
-                    filehandle.write('    <matDef name=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" media=\"\">\n')
+                    filehandle.write('    <matDef name=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" pak=\"\">\n')
                 filehandle.write('    </matDef>\n')
                 
                 #如果 picidx == 0 就不处理了 
                 packpicidx += 1
                 picidx += 1
-                #remainder= picidx % piccntperone
                 #不是第一张图片
                 if picidx != 1:
-                    #if remainder == 0:  # 下一个元素如果是一个包的开始，如果既是新的包的开始，也是新的行的开始，也走这里
                     if packpicidx == piccntperone:  # 下一个元素如果是一个包的开始，如果既是新的包的开始，也是新的行的开始，也走这里
                         packidx += 1
                         packpicidx = 0
@@ -298,6 +299,10 @@ class TerrainCrop(object):
         
         xrem = int(threeparam % ParamInfo.pInstance.m_cropWidth)
         yrem = int(fourparam % ParamInfo.pInstance.m_cropHeight)
+        
+        # 获取资源 Id 对应的文件的名字
+        resId = ""
+        resFileName = ""
         
         if xrem != 0:
             xcnt += 1
@@ -373,7 +378,10 @@ class TerrainCrop(object):
             # 新的一行必然从新开始一个资源包
             for x in range(xcnt):
                 if not nobgpic:
-                    filehandle.write('        <floor id=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" src=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" width=\"' + str(ParamInfo.pInstance.m_cropWidth) + '\" height=\"' + str(ParamInfo.pInstance.m_cropHeight) + '\" x=\"' + str(xpos + xoff) + '\" y=\"' + str(ypos) + '\"/>\n')
+                    #filehandle.write('        <floor id=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" src=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" width=\"' + str(ParamInfo.pInstance.m_cropWidth) + '\" height=\"' + str(ParamInfo.pInstance.m_cropHeight) + '\" x=\"' + str(xpos + xoff) + '\" y=\"' + str(ypos) + '\"/>\n')
+                    resId = oneparam + '_' + str(packidx) + '_' + str(packpicidx)
+                    resFileName = TerrainCrop.getFileNameByResId(resId)
+                    filehandle.write('        <floor id=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" src=\"' + resFileName + '\" width=\"' + str(ParamInfo.pInstance.m_cropWidth) + '\" height=\"' + str(ParamInfo.pInstance.m_cropHeight) + '\" x=\"' + str(xpos + xoff) + '\" y=\"' + str(ypos) + '\"/>\n')
                 else:
                     filehandle.write('        <floor id=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" src=\"\" width=\"' + str(ParamInfo.pInstance.m_cropWidth) + '\" height=\"' + str(ParamInfo.pInstance.m_cropHeight) + '\" x=\"' + str(xpos + xoff) + '\" y=\"' + str(ypos) + '\"/>\n')
                 
@@ -428,6 +436,68 @@ class TerrainCrop(object):
     def buildThumbnails():
         CmdLine.exeScale()
         
+        
+    '''
+    生成地形资源唯一 ID 和图片名字之间的对应关系，暂时直接加载对应的文件
+    '''    
+    @staticmethod
+    def terrainID2FIleName():
+        picpath = ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.m_srcFolder2DestFolderMap[ParamInfo.pInstance.m_curSrcFile].m_tplFileName
+        prefix = 't'
+        
+        #直接赋值遍历的目录
+        tplFileName = ParamInfo.pInstance.m_srcFolder2DestFolderMap[ParamInfo.pInstance.m_curSrcFile].m_tplFileName
+        #for i in alldir:
+        #每一个包图片数  
+        piccntperone = 4
+        lessone = piccntperone - 1
+        #当前遍历的文件数量，总共 total - 1 个，从 0 开始         
+        curidx = 0
+        #包中图片索引 0 1 2 3 
+        packpicidx = 0
+        
+        resId = ""
+        resFileName = ""
+    
+        #遍历这个文件，输出配置文件
+        allfiles = os.listdir(picpath)
+        for filename in allfiles:
+            remainder= curidx % piccntperone
+
+            #向新文件中输出内容
+            if remainder == 0:
+                packpicidx = 0
+                divisor = int(curidx / piccntperone)
+            else:
+                packpicidx += 1
+                if remainder == lessone:
+                    pass
+                    
+            resId = tplFileName + '_' + str(divisor) + '_' + str(packpicidx)
+            # 去掉扩展名字
+            dotdix = filename.find('.')
+            if dotdix != -1:
+                resFileName = filename[0:dotdix]
+            else:
+                resFileName = filename
+            
+            TerrainCrop.ResId2FileNameDic[resId] = resFileName
+
+            curidx += 1
+
+        #最后加上结尾符号 
+        if remainder != lessone:
+            pass
+
+
+
+    @staticmethod
+    def getFileNameByResId(resId):
+        if resId in TerrainCrop.ResId2FileNameDic.keys():
+            return TerrainCrop.ResId2FileNameDic[resId]
+        
+        return "10000"
+
 
 '''
 main entry
@@ -494,6 +564,7 @@ def startPackTer():
                 TerrainCrop.terraincrop()       #切割地图
                 TerrainCrop.terrainRename()     #重命名切割后的地图片，进行排序
 
+            TerrainCrop.terrainID2FIleName()    # 生成资源 Id 和文件名字的映射
             TerrainCrop.terrainTplXml()     #生成地形材质配置文件，虽然没有图片的 nobgpic 的地图不需要这些配置文件，但是这个函数中生成一些配置数据，后面要用到的
             
             TerrainCrop.terrainXml()        #生成地形场景配置文件
@@ -510,3 +581,4 @@ def startPackTer():
     
     # 关闭文件
     ParamInfo.pInstance.m_handleImageWH.close() 
+
