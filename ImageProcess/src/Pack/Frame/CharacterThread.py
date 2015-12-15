@@ -47,34 +47,6 @@ class CharacterThread(Thread):
         else:
             Logger.instance().loggerChar("子进程错误退出")
         
-        #AppSys.instance().m_bOverChar = True
-        # 启动资源打包
-        #handle = subprocess.Popen([Config.instance().m_commonCfg.flashcs, Config.instance().m_charCfg.jsfl], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        try:
-            handle = subprocess.Popen([Config.instance().m_commonCfg.flashcs, Config.instance().m_charCfg.jsfl, Config.instance().m_commonCfg.jsflstartparam])
-        except:
-            Logger.instance().loggerChar("Flash CS cannot start")
-        
-        # 或者由于信号退出，或者正在运行，或者正常退出，或者执行错误退出
-#         while handle.poll() == None:
-#             try:
-#                 output, errout = handle.communicate()
-#             except:
-#                 #有异常直接退出吧
-#                 Logger.instance().loggerChar("异常退出")
-#                 typeerr, value, tb = sys.exc_info()
-#                 errstr = traceback.format_exception(typeerr, value, tb)
-#                 Logger.instance().loggerChar(errstr)
-#                 break
-#                 
-#             Logger.instance().loggerChar(output)
-#             Logger.instance().loggerChar(errout)
-#                 
-#         if handle.returncode == 0:
-#             Logger.instance().loggerChar("正常退出")
-#         elif handle.returncode < 0:
-#             Logger.instance().loggerChar("信号中断退出")
-#         else:
-#             Logger.instance().loggerChar("子进程错误退出")
+        # 继续打包资源，暂时没有实现
         
         AppSys.instance().m_bOverChar = True

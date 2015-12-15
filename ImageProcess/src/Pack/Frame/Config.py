@@ -9,40 +9,29 @@ import os
 class ComConfig(object):
     def __init__(self):
         self.CONVERTCMD = 'D:/ProgramFiles/ImageMagick-6.8.0-Q8/convertim.exe'
-        self.z7z= 'D:\\ProgramFiles\\7-Zip\\7z.exe'
-        self.jar = 'E:\\work\\client-05\\trunk\\tools\\swift-tool\\Swift.jar'
-        self.pngout = 'D:\\ProgramFiles\\pngout\\pngout.exe'
         self.CONVERTIDENT = ''
-        self.serverid = ''
         self.MONTAGE = 'D:/ProgramFiles/ImageMagick-6.8.6-Q8/montage.exe'
-        self.python = "python"  # python 解释命令
-        self.swf2xmltool = "swf2xml.exe"    # 将所有 xml 配置文件打包成一个 swf 文件
-        self.jsflstartparam = '-AlwaysRunJSFL'  # 启动 jsfl 需要传递给 flash 的参数 
+        self.z7z= 'D:\\ProgramFiles\\7-Zip\\7z.exe'
+        self.pngout = 'D:\\ProgramFiles\\pngout\\pngout.exe'
+        self.serverid = ''
+        self.python = "python"  # python 解释命令 
         
     def parseKeyValue(self, lst):
         #公用配置
         if(lst[0] == 'CONVERTCMD'):
             self.CONVERTCMD = lst[1]
-        elif(lst[0] == 'z7z'):
-            self.z7z = lst[1]
-        elif(lst[0] == 'jar'):
-            self.jar = lst[1]
-        elif(lst[0] == 'pngout'):
-            self.pngout = lst[1]
-        elif(lst[0] == 'CONVERTIDENT'):
-            self.CONVERTIDENT = lst[1]
-        elif(lst[0] == 'flashcs'):
-            self.flashcs = lst[1]
-        elif(lst[0] == 'serverid'):
-            self.serverid = lst[1]
         elif lst[0] == 'MONTAGE':
             self.MONTAGE = lst[1]
+        elif(lst[0] == 'CONVERTIDENT'):
+            self.CONVERTIDENT = lst[1]
+        elif(lst[0] == 'z7z'):
+            self.z7z = lst[1]
+        elif(lst[0] == 'pngout'):
+            self.pngout = lst[1]
+        elif(lst[0] == 'serverid'):
+            self.serverid = lst[1]
         elif lst[0] == 'python':
             self.python = lst[1]
-        elif lst[0] == 'swf2xmltool':
-            self.swf2xmltool = lst[1]
-        elif lst[0] == 'jsflstartparam':
-            self.jsflstartparam = lst[1]
     
     def resolveCfg(self):
         pass
@@ -51,15 +40,11 @@ class ComConfig(object):
         fHandle.write('[common]\n')
         fHandle.write('CONVERTCMD=' + self.CONVERTCMD + '\n')
         fHandle.write('CONVERTIDENT=' + self.CONVERTIDENT + '\n')
-        fHandle.write('z7z=' + self.z7z + '\n')
-        fHandle.write('jar=' + self.jar + '\n')
-        fHandle.write('pngout=' + self.pngout + '\n')
-        fHandle.write('flashcs=' + self.flashcs + '\n')
-        fHandle.write('serverid=' + self.serverid + '\n')
         fHandle.write('MONTAGE=' + self.MONTAGE + '\n')
-        fHandle.write('python=' + self.python + '\n')
-        fHandle.write('swf2xmltool=' + self.swf2xmltool + '\n')
-        fHandle.write('jsflstartparam=' + self.jsflstartparam + '\n')
+        fHandle.write('z7z=' + self.z7z + '\n')
+        fHandle.write('pngout=' + self.pngout + '\n')
+        fHandle.write('serverid=' + self.serverid + '\n')
+        fHandle.write('python=' + self.python)
         
 '''
 特效配置
@@ -81,15 +66,10 @@ class EffConfig(object):
         self.packWidth=50
         self.packHeight=50
         self.extName = 'png'  # 打包图像的扩展名字
-        self.jsfl=''    # 0 默认打包类型
-        self.jsfla=''   # a 中心点在中心，大小最小
-        self.jsflb=''   # b 中心点在中心，大小指定
         
         self.srcn2destn = {}    #特效资源原始文件夹到目标文件夹名字映射
         self.modelparamDic = {}    #原始模型配置参数
         self.srcrootdir_bak = ''    # 特效原始根目录可能会改变，因此备份一下
-        
-        self.effectcfgswfpath = '' # 特效的 swf 文件所在的目录
         self.effectcfgxmlpath = '' # 特效的 xml 文件所在的目录
         
     def parseKeyValue(self, lst):
@@ -105,8 +85,6 @@ class EffConfig(object):
             self.destrootdir=lst[1]
         elif(lst[0] == 'bpngout'):
             self.bpngout = lst[1] == '1'
-        elif(lst[0] == 'jsfl'):
-            self.jsfl = lst[1]
         elif(lst[0] == 'packType'):
             self.packType = int(lst[1])
         elif(lst[0] == 'packWidth'):
@@ -115,10 +93,6 @@ class EffConfig(object):
             self.packHeight = int(lst[1])
         elif(lst[0] == 'extname'):
             self.extName = lst[1]
-        elif(lst[0] == 'jsfl'):
-            self.jsfl = int(lst[1])
-        #elif(lst[0] == 'effectcfgswfpath'):
-        #    self.effectcfgswfpath = lst[1]
         elif(lst[0] == 'effectcfgxmlpath'):
             self.effectcfgxmlpath = lst[1]
 
@@ -129,11 +103,7 @@ class EffConfig(object):
         self.effectSwf = self.destrootdir + '/' + 'effect_swf'
         self.effectXmlSwf = self.destrootdir + '/' + 'effect_xml_swf'
         self.srcrootdir_bak = self.srcrootdir
-        
-        # 不同特效打包方法
-        dotidx = self.jsfl.find('.')
-        self.jsfla = self.jsfl[0:dotidx]
-        self.jsfla = self.jsfla + 'a.jsfl'
+
         
     def saveCFG(self, fHandle):
         fHandle.write('\n')
@@ -149,9 +119,7 @@ class EffConfig(object):
         fHandle.write('packWidth=' + str(self.packWidth) + '\n')
         fHandle.write('packHeight=' + str(self.packHeight) + '\n')
         fHandle.write('extname=' + self.extName + '\n')
-        fHandle.write('jsfl=' + self.jsfl + '\n')
-        #fHandle.write('effectcfgswfpath=' + self.effectcfgswfpath + '\n')
-        fHandle.write('effectcfgxmlpath=' + self.effectcfgxmlpath + '\n')
+        fHandle.write('effectcfgxmlpath=' + self.effectcfgxmlpath)
 
 '''
 模型配置
@@ -163,9 +131,7 @@ class CharConfig(object):
         self.moduleName = '资源'
         self.name = 'c111'
         self.xmlDir = 'F:\\common\\pack\\char\\asxml'
-        
-        self.xswfDir = 'F:\\common\\pack\\char\\xswf'
-        self.swfDir = 'F:\\common\\pack\\char\\swf'
+
         self.bpngout = True
         self.bcompress = False
         self.quality = 80
@@ -173,8 +139,6 @@ class CharConfig(object):
         
         self.srcn2destn = {}    #特效资源原始文件夹到目标文件夹名字映射
         self.modelparamDic = {}    #原始模型配置参数
-        
-        self.modelcfgswfpath = '' # 模型的 swf 文件所在的目录
         self.modelcfgxmlpath = '' # 模型的 xml 文件所在的目录
     
     def parseKeyValue(self, lst):
@@ -198,18 +162,12 @@ class CharConfig(object):
             self.m_maxtexwidth = int(lst[1])
         elif(lst[0] == 'maxtexheight'):
             self.m_maxtexheight = int(lst[1])
-        elif(lst[0] == 'jsfl'):
-            self.jsfl = lst[1]
-        #elif(lst[0] == 'modelcfgswfpath'):
-        #    self.modelcfgswfpath = lst[1]
         elif(lst[0] == 'modelcfgxmlpath'):
             self.modelcfgxmlpath = lst[1]
     
     def resolveCfg(self):
         self.baseDir = self.srcrootdir
         self.xmlDir = self.destrootdir + '/' + 'asxml'
-        self.xswfDir = self.destrootdir + '/' + 'xswf'
-        self.swfDir = self.destrootdir + '/' + 'swf'
         
     def saveCFG(self, fHandle):
         fHandle.write('\n')
@@ -228,9 +186,7 @@ class CharConfig(object):
 
         fHandle.write('maxtexwidth=' + str(self.m_maxtexwidth) + '\n')
         fHandle.write('maxtexheight=' + str(self.m_maxtexheight) + '\n')
-        fHandle.write('jsfl=' + self.jsfl + '\n')
-        #fHandle.write('modelcfgswfpath=' + self.modelcfgswfpath + '\n')
-        fHandle.write('modelcfgxmlpath=' + self.modelcfgxmlpath + '\n')
+        fHandle.write('modelcfgxmlpath=' + self.modelcfgxmlpath)
 
 '''
 地形配置
@@ -240,7 +196,6 @@ class TerConfig(object):
         self.m_cropWidth = 128
         self.m_cropHeight = 128
         self.srcn2destn = {}    #特效资源原始文件夹到目标文件夹名字映射
-        self.jsfl = ''
         self.m_bfight = False;    # 是不是战斗地图
         #self.m_addLeftGrid = 0    # 左边增加的格子
         #self.m_addRightGrid = 0   # 右边增加的格子
@@ -251,7 +206,6 @@ class TerConfig(object):
         #self.m_thumbnailsHeight = 32  # 缩略图高度
         self.m_thumbnailsscale = 20 # 图像缩放比例
         self.m_thumbnailsquality = 80 # 缩略图 imagemagic 压缩质量
-        self.m_thumbnailsjsfl = '' # 缩略图打包的工具
         self.m_thumbnailsFolderName = 'tthumbnails'  # 缩略图图片所在的目录
         
         # 地形区域大小
@@ -291,8 +245,6 @@ class TerConfig(object):
             self.m_gridWidth=int(lst[1])
         elif(lst[0] == 'gridheight'):
             self.m_gridHeight=int(lst[1])
-        elif(lst[0] == 'jsfl'):
-            self.jsfl = lst[1]
         elif(lst[0] == 'bfight'):
             self.m_bfight = lst[1] == '1'
         elif(lst[0] == 'floorperpack'):
@@ -313,11 +265,9 @@ class TerConfig(object):
             self.m_thumbnailsscale = int(lst[1])
         elif(lst[0] == 'thumbnailsquality'):
             self.m_thumbnailsquality = int(lst[1])
-        elif(lst[0] == 'thumbnailsjsfl'):
-            self.m_thumbnailsjsfl = lst[1]
     
     def resolveCfg(self):
-        self.XmlSwfFolderName = 'aterxmlswf'
+        pass
     
     def saveCFG(self, fHandle):
         fHandle.write('\n')
@@ -343,9 +293,7 @@ class TerConfig(object):
         #fHandle.write('thumbnailswidth=' + str(self.m_thumbnailsWidth) + '\n')
         #fHandle.write('thumbnailsheight=' + str(self.m_thumbnailsHeight) + '\n')
         fHandle.write('thumbnailsscale=' + str(self.m_thumbnailsscale) + '\n')
-        fHandle.write('thumbnailsquality=' + str(self.m_thumbnailsquality) + '\n')
-        fHandle.write('thumbnailsjsfl=' + self.m_thumbnailsjsfl + '\n')
-        fHandle.write('jsfl=' + self.jsfl)
+        fHandle.write('thumbnailsquality=' + str(self.m_thumbnailsquality))
         
         
     def getImageWHFileName(self):
@@ -495,10 +443,6 @@ class Config(object):
         #最后一个调用解析
         self.m_curCfg.resolveCfg()
         fHandle.close()
-        
-        # 一次额配置文件的变量赋值
-        self.m_effCfg.effectcfgswfpath = os.path.join(self.m_commonCfg.serverid, 'xml\\effect')
-        self.m_charCfg.modelcfgswfpath = os.path.join(self.m_commonCfg.serverid, 'xml\\being')
         
 
     '''

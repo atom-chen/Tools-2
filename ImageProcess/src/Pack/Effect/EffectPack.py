@@ -84,104 +84,12 @@ class PngXml:
         fHandle.close()
 
         
-    def createPackageXml(self, effectXmlSwf):
-        '''生成打包资源的xml配置文件开始'''
-        
-        # 检测如果配置文件没有生成，就直接退出函数
-        xmlFullName = '%s\\%s.xml' % (self.genxmldir, self.xmlName)
-        if not os.path.isfile(xmlFullName):
-            return
-       
-        doc = Document()
-        root = doc.createElement('lib')
-        root.setAttribute('allowDomain', '*')
-        
-        byteArray = doc.createElement('bytearray')
-        byteArray.setAttribute('file', '%s\\%s.xml' % \
-                               (self.genxmldir, self.xmlName ))
-        byteArray.setAttribute('class', 'art.cfg.%s' % self.xmlName)
-        
-        doc.appendChild(root)
-        root.appendChild(byteArray)
-       
-        '''生成的xml写入文件'''
-        xmlFullName = '%s\\x%s' % (self.genNewPngDir, self.xmlName)
-        fHandle = open('%s.xml' % xmlFullName, 'w')
-        fHandle.write(str(doc.toprettyxml(indent = "  ", encoding="UTF-8"), encoding='utf-8'))
-        fHandle.close()
-
-        swfName = 'x%s.swf' % (self.xmlName)
-        '''根据生成的xml打包as3用的xml成最终的swf包'''
-        #os.popen('java -jar %s xml2lib %s.xml %s.swc' % (jar, xmlFullName, xmlFullName)).read()
-        handle = subprocess.Popen('java -jar %s xml2lib %s.xml %s.swc' % (jar, xmlFullName, xmlFullName), shell=True, stdout=subprocess.PIPE)
-        handle.wait()
-        cmd = '"%s" e -y %s.swc -o%s *.swf' % (z7z, xmlFullName, self.genNewPngDir)
-        #os.popen(cmd).read()
-        handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-        handle.wait()
-        open('%s\\%s' % (effectXmlSwf, swfName), 'wb').write(open('%s\\library.swf' % self.genNewPngDir, 'rb').read())
-        os.remove('%s\\library.swf' % self.genNewPngDir)
-        os.remove('%s.swc' % xmlFullName)
-        #os.remove('%s.xml' % xmlFullName)
-        Logger.instance().loggerESubPro ('打第 xml包 %s 完成' % swfName)
-        
     def createBat(self):
         '''生成批处理文件,直接 输出'''
         txt = open('%s\\bat.example' % self.genNewPngDir, 'r').read()
         fHandle = open('%s\\x%s.bat' % (self.genNewPngDir, self.xmlName), 'w')
         fHandle.write(txt)
         fHandle.close()
-    def createClass2Png(self, effectSwf):
-        '''生成as3类对应的图片资源xml配置文件和对应批处理打包文件'''
-        index = 0
-        nameIndex = 0
-        for pngList in self.pngCut.getPackage(self.xmlName):
-           
-            '''生成xml'''
-            doc = Document()
-            root = doc.createElement('lib')
-            root.setAttribute('allowDomain', '*')
-            
-            for png in pngList:
-                byteArray = doc.createElement('bitmapdata')
-                
-                #pngName = png.split('\\')[-1].split('.')[0]\
-                #         .split('_')[1].lstrip('0')
-                #if(pngName == ''):
-                #   pngName = '0'
-                
-                byteArray.setAttribute('file',  png)
-                if(bcompress):
-                    byteArray.setAttribute('compression', compress)
-                    byteArray.setAttribute('quality', '%s' % quality)
-                byteArray.setAttribute('class', 'art.scene.e0%s' % nameIndex)
-                root.appendChild(byteArray)
-                nameIndex += 1
-            doc.appendChild(root)
-
-            '''拼接对应文件名称'''
-            fileName = '%s\\%s_0_0_%s' % (self.genNewPngDir, self.xmlName, index)
-            '''生成的xml写入文件'''
-            
-            fHandle = open('%s.xml' % fileName, 'w')
-            fHandle.write(str(doc.toprettyxml(indent = "  ", encoding="UTF-8"), encoding='utf-8'))
-            fHandle.close()
-            swfName = '%s_0_0_%s.swf' % (self.xmlName, index)
-            '''根据生成的xml打包成最终的swf包'''
-            #os.popen('java -jar %s xml2lib %s.xml %s.swc' % (jar, fileName, fileName)).read()
-            handle=subprocess.Popen('java -jar %s xml2lib %s.xml %s.swc' % (jar, fileName, fileName), shell=True, stdout=subprocess.PIPE)
-            handle.wait();
-            cmd= '"%s" e -y %s.swc -o%s *.swf' % (z7z, fileName, self.genNewPngDir)
-            #os.popen(cmd).read()
-            handle=subprocess.Popen(cmd)
-            handle.wait();
-            open('%s\\%s' % (effectSwf, swfName), 'wb').write(open('%s\\library.swf' % self.genNewPngDir, 'rb').read())
-            os.remove('%s\\library.swf' % self.genNewPngDir)
-            os.remove('%s.swc' % fileName)
-            #os.remove('%s.xml' % fileName)
-            Logger.instance().loggerESubPro ('打第 %d 包 %s 完成' % (index, swfName))
-            
-            index = index + 1
       
        
 '''裁剪图片处理'''
@@ -407,13 +315,7 @@ class PngCut:
             idx = len(out) - 3
             size = out[0:idx]
             Logger.instance().loggerESubPro (path + " byte: " + size)
-            
-            #size = float(size)/1024    # 这个地方除以 1024 ，不是 1000
-            
-            # 添加日志
-            #Logger.instance().loggerESubPro (path + ' kbyte: ' + str(size))
-            
-            #Logger.instance().loggerESubPro('out:%s, size:%s' % (out, size))
+
             if(totalSize + float(size)) > MAX_SIZE:
                 totalSize = 0
                 index += 1
@@ -421,6 +323,8 @@ class PngCut:
             mediaPath = '%s_0_0_%u.swf' % (xmlName, index)
             sizeList.append(mediaPath)
         return sizeList
+    
+
     def getPackage(self, xmlName):
         '''获取每个包里面包含的png图片'''
         pngList = []
@@ -483,12 +387,6 @@ def modelPack(config):
     if(packType == 0):  # 只有 0 的时候才是需要输出 xml 的
         pngXml = PngXml(pngCut, genxmldir, xmlName, genNewPngDir)
         pngXml.createXml()
-        pngXml.createPackageXml(effectXmlSwf)
-    #pngXml.createBat()
-    #pngXml.createClass2Png(effectSwf)
-
-    #Logger.instance().loggerESubPro ('恭喜打包成功！！！！！！')
-    #pngCut.getPackage(xmlName)
     
 # 打包接口
 def startPack(config):
@@ -498,8 +396,6 @@ def startPack(config):
     CONVERTCMD = config.m_commonCfg.CONVERTCMD
     global z7z
     z7z= config.m_commonCfg.z7z
-    global jar
-    jar = config.m_commonCfg.jar
     global bpngout
     bpngout = config.m_effCfg.bpngout
     #bpngout = config.bpngout
@@ -563,7 +459,6 @@ def startPack(config):
 MAX_SIZE = 150 * 1024
 CONVERTCMD = 'F:/common/programfile/ImageMagick-6.8.1-Q8/convertim.exe'
 z7z= 'F:\\common\\programfile\\7-Zip\\7z.exe'
-jar = 'F:\\common\\programfile\\swift\\Swift.jar'
 bpngout = True
 #bpngout = False
 pngout = 'F:\\common\\programfile\\pngout\\pngout.exe'

@@ -167,17 +167,13 @@ class TabWidget(QtWidgets.QTabWidget):
         pass
     
     def onBtnEffCopyCfg(self):
-        srcfilename = os.path.join(Config.instance().m_effCfg.effectcfgxmlpath, 'xealleffectxml.swf')
-        destfilename = os.path.join(Config.instance().m_commonCfg.serverid, 'xml\\effect', 'xealleffectxml.swf')
-        UtilTools.copyFile(srcfilename, destfilename)
+        pass
     
     def onBtnChaBuildCfg(self):
         pass
     
     def onBtnChaCopyCfg(self):
-        srcfilename = os.path.join(Config.instance().m_charCfg.modelcfgxmlpath, 'xcallbeingxml.swf')
-        destfilename = os.path.join(Config.instance().m_commonCfg.serverid, 'xml\\being', 'xcallbeingxml.swf')
-        UtilTools.copyFile(srcfilename, destfilename)
+        pass
     
     
     

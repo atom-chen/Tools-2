@@ -62,19 +62,8 @@ class CmdLine(object):
         
         handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
         handle.wait()
-    
-    @staticmethod
-    def execSwift():
-        #identify -format "size is %Wx%H" input.bmp
-        cmd = 'java -jar %s xml2lib %s.xml %s.swc' % (ParamInfo.pInstance.m_swift, ParamInfo.pInstance.m_swiftFullXmlFile, ParamInfo.pInstance.m_swiftFullSwcFile)
-        handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-        handle.wait()
-    
-    @staticmethod
-    def exec7z():
-        cmd = '"%s" e -y %s.swc -o%s *.swf' % (ParamInfo.pInstance.m_7z, ParamInfo.pInstance.m_swiftFullSwcFile, ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName)
-        handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-        handle.wait()
+
+
 
 '''
 parameter info
@@ -102,7 +91,6 @@ class ParamInfo(object):
         self.m_convCmd = 'convertim.exe'    #裁剪指令
         self.m_identCmd = 'identify.exe'    #查看图像信息
         self.m_7z = '7z.exe'
-        self.m_swift = 'Swift.jar'
         self.m_destTplFileName = 'dest.jpg' #生成的模板文件名字，地形 jpg 压缩
         
         #下面的参数都是闭包数据
@@ -111,18 +99,12 @@ class ParamInfo(object):
         
         self.m_curSrcWidth = ''        #原始文件宽度
         self.m_curSrcHeight = ''       #原始文件高度
-        
-        self.m_swiftFullXmlFile = ''    #
-        self.m_swiftFullSwcFile = ''    #
         self.m_bStopPt = False          # 是否有阻挡点信息
         
         #配置引用数据
         self.m_srcFolder2DestFolderMap = {} #源文件夹到目标文件夹映射
-
         #内部定义使用
-        self.xmlFolderName = 'aterxml'                    #地形材质和地形配置文件文件夹目录
-        self.XmlSwfFolderName = 'aterxmlswf'              #地形地形材质和场景配置打包swf文件文件夹目录
-        self.batXmlFolderName = 'aterbatxml'              #打包中间文件文件夹目录
+        self.xmlFolderName = 'TerrainXml'                    #地形材质和地形配置文件文件夹目录
         
         # 战斗地形打包配置信息
         self.m_bfight = False;    # 是不是战斗地图
@@ -289,82 +271,8 @@ class TerrainCrop(object):
         filehandle.write('</definitions>')
         
         filehandle.close()
-        
-    '''
-    生成地形材质打包文件
-    '''    
-    @staticmethod
-    def terrainTplBatXml():
-        tplname = ParamInfo.pInstance.m_srcFolder2DestFolderMap[ParamInfo.pInstance.m_curSrcFile].m_tplFileName
-        base_dir = ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.xmlFolderName
-        
-        #tplswfpath = ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.XmlSwfFolderName
-        batxmlpath = ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName
-        
-        doc = Document()
-        root = doc.createElement('lib')
-        root.setAttribute('allowDomain', '*')
-        
-        byteArray = doc.createElement('bytearray')
-        byteArray.setAttribute('file', '%s\\%s.xml' % (base_dir, tplname))
-        byteArray.setAttribute('class', 'art.cfg.%s' % tplname)
-        
-        doc.appendChild(root)
-        root.appendChild(byteArray)
-       
-        '''生成的xml写入文件'''
-        xmlFullName = '%s\\x%s' % (batxmlpath, tplname)
-        fHandle = open('%s.xml' % xmlFullName, 'w')
-        fHandle.write(str(doc.toprettyxml(indent = "  ", encoding="UTF-8"), encoding='utf-8'))
-        fHandle.close()
 
-        swfName = 'x%s.swf' % (tplname)
-        '''根据生成的xml打包as3用的xml成最终的swf包'''
-        ParamInfo.pInstance.m_swiftFullXmlFile = xmlFullName
-        ParamInfo.pInstance.m_swiftFullSwcFile = xmlFullName
-        CmdLine.execSwift()
-        CmdLine.exec7z()
 
-        open('%s\\%s' % (ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.XmlSwfFolderName, swfName), 'wb').write(open('%s\\library.swf' % (ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName), 'rb').read())
-        os.remove('%s\\library.swf' % (ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName))
-        os.remove('%s.swc' % xmlFullName)
-        print ('打第 xml包 %s 完成' % swfName)
-
-    '''
-    @brief 阻挡点 swf 文件
-    '''
-    @staticmethod
-    def stopPtBatXml():
-        stopptname = ParamInfo.pInstance.m_srcRootPath + '/' + ParamInfo.pInstance.m_curSrcFile.split('.')[0] + '.mps' # 阻挡点文件名字
-        if os.path.exists(stopptname):
-            if os.path.isfile(stopptname):
-                ParamInfo.pInstance.m_bStopPt = True
-                # 生成打包的 xml 文件
-                with open(ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName + '/' + 's' + ParamInfo.pInstance.m_srcFolder2DestFolderMap[ParamInfo.pInstance.m_curSrcFile].m_terFileName + '.xml', 'w', encoding = 'utf8') as fHandle:
-                    fHandle.write('<?xml version=\"1.0\" encoding=\"utf-8\"?>\n')
-                    fHandle.write('<lib allowDomain=\"*\">\n')
-                    fHandle.write('<bytearray file=\"' + stopptname + '\" class=\"art.cfg.' + 's' + ParamInfo.pInstance.m_srcFolder2DestFolderMap[ParamInfo.pInstance.m_curSrcFile].m_terFileName + '\"/>\n')
-                    fHandle.write('</lib>')
-                    fHandle.close()
-
-        if ParamInfo.pInstance.m_bStopPt:
-            scenename = ParamInfo.pInstance.m_srcFolder2DestFolderMap[ParamInfo.pInstance.m_curSrcFile].m_terFileName
-            base_dir = ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName
-        
-            '''生成的xml写入文件'''
-            xmlFullName = '%s\\s%s' % (base_dir, scenename)
-    
-            swfName = 's%s.swf' % (scenename)
-            '''根据生成的xml打包as3用的xml成最终的swf包'''
-            ParamInfo.pInstance.m_swiftFullXmlFile = xmlFullName
-            ParamInfo.pInstance.m_swiftFullSwcFile = xmlFullName
-            CmdLine.execSwift()
-            CmdLine.exec7z()
-    
-            open('%s\\%s' % (ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.XmlSwfFolderName, swfName), 'wb').write(open('%s\\library.swf' % (ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName), 'rb').read())
-            os.remove('%s\\library.swf' % (ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName))
-            os.remove('%s.swc' % xmlFullName)
-            print ('打第 xml包 %s 完成' % swfName)
 
     '''
     生成地形定义文件
@@ -526,137 +434,7 @@ class TerrainCrop(object):
         
         filehandle.close()
 
-    '''
-    生成地形场景打包文件
-    '''    
-    @staticmethod
-    def terrainBatXml():
-        scenename = ParamInfo.pInstance.m_srcFolder2DestFolderMap[ParamInfo.pInstance.m_curSrcFile].m_terFileName
-        srcxmlpath = ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.xmlFolderName
-        base_dir = ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName
-        
-        #sceneswfpath = ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.XmlSwfFolderName
 
-        doc = Document()
-        root = doc.createElement('lib')
-        root.setAttribute('allowDomain', '*')
-        
-        byteArray = doc.createElement('bytearray')
-        byteArray.setAttribute('file', '%s\\%s.xml' % (srcxmlpath, scenename))
-        byteArray.setAttribute('class', 'art.cfg.t%s' % scenename)
-        
-        doc.appendChild(root)
-        root.appendChild(byteArray)
-       
-        '''生成的xml写入文件'''
-        xmlFullName = '%s\\x%s' % (base_dir, scenename)
-        fHandle = open('%s.xml' % xmlFullName, 'w')
-        fHandle.write(str(doc.toprettyxml(indent = "  ", encoding="UTF-8"), encoding='utf-8'))
-        fHandle.close()
-
-        swfName = 'x%s.swf' % (scenename)
-        '''根据生成的xml打包as3用的xml成最终的swf包'''
-        ParamInfo.pInstance.m_swiftFullXmlFile = xmlFullName
-        ParamInfo.pInstance.m_swiftFullSwcFile = xmlFullName
-        CmdLine.execSwift()
-        CmdLine.exec7z()
-
-        open('%s\\%s' % (ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.XmlSwfFolderName, swfName), 'wb').write(open('%s\\library.swf' % (ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName), 'rb').read())
-        os.remove('%s\\library.swf' % (ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName))
-        os.remove('%s.swc' % xmlFullName)
-        print ('打第 xml包 %s 完成' % swfName)
-        
-    '''
-    生成地形定义文件
-    '''    
-    @staticmethod
-    def terrainMakeSwiftXml():
-        base_dir = ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName
-        picpath = ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.m_srcFolder2DestFolderMap[ParamInfo.pInstance.m_curSrcFile].m_tplFileName
-        prefix = 'art.scene.t'
-        
-        #alldir = os.listdir(ParamInfo.pInstance.m_destRootPath)
-        
-        xmlfilehandle = None
-        batfilehandle = None
-        
-        #直接赋值遍历的目录
-        i = ParamInfo.pInstance.m_srcFolder2DestFolderMap[ParamInfo.pInstance.m_curSrcFile].m_tplFileName
-        #for i in alldir:
-        #每一个包图片数  
-        piccntperone = 4
-        lessone = piccntperone - 1
-        #当前遍历的文件数量，总共 total - 1 个，从 0 开始         
-        curidx = 0
-        #包中图片索引 0 1 2 3 
-        packpicidx = 0
-    
-        #遍历这个文件，输出配置文件
-        allfiles = os.listdir(picpath)
-        for j in allfiles:
-            remainder= curidx % piccntperone
-
-            #向新文件中输出内容
-            if remainder == 0:
-                packpicidx = 0
-                divisor = int(curidx / piccntperone)
-                
-                #如果目录不存在，先创建目录
-                if not os.path.exists(base_dir + '/' + i):
-                    os.makedirs(base_dir + '/' + i)
-                filename = base_dir + '/' + i + '/' + i + '_' + str(divisor) + '.xml'
-                #关闭之前的文件
-                #if xmlfilehandle:
-                #    xmlfilehandle.close()
-                xmlfilehandle = open(filename, 'w')
-                
-                xmlfilehandle.write('<?xml version=\"1.0\" encoding=\"utf-8\"?>\n')
-                xmlfilehandle.write('<lib allowDomain="*">\n')
-                xmlfilehandle.write('    <bitmapdata file=\"' + picpath + '/' + j + '\" ' + 'class=\"' + prefix + str(packpicidx) + '\"/>\n')
-                
-                #输出 bat 文件
-                filename = base_dir + '/' + i + '/' + i + '_' + str(divisor) + '.bat'
-                #if batfilehandle:
-                #    batfilehandle.close()
-                batfilehandle = open(filename, 'w')
-                batfilehandle.write('@echo on\n')
-                
-                batfilehandle.write('set base_dir=%~dp0\n')
-                batfilehandle.write('%base_dir:~0,2%\n')
-                batfilehandle.write('echo %base_dir%\n')
-    
-                batfilehandle.write('pushd %base_dir%\n')
-    
-                batfilehandle.write('if exist %swcterpath%\%~n0.swc del %swcterpath%\%~n0.swc\n')
-    
-                batfilehandle.write('pushd %respath%\n')
-                batfilehandle.write('java -jar %swiftpath% xml2lib %base_dir%\%~n0.xml %%swcterpath%\%~n0.swc\n')
-                batfilehandle.write('popd\n')
-    
-                batfilehandle.write('if exist %%swcterpath%%\library.swf del %%swcterpath%%\library.swf\n')
-    
-                batfilehandle.write('%z7% e %swcterpath%\%~n0.swc -o%swcterpath% *.swf\n')
-    
-                batfilehandle.write('if exist %swfterpath%\%~n0.swf del %swfterpath%\%~n0.swf\n')
-    
-                batfilehandle.write('copy %swcterpath%\library.swf %swfterpath%\%~n0.swf\n')
-    
-                batfilehandle.write('popd')
-                batfilehandle.close()
-            else:
-                packpicidx += 1
-                xmlfilehandle.write('    <bitmapdata file=\"' + picpath + '/' + j + '\" class=\"' + prefix + str(packpicidx) + '\"/>\n')
-                if remainder == lessone:
-                    #输出结尾符号
-                    xmlfilehandle.write('</lib>')
-                    xmlfilehandle.close()
-
-            curidx += 1
-
-        #最后加上结尾符号 
-        if remainder != lessone:
-            xmlfilehandle.write('</lib>')
-            xmlfilehandle.close()
 
     '''
     生成地图缩略图
@@ -685,7 +463,6 @@ def startPackTer():
     ParamInfo.pInstance.m_convCmd = Config.instance().m_commonCfg.CONVERTCMD
     ParamInfo.pInstance.m_identCmd = Config.instance().m_commonCfg.CONVERTIDENT
     ParamInfo.pInstance.m_7z = Config.instance().m_commonCfg.z7z
-    ParamInfo.pInstance.m_swift = Config.instance().m_commonCfg.jar
     
     # 战斗地图特殊处理
     ParamInfo.pInstance.m_bfight = Config.instance().m_terCfg.m_bfight
@@ -705,12 +482,6 @@ def startPackTer():
     #初始化目录
     if not os.path.exists(ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.xmlFolderName):
         os.makedirs(ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.xmlFolderName)
-        
-    if not os.path.exists(ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.XmlSwfFolderName):
-        os.makedirs(ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.XmlSwfFolderName)
-        
-    if not os.path.exists(ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName):
-        os.makedirs(ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.batXmlFolderName)
         
     if not os.path.exists(ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.m_thumbnailsFolderName):
         os.makedirs(ParamInfo.pInstance.m_destRootPath + '/' + ParamInfo.pInstance.m_thumbnailsFolderName)
@@ -739,16 +510,10 @@ def startPackTer():
                 TerrainCrop.terrainRename()     #重命名切割后的地图片，进行排序
 
             TerrainCrop.terrainTplXml()     #生成地形材质配置文件，虽然没有图片的 nobgpic 的地图不需要这些配置文件，但是这个函数中生成一些配置数据，后面要用到的
-            TerrainCrop.terrainTplBatXml()  #生成地形材质打包文件
-            
-            if not nobgpic:
-                TerrainCrop.stopPtBatXml()  #阻挡点生成
             
             TerrainCrop.terrainXml()        #生成地形场景配置文件
-            TerrainCrop.terrainBatXml()     #生成地形场景打包文件
-            #TerrainCrop.terrainMakeSwiftXml()   #生成地形图片打包文件
-            if not nobgpic:
-                TerrainCrop.buildThumbnails()       #生成地形缩略图
+            #if not nobgpic:
+            #    TerrainCrop.buildThumbnails()       #生成地形缩略图
             
             # 输出宽度和高度
             if ParamInfo.pInstance.m_firImage:

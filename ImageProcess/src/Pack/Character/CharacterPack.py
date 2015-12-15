@@ -326,72 +326,7 @@ class PngPackage:
         fHandle = open(xmlFullName, 'w')
         fHandle.write(str(doc.toprettyxml(indent = " ", encoding="UTF-8"), encoding='utf-8'))
         fHandle.close()
-           
-    def createXmlSwf(self, xswfDir, xmlDir):
-        self.__createXmlUsePackageXml(xmlDir)
-        swfName = 'x%s.swf' % (self.name)
-       
-        '''根据生成的xml打包as3用的xml成最终的swf包'''
-        packageXml = '%s\\x%s.xml' % (xmlDir, self.name)
-        #os.popen('java -jar %s xml2lib %s %s.swc' % (jar, packageXml, self.xmlFullName)).read()
-        handle = subprocess.Popen(('java -jar %s xml2lib %s %s.swc' % (jar, packageXml, self.xmlFullName)), shell=True, stdout=subprocess.PIPE)
-        handle.wait()
-        cmd= '"%s" e -y %s.swc -o%s *.swf' % (z7z, self.xmlFullName, self.destDir)
-        
-        #os.popen(cmd).read()
-        handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-        handle.wait()
-        open('%s\\%s' % (xswfDir, swfName), 'wb').write(open('%s\\library.swf' % self.destDir, 'rb').read())
-        os.remove('%s\\library.swf' % self.destDir)
-        os.remove('%s.swc' % self.xmlFullName)
-        #os.remove(packageXml)
-        Logger.instance().loggerCSubPro('打xml包 %s 完成' % swfName)
-        Logger.instance().loggerCSubPro('恭喜打包%s全部完成!!!' % self.name)
-        
-    def createSwf(self, xmlDir, swfDir):
-        for act in self.actNodeList:
-            for angle in act.angleNode:
-                xmlFullName = '%s\\%s_%s_%s'\
-                              % (xmlDir, self.name, act.act,\
-                                 self.pngDir2XmlDir[angle.angle]) 
-                doc = Document()
-                root = doc.createElement('lib')
-                root.setAttribute('allowDomain', '*')
-                index = 0
-                for png in angle.pngInfo:
-                    #print png.path
-                    byteArray = doc.createElement('bitmapdata')
-                    #byteArray.setAttribute('file',  unicode(png.path, "gbk"))
-                    byteArray.setAttribute('file',  png.path)
-                    byteArray.setAttribute('class', 'art.scene.c%s%d' % \
-                                           (self.pngDir2XmlDir[angle.angle],\
-                                           index))
-                    if bcompress:
-                        byteArray.setAttribute('compression', compress)
-                        byteArray.setAttribute('quality', '%s' % quality)
-                    
-                    index += 1
-                    root.appendChild(byteArray)
 
-                doc.appendChild(root)
-                fHandle = open('%s.xml' % xmlFullName, 'w')
-                fHandle.write(doc.toprettyxml(indent = " ", encoding="UTF-8"))
-                fHandle.close()
-
-                #os.popen('java -jar %s xml2lib %s.xml %s.swc' % (jar, xmlFullName, xmlFullName)).read()
-                handle = subprocess.Popen(('java -jar %s xml2lib %s.xml %s.swc' % (jar, xmlFullName, xmlFullName)), shell=True, stdout=subprocess.PIPE)
-                handle.wait()
-                cmd= '"%s" e -y %s.swc -o%s *.swf' % (z7z, xmlFullName, self.baseDir)
-                #os.popen(cmd).read()
-                handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-                handle.wait()
-                swfName = '%s\\%s_%s_%s.swf'  % (swfDir, self.name, act.act, self.pngDir2XmlDir[angle.angle]) 
-                open(swfName, 'wb').write(open('%s\\library.swf' % self.baseDir, 'rb').read())
-                os.remove('%s\\library.swf' % self.baseDir)
-                os.remove('%s.swc' % xmlFullName)
-                os.remove('%s.xml' % xmlFullName)
-                Logger.instance().loggerCSubPro('打xml包 %s 完成' % swfName)
-        Logger.instance().loggerCSubPro('恭喜打包%s全部完成!!!' % self.name)
 
     # 生成排列，以便生成 atlas
     def buildArr(self, act, dir):
@@ -480,19 +415,10 @@ class PngPackage:
 '''入口函数'''       
 def modelPack(config):
     '''声明全局变量'''
-#     baseDir = 'F:\\common\\pack\\char'  #根目录
-#     moduleName = '资源'  # 美术给的资源的名称
-#     name = 'c111'
-#     xmlDir = 'F:\\common\\pack\\char\\asxml'  #as3程序xml
-#     xswfDir = 'F:\\common\\pack\\char\\xswf'  #最后生成的 xml  打包文件
-#     swfDir = 'F:\\common\\pack\\char\\swf'  # 最后生成的模型打包文件
-    
     baseDir = config.m_charCfg.baseDir  #根目录
     moduleName = config.m_charCfg.moduleName  # 美术给的资源的名称
     name = config.m_charCfg.name
     xmlDir = config.m_charCfg.xmlDir  #as3程序xml
-    xswfDir = config.m_charCfg.xswfDir  #最后生成的 xml  打包文件
-    swfDir = config.m_charCfg.swfDir  # 最后生成的模型打包文件
     destDir = config.m_charCfg.destrootdir  # 生成的目标目录
     
     pc = PngCut(baseDir, moduleName, destDir)
@@ -501,8 +427,6 @@ def modelPack(config):
     package = PngPackage(baseDir, moduleName, name, destDir)
     package.getPngData()
     package.createXml(xmlDir)
-    package.createXmlSwf(xswfDir, xmlDir)
-    #package.createSwf(xmlDir, swfDir)
     if hardwareAcc:
         package.buildAtlas()        # 生成地图集
     
@@ -549,19 +473,7 @@ def startPack(config):
     if not os.path.exists(config.m_charCfg.xmlDir):
         os.makedirs(config.m_charCfg.xmlDir)
         Logger.instance().loggerCSubPro('405 dir ' + config.m_charCfg.xmlDir)
-    if not os.path.exists(config.m_charCfg.xswfDir):
-        os.makedirs(config.m_charCfg.xswfDir)
-        Logger.instance().loggerCSubPro('408 dir ' + config.m_charCfg.xswfDir)
-    if not os.path.exists(config.m_charCfg.swfDir):
-        os.makedirs(config.m_charCfg.swfDir)
-        Logger.instance().loggerCSubPro('411 dir ' + config.m_charCfg.xswfDir)
     
-#     modellist = os.listdir(config.m_charCfg.srcrootdir)
-#     for model in modellist:
-#         if model in config.m_charCfg.srcn2destn.keys():
-#             config.m_charCfg.moduleName = model
-#             config.m_charCfg.name = config.m_charCfg.srcn2destn[model]
-#             modelPack(config)
 
     for (k,v) in config.m_charCfg.srcn2destn.items():
         if os.path.isdir(config.m_charCfg.srcrootdir + '/' + k):

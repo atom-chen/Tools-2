@@ -19,7 +19,7 @@ class EffectThread(Thread):
 
     def run(self):
         Logger.instance().loggerEff("epack is running")
-        #handle = subprocess.Popen(["python", "./eff/maineff.py", "test"], shell=True, stdout=subprocess.PIPE)
+        #handle = subprocess.Popen(["python", "./Effect/MainEffect.py", "test"], shell=True, stdout=subprocess.PIPE)
         if Config.instance().startType == Config.MainPy:
             handle = subprocess.Popen([Config.instance().m_commonCfg.python, Config.instance().effExePath, "test"], shell=True, stdout=subprocess.PIPE)
         else:
@@ -49,19 +49,6 @@ class EffectThread(Thread):
         else:
             Logger.instance().loggerEff("子进程错误退出")
         
-        #AppSys.instance().m_bOverChar = True
-        # 启动资源打包
-        #handle = subprocess.Popen([Config.instance().m_commonCfg.flashcs, Config.instance().m_charCfg.jsfl], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        # 只有 0 需要打包
-        if Config.instance().m_effCfg.packType == 0:
-            try:
-                handle = subprocess.Popen([Config.instance().m_commonCfg.flashcs, Config.instance().m_effCfg.jsfl, Config.instance().m_commonCfg.jsflstartparam])
-            except:
-                Logger.instance().loggerEff("Flash CS cannot start")
-        if Config.instance().m_effCfg.packType == 1 or Config.instance().m_effCfg.packType == 2:
-            try:
-                handle = subprocess.Popen([Config.instance().m_commonCfg.flashcs, Config.instance().m_effCfg.jsfla, Config.instance().m_commonCfg.jsflstartparam])
-            except:
-                Logger.instance().loggerEff("Flash CS cannot start")
+        #继续打包特效资源，暂时没有实现
 
         AppSys.instance().m_bOverEff = True

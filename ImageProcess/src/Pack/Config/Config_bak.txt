@@ -1,15 +1,11 @@
 [common]
 CONVERTCMD=D:\ProgramFiles\ImageMagick-6.9.2-Q16/convertim.exe
 CONVERTIDENT=D:\ProgramFiles\ImageMagick-6.9.2-Q16/identify.exe
-z7z=D:\ProgramFiles\7-Zip/7z.exe
-jar=D:\ProgramFiles\swift/Swift.jar
-pngout=D:\ProgramFiles\pngout/pngout.exe
-flashcs=D:\ProgramFiles\Adobe\Adobe Flash CC\Flash.exe
-serverid=E:\e\work\client-new-0212\client_maintrunk\client\bin\asset\scene
 MONTAGE=D:\ProgramFiles\ImageMagick-6.9.2-Q16/montage.exe
+z7z=D:\ProgramFiles\7-Zip/7z.exe
+pngout=D:\ProgramFiles\pngout/pngout.exe
+serverid=E:\e\work\client-new-0212\client_maintrunk\client\bin\asset\scene
 python=D:\ProgramFiles\Python33\python.exe
-swf2xmltool=D:\ProgramFiles\swf2xml\swf2xml.exe
-jsflstartparam=-AlwaysRunJSFL
 
 [effect]
 MAX_SIZE=10000
@@ -34,8 +30,8 @@ jsfl=E:\e\work\client-new-0212\client_maintrunk\tools\jsfl\cflash.jsfl
 modelcfgxmlpath=E:\e\tmp\model
 
 [terrain]
-srcrootdir=E:/e/work/art-new-svn/场景
-destrootdir=E:\e\image\test12
+srcrootdir=E:/Self/ImageTest/Terrain/Input
+destrootdir=E:/Self/ImageTest/Terrain/Output
 cropwidth=256
 cropheight=256
 gridwidth=32
@@ -45,5 +41,3 @@ floorperpack=4
 bjustxml=0
 thumbnailsscale=5
 thumbnailsquality=80
-thumbnailsjsfl=F:\e\work\client-new-0212\client_maintrunk\tools\jsfl\thumbnailsflash.jsfl
-jsfl=E:\e\work\client-new-0212\client_maintrunk\tools\jsfl\tflash.jsfl
