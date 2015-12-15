@@ -1,8 +1,6 @@
 #coding=utf-8
-'''
-Created on 2013-3-29
 
-@author: Administrator
+'''
 '''
 
 #from subprocess import Popen, PIPE
@@ -16,15 +14,12 @@ import traceback
 import shutil
 import glob
 
-from Pack.Frame.logger import Logger
-from Pack.Frame.config import Config
-from Pack.Frame.stRect import stRect
+from Pack.Frame.Logger import Logger
+from Pack.Frame.Config import Config
+from Pack.Frame.Rect import stRect
 
 '''
 模型资源打包脚本
-python版本2.7
-author panqiangqiang 2013年2月22日
-
 '''
 #import sys  
 # 获得系统默认编码格式  

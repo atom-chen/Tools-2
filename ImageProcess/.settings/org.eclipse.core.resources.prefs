@@ -1,5 +1,8 @@
 eclipse.preferences.version=1
+encoding//src/Pack/Character/CharacterPack.py=utf-8
+encoding//src/Pack/Character/MainCharacter.py=utf-8
 encoding//src/Pack/Effect/EffectPack.py=utf-8
+encoding//src/Pack/Effect/MainEffect.py=utf-8
 encoding//src/Pack/Frame/AppSys.py=utf-8
 encoding//src/Pack/Frame/CharacterThread.py=utf-8
 encoding//src/Pack/Frame/Config.py=utf-8

@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
-'''
-Created on 2013-4-11
 
-@author: Administrator
+'''
 @ brief char pack module
 '''
+
 #import sys
 #sys.path.append('E:/work/client-05/trunk/tools/python脚本/packeff/PackEff/src')
-from Pack.Frame.config import Config
-from pack.char.cpackage import startPack
-from Pack.Frame.logger import Logger
+from Pack.Frame.Config import Config
+from pack.Character.CharacterPack import startPack
+from Pack.Frame.Logger import Logger
 
 def main():
     #for arg in sys.argv:

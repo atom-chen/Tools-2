@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 #from subprocess import Popen, PIPE
 import subprocess
 import os
@@ -20,9 +21,6 @@ from Pack.Frame.Config import Config
 
 '''
 特效图片资源打包脚本
-python版本2.7
-author panqiangqiang 2013年2月18日
-
 '''
 
 '''定义一个可以存放图片偏移量和尺寸的类型'''

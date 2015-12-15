@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-'''
-Created on 2013-4-12
 
-@author: Administrator
+'''
 '''
 
 #import sys
-from Pack.Frame.config import Config
-from pack.eff.epackage import startPack
-from Pack.Frame.logger import Logger
+from Pack.Frame.Config import Config
+from Pack.Effect.EffectPack import startPack
+from Pack.Frame.Logger import Logger
 
 def main():
     #for arg in sys.argv:
