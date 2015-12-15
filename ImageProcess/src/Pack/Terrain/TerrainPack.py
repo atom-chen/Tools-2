@@ -23,7 +23,8 @@ class CmdLine(object):
     @staticmethod
     def execOneCrop():
         #convertim -crop 128x128 %%k "dest.jpg"
-        cmd = ParamInfo.pInstance.m_convCmd + ' -crop ' + str(ParamInfo.pInstance.m_cropWidth) + 'x' + str(ParamInfo.pInstance.m_cropWidth) + ' ' + ParamInfo.pInstance.curSrcfileDir() + ' ' + ParamInfo.pInstance.curDestFileDir()
+        srcPath = ParamInfo.pInstance.curSrcfileDir()
+        cmd = ParamInfo.pInstance.m_convCmd + ' -crop ' + str(ParamInfo.pInstance.m_cropWidth) + 'x' + str(ParamInfo.pInstance.m_cropWidth) + ' ' + srcPath + ' ' + ParamInfo.pInstance.curDestFileDir()
         handle = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
         handle.wait()
         
@@ -146,7 +147,8 @@ class ParamInfo(object):
         
     # 当前裁剪图片的恩见完整路径
     def curSrcfileDir(self):
-        return self.m_srcRootPath + '/' + self.m_curSrcFile
+        retPath = self.m_srcRootPath + '/' + self.m_curSrcFile
+        return retPath
     
     #当前裁剪后图片完整的名字
     def curDestFileDir(self):
