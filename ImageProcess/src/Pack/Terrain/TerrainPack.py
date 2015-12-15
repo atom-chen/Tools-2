@@ -379,8 +379,9 @@ class TerrainCrop(object):
             for x in range(xcnt):
                 if not nobgpic:
                     #filehandle.write('        <floor id=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" src=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" width=\"' + str(ParamInfo.pInstance.m_cropWidth) + '\" height=\"' + str(ParamInfo.pInstance.m_cropHeight) + '\" x=\"' + str(xpos + xoff) + '\" y=\"' + str(ypos) + '\"/>\n')
-                    resId = oneparam + '_' + str(packidx) + '_' + str(packpicidx)
-                    resFileName = TerrainCrop.getFileNameByResId(resId)
+                    #resId = oneparam + '_' + str(packidx) + '_' + str(packpicidx)
+                    #resFileName = TerrainCrop.getFileNameByResId(resId)
+                    resFileName = str(picidx + 10000)
                     filehandle.write('        <floor id=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" src=\"' + resFileName + '\" width=\"' + str(ParamInfo.pInstance.m_cropWidth) + '\" height=\"' + str(ParamInfo.pInstance.m_cropHeight) + '\" x=\"' + str(xpos + xoff) + '\" y=\"' + str(ypos) + '\"/>\n')
                 else:
                     filehandle.write('        <floor id=\"' + oneparam + '_' + str(packidx) + '_' + str(packpicidx) + '\" src=\"\" width=\"' + str(ParamInfo.pInstance.m_cropWidth) + '\" height=\"' + str(ParamInfo.pInstance.m_cropHeight) + '\" x=\"' + str(xpos + xoff) + '\" y=\"' + str(ypos) + '\"/>\n')
@@ -480,6 +481,7 @@ class TerrainCrop(object):
                 resFileName = filename[0:dotdix]
             else:
                 resFileName = filename
+                
             
             TerrainCrop.ResId2FileNameDic[resId] = resFileName
 
@@ -497,6 +499,7 @@ class TerrainCrop(object):
             return TerrainCrop.ResId2FileNameDic[resId]
         
         return "10000"
+
 
 
 '''
