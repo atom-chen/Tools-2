@@ -4,7 +4,7 @@ CONVERTIDENT=D:\ProgramFiles\ImageMagick-6.9.2-Q16/identify.exe
 MONTAGE=D:\ProgramFiles\ImageMagick-6.9.2-Q16/montage.exe
 z7z=D:\ProgramFiles\7-Zip/7z.exe
 pngout=D:\ProgramFiles\pngout/pngout.exe
-serverid=E:\e\work\client-new-0212\client_maintrunk\client\bin\asset\scene
+serverid=E:\e\work\client-new-0212
 python=D:\ProgramFiles\Python33\python.exe
 
 [effect]
@@ -16,7 +16,6 @@ packType=1
 packWidth=80
 packHeight=100
 extname=png
-jsfl=E:\e\work\client-new-0212\client_maintrunk\tools\jsfl\eflash.jsfl
 effectcfgxmlpath=E:\e\tmp\effect
 
 [character]
@@ -26,7 +25,6 @@ destrootdir=E:/e/image/test10
 hardwareAcc=0
 maxtexwidth=2048
 maxtexheight=2048
-jsfl=E:\e\work\client-new-0212\client_maintrunk\tools\jsfl\cflash.jsfl
 modelcfgxmlpath=E:\e\tmp\model
 
 [terrain]
