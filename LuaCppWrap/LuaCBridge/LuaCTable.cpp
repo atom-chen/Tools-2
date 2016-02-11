@@ -6,9 +6,8 @@
 
 LuaCTable::LuaCTable(int reference, LuaCVM* interpreter)
 {
-	_Reference = reference;
-	_Interpreter = interpreter;
-	translator = interpreter->translator;
+	m_ref = reference;
+	m_luavm = interpreter;
 }
 
 LuaCTable::~LuaCTable()
@@ -18,67 +17,67 @@ LuaCTable::~LuaCTable()
 
 LuaCObject* LuaCTable::getField(std::string field)
 {
-	return _Interpreter->getObject(_Reference, field);
+	return m_luavm->getObject(m_ref, field);
 }
 
 void LuaCTable::setField(std::string field, LuaCObject* value)
 {
-	_Interpreter->setObject(_Reference, field, value);
+	m_luavm->setObject(m_ref, field, value);
 }
 
 //public System.Collections.IDictionaryEnumerator GetEnumerator()
 //{
-//return _Interpreter.GetTableDict(this).GetEnumerator();
+//return m_luavm.GetTableDict(this).GetEnumerator();
 //}
 //
 //public int Count
 //{
 //get
 //{
-////push(_Interpreter.L);
-////LuaDLL.lua_objlen(_Interpreter.L, -1);
-//return _Interpreter.GetTableDict(this).Count;
+////push(m_luavm.L);
+////LuaDLL.lua_objlen(m_luavm.L, -1);
+//return m_luavm.GetTableDict(this).Count;
 //}
 //}
 //
 //public ICollection Keys
 //{
-//get{ return _Interpreter.GetTableDict(this).Keys; }
+//get{ return m_luavm.GetTableDict(this).Keys; }
 //}
 //
 //public ICollection Values
 //{
-//get{ return _Interpreter.GetTableDict(this).Values; }
+//get{ return m_luavm.GetTableDict(this).Values; }
 //}
 
 void LuaCTable::SetMetaTable(LuaCTable* metaTable)
 {
-	push(_Interpreter->L);
-	metaTable->push(_Interpreter->L);
-	lua_setmetatable(_Interpreter->L, -2);
-	lua_pop(_Interpreter->L, 1);
+	push(m_luavm->L);
+	metaTable->push(m_luavm->L);
+	lua_setmetatable(m_luavm->L, -2);
+	lua_pop(m_luavm->L, 1);
 }
 
 //public T[] ToArray<T>()
 //{
-//	IntPtr L = _Interpreter.L;
+//	IntPtr L = m_luavm.L;
 //	push(L);
 //	return LuaScriptMgr.GetArrayObject<T>(L, -1);
 //}
 
 void LuaCTable::Set(std::string key, LuaCObject* o)
 {
-	lua_State* L = _Interpreter->L;
+	lua_State* L = m_luavm->L;
 	push(L);
 	lua_pushstring(L, key.c_str());
-	PushArgs(L, o);
+	PushArgs(o);
 	lua_rawset(L, -3);
 	lua_settop(L, 0);
 }
 
 void LuaCTable::setLuaFunction(std::string key, lua_CFunction func)
 {
-	lua_State* L = _Interpreter->L;
+	lua_State* L = m_luavm->L;
 	push(L);
 	lua_pushstring(L, key.c_str());
 	lua_pushcfunction(L, func);
@@ -92,15 +91,15 @@ void LuaCTable::setLuaFunction(std::string key, lua_CFunction func)
 */
 LuaCObject* LuaCTable::rawget(std::string field)
 {
-	return _Interpreter->rawGetObject(_Reference, field);
+	return m_luavm->rawGetObject(m_ref, field);
 }
 
 LuaCObject* LuaCTable::rawgetFunction(std::string field)
 {
-	LuaCObject* obj = _Interpreter->rawGetObject(_Reference, field);
+	LuaCObject* obj = m_luavm->rawGetObject(m_ref, field);
 
 	if (obj->GetType() == LUAC_TFUNCTION)
-		//return new LuaCFunction((LuaCSFunction*)obj, _Interpreter);
+		//return new LuaCFunction((LuaCSFunction*)obj, m_luavm);
 		return obj;
 	else
 		return obj;
@@ -108,12 +107,12 @@ LuaCObject* LuaCTable::rawgetFunction(std::string field)
 
 LuaCFunction* LuaCTable::RawGetFunc(std::string field)
 {
-	lua_State* L = _Interpreter->L;
+	lua_State* L = m_luavm->L;
 	int type = LUA_TNONE;
 	LuaCFunction* func = nullptr;
 
 	int oldTop = lua_gettop(L);
-	lua_getref(L, _Reference);
+	lua_getref(L, m_ref);
 	lua_pushstring(L, field.c_str());
 	lua_gettable(L, -2);
 
@@ -133,7 +132,7 @@ LuaCFunction* LuaCTable::RawGetFunc(std::string field)
 // */
 void LuaCTable::push(lua_State* luaState)
 {
-	lua_getref(luaState, _Reference);
+	lua_getref(luaState, m_ref);
 }
 
 std::string LuaCTable::ToString()

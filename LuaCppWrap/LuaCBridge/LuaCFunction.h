@@ -12,7 +12,7 @@ class LuaCVM;
  */
 class LuaCFunction : public LuaCBase
 {
-protected:
+public:
 	lua_State* L;
 
 public:

@@ -1,6 +1,6 @@
 #include "LuaCObjectTranslator.h"
 #include "LuaCObject.h"
-#include "LuaCScriptMgr.h"
+#include "LuaCVM.h"
 
 std::vector<LuaCObjectTranslator*> LuaCObjectTranslator::list;
 
@@ -14,29 +14,21 @@ LuaCObjectTranslator::~LuaCObjectTranslator()
 
 }
 
-LuaCObject* LuaCObjectTranslator::getObject(lua_State* luaState, int index)
+LuaCObject* LuaCObjectTranslator::getObject(int index)
 {
-	return LuaCScriptMgr::GetVarObject(luaState, index);
+	return interpreter->GetVarObject(index);
 }
 
-LuaCObjectTranslator* LuaCObjectTranslator::FromState(lua_State* luaState)
+void LuaCObjectTranslator::push(LuaCObject* o)
 {
-	lua_getglobal(luaState, "_translator");
-	int pos = (int)lua_tonumber(luaState, -1);
-	lua_pop(luaState, 1);
-	return list[pos];
+	interpreter->PushVarObject(o);
 }
 
-void LuaCObjectTranslator::push(lua_State* luaState, LuaCObject* o)
-{
-	LuaCScriptMgr::PushVarObject(luaState, o);
-}
-
-std::vector<LuaCObject*> LuaCObjectTranslator::popValues(lua_State* luaState, int oldTop)
+std::vector<LuaCObject*> LuaCObjectTranslator::popValues(int oldTop)
 {
 	std::vector<LuaCObject*> returnValues;
 
-	int newTop = lua_gettop(luaState);
+	int newTop = lua_gettop(interpreter->L);
 
 	if (oldTop == newTop)
 	{
@@ -48,19 +40,19 @@ std::vector<LuaCObject*> LuaCObjectTranslator::popValues(lua_State* luaState, in
 
 		for (int i = oldTop + 1; i <= newTop; i++)
 		{
-			returnValues.push_back(getObject(luaState, i));
+			returnValues.push_back(getObject(i));
 		}
 
-		lua_settop(luaState, oldTop);
+		lua_settop(interpreter->L, oldTop);
 		return returnValues;
 	}
 }
 
-std::vector<LuaCObject*> LuaCObjectTranslator::popValues(lua_State* luaState, int oldTop, std::vector<int> popTypes)
+std::vector<LuaCObject*> LuaCObjectTranslator::popValues(int oldTop, std::vector<int> popTypes)
 {
 	std::vector<LuaCObject*> returnValues;
 
-	int newTop = lua_gettop(luaState);
+	int newTop = lua_gettop(interpreter->L);
 	if (oldTop == newTop)
 	{
 		return returnValues;
@@ -75,15 +67,15 @@ std::vector<LuaCObject*> LuaCObjectTranslator::popValues(lua_State* luaState, in
 			iTypes = 0;
 		for (int i = oldTop + 1; i <= newTop; i++)
 		{
-			returnValues.push_back(getAsType(luaState, i, popTypes[iTypes]));
+			returnValues.push_back(getAsType(i, popTypes[iTypes]));
 			iTypes++;
 		}
-		lua_settop(luaState, oldTop);
+		lua_settop(interpreter->L, oldTop);
 		return returnValues;
 	}
 }
 
-LuaCObject* LuaCObjectTranslator::getAsType(lua_State* luaState, int stackPos, int paramType)
+LuaCObject* LuaCObjectTranslator::getAsType(int stackPos, int paramType)
 {
 	return nullptr;
 }

@@ -17,7 +17,7 @@ function require (name)
     return package.loaded[name]
 end
 
-require "TestRequireDep"
+require "MyLua.TestRequire.TestRequireDep"
 
 result = addSelf(10, 20)
 print(result)
