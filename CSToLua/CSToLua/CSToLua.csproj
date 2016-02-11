@@ -43,8 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\BindLua.cs" />
+    <Compile Include="Src\ToLuaExport.cs" />
+    <Compile Include="Src\WrapFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
