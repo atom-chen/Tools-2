@@ -67,7 +67,5 @@ class MList(object):
     def Sort(self, comparer):
         self.m_list.sort(comparer);
 
-        
-    def 
     
     
