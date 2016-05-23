@@ -6,6 +6,117 @@
 class UtilStr(object):
     
     @staticmethod
+    def len(srcStr):
+        return len(srcStr);
+    
+    @staticmethod
+    def max(srcStr):
+        return max(srcStr);
+        
+    @staticmethod
+    def min(srcStr):
+        return min(srcStr);
+    
+    
+    @staticmethod
+    def cmp(stra, strb):
+        #return cmp(stra, strb);
+        pass;
+    
+    @staticmethod
+    def truncate(stra, start, end):
+        return stra[start:end];
+    
+    
+    @staticmethod
+    def isInStr(stra, strb):
+        return stra in strb;
+        
+
+    @staticmethod
+    def isNotInStr(stra, strb):
+        return stra not in strb;
+    
+    
+    # 可指范围查找子串，返回索引值，否则返回-1
+    @staticmethod
+    def find(stra, subStr, start = 0, end = 0):
+        if(end == 0):
+            end = len(stra);
+        return stra.find(subStr, start , end);
+    
+    # 反向查找
+    @staticmethod
+    def rfind(stra, subStr, start = 0, end = 0):
+        if(end == 0):
+            end = len(stra);
+        return stra.index(subStr, start , end);
+    
+
+    # 同find，只是找不到产生ValueError异常
+    @staticmethod
+    def index(stra, subStr, start = 0, end = 0):
+        if(end == 0):
+            end = len(stra);
+        return stra.index(subStr, start , end);
+        
+    # 同上反向查找
+    @staticmethod
+    def rindex(stra, subStr, start = 0, end = 0):
+        if(end == 0):
+            end = len(stra);
+        return stra.rindex(subStr, start , end);
+        
+        
+    # 返回找到子串的个数
+    @staticmethod
+    def count(stra, subStr, start = 0, end = 0):
+        if(end == 0):
+            end = len(stra);
+        return stra.count(subStr, start ,end);
+        
+        
+    @staticmethod
+    def lowercase(stra):    
+        return stra.lowercase();
+    
+    
+    # 首字母大写
+    @staticmethod
+    def capitalize(stra):    
+        return stra.capitalize();
+        
+
+    # 转小写
+    @staticmethod
+    def lower(stra):    
+        return stra.lower();
+        
+    #转大写
+    @staticmethod
+    def upper(stra):    
+        return stra.upper();    
+    
+    
+    #大小写互换
+    @staticmethod
+    def swapcase(stra):    
+        return stra.swapcase();    
+
+    
+    #将string转list，以空格切分
+    @staticmethod
+    def split(stra, splitStr):
+        return stra.split(splitStr);
+
+
+    #将list转string，以空格连接
+    @staticmethod
+    def join(stra, lst):
+        return stra.join(lst, ' ');
+            
+    
+    @staticmethod
     def startswith(srcStr, subStr, beg = 0, end = 0):
         if(beg == None):
             beg = 0;
