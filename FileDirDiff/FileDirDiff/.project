@@ -3,6 +3,7 @@
 	<name>autoupdate</name>
 	<comment></comment>
 	<projects>
+		<project>PyLibs</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
