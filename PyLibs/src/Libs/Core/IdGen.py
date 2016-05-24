@@ -1,17 +1,17 @@
-﻿namespace SDK.Lib
-{
-    public class IdGen
-    {
-        protected uint mCurrentId;
+#-*- encoding=utf-8 -*-
 
-        public IdGen()
-        {
-            mCurrentId = 0;
-        }
+'''
+@brief: IdGen
+'''
+from Libs.Core import GObject
 
-        public uint generateNewId()
-        {
-            return mCurrentId++;
-        }
-    }
-}
+class IdGen(GObject):
+    # Constructor
+    def __init__(self):
+        self.mCurrentId = 0;
+
+
+    def generateNewId(self):
+        self.mCurrentId = self.mCurrentId + 1;
+        return self.mCurrentId;
+

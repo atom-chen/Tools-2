@@ -1,102 +1,63 @@
-﻿using LuaInterface;
-using System;
-using System.Collections.Generic;
+﻿#-*- encoding=utf-8 -*-
 
-/**
- * @brief 定时器管理器
- */
-namespace SDK.Lib
-{
-    public class TimerMgr : DelayHandleMgrBase
-    {
-        protected List<TimerItemBase> m_timerList = new List<TimerItemBase>();     // 当前所有的定时器列表
+'''
+@brief 定时器管理器
+'''
 
-        public TimerMgr()
-        {
-            
-        }
+from Libs.DelayHandle.DelayHandleMgrBase import DelayHandleMgrBase
+from Libs.DataStruct.MList import MList
+from Libs.Tools.UtilApi import UtilApi
 
-        protected override void addObject(IDelayHandleItem delayObject, float priority = 0.0f)
-        {
-            // 检查当前是否已经在队列中
-            if (m_timerList.IndexOf(delayObject as TimerItemBase) == -1)
-            {
-                if (bInDepth())
-                {
-                    base.addObject(delayObject, priority);
-                }
-                else
-                {
-                    m_timerList.Add(delayObject as TimerItemBase);
-                }
-            }
-        }
+class TimerMgr(DelayHandleMgrBase):
 
-        protected override void removeObject(IDelayHandleItem delayObject)
-        {
-            // 检查当前是否在队列中
-            if (m_timerList.IndexOf(delayObject as TimerItemBase) != -1)
-            {
-                (delayObject as TimerItemBase).m_disposed = true;
-                if (bInDepth())
-                {
-                    base.removeObject(delayObject);
-                }
-                else
-                {
-                    foreach (TimerItemBase item in m_timerList)
-                    {
-                        if (UtilApi.isAddressEqual(item, delayObject))
-                        {
-                            m_timerList.Remove(item);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+    def __init__(self):
+        super(TimerMgr, self).__init__();
+        
+        self.mTypeId = "TimerMgr";
+        
+        self.m_timerList = MList();     # 当前所有的定时器列表
 
-        // 从 Lua 中添加定时器，这种定时器尽量整个定时器周期只与 Lua 通信一次
-        public void addTimer(TimerItemBase delayObject, float priority = 0.0f)
-        {
-            this.addObject(delayObject, priority);
-        }
 
-        public void addTimer(LuaTable luaTimer)
-        {
-            LuaTable table = luaTimer["pthis"] as LuaTable;
-            LuaFunction function = luaTimer["func"] as LuaFunction;
+    def addObject(self, delayObject, priority = 0.0):
+        # 检查当前是否已经在队列中
+        if (self.m_timerList.IndexOf(delayObject) == -1):
+            if (self.bInDepth()):
+                super(TimerMgr, self).addObject(delayObject, priority);
+            else:
+                self.m_timerList.Add(delayObject);
 
-            TimerItemBase timer = new TimerItemBase();
-            timer.m_totalTime = Convert.ToSingle(luaTimer["totaltime"]);
-            timer.setLuaFunctor(table, function);
 
-            this.addTimer(timer);
-        }
+    def removeObject(self, delayObject):
+        # 检查当前是否在队列中
+        if (self.m_timerList.IndexOf(delayObject) != -1):
+            delayObject.m_disposed = True;
+            if (self.bInDepth()):
+                super(TimerMgr, self).removeObject(delayObject);
+            else:
+                for item in self.m_timerList.getList():
+                    if (UtilApi.isAddressEqual(item, delayObject)):
+                        self.m_timerList.Remove(item);
+                        break;
 
-        public void removeTimer(TimerItemBase timer)
-        {
-            this.removeObject(timer);
-        }
 
-        public void Advance(float delta)
-        {
-            incDepth();
+    # 从 Lua 中添加定时器，这种定时器尽量整个定时器周期只与 Lua 通信一次
+    def addTimer(self, delayObject, priority = 0.0):
+        self.addObject(delayObject, priority);
 
-            foreach (TimerItemBase timerItem in m_timerList)
-            {
-                if (!timerItem.getClientDispose())
-                {
-                    timerItem.OnTimer(delta);
-                }
 
-                if (timerItem.m_disposed)        // 如果已经结束
-                {
-                    removeObject(timerItem);
-                }
-            }
+    def removeTimer(self, timer):
+        self.removeObject(timer);
 
-            decDepth();
-        }
-    }
-}
+
+    def Advance(self, delta):
+        self.incDepth();
+
+        for timerItem in self.m_timerList.getList():
+            if (not timerItem.getClientDispose()):
+                timerItem.OnTimer(delta);
+
+            if (timerItem.m_disposed):        # 如果已经结束
+                self.removeObject(timerItem);
+
+        self.decDepth();
+

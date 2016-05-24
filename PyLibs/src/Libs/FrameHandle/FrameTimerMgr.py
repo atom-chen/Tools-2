@@ -1,86 +1,62 @@
-﻿using System.Collections.Generic;
+﻿#-*- encoding=utf-8 -*-
 
-/**
- * @brief 定时器管理器
- */
-namespace SDK.Lib
-{
-    public class FrameTimerMgr : DelayHandleMgrBase
-    {
-        protected List<FrameTimerItem> m_timerLists;     // 当前所有的定时器列表
+'''
+* @brief 定时器管理器
+'''
 
-        public FrameTimerMgr()
-        {
-            m_timerLists = new List<FrameTimerItem>();
-        }
+from Libs.DataStruct.MList import MList
+from Libs.Tools.UtilApi import UtilApi
+from Libs.DelayHandle.DelayHandleMgrBase import DelayHandleMgrBase
 
-        override protected void addObject(IDelayHandleItem delayObject, float priority = 0.0f)
-        {
-            // 检查当前是否已经在队列中
-            if (m_timerLists.IndexOf(delayObject as FrameTimerItem) == -1)
-            {
-                if (bInDepth())
-                {
-                    base.addObject(delayObject, priority);
-                }
-                else
-                {
-                    m_timerLists.Add(delayObject as FrameTimerItem);
-                }
-            }
-        }
+class FrameTimerMgr(DelayHandleMgrBase):
 
-        override protected void removeObject(IDelayHandleItem delayObject)
-        {
-            // 检查当前是否在队列中
-            if (m_timerLists.IndexOf(delayObject as FrameTimerItem) != -1)
-            {
-                (delayObject as FrameTimerItem).m_disposed = true;
-                if (bInDepth())
-                {
-                    base.addObject(delayObject);
-                }
-                else
-                {
-                    foreach (FrameTimerItem item in m_timerLists)
-                    {
-                        if (UtilApi.isAddressEqual(item, delayObject))
-                        {
-                            m_timerLists.Remove(item);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+    def __init__(self):
+        super(FrameTimerMgr, self).__init__();
+        
+        self.mmTypeId = "FrameTimerMgr";
+        
+        self.m_timerLists = MList();      # 当前所有的定时器列表
 
-        public void addFrameTimer(FrameTimerItem timer, float priority = 0.0f)
-        {
-            this.addObject(timer, priority);
-        }
 
-        public void removeFrameTimer(FrameTimerItem timer)
-        {
-            this.removeObject(timer);
-        }
+    def addObject(self, delayObject, priority = 0.0):
+        # 检查当前是否已经在队列中
+        if (self.m_timerLists.IndexOf(delayObject) == -1):
+            if (self.bInDepth()):
+                super(FrameTimerMgr, self).addObject(delayObject, priority);
+            else:
+                self.m_timerLists.Add(delayObject);
 
-        public void Advance(float delta)
-        {
-            incDepth();
 
-            foreach (FrameTimerItem timerItem in m_timerLists)
-            {
-                if (!timerItem.getClientDispose())
-                {
-                    timerItem.OnFrameTimer();
-                }
-                if (timerItem.m_disposed)
-                {
-                    removeObject(timerItem);
-                }
-            }
 
-            decDepth();
-        }
-    }
-}
+    def removeObject(self, delayObject):
+        # 检查当前是否在队列中
+        if (self.m_timerLists.IndexOf(delayObject) != -1):
+            delayObject.m_disposed = True;
+            if (self.bInDepth()):
+                super(FrameTimerMgr,self).addObject(delayObject);
+            else:
+                for item in self.m_timerLists.getList():
+                    if (UtilApi.isAddressEqual(item, delayObject)):
+                        self.m_timerLists.Remove(item);
+                        break;
+
+
+    def addFrameTimer(self, timer, priority = 0.0):
+        self.addObject(timer, priority);
+
+
+    def removeFrameTimer(self, timer):
+        self.removeObject(timer);
+
+
+    def Advance(self, delta):
+        self.incDepth();
+
+        for timerItem in self.m_timerLists.getList():
+            if (not timerItem.getClientDispose()):
+                timerItem.OnFrameTimer();
+            if (timerItem.m_disposed):
+                self.removeObject(timerItem);
+
+        self.decDepth();
+

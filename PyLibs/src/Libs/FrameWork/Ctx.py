@@ -1,4 +1,5 @@
-﻿namespace SDK.Lib
+﻿#-*- encoding=utf-8 -*-
+
 {
     /**
      * @brief 全局数据区

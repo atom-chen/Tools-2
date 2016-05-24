@@ -3,9 +3,12 @@
 '''
 @brief: 数组
 '''
-class MList(object):
+from Libs.Core.GObject import GObject
+
+class MList(GObject):
 
     def __init__(self):
+        self.mTypeId = "MDictionary";
         self.m_list = [];
 
 

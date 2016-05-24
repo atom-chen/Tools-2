@@ -1,17 +1,15 @@
-﻿namespace SDK.Lib
-{
-    public class GObject
-    {
-        protected string mTypeId;     // 名字
+﻿#-*- encoding=utf-8 -*-
 
-        public GObject()
-        {
-            mTypeId = "GObject";
-        }
+'''
+@brief: GObject
+'''
+class GObject(object):
+    # Constructor
+    def __init__(self):
+        self.mTypeId = "GObject";      # 名字
 
-        public string getTypeId()
-        {
-            return mTypeId;
-        }
-    }
-}
+
+    # 获取类型 Id
+    def getTypeId(self):
+        return self.mTypeId;
+

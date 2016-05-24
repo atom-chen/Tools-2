@@ -1,16 +1,16 @@
-﻿namespace SDK.Lib
-{
-    public class ResEventDispatch : EventDispatch
-    {
-        public ResEventDispatch()
-        {
+﻿#-*- encoding=utf-8 -*-
 
-        }
+from Libs.EventHandle.EventDispatch import EventDispatch
 
-        override public void dispatchEvent(IDispatchObject dispatchObject)
-        {
-            base.dispatchEvent(dispatchObject);
-            clearEventHandle();
-        }
-    }
-}
+class ResEventDispatch(EventDispatch):
+    def __init__(self):
+        super(ResEventDispatch, self).__init__()
+        
+        self.mTypeId = "ResEventDispatch";
+
+
+    def dispatchEvent(self, dispatchObject):
+        super(ResEventDispatch, self).dispatchEvent(dispatchObject);
+        self.clearEventHandle();
+
+

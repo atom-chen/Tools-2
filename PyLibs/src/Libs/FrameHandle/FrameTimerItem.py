@@ -1,101 +1,61 @@
-﻿using System;
+﻿#-*- encoding=utf-8 -*-
 
-namespace SDK.Lib
-{
-    /**
-     * @brief 定时器，这个是不断增长的
-     */
-    public class FrameTimerItem : IDelayHandleItem
-    {
-        public int m_internal;              // 帧数间隔
-        public int m_totalFrameCount;       // 总共次数
-        public int m_curFrame;              // 当前已经调用的定时器的时间
-        public int m_curLeftFrame;          // 剩余帧数
-        public bool m_bInfineLoop;      // 是否是无限循环
-        public Action<FrameTimerItem> m_timerDisp;       // 定时器分发
-        public bool m_disposed;             // 是否已经被释放
+'''
+@brief 定时器，这个是不断增长的
+'''
 
-        //protected int m_preFrame = 0;
+from Libs.DelayHandle.IDelayHandleItem import IDelayHandleItem
 
-        public FrameTimerItem()
-        {
-            m_internal = 1;
-            m_totalFrameCount = 1;
-            m_curFrame = 0;
-            m_bInfineLoop = false;
-            m_curLeftFrame = 0;
-            m_timerDisp = null;
-            m_disposed = false;
-        }
+class FrameTimerItem(IDelayHandleItem):
+    def __init__(self):
+        super(FrameTimerItem, self).__init__();
+        
+        self.mTypeId = "FrameTimerItem";
+        
+        self.m_internal = 1;            # 帧数间隔
+        self.m_totalFrameCount = 1;     # 当前已经调用的定时器的时间
+        self.m_curFrame = 0;            # 剩余帧数
+        self.m_bInfineLoop = False;     # 是否是无限循环
+        self.m_curLeftFrame = 0;        
+        self.m_timerDisp = None;        # 定时器分发
+        self.m_disposed = False;        # 是否已经被释放
 
-        public virtual void OnFrameTimer()
-        {
-            if (m_disposed)
-            {
-                return;
-            }
 
-            ++m_curFrame;
-            ++m_curLeftFrame;
+    def OnFrameTimer(self):
+        if (self.m_disposed):
+            return;
 
-            //if (m_preFrame == m_curFrame)
-            //{
-            //    Ctx.m_instance.m_logSys.log("aaaaaaaafadfsasdf");
-            //}
+        self.m_curFrame = self.m_curFrame + 1;
+        self.m_curLeftFrame = self.m_curLeftFrame + 1;
 
-            //m_curFrame = m_preFrame;
+        if (self.m_bInfineLoop):
+            if (self.m_curLeftFrame == self.m_internal):
+                self.m_curLeftFrame = 0;
 
-            if (m_bInfineLoop)
-            {
-                if (m_curLeftFrame == m_internal)
-                {
-                    m_curLeftFrame = 0;
+                if (self.m_timerDisp != None):
+                    self.m_timerDisp(self);
+        else:
+            if (self.m_curFrame == self.m_totalFrameCount):
+                self.m_disposed = True;
+                if (self.m_timerDisp != None):
+                    self.m_timerDisp(self);
+            else:
+                if (self.m_curLeftFrame == self.m_internal):
+                    self.m_curLeftFrame = 0;
+                    if (self.m_timerDisp != None):
+                        self.m_timerDisp(self);
 
-                    if (m_timerDisp != null)
-                    {
-                        m_timerDisp(this);
-                    }
-                }
-            }
-            else
-            {
-                if (m_curFrame == m_totalFrameCount)
-                {
-                    m_disposed = true;
-                    if (m_timerDisp != null)
-                    {
-                        m_timerDisp(this);
-                    }
-                }
-                else
-                {
-                    if (m_curLeftFrame == m_internal)
-                    {
-                        m_curLeftFrame = 0;
-                        if (m_timerDisp != null)
-                        {
-                            m_timerDisp(this);
-                        }
-                    }
-                }
-            }
-        }
 
-        public virtual void reset()
-        {
-            m_curFrame = 0;
-            m_curLeftFrame = 0;
-            m_disposed = false;
-        }
+    def reset(self):
+        self.m_curFrame = 0;
+        self.m_curLeftFrame = 0;
+        self.m_disposed = False;
 
-        public void setClientDispose()
-        {
 
-        }
+    def setClientDispose(self):
+        pass;
 
-        public bool getClientDispose()
-        {
-            return false;
-        }
-    }
-}
+
+    def getClientDispose(self):
+        return False;
+

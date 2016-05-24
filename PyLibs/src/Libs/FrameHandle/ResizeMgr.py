@@ -1,78 +1,57 @@
-﻿namespace SDK.Lib
-{
-    public class ResizeMgr : DelayHandleMgrBase, ITickedObject
-    {
-        protected int m_preWidth;       // 之前宽度
-        protected int m_preHeight;
-        protected int m_curWidth;       // 现在宽度
-        protected int m_curHeight;
+﻿#-*- encoding=utf-8 -*-
 
-        protected MList<IResizeObject> m_ResizeLst;
+from Libs.DataStruct.MList import MList
+from Libs.DelayHandle.DelayHandleMgrBase import DelayHandleMgrBase
 
-        public ResizeMgr()
-        {
-            m_ResizeLst = new MList<IResizeObject>();
-        }
+class ResizeMgr(DelayHandleMgrBase):
 
-        override protected void addObject(IDelayHandleItem delayObject, float priority = 0.0f)
-        {
-            if(this.bInDepth())
-            {
-                base.addObject(delayObject, priority);
-            }
-            else
-            {
-                this.addResizeObject(delayObject as IResizeObject, priority);
-            }
-        }
+    def __init__(self):
+        super(ResizeMgr, self).__init__();
+        
+        self.mTypeId = "ResizeMgr";
+        
+        self.m_preWidth = 0;
+        self.m_preHeight = 0;
+        self.m_curWidth = 0;
+        self.m_curHeight = 0;
+        self.m_ResizeLst = MList();
 
-        override protected void removeObject(IDelayHandleItem delayObject)
-        {
-            if(this.bInDepth())
-            {
-                base.removeObject(delayObject);
-            }
-            else
-            {
-                this.removeResizeObject(delayObject as IResizeObject);
-            }
-        }
 
-        public void addResizeObject(IResizeObject obj, float priority = 0)
-        {
-            if (m_ResizeLst.IndexOf(obj) == -1)
-            {
-                m_ResizeLst.Add(obj);
-            }
-        }
+    def addObject(self, delayObject, priority = 0.0):
+        if(self.bInDepth()):
+            super(ResizeMgr, self).addObject(delayObject, priority);
+        else:
+            self.addResizeObject(delayObject, priority);
 
-        public void removeResizeObject(IResizeObject obj)
-        {
-            if (m_ResizeLst.IndexOf(obj) != -1)
-            {
-                m_ResizeLst.Remove(obj);
-            }
-        }
 
-        public void onTick(float delta)
-        {
-            m_preWidth = m_curWidth;
-            m_curWidth = UtilApi.getScreenWidth();
-            m_preHeight = m_curHeight;
-            m_curHeight = UtilApi.getScteedHeight();
+    def removeObject(self, delayObject):
+        if(self.bInDepth()):
+            super().removeObject(delayObject);
+        else:
+            self.removeResizeObject(delayObject);
 
-            if(m_preWidth != m_curWidth || m_preHeight != m_curHeight)
-            {
-                this.onResize(m_curWidth, m_curHeight);
-            }
-        }
+    def addResizeObject(self, obj, priority = 0):
+        if (self.m_ResizeLst.IndexOf(obj) == -1):
+            self.m_ResizeLst.Add(obj);
 
-        public void onResize(int viewWidth, int viewHeight)
-        {
-            foreach (IResizeObject resizeObj in m_ResizeLst.list())
-            {
-                resizeObj.onResize(viewWidth, viewHeight);
-            }
-        }
-    }
-}
+
+    def removeResizeObject(self, obj):
+        if (self.m_ResizeLst.IndexOf(obj) != -1):
+            self.m_ResizeLst.Remove(obj);
+
+
+    def onTick(self, delta):
+        self.m_preWidth = self.m_curWidth;
+        self.m_curWidth = 0;
+        self.m_preHeight = self.m_curHeight;
+        self.m_curHeight = 0;
+
+        if(self.m_preWidth != self.m_curWidth or self.m_preHeight != self.m_curHeight):
+            self.onResize(self.m_curWidth, self.m_curHeight);
+
+
+    def onResize(self, viewWidth, viewHeight):
+        for resizeObj in self.m_ResizeLst.getList():
+            resizeObj.onResize(viewWidth, viewHeight);
+
+

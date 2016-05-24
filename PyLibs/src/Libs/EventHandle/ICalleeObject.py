@@ -1,10 +1,17 @@
-﻿namespace SDK.Lib
-{
-    /**
-     * @brief 可被调用的函数对象
-     */
-    public interface ICalleeObject
-    {
-        void call(IDispatchObject dispObj);
-    }
-}
+﻿#-*- encoding=utf-8 -*-
+
+'''
+@brief 可被调用的函数对象
+'''
+
+from Libs.Core.GObject import GObject
+
+class ICalleeObject(GObject):
+    
+    def __init__(self):
+        super(ICalleeObject, self).__init__();
+    
+    def call(self, dispObj):
+        pass;
+    
+    

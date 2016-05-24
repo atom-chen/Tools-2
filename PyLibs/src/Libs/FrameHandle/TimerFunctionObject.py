@@ -1,113 +1,37 @@
-using LuaInterface;
-using System;
+#-*- encoding=utf-8 -*-
 
-namespace SDK.Lib
-{
-    public class TimerFunctionObject
-    {
-        public Action<TimerItemBase> m_handle;
-        protected LuaCSDispatchFunctionObject m_luaCSDispatchFunctionObject;
+from Libs.Core.GObject import GObject
+from Libs.Tools.UtilApi import UtilApi
 
-        public TimerFunctionObject()
-        {
-            m_handle = null;
-        }
+class TimerFunctionObject(GObject):
 
-        public LuaCSDispatchFunctionObject luaCSDispatchFunctionObject
-        {
-            get
-            {
-                return m_luaCSDispatchFunctionObject;
-            }
-            set
-            {
-                m_luaCSDispatchFunctionObject = value;
-            }
-        }
+    def __init__(self):
+        super(TimerFunctionObject, self).__init__();
+        
+        self.mTypeId = "TimerFunctionObject";
+        
+        self.m_handle = None;
 
-        public void setFuncObject(Action<TimerItemBase> handle)
-        {
-            m_handle = handle;
-        }
 
-        public void setLuaTable(LuaTable luaTable)
-        {
-            if(m_luaCSDispatchFunctionObject == null)
-            {
-                m_luaCSDispatchFunctionObject = new LuaCSDispatchFunctionObject();
-            }
+    def setFuncObject(self, handle):    
+        self.m_handle = handle;
 
-            m_luaCSDispatchFunctionObject.setTable(luaTable);
-        }
 
-        public void setLuaFunction(LuaFunction function)
-        {
-            if(m_luaCSDispatchFunctionObject == null)
-            {
-                m_luaCSDispatchFunctionObject = new LuaCSDispatchFunctionObject();
-            }
+    def isValid(self):
+        return self.m_handle != None;
 
-            m_luaCSDispatchFunctionObject.setFunction(function);
-        }
 
-        public void setLuaFunctor(LuaTable luaTable, LuaFunction function)
-        {
-            if(m_luaCSDispatchFunctionObject == null)
-            {
-                m_luaCSDispatchFunctionObject = new LuaCSDispatchFunctionObject();
-            }
+    def isEqual(self, handle):
+        ret = False;
+        if(handle != None):
+            ret = UtilApi.isAddressEqual(self.m_handle, handle);
+            if(not ret):
+                return ret;
+        
+        return ret;
 
-            m_luaCSDispatchFunctionObject.setTable(luaTable);
-            m_luaCSDispatchFunctionObject.setFunction(function);
-        }
 
-        public bool isValid()
-        {
-            return m_handle != null || (m_luaCSDispatchFunctionObject != null && m_luaCSDispatchFunctionObject.isValid());
-        }
+    def call(self, dispObj):
+        if (None != self.m_handle):
+            self.m_handle(dispObj);
 
-        public bool isEqual(MAction<IDispatchObject> handle, LuaTable luaTable = null, LuaFunction luaFunction = null)
-        {
-            bool ret = false;
-            if(handle != null)
-            {
-                ret = UtilApi.isAddressEqual(this.m_handle, handle);
-                if(!ret)
-                {
-                    return ret;
-                }
-            }
-            if(luaTable != null)
-            {
-                ret = m_luaCSDispatchFunctionObject.isTableEqual(luaTable);
-                if(!ret)
-                {
-                    return ret;
-                }
-            }
-            if(luaTable != null)
-            {
-                ret = m_luaCSDispatchFunctionObject.isFunctionEqual(luaFunction);
-                if (!ret)
-                {
-                    return ret;
-                }
-            }
-
-            return ret;
-        }
-
-        public void call(TimerItemBase dispObj)
-        {
-            if (null != m_handle)
-            {
-                m_handle(dispObj);
-            }
-
-            if(m_luaCSDispatchFunctionObject != null)
-            {
-                m_luaCSDispatchFunctionObject.call(dispObj);
-            }
-        }
-    }
-}

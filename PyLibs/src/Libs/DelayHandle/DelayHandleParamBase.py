@@ -1,7 +1,9 @@
-﻿namespace SDK.Lib
-{
-    public class DelayHandleParamBase
-    {
+﻿#-*- encoding=utf-8 -*-
 
-    }
-}
+from Libs.Core.GObject import GObject
+
+class DelayHandleParamBase(GObject):
+
+    def __init__(self):
+        self.mTypeId = "DelayHandleParamBase";
+

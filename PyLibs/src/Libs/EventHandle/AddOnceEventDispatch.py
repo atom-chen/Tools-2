@@ -1,26 +1,21 @@
-﻿using LuaInterface;
-using System;
+﻿#-*- encoding=utf-8 -*-
 
-namespace SDK.Lib
-{
-    /**
-     * @brief 事件回调函数只能添加一次
-     */
-    public class AddOnceEventDispatch : EventDispatch
-    {
-        public AddOnceEventDispatch(int eventId_ = 0)
-            : base(eventId_)
-        {
+'''
+@brief 事件回调函数只能添加一次
+'''
 
-        }
+from Libs.EventHandle.EventDispatch import EventDispatch
 
-        override public void addEventHandle(ICalleeObject pThis, MAction<IDispatchObject> handle, LuaTable luaTable = null, LuaFunction luaFunction = null)
-        {
-            // 这个判断说明相同的函数只能加一次，但是如果不同资源使用相同的回调函数就会有问题，但是这个判断可以保证只添加一次函数，值得，因此不同资源需要不同回调函数
-            if (!existEventHandle(pThis, handle, luaTable, luaFunction))
-            {
-                base.addEventHandle(pThis, handle, luaTable, luaFunction);
-            }
-        }
-    }
-}
+class AddOnceEventDispatch(EventDispatch):
+    
+    def __init__(self, eventId_ = 0):
+        super(AddOnceEventDispatch, self).__init__(eventId_);
+        
+        self.mTypeId = "AddOnceEventDispatch";
+
+    def addEventHandle(self, pThis, handle):
+        # 这个判断说明相同的函数只能加一次，但是如果不同资源使用相同的回调函数就会有问题，但是这个判断可以保证只添加一次函数，值得，因此不同资源需要不同回调函数
+        if (not self.existEventHandle(pThis, handle)):
+            super(AddOnceEventDispatch, self).addEventHandle(pThis, handle);
+
+

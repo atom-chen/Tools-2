@@ -1,11 +1,15 @@
 #-*- encoding=utf-8 -*-
 
 '''
-@brief: 字典
+@brief: MDictionary
 '''
-class MDictionary(object):
+
+from Libs.Core.GObject import GObject
+
+class MDictionary(GObject):
     
-    def __init__(self): 
+    def __init__(self):
+        self.mTypeId = "MDictionary"; 
         self.m_data = {};
 
     def getData(self):

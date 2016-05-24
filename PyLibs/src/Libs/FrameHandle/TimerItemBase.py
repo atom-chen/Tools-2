@@ -1,211 +1,148 @@
-﻿using LuaInterface;
-using System;
+﻿#-*- encoding=utf-8 -*-
 
-namespace SDK.Lib
-{
-    /**
-     * @brief 定时器，这个是不断增长的
-     */
-    public class TimerItemBase : IDelayHandleItem, IDispatchObject
-    {
-        public float m_internal;        // 定时器间隔
-        public float m_totalTime;       // 总共定时器时间
-        public float m_curRunTime;      // 当前定时器运行的时间
-        public float m_curCallTime;     // 当前定时器已经调用的时间
-        public bool m_bInfineLoop;      // 是否是无限循环
-        public float m_intervalLeftTime;     // 定时器调用间隔剩余时间
-        public TimerFunctionObject m_timerDisp;       // 定时器分发
-        public bool m_disposed;             // 是否已经被释放
-        public bool m_bContinuous;          // 是否是连续的定时器
+'''
+@brief 定时器，这个是不断增长的
+'''
 
-        public TimerItemBase()
-        {
-            m_internal = 1;
-            m_totalTime = 1;
-            m_curRunTime = 0;
-            m_curCallTime = 0;
-            m_bInfineLoop = false;
-            m_intervalLeftTime = 0;
-            m_timerDisp = new TimerFunctionObject();
-            m_disposed = false;
-            m_bContinuous = false;
-        }
+from Libs.Core.GObject import GObject
+from Libs.FrameHandle.TimerFunctionObject import TimerFunctionObject
 
-        public void setFuncObject(Action<TimerItemBase> handle)
-        {
-            m_timerDisp.setFuncObject(handle);
-        }
+class TimerItemBase(GObject):
 
-        virtual public void setTotalTime(float value)
-        {
-            this.m_totalTime = value;
-        }
+    def __init__(self):
+        super(TimerItemBase, self).__init__();
+        
+        self.mTypeId = "TimerItemBase";
+        
+        self.m_internal = 1;             # 定时器间隔
+        self.m_totalTime = 1;            # 总共定时器时间
+        self.m_curRunTime = 0;           # 当前定时器运行的时间
+        self.m_curCallTime = 0;          # 当前定时器已经调用的时间
+        self.m_bInfineLoop = False;      # 是否是无限循环
+        self.m_intervalLeftTime = 0;     # 定时器调用间隔剩余时间
+        self.m_timerDisp = TimerFunctionObject();    # 定时器分发
+        self.m_disposed = False;         # 是否已经被释放
+        self.m_bContinuous = False;      # 是否是连续的定时器
 
-        virtual public float getRunTime()
-        {
-            return this.m_curRunTime;
-        }
 
-        virtual public float getCallTime()
-        {
-            return this.m_curCallTime;
-        }
+    def setFuncObject(self, handle):
+        self.m_timerDisp.setFuncObject(handle);
 
-        virtual public float getLeftRunTime()
-        {
-            return this.m_totalTime - this.m_curRunTime;
-        }
 
-        virtual public float getLeftCallTime()
-        {
-            return this.m_totalTime - this.m_curCallTime;
-        }
+    def setTotalTime(self, value):
+        self.m_totalTime = value;
 
-        // 在调用回调函数之前处理
-        protected virtual void onPreCallBack()
-        {
 
-        }
+    def getRunTime(self):
+        return self.m_curRunTime;
 
-        public virtual void OnTimer(float delta)
-        {
-            if (m_disposed)
-            {
-                return;
-            }
 
-            m_curRunTime += delta;
-            if (m_curRunTime > m_totalTime)
-            {
-                m_curRunTime = m_totalTime;
-            }
-            m_intervalLeftTime += delta;
+    def getCallTime(self):
+        return self.m_curCallTime;
 
-            if (m_bInfineLoop)
-            {
-                checkAndDisp();
-            }
-            else
-            {
-                if (m_curRunTime >= m_totalTime)
-                {
-                    disposeAndDisp();
-                }
-                else
-                {
-                    checkAndDisp();
-                }
-            }
-        }
 
-        public virtual void disposeAndDisp()
-        {
-            if (this.m_bContinuous)
-            {
-                this.continueDisposeAndDisp();
-            }
-            else
-            {
-                this.discontinueDisposeAndDisp();
-            }
-        }
+    def getLeftRunTime(self):
+        return self.m_totalTime - self.m_curRunTime;
 
-        protected void continueDisposeAndDisp()
-        {
-            this.m_disposed = true;
 
-            while (this.m_intervalLeftTime >= this.m_internal && this.m_curCallTime < this.m_totalTime)
-            {
-                this.m_curCallTime = this.m_curCallTime + this.m_internal;
-                this.m_intervalLeftTime = this.m_intervalLeftTime - this.m_internal;
-                this.onPreCallBack();
+    def getLeftCallTime(self):
+        return self.m_totalTime - self.m_curCallTime;
 
-                if (this.m_timerDisp.isValid())
-                {
-                    this.m_timerDisp.call(this);
-                }
-            }
-        }
 
-        protected void discontinueDisposeAndDisp()
-        {
-            m_disposed = true;
-            m_curCallTime = m_totalTime;
-            this.onPreCallBack();
+    # 在调用回调函数之前处理
+    def onPreCallBack(self):
+        pass;
 
-            if (m_timerDisp.isValid())
-            {
-                m_timerDisp.call(this);
-            }
-        }
 
-        public virtual void checkAndDisp()
-        {
-            if(m_bContinuous)
-            {
-                continueCheckAndDisp();
-            }
-            else
-            {
-                discontinueCheckAndDisp();
-            }
-        }
+    def OnTimer(self, delta):
+        if (self.m_disposed):
+            return;
 
-        // 连续的定时器
-        protected void continueCheckAndDisp()
-        {
-            while (m_intervalLeftTime >= m_internal)
-            {
-                // 这个地方 m_curCallTime 肯定会小于 m_totalTime，因为在调用这个函数的外部已经进行了判断
-                m_curCallTime = m_curCallTime + m_internal;
-                m_intervalLeftTime = m_intervalLeftTime - m_internal;
-                this.onPreCallBack();
+        self.m_curRunTime += delta;
+        if (self.m_curRunTime > self.m_totalTime):
+            self.m_curRunTime = self.m_totalTime;
 
-                if (m_timerDisp.isValid())
-                {
-                    m_timerDisp.call(this);
-                }
-            }
-        }
+        self.m_intervalLeftTime += delta;
 
-        // 不连续的定时器
-        protected void discontinueCheckAndDisp()
-        {
-            if (m_intervalLeftTime >= m_internal)
-            {
-                // 这个地方 m_curCallTime 肯定会小于 m_totalTime，因为在调用这个函数的外部已经进行了判断
-                m_curCallTime = m_curCallTime + (((int)(m_intervalLeftTime / m_internal)) * m_internal);
-                m_intervalLeftTime = m_intervalLeftTime % m_internal;   // 只保留余数
-                this.onPreCallBack();
+        if (self.m_bInfineLoop):
+            self.checkAndDisp();
+        else:
+            if (self.m_curRunTime >= self.m_totalTime):
+                self.disposeAndDisp();
+            else:
+                self.checkAndDisp();
 
-                if (m_timerDisp.isValid())
-                {
-                    m_timerDisp.call(this);
-                }
-            }
-        }
 
-        public virtual void reset()
-        {
-            m_curRunTime = 0;
-            m_curCallTime = 0;
-            m_intervalLeftTime = 0;
-            m_disposed = false;
-        }
+    def disposeAndDisp(self):
+        if (self.m_bContinuous):
+            self.continueDisposeAndDisp();
+        else:
+            self.discontinueDisposeAndDisp();
 
-        public void setClientDispose()
-        {
 
-        }
+    def continueDisposeAndDisp(self):
+        self.m_disposed = True;
 
-        public bool getClientDispose()
-        {
-            return false;
-        }
+        while (self.m_intervalLeftTime >= self.m_internal and self.m_curCallTime < self.m_totalTime):
+            self.m_curCallTime = self.m_curCallTime + self.m_internal;
+            self.m_intervalLeftTime = self.m_intervalLeftTime - self.m_internal;
+            self.onPreCallBack();
 
-        public void setLuaFunctor(LuaTable luaTable, LuaFunction function)
-        {
-            m_timerDisp.setLuaFunctor(luaTable, function);
-        }
-    }
-}
+            if (self.m_timerDisp.isValid()):
+                self.m_timerDisp.call(self);
+
+
+    def discontinueDisposeAndDisp(self):
+        self.m_disposed = True;
+        self.m_curCallTime = self.m_totalTime;
+        self.onPreCallBack();
+
+        if (self.m_timerDisp.isValid()):
+            self.m_timerDisp.call(self);
+
+
+    def checkAndDisp(self):
+        if(self.m_bContinuous):
+            self.continueCheckAndDisp();
+        else:
+            self.discontinueCheckAndDisp();
+
+    # 连续的定时器
+    def continueCheckAndDisp(self):
+        while (self.m_intervalLeftTime >= self.m_internal):
+            # 这个地方 m_curCallTime 肯定会小于 m_totalTime，因为在调用这个函数的外部已经进行了判断
+            self.m_curCallTime = self.m_curCallTime + self.m_internal;
+            self.m_intervalLeftTime = self.m_intervalLeftTime - self.m_internal;
+            self.onPreCallBack();
+
+            if (self.m_timerDisp.isValid()):
+                self.m_timerDisp.call(self);
+
+
+
+    # 不连续的定时器
+    def discontinueCheckAndDisp(self):
+        if (self.m_intervalLeftTime >= self.m_internal):
+            # 这个地方 m_curCallTime 肯定会小于 m_totalTime，因为在调用这个函数的外部已经进行了判断
+            self.m_curCallTime = self.m_curCallTime + (((int)(self.m_intervalLeftTime / self.m_internal)) * self.m_internal);
+            self.m_intervalLeftTime = self.m_intervalLeftTime % self.m_internal;   # 只保留余数
+            self.onPreCallBack();
+
+            if (self.m_timerDisp.isValid()):
+                self.m_timerDisp.call(self);
+
+
+    def reset(self):
+        self.m_curRunTime = 0;
+        self.m_curCallTime = 0;
+        self.m_intervalLeftTime = 0;
+        self.m_disposed = False;
+
+
+    def setClientDispose(self):
+        pass;
+
+
+    def getClientDispose(self):
+        return False;
+

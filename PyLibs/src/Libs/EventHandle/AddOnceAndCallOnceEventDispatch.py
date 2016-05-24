@@ -1,22 +1,18 @@
-﻿using LuaInterface;
-using System;
+﻿#-*- encoding=utf-8 -*-
 
-namespace SDK.Lib
-{
-    public class AddOnceAndCallOnceEventDispatch : EventDispatch
-    {
-        override public void addEventHandle(ICalleeObject pThis, MAction<IDispatchObject> handle, LuaTable luaTable = null, LuaFunction luaFunction = null)
-        {
-            if (!existEventHandle(pThis, handle, luaTable, luaFunction))
-            {
-                base.addEventHandle(pThis, handle, luaTable, luaFunction);
-            }
-        }
+from Libs.EventHandle.EventDispatch import EventDispatch
 
-        override public void dispatchEvent(IDispatchObject dispatchObject)
-        {
-            base.dispatchEvent(dispatchObject);
-            clearEventHandle();
-        }
-    }
-}
+class AddOnceAndCallOnceEventDispatch(EventDispatch):
+    def __init__(self):
+        super(AddOnceAndCallOnceEventDispatch, self).__init__();
+        self.mTypeId = "AddOnceAndCallOnceEventDispatch";
+        
+    def addEventHandle(self, pThis, handle):
+        if (not self.existEventHandle(pThis, handle)):
+            super(AddOnceAndCallOnceEventDispatch, self).addEventHandle(pThis, handle);
+
+
+    def dispatchEvent(self, dispatchObject):
+        super(AddOnceAndCallOnceEventDispatch, self).dispatchEvent(dispatchObject);
+        self.clearEventHandle();
+

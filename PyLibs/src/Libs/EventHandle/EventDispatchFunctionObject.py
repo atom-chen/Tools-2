@@ -1,140 +1,58 @@
-﻿using LuaInterface;
-using System;
+﻿#-*- encoding=utf-8 -*-
 
-namespace SDK.Lib
-{
-    public class EventDispatchFunctionObject : IDelayHandleItem
-    {
-        public bool m_bClientDispose;       // 是否释放了资源
-        public ICalleeObject mThis;
-        public MAction<IDispatchObject> m_handle;
+from Libs.DelayHandle.IDelayHandleItem import IDelayHandleItem
+from Libs.Tools.UtilApi import UtilApi
 
-        protected LuaCSDispatchFunctionObject m_luaCSDispatchFunctionObject;
+class EventDispatchFunctionObject(IDelayHandleItem):
+    
+    def __init__(self):
+        super(EventDispatchFunctionObject, self).__init__();
+        
+        self.mTypeId = "EventDispatchFunctionObject";
+        
+        self.m_bClientDispose = False;      # 是否释放了资源
+        self.mThis = None;
+        self.m_handle = None;
 
-        public EventDispatchFunctionObject()
-        {
-            m_bClientDispose = false;
-        }
 
-        public LuaCSDispatchFunctionObject luaCSDispatchFunctionObject
-        {
-            get
-            {
-                return m_luaCSDispatchFunctionObject;
-            }
-            set
-            {
-                m_luaCSDispatchFunctionObject = value;
-            }
-        }
+    def setFuncObject(self, pThis, func):
+        self.mThis = pThis;
+        self.m_handle = func;
 
-        public void setFuncObject(ICalleeObject pThis, MAction<IDispatchObject> func)
-        {
-            this.mThis = pThis;
-            this.m_handle = func;
-        }
 
-        public void setLuaTable(LuaTable luaTable)
-        {
-            if(m_luaCSDispatchFunctionObject == null)
-            {
-                m_luaCSDispatchFunctionObject = new LuaCSDispatchFunctionObject();
-            }
+    def isValid(self):
+        return self.mThis != None or self.m_handle != None;
 
-            m_luaCSDispatchFunctionObject.setTable(luaTable);
-        }
 
-        public void setLuaFunction(LuaFunction function)
-        {
-            if(m_luaCSDispatchFunctionObject == null)
-            {
-                m_luaCSDispatchFunctionObject = new LuaCSDispatchFunctionObject();
-            }
+    def isEqual(self, pThis, handle):
+        ret = False;
+        if(pThis != None):
+            ret = UtilApi.isAddressEqual(self.mThis, pThis);
+            if (not ret):
+                return ret;
 
-            m_luaCSDispatchFunctionObject.setFunction(function);
-        }
+        if (handle != None):
+            ret = UtilApi.isAddressEqual(self.m_handle, handle);
+            if(not ret):
+                return ret;
 
-        public void setLuaFunctor(LuaTable luaTable, LuaFunction function)
-        {
-            if(m_luaCSDispatchFunctionObject == null)
-            {
-                m_luaCSDispatchFunctionObject = new LuaCSDispatchFunctionObject();
-            }
+        return ret;
 
-            m_luaCSDispatchFunctionObject.setTable(luaTable);
-            m_luaCSDispatchFunctionObject.setFunction(function);
-        }
 
-        public bool isValid()
-        {
-            return mThis != null || m_handle != null || (m_luaCSDispatchFunctionObject != null && m_luaCSDispatchFunctionObject.isValid());
-        }
+    def call(self, dispObj):
+        #if(self.mThis != None)
+        #{
+        #    self.mThis.call(dispObj);
+        #}
 
-        public bool isEqual(ICalleeObject pThis, MAction<IDispatchObject> handle, LuaTable luaTable = null, LuaFunction luaFunction = null)
-        {
-            bool ret = false;
-            if(pThis != null)
-            {
-                ret = UtilApi.isAddressEqual(this.mThis, pThis);
-                if (!ret)
-                {
-                    return ret;
-                }
-            }
-            if (handle != null)
-            {
-                ret = UtilApi.isAddressEqual(this.m_handle, handle);
-                if(!ret)
-                {
-                    return ret;
-                }
-            }
-            if(luaTable != null)
-            {
-                ret = m_luaCSDispatchFunctionObject.isTableEqual(luaTable);
-                if(!ret)
-                {
-                    return ret;
-                }
-            }
-            if (luaFunction != null)
-            {
-                ret = m_luaCSDispatchFunctionObject.isFunctionEqual(luaFunction);
-                if(!ret)
-                {
-                    return ret;
-                }
-            }
+        if(None != self.m_handle):
+            self.m_handle(dispObj);
 
-            return ret;
-        }
 
-        public void call(IDispatchObject dispObj)
-        {
-            //if(mThis != null)
-            //{
-            //    mThis.call(dispObj);
-            //}
+    def setClientDispose(self):
+        self.m_bClientDispose = True;
 
-            if(null != m_handle)
-            {
-                m_handle(dispObj);
-            }
 
-            if(m_luaCSDispatchFunctionObject != null)
-            {
-                m_luaCSDispatchFunctionObject.call(dispObj);
-            }
-        }
+    def getClientDispose(self):
+        return self.m_bClientDispose;
 
-        public void setClientDispose()
-        {
-            m_bClientDispose = true;
-        }
-
-        public bool getClientDispose()
-        {
-            return m_bClientDispose;
-        }
-    }
-}
