@@ -8,7 +8,7 @@ from Libs.Core.GObject import GObject
 class MList(GObject):
 
     def __init__(self):
-        self.mTypeId = "MDictionary";
+        self.mTypeId = "MList";
         self.m_list = [];
 
 

@@ -12,6 +12,10 @@ from Libs.EventHandle.EventDispatchFunctionObject import EventDispatchFunctionOb
 class EventDispatch(DelayHandleMgrBase):
 
     def __init__(self, eventId_ = 0):
+        super(EventDispatch, self).__init__();
+        
+        self.mTypeId = "EventDispatch";
+        
         self.m_eventId = eventId_;
         self.m_handleList = MList();
 

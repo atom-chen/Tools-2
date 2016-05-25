@@ -14,6 +14,8 @@ from Libs.DelayHandle.DelayAddParam import DelayAddParam
 class DelayHandleMgrBase(GObject):
 
     def __init__(self):
+        super(DelayHandleMgrBase, self).__init__();
+        
         self.mTypeId = "DelayHandleParamBase";
 
         self.m_deferredAddQueue = MList();

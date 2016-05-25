@@ -10,6 +10,9 @@ class DaoJiShiTimer(TimerItemBase):
     
     def __init__(self):
         super(DaoJiShiTimer, self).__init__();
+        
+        self.mTypeId = "DaoJiShiTimer";
+
     
     def setTotalTime(self, value):
         super(DaoJiShiTimer, self).setTotalTime(value);

@@ -5,6 +5,7 @@ from Libs.EventHandle.EventDispatch import EventDispatch
 class AddOnceAndCallOnceEventDispatch(EventDispatch):
     def __init__(self):
         super(AddOnceAndCallOnceEventDispatch, self).__init__();
+        
         self.mTypeId = "AddOnceAndCallOnceEventDispatch";
         
     def addEventHandle(self, pThis, handle):

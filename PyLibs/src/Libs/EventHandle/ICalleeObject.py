@@ -10,6 +10,9 @@ class ICalleeObject(GObject):
     
     def __init__(self):
         super(ICalleeObject, self).__init__();
+        
+        self.mTypeId = "ICalleeObject";
+
     
     def call(self, dispObj):
         pass;
