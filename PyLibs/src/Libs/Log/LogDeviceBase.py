@@ -1,20 +1,29 @@
-﻿namespace SDK.Lib
-{
-    /**
-     * @brief 日志设备
-     */
-    public abstract class LogDeviceBase
-    {
-        public virtual void initDevice()
-        {
+﻿﻿#-*- encoding=utf-8 -*-
+
+'''
+@brief 日志设备
+'''
+
+from Libs.Core.GObject import GObject
+from Libs.Log.LogColor import LogColor
+
+class LogDeviceBase(GObject):
     
-        }
+    def __init__(self):
+        super(LogDeviceBase).__init__();
+        
+        self.mTypeId = "LogDeviceBase";
 
-        public virtual void closeDevice()
-        {
+    
+    def initDevice(self):
+        pass;
 
-        }
 
-        abstract public void logout(string message, LogColor type = LogColor.LOG);
-    }
-}
+    def closeDevice(self):
+        pass;
+
+
+    def logout(self, message, type = LogColor.LOG):
+        pass;
+
+

@@ -1,110 +1,91 @@
-﻿using System;
-using System.Threading;
+﻿﻿#-*- encoding=utf-8 -*-
 
-namespace SDK.Lib
-{
-    /**
-     *@brief 基本的线程
-     */
-    public class MThread
-    {
-        protected static int m_sMainThreadID;           // 主线程 id
-        protected int m_curThreadID;                    // 当前线程的 id
+from Libs.Core.GObject import GObject
+import threading
 
-        // 数据区域
-        protected Thread m_thread;
-        protected Action<object> m_cb;
-        protected object m_param;           // 参数数据
-        protected bool m_ExitFlag;           // 退出标志
+'''
+@brief 基本的线程
+'''
 
-        public MThread(Action<object> func, object param)
-        {
-            m_cb = func;
-            m_param = param;
-        }
+#class MThread(Thread):
+class MThread(GObject):
+    m_sMainThreadID = 0;           # 主线程 id
+    
+    def __init__(self, func, param, name):
+        super(MThread, self).__init__();
+        
+        self.mTypeId = "MThread";
+        
+        self.mThread = None;
+        self.m_curThreadID = 0;     # 当前线程的 id
+        self.m_cb = func;
+        self.m_param = param;
+        self.mName = name;
+        self.m_ExitFlag = False;
 
-        public bool ExitFlag
-        {
-            set
-            {
-                m_ExitFlag = value;
-            }
-        }
 
-        public Action<object> cb
-        {
-            set
-            {
-                m_cb = value;
-            }
-        }
+    def setExitFlag(self, value):
+        self.m_ExitFlag = value;
 
-        public object param
-        {
-            set
-            {
-                m_param = value;
-            }
-        }
 
-        // 函数区域
-        /**
-         *@brief 开启一个线程
-         */
-        public void start()
-        {
-            m_thread = new Thread(new ThreadStart(threadHandle));
-            m_thread.Priority = ThreadPriority.Lowest;
-            //m_thread.IsBackground = true;             // 继续作为前台线程
-            m_thread.Start();
-        }
+    def setCb(self, value):
+        self.m_cb = value;
 
-        public void join()
-        {
-            //m_thread.Interrupt();           // 直接线程终止
-            m_thread.Join();
-        }
 
-        /**
-         *@brief 线程回调函数
-         */
-        virtual public void threadHandle()
-        {
-            getCurThreadID();
+    def setParam(self, value):
+        self.m_param = value;
+        
 
-            if(m_cb != null)
-            {
-                m_cb(m_param);
-            }
-        }
+    '''
+    @brief 开启一个线程
+    '''
+    def start(self):
+        if(self.mThread == None):
+            self.mThread = threading.Thread(target = self.threadHandle, args=(0, "aaa"), name = self.mName); 
 
-        protected void getCurThreadID()
-        {
-            m_curThreadID = Thread.CurrentThread.ManagedThreadId;       // 当前线程的 ID
-        }
+        self.mThread.Start();
 
-        public bool isCurThread(int threadID)
-        {
-            return (m_curThreadID == threadID);
-        }
 
-        static public void getMainThreadID()
-        {
-            m_sMainThreadID = Thread.CurrentThread.ManagedThreadId;
-        }
+    def join(self):
+        self.mThread.Join();
 
-        static public bool isMainThread()
-        {
-            return (m_sMainThreadID == Thread.CurrentThread.ManagedThreadId);
-        }
 
-        static public void needMainThread()
-        {
-            if (!isMainThread())
-            {
-                Ctx.m_instance.m_logSys.error("error: log 输出在另外一个线程");
-                throw new Exception("cannot call function in thread");
-            }
-        }
-    }
-}
+    def run(self):
+        pass;
+
+    '''
+    @brief 线程回调函数
+    '''
+    def threadHandle(self, params):
+        self.getCurThreadID();
+
+        if(self.m_cb != None):
+            self.m_cb(self.m_param);
+
+
+
+    def getCurThreadID(self):
+        self.m_curThreadID = threading.current_thread.ident;       # 当前线程的 ID
+
+
+    def isCurThread(self, threadID):
+        return (self.m_curThreadID == threadID);
+
+
+    @staticmethod
+    def getMainThreadID():
+        MThread.m_sMainThreadID = threading.current_thread.ident;
+
+
+    @staticmethod
+    def isMainThread():
+        return (MThread.m_sMainThreadID == threading.current_thread.ident);
+
+
+    @staticmethod
+    def needMainThread():
+        if (not MThread.isMainThread()):
+            raise Exception("cannot call function in thread");
+
+
+

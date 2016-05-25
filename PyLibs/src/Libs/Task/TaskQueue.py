@@ -1,21 +1,22 @@
-﻿namespace SDK.Lib
-{
-    public class TaskQueue : LockQueue<ITask>
-    {
-        public TaskThreadPool m_pTaskThreadPool;
+﻿﻿#-*- encoding=utf-8 -*-
 
-        public TaskQueue(string name)
-            : base(name)
-        {
+from Libs.DataStruct.LockQueue import LockQueue
 
-        }
+class TaskQueue(LockQueue):
 
-        public new void push(ITask item)
-        {
-            base.push(item);
+    def __init__(self):
+        super(TaskQueue, self).__init__();
 
-            // 检查是否有线程空闲，如果有就唤醒
-            m_pTaskThreadPool.notifyIdleThread();
-        }
-    }
-}
+        self.mTypeId = "TaskQueue";
+        
+    
+    def setTaskThreadPool(self, value):
+        self.m_pTaskThreadPool = value;
+
+
+    def push(self, item):
+        super(TaskQueue, self).push(item);
+
+        # 检查是否有线程空闲，如果有就唤醒
+        self.m_pTaskThreadPool.notifyIdleThread();
+

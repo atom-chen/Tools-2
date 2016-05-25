@@ -1,26 +1,21 @@
-﻿using UnityEngine;
+﻿﻿#-*- encoding=utf-8 -*-
 
-namespace SDK.Lib
-{
-    /**
-     * @brief 文件日志
-     */
-    public class WinLogDevice : LogDeviceBase
-    {
-        public override void logout(string message, LogColor type = LogColor.LOG)
-        {
-            if (type == LogColor.LOG)
-            {
-                Debug.Log(message);
-            }
-            else if (type == LogColor.WARN)
-            {
-                Debug.LogWarning(message);
-            }
-            else if (type == LogColor.ERROR)
-            {
-                Debug.LogError(message);
-            }
-        }
-    }
-}
+'''
+@brief 窗口日志
+'''
+
+from Libs.Log.LogDeviceBase import LogDeviceBase
+from Libs.Log.LogColor import LogColor
+
+class WinLogDevice(LogDeviceBase):
+    
+    def __init__(self):
+        super(WinLogDevice, self).__init__();
+        
+        self.mTypeId = "WinLogDevice";
+
+    
+    def logout(self, message, type = LogColor.LOG):
+        print(message);
+
+

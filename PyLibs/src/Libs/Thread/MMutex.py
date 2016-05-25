@@ -1,44 +1,26 @@
-﻿using System.Threading;
+﻿﻿#-*- encoding=utf-8 -*-
 
-namespace SDK.Lib
-{
-    /**
-     * @brief 互斥
-     */
-    public class MMutex
-    {
-        private Mutex m_mutex;   // 读互斥
+'''
+@brief 互斥
+'''
 
-        public MMutex(bool initiallyOwned, string name)
-        {
-            if (MacroDef.NET_MULTHREAD)
-            {
-                m_mutex = new Mutex(initiallyOwned, name);
-            }
-        }
+from Libs.Core.GObject import GObject
+from threading import Lock
 
-        public void WaitOne()
-        {
-            if (MacroDef.NET_MULTHREAD)
-            {
-                m_mutex.WaitOne();
-            }
-        }
+class MMutex(GObject):
+    
+    def __init__(self):
+        super(MMutex, self).__init__();
+        
+        self.mTypeId = "MLock";
+        
+        self.m_mmutex = Lock();
 
-        public void ReleaseMutex()
-        {
-            if (MacroDef.NET_MULTHREAD)
-            {
-                m_mutex.ReleaseMutex();
-            }
-        }
 
-        public void close()
-        {
-            if (MacroDef.NET_MULTHREAD)
-            {
-                m_mutex.Close();
-            }
-        }
-    }
-}
+    def lock(self, timeout = 0):
+        self.m_mmutex.acquire(timeout);
+
+
+    def unlock(self):
+        self.m_mmutex.release();
+

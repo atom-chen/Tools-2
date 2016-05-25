@@ -1,32 +1,31 @@
-﻿using System.Threading;
+﻿﻿#-*- encoding=utf-8 -*-
 
-namespace SDK.Lib
-{
-    /**
-     * @同步使用的 Event
-     */
-    public class MEvent
-    {
-        private ManualResetEvent m_event;
+from threading import Event
+from Libs.Core.GObject import GObject
 
-        public MEvent(bool initialState)
-        {
-            m_event = new ManualResetEvent(initialState);
-        }
+'''
+@同步使用的 Event
+'''
 
-        public void WaitOne()
-        {
-            m_event.WaitOne();
-        }
+class MEvent(GObject):
 
-        public bool Reset()
-        {
-            return m_event.Reset();
-        }
+    def __init__(self, initialState):
+        super(MEvent, self).__init__();
+        
+        self.mTypeId = "MEvent";
 
-        public bool Set()
-        {
-            return m_event.Set();
-        }
-    }
-}
+        self.m_event = Event(initialState);
+
+
+    def WaitOne(self):
+        self.m_event.wait();
+
+
+    def Reset(self):
+        return self.m_event.clear();
+
+
+    def Set(self):
+        return self.m_event.set();
+
+

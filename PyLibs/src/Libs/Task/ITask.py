@@ -1,8 +1,13 @@
-﻿namespace SDK.Lib
-{
-    public interface ITask
-    {
-        void runTask();             // 执行任务
-        void handleResult();        // 处理结果
-    }
-}
+﻿﻿#-*- encoding=utf-8 -*-
+
+from Libs.Core.GObject import GObject
+
+class ITask(GObject):
+    def runTask(self):             # 执行任务
+        pass;
+    
+    
+    def handleResult(self):        # 处理结果
+        pass;
+
+
