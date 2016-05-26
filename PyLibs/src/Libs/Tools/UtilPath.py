@@ -2,15 +2,19 @@
 
 import os
 import shutil
+import glob
 
 from Libs.Tools.UtilStr import UtilStr
 from Libs.Tools.UtilError import UtilError
+from Libs.DataStruct.MList import MList
+from Libs.Core.GObject import GObject
+from Libs.FileSystem.MFileDirInfo import MFileAndDirList, MFileInfo, MDirInfo
 
 '''
 @brief: 目录处理
 '''
 
-class UtilPath(object):
+class UtilPath(GObject):
     # 将 "\" 转换成 "/"
     @staticmethod
     def normal(fullPath):
@@ -40,8 +44,8 @@ class UtilPath(object):
     
     # 复制文件，oldfile只能是文件夹，newfile可以是文件，也可以是目标目录
     @staticmethod
-    def copy(oldDir, newFullFileOrDirPath):
-        shutil.copy(oldDir, newFullFileOrDirPath);
+    def copy(oldFullDirPath, newFullFileOrDirPath):
+        shutil.copy(oldFullDirPath, newFullFileOrDirPath);
         
     
     # 复制文件夹，olddir和newdir都只能是目录，且newdir必须不存在
@@ -173,7 +177,114 @@ class UtilPath(object):
         for root, dirs, files in os.walk(srcPath):
             for oneFile in files:
                 if(func != None):
-                    func(UtilPath.join(root, oneFile, None), UtilPath.join(destPath, oneFile, None));
+                    func(UtilPath.join(root, oneFile), UtilPath.join(destPath, oneFile));
                     
 
+    @staticmethod
+    def getAllFile(self, srcPath, includeExtList = None, excludeExtList = None, isRecurse = True):
+        fileAndDirList = glob(UtilPath.join(srcPath, '*'));
+        fileList = MList();
+        dirList = MList();
+        fullFileOrDirPath = "";
+        extName = "";
+        
+        for fileOrDir in fileAndDirList:
+            fullFileOrDirPath = UtilPath.join(srcPath, fileOrDir);
+            if(UtilPath.isfile(fullFileOrDirPath)):
+                _, extName = UtilPath.splitext(fileOrDir);
+                if(excludeExtList == None or excludeExtList.IndexOf(extName) != -1):
+                    if(includeExtList == None or includeExtList.IndexOf(extName) != -1):
+                        curFileInfo = MFileInfo();
+                        curFileInfo.mFullPath = fullFileOrDirPath;
+                        curFileInfo.mFileName = fileOrDir;
+                        fileList.Add(curFileInfo);
+            else:
+                curDirInfo = MDirInfo();
+                curDirInfo.mFullPath = fullFileOrDirPath;
+                curDirInfo.mDirName = fileOrDir;
+                dirList.Add(curDirInfo);
+                        
+        if(isRecurse):
+            for dirPath in dirList.getList():
+                subDirFileList = self.getAllFile(dirPath.mFullPath, includeExtList, excludeExtList, isRecurse);
+                fileList.merge(subDirFileList);
+                
+        return fileList
     
+    
+    @staticmethod
+    def getAllDir(self, srcPath, isRecurse = True):
+        fileAndDirList = glob(UtilPath.join(srcPath, '*'));
+        dirList = MList();
+        fullFileOrDirPath = "";
+        
+        for fileOrDir in fileAndDirList:
+            fullFileOrDirPath = UtilPath.join(srcPath, fileOrDir);
+            if(UtilPath.isdir(fullFileOrDirPath)):
+                curDirInfo = MDirInfo();
+                curDirInfo.mFullPath = fullFileOrDirPath;
+                curDirInfo.mDirName = fileOrDir;
+                dirList.Add(curDirInfo);
+                        
+        if(isRecurse):
+            for dirPath in dirList.getList():
+                subDirList = self.getAllDir(dirPath.mFullPath, isRecurse);
+                dirList.merge(subDirList);
+                
+        return dirList;
+    
+    
+    @staticmethod
+    def getAllFileOrDir(self, srcPath, includeExtList = None, excludeExtList = None, isRecurse = True):
+        fileAndDirList = glob(UtilPath.join(srcPath, '*'));
+        retFileAndDirListInfo = MFileAndDirList();
+        fullFileOrDirPath = "";
+        extName = "";
+        
+        for fileOrDir in fileAndDirList:
+            fullFileOrDirPath = UtilPath.join(srcPath, fileOrDir);
+            if(UtilPath.isfile(fullFileOrDirPath)):
+                _, extName = UtilPath.splitext(fileOrDir);
+                if(excludeExtList == None or excludeExtList.IndexOf(extName) != -1):
+                    if(includeExtList == None or includeExtList.IndexOf(extName) != -1):
+                        curFileInfo = MFileInfo();
+                        curFileInfo.mFullPath = fullFileOrDirPath;
+                        curFileInfo.mFileName = fileOrDir;
+                        retFileAndDirListInfo.mFileList.Add(curFileInfo);
+            else:
+                curDirInfo = MDirInfo();
+                curDirInfo.mFullPath = fullFileOrDirPath;
+                curDirInfo.mDirName = fileOrDir;
+                retFileAndDirListInfo.mDirList.Add(curDirInfo);
+                        
+        if(isRecurse):
+            for dirPath in retFileAndDirListInfo.mDirList.getList():
+                subDirFileListInfo = self.getAllFile(dirPath.mFullPath, isRecurse);
+                retFileAndDirListInfo.mFileList.merge(subDirFileListInfo.mFileList);
+                retFileAndDirListInfo.mDirList.merge(subDirFileListInfo.mDirList);
+                
+        return retFileAndDirListInfo;
+     
+
+    # 递归拷贝目录
+    @staticmethod
+    def copyDirectory(srcPath, destPath, includeExtList = None, excludeExtList = None, isRecurse = True):
+        if(UtilStr.startswith(srcPath, destPath)):
+            UtilError.error("Dir Can not Same");
+        
+        if(not UtilPath.exists(srcPath)):
+            return;
+    
+        if(not UtilPath.exists(destPath)):
+            UtilPath.mkdir(destPath);
+
+        fileAndDirListInfo = UtilPath.getAllFileOrDir(srcPath, includeExtList, excludeExtList, False);
+        for fileItemInfo in fileAndDirListInfo.mFileList:
+            UtilPath.copy(fileItemInfo.mFullPath, destPath);
+
+        destDirPath = "";
+        if(isRecurse):
+            for dirItemInfo in fileAndDirListInfo.mDirList.getList():
+                destDirPath = UtilPath.join(destPath, dirItemInfo.mDirName);
+                UtilPath.copyDirectory(dirItemInfo.mFullPath, destDirPath, isRecurse);
+

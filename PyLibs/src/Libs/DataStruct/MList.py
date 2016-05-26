@@ -9,7 +9,10 @@ from Libs.Core.GObject import GObject
 class MList(GObject):
 
     def __init__(self):
+        super(MList, self).__init__();
+        
         self.mTypeId = "MList";
+        
         self.m_list = [];
 
 
@@ -53,7 +56,11 @@ class MList(GObject):
 
     # 该元素的位置,无则抛异常
     def IndexOf(self, item):
-        return self.m_list.index(item);
+        idx = -1;
+        if(item in self.m_list):
+            idx = self.m_list.index(item);
+            
+        return idx;
 
 
     def Insert(self, index, item):
@@ -70,6 +77,11 @@ class MList(GObject):
 
     def Sort(self, comparer):
         self.m_list.sort(comparer);
+        
+    
+    def merge(self, rhl):
+        for item in rhl.getList():
+            self.Add(item);
 
     
     
