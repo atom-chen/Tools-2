@@ -1,9 +1,10 @@
 #-*- encoding=utf-8 -*-
 
+from Libs.Core import GObject
+
 '''
 @brief: IdGen
 '''
-from Libs.Core import GObject
 
 class IdGen(GObject):
     # Constructor

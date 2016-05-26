@@ -1,13 +1,13 @@
 ﻿#-*- encoding=utf-8 -*-
 
-'''
-@brief 心跳管理器
-'''
-
 from Libs.DataStruct.MList import MList
 from Libs.Tools.UtilApi import UtilApi
 from Libs.DelayHandle.DelayHandleMgrBase import DelayHandleMgrBase
 from Libs.FrameHandle.TickProcessObject import TickProcessObject
+
+'''
+@brief 心跳管理器
+'''
 
 class TickMgr(DelayHandleMgrBase):
 

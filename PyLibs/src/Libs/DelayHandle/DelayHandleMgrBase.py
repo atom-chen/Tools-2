@@ -1,15 +1,15 @@
 ﻿#-*- encoding=utf-8 -*-
 
-'''
-@brief 当需要管理的对象可能在遍历中间添加的时候，需要这个管理器
-'''
-
 from Libs.Core.GObject import GObject
 from Libs.DataStruct.MList import MList
 from Libs.DelayHandle.DelayHandleObject import DelayHandleObject
 from Libs.DelayHandle.DelayDelParam import DelayDelParam
 from Libs.Tools.UtilApi import UtilApi
 from Libs.DelayHandle.DelayAddParam import DelayAddParam
+
+'''
+@brief 当需要管理的对象可能在遍历中间添加的时候，需要这个管理器
+'''
 
 class DelayHandleMgrBase(GObject):
 

@@ -1,11 +1,11 @@
 ﻿﻿#-*- encoding=utf-8 -*-
 
+from Libs.Core.GObject import GObject
+from Libs.Log.LogColor import LogColor
+
 '''
 @brief 日志设备
 '''
-
-from Libs.Core.GObject import GObject
-from Libs.Log.LogColor import LogColor
 
 class LogDeviceBase(GObject):
     

@@ -1,14 +1,14 @@
 #-*- encoding=utf-8 -*-
 
-'''
-@brief: 目录处理
-'''
-
 import os
 import shutil
 
 from Libs.Tools.UtilStr import UtilStr
 from Libs.Tools.UtilError import UtilError
+
+'''
+@brief: 目录处理
+'''
 
 class UtilPath(object):
     # 将 "\" 转换成 "/"

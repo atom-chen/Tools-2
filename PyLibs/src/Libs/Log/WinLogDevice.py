@@ -1,11 +1,11 @@
 ﻿﻿#-*- encoding=utf-8 -*-
 
+from Libs.Log.LogDeviceBase import LogDeviceBase
+from Libs.Log.LogColor import LogColor
+
 '''
 @brief 窗口日志
 '''
-
-from Libs.Log.LogDeviceBase import LogDeviceBase
-from Libs.Log.LogColor import LogColor
 
 class WinLogDevice(LogDeviceBase):
     

@@ -1,10 +1,10 @@
 ﻿#-*- encoding=utf-8 -*-
 
+from Libs.EventHandle.EventDispatch import EventDispatch
+
 '''
 @brief 事件回调函数只能添加一次
 '''
-
-from Libs.EventHandle.EventDispatch import EventDispatch
 
 class AddOnceEventDispatch(EventDispatch):
     

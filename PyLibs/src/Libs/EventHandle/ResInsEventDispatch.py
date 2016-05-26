@@ -1,10 +1,10 @@
 ﻿#-*- encoding=utf-8 -*-
 
+from Libs.EventHandle.EventDispatch import EventDispatch
+
 '''
 @brief 资源实例化事件分发器
 '''
-
-from Libs.EventHandle.EventDispatch import EventDispatch
 
 class ResInsEventDispatch(EventDispatch):
 

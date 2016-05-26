@@ -1,9 +1,10 @@
 #-*- encoding=utf-8 -*-
 
+from Libs.Core.GObject import GObject
+
 '''
 @brief: 数组
 '''
-from Libs.Core.GObject import GObject
 
 class MList(GObject):
 

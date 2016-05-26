@@ -1,11 +1,11 @@
 ﻿﻿#-*- encoding=utf-8 -*-
 
-'''
-@brief 网络线程
-'''
-
 from Libs.Thread.MThread import MThread
 from Libs.Thread.MCondition import MCondition
+
+'''
+@brief 任务线程
+'''
 
 class TaskThread(MThread):
 

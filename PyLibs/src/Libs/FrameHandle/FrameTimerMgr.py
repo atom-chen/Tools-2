@@ -1,12 +1,12 @@
 ﻿#-*- encoding=utf-8 -*-
 
-'''
-* @brief 定时器管理器
-'''
-
 from Libs.DataStruct.MList import MList
 from Libs.Tools.UtilApi import UtilApi
 from Libs.DelayHandle.DelayHandleMgrBase import DelayHandleMgrBase
+
+'''
+* @brief 定时器管理器
+'''
 
 class FrameTimerMgr(DelayHandleMgrBase):
 

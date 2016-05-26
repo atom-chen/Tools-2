@@ -1,12 +1,12 @@
 ﻿﻿#-*- encoding=utf-8 -*-
 
-'''
-@brief 线程安全列表， T 是 Object ，便于使用 Equal 比较地址
-'''
-
 from Libs.Core.GObject import GObject
 from Libs.Thread.MMutex import MMutex
 from Libs.DataStruct.MList import MList
+
+'''
+@brief 线程安全列表， T 是 Object ，便于使用 Equal 比较地址
+'''
 
 class LockList(GObject):
 

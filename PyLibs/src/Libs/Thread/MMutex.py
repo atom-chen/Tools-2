@@ -1,11 +1,11 @@
 ﻿﻿#-*- encoding=utf-8 -*-
 
+from threading import Lock
+from Libs.Core.GObject import GObject
+
 '''
 @brief 互斥
 '''
-
-from Libs.Core.GObject import GObject
-from threading import Lock
 
 class MMutex(GObject):
     

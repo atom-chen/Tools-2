@@ -1,10 +1,10 @@
 ﻿#-*- encoding=utf-8 -*-
 
+from Libs.FrameHandle.TimerItemBase import TimerItemBase
+
 '''
 @brief 倒计时定时器
 '''
-
-from Libs.FrameHandle.TimerItemBase import TimerItemBase
 
 class DaoJiShiTimer(TimerItemBase):
     

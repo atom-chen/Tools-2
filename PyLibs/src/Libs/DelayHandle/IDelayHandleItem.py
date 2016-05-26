@@ -1,9 +1,10 @@
 ﻿#-*- encoding=utf-8 -*-
 
+from Libs.Core.GObject import GObject
+
 '''
 @brief 延迟添加的对象
 '''
-from Libs.Core.GObject import GObject
 
 class IDelayHandleItem(GObject):
     
