@@ -9,12 +9,16 @@ from Libs.Tools.UtilError import UtilError
 from Libs.DataStruct.MList import MList
 from Libs.Core.GObject import GObject
 from Libs.FileSystem.MFileDirInfo import MFileAndDirList, MFileInfo, MDirInfo
+from Libs.Tools.UtilApi import UtilApi
 
 '''
 @brief: 目录处理
 '''
 
 class UtilPath(GObject):
+    
+    DOT = '.';
+    
     # 将 "\" 转换成 "/"
     @staticmethod
     def normal(fullPath):
@@ -160,6 +164,54 @@ class UtilPath(GObject):
     def getcwd():
         return os.getcwd();
     
+    
+    @staticmethod
+    def removeExtDot(ext):
+        if(not UtilStr.isEmptyOrNull(ext)):
+            if(ext[0] == UtilPath.DOT):
+                ext = ext[1:];
+        
+        return ext;
+    
+    
+    @staticmethod
+    def getFileName(fullFilePath):
+        _, fileName = UtilPath.split(fullFilePath);
+        return fileName;
+    
+    
+    @staticmethod
+    def getFileNameNoExt(fullFilePath):
+        _, fileName = UtilPath.split(fullFilePath);
+        fileNameNoExt = UtilPath.getFileExt(fileName);
+        return fileNameNoExt;
+    
+    
+    @staticmethod
+    def getFileExt(fullFilePath):
+        _, ext = UtilPath.splitext(fullFilePath);
+        ext = UtilPath.removeExtDot(ext);
+        return ext;
+    
+    @staticmethod
+    def getFileDir(fullFilePath):
+        filePath, _ = UtilPath.split(fullFilePath);
+        filePath = UtilPath.normal(filePath);
+        return filePath;
+    
+    
+    @staticmethod
+    def getDirCurName(fullDirPath):
+        fullDirPath = UtilPath.normal(fullDirPath);
+        idx = UtilStr.rfind(fullDirPath, '/');
+        if(idx != -1):
+            curDirName = UtilStr.truncate(fullDirPath, idx + 1, None);
+        else:
+            curDirName = fullDirPath;
+
+        return curDirName;
+            
+    
         
     # 递归遍历整个目录
     @staticmethod
@@ -181,7 +233,7 @@ class UtilPath(GObject):
                     
 
     @staticmethod
-    def getAllFile(self, srcPath, includeExtList = None, excludeExtList = None, isRecurse = True):
+    def getAllFile(srcPath, includeExtList = None, excludeExtList = None, isRecurse = True):
         fileAndDirList = glob(UtilPath.join(srcPath, '*'));
         fileList = MList();
         dirList = MList();
@@ -189,77 +241,83 @@ class UtilPath(GObject):
         extName = "";
         
         for fileOrDir in fileAndDirList:
-            fullFileOrDirPath = UtilPath.join(srcPath, fileOrDir);
+            fullFileOrDirPath = fileOrDir;
             if(UtilPath.isfile(fullFileOrDirPath)):
-                _, extName = UtilPath.splitext(fileOrDir);
+                fileOrDirName = UtilPath.getFileName(fullFileOrDirPath);
+                extName = UtilPath.getFileExt(fileOrDir);
                 if(excludeExtList == None or excludeExtList.IndexOf(extName) != -1):
                     if(includeExtList == None or includeExtList.IndexOf(extName) != -1):
                         curFileInfo = MFileInfo();
                         curFileInfo.mFullPath = fullFileOrDirPath;
-                        curFileInfo.mFileName = fileOrDir;
+                        curFileInfo.mFileName = fileOrDirName;
                         fileList.Add(curFileInfo);
             else:
+                fileOrDirName = UtilPath.getDirCurName(fullFileOrDirPath);
                 curDirInfo = MDirInfo();
                 curDirInfo.mFullPath = fullFileOrDirPath;
-                curDirInfo.mDirName = fileOrDir;
+                curDirInfo.mDirName = fileOrDirName;
                 dirList.Add(curDirInfo);
                         
         if(isRecurse):
             for dirPath in dirList.getList():
-                subDirFileList = self.getAllFile(dirPath.mFullPath, includeExtList, excludeExtList, isRecurse);
+                subDirFileList = UtilPath.getAllFile(dirPath.mFullPath, includeExtList, excludeExtList, isRecurse);
                 fileList.merge(subDirFileList);
                 
         return fileList
     
     
     @staticmethod
-    def getAllDir(self, srcPath, isRecurse = True):
+    def getAllDir(srcPath, isRecurse = True):
         fileAndDirList = glob(UtilPath.join(srcPath, '*'));
         dirList = MList();
         fullFileOrDirPath = "";
         
         for fileOrDir in fileAndDirList:
-            fullFileOrDirPath = UtilPath.join(srcPath, fileOrDir);
+            fullFileOrDirPath = fileOrDir;
             if(UtilPath.isdir(fullFileOrDirPath)):
+                fileOrDirName = UtilPath.getDirCurName(fullFileOrDirPath);
                 curDirInfo = MDirInfo();
                 curDirInfo.mFullPath = fullFileOrDirPath;
-                curDirInfo.mDirName = fileOrDir;
+                curDirInfo.mDirName = fileOrDirName;
                 dirList.Add(curDirInfo);
                         
         if(isRecurse):
             for dirPath in dirList.getList():
-                subDirList = self.getAllDir(dirPath.mFullPath, isRecurse);
+                subDirList = UtilPath.getAllDir(dirPath.mFullPath, isRecurse);
                 dirList.merge(subDirList);
                 
         return dirList;
     
     
     @staticmethod
-    def getAllFileOrDir(self, srcPath, includeExtList = None, excludeExtList = None, isRecurse = True):
-        fileAndDirList = glob(UtilPath.join(srcPath, '*'));
+    def getAllFileOrDir(srcPath, includeExtList = None, excludeExtList = None, isRecurse = True):
+        fileAndDirList = glob.glob(UtilPath.join(srcPath, '*'));
         retFileAndDirListInfo = MFileAndDirList();
         fullFileOrDirPath = "";
+        fileOrDirName = ""
         extName = "";
         
         for fileOrDir in fileAndDirList:
-            fullFileOrDirPath = UtilPath.join(srcPath, fileOrDir);
+            fullFileOrDirPath = fileOrDir;
             if(UtilPath.isfile(fullFileOrDirPath)):
-                _, extName = UtilPath.splitext(fileOrDir);
-                if(excludeExtList == None or excludeExtList.IndexOf(extName) != -1):
+                fileOrDirName = UtilPath.getFileName(fullFileOrDirPath);
+                extName = UtilPath.getFileExt(fileOrDir);
+                if(excludeExtList == None or excludeExtList.IndexOf(extName) == -1):
                     if(includeExtList == None or includeExtList.IndexOf(extName) != -1):
                         curFileInfo = MFileInfo();
                         curFileInfo.mFullPath = fullFileOrDirPath;
-                        curFileInfo.mFileName = fileOrDir;
+                        curFileInfo.mFileName = fileOrDirName;
                         retFileAndDirListInfo.mFileList.Add(curFileInfo);
             else:
+                fileOrDirName = UtilPath.getDirCurName(fullFileOrDirPath);
                 curDirInfo = MDirInfo();
                 curDirInfo.mFullPath = fullFileOrDirPath;
-                curDirInfo.mDirName = fileOrDir;
+                curDirInfo.mDirName = fileOrDirName;
                 retFileAndDirListInfo.mDirList.Add(curDirInfo);
                         
         if(isRecurse):
             for dirPath in retFileAndDirListInfo.mDirList.getList():
-                subDirFileListInfo = self.getAllFile(dirPath.mFullPath, isRecurse);
+                subDirFileListInfo = UtilPath.getAllFile(dirPath.mFullPath, isRecurse);
                 retFileAndDirListInfo.mFileList.merge(subDirFileListInfo.mFileList);
                 retFileAndDirListInfo.mDirList.merge(subDirFileListInfo.mDirList);
                 
@@ -279,12 +337,12 @@ class UtilPath(GObject):
             UtilPath.mkdir(destPath);
 
         fileAndDirListInfo = UtilPath.getAllFileOrDir(srcPath, includeExtList, excludeExtList, False);
-        for fileItemInfo in fileAndDirListInfo.mFileList:
+        for fileItemInfo in fileAndDirListInfo.mFileList.getList():
             UtilPath.copy(fileItemInfo.mFullPath, destPath);
 
         destDirPath = "";
         if(isRecurse):
             for dirItemInfo in fileAndDirListInfo.mDirList.getList():
                 destDirPath = UtilPath.join(destPath, dirItemInfo.mDirName);
-                UtilPath.copyDirectory(dirItemInfo.mFullPath, destDirPath, isRecurse);
+                UtilPath.copyDirectory(dirItemInfo.mFullPath, destDirPath, includeExtList, excludeExtList, isRecurse);
 

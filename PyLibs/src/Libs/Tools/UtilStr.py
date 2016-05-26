@@ -24,8 +24,13 @@ class UtilStr(object):
         pass;
     
     @staticmethod
-    def truncate(stra, start, end):
-        return stra[start:end];
+    def truncate(stra, start = None, end = None):
+        if(start != None and end != None):
+            return stra[start:end];
+        elif(start != None and end == None):
+            return stra[start:];
+        elif(start == None and end != None):
+            return stra[:end];
     
     
     @staticmethod
@@ -50,7 +55,7 @@ class UtilStr(object):
     def rfind(stra, subStr, start = 0, end = 0):
         if(end == 0):
             end = len(stra);
-        return stra.index(subStr, start , end);
+        return stra.rfind(subStr, start , end);
     
 
     # 同find，只是找不到产生ValueError异常

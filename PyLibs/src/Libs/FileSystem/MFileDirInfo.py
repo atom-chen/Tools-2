@@ -5,7 +5,7 @@ from Libs.DataStruct.MList import MList
 
 class MFileInfo(GObject):
     def __init__(self):
-        super(MFileAndDirList, self).__init__();
+        super(MFileInfo, self).__init__();
         
         self.mTypeId = "MFileInfo";
         
@@ -15,7 +15,7 @@ class MFileInfo(GObject):
         
 class MDirInfo(GObject):
     def __init__(self):
-        super(MFileAndDirList, self).__init__();
+        super(MDirInfo, self).__init__();
         
         self.mTypeId = "MDirInfo";
         
