@@ -17,7 +17,7 @@ class LogSys(GObject):
         self.m_asyncErrorList = LockList();             # 这个是多线程访问的
 
         self.m_logDeviceList = MList();
-        self.mEnableLog = True;
+        self.mEnableLog = True;         #  这个是总的开关
         self.registerDevice();
         self.registerFileLogDevice();
 
@@ -33,9 +33,12 @@ class LogSys(GObject):
 
 
     def isInFilter(self, logTypeId):
+        if(not self.mEnableLog):
+            return False;
+        
         if(logTypeId == LogTypeId.eLogCommon or
-           logTypeId == LogTypeId.eLogTest):
-            return self.mEnableLog;
+            logTypeId == LogTypeId.eLogTest):
+            return True;
 
         return False;
 
@@ -79,12 +82,12 @@ class LogSys(GObject):
         self.m_asyncErrorList.Add(message);
 
     
-    def logout(self, message, type = LogColor.LOG):
+    def logout(self, message, logTypeId = LogColor.LOG):
         MThread.needMainThread();
 
         if (self.m_bOutLog):
             for logDevice in self.m_logDeviceList.getList():
-                logDevice.logout(message, type);
+                logDevice.logout(message, logTypeId);
 
 
     def updateLog(self):
