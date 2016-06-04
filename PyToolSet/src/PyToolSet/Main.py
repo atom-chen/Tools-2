@@ -6,7 +6,7 @@
 
 def main():
     import sys
-    from FileDirDiff.Frame import AppFrame
+    from PyToolSet.Frame import AppFrame
     app = AppFrame.AppFrame()
     sys.exit(app.exec_())
     

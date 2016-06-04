@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-'''
-Created on 2013-4-23
 
-@author: Administrator
+'''
 @brief application
 '''
 
@@ -13,7 +11,7 @@ class AppFrame(QApplication):
     def __init__(self):
         super(AppFrame, self).__init__(sys.argv)
         
-        from FileDirDiff.Frame import MainWindow
+        from PyToolSet.Frame import MainWindow
 
         self.mainWindow = MainWindow.MainWindow(self)
         self.mainWindow.show()

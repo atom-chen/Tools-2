@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
-'''
-Created on 2013-5-15
 
-@author: Administrator
+'''
 '''
 
 from PyQt5 import QtWidgets
 
-import FileDirDiff.UI.ui_leftfnwin
+import PyToolSet.UI.ui_leftfnwin
 from FileDirDiff.Core.AppSys import AppSysBase
 from FileDirDiff.Core.VerTask import VerTask
 

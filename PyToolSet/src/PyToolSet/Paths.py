@@ -7,7 +7,7 @@ import os
 
 FROZEN = False
 
-from FileDirDiff import Fake
+from PyToolSet import Fake
 
 PACKAGE_DIR = os.path.dirname(os.path.abspath(Fake.__file__))
 

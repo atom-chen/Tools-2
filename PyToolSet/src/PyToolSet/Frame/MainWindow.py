@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
-'''
-Created on 2013-4-23
 
-@author: Administrator
+'''
 @brief mainwindow
 '''
 
 from PyQt5 import  QtWidgets, QtCore
 
-import FileDirDiff.UI.ui_mainwindow
-import FileDirDiff.Frame.LoggerWin
-import FileDirDiff.Frame.LeftFnWin
-#from FileDirDiff.Core.GlobalIns import GlobalIns
+import PyToolSet.UI.ui_mainwindow
+import PyToolSet.Frame.LoggerWin
+import PyToolSet.Frame.LeftFnWin
 from FileDirDiff.Core.AppSys import AppSys
 
 class MainWindow(QtWidgets.QMainWindow):
