@@ -4,9 +4,9 @@
 @brief: PyFileDirDiffSys
 '''
 
-from ToolSet.FileDirDiff.FileDirDiffSys import FileDirDiffSys
+from ToolSet.FileDirDiff.FileDirDiffSysImpl import FileDirDiffSysImpl
 
-class PyFileDirDiffSys(FileDirDiffSys):
+class PyFileDirDiffSys(FileDirDiffSysImpl):
     
     def __init__(self):
         super(PyFileDirDiffSys, self).__init__();

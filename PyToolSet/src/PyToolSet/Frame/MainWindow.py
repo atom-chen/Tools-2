@@ -9,7 +9,11 @@ from PyQt5 import  QtWidgets, QtCore
 import PyToolSet.UI.ui_mainwindow
 import PyToolSet.Frame.LoggerWin
 import PyToolSet.Frame.LeftFnWin
-from FileDirDiff.Core.AppSys import AppSys
+
+from PyToolSet.Common.PyToolSetSys import PyToolSetSys
+from PyToolSet.Common.PyToolSetSysImpl import PyToolSetSysImpl
+from Libs.FrameWork.Ctx import Ctx
+from Libs.FrameWork.CtxImpl import CtxImpl
 
 class MainWindow(QtWidgets.QMainWindow):
     
@@ -25,21 +29,21 @@ class MainWindow(QtWidgets.QMainWindow):
         
         self.createUI()
         #实例化全局变量
-        #GlobalIns.insGlobal()
-        AppSys.instance();
-        AppSys.instance().postInit();
+        Ctx.msInstance = CtxImpl();
+        PyToolSetSys.msInstance = PyToolSetSysImpl();
+        PyToolSetSys.instance().start();
 
 
     def createUI(self):
-        self.ui = FileDirDiff.UI.ui_mainwindow.Ui_MainWindow()
+        self.ui = PyToolSet.UI.ui_mainwindow.Ui_MainWindow()
         self.ui.setupUi(self)
         
         # 可停靠的窗口
-        self.m_LoggerWin = FileDirDiff.Frame.LoggerWin.LoggerWin()
+        self.m_LoggerWin = PyToolSet.Frame.LoggerWin.LoggerWin()
         self.addDockWidget(QtCore.Qt.BottomDockWidgetArea, self.m_LoggerWin)
         
         # 左边可停靠窗口
-        self.m_LeftFnWin = FileDirDiff.Frame.LeftFnWin.LeftFnWin()
+        self.m_LeftFnWin = PyToolSet.Frame.LeftFnWin.LeftFnWin()
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.m_LeftFnWin)
         
         self.m_qttimer = QtCore.QTimer()

@@ -16,3 +16,4 @@ class AppFrame(QApplication):
         self.mainWindow = MainWindow.MainWindow(self)
         self.mainWindow.show()
         self.mainWindow.raise_()
+

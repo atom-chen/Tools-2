@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 
 '''
-@author: FileDirDiffSys
+@author: FileDirDiffSysImpl
 '''
 
-from Libs.Core.GObject import GObject
 from ToolSet.FileDirDiff.Config import Config
+from ToolSet.FileDirDiff.FileDirDiffSys import FileDirDiffSys
 
-class FileDirDiffSys(GObject):
+class FileDirDiffSysImpl(FileDirDiffSys):
     
     def __init__(self):
-        super(FileDirDiffSys, self).__init__();
+        super(FileDirDiffSysImpl, self).__init__();
         
-        self.mTypeId = "FileDirDiffSys";
+        self.mTypeId = "FileDirDiffSysImpl";
         
         self.mConfig = Config();
 

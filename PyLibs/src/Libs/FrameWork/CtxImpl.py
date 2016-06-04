@@ -1,26 +1,17 @@
 ﻿#-*- encoding=utf-8 -*-
 
 '''
-@brief: Ctx 基类，防止模块之间互相导入
+@brief: CtxImpl
 '''
 
-from Libs.Core.GObject import GObject
+from Libs.FrameWork.Ctx import Ctx
 
-class CtxBase(GObject):
-    msInstance = None;
-    
-    @staticmethod
-    def instance():
-        if (CtxBase.msInstance == None):
-            CtxBase.msInstance = CtxBase();
-
-        return CtxBase.msInstance;
-    
+class CtxImpl(Ctx):
     
     def __init__(self):
-        super(CtxBase, self).__init__();
+        super(Ctx, self).__init__();
         
-        self.mTypeId = "CtxBase";
+        self.mTypeId = "CtxImpl";
         
         # 声明需要的变量，当然也可以不必在这里声明，直接赋值就行了
         self.m_msgRouteNotify = None;

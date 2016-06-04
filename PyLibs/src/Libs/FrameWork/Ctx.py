@@ -1,7 +1,7 @@
 ﻿#-*- encoding=utf-8 -*-
 
 '''
-@brief 全局数据区
+@brief Ctx，基类，防止模块之间互相导入
 '''
 
 from Libs.Thread.MThread import MThread
@@ -15,12 +15,21 @@ from Libs.FrameHandle.TimerMgr import TimerMgr
 from Libs.FrameHandle.FrameTimerMgr import FrameTimerMgr
 from Libs.FrameWork.EngineLoop import EngineLoop
 from Libs.Log.LogSys import LogSys
-from Libs.FrameWork.CtxBase import CtxBase
 from Libs.FrameWork.ProcessSys import ProcessSys
 from Libs.MsgRoute.MsgRouteNotify import MsgRouteNotify
 from Libs.MsgRoute.SysMsgRoute import SysMsgRoute
+from Libs.Core.GObject import GObject
 
-class Ctx(CtxBase):
+class Ctx(GObject):
+    
+    msInstance = None;
+    
+    @staticmethod
+    def instance():
+        if (Ctx.msInstance == None):
+            Ctx.msInstance = Ctx();
+
+        return Ctx.msInstance;
 
     def __init__(self):
         super(Ctx, self).__init__();
