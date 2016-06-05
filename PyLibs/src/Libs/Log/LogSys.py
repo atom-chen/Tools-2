@@ -26,10 +26,14 @@ class LogSys(GObject):
         self.mEnableLog = value;
 
 
-    def registerDevice(self):
-        logDevice = WinLogDevice();
+    def addLogDevice(self, logDevice):
         logDevice.initDevice();
         self.m_logDeviceList.Add(logDevice);
+
+
+    def registerDevice(self):
+        logDevice = WinLogDevice();
+        self.addLogDevice(logDevice);
 
 
     def isInFilter(self, logTypeId):

@@ -22,6 +22,8 @@ class PyToolSetSys(ToolSetSys):
         super(PyToolSetSys, self).__init__();
         
         self.mTypeId = "PyToolSetSys";
+        
+        self.mWinLogDeviceProxy = None;
     
 
     def init(self):

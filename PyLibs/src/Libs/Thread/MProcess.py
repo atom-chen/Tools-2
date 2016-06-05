@@ -10,7 +10,7 @@ import multiprocessing
 from Libs.Core import GObject
 import time
     
-class MProcessExt(GObject):
+class MProcess(GObject):
     '''
     classdocs
     '''

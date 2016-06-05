@@ -37,6 +37,7 @@ encoding//src/Libs/FrameHandle/TimerMgr.py=utf-8
 encoding//src/Libs/FrameWork/Ctx.py=utf-8
 encoding//src/Libs/FrameWork/CtxImpl.py=utf-8
 encoding//src/Libs/Log/LogSys.py=utf-8
+encoding//src/Libs/Thread/MProcess.py=utf-8
 encoding//src/Libs/Thread/MProcessExt.py=utf-8
 encoding//src/Libs/Thread/MThreadExt.py=utf-8
 encoding//src/Libs/Tools/UtilApi.py=utf-8

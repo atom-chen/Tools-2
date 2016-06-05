@@ -5,8 +5,12 @@
 '''
 
 from Libs.Log.LogDeviceBase import LogDeviceBase
-from Libs.Tools.UtilApi import UtilApi
 from Libs.Log.LogColor import LogColor
+from Libs.Tools.UtilPath import UtilPath
+from Libs.FileSystem.MDataStream import MDataStream
+from Libs.FileSystem.MFileMode import MFileMode
+from Libs.FrameWork.Ctx import Ctx
+from Libs.Tools.UtilStr import UtilStr
 
 class FileLogDevice(LogDeviceBase):
 
@@ -34,54 +38,47 @@ class FileLogDevice(LogDeviceBase):
 
 
     def initDevice(self):
-        path = UtilApi.getcwd();
+        path = UtilPath.getcwd();
         self.checkDirSize(path); # 检查目录大小
         
-        if (not UtilApi.exists(path)):
-            UtilApi.mkdir(path);
+        if (not UtilPath.exists(path)):
+            UtilPath.mkdir(path);
 
         file = "";
-        if (UtilApi.exists(file) and UtilApi.isfile(file)):
-            File.Delete(file);
-            m_fileStream = new FileStream(file, FileMode.Create);
+        if (UtilPath.exists(file) and UtilPath.isfile(file)):
+            UtilPath.deleteFile(file);
+            self.m_fileStream = MDataStream(file, MFileMode.WriteTxt);
         else:
-            m_fileStream = new FileStream(file, FileMode.Create);
-
-        m_streamWriter = new StreamWriter(m_fileStream);
+            self.m_fileStream = MDataStream(file, MFileMode.WriteAppend);
 
 
     def closeDevice(self):
-        m_streamWriter.Flush();
-        m_streamWriter.Close();
-        m_fileStream.Close();
+        self.m_fileStream.close();
 
 
     # 写文件
-    def logout(self, message, type = LogColor.LOG):
-        if (m_streamWriter != None):
-            m_streamWriter.Write(message);
-            m_streamWriter.Write("\n");
-            m_streamWriter.Flush();
+    def logout(self, message, logType = LogColor.LOG):
+        if (self.m_fileStream != None):
+            self.m_fileStream.writeLine(message);
+            self.m_fileStream.Flush();
 
 
     # 检测日志目录大小，如果太大，就删除
     def checkDirSize(self, path):
-        if (UtilApi.exists(path)):
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
+        if (UtilPath.exists(path)):
             size = 0;
             # 所有文件大小
-            FileInfo[] fis = dirInfo.GetFiles();
-            foreach (FileInfo fi in fis)
-                Size += fi.Length;
+            fileList = UtilPath.getAllFile();
+            for file in fileList:
+                size = size + file.mLength;
 
             # 如果超过限制就删除
             if (size > 10 * 1024 * 1024):
-                for fi in fis:
+                for file in fileList:
                     try:
-                        fi.Delete();
-                    catch Exception err:
-
-                        Ctx.m_instance.m_logSys.log(string.Format("删除文件 {0} 出错", fi.FullName));
+                        UtilPath.deleteFile(file.mFullPath);
+                    except:
+                        Ctx.instance().m_logSys.log(UtilStr.format("删除文件 {0} 出错", file.mFullPath));
 
 
 

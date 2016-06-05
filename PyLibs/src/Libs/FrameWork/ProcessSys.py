@@ -5,6 +5,7 @@
 '''
 
 from Libs.Core.GObject import GObject
+from Libs.FrameWork.Ctx import Ctx
 
 class ProcessSys(GObject):
     
@@ -15,14 +16,14 @@ class ProcessSys(GObject):
 
 
     def ProcessNextFrame(self):
-        Ctx.msInstance.m_systemTimeData.nextFrame();
-        self.Advance(Ctx.msInstance.m_systemTimeData.deltaSec);
+        Ctx.instance().m_systemTimeData.nextFrame();
+        self.Advance(Ctx.instance().m_systemTimeData.deltaSec);
 
 
     def Advance(self, delta):
-        Ctx.m_instance.m_systemFrameData.nextFrame(delta);
-        Ctx.m_instance.m_tickMgr.Advance(delta);                # 心跳
-        //Ctx.m_instance.m_timerMgr.Advance(delta);             # 定时器
-        //Ctx.m_instance.m_frameTimerMgr.Advance(delta);        # 帧定时器
+        Ctx.instance().m_systemFrameData.nextFrame(delta);
+        Ctx.instance().m_tickMgr.Advance(delta);                # 心跳
+        Ctx.instance().m_timerMgr.Advance(delta);               # 定时器
+        Ctx.instance().m_frameTimerMgr.Advance(delta);          # 帧定时器
 
 

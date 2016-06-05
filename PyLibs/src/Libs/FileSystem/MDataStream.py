@@ -5,6 +5,7 @@
 '''
 
 from Libs.Core import GObject
+from Libs.Tools.UtilPath import UtilPath
 
 class MDataStream(GObject):
     
@@ -25,8 +26,9 @@ class MDataStream(GObject):
             
         self.open();
         
-    
+    #注：不能把open语句放在try块里，因为当打开文件出现异常时，文件对象file_object无法执行close()方法。
     def open(self):
+        # 第二个参数默认为r
         self.mFileHandle = open(self.mFileName, self.mMode, self.mEncoding);
         
         
@@ -125,6 +127,11 @@ class MDataStream(GObject):
         if(self.isValid()):
             self.mFileHandle.write(strCon);
             
+    
+    def writeLine(self, strCon):
+        if(self.isValid()):
+            self.mFileHandle.write(strCon);
+            self.mFileHandle.write(UtilPath.CRLF);    
             
     #把seq的内容全部写到文件中。这个函数也只是忠实地写入，不会在每行后面加上任何东西。 
     def writelines(self, seq):

@@ -16,7 +16,7 @@ class EngineLoop(GObject):
         
         
     
-    def MainLoop(self):
+    def mainLoop(self):
         # 游戏循环处理
         Ctx.instance().m_processSys.ProcessNextFrame();
         Ctx.instance().m_logSys.updateLog();

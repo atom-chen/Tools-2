@@ -11,6 +11,7 @@ class MFileInfo(GObject):
         
         self.mFullPath = "";
         self.mFileName = "";
+        self.mLength = 0;
         
         
 class MDirInfo(GObject):
@@ -21,6 +22,7 @@ class MDirInfo(GObject):
         
         self.mFullPath = "";
         self.mDirName = "";
+        self.mLength = 0;
         
 
 class MFileAndDirList(GObject):

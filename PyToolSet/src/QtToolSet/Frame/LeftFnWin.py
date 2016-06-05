@@ -5,15 +5,14 @@
 
 from PyQt5 import QtWidgets
 
-import PyToolSet.UI.ui_leftfnwin
-from FileDirDiff.Core.AppSys import AppSysBase
-from FileDirDiff.Core.VerTask import VerTask
+import QtToolSet.UI.ui_leftfnwin
+from Libs.FrameWork.Ctx import Ctx
 
 class LeftFnWin(QtWidgets.QDockWidget):    
     def __init__(self):
         super(LeftFnWin, self).__init__()
 
-        self.ui = FileDirDiff.UI.ui_leftfnwin.Ui_LeftFnWin()
+        self.ui = QtToolSet.UI.ui_leftfnwin.Ui_LeftFnWin()
         self.ui.setupUi(self)
         
         # 注册事件处理函数
@@ -23,12 +22,12 @@ class LeftFnWin(QtWidgets.QDockWidget):
 
     # 生成当前版版本的 md5 文件
     def onBtnClkCheck(self):
-        AppSysBase.instance().m_logSys.info('test button')
+        Ctx.instance().m_logSys.log('test button')
     
     # 生成版本文件，用于更新资源使用
     # 拷贝文件
     def onBtnClkCopy(self):
-        AppSysBase.instance().m_pBuildVersion.copyFile();
+        pass;
         
     # 生成版本文件
     def onBtnClkDiff(self):
@@ -38,4 +37,5 @@ class LeftFnWin(QtWidgets.QDockWidget):
                 AppSysBase.instance().m_verTask = VerTask();
             AppSysBase.instance().m_verTask.start()
         else:
-            AppSysBase.instance().m_logSys.info('Verthread is runing')
+            Ctx.instance().m_logSys.log('Verthread is runing')
+

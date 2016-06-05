@@ -15,7 +15,7 @@ class WinLogDevice(LogDeviceBase):
         self.mTypeId = "WinLogDevice";
 
     
-    def logout(self, message, type = LogColor.LOG):
+    def logout(self, message, logType = LogColor.LOG):
         print(message);
 
 

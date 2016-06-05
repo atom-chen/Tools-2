@@ -14,5 +14,5 @@ class ToolSetSysImpl(ToolSetSys):
         
         self.mTypeId = "ToolSetSysImpl";
         
-        self.mFileDirDiffSys = FileDirDiffSysImpl();
+
     

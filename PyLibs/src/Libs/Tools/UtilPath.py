@@ -9,7 +9,6 @@ from Libs.Tools.UtilError import UtilError
 from Libs.DataStruct.MList import MList
 from Libs.Core.GObject import GObject
 from Libs.FileSystem.MFileDirInfo import MFileAndDirList, MFileInfo, MDirInfo
-from Libs.Tools.UtilApi import UtilApi
 
 '''
 @brief: 目录处理
@@ -18,6 +17,7 @@ from Libs.Tools.UtilApi import UtilApi
 class UtilPath(GObject):
     
     DOT = '.';
+    CRLF = "/r/n";
     
     # 将 "\" 转换成 "/"
     @staticmethod
@@ -62,7 +62,12 @@ class UtilPath(GObject):
     @staticmethod
     def move(oldFullFilePathOrDir, newFullFileOrDirPath):
         shutil.move(oldFullFilePathOrDir, newFullFileOrDirPath);
-        
+    
+    
+    # 删除文件
+    @staticmethod
+    def deleteFile(fullFilePath):
+        UtilPath.remove(fullFilePath);
     # 删除文件
     @staticmethod
     def remove(fullFilePath):
@@ -215,7 +220,7 @@ class UtilPath(GObject):
         
     # 递归遍历整个目录
     @staticmethod
-    def recurseTraverseDirectory(srcPath, destPath, pThis, func):
+    def traverseDirectory(srcPath, destPath, pThis, func):
         if(UtilStr.startswith(srcPath, destPath)):
             UtilError.error("Dir Can not Same");
             
@@ -250,12 +255,14 @@ class UtilPath(GObject):
                         curFileInfo = MFileInfo();
                         curFileInfo.mFullPath = fullFileOrDirPath;
                         curFileInfo.mFileName = fileOrDirName;
+                        curFileInfo.mLength = UtilPath.getsize(curFileInfo.mFullPath);
                         fileList.Add(curFileInfo);
             else:
                 fileOrDirName = UtilPath.getDirCurName(fullFileOrDirPath);
                 curDirInfo = MDirInfo();
                 curDirInfo.mFullPath = fullFileOrDirPath;
                 curDirInfo.mDirName = fileOrDirName;
+                curDirInfo.mLength = UtilPath.getsize(curDirInfo.mFullPath);
                 dirList.Add(curDirInfo);
                         
         if(isRecurse):
@@ -279,6 +286,7 @@ class UtilPath(GObject):
                 curDirInfo = MDirInfo();
                 curDirInfo.mFullPath = fullFileOrDirPath;
                 curDirInfo.mDirName = fileOrDirName;
+                curDirInfo.mLength = UtilPath.getsize(curDirInfo.mFullPath);
                 dirList.Add(curDirInfo);
                         
         if(isRecurse):
@@ -307,12 +315,14 @@ class UtilPath(GObject):
                         curFileInfo = MFileInfo();
                         curFileInfo.mFullPath = fullFileOrDirPath;
                         curFileInfo.mFileName = fileOrDirName;
+                        curFileInfo.mLength = UtilPath.getsize(curFileInfo.mFullPath);
                         retFileAndDirListInfo.mFileList.Add(curFileInfo);
             else:
                 fileOrDirName = UtilPath.getDirCurName(fullFileOrDirPath);
                 curDirInfo = MDirInfo();
                 curDirInfo.mFullPath = fullFileOrDirPath;
                 curDirInfo.mDirName = fileOrDirName;
+                curDirInfo.mLength = UtilPath.getsize(curDirInfo.mFullPath);
                 retFileAndDirListInfo.mDirList.Add(curDirInfo);
                         
         if(isRecurse):

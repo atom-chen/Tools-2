@@ -1,23 +1,9 @@
 ﻿#-*- encoding=utf-8 -*-
 
 '''
-@brief Ctx，基类，防止模块之间互相导入
+@brief: Ctx
 '''
 
-from Libs.Thread.MThread import MThread
-from Libs.FrameHandle.ResizeMgr import ResizeMgr
-from Libs.Task.TaskQueue import TaskQueue
-from Libs.Task.TaskThreadPool import TaskThreadPool
-from Libs.FrameHandle.SystemFrameData import SystemFrameData
-from Libs.FrameHandle.SystemTimeData import SystemTimeData
-from Libs.FrameHandle.TickMgr import TickMgr
-from Libs.FrameHandle.TimerMgr import TimerMgr
-from Libs.FrameHandle.FrameTimerMgr import FrameTimerMgr
-from Libs.FrameWork.EngineLoop import EngineLoop
-from Libs.Log.LogSys import LogSys
-from Libs.FrameWork.ProcessSys import ProcessSys
-from Libs.MsgRoute.MsgRouteNotify import MsgRouteNotify
-from Libs.MsgRoute.SysMsgRoute import SysMsgRoute
 from Libs.Core.GObject import GObject
 
 class Ctx(GObject):
@@ -31,46 +17,29 @@ class Ctx(GObject):
 
         return Ctx.msInstance;
 
+    
     def __init__(self):
         super(Ctx, self).__init__();
         
-        self.mTypeId = "Ctx";
-
-
-    def preInit(self):
-        MThread.getMainThreadID();  # 获取主线程 ID
-        self.m_msgRouteNotify = MsgRouteNotify();
+        self.mTypeId = "CtxImpl";
         
-        self.m_TaskQueue = TaskQueue("TaskQueue");
-        self.m_TaskThreadPool = TaskThreadPool();
-        self.m_systemFrameData = SystemFrameData();
-        self.m_systemTimeData = SystemTimeData();
-        self.m_processSys = ProcessSys();
-        self.m_tickMgr = TickMgr();
-        self.m_timerMgr = TimerMgr();
-        self.m_frameTimerMgr = FrameTimerMgr();
-        self.m_engineLoop = EngineLoop();
-        self.m_resizeMgr = ResizeMgr();
-        self.m_sysMsgRoute = SysMsgRoute("SysMsgRoute");
-        self.m_logSys = LogSys();
-
-
-    def interInit(self):
-        pass;
-
-
-    def postInit(self):
-        self.m_TaskQueue.m_pTaskThreadPool = self.m_TaskThreadPool;
-        self.m_TaskThreadPool.initThreadPool(2, self.m_TaskQueue);
+        # 声明需要的变量，当然也可以不必在这里声明，直接赋值就行了
+        self.m_msgRouteNotify = None;
+        self.m_TaskQueue = None;
+        self.m_TaskThreadPool = None;
+        self.m_systemFrameData = None;
+        self.m_systemTimeData = None;
+        self.m_processSys = None;
+        self.m_tickMgr = None;
+        self.m_timerMgr = None;
+        self.m_frameTimerMgr = None;
+        self.m_engineLoop = None;
+        self.m_resizeMgr = None;
+        self.m_sysMsgRoute = None;
+        self.m_logSys = None;
 
 
     def init(self):
-        self.preInit();
-        self.interInit();
-        self.postInit();
-
-
-    # 卸载所有的资源
-    def unloadAll(self):
         pass;
+
 

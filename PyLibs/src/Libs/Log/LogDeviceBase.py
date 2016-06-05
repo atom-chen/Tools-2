@@ -23,7 +23,7 @@ class LogDeviceBase(GObject):
         pass;
 
 
-    def logout(self, message, type = LogColor.LOG):
+    def logout(self, message, logType = LogColor.LOG):
         pass;
 
 
