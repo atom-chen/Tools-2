@@ -15,10 +15,14 @@ class MProcess(GObject):
     classdocs
     '''
 
-    def __init__(self, processName, func):
+    def __init__(self, processName = "", func = None):
         '''
         Constructor
         '''
+        super(MProcess, self).__init();
+        
+        self.mTypeId = "MProcess";
+        
         self.mProcessName = processName;
         self.m_runF = func;
         self.m_pid = 0;

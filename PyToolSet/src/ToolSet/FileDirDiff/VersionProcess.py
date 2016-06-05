@@ -7,4 +7,14 @@
 from Libs.Thread.MProcess import MProcess
 
 class VersionProcess(MProcess):
-    pass;
+    
+    def __init__(self):
+        super(VersionProcess, self).__init__("VersionProcess", None);
+        
+        self.mTypeId = "VersionProcess";
+    
+    def run(self, params):
+        super(VersionProcess, self).run(params);
+        
+        
+        

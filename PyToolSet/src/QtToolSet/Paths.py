@@ -7,7 +7,7 @@ import os
 
 FROZEN = False
 
-from PyToolSet import Fake
+from QtToolSet import Fake
 
 PACKAGE_DIR = os.path.dirname(os.path.abspath(Fake.__file__))
 

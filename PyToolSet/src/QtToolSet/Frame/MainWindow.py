@@ -9,7 +9,7 @@ from PyQt5 import  QtWidgets, QtCore
 import QtToolSet.UI.ui_mainwindow
 import QtToolSet.Frame.LoggerWin
 import QtToolSet.Frame.LeftFnWin
-from PyToolSet.Common.PyToolSetSys import PyToolSetSys
+from QtToolSet.Common.QtToolSetSys import QtToolSetSys
 from Libs.FrameWork.Ctx import Ctx
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -25,7 +25,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.m_app = app;
         
         self.createUI();
-        PyToolSetSys.instance().mWinLogDeviceProxy.setLogWin(self.m_LoggerWin);
+        QtToolSetSys.instance().mWinLogDeviceProxy.setLogWin(self.m_LoggerWin);
 
 
     def createUI(self):

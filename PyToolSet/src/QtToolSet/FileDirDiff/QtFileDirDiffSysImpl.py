@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
 '''
-@brief: PyFileDirDiffSysImpl
+@brief: QtFileDirDiffSysImpl
 '''
 
 from ToolSet.FileDirDiff.FileDirDiffSys import FileDirDiffSys
 
-class PyFileDirDiffSysImpl(FileDirDiffSys):
+class QtFileDirDiffSysImpl(FileDirDiffSys):
     
     def __init__(self):
-        super(PyFileDirDiffSysImpl, self).__init__();
+        super(QtFileDirDiffSysImpl, self).__init__();
             
         self.mTypeId = "PyFileDirDiffSysImpl";
 

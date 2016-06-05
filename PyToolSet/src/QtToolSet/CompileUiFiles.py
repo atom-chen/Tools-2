@@ -18,7 +18,7 @@ def compileUIFiles(uiDir):
                     compileUi(uiFilePath, f)
 
 def main():
-    from FileDirDiff import Paths
+    from QtToolSet import Paths
 
     compileUIFiles(Paths.UI_DIR)
 

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 '''
-@brief: PyToolSetSys
+@brief: QtToolSetSys
 '''
 
 from ToolSet.Common import ToolSetSys
 
-class PyToolSetSys(ToolSetSys):
+class QtToolSetSys(ToolSetSys):
             
     msInstance = None;
     
@@ -15,15 +15,16 @@ class PyToolSetSys(ToolSetSys):
         #if (PyToolSetSys.msInstance == None):
         #    PyToolSetSys.msInstance = PyToolSetSys();
 
-        return PyToolSetSys.msInstance;
+        return QtToolSetSys.msInstance;
 
     
     def __init__(self):
-        super(PyToolSetSys, self).__init__();
+        super(QtToolSetSys, self).__init__();
         
         self.mTypeId = "PyToolSetSys";
         
         self.mWinLogDeviceProxy = None;
+
     
 
     def init(self):

@@ -15,10 +15,20 @@ class FileDirDiffSys(GObject):
         self.mTypeId = "FileDirDiffSys";
         
         self.mConfig = Config();
+        self.m_bOverVer = True;
+        self.mVerProcess = None;
 
 
     def start(self):
         self.mConfig.readInit('Config/Config.txt');
+        
+        
+    def isVersionOver(self):
+        return self.m_bOverVer;
+    
+    
+    def startVerProcess(self):
+        pass
 
 
 

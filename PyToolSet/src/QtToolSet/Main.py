@@ -6,7 +6,7 @@
 
 def main():
     import sys
-    from PyToolSet.Frame import AppFrame
+    from QtToolSet.Frame import AppFrame
     app = AppFrame.AppFrame()
     sys.exit(app.exec_())
     

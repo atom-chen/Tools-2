@@ -5,8 +5,8 @@
 '''
 
 from Libs.Core.GObject import GObject
-from PyToolSet.Common.PyToolSetSys import PyToolSetSys
-from PyToolSet.Common.PyToolSetSysImpl import PyToolSetSysImpl
+from QtToolSet.Common.QtToolSetSys import QtToolSetSys
+from QtToolSet.Common.QtToolSetSysImpl import QtToolSetSysImpl
 from Libs.FrameWork.Ctx import Ctx
 from Libs.FrameWork.CtxImpl import CtxImpl
 
@@ -21,8 +21,8 @@ class MApp(GObject):
     def init(self):
         #实例化全局变量
         Ctx.msInstance = CtxImpl();
-        PyToolSetSys.msInstance = PyToolSetSysImpl();
-        PyToolSetSys.instance().init();
+        QtToolSetSys.msInstance = QtToolSetSysImpl();
+        QtToolSetSys.instance().init();
 
 
 

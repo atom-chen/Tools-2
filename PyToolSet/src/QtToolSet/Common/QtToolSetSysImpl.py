@@ -1,24 +1,24 @@
 # -*- coding: utf-8 -*-
 
 '''
-@brief: PyToolSetSysImpl
+@brief: QtToolSetSysImpl
 '''
 
-from PyToolSet.Common.PyToolSetSys import PyToolSetSys
+from QtToolSet.Common.QtToolSetSys import QtToolSetSys
 from ToolSet.FileDirDiff.FileDirDiffSysImpl import FileDirDiffSysImpl
-from PyToolSet.Common.LogWinProxy import LogWinProxy
+from QtToolSet.Common.LogWinProxy import LogWinProxy
 from Libs.FrameWork.Ctx import Ctx
 
-class PyToolSetSysImpl(PyToolSetSys):
+class QtToolSetSysImpl(QtToolSetSys):
     
     def __init__(self):
-        super(PyToolSetSysImpl, self).__init__();
+        super(QtToolSetSysImpl, self).__init__();
         
         self.mTypeId = "PyToolSetSysImpl";
         
     
     def init(self):
-        super(PyToolSetSysImpl, self).init();
+        super(QtToolSetSysImpl, self).init();
 
         self.mFileDirDiffSys = FileDirDiffSysImpl();
         

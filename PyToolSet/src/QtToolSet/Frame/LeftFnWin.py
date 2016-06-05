@@ -7,6 +7,7 @@ from PyQt5 import QtWidgets
 
 import QtToolSet.UI.ui_leftfnwin
 from Libs.FrameWork.Ctx import Ctx
+from QtToolSet.Common.QtToolSetSys import QtToolSetSys
 
 class LeftFnWin(QtWidgets.QDockWidget):    
     def __init__(self):
@@ -32,10 +33,8 @@ class LeftFnWin(QtWidgets.QDockWidget):
     # 生成版本文件
     def onBtnClkDiff(self):
         #直接启动线程
-        if AppSysBase.instance().m_bOverVer:
-            if AppSysBase.instance().m_verTask is None:
-                AppSysBase.instance().m_verTask = VerTask();
-            AppSysBase.instance().m_verTask.start()
+        if QtToolSetSys.instance().mFileDirDiffSys.isVersionOver():
+            QtToolSetSys.instance().mFileDirDiffSys.startVerProcess();
         else:
             Ctx.instance().m_logSys.log('Verthread is runing')
 

@@ -6,6 +6,7 @@
 
 from ToolSet.FileDirDiff.Config import Config
 from ToolSet.FileDirDiff.FileDirDiffSys import FileDirDiffSys
+from ToolSet.FileDirDiff.VersionProcess import VersionProcess
 
 class FileDirDiffSysImpl(FileDirDiffSys):
     
@@ -21,4 +22,12 @@ class FileDirDiffSysImpl(FileDirDiffSys):
         self.mConfig.readInit('Config/Config.txt');
 
 
-
+    def startVerProcess(self):
+        super(FileDirDiffSysImpl, self).startVerProcess();
+        
+        if(self.isVersionOver()):
+            self.mVerProcess = VersionProcess();
+            self.mVerProcess.start();
+        
+        
+        

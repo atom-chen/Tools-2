@@ -26,6 +26,7 @@ encoding//src/QtToolSet/Common/LogWinProxy.py=utf-8
 encoding//src/QtToolSet/Common/MApp.py=utf-8
 encoding//src/QtToolSet/Common/QtToolSetSys.py=utf-8
 encoding//src/QtToolSet/Common/QtToolSetSysImpl.py=utf-8
+encoding//src/QtToolSet/CompileUiFiles.py=utf-8
 encoding//src/QtToolSet/Fake.py=utf-8
 encoding//src/QtToolSet/FileDirDiff/QtFileDirDiffSys.py=utf-8
 encoding//src/QtToolSet/FileDirDiff/QtFileDirDiffSysImpl.py=utf-8
