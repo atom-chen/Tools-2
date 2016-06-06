@@ -1,4 +1,4 @@
-﻿#-*- encoding=utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from Libs.DelayHandle.IDelayHandleItem import IDelayHandleItem
 from Libs.Tools.UtilApi import UtilApi

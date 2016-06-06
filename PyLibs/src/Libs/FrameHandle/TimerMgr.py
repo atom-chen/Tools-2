@@ -1,4 +1,4 @@
-﻿#-*- encoding=utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from Libs.DelayHandle.DelayHandleMgrBase import DelayHandleMgrBase
 from Libs.DataStruct.MList import MList

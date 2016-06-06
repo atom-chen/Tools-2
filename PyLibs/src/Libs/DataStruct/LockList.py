@@ -1,4 +1,4 @@
-﻿﻿#-*- encoding=utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 from Libs.Core.GObject import GObject
 from Libs.Thread.MMutex import MMutex

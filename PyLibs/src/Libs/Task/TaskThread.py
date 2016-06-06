@@ -1,4 +1,4 @@
-﻿﻿#-*- encoding=utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 from Libs.Thread.MThread import MThread
 from Libs.Thread.MCondition import MCondition

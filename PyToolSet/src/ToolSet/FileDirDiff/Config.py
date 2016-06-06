@@ -4,7 +4,8 @@
 @brief: Administrator
 '''
 
-from Libs.Core import GObject
+from Libs.Core.GObject import GObject
 
 class Config(GObject):
     pass;
+

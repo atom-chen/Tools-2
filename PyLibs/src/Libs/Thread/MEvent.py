@@ -1,4 +1,4 @@
-﻿﻿#-*- encoding=utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 from threading import Event
 from Libs.Core.GObject import GObject

@@ -1,6 +1,6 @@
-﻿﻿#-*- encoding=utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
-from Libs.Core import GObject
+from Libs.Core.GObject import GObject
 
 class LogTypeId(GObject):
     eLogCommon = 0;         # 通用日志

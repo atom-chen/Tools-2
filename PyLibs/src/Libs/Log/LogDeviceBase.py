@@ -1,4 +1,4 @@
-﻿﻿#-*- encoding=utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 from Libs.Core.GObject import GObject
 from Libs.Log.LogColor import LogColor
@@ -10,7 +10,7 @@ from Libs.Log.LogColor import LogColor
 class LogDeviceBase(GObject):
     
     def __init__(self):
-        super(LogDeviceBase).__init__();
+        super(LogDeviceBase, self).__init__();
         
         self.mTypeId = "LogDeviceBase";
 

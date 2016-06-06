@@ -5,7 +5,7 @@
 '''
 
 import hashlib
-from Libs.Core import GObject
+from Libs.Core.GObject import GObject
 
 class UtilHash(GObject):
     

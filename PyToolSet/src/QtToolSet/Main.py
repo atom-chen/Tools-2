@@ -5,10 +5,11 @@
 '''
 
 def main():
-    import sys
-    from QtToolSet.Frame import AppFrame
-    app = AppFrame.AppFrame()
-    sys.exit(app.exec_())
+    import sys;
+    from QtToolSet.Frame import AppFrame;
+    app = AppFrame.AppFrame();
+    sys.exit(app.exec_());
     
 if __name__ == "__main__":
-    main()
+    main();
+

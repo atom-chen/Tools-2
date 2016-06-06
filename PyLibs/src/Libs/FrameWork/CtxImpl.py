@@ -1,4 +1,4 @@
-﻿#-*- encoding=utf-8 -*-
+# -*- coding: utf-8 -*-
 
 '''
 @brief Ctx，基类，防止模块之间互相导入

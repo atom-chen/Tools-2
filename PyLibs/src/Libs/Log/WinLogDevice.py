@@ -1,4 +1,4 @@
-﻿﻿#-*- encoding=utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 from Libs.Log.LogDeviceBase import LogDeviceBase
 from Libs.Log.LogColor import LogColor

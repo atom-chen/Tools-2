@@ -1,4 +1,4 @@
-﻿#-*- encoding=utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from Libs.DataStruct.MList import MList
 from Libs.Tools.UtilApi import UtilApi

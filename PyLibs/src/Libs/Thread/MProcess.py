@@ -1,4 +1,4 @@
-﻿#-*- encoding=utf-8 -*-
+# -*- coding: utf-8 -*-
 
 '''
 @brief: 多处理器 
@@ -7,9 +7,9 @@
 
 import multiprocessing
 
-from Libs.Core import GObject
+from Libs.Core.GObject import GObject
 import time
-    
+
 class MProcess(GObject):
     '''
     classdocs
