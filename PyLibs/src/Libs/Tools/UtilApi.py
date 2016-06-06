@@ -6,6 +6,7 @@
 
 import time;
 import types;
+import os;
 from Libs.Core.GObject import GObject;
 
 class UtilApi(GObject):
@@ -30,5 +31,10 @@ class UtilApi(GObject):
     def isType(varName, typeProto):
         return (type(varName) == typeProto)
     
+    
+    
+    @staticmethod
+    def getpid():
+        return os.getpid();
     
     

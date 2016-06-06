@@ -4,7 +4,7 @@
 @author: FileDirDiffSysImpl
 '''
 
-from ToolSet.FileDirDiff.Config import Config
+from ToolSet.FileDirDiff.VerConfig import VerConfig
 from ToolSet.FileDirDiff.FileDirDiffSys import FileDirDiffSys
 from ToolSet.FileDirDiff.VersionProcess import VersionProcess
 
@@ -15,7 +15,7 @@ class FileDirDiffSysImpl(FileDirDiffSys):
         
         self.mTypeId = "FileDirDiffSysImpl";
         
-        self.mConfig = Config();
+        self.mVerConfig = VerConfig();
 
 
     def start(self):

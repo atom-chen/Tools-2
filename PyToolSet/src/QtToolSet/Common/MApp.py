@@ -20,9 +20,9 @@ class MApp(GObject):
     
     def init(self):
         #实例化全局变量
-        Ctx.msInstance = CtxImpl();
+        Ctx.setInstance(CtxImpl());
         Ctx.instance().init();
-        QtToolSetSys.msInstance = QtToolSetSysImpl();
+        QtToolSetSys.setInstance(QtToolSetSysImpl());
         QtToolSetSys.instance().init();
 
 

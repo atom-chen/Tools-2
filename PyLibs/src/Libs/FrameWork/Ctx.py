@@ -5,10 +5,20 @@
 '''
 
 from Libs.Core.GObject import GObject;
+from Libs.Tools.UtilError import UtilError
 
 class Ctx(GObject):
     
     msInstance = None;
+    
+    @staticmethod
+    def setInstance(ins):
+        if (Ctx.msInstance == None):
+            Ctx.msInstance = ins;
+        else:
+            UtilError.error("Ins Can not Ins Twice");   
+    
+    
     
     @staticmethod
     def instance():

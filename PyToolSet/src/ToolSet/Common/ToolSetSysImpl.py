@@ -4,8 +4,7 @@
 @brief: ToolSetSysImpl
 '''
 
-from ToolSet.Common.ToolSetSys import ToolSetSys
-from ToolSet.FileDirDiff.FileDirDiffSysImpl import FileDirDiffSysImpl
+from ToolSet.Common.ToolSetSys import ToolSetSys;
 
 class ToolSetSysImpl(ToolSetSys):
     

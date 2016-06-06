@@ -134,7 +134,13 @@ class UtilPath(GObject):
         pathNoExt, ext = os.path.splitext(fullFilePath);
         pathNoExt = UtilPath.normal(pathNoExt);
         return pathNoExt, ext;
-        
+
+
+    @staticmethod
+    def combine(path_a, path_b, path_c = None):
+        return UtilPath.join(path_a, path_b, path_c);
+
+
     # 连接目录
     @staticmethod
     def join(path_a, path_b, path_c = None):

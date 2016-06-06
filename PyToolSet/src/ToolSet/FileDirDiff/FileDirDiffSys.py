@@ -5,7 +5,6 @@
 '''
 
 from Libs.Core.GObject import GObject
-from ToolSet.FileDirDiff.Config import Config
 
 class FileDirDiffSys(GObject):
     
@@ -14,7 +13,7 @@ class FileDirDiffSys(GObject):
         
         self.mTypeId = "FileDirDiffSys";
         
-        self.mConfig = Config();
+        self.mVerConfig = None;
         self.m_bOverVer = True;
         self.mVerProcess = None;
 
