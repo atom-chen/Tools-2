@@ -14,7 +14,8 @@ class MProcess(GObject):
     classdocs
     '''
 
-    def __init__(self, processName = "", func = None):
+    def __init__(self, params = None, processName = "", func = None):
+    #def __init__(self, processName = "", func = None):
         '''
         Constructor
         '''
@@ -22,11 +23,18 @@ class MProcess(GObject):
         
         self.mTypeId = "MProcess";
         
+        #self.mManager = multiprocessing.Manager();
+        #self.mParam = self.mManager.Value('params', params);
+        
+        self.mParam = params;
         self.mProcessName = processName;
         self.m_runF = func;
         self.m_pid = 0;
         self.mProcessHandle = None;
         
+    
+    def setInfo(self, info):
+        self.mInfo = info;
         
         
     def isValid(self):
@@ -37,7 +45,7 @@ class MProcess(GObject):
         if(self.mProcessHandle == None):
             self.mProcessHandle = multiprocessing.Process(
                                                           target = self.run, 
-                                                          args = (15, ), 
+                                                          args = (self.mParam, ), 
                                                           name = self.mProcessName
                                                           );
 
@@ -68,7 +76,7 @@ class MProcess(GObject):
     def getDaemon(self):
         return self.mProcessHandle.daemon;
     
-    
+    # 守护进程就是不阻挡主程序退出，自己干自己的 mutilprocess.setDaemon(True)
     def setDaemon(self, daemonic):
         self.mProcessHandle.daemon = daemonic;
         
@@ -85,5 +93,11 @@ class MProcess(GObject):
         if self.m_runF is not None:
             self.m_runF();
             time.sleep(10);
+
+
+    @staticmethod
+    def current_process():
+        return multiprocessing.current_process();
+
 
 

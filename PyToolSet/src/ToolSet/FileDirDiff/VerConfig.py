@@ -22,12 +22,19 @@ class VerConfig(GObject):
         super(VerConfig, self).__init__();
         
         self.mTypeId = "Config";
-        self.mProjRootPath = "";     # 工程根目录
+        self.mProjRootPath = "";    # 工程根目录
+        self.mOutPath = "";         # 输出目录
+        self.mDestPath = "";        # 最终目录
+        
         self.mResourcesName = "Resources";  # Resources 目录名字
         self.mAssetName = "Assets";       # Assets 目录名字
         self.mStreamingAssetsName = "StreamingAssets";  # StreamingAssets 目录名字
         
         self.mMakeVerType = eMakeType.eResources;       # 生成版本的类型
+        
+        self.mResourcesVerFileName = "Version_R.txt";       # Resources 版本文件名字
+        
+        
 
 
     def isMakeResources(self):
@@ -52,6 +59,10 @@ class VerConfig(GObject):
 
     def getStreamingAssetsPath(self):
         return UtilPath.combine(self.mProjRootPath, self.mAssetName, self.mStreamingAssetsName);
+    
+    
+    def getResourcesVerFileFullOutPath(self):
+        return UtilPath.combine(self.mOutPath, self.mResourcesVerFileName);
     
 
     
