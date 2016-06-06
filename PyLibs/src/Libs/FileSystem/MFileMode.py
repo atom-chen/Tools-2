@@ -3,7 +3,7 @@
 '''
 @brief: MFileMode
 '''
-from Libs.Core.GObject import GObject
+from Libs.Core.GObject import GObject;
 
 class MFileMode(GObject):
 

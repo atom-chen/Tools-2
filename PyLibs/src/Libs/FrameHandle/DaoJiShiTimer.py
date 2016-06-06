@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from Libs.FrameHandle.TimerItemBase import TimerItemBase
+from Libs.FrameHandle.TimerItemBase import TimerItemBase;
 
 '''
 @brief 倒计时定时器

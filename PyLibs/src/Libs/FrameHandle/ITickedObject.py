@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject
+from Libs.Core.GObject import GObject;
 
 class ITickedObject(GObject):
     def __init__(self):

@@ -4,10 +4,10 @@
 @brief: TestMain
 '''
 
-from Libs.Core.GObject import GObject
-from Test.TestEventDispatch import TestEventDispatch
-from Test.TestDataStruct import TestDataStruct
-from Test.TestUtil import TestUtil
+from Libs.Core.GObject import GObject;
+from Test.TestEventDispatch import TestEventDispatch;
+from Test.TestDataStruct import TestDataStruct;
+from Test.TestUtil import TestUtil;
 
 class TestMain(GObject):
     

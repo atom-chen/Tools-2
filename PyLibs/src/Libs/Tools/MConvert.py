@@ -4,7 +4,9 @@
 @brief: 类型之间相互转换
 '''
 
-class MConvert(object):
+from Libs.Core.GObject import GObject;
+
+class MConvert(GObject):
 
     @staticmethod
     def str2Float(srcStr):

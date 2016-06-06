@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject
-import threading
+import threading;
+from Libs.Core.GObject import GObject;
 
 '''
 @brief 基本的线程

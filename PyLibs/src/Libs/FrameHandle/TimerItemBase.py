@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject
-from Libs.FrameHandle.TimerFunctionObject import TimerFunctionObject
+from Libs.Core.GObject import GObject;
+from Libs.FrameHandle.TimerFunctionObject import TimerFunctionObject;
 
 '''
 @brief 定时器，这个是不断增长的

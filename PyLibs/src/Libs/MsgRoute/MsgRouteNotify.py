@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject
-from Libs.DataStruct.MList import MList
+from Libs.Core.GObject import GObject;
+from Libs.DataStruct.MList import MList;
 
 class MsgRouteNotify(GObject):
 

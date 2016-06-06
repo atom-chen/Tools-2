@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from Libs.DataStruct.MList import MList
-from Libs.Tools.UtilApi import UtilApi
-from Libs.DelayHandle.DelayHandleMgrBase import DelayHandleMgrBase
-from Libs.FrameHandle.TickProcessObject import TickProcessObject
+from Libs.DataStruct.MList import MList;
+from Libs.Tools.UtilApi import UtilApi;
+from Libs.DelayHandle.DelayHandleMgrBase import DelayHandleMgrBase;
+from Libs.FrameHandle.TickProcessObject import TickProcessObject;
 
 '''
 @brief 心跳管理器

@@ -3,12 +3,10 @@
 '''
 @brief: 多处理器 
 '''
-#-*- encoding=utf-8 -*-
 
-import multiprocessing
-
-from Libs.Core.GObject import GObject
-import time
+import multiprocessing;
+import time;
+from Libs.Core.GObject import GObject;
 
 class MProcess(GObject):
     '''

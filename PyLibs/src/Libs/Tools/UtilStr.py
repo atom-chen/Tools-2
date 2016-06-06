@@ -1,9 +1,11 @@
 #-*- encoding=utf-8 -*-
 
+from Libs.Core.GObject import GObject;
+
 '''
 @brief: 字符串工具
 '''
-class UtilStr(object):
+class UtilStr(GObject):
     
     @staticmethod
     def len(srcStr):

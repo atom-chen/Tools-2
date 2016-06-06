@@ -1,6 +1,6 @@
 #-*- encoding=utf-8 -*-
 
-from Libs.Core import GObject
+from Libs.Core.GObject import GObject;
 
 '''
 @brief: IdGen

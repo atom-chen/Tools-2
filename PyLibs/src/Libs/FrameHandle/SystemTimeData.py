@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject
-from Libs.Tools.UtilApi import UtilApi
+from Libs.Core.GObject import GObject;
+from Libs.Tools.UtilApi import UtilApi;
 
 class SystemTimeData(GObject):
 
