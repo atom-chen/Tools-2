@@ -1,7 +1,8 @@
 ﻿# -*- coding: utf-8 -*-
 
-from Libs.Thread.MThread import MThread
-from Libs.Thread.MCondition import MCondition
+import time;
+from Libs.Thread.MThread import MThread;
+from Libs.Thread.MCondition import MCondition;
 
 '''
 @brief 任务线程
@@ -21,16 +22,22 @@ class TaskThread(MThread):
     #def threadHandle(self, intParam, strParam):
     def threadHandle(self):
         while (not self.m_ExitFlag):
-            self.m_curTask = self.m_taskQueue.pop();
-            if(self.m_curTask != None):
-                self.m_curTask.runTask();
-            else:
-                self.m_condition.wait();
+            if(self.m_condition.acquire()):
+                self.m_curTask = self.m_taskQueue.pop();
+                if(self.m_curTask != None):
+                    self.m_curTask.runTask();
+                else:
+                    self.m_condition.wait();
+                    
+                self.m_condition.release();
+                
+                time.sleep(2);
             
 
     def notifySelf(self):
-        if(self.m_condition.canEnterWait):
+        if(self.m_condition.acquire()):
             self.m_condition.notifyAll();
+            self.m_condition.release();
             return True;
 
         return False;

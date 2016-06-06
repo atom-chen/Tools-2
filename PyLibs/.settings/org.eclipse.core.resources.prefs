@@ -46,6 +46,7 @@ encoding//src/Libs/Task/TaskQueue.py=utf-8
 encoding//src/Libs/Task/TaskThread.py=utf-8
 encoding//src/Libs/Task/TaskThreadPool.py=utf-8
 encoding//src/Libs/Thread/MCondition.py=utf-8
+encoding//src/Libs/Thread/MEvent.py=utf-8
 encoding//src/Libs/Thread/MProcess.py=utf-8
 encoding//src/Libs/Thread/MProcessExt.py=utf-8
 encoding//src/Libs/Thread/MThread.py=utf-8

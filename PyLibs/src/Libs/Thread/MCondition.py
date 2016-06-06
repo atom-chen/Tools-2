@@ -19,6 +19,14 @@ class MCondition(GObject):
         self.mCond = threading.Condition();
 
 
+    def acquire(self):
+        return self.mCond.acquire();
+    
+    
+    def release(self):
+        return self.mCond.release();
+
+
     def wait(self):
         self.mCond.wait();
 
