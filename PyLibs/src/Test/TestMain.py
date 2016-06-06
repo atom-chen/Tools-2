@@ -8,6 +8,7 @@ from Libs.Core.GObject import GObject
 from Test.TestEventDispatch import TestEventDispatch
 from Test.TestDataStruct import TestDataStruct
 from Test.TestUtil import TestUtil
+from Test.TestRef import TestRef
 
 class TestMain(GObject):
     
@@ -19,12 +20,14 @@ class TestMain(GObject):
         self.mTestEventDispatch = TestEventDispatch();
         self.mTestDataStruct = TestDataStruct();
         self.mTestUtil = TestUtil();
+        self.mTestRef = TestRef();
         
     
     def run(self):
-        self.mTestEventDispatch.run();
-        self.mTestDataStruct.run();
-        self.mTestUtil.run();
+        #self.mTestEventDispatch.run();
+        #self.mTestDataStruct.run();
+        #self.mTestUtil.run();
+        self.mTestRef.run();
 
 
 
