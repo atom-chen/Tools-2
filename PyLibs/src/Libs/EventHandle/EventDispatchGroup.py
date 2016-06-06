@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject;
-from Libs.DataStruct.MDictionary import MDictionary;
-from Libs.EventHandle.EventDispatch import EventDispatch;
+from Libs.Core.GObject import GObject
+from Libs.DataStruct.MDictionary import MDictionary
+from Libs.EventHandle.EventDispatch import EventDispatch
 
 class EventDispatchGroup(GObject):
 

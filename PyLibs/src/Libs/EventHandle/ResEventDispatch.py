@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from Libs.EventHandle.EventDispatch import EventDispatch;
+from Libs.EventHandle.EventDispatch import EventDispatch
 
 class ResEventDispatch(EventDispatch):
     def __init__(self):

@@ -4,7 +4,7 @@
 @brief 可分发的对象
 '''
 
-from Libs.Core.GObject import GObject;
+from Libs.Core.GObject import GObject
 
 class IDispatchObject(GObject):
     def __init__(self):

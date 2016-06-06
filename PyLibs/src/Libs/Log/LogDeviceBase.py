@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject;
-from Libs.Log.LogColor import LogColor;
+from Libs.Core.GObject import GObject
+from Libs.Log.LogColor import LogColor
 
 '''
 @brief 日志设备

@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
-from Libs.Log.LogDeviceBase import LogDeviceBase;
-from Libs.Log.LogColor import LogColor;
+from Libs.Log.LogDeviceBase import LogDeviceBase
+from Libs.Log.LogColor import LogColor
 
 '''
 @brief 窗口日志

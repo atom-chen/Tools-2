@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject;
+from Libs.Core.GObject import GObject
 
 class LogColor(GObject):
     LOG = 0;

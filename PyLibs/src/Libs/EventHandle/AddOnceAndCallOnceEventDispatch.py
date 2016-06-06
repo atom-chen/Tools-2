@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from Libs.EventHandle.EventDispatch import EventDispatch;
+from Libs.EventHandle.EventDispatch import EventDispatch
 
 class AddOnceAndCallOnceEventDispatch(EventDispatch):
     def __init__(self):

@@ -4,7 +4,7 @@
 @brief: Ctx
 '''
 
-from Libs.Core.GObject import GObject;
+from Libs.Core.GObject import GObject
 from Libs.Tools.UtilError import UtilError
 
 class Ctx(GObject):

@@ -2,8 +2,8 @@
 @brief: TestUtil
 '''
 
-from Libs.Core.GObject import GObject;
-from Libs.Tools.UtilPath import UtilPath;
+from Libs.Core.GObject import GObject
+from Libs.Tools.UtilPath import UtilPath
 
 class TestUtil(GObject):
     def __init__(self):

@@ -1,8 +1,8 @@
 ﻿# -*- coding: utf-8 -*-
 
-import time;
-from Libs.Thread.MThread import MThread;
-from Libs.Thread.MCondition import MCondition;
+import time
+from Libs.Thread.MThread import MThread
+from Libs.Thread.MCondition import MCondition
 
 '''
 @brief 任务线程

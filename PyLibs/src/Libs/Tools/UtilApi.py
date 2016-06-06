@@ -4,10 +4,10 @@
 @brief: UtilApi
 '''
 
-import time;
-import types;
-import os;
-from Libs.Core.GObject import GObject;
+import time
+import types
+import os
+from Libs.Core.GObject import GObject
 
 class UtilApi(GObject):
     

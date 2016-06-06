@@ -1,14 +1,14 @@
 #-*- encoding=utf-8 -*-
 
-import os;
-import shutil;
-import glob;
+import os
+import shutil
+import glob
 
-from Libs.Tools.UtilStr import UtilStr;
-from Libs.Tools.UtilError import UtilError;
-from Libs.DataStruct.MList import MList;
-from Libs.Core.GObject import GObject;
-from Libs.FileSystem.MFileDirInfo import MFileAndDirList, MFileInfo, MDirInfo;
+from Libs.Tools.UtilStr import UtilStr
+from Libs.Tools.UtilError import UtilError
+from Libs.DataStruct.MList import MList
+from Libs.Core.GObject import GObject
+from Libs.FileSystem.MFileDirInfo import MFileAndDirList, MFileInfo, MDirInfo
 
 '''
 @brief: 目录处理

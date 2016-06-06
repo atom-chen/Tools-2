@@ -4,8 +4,8 @@
 @brief: 测试目录
 '''
 
-from Libs.Tools.UtilPath import UtilPath;
-from Libs.Tools.UtilStr import UtilStr;
+from Libs.Tools.UtilPath import UtilPath
+from Libs.Tools.UtilStr import UtilStr
 
 class TestPath(object):
     def test(self):

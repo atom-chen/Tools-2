@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from Libs.EventHandle.EventDispatch import EventDispatch;
+from Libs.EventHandle.EventDispatch import EventDispatch
 
 '''
 @brief 事件回调函数只能添加一次

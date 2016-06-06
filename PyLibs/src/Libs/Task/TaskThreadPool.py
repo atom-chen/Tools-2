@@ -1,9 +1,9 @@
 ﻿# -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject;
-from Libs.DataStruct.MList import MList;
-from Libs.Task.TaskThread import TaskThread;
-from Libs.Tools.UtilStr import UtilStr;
+from Libs.Core.GObject import GObject
+from Libs.DataStruct.MList import MList
+from Libs.Task.TaskThread import TaskThread
+from Libs.Tools.UtilStr import UtilStr
 
 class TaskThreadPool(GObject):
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from Libs.DelayHandle.IDelayHandleItem import IDelayHandleItem;
-from Libs.Tools.UtilApi import UtilApi;
+from Libs.DelayHandle.IDelayHandleItem import IDelayHandleItem
+from Libs.Tools.UtilApi import UtilApi
 
 class EventDispatchFunctionObject(IDelayHandleItem):
     

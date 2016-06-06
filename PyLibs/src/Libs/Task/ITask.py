@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject;
+from Libs.Core.GObject import GObject
 
 class ITask(GObject):
     def runTask(self):             # 执行任务

@@ -4,13 +4,13 @@
 @brief mainwindow
 '''
 
-from PyQt5 import  QtWidgets, QtCore;
+from PyQt5 import  QtWidgets, QtCore
 
-import QtToolSet.UI.ui_mainwindow;
-import QtToolSet.Frame.LoggerWin;
-import QtToolSet.Frame.LeftFnWin;
-from QtToolSet.Common.QtToolSetSys import QtToolSetSys;
-from Libs.FrameWork.Ctx import Ctx;
+import QtToolSet.UI.ui_mainwindow
+import QtToolSet.Frame.LoggerWin
+import QtToolSet.Frame.LeftFnWin
+from QtToolSet.Common.QtToolSetSys import QtToolSetSys
+from Libs.FrameWork.Ctx import Ctx
 
 class MainWindow(QtWidgets.QMainWindow):
     

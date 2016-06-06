@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from Libs.DelayHandle.IDelayHandleItem import IDelayHandleItem;
+from Libs.DelayHandle.IDelayHandleItem import IDelayHandleItem
 
 '''
 @brief 定时器，这个是不断增长的

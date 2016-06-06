@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from Libs.DelayHandle.DelayHandleParamBase import DelayHandleParamBase;
+from Libs.DelayHandle.DelayHandleParamBase import DelayHandleParamBase
 
 class DelayDelParam(DelayHandleParamBase):
     

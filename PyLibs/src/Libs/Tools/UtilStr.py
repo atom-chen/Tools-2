@@ -1,7 +1,7 @@
 #-*- encoding=utf-8 -*-
 
-import re;
-from Libs.Core.GObject import GObject;
+import re
+from Libs.Core.GObject import GObject
 
 '''
 @brief: 字符串工具

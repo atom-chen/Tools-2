@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject;
-from Libs.DataStruct.MDictionary import MDictionary;
+from Libs.Core.GObject import GObject
+from Libs.DataStruct.MDictionary import MDictionary
 
 class MsgRouteDispHandle(GObject):
 

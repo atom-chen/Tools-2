@@ -4,8 +4,8 @@
 @brief: TestDataStruct 
 '''
 
-from Libs.Core.GObject import GObject;
-from Libs.DataStruct.MList import MList;
+from Libs.Core.GObject import GObject
+from Libs.DataStruct.MList import MList
 
 class TestDataStruct(GObject):
     def __init__(self):

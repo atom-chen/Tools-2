@@ -4,8 +4,8 @@
 @brief: 哈希算法
 '''
 
-import hashlib;
-from Libs.Core.GObject import GObject;
+import hashlib
+from Libs.Core.GObject import GObject
 from Libs.FileSystem.MDataStream import MDataStream
 from Libs.FileSystem.MFileMode import MFileMode
 

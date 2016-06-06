@@ -1,7 +1,7 @@
 #-*- encoding=utf-8 -*-
 
-import multiprocessing;
-import time;
+import multiprocessing
+import time
     
 class MProcessExt(multiprocessing.process):
     '''

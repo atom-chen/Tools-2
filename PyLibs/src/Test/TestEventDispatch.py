@@ -4,8 +4,8 @@
 @brief: 测试 EventDispatch
 '''
 
-from Libs.Core.GObject import GObject;
-from Libs.EventHandle.AddOnceAndCallOnceEventDispatch import AddOnceAndCallOnceEventDispatch;
+from Libs.Core.GObject import GObject
+from Libs.EventHandle.AddOnceAndCallOnceEventDispatch import AddOnceAndCallOnceEventDispatch
 
 class TestEventDispatch(GObject):
     

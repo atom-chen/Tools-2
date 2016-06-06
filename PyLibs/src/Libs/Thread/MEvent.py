@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
-from threading import Event;
-from Libs.Core.GObject import GObject;
+from threading import Event
+from Libs.Core.GObject import GObject
 
 '''
 @同步使用的 Event

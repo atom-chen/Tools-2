@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 
-from Libs.DataStruct.LockQueue import LockQueue;
+from Libs.DataStruct.LockQueue import LockQueue
 
 class TaskQueue(LockQueue):
 
