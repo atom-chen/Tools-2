@@ -12,8 +12,8 @@ class Ctx(GObject):
     
     @staticmethod
     def instance():
-        if (Ctx.msInstance == None):
-            Ctx.msInstance = Ctx();
+        #if (Ctx.msInstance == None):
+        #    Ctx.msInstance = Ctx();
 
         return Ctx.msInstance;
 

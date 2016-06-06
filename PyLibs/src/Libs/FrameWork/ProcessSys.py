@@ -17,7 +17,7 @@ class ProcessSys(GObject):
 
     def ProcessNextFrame(self):
         Ctx.instance().m_systemTimeData.nextFrame();
-        self.Advance(Ctx.instance().m_systemTimeData.deltaSec);
+        self.Advance(Ctx.instance().m_systemTimeData.getDeltaSec());
 
 
     def Advance(self, delta):
