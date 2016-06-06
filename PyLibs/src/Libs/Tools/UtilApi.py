@@ -4,8 +4,9 @@
 @brief: UtilApi
 '''
 
-import time
-from Libs.Core.GObject import GObject
+import time;
+import types;
+from Libs.Core.GObject import GObject;
 
 class UtilApi(GObject):
     
@@ -17,5 +18,17 @@ class UtilApi(GObject):
     @staticmethod
     def getTotalSeconds():
         return time.time();
+    
+    
+    @staticmethod
+    def isinstance(varName, typeProto):
+        return isinstance(varName, typeProto);
+    
+    
+    # 对于subclass之类的 type 就不行.所以,强烈建议不要使用type判断对象类型
+    @staticmethod
+    def isType(varName, typeProto):
+        return (type(varName) == typeProto)
+    
     
     

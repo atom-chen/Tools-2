@@ -1,11 +1,11 @@
 ﻿# -*- coding: utf-8 -*-
 
-from Libs.DataStruct.LockQueue import LockQueue
+from Libs.DataStruct.LockQueue import LockQueue;
 
 class TaskQueue(LockQueue):
 
-    def __init__(self):
-        super(TaskQueue, self).__init__();
+    def __init__(self, name = ""):
+        super(TaskQueue, self).__init__(name);
 
         self.mTypeId = "TaskQueue";
         

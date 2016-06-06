@@ -10,11 +10,12 @@ from Libs.Core.GObject import GObject
 
 class MCondition(GObject):
     
-    def __init__(self):
+    def __init__(self, name):
         super(MCondition, self).__init__();
         
         self.mTypeId = "MCondition";
         
+        self.mName = name;
         self.mCond = threading.Condition();
 
 

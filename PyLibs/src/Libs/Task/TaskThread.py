@@ -10,7 +10,7 @@ from Libs.Thread.MCondition import MCondition
 class TaskThread(MThread):
 
     def __init__(self, name, taskQueue):
-        super(TaskThread, self).__init__();
+        super(TaskThread, self).__init__(None, None, name);
         self.m_taskQueue = taskQueue;
         self.m_condition = MCondition(name);
 

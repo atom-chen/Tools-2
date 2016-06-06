@@ -19,7 +19,7 @@ class LogSys(GObject):
         self.m_logDeviceList = MList();
         self.mEnableLog = True;         #  这个是总的开关
         self.registerDevice();
-        self.registerFileLogDevice();
+
 
 
     def setEnableLog(self, value):

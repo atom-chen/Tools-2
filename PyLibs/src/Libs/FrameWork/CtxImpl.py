@@ -56,6 +56,7 @@ class CtxImpl(Ctx):
 
 
     def init(self):
+        super(CtxImpl, self).init();
         self.preInit();
         self.interInit();
         self.postInit();

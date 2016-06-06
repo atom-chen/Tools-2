@@ -43,11 +43,11 @@ class MThread(GObject):
         if(self.mThread == None):
             self.mThread = threading.Thread(target = self.threadHandle, args=(0, "aaa"), name = self.mName); 
 
-        self.mThread.Start();
+        self.mThread.start();
 
 
     def join(self):
-        self.mThread.Join();
+        self.mThread.join();
 
 
     def run(self):
@@ -65,7 +65,7 @@ class MThread(GObject):
 
 
     def getCurThreadID(self):
-        self.m_curThreadID = threading.current_thread.ident;       # 当前线程的 ID
+        self.m_curThreadID = threading.current_thread().ident;       # 当前线程的 ID
 
 
     def isCurThread(self, threadID):
@@ -74,12 +74,12 @@ class MThread(GObject):
 
     @staticmethod
     def getMainThreadID():
-        MThread.m_sMainThreadID = threading.current_thread.ident;
+        MThread.m_sMainThreadID = threading.current_thread().ident;
 
 
     @staticmethod
     def isMainThread():
-        return (MThread.m_sMainThreadID == threading.current_thread.ident);
+        return (MThread.m_sMainThreadID == threading.current_thread().ident);
 
 
     @staticmethod

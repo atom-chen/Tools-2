@@ -84,4 +84,10 @@ class MList(GObject):
             self.Add(item);
 
     
+    def __getitem__(self, index):
+        if(index < self.length()):
+            return self.m_list[index];
+        
+        return None;
+        
     

@@ -4,10 +4,10 @@
 @brief: QtToolSetSysImpl
 '''
 
-from QtToolSet.Common.QtToolSetSys import QtToolSetSys
-from ToolSet.FileDirDiff.FileDirDiffSysImpl import FileDirDiffSysImpl
-from QtToolSet.Common.LogWinProxy import LogWinProxy
-from Libs.FrameWork.Ctx import Ctx
+from QtToolSet.Common.QtToolSetSys import QtToolSetSys;
+from ToolSet.FileDirDiff.FileDirDiffSysImpl import FileDirDiffSysImpl;
+from QtToolSet.Common.LogWinProxy import LogWinProxy;
+from Libs.FrameWork.Ctx import Ctx;
 
 class QtToolSetSysImpl(QtToolSetSys):
     
@@ -23,6 +23,6 @@ class QtToolSetSysImpl(QtToolSetSys):
         self.mFileDirDiffSys = FileDirDiffSysImpl();
         
         self.mWinLogDeviceProxy = LogWinProxy();
-        Ctx.instance().m_logSys.addLogDevice(self.mWinLogDevice);
+        Ctx.instance().m_logSys.addLogDevice(self.mWinLogDeviceProxy);
 
     
