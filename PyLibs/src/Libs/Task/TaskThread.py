@@ -18,6 +18,7 @@ class TaskThread(MThread):
     '''
     brief 线程回调函数
     '''
+    #def threadHandle(self, intParam, strParam):
     def threadHandle(self):
         while (not self.m_ExitFlag):
             self.m_curTask = self.m_taskQueue.pop();

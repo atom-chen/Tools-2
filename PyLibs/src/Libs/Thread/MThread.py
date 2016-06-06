@@ -41,13 +41,35 @@ class MThread(GObject):
     '''
     def start(self):
         if(self.mThread == None):
-            self.mThread = threading.Thread(target = self.threadHandle, args=(0, "aaa"), name = self.mName); 
+            #self.mThread = threading.Thread(target = self.threadHandle, args=(0, "aaa"), name = self.mName);
+            self.mThread = threading.Thread(target = self.threadHandle, name = self.mName); 
 
         self.mThread.start();
 
 
-    def join(self):
-        self.mThread.join();
+    def join(self, timeout = None):
+        self.mThread.join(timeout);
+        
+    
+    def getName(self):
+        self.mThread.getName();
+
+
+    def setName(self, name):
+        self.mThread.setName(name);    
+
+        
+    def isAlive(self):
+        self.mThread.isAlive();
+        
+        
+    def isDaemon(self):
+        self.mThread.isDaemon();
+        
+        
+    # 设置守护线程标志为布尔值daemonic。它必须在start()调用之前被调用
+    def setDaemon(self, daemonic):
+        self.mThread.setDaemon(daemonic);
 
 
     def run(self):
@@ -56,7 +78,8 @@ class MThread(GObject):
     '''
     @brief 线程回调函数
     '''
-    def threadHandle(self, params):
+    #def threadHandle(self, intParam, strParam):
+    def threadHandle(self):
         self.getCurThreadID();
 
         if(self.m_cb != None):
@@ -87,5 +110,10 @@ class MThread(GObject):
         if (not MThread.isMainThread()):
             raise Exception("cannot call function in thread");
 
+
+    # 获取当前线程数量
+    @staticmethod
+    def activeCount():
+        return threading.activeCount()
 
 
