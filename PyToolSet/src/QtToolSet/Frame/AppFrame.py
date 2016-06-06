@@ -4,8 +4,8 @@
 @brief application
 '''
 
-from PyQt5.QtWidgets import QApplication
-import sys
+from PyQt5.QtWidgets import QApplication;
+import sys;
 
 class AppFrame(QApplication):
     def __init__(self):

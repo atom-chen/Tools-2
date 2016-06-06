@@ -3,14 +3,14 @@
 '''
 '''
 
-from PyQt5 import QtWidgets
-import QtToolSet.UI.ui_loggerwin
+from PyQt5 import QtWidgets;
+import QtToolSet.UI.ui_loggerwin;
 
 
 class LoggerWin(QtWidgets.QDockWidget):    
     def __init__(self):
-        super(LoggerWin, self).__init__()
+        super(LoggerWin, self).__init__();
 
-        self.ui = QtToolSet.UI.ui_loggerwin.Ui_LoggerWin()
-        self.ui.setupUi(self)
+        self.ui = QtToolSet.UI.ui_loggerwin.Ui_LoggerWin();
+        self.ui.setupUi(self);
 
