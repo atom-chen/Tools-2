@@ -38,3 +38,7 @@ class UtilApi(GObject):
         return os.getpid();
     
     
+    #import struct
+    #bytes = struct.pack('>i4sh',100,'string',250)
+    
+    

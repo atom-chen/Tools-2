@@ -17,7 +17,7 @@ from Libs.FileSystem.MFileDirInfo import MFileAndDirList, MFileInfo, MDirInfo;
 class UtilPath(GObject):
     
     DOT = '.';
-    CRLF = "/r/n";
+    CRLF = "\n";
     
     # 将 "\" 转换成 "/"
     @staticmethod
@@ -144,14 +144,19 @@ class UtilPath(GObject):
     # 连接目录
     @staticmethod
     def join(path_a, path_b, path_c = None):
+        retPath = "";
         if(path_a != None and path_b != None and path_c != None):
-            return os.path.join(path_a, path_b, path_c);
+            retPath = os.path.join(path_a, path_b, path_c);
         elif(path_a != None and path_b != None):
-            return os.path.join(path_a, path_b);
+            retPath =os.path.join(path_a, path_b);
         elif(path_a != None):
-            return path_a;
+            retPath =path_a;
         else:
-            return "";
+            retPath = "";
+            
+        retPath = UtilPath.normal(retPath);
+            
+        return retPath;
         
     
     # 获取绝对目录
@@ -194,8 +199,15 @@ class UtilPath(GObject):
     @staticmethod
     def getFileNameNoExt(fullFilePath):
         _, fileName = UtilPath.split(fullFilePath);
-        fileNameNoExt = UtilPath.getFileExt(fileName);
+        fileNameNoExt, _ = UtilPath.splitext(fileName);
         return fileNameNoExt;
+
+
+    @staticmethod
+    def getFilePathNoExt(fullFilePath):
+        pathNoExt, _ = UtilPath.splitext(fullFilePath);
+        return pathNoExt;
+
     
     
     @staticmethod
@@ -226,21 +238,41 @@ class UtilPath(GObject):
         
     # 递归遍历整个目录
     @staticmethod
-    def traverseDirectory(srcPath, destPath, pThis, func):
-        if(UtilStr.startswith(srcPath, destPath)):
-            UtilError.error("Dir Can not Same");
+    def traverseDirectory(
+                          srcPath, 
+                          destPath, 
+                          pDirThis = None, 
+                          dirHandle = None, 
+                          pFileThis = None, 
+                          fileHandle = None,
+                          isRecurse = False,
+                          isCreateDestPath = False
+                        ):
+        if(not UtilStr.isEmptyOrNull(destPath)):
+            if(UtilStr.startswith(srcPath, destPath)):
+                UtilError.error("Dir Can not Same");
             
         if(not UtilPath.exists(srcPath)):
             return;
         
         if(not UtilStr.isEmptyOrNull(destPath)):
-            if(not UtilPath.exists(destPath)):
+            if(not UtilPath.exists(destPath) and isCreateDestPath):
                 UtilPath.mkdir(destPath);
+                
+        if (dirHandle != None):
+            fileOrDirName = UtilPath.getDirCurName(srcPath);
+            if (UtilStr.isEmptyOrNull(destPath)):
+                dirHandle(srcPath, fileOrDirName, "");
+            else:
+                dirHandle(srcPath, fileOrDirName, destPath);
         
         for root, dirs, files in os.walk(srcPath):
             for oneFile in files:
-                if(func != None):
-                    func(UtilPath.join(root, oneFile), UtilPath.join(destPath, oneFile));
+                if(fileHandle != None):
+                    if (UtilStr.isEmptyOrNull(destPath)):
+                        fileHandle(UtilPath.join(root, oneFile), oneFile, "");
+                    else:
+                        fileHandle(UtilPath.join(root, oneFile), oneFile, UtilPath.join(destPath, oneFile));
                     
 
     @staticmethod

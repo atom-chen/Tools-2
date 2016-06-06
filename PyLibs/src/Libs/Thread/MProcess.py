@@ -24,9 +24,9 @@ class MProcess(GObject):
         self.mTypeId = "MProcess";
         
         #self.mManager = multiprocessing.Manager();
-        #self.mParam = self.mManager.Value('params', params);
+        #self.mParams = self.mManager.Value('params', params);
         
-        self.mParam = params;
+        self.mParams = params;
         self.mProcessName = processName;
         self.m_runF = func;
         self.m_pid = 0;
@@ -45,7 +45,7 @@ class MProcess(GObject):
         if(self.mProcessHandle == None):
             self.mProcessHandle = multiprocessing.Process(
                                                           target = self.run, 
-                                                          args = (self.mParam, ), 
+                                                          args = (self.mParams, ), 
                                                           name = self.mProcessName
                                                           );
 

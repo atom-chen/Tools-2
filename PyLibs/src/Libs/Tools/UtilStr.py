@@ -1,5 +1,6 @@
 #-*- encoding=utf-8 -*-
 
+import re;
 from Libs.Core.GObject import GObject;
 
 '''
@@ -169,35 +170,13 @@ class UtilStr(GObject):
             return "";
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @staticmethod
+    def replace(srcStr, findStr, replaceStr):
+        return srcStr.replace(findStr, replaceStr);
+    
+    
+    @staticmethod
+    def replaceRex(srcStr, findStr, replaceStr):
+        strinfo = re.compile(findStr);
+        return strinfo.sub(replaceStr, srcStr);
 

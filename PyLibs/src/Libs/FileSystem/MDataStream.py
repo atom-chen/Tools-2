@@ -9,7 +9,9 @@ from Libs.Tools.UtilPath import UtilPath;
 
 class MDataStream(GObject):
     
-    def __init__(self, fileName, mode, encoding):
+    # In text mode, if encoding is not specified the encoding used is platform
+    # dependent: locale.getpreferredencoding(False) is called to get the current locale encoding.
+    def __init__(self, fileName, mode = None, encoding = None):
         super(MDataStream, self).__init__();
         
         self.mTypeId = "MDataStream";
@@ -22,14 +24,15 @@ class MDataStream(GObject):
         if(self.mMode == None):
             self.mMode = "rb";
         if(self.mEncoding == None):
-            self.mEncoding = "utf8";
+            self.mEncoding = "utf-8";
             
         self.open();
         
     #注：不能把open语句放在try块里，因为当打开文件出现异常时，文件对象file_object无法执行close()方法。
     def open(self):
         # 第二个参数默认为r
-        self.mFileHandle = open(self.mFileName, self.mMode, self.mEncoding);
+        #self.mFileHandle = open(self.mFileName, self.mMode, self.mEncoding);
+        self.mFileHandle = open(self.mFileName, self.mMode);
         
         
     def close(self):

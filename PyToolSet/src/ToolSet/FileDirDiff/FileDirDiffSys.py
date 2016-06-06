@@ -23,6 +23,10 @@ class FileDirDiffSys(GObject):
         
         
     def isVersionOver(self):
+        if(self.mVerProcess != None and self.mVerProcess.isValid()):
+            self.m_bOverVer = not self.mVerProcess.is_alive();
+        else:
+            self.m_bOverVer = True;
         return self.m_bOverVer;
     
     

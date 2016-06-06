@@ -9,7 +9,16 @@ from Libs.Tools.UtilStr import UtilStr;
 
 class TestPath(object):
     def test(self):
-        UtilPath.traverseDirectory("E:/Self/Self/unity/unitygame/Client_Start/Assets/uLua/Lua", None, self, self.traversePathHandle);
+        UtilPath.traverseDirectory(
+                                   "E:/Self/Self/unity/unitygame/Client_Start/Assets/uLua/Lua", 
+                                   None, 
+                                   None, 
+                                   None, 
+                                   None, 
+                                   self, 
+                                   self.traversePathHandle, 
+                                   True
+                                   );
         
     def traversePathHandle(self, srcPath, destPath):
         pathNoExt, ext = UtilPath.splitext(srcPath);

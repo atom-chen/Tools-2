@@ -22,8 +22,8 @@ class VerConfig(GObject):
         super(VerConfig, self).__init__();
         
         self.mTypeId = "Config";
-        self.mProjRootPath = "";    # 工程根目录
-        self.mOutPath = "";         # 输出目录
+        self.mProjRootPath = "E:/Self/Self/unity/unitygame/Client_Start";    # 工程根目录
+        self.mOutPath = "E:/Self/Self/unity/unitygame/Client_Start/Tmp";         # 输出目录
         self.mDestPath = "";        # 最终目录
         
         self.mResourcesName = "Resources";  # Resources 目录名字
