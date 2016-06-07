@@ -89,5 +89,11 @@ class MList(GObject):
             return self.m_list[index];
         
         return None;
+    
+    
+    @staticmethod
+    def len(listData):
+        return len(listData);
+    
         
     

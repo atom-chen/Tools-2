@@ -104,8 +104,8 @@ class MDataStream(GObject):
     #size为读取的长度，以byte为单位 
     def read(self, size = None):
         if(self.isValid()):
-            if(size == None):
-                size = self.getLength();
+            #if(size == None):
+            #    size = self.getLength();
             return self.mFileHandle.read(size);
         
         return "";
@@ -113,7 +113,7 @@ class MDataStream(GObject):
     #读一行，如果定义了size，有可能返回的只是一行的一部分  
     def readline(self, size):
         if(self.isValid()):
-            return self.mFileHandle.readlines(size)
+            return self.mFileHandle.readline(size)
             
         return "";
             

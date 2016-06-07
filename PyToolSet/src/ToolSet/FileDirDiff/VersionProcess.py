@@ -12,6 +12,7 @@ from Libs.FileSystem.MFileMode import MFileMode
 from Libs.Tools.UtilPath import UtilPath
 from Libs.Tools.UtilStr import UtilStr
 from Libs.Tools.UtilHash import UtilHash
+from ToolSet.FileDirDiff.AssetBundlesManifest import AssetBundlesManifest
 
 class VersionProcess(MProcess):
     
@@ -25,6 +26,9 @@ class VersionProcess(MProcess):
         self.mTypeId = "VersionProcess";
         
         self.mDataStream = None;
+        self.mAssetBundlesManifest = None;
+
+
     
     def run(self, params):
         super(VersionProcess, self).run(params);
@@ -33,12 +37,12 @@ class VersionProcess(MProcess):
     
         
     def buildVer(self):
-        if(self.mParams.isMakeResources()):
-            self.buildResourcesVer();
-        if(self.mParams.isMakeStreamingAssets()):
-            self.buildStreamingAssetsVer();
-        if(self.mParams.isMakePersistent()):
-            self.buildPersistentVer();
+        #if(self.mParams.isMakeResources()):
+        self.buildResourcesVer();
+        #if(self.mParams.isMakeStreamingAssets()):
+        self.buildStreamingAssetsVer();
+        #if(self.mParams.isMakePersistent()):
+        #    self.buildPersistentVer();
     
     
     def buildResourcesVer(self):
@@ -59,14 +63,94 @@ class VersionProcess(MProcess):
     
     
     def buildStreamingAssetsVer(self):
-        pass;
+        self.mDataStream = MDataStream(
+                                       self.mParams.getStreamingAssetsVerFileFullOutPath(), 
+                                       MFileMode.WriteTxt
+                                       );
+                                       
+        self.mAssetBundlesManifest = AssetBundlesManifest();
+        self.mAssetBundlesManifest.readManifest();
+        
+        UtilPath.traverseDirectory(
+                           self.mParams.getStreamingAssetsPath(), 
+                           None, 
+                           None, 
+                           None,  
+                           self, 
+                           self.traverseStreamingAssetsPathHandle, 
+                           True
+                           );
+        
+        self.mDataStream.close();
+        self.mAssetBundlesManifest = None;
         
     
     def buildPersistentVer(self):
-        pass;
+        self.mDataStream = MDataStream(
+                                       self.mParams.getPersistentVerFileFullOutPath(), 
+                                       MFileMode.WriteTxt
+                                       );
+        
+        UtilPath.traverseDirectory(
+                           self.mParams.getResourcesPath(), 
+                           None, 
+                           None, 
+                           None,  
+                           self, 
+                           self.traverseResourcesPathHandle, 
+                           True
+                           );
+        
+        self.mDataStream.close();
 
 
     def traverseResourcesPathHandle(self, srcFullPath, srcCurName, destFullPath):
+        extName = UtilPath.getFileExt(srcFullPath);
+        if(extName != "meta"):
+            resourcePath = UtilStr.replace(srcFullPath, self.mParams.getStreamingAssetsPath(), "");
+            resourcePath = UtilStr.truncate(resourcePath, 1);
+            resUniqueId = UtilPath.getFilePathNoExt(resourcePath);
+            loadPath = UtilPath.getFilePathNoExt(resourcePath);
+            fileMd5 = UtilHash.buildFileMd5(srcFullPath);
+            fileSize = UtilPath.getsize(srcFullPath);
+            strContent = UtilStr.format(
+                                 "{0}={1}={2}={3}={4}", 
+                                 resourcePath, 
+                                 resUniqueId,
+                                 loadPath,
+                                 fileMd5,
+                                 fileSize
+                                 );
+
+            self.mDataStream.writeLine(strContent);
+            
+            
+    def traverseStreamingAssetsPathHandle(self, srcFullPath, srcCurName, destFullPath):
+        extName = UtilPath.getFileExt(srcFullPath);
+        if(extName != "meta"):
+            resourcePath = UtilStr.replace(srcFullPath, self.mParams.getStreamingAssetsPath(), "");
+            resourcePath = UtilStr.truncate(resourcePath, 1);
+            assetBundlesItem = self.mAssetBundlesManifest.getAssetBundlesItem(resourcePath);
+            resUniqueId = UtilPath.getFilePathNoExt(resourcePath);
+            loadPath = resourcePath;
+            if(assetBundlesItem != None):
+                resourcePath = assetBundlesItem.mAssetItem.mAssetList[0];
+            
+            fileMd5 = UtilHash.buildFileMd5(srcFullPath);
+            fileSize = UtilPath.getsize(srcFullPath);
+            strContent = UtilStr.format(
+                                 "{0}={1}={2}={3}={4}", 
+                                 resourcePath, 
+                                 resUniqueId,
+                                 loadPath,
+                                 fileMd5,
+                                 fileSize
+                                 );
+
+            self.mDataStream.writeLine(strContent);
+
+
+    def traversePersistentPathHandle(self, srcFullPath, srcCurName, destFullPath):
         extName = UtilPath.getFileExt(srcFullPath);
         if(extName != "meta"):
             resourcePath = UtilStr.replace(srcFullPath, self.mParams.getResourcesPath(), "");
@@ -85,4 +169,4 @@ class VersionProcess(MProcess):
                                  );
 
             self.mDataStream.writeLine(strContent);
-        
+

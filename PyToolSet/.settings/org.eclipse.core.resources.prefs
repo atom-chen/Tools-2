@@ -41,6 +41,7 @@ encoding//src/QtToolSet/UI/ui_loggerwin.py=utf-8
 encoding//src/QtToolSet/UI/ui_mainwindow.py=utf-8
 encoding//src/ToolSet/Common/ToolSetSys.py=utf-8
 encoding//src/ToolSet/Common/ToolSetSysImpl.py=utf-8
+encoding//src/ToolSet/FileDirDiff/AssetBundlesManifest.py=utf-8
 encoding//src/ToolSet/FileDirDiff/FileDirDiffSys.py=utf-8
 encoding//src/ToolSet/FileDirDiff/FileDirDiffSysImpl.py=utf-8
 encoding//src/ToolSet/FileDirDiff/VerConfig.py=utf-8

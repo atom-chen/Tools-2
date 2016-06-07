@@ -18,6 +18,7 @@ class UtilPath(GObject):
     
     DOT = '.';
     CRLF = "\n";
+    SPLIT = "=";
     
     # 将 "\" 转换成 "/"
     @staticmethod
@@ -137,15 +138,19 @@ class UtilPath(GObject):
 
 
     @staticmethod
-    def combine(path_a, path_b, path_c = None):
-        return UtilPath.join(path_a, path_b, path_c);
+    def combine(path_a, path_b, path_c = None, path_d = None, path_e = None):
+        return UtilPath.join(path_a, path_b, path_c, path_d, path_e);
 
 
     # 连接目录
     @staticmethod
-    def join(path_a, path_b, path_c = None):
+    def join(path_a, path_b, path_c = None, path_d = None, path_e = None):
         retPath = "";
-        if(path_a != None and path_b != None and path_c != None):
+        if(path_a != None and path_b != None and path_c != None and path_d != None and path_e != None):
+            retPath = os.path.join(path_a, path_b, path_c, path_d, path_e);
+        elif(path_a != None and path_b != None and path_c != None and path_d != None):
+            retPath = os.path.join(path_a, path_b, path_c, path_d);
+        elif(path_a != None and path_b != None and path_c != None):
             retPath = os.path.join(path_a, path_b, path_c);
         elif(path_a != None and path_b != None):
             retPath =os.path.join(path_a, path_b);

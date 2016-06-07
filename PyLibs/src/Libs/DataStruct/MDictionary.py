@@ -9,8 +9,12 @@ from Libs.Core.GObject import GObject
 class MDictionary(GObject):
     
     def __init__(self):
-        self.mTypeId = "MDictionary"; 
+        super(MDictionary, self).__init__();
+        
+        self.mTypeId = "MDictionary";
+         
         self.m_data = {};
+
 
     def getData(self):
         return self.m_data;
@@ -21,7 +25,9 @@ class MDictionary(GObject):
     
 
     def value(self, key):
-        if(self.m_data.has_key(key)):
+        # Python3以后删除了has_key()方法
+        #if(self.m_data.has_key(key)):
+        if(key in self.m_data):
             return self.m_data[key];
         
         return None;

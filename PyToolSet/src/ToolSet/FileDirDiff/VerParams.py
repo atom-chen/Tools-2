@@ -26,7 +26,22 @@ class VerParams(GObject):
     def getResourcesPath(self):
         return self.mVerConfig.getResourcesPath();
         
+        
+    def getStreamingAssetsPath(self):
+        return self.mVerConfig.getStreamingAssetsPath();
+    
 
     def getResourcesVerFileFullOutPath(self):
         return self.mVerConfig.getResourcesVerFileFullOutPath();
+    
+    
+    def getStreamingAssetsVerFileFullOutPath(self):
+        return self.mVerConfig.getStreamingAssetsVerFileFullOutPath();
+    
+    
+    def getPersistentVerFileFullOutPath(self):
+        return self.mVerConfig.getPersistentVerFileFullOutPath();
+    
+    
+    
     
