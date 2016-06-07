@@ -107,7 +107,7 @@ class VersionProcess(MProcess):
     def traverseResourcesPathHandle(self, srcFullPath, srcCurName, destFullPath):
         extName = UtilPath.getFileExt(srcFullPath);
         if(extName != "meta"):
-            resourcePath = UtilStr.replace(srcFullPath, self.mParams.getStreamingAssetsPath(), "");
+            resourcePath = UtilStr.replace(srcFullPath, self.mParams.getResourcesPath(), "");
             resourcePath = UtilStr.truncate(resourcePath, 1);
             resUniqueId = UtilPath.getFilePathNoExt(resourcePath);
             loadPath = UtilPath.getFilePathNoExt(resourcePath);
