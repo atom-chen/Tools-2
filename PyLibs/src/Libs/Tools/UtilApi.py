@@ -38,7 +38,8 @@ class UtilApi(GObject):
         return os.getpid();
     
     
-    #import struct
-    #bytes = struct.pack('>i4sh',100,'string',250)
-    
-    
+    @staticmethod
+    def convResourcesPathToAssetBundlesPath(resPath):
+        return "{0}/{1}".format("Asset/Resources", resPath);
+
+

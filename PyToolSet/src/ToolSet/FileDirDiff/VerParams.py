@@ -43,5 +43,8 @@ class VerParams(GObject):
         return self.mVerConfig.getPersistentVerFileFullOutPath();
     
     
-    
-    
+    def getAssetBundlesManifestPath(self):
+        return self.mVerConfig.getAssetBundlesManifestPath();
+
+
+

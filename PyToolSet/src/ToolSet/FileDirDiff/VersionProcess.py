@@ -13,6 +13,7 @@ from Libs.Tools.UtilPath import UtilPath
 from Libs.Tools.UtilStr import UtilStr
 from Libs.Tools.UtilHash import UtilHash
 from ToolSet.FileDirDiff.AssetBundlesManifest import AssetBundlesManifest
+from ToolSet.FileDirDiff.VerProcessSys import VerProcessSys
 
 class VersionProcess(MProcess):
     
@@ -29,20 +30,21 @@ class VersionProcess(MProcess):
         self.mAssetBundlesManifest = None;
 
 
-    
     def run(self, params):
         super(VersionProcess, self).run(params);
+        
+        VerProcessSys.instance().mParams = self.mParams;
 
         self.buildVer();
     
         
     def buildVer(self):
-        #if(self.mParams.isMakeResources()):
-        self.buildResourcesVer();
-        #if(self.mParams.isMakeStreamingAssets()):
-        self.buildStreamingAssetsVer();
-        #if(self.mParams.isMakePersistent()):
-        #    self.buildPersistentVer();
+        if(self.mParams.isMakePersistent()):
+            self.buildPersistentVer();
+        if(self.mParams.isMakeResources()):
+            self.buildResourcesVer();
+        if(self.mParams.isMakeStreamingAssets()):
+            self.buildStreamingAssetsVer();
     
     
     def buildResourcesVer(self):
@@ -59,8 +61,7 @@ class VersionProcess(MProcess):
                            );
         
         self.mDataStream.close();
-        
-    
+
     
     def buildStreamingAssetsVer(self):
         self.mDataStream = MDataStream(
@@ -70,6 +71,7 @@ class VersionProcess(MProcess):
                                        
         self.mAssetBundlesManifest = AssetBundlesManifest();
         self.mAssetBundlesManifest.readManifest();
+        self.mAssetBundlesManifest.findResourcsName();
         
         UtilPath.traverseDirectory(
                            self.mParams.getStreamingAssetsPath(), 
@@ -83,8 +85,8 @@ class VersionProcess(MProcess):
         
         self.mDataStream.close();
         self.mAssetBundlesManifest = None;
-        
-    
+
+
     def buildPersistentVer(self):
         self.mDataStream = MDataStream(
                                        self.mParams.getPersistentVerFileFullOutPath(), 

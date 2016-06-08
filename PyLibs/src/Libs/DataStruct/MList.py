@@ -24,6 +24,10 @@ class MList(GObject):
         return len(self.m_list);
 
 
+    def add(self, item):
+        self.m_list.append(item); 
+
+
     def Add(self, item):
         self.m_list.append(item);
 
@@ -54,12 +58,13 @@ class MList(GObject):
             del self.m_list[index];
 
 
-    # 该元素的位置,无则抛异常
+    # 该元素的位置,无则抛异常，因此需要先判断，然后再计算索引
     def IndexOf(self, item):
         idx = -1;
+        # 先检查是否在列表中，如果不检查，直接使用 index ，如果没有找到会抛出异常
         if(item in self.m_list):
             idx = self.m_list.index(item);
-            
+
         return idx;
 
 
