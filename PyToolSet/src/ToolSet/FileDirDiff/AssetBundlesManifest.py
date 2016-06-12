@@ -194,17 +194,45 @@ class AssetBundlesManifest(GObject):
                            self.traverseResourcesPathHandle, 
                            True
                            );
+        
+        
+        self.mResourcesScenesPath = VerProcessSys.instance().mParams.mVerConfig.getScenesPath();
+
+        UtilPath.traverseDirectory(
+                           self.mResourcesScenesPath, 
+                           None, 
+                           None, 
+                           None,  
+                           self, 
+                           self.traverseResourcesScenesPathHandle, 
+                           True
+                           );                   
+        
 
         
     def traverseResourcesPathHandle(self, srcFullPath, srcCurName, destFullPath):
         extName = UtilPath.getFileExt(srcFullPath);
         # 如果是可以打成 AssetBundles 的资源
-        if(extName != "meta" and extName != "manifest"):
+        if(not VerProcessSys.instance().mParams.isIgnoreFileByExt(extName)):
             if(VerProcessSys.instance().mParams.mVerConfig.isPrefabRes(extName)):
                 resourcesPath = UtilStr.replace(srcFullPath, self.mResourcesPath, "");
                 resourcesPath = UtilStr.truncate(resourcesPath, 1);
                 lowerABResPath = UtilApi.convResourcesPathToAssetBundlesPath(resourcesPath);
                 lowerABResPath = UtilStr.lower(lowerABResPath);
+                lowerResourcesPath = UtilStr.lower(resourcesPath);
+                assetBundlesItem = self.mABResPathToItemDic.value(lowerResourcesPath);
+                if(assetBundlesItem != None):
+                    assetBundlesItem.setResourcesName(lowerResourcesPath, resourcesPath);
+                    
+                    
+    def traverseResourcesScenesPathHandle(self, srcFullPath, srcCurName, destFullPath):
+        extName = UtilPath.getFileExt(srcFullPath);
+        assetPath = VerProcessSys.instance().mParams.mVerConfig.getAssetPath();
+        # 如果是可以打成 AssetBundles 的资源
+        if(not VerProcessSys.instance().mParams.isIgnoreFileByExt(extName)):
+            if(VerProcessSys.instance().mParams.mVerConfig.isSceneRes(extName)):
+                resourcesPath = UtilStr.replace(srcFullPath, assetPath, "");
+                resourcesPath = UtilStr.truncate(resourcesPath, 1);
                 lowerResourcesPath = UtilStr.lower(resourcesPath);
                 assetBundlesItem = self.mABResPathToItemDic.value(lowerResourcesPath);
                 if(assetBundlesItem != None):

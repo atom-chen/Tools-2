@@ -23,6 +23,11 @@ class VerParams(GObject):
     def isMakePersistent(self):
         return self.mVerConfig.isMakePersistent();
     
+    
+    def getAssetPath(self):
+        return self.mVerConfig.getAssetPath();
+    
+    
     def getResourcesPath(self):
         return self.mVerConfig.getResourcesPath();
         
@@ -34,6 +39,10 @@ class VerParams(GObject):
     def getPersistentPath(self):
         return self.mVerConfig.getPersistentPath();
     
+       
+    def getScenesPath(self):
+        return self.mVerConfig.getScenesPath();
+
 
     def getResourcesVerFileFullOutPath(self):
         return self.mVerConfig.getResourcesVerFileFullOutPath();

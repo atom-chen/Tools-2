@@ -53,7 +53,6 @@ class VersionProcess(MProcess):
             self.buildPersistentVer();
         if(self.mParams.isMakeStreamingAssets()):
             self.copyFromPersistentToStreamingAssets();
-            self.copyFromPersistentToStreamingAssets();
             self.buildStreamingAssetsVer();
         if(self.mParams.isMakeResources()):
             self.buildResourcesVer();
@@ -69,6 +68,16 @@ class VersionProcess(MProcess):
                            None,  
                            self, 
                            self.traverseResourcesPathHandle, 
+                           True
+                           );
+
+        UtilPath.traverseDirectory(
+                           self.mParams.getScenesPath(), 
+                           None, 
+                           None, 
+                           None,  
+                           self, 
+                           self.traverseResourcesScenesPathHandle, 
                            True
                            );
         
@@ -189,6 +198,30 @@ class VersionProcess(MProcess):
 
             self.mDataStream.writeLine(strContent);
             
+
+    def traverseResourcesScenesPathHandle(self, srcFullPath, srcCurName, destFullPath):
+        extName = UtilPath.getFileExt(srcFullPath);
+        if(not VerProcessSys.instance().mParams.isIgnoreFileByExt(extName)):
+            resourcePath = UtilStr.replace(srcFullPath, self.mParams.getAssetPath(), "");
+            resourcePath = UtilStr.truncate(resourcePath, 1);
+            resUniqueId = UtilPath.getFilePathNoExt(resourcePath);
+            loadPath = UtilPath.getFilePathNoExt(resourcePath);
+            if(VerProcessSys.instance().mParams.mVerConfig.isPrefabOrSceneRes(extName)):
+                fileMd5 = self.mAssetBundlesManifest.getResPathMd5(resourcePath);
+            else:
+                fileMd5 = UtilHash.buildFileMd5(srcFullPath);
+            fileSize = UtilPath.getsize(srcFullPath);
+            strContent = UtilStr.format(
+                                 "{0}={1}={2}={3}={4}", 
+                                 resourcePath, 
+                                 resUniqueId,
+                                 loadPath,
+                                 fileMd5,
+                                 fileSize
+                                 );
+
+            self.mDataStream.writeLine(strContent);
+            
             
     def traverseStreamingAssetsPathHandle(self, srcFullPath, srcCurName, destFullPath):
         extName = UtilPath.getFileExt(srcFullPath);
@@ -198,7 +231,7 @@ class VersionProcess(MProcess):
             assetBundlesItem = self.mAssetBundlesManifest.getAssetBundlesItem(resourcePath);
             resUniqueId = UtilPath.getFilePathNoExt(resourcePath);
             loadPath = resourcePath;
-            if(VerProcessSys.instance().mParams.mVerConfig.isPrefabOrSceneRes(extName) and assetBundlesItem != None):
+            if(VerProcessSys.instance().mParams.mVerConfig.isAssetBundlesRes(extName) and assetBundlesItem != None):
                 index = 0;
                 while(index < assetBundlesItem.mAssetItemList.mAssetList.length()):
                     resourcePath = assetBundlesItem.mAssetItemList.mAssetList[index].mABPath;
@@ -240,7 +273,7 @@ class VersionProcess(MProcess):
             assetBundlesItem = self.mAssetBundlesManifest.getAssetBundlesItem(resourcePath);
             resUniqueId = UtilPath.getFilePathNoExt(resourcePath);
             loadPath = resourcePath;
-            if(VerProcessSys.instance().mParams.mVerConfig.isPrefabOrSceneRes(extName) and assetBundlesItem != None):
+            if(VerProcessSys.instance().mParams.mVerConfig.isAssetBundlesRes(extName) and assetBundlesItem != None):
                 index = 0;
                 while(index < assetBundlesItem.mAssetItemList.mAssetList.length()):
                     resourcePath = assetBundlesItem.mAssetItemList.mAssetList[index].mABPath;

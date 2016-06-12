@@ -31,6 +31,7 @@ class VerConfig(GObject):
         self.mAssetName = "Assets";       # Assets 目录名字
         self.mResourcesName = "Resources";  # Resources 目录名字
         self.mStreamingAssetsName = "StreamingAssets";  # StreamingAssets 目录名字
+        self.mScenesName = "Scenes";
         
         self.mMakeVerTypeList = MList();       # 生成版本的类型
         self.mMakeVerTypeList.add(eMakeType.eResources);
@@ -90,6 +91,10 @@ class VerConfig(GObject):
         return self.mPersistentAssetBundlesPath;
     
     
+    def getScenesPath(self):
+        return UtilPath.combine(self.mProjRootPath, self.mAssetName, self.mScenesName);
+
+
     def getResourcesVerFileFullOutPath(self):
         return UtilPath.combine(self.mProjRootPath, self.mAssetName, self.mResourcesName, self.mResourcesVerFileName);
     
