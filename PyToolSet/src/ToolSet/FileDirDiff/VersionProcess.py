@@ -49,8 +49,11 @@ class VersionProcess(MProcess):
         self.createAssetBundleManifest();
         
         if(self.mParams.isMakePersistent()):
+            self.copyFromResourcesToPersistent();
             self.buildPersistentVer();
         if(self.mParams.isMakeStreamingAssets()):
+            self.copyFromPersistentToStreamingAssets();
+            self.copyFromPersistentToStreamingAssets();
             self.buildStreamingAssetsVer();
         if(self.mParams.isMakeResources()):
             self.buildResourcesVer();
@@ -70,6 +73,32 @@ class VersionProcess(MProcess):
                            );
         
         self.mDataStream.close();
+        
+        
+            # 拷贝资源从 Persistent 到 StreamingAssets 目录下
+    def copyFromPersistentToStreamingAssets(self):
+        UtilPath.traverseDirectory(
+                                   self.mParams.getPersistentPath(), 
+                                   self.mParams.getStreamingAssetsPath(), 
+                                   None, 
+                                   None, 
+                                   self, 
+                                   self.onCopyFromPersistentToStreamingAssets, 
+                                   True, 
+                                   False
+                                   );
+                                   
+                                   
+    def onCopyFromPersistentToStreamingAssets(self, srcFullPath, srcCurName, destFullPath):
+        extName = UtilPath.getFileExt(srcFullPath);
+        if(not self.mParams.isIgnoreFileByExt(extName)):
+            destFullFilePath = UtilPath.combine(destFullPath, srcCurName);
+            if(UtilPath.exists(destFullFilePath)):
+                UtilPath.deleteFile(destFullFilePath);
+            elif(not UtilPath.exists(destFullPath)):
+                UtilPath.mkdir(destFullPath);
+                
+            UtilPath.copyFile(srcFullPath, destFullFilePath);
 
 
     def buildStreamingAssetsVer(self):
@@ -89,6 +118,33 @@ class VersionProcess(MProcess):
                            );
         
         self.mDataStream.close();
+
+
+    # 拷贝资源从 Resources 到 Persistent 目录下
+    def copyFromResourcesToPersistent(self):
+        UtilPath.traverseDirectory(
+                                   self.mParams.getResourcesPath(), 
+                                   self.mParams.getPersistentPath(), 
+                                   None, 
+                                   None, 
+                                   self, 
+                                   self.onCopyFromResourcesToPersistent, 
+                                   True, 
+                                   False
+                                   );
+                                   
+                                   
+    def onCopyFromResourcesToPersistent(self, srcFullPath, srcCurName, destFullPath):
+        extName = UtilPath.getFileExt(srcFullPath);
+        if(not self.mParams.isIgnoreFileByExt(extName)):
+            if(not self.mParams.mVerConfig.isPrefabOrSceneRes(extName)):
+                destFullFilePath = UtilPath.combine(destFullPath, srcCurName);
+                if(UtilPath.exists(destFullFilePath)):
+                    UtilPath.deleteFile(destFullFilePath);
+                elif(not UtilPath.exists(destFullPath)):
+                    UtilPath.mkdir(destFullPath);
+                    
+                UtilPath.copyFile(srcFullPath, destFullFilePath);
 
 
     def buildPersistentVer(self):

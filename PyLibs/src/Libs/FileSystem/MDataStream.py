@@ -32,7 +32,10 @@ class MDataStream(GObject):
     def open(self):
         # 第二个参数默认为r
         #self.mFileHandle = open(self.mFileName, self.mMode, self.mEncoding);
-        self.mFileHandle = open(self.mFileName, self.mMode);
+        try:
+            self.mFileHandle = open(self.mFileName, self.mMode);
+        except Exception as e:
+            print("MDataStream open error");
         
         
     def close(self):

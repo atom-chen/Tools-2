@@ -44,7 +44,9 @@ class VerConfig(GObject):
         self.mPrefabResExtNameList = MList();        # Resources 目录下使用 AssetBundles 打包资源的资源扩展名字列表
         self.mPrefabResExtNameList.Add("prefab");
         self.mPrefabResExtNameList.Add("mat");
+        self.mPrefabResExtNameList.Add("shader");
         self.mPrefabResExtNameList.Add("png");
+        self.mPrefabResExtNameList.Add("jpg");
         self.mPrefabResExtNameList.Add("tga");
         
         self.mAssetBundlesExtNameList = MList();     # AssetBundles 资源的扩展名字

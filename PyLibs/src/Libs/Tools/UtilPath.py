@@ -34,69 +34,105 @@ class UtilPath(GObject):
     # 创建文件，直接打开一个文件，如果文件不存在则创建文件
     @staticmethod
     def open(fullFilePath, mode):
-        return os.open(fullFilePath, mode);
+        try:
+            return os.open(fullFilePath, mode);
+        except Exception as e:
+            print("open error");
         
     # 创建目录
     @staticmethod
     def mkdir(fullDirPath):
-        os.mkdir(fullDirPath);
+        try:
+            if(not UtilPath.exists(fullDirPath)):
+                os.mkdir(fullDirPath);
+        except Exception as e:
+            print("mkdir error");
         
     # 复制文件，oldfile和newfile都只能是文件
     @staticmethod
     def copyFile(oldFullFilePath, newFullFilePath):
-        shutil.copyfile(oldFullFilePath, newFullFilePath);
+        try:
+            shutil.copyfile(oldFullFilePath, newFullFilePath);
+        except Exception as e:
+            print("copyFile error");
         
     
     # 复制文件，oldfile只能是文件夹，newfile可以是文件，也可以是目标目录
     @staticmethod
     def copy(oldFullDirPath, newFullFileOrDirPath):
-        shutil.copy(oldFullDirPath, newFullFileOrDirPath);
+        try:
+            shutil.copy(oldFullDirPath, newFullFileOrDirPath);
+        except Exception as e:
+            print("copy error");
         
     
     # 复制文件夹，olddir和newdir都只能是目录，且newdir必须不存在
     @staticmethod
     def copytree(oldFullDirPath, newFullDirPath):
-        shutil.copytree(oldFullDirPath, newFullDirPath);
+        try:
+            shutil.copytree(oldFullDirPath, newFullDirPath);
+        except Exception as e:
+            print("copytree error");
         
     
     # 移动文件（目录）
     @staticmethod
     def move(oldFullFilePathOrDir, newFullFileOrDirPath):
-        shutil.move(oldFullFilePathOrDir, newFullFileOrDirPath);
+        try:
+            shutil.move(oldFullFilePathOrDir, newFullFileOrDirPath);
+        except Exception as e:
+            print("move error");
     
     
     # 删除文件
     @staticmethod
     def deleteFile(fullFilePath):
         UtilPath.remove(fullFilePath);
+
+
     # 删除文件
     @staticmethod
     def remove(fullFilePath):
-        os.remove(fullFilePath);
+        try:
+            os.remove(fullFilePath);
+        except Exception as e:
+            print("remove error");
         
     
     # 重命名文件（目录），文件或目录都是使用这条命令
     @staticmethod
     def rename(oldFullFileOrDirPath, newFullFileOrDirPath):
-        os.rename(oldFullFileOrDirPath, newFullFileOrDirPath);
+        try:
+            os.rename(oldFullFileOrDirPath, newFullFileOrDirPath);
+        except Exception as e:
+            print("rename error");
         
     
     # 删除目录，只能删除空目录
     @staticmethod
     def rmdir(fullDirPath):
-        os.rmdir(fullDirPath);
+        try:
+            os.rmdir(fullDirPath);
+        except Exception as e:
+            print("rmdir error");
         
     
     # 删除目录，空目录、有内容的目录都可以删 
     @staticmethod
     def rmtree(fullDirPath):
-        shutil.rmtree(fullDirPath);
+        try:
+            shutil.rmtree(fullDirPath);
+        except Exception as e:
+            print("rmtree error");
     
     
     # 转换目录
     @staticmethod
     def chdir(fullDirPath):
-        os.chdir(fullDirPath);
+        try:
+            os.chdir(fullDirPath);
+        except Exception as e:
+            print("chdir error");
         
     # 判断目标，判断目标是否存在
     @staticmethod
@@ -143,6 +179,7 @@ class UtilPath(GObject):
 
 
     # 连接目录
+    # E:/Self/Self/unity/unitygame/Client_Start/OutPut/AssetBundles/Windows 和 /AI 连接的结果是 E:/AI 
     @staticmethod
     def join(path_a, path_b, path_c = None, path_d = None, path_e = None):
         retPath = "";
@@ -277,7 +314,13 @@ class UtilPath(GObject):
                     if (UtilStr.isEmptyOrNull(destPath)):
                         fileHandle(UtilPath.join(root, oneFile), oneFile, "");
                     else:
-                        fileHandle(UtilPath.join(root, oneFile), oneFile, UtilPath.join(destPath, oneFile));
+                        root = UtilPath.normal(root);
+                        addSubPath = UtilStr.replace(root, srcPath, "");
+                        addSubPath = UtilStr.truncate(addSubPath, 1);
+                        adjustDestPath = destPath;
+                        if(UtilStr.len(addSubPath)):
+                            adjustDestPath = UtilPath.combine(destPath, addSubPath);
+                        fileHandle(UtilPath.join(root, oneFile), oneFile, adjustDestPath);
                     
 
     @staticmethod
