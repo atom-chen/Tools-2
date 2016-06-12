@@ -43,12 +43,21 @@ class VerConfig(GObject):
         
         self.mPrefabResExtNameList = MList();        # Resources 目录下使用 AssetBundles 打包资源的资源扩展名字列表
         self.mPrefabResExtNameList.Add("prefab");
+        self.mPrefabResExtNameList.Add("mat");
+        self.mPrefabResExtNameList.Add("png");
+        self.mPrefabResExtNameList.Add("tga");
         
         self.mAssetBundlesExtNameList = MList();     # AssetBundles 资源的扩展名字
         self.mAssetBundlesExtNameList.Add("unity3d");
         
         self.mSceneExtNameList = MList();           # 场景文件扩赞名字列表
         self.mSceneExtNameList.Add("unity");
+        
+        self.mPersistentAssetBundlesPath = "E:/Self/Self/unity/unitygame/Client_Start/OutPut/AssetBundles/Windows";      # 最终的 AssetBudnles 输出的目录
+        
+        self.mIgnoreExtList = MList();
+        self.mIgnoreExtList.Add("meta");
+        self.mIgnoreExtList.Add("manifest");
 
 
 
@@ -75,6 +84,9 @@ class VerConfig(GObject):
     def getStreamingAssetsPath(self):
         return UtilPath.combine(self.mProjRootPath, self.mAssetName, self.mStreamingAssetsName);
     
+    def getPersistentPath(self):
+        return self.mPersistentAssetBundlesPath;
+    
     
     def getResourcesVerFileFullOutPath(self):
         return UtilPath.combine(self.mProjRootPath, self.mAssetName, self.mResourcesName, self.mResourcesVerFileName);
@@ -85,7 +97,7 @@ class VerConfig(GObject):
     
     
     def getPersistentVerFileFullOutPath(self):
-        return UtilPath.combine(self.mOutPutPath, self.mPersistentVerFileName);
+        return UtilPath.combine(self.mPersistentAssetBundlesPath, self.mPersistentVerFileName);
 
 
     def getOutPutRootPath(self):
@@ -96,7 +108,8 @@ class VerConfig(GObject):
         pass;
 
 
-    def getAssetBundlesManifestPath(self, buildTarget):
+    #def getAssetBundlesManifestPath(self, buildTarget):
+    def getAssetBundlesManifestPath(self):
         return "E:/Self/Self/unity/unitygame/Client_Start/OutPut/BuildOut/AssetBundlesList.txt";
 
     
@@ -112,8 +125,18 @@ class VerConfig(GObject):
         return self.mSceneExtNameList.IndexOf(extName) != -1;    
     
     
+    def isPrefabOrSceneRes(self, extName):
+        return self.isPrefabRes(extName) or self.isSceneRes(extName);
+    
+    
+    
     def isAssetBundlesRes(self, extName):
         return self.mAssetBundlesExtNameList.IndexOf(extName) != -1;
+
+
+    def isIgnoreFileByExt(self, extName):
+        return self.mIgnoreExtList.IndexOf(extName) != -1;
+
 
 
 

@@ -36,20 +36,29 @@ class VersionProcess(MProcess):
         VerProcessSys.instance().mParams = self.mParams;
 
         self.buildVer();
+        
+    def createAssetBundleManifest(self):
+        if(self.mAssetBundlesManifest == None):
+            self.mAssetBundlesManifest = AssetBundlesManifest();
+            self.mAssetBundlesManifest.readManifest();
+            self.mAssetBundlesManifest.findResourcsName();
+            self.mAssetBundlesManifest.calcMd5(VerProcessSys.instance().mParams.mVerConfig.getPersistentPath());
     
         
     def buildVer(self):
+        self.createAssetBundleManifest();
+        
         if(self.mParams.isMakePersistent()):
             self.buildPersistentVer();
-        if(self.mParams.isMakeResources()):
-            self.buildResourcesVer();
         if(self.mParams.isMakeStreamingAssets()):
             self.buildStreamingAssetsVer();
-    
-    
+        if(self.mParams.isMakeResources()):
+            self.buildResourcesVer();
+
+
     def buildResourcesVer(self):
         self.mDataStream = MDataStream(self.mParams.getResourcesVerFileFullOutPath(), MFileMode.WriteTxt);
-        
+
         UtilPath.traverseDirectory(
                            self.mParams.getResourcesPath(), 
                            None, 
@@ -62,16 +71,12 @@ class VersionProcess(MProcess):
         
         self.mDataStream.close();
 
-    
+
     def buildStreamingAssetsVer(self):
         self.mDataStream = MDataStream(
                                        self.mParams.getStreamingAssetsVerFileFullOutPath(), 
                                        MFileMode.WriteTxt
                                        );
-                                       
-        self.mAssetBundlesManifest = AssetBundlesManifest();
-        self.mAssetBundlesManifest.readManifest();
-        self.mAssetBundlesManifest.findResourcsName();
         
         UtilPath.traverseDirectory(
                            self.mParams.getStreamingAssetsPath(), 
@@ -84,7 +89,6 @@ class VersionProcess(MProcess):
                            );
         
         self.mDataStream.close();
-        self.mAssetBundlesManifest = None;
 
 
     def buildPersistentVer(self):
@@ -94,12 +98,12 @@ class VersionProcess(MProcess):
                                        );
         
         UtilPath.traverseDirectory(
-                           self.mParams.getResourcesPath(), 
+                           self.mParams.getPersistentPath(), 
                            None, 
                            None, 
                            None,  
                            self, 
-                           self.traverseResourcesPathHandle, 
+                           self.traversePersistentPathHandle, 
                            True
                            );
         
@@ -108,12 +112,15 @@ class VersionProcess(MProcess):
 
     def traverseResourcesPathHandle(self, srcFullPath, srcCurName, destFullPath):
         extName = UtilPath.getFileExt(srcFullPath);
-        if(extName != "meta"):
+        if(not VerProcessSys.instance().mParams.isIgnoreFileByExt(extName)):
             resourcePath = UtilStr.replace(srcFullPath, self.mParams.getResourcesPath(), "");
             resourcePath = UtilStr.truncate(resourcePath, 1);
             resUniqueId = UtilPath.getFilePathNoExt(resourcePath);
             loadPath = UtilPath.getFilePathNoExt(resourcePath);
-            fileMd5 = UtilHash.buildFileMd5(srcFullPath);
+            if(VerProcessSys.instance().mParams.mVerConfig.isPrefabOrSceneRes(extName)):
+                fileMd5 = self.mAssetBundlesManifest.getResPathMd5(resourcePath);
+            else:
+                fileMd5 = UtilHash.buildFileMd5(srcFullPath);
             fileSize = UtilPath.getsize(srcFullPath);
             strContent = UtilStr.format(
                                  "{0}={1}={2}={3}={4}", 
@@ -129,46 +136,83 @@ class VersionProcess(MProcess):
             
     def traverseStreamingAssetsPathHandle(self, srcFullPath, srcCurName, destFullPath):
         extName = UtilPath.getFileExt(srcFullPath);
-        if(extName != "meta"):
+        if(not VerProcessSys.instance().mParams.isIgnoreFileByExt(extName)):
             resourcePath = UtilStr.replace(srcFullPath, self.mParams.getStreamingAssetsPath(), "");
             resourcePath = UtilStr.truncate(resourcePath, 1);
             assetBundlesItem = self.mAssetBundlesManifest.getAssetBundlesItem(resourcePath);
             resUniqueId = UtilPath.getFilePathNoExt(resourcePath);
             loadPath = resourcePath;
-            if(assetBundlesItem != None):
-                resourcePath = assetBundlesItem.mAssetItem.mAssetList[0];
-            
-            fileMd5 = UtilHash.buildFileMd5(srcFullPath);
-            fileSize = UtilPath.getsize(srcFullPath);
-            strContent = UtilStr.format(
-                                 "{0}={1}={2}={3}={4}", 
-                                 resourcePath, 
-                                 resUniqueId,
-                                 loadPath,
-                                 fileMd5,
-                                 fileSize
-                                 );
+            if(VerProcessSys.instance().mParams.mVerConfig.isPrefabOrSceneRes(extName) and assetBundlesItem != None):
+                index = 0;
+                while(index < assetBundlesItem.mAssetItemList.mAssetList.length()):
+                    resourcePath = assetBundlesItem.mAssetItemList.mAssetList[index].mABPath;
+                    
+                    fileMd5 = UtilHash.buildFileMd5(srcFullPath);
+                    fileSize = UtilPath.getsize(srcFullPath);
+                    strContent = UtilStr.format(
+                                         "{0}={1}={2}={3}={4}", 
+                                         resourcePath, 
+                                         resUniqueId,
+                                         loadPath,
+                                         fileMd5,
+                                         fileSize
+                                         );
+                    self.mDataStream.writeLine(strContent);
+                    
+                    index = index + 1;
+            else:
+                fileMd5 = UtilHash.buildFileMd5(srcFullPath);
+                fileSize = UtilPath.getsize(srcFullPath);
+                strContent = UtilStr.format(
+                                     "{0}={1}={2}={3}={4}", 
+                                     resourcePath, 
+                                     resUniqueId,
+                                     loadPath,
+                                     fileMd5,
+                                     fileSize
+                                     );
+                
+                self.mDataStream.writeLine(strContent);
 
-            self.mDataStream.writeLine(strContent);
 
 
     def traversePersistentPathHandle(self, srcFullPath, srcCurName, destFullPath):
         extName = UtilPath.getFileExt(srcFullPath);
-        if(extName != "meta"):
-            resourcePath = UtilStr.replace(srcFullPath, self.mParams.getResourcesPath(), "");
+        if(not VerProcessSys.instance().mParams.isIgnoreFileByExt(extName)):
+            resourcePath = UtilStr.replace(srcFullPath, self.mParams.getPersistentPath(), "");
             resourcePath = UtilStr.truncate(resourcePath, 1);
+            assetBundlesItem = self.mAssetBundlesManifest.getAssetBundlesItem(resourcePath);
             resUniqueId = UtilPath.getFilePathNoExt(resourcePath);
-            loadPath = UtilPath.getFilePathNoExt(resourcePath);
-            fileMd5 = UtilHash.buildFileMd5(srcFullPath);
-            fileSize = UtilPath.getsize(srcFullPath);
-            strContent = UtilStr.format(
-                                 "{0}={1}={2}={3}={4}", 
-                                 resourcePath, 
-                                 resUniqueId,
-                                 loadPath,
-                                 fileMd5,
-                                 fileSize
-                                 );
+            loadPath = resourcePath;
+            if(VerProcessSys.instance().mParams.mVerConfig.isPrefabOrSceneRes(extName) and assetBundlesItem != None):
+                index = 0;
+                while(index < assetBundlesItem.mAssetItemList.mAssetList.length()):
+                    resourcePath = assetBundlesItem.mAssetItemList.mAssetList[index].mABPath;
+                    
+                    fileMd5 = UtilHash.buildFileMd5(srcFullPath);
+                    fileSize = UtilPath.getsize(srcFullPath);
+                    strContent = UtilStr.format(
+                                         "{0}={1}={2}={3}={4}", 
+                                         resourcePath, 
+                                         resUniqueId,
+                                         loadPath,
+                                         fileMd5,
+                                         fileSize
+                                         );
+                    self.mDataStream.writeLine(strContent);
+                    
+                    index = index + 1;
+            else:
+                fileMd5 = UtilHash.buildFileMd5(srcFullPath);
+                fileSize = UtilPath.getsize(srcFullPath);
+                strContent = UtilStr.format(
+                                     "{0}={1}={2}={3}={4}", 
+                                     resourcePath, 
+                                     resUniqueId,
+                                     loadPath,
+                                     fileMd5,
+                                     fileSize
+                                     );
+                self.mDataStream.writeLine(strContent);
 
-            self.mDataStream.writeLine(strContent);
 

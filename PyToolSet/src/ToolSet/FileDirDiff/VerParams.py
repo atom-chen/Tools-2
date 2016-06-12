@@ -30,6 +30,10 @@ class VerParams(GObject):
     def getStreamingAssetsPath(self):
         return self.mVerConfig.getStreamingAssetsPath();
     
+    
+    def getPersistentPath(self):
+        return self.mVerConfig.getPersistentPath();
+    
 
     def getResourcesVerFileFullOutPath(self):
         return self.mVerConfig.getResourcesVerFileFullOutPath();
@@ -45,6 +49,10 @@ class VerParams(GObject):
     
     def getAssetBundlesManifestPath(self):
         return self.mVerConfig.getAssetBundlesManifestPath();
+
+
+    def isIgnoreFileByExt(self, extName):
+        return self.mVerConfig.isIgnoreFileByExt(extName);
 
 
 

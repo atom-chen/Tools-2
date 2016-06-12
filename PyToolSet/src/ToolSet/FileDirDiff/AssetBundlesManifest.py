@@ -9,6 +9,7 @@ from Libs.Tools.UtilPath import UtilPath
 from Libs.DataStruct.MDictionary import MDictionary
 from ToolSet.FileDirDiff.VerProcessSys import VerProcessSys
 from Libs.Tools.UtilApi import UtilApi
+from Libs.Tools.UtilHash import UtilHash
 
 '''
 @brief 打包的进入 AssetBundles 中的资源列表
@@ -16,7 +17,7 @@ from Libs.Tools.UtilApi import UtilApi
 class AssetItem(GObject):
     
     def __init__(self):
-        super(AssetItemList, self).__init__();
+        super(AssetItem, self).__init__();
         
         self.mTypeId = "AssetItem";
         
@@ -30,7 +31,7 @@ class AssetItem(GObject):
 class DepItem(GObject):
     
     def __init__(self):
-        super(DepItemList, self).__init__();
+        super(DepItem, self).__init__();
         
         self.mTypeId = "DepItem";
         
@@ -55,7 +56,7 @@ class AssetItemList(GObject):
 
 
     def addAsset(self, assetPath):
-        assetItem = AssetItem;
+        assetItem = AssetItem();
         assetItem.mABPath = assetPath;
         
         self.mAssetList.Add(assetItem);
@@ -66,6 +67,14 @@ class AssetItemList(GObject):
             if(assetItem.mABPath == abPath):
                 assetItem.mPrefabPath = resourcePath;
                 break;
+    
+    
+    def isResPathInABList(self, fullPath):
+        for assetItem in self.mAssetList.getList():
+            if(assetItem.mPrefabPath == fullPath):
+                return True;
+
+        return False;
 
 
 '''
@@ -100,6 +109,7 @@ class AssetBundlesItem(GObject):
         
         self.mAssetItemList = AssetItemList();
         self.mDepItemList = DepItemList();
+        self.mMd5 = "";         # AssetBundles 的 MD5 码
 
 
     def addAsset(self, assetPath):
@@ -112,6 +122,18 @@ class AssetBundlesItem(GObject):
 
     def addDep(self, depPath):
         self.mDepItemList.addDep(depPath);
+        
+        
+    def setAbMd5(self, md5):
+        self.mMd5 = md5;
+        
+        
+    def getABMd5(self):
+        return self.mMd5;
+        
+    
+    def isResPathInABList(self, fullPath):
+        return self.mAssetItemList.isResPathInABList(fullPath);
         
 
 '''
@@ -130,7 +152,7 @@ class AssetBundlesManifest(GObject):
         
         
     def getAssetBundlesItem(self, itemPath):
-        return self.mAssetDic.value(itemPath);
+        return self.mABPathToItemDic.value(itemPath);
     
 
     def readManifest(self):
@@ -148,13 +170,15 @@ class AssetBundlesManifest(GObject):
                 # , Split
                 commoList = UtilStr.split(equalSplitList[1], ",");
                 for commoItem in commoList:
-                    self.mABResPathToItemDic.Add(commoItem, assetBundlesItem);                    
-                    assetBundlesItem.addAsset(commoItem);
+                    if(UtilStr.len(commoItem)):
+                        self.mABResPathToItemDic.Add(commoItem, assetBundlesItem);                    
+                        assetBundlesItem.addAsset(commoItem);
                 
                 if(MList.len(equalSplitList) > 2):
                     commoList = UtilStr.split(equalSplitList[2], ",");
                     for commoItem in commoList:
-                        assetBundlesItem.addDep(commoItem);
+                        if(UtilStr.len(commoItem)):
+                            assetBundlesItem.addDep(commoItem);
 
 
     # 查找 Resources 目录下的对应的名字
@@ -175,11 +199,31 @@ class AssetBundlesManifest(GObject):
     def traverseResourcesPathHandle(self, srcFullPath, srcCurName, destFullPath):
         extName = UtilPath.getFileExt(srcFullPath);
         # 如果是可以打成 AssetBundles 的资源
-        if(VerProcessSys.instance().mParams.mVerConfig.isPrefabRes(extName)):
-            resourcesPath = UtilStr.replace(srcFullPath, self.mResourcesPath, "");
-            lowerResourcesPath = UtilApi.convResourcesPathToAssetBundlesPath(resourcesPath);
-            lowerResourcesPath = UtilStr.lower(resourcesPath);
-            assetBundlesItem = self.mABResPathToItemDic.value(lowerResourcesPath);
-            if(assetBundlesItem != None):
-                assetBundlesItem.setResourcesName(lowerResourcesPath, resourcesPath);
+        if(extName != "meta" and extName != "manifest"):
+            if(VerProcessSys.instance().mParams.mVerConfig.isPrefabRes(extName)):
+                resourcesPath = UtilStr.replace(srcFullPath, self.mResourcesPath, "");
+                resourcesPath = UtilStr.truncate(resourcesPath, 1);
+                lowerABResPath = UtilApi.convResourcesPathToAssetBundlesPath(resourcesPath);
+                lowerABResPath = UtilStr.lower(lowerABResPath);
+                lowerResourcesPath = UtilStr.lower(resourcesPath);
+                assetBundlesItem = self.mABResPathToItemDic.value(lowerResourcesPath);
+                if(assetBundlesItem != None):
+                    assetBundlesItem.setResourcesName(lowerResourcesPath, resourcesPath);
+
+
+    def calcMd5(self, rootPath):
+        for (key_, value_) in self.mABPathToItemDic.items():
+            fullPath = UtilPath.combine(rootPath, key_);
+            md5 = UtilHash.buildFileMd5(fullPath);
+            value_.setAbMd5(md5);
+    
+    
+    def getResPathMd5(self, resPath):
+        for (key_, value_) in self.mABPathToItemDic.items():
+            if(value_.isResPathInABList(resPath)):
+                return value_.getABMd5();
+            
+        return "error";
+    
+    
 

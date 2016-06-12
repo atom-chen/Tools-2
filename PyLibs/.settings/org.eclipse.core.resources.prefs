@@ -73,6 +73,7 @@ encoding//src/Libs/Tools/UtilError.py=utf-8
 encoding//src/Libs/Tools/UtilHash.py=utf-8
 encoding//src/Libs/Tools/UtilPath.py=utf-8
 encoding//src/Libs/Tools/UtilStr.py=utf-8
+encoding//src/Test/TestClassAttr.py=utf-8
 encoding//src/Test/TestDataStruct.py=utf-8
 encoding//src/Test/TestEventDispatch.py=utf-8
 encoding//src/Test/TestMain.py=utf-8
