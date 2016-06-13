@@ -100,7 +100,7 @@ class VersionProcess(MProcess):
                                    
     def onCopyFromPersistentToStreamingAssets(self, srcFullPath, srcCurName, destFullPath):
         extName = UtilPath.getFileExt(srcFullPath);
-        if(not self.mParams.isIgnoreFileByExt(extName)):
+        if(not self.mParams.isIgnoreFileByExt(extName) and not self.mParams.mVerConfig.isPersistentVerFileName(srcCurName)):
             destFullFilePath = UtilPath.combine(destFullPath, srcCurName);
             if(UtilPath.exists(destFullFilePath)):
                 UtilPath.deleteFile(destFullFilePath);
@@ -145,7 +145,7 @@ class VersionProcess(MProcess):
                                    
     def onCopyFromResourcesToPersistent(self, srcFullPath, srcCurName, destFullPath):
         extName = UtilPath.getFileExt(srcFullPath);
-        if(not self.mParams.isIgnoreFileByExt(extName)):
+        if(not self.mParams.isIgnoreFileByExt(extName) and not self.mParams.mVerConfig.isResourcesVerFileName(srcCurName)):
             if(not self.mParams.mVerConfig.isPrefabOrSceneRes(extName)):
                 destFullFilePath = UtilPath.combine(destFullPath, srcCurName);
                 if(UtilPath.exists(destFullFilePath)):

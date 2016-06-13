@@ -40,7 +40,8 @@ class VerConfig(GObject):
         
         self.mResourcesVerFileName = "Version_R.txt";       # Resources 版本文件名字
         self.mStreamingAssetsVerFileName = "Version_S.txt"; # StreamingAssets 版本文件名字
-        self.mPersistentVerFileName = "Version_P.txt";       # Persistent 版本文件名字
+        self.mPersistentVerFileName = "Version_P.txt";      # Persistent 版本文件名字
+        self.mMinVerFileName = "Version_Mini.txt";          # 就是版本的版本
         
         self.mPrefabResExtNameList = MList();        # Resources 目录下使用 AssetBundles 打包资源的资源扩展名字列表
         self.mPrefabResExtNameList.Add("prefab");
@@ -145,5 +146,27 @@ class VerConfig(GObject):
         return self.mIgnoreExtList.IndexOf(extName) != -1;
 
 
+    def getResourcesVerFileName(self):
+        return self.mResourcesVerFileName;
 
+
+    def getStreamingAssetsVerFileName(self):
+        return self.mStreamingAssetsVerFileName;
+    
+
+    def getPersistentVerFileName(self):
+        return self.mPersistentVerFileName;
+    
+    
+    def getMinVerFileName(self):
+        return self.mMinVerFileName;
+    
+    
+    def isResourcesVerFileName(self, fileName):
+        return self.mResourcesVerFileName == fileName;
+    
+    
+    def isPersistentVerFileName(self, fileName):
+        return self.mPersistentVerFileName == fileName;
+    
 
