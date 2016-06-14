@@ -8,6 +8,8 @@ from Libs.Tools.UtilPath import UtilPath
 class TestUtil(GObject):
     def __init__(self):
         super(TestUtil, self).__init__();
+        
+        self.mTypeId = "TestUtil";
 
 
     def run(self):

@@ -177,3 +177,11 @@ class VerConfig(GObject):
         return self.mPersistentVerFileName == fileName;
     
 
+    def getLuaSrcPath(self):
+        return UtilPath.combine(self.mProjRootPath, self.mAssetName, "uLua/Lua");
+    
+    
+    def getLuaDestPath(self):
+        return UtilPath.combine(self.mProjRootPath, self.mAssetName, self.mResourcesName, "Lua");
+    
+

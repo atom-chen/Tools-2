@@ -6,8 +6,21 @@
 
 from Libs.Tools.UtilPath import UtilPath
 from Libs.Tools.UtilStr import UtilStr
+from Libs.Core.GObject import GObject
 
-class TestPath(object):
+class TestPath(GObject):
+    
+    def __init__(self):
+        super(TestPath, self).__init__();
+        
+        self.mTypeId = "TestUtil";
+
+
+    def run(self):
+        #self.test();
+        self.testMkdir();
+
+
     def test(self):
         UtilPath.traverseDirectory(
                                    "E:/Self/Self/unity/unitygame/Client_Start/Assets/uLua/Lua", 
@@ -26,7 +39,13 @@ class TestPath(object):
             txtPath = UtilStr.format("{0}{1}", pathNoExt, ".txt");
             UtilPath.rename(srcPath, txtPath);
 
+    
+    def testMkdir(self):
+        srcPath = "E:/Self/Self/unity/unitygame/Client_Start/Assets/Resources/lua";
+        UtilPath.mkdir(srcPath);
 
-testPath = TestPath();
-testPath.test();
+        srcPath = "E:/Self/Self/unity/unitygame/Client_Start/Assets/Resources/lua/aaa/bbb";
+        UtilPath.makedirs(srcPath);
+        
+        print("end");
 

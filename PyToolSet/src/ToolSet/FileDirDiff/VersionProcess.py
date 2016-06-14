@@ -47,6 +47,7 @@ class VersionProcess(MProcess):
     
         
     def buildVer(self):
+        self.copyLuaToResources();
         self.createAssetBundleManifest();
         
         if(self.mParams.isMakePersistent()):
@@ -108,7 +109,7 @@ class VersionProcess(MProcess):
             if(UtilPath.exists(destFullFilePath)):
                 UtilPath.deleteFile(destFullFilePath);
             elif(not UtilPath.exists(destFullPath)):
-                UtilPath.mkdir(destFullPath);
+                UtilPath.makedirs(destFullPath);
                 
             UtilPath.copyFile(srcFullPath, destFullFilePath);
 
@@ -154,7 +155,7 @@ class VersionProcess(MProcess):
                 if(UtilPath.exists(destFullFilePath)):
                     UtilPath.deleteFile(destFullFilePath);
                 elif(not UtilPath.exists(destFullPath)):
-                    UtilPath.mkdir(destFullPath);
+                    UtilPath.makedirs(destFullPath);
                     
                 UtilPath.copyFile(srcFullPath, destFullFilePath);
 
@@ -342,4 +343,32 @@ class VersionProcess(MProcess):
         self.mDataStream.close();
         
 
+    # 拷贝 Lua 文件到 Resources 文件夹
+    def copyLuaToResources(self):
+        srcPath = self.mParams.mVerConfig.getLuaSrcPath();
+        destPath = self.mParams.mVerConfig.getLuaDestPath();
+        
+        UtilPath.traverseDirectory(
+                           srcPath, 
+                           destPath, 
+                           None, 
+                           None,  
+                           self, 
+                           self.traverseLua, 
+                           True
+                           );        
+
+    # 遍历 Lua 目录，然后拷贝，并且将扩展名字修改成 txt 的扩展名字
+    def traverseLua(self, srcFullPath, srcCurName, destFullPath):
+        extName = UtilPath.getFileExt(srcCurName);
+        if(extName == 'lua'):
+            fileNameNoExt = UtilPath.getFileNameNoExt(srcCurName);
+            destFilePath = UtilStr.format("{0}/{1}.txt", destFullPath, fileNameNoExt);
+            if(UtilPath.exists(destFilePath)):
+                UtilPath.deleteFile(destFilePath);
+            elif(not UtilPath.exists(destFullPath)):
+                UtilPath.makedirs(destFullPath);
+            UtilPath.copyFile(srcFullPath, destFilePath);
+        
+        
 

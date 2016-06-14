@@ -39,22 +39,33 @@ class UtilPath(GObject):
         except Exception as e:
             print("open error");
         
-    # 创建目录
+    # 创建目录,使用mkdir方法创建一个文件夹，可能性能比 makedirs 好点，但是尽量还是使用 makedirs 吧，因为你不知道到底是几层文件夹
     @staticmethod
     def mkdir(fullDirPath):
         try:
             if(not UtilPath.exists(fullDirPath)):
                 os.mkdir(fullDirPath);
         except Exception as e:
-            print("mkdir error");
-        
+            print(UtilStr.format("mkdir error Dir is {0}", fullDirPath));
+    
+    
+    # 使用mkdir方法创建多层文件夹，也就是说，文件夹f:/tt1和文件夹f:/tt1/tt1都是不存在的
+    @staticmethod
+    def makedirs(fullDirPath):
+        try:
+            if(not UtilPath.exists(fullDirPath)):
+                os.makedirs(fullDirPath);
+        except Exception as e:
+            print(UtilStr.format("makedirs error Dir is {0}", fullDirPath));
+
+
     # 复制文件，oldfile和newfile都只能是文件
     @staticmethod
     def copyFile(oldFullFilePath, newFullFilePath):
         try:
             shutil.copyfile(oldFullFilePath, newFullFilePath);
         except Exception as e:
-            print("copyFile error");
+            print(UtilStr.format("copyFile error From {0} To {1}", oldFullFilePath, newFullFilePath));
         
     
     # 复制文件，oldfile只能是文件夹，newfile可以是文件，也可以是目标目录
@@ -108,13 +119,22 @@ class UtilPath(GObject):
             print("rename error");
         
     
-    # 删除目录，只能删除空目录
+    # 删除单个目录，只能删除空目录
     @staticmethod
     def rmdir(fullDirPath):
         try:
             os.rmdir(fullDirPath);
         except Exception as e:
             print("rmdir error");
+
+    
+    #删除所给路径最后一个目录下所有空目录。
+    @staticmethod
+    def removedirs(fullDirPath):
+        try:
+            os.removedirs(fullDirPath);
+        except Exception as e:
+            print("removedirs error");
         
     
     # 删除目录，空目录、有内容的目录都可以删 
@@ -223,6 +243,12 @@ class UtilPath(GObject):
         return os.getcwd();
     
     
+    # 获取文件属性
+    @staticmethod
+    def stat(fullFilePath):
+        return os.stat(fullFilePath);
+    
+    
     @staticmethod
     def removeExtDot(ext):
         if(not UtilStr.isEmptyOrNull(ext)):
@@ -299,7 +325,7 @@ class UtilPath(GObject):
         
         if(not UtilStr.isEmptyOrNull(destPath)):
             if(not UtilPath.exists(destPath) and isCreateDestPath):
-                UtilPath.mkdir(destPath);
+                UtilPath.makedirs(destPath);
                 
         if (dirHandle != None):
             fileOrDirName = UtilPath.getDirCurName(srcPath);
@@ -430,7 +456,7 @@ class UtilPath(GObject):
             return;
     
         if(not UtilPath.exists(destPath)):
-            UtilPath.mkdir(destPath);
+            UtilPath.makedirs(destPath);
 
         fileAndDirListInfo = UtilPath.getAllFileOrDir(srcPath, includeExtList, excludeExtList, False);
         for fileItemInfo in fileAndDirListInfo.mFileList.getList():
