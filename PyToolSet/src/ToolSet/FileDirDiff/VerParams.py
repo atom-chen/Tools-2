@@ -23,6 +23,10 @@ class VerParams(GObject):
     def isMakePersistent(self):
         return self.mVerConfig.isMakePersistent();
     
+
+    def isMakeMini(self):
+        return self.mVerConfig.isMakeMini();
+    
     
     def getAssetPath(self):
         return self.mVerConfig.getAssetPath();

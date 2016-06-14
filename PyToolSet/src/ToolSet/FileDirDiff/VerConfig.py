@@ -11,6 +11,7 @@ class eMakeType(GObject):
     eResources = 0;
     eStreamingAssets = 1;
     ePersistent = 2;
+    eMini = 3;
     
 
 '''
@@ -37,6 +38,7 @@ class VerConfig(GObject):
         self.mMakeVerTypeList.add(eMakeType.eResources);
         self.mMakeVerTypeList.add(eMakeType.eStreamingAssets);
         self.mMakeVerTypeList.add(eMakeType.ePersistent);
+        self.mMakeVerTypeList.add(eMakeType.eMini);
         
         self.mResourcesVerFileName = "Version_R.txt";       # Resources 版本文件名字
         self.mStreamingAssetsVerFileName = "Version_S.txt"; # StreamingAssets 版本文件名字
@@ -75,6 +77,10 @@ class VerConfig(GObject):
     
     def isMakePersistent(self):
         return self.mMakeVerTypeList.IndexOf(eMakeType.ePersistent) != -1;
+    
+    
+    def isMakeMini(self):
+        return self.mMakeVerTypeList.IndexOf(eMakeType.eMini) != -1;
 
 
     def getAssetPath(self):
@@ -106,7 +112,10 @@ class VerConfig(GObject):
     
     def getPersistentVerFileFullOutPath(self):
         return UtilPath.combine(self.mPersistentAssetBundlesPath, self.mPersistentVerFileName);
-
+    
+    
+    def getMiniVerFileFullOutPath(self):
+        return UtilPath.combine(self.mPersistentAssetBundlesPath, self.mMinVerFileName);
 
     def getOutPutRootPath(self):
         return self.mOutPutPath;
@@ -135,8 +144,7 @@ class VerConfig(GObject):
     
     def isPrefabOrSceneRes(self, extName):
         return self.isPrefabRes(extName) or self.isSceneRes(extName);
-    
-    
+
     
     def isAssetBundlesRes(self, extName):
         return self.mAssetBundlesExtNameList.IndexOf(extName) != -1;
@@ -156,7 +164,6 @@ class VerConfig(GObject):
 
     def getPersistentVerFileName(self):
         return self.mPersistentVerFileName;
-    
     
     def getMinVerFileName(self):
         return self.mMinVerFileName;

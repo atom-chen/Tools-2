@@ -14,6 +14,7 @@ from Libs.Tools.UtilStr import UtilStr
 from Libs.Tools.UtilHash import UtilHash
 from ToolSet.FileDirDiff.AssetBundlesManifest import AssetBundlesManifest
 from ToolSet.FileDirDiff.VerProcessSys import VerProcessSys
+from Libs.Tools.UtilTime import UtilTime
 
 class VersionProcess(MProcess):
     
@@ -56,6 +57,8 @@ class VersionProcess(MProcess):
             self.buildStreamingAssetsVer();
         if(self.mParams.isMakeResources()):
             self.buildResourcesVer();
+        if(self.mParams.isMakeMini()):
+            self.buildMiniVer();
 
 
     def buildResourcesVer(self):
@@ -303,5 +306,40 @@ class VersionProcess(MProcess):
                                      fileSize
                                      );
                 self.mDataStream.writeLine(strContent);
+
+
+    def buildMiniVer(self):
+        if(UtilPath.exists(self.mParams.mVerConfig.getMiniVerFileFullOutPath())):
+            UtilPath.deleteFile(self.mParams.mVerConfig.getMiniVerFileFullOutPath());
+        
+        self.mDataStream = MDataStream(
+                                       self.mParams.mVerConfig.getMiniVerFileFullOutPath(), 
+                                       MFileMode.WriteTxt
+                                       );
+        
+        verLine = UtilStr.format('Version={0}', UtilTime.getTimeStamp());
+        self.mDataStream.writeLine(verLine);
+        
+        pVerPath = self.mParams.mVerConfig.getPersistentVerFileFullOutPath();
+        if(UtilPath.exists(pVerPath)):
+            resourcePath = UtilStr.replace(pVerPath, self.mParams.getPersistentPath(), "");
+            resourcePath = UtilStr.truncate(resourcePath, 1);
+            resUniqueId = UtilPath.getFilePathNoExt(resourcePath);
+            loadPath = resourcePath;
+            fileMd5 = UtilHash.buildFileMd5(pVerPath);
+            fileSize = UtilPath.getsize(pVerPath);
+            
+            strContent = UtilStr.format(
+                     "{0}={1}={2}={3}={4}", 
+                     resourcePath, 
+                     resUniqueId,
+                     loadPath,
+                     fileMd5,
+                     fileSize
+                     );
+            self.mDataStream.writeLine(strContent);
+        
+        self.mDataStream.close();
+        
 
 
