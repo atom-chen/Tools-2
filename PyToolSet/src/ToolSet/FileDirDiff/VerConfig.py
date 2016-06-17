@@ -60,6 +60,7 @@ class VerConfig(GObject):
         self.mSceneExtNameList.Add("unity");
         
         self.mPersistentAssetBundlesPath = "E:/Self/Self/unity/unitygame/Client_Start/OutPut/AssetBundles/Windows";      # 最终的 AssetBudnles 输出的目录
+        #self.mPersistentAssetBundlesPath = "E:/Self/Self/unity/unitygame/Client_Start/OutPut/AssetBundles/Android";      # 最终的 AssetBudnles 输出的目录
         
         self.mIgnoreExtList = MList();
         self.mIgnoreExtList.Add("meta");
@@ -93,7 +94,8 @@ class VerConfig(GObject):
 
     def getStreamingAssetsPath(self):
         return UtilPath.combine(self.mProjRootPath, self.mAssetName, self.mStreamingAssetsName);
-    
+
+
     def getPersistentPath(self):
         return self.mPersistentAssetBundlesPath;
     
@@ -107,7 +109,9 @@ class VerConfig(GObject):
     
 
     def getStreamingAssetsVerFileFullOutPath(self):
-        return UtilPath.combine(self.mProjRootPath, self.mAssetName, self.mStreamingAssetsName, self.mStreamingAssetsVerFileName);
+        # StreamingAssets 目录下的 "Version_S.txt" 不放在 StreamingAssets 目录下了，因为我们会同步加载 "Version_S.txt" 这个配置，但是在 Android 下 StreamingAssets 目录只能使用 WWW 异步加载非 AssetBundles 资源 
+        #return UtilPath.combine(self.mProjRootPath, self.mAssetName, self.mStreamingAssetsName, self.mStreamingAssetsVerFileName);
+        return UtilPath.combine(self.mProjRootPath, self.mAssetName, self.mResourcesName, self.mStreamingAssetsVerFileName);
     
     
     def getPersistentVerFileFullOutPath(self):
