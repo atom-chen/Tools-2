@@ -6,6 +6,7 @@
 
 from Libs.Core.GObject import GObject
 from Libs.Tools.UtilPath import UtilPath
+from Libs.Tools.UtilStr import UtilStr
 
 class MDataStream(GObject):
     
@@ -35,7 +36,7 @@ class MDataStream(GObject):
         try:
             self.mFileHandle = open(self.mFileName, self.mMode);
         except Exception as e:
-            print("MDataStream open error");
+            print(UtilStr.format("MDataStream::open, error, Path is {0}", self.mFileName));
         
         
     def close(self):
