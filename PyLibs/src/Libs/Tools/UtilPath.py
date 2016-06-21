@@ -107,7 +107,7 @@ class UtilPath(GObject):
         try:
             os.remove(fullFilePath);
         except Exception as e:
-            print("remove error");
+            print(UtilStr.format("UtilPath::remove, fail, Path is {0}", fullFilePath));
         
     
     # 重命名文件（目录），文件或目录都是使用这条命令

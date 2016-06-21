@@ -27,6 +27,8 @@ class VerConfig(GObject):
         
         self.mProjRootPath = "E:/Self/Self/unity/unitygame/Client_Start";    # 工程根目录
         self.mOutPutPath = "E:/Self/Self/unity/unitygame/Client_Start/OutPut";         # 输出目录
+        #self.mProjRootPath = "/Users/zt-2202351/File/Client_Start";    # 工程根目录
+        #self.mOutPutPath = "/Users/zt-2202351/File/Client_Start/OutPut";         # 输出目录
         self.mDestPath = "";        # 最终目录
         
         self.mAssetName = "Assets";       # Assets 目录名字
@@ -60,7 +62,9 @@ class VerConfig(GObject):
         self.mSceneExtNameList.Add("unity");
         
         self.mPersistentAssetBundlesPath = "E:/Self/Self/unity/unitygame/Client_Start/OutPut/AssetBundles/Windows";      # 最终的 AssetBudnles 输出的目录
-        #self.mPersistentAssetBundlesPath = "E:/Self/Self/unity/unitygame/Client_Start/OutPut/AssetBundles/Android";      # 最终的 AssetBudnles 输出的目录
+        #self.mPersistentAssetBundlesPath = "/Users/zt-2202351/File/Client_Start/OutPut/AssetBundles/Android";      # 最终的 AssetBudnles 输出的目录
+        #self.mPersistentAssetBundlesPath = "/Users/zt-2202351/File/Client_Start/OutPut/AssetBundles/OSX";      # 最终的 AssetBudnles 输出的目录
+        #self.mPersistentAssetBundlesPath = "/Users/zt-2202351/File/Client_Start/OutPut/AssetBundles/iOS";      # 最终的 AssetBudnles 输出的目录
         
         self.mIgnoreExtList = MList();
         self.mIgnoreExtList.Add("meta");
@@ -132,6 +136,7 @@ class VerConfig(GObject):
     #def getAssetBundlesManifestPath(self, buildTarget):
     def getAssetBundlesManifestPath(self):
         return "E:/Self/Self/unity/unitygame/Client_Start/OutPut/BuildOut/AssetBundlesList.txt";
+        #return "/Users/zt-2202351/File/Client_Start/OutPut/BuildOut/AssetBundlesList.txt";
 
     
     def getBuildOutPath(self):
