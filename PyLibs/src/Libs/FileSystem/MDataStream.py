@@ -36,7 +36,7 @@ class MDataStream(GObject):
         try:
             self.mFileHandle = open(self.mFileName, self.mMode);
         except Exception as e:
-            print(UtilStr.format("MDataStream::open, error, Path is {0}", self.mFileName));
+            print(UtilStr.format("MDataStream::open, error, Path is {0} {1}", self.mFileName, e));
         
         
     def close(self):

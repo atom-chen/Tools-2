@@ -2,6 +2,7 @@
 
 import re
 from Libs.Core.GObject import GObject
+from Libs.Tools.Symbolic import Symbolic
 
 '''
 @brief: 字符串工具
@@ -27,13 +28,13 @@ class UtilStr(GObject):
         pass;
     
     @staticmethod
-    def truncate(stra, start = None, end = None):
+    def truncate(srcStr, start = None, end = None):
         if(start != None and end != None):
-            return stra[start:end];
+            return srcStr[start:end];
         elif(start != None and end == None):
-            return stra[start:];
+            return srcStr[start:];
         elif(start == None and end != None):
-            return stra[:end];
+            return srcStr[:end];
     
     
     @staticmethod
@@ -179,4 +180,14 @@ class UtilStr(GObject):
     def replaceRex(srcStr, findStr, replaceStr):
         strinfo = re.compile(findStr);
         return strinfo.sub(replaceStr, srcStr);
+
+
+    @staticmethod
+    def removeLastCR(srcStr):
+        if(not UtilStr.isEmptyOrNull(srcStr)):
+            strLen = UtilStr.len(srcStr);
+            if(srcStr[strLen - 1] == Symbolic.CR):
+                return UtilStr.truncate(srcStr, 0, strLen - 1);
+
+        return srcStr;
 

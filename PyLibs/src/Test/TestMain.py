@@ -11,6 +11,7 @@ from Test.TestUtil import TestUtil
 from Test.TestRef import TestRef
 from Test.TestClassAttr import TestClassAttr
 from Test.TestPath import TestPath
+from Test.TestStr import TestStr
 
 class TestMain(GObject):
     
@@ -25,6 +26,7 @@ class TestMain(GObject):
         self.mTestRef = TestRef();
         self.mTestClassAttr = TestClassAttr();
         self.mTestPath = TestPath();
+        self.mTestStr = TestStr();
         
     
     def run(self):
@@ -33,7 +35,8 @@ class TestMain(GObject):
         #self.mTestUtil.run();
         #self.mTestRef.run();
         #self.mTestClassAttr.run();
-        self.mTestPath.run();
+        #self.mTestPath.run();
+        self.mTestStr.run();
 
 
 

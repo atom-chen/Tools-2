@@ -18,6 +18,7 @@ class UtilPath(GObject):
     
     DOT = '.';
     CR_LF = "\n";
+    LF = "\n";
     SPLIT = "=";
     COMMENT = "#";
     

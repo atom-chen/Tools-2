@@ -211,7 +211,8 @@ class VerConfig(GObject):
     
     
     def readConfig(self):
-        path = UtilPath.combine(UtilPath.getcwd(), "Config/Config.txt"),
+        #path = UtilPath.combine(UtilPath.getcwd(), "Config/Config.txt");
+        path = "Config/Config.txt";
         dataStream = MDataStream(path, MFileMode.ReadTxt);
         content = dataStream.read();
         
@@ -220,13 +221,17 @@ class VerConfig(GObject):
         arrLen = MList.len(lineArr);
         while(idx < arrLen):
             if(UtilStr.len(lineArr[idx]) > 0 and lineArr[idx][0] != UtilPath.COMMENT):
+                lineArr[idx] = UtilStr.removeLastCR(lineArr[idx]);
                 equalSplitArr = UtilStr.split(lineArr[idx], UtilPath.SPLIT);
                 if(equalSplitArr[0] == "mProjRootPath"):
-                    self.mProjRootPath = equalSplitArr[0];
+                    self.mProjRootPath = equalSplitArr[1];
                 elif(equalSplitArr[0] == "mOutPutPath"):
-                    self.mOutPutPath = equalSplitArr[0];
+                    self.mOutPutPath = equalSplitArr[1];
                 elif(equalSplitArr[0] == "mTargetPlatformType"):
-                    self.mTargetPlatformType = equalSplitArr[0];
+                    self.mTargetPlatformType = equalSplitArr[1];
+                    
+            idx += 1;
+            #idx = idx + 1;
 
         self.postInit();
 
