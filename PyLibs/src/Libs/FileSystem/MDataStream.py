@@ -138,7 +138,7 @@ class MDataStream(GObject):
     def writeLine(self, strCon):
         if(self.isValid()):
             self.mFileHandle.write(strCon);
-            self.mFileHandle.write(UtilPath.CRLF);    
+            self.mFileHandle.write(UtilPath.CR_LF);    
             
     #把seq的内容全部写到文件中。这个函数也只是忠实地写入，不会在每行后面加上任何东西。 
     def writelines(self, seq):

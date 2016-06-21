@@ -17,8 +17,9 @@ from Libs.FileSystem.MFileDirInfo import MFileAndDirList, MFileInfo, MDirInfo
 class UtilPath(GObject):
     
     DOT = '.';
-    CRLF = "\n";
+    CR_LF = "\n";
     SPLIT = "=";
+    COMMENT = "#";
     
     # 将 "\" 转换成 "/"
     @staticmethod

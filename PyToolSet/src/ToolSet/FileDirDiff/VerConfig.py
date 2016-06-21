@@ -3,6 +3,9 @@
 from Libs.Core.GObject import GObject
 from Libs.Tools.UtilPath import UtilPath
 from Libs.DataStruct.MList import MList
+from Libs.FileSystem.MDataStream import MDataStream
+from Libs.FileSystem.MFileMode import MFileMode
+from Libs.Tools.UtilStr import UtilStr
 
 '''
 @brief 生成版本的类型
@@ -46,6 +49,7 @@ class VerConfig(GObject):
         self.mStreamingAssetsVerFileName = "Version_S.txt"; # StreamingAssets 版本文件名字
         self.mPersistentVerFileName = "Version_P.txt";      # Persistent 版本文件名字
         self.mMinVerFileName = "Version_Mini.txt";          # 就是版本的版本
+        self.mManifestConfigFileName = "AssetBundlesList.txt";
         
         self.mPrefabResExtNameList = MList();        # Resources 目录下使用 AssetBundles 打包资源的资源扩展名字列表
         self.mPrefabResExtNameList.Add("prefab");
@@ -60,15 +64,26 @@ class VerConfig(GObject):
         
         self.mSceneExtNameList = MList();           # 场景文件扩赞名字列表
         self.mSceneExtNameList.Add("unity");
-        
+
+        self.mTargetPlatformType = "Windows";
+        self.mTargetFolderName = "Windows";
         self.mPersistentAssetBundlesPath = "E:/Self/Self/unity/unitygame/Client_Start/OutPut/AssetBundles/Windows";      # 最终的 AssetBudnles 输出的目录
         #self.mPersistentAssetBundlesPath = "/Users/zt-2202351/File/Client_Start/OutPut/AssetBundles/Android";      # 最终的 AssetBudnles 输出的目录
         #self.mPersistentAssetBundlesPath = "/Users/zt-2202351/File/Client_Start/OutPut/AssetBundles/OSX";      # 最终的 AssetBudnles 输出的目录
         #self.mPersistentAssetBundlesPath = "/Users/zt-2202351/File/Client_Start/OutPut/AssetBundles/iOS";      # 最终的 AssetBudnles 输出的目录
         
+        
+        self.mPersistentAssetBundlesPath = UtilPath.combine(
+                                                            self.mOutPutPath, 
+                                                            "AssetBundles", 
+                                                            self.mTargetFolderName
+                                                            );
+        
         self.mIgnoreExtList = MList();
         self.mIgnoreExtList.Add("meta");
         self.mIgnoreExtList.Add("manifest");
+        
+        self.readConfig();
 
 
 
@@ -135,8 +150,9 @@ class VerConfig(GObject):
 
     #def getAssetBundlesManifestPath(self, buildTarget):
     def getAssetBundlesManifestPath(self):
-        return "E:/Self/Self/unity/unitygame/Client_Start/OutPut/BuildOut/AssetBundlesList.txt";
+        #return "E:/Self/Self/unity/unitygame/Client_Start/OutPut/BuildOut/AssetBundlesList.txt";
         #return "/Users/zt-2202351/File/Client_Start/OutPut/BuildOut/AssetBundlesList.txt";
+        return UtilPath.combine(self.mOutPutPath, "BuildOut", self.mManifestConfigFileName);
 
     
     def getBuildOutPath(self):
@@ -192,5 +208,38 @@ class VerConfig(GObject):
     
     def getLuaDestPath(self):
         return UtilPath.combine(self.mProjRootPath, self.mAssetName, self.mResourcesName, "Lua");
+    
+    
+    def readConfig(self):
+        path = UtilPath.combine(UtilPath.getcwd(), "Config/Config.txt"),
+        dataStream = MDataStream(path, MFileMode.ReadTxt);
+        content = dataStream.read();
+        
+        lineArr = UtilStr.split(content, UtilPath.CR_LF);
+        idx = 0;
+        arrLen = MList.len(lineArr);
+        while(idx < arrLen):
+            if(UtilStr.len(lineArr[idx]) > 0 and lineArr[idx][0] != UtilPath.COMMENT):
+                equalSplitArr = UtilStr.split(lineArr[idx], UtilPath.SPLIT);
+                if(equalSplitArr[0] == "mProjRootPath"):
+                    self.mProjRootPath = equalSplitArr[0];
+                elif(equalSplitArr[0] == "mOutPutPath"):
+                    self.mOutPutPath = equalSplitArr[0];
+                elif(equalSplitArr[0] == "mTargetPlatformType"):
+                    self.mTargetPlatformType = equalSplitArr[0];
+
+        self.postInit();
+
+        
+    def postInit(self):
+        self.mTargetFolderName = self.mTargetPlatformType;
+
+        self.mPersistentAssetBundlesPath = UtilPath.combine(
+                                                            self.mOutPutPath, 
+                                                            "AssetBundles", 
+                                                            self.mTargetFolderName
+                                                            );        
+        
+    
     
 

@@ -1,0 +1,4 @@
+#comment
+mProjRootPath=E:/Self/Self/unity/unitygame/Client_Start
+mOutPutPath=E:/Self/Self/unity/unitygame/Client_Start/OutPut
+mTargetPlatformType=Windows

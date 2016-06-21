@@ -160,7 +160,7 @@ class AssetBundlesManifest(GObject):
         
         dataStream = MDataStream(manifestPath, MFileMode.ReadTxt);
         lines = dataStream.read();
-        splitLineList = UtilStr.split(lines, UtilPath.CRLF);
+        splitLineList = UtilStr.split(lines, UtilPath.CR_LF);
         for oneLine in splitLineList:
             if(UtilStr.len(oneLine) > 0):
                 # = Split
