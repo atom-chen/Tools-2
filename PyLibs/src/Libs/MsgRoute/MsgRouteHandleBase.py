@@ -1,8 +1,8 @@
 ﻿# -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject
-from Libs.DataStruct.MDictionary import MDictionary
-from Libs.EventHandle.AddOnceEventDispatch import AddOnceEventDispatch
+from Libs.Core.GObject import GObject;
+from Libs.DataStruct.MDictionary import MDictionary;
+from Libs.EventHandle.AddOnceEventDispatch import AddOnceEventDispatch;
 
 class MsgRouteHandleBase(GObject):
     def __init__(self):

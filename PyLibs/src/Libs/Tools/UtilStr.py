@@ -1,8 +1,8 @@
 #-*- encoding=utf-8 -*-
 
-import re
-from Libs.Core.GObject import GObject
-from Libs.Tools.Symbolic import Symbolic
+import re;
+from Libs.Core.GObject import GObject;
+from Libs.Tools.Symbolic import Symbolic;
 
 '''
 @brief: 字符串工具

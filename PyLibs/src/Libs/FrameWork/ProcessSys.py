@@ -4,8 +4,8 @@
 @brief 系统循环
 '''
 
-from Libs.Core.GObject import GObject
-from Libs.FrameWork.Ctx import Ctx
+from Libs.Core.GObject import GObject;
+from Libs.FrameWork.Ctx import Ctx;
 
 class ProcessSys(GObject):
     

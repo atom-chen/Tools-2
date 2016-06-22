@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject
-from Libs.DataStruct.LockList import LockList
+from Libs.Core.GObject import GObject;
+from Libs.DataStruct.LockList import LockList;
 
 class LockQueue(GObject):
     

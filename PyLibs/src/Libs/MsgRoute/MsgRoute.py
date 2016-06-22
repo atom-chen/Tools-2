@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 
-from Libs.MsgRoute.MsgRouteBase import MsgRouteBase, MsgRouteID
+from Libs.MsgRoute.MsgRouteBase import MsgRouteBase, MsgRouteID;
 
 class SocketOpenedMR(MsgRouteBase):
     def __init__(self):

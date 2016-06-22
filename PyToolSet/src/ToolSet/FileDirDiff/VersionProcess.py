@@ -4,17 +4,17 @@
 @brief: VersionProcess
 '''
 
-from Libs.Thread.MProcess import MProcess
-from ToolSet.Common.ToolSetSys import ToolSetSys
-from ToolSet.FileDirDiff.VerParams import VerParams
-from Libs.FileSystem.MDataStream import MDataStream
-from Libs.FileSystem.MFileMode import MFileMode
-from Libs.Tools.UtilPath import UtilPath
-from Libs.Tools.UtilStr import UtilStr
-from Libs.Tools.UtilHash import UtilHash
-from ToolSet.FileDirDiff.AssetBundlesManifest import AssetBundlesManifest
-from ToolSet.FileDirDiff.VerProcessSys import VerProcessSys
-from Libs.Tools.UtilTime import UtilTime
+from Libs.Thread.MProcess import MProcess;
+from ToolSet.Common.ToolSetSys import ToolSetSys;
+from ToolSet.FileDirDiff.VerParams import VerParams;
+from Libs.FileSystem.MDataStream import MDataStream;
+from Libs.FileSystem.MFileMode import MFileMode;
+from Libs.Tools.UtilPath import UtilPath;
+from Libs.Tools.UtilStr import UtilStr;
+from Libs.Tools.UtilHash import UtilHash;
+from ToolSet.FileDirDiff.AssetBundlesManifest import AssetBundlesManifest;
+from ToolSet.FileDirDiff.VerProcessSys import VerProcessSys;
+from Libs.Tools.UtilTime import UtilTime;
 
 class VersionProcess(MProcess):
     
@@ -65,25 +65,9 @@ class VersionProcess(MProcess):
     def buildResourcesVer(self):
         self.mDataStream = MDataStream(self.mParams.getResourcesVerFileFullOutPath(), MFileMode.WriteTxt);
 
-        UtilPath.traverseDirectory(
-                           self.mParams.getResourcesPath(), 
-                           None, 
-                           None, 
-                           None,  
-                           self, 
-                           self.traverseResourcesPathHandle, 
-                           True
-                           );
+        strContent = "aaaaa";
+        self.mDataStream.writeLine(strContent);
 
-        UtilPath.traverseDirectory(
-                           self.mParams.getScenesPath(), 
-                           None, 
-                           None, 
-                           None,  
-                           self, 
-                           self.traverseResourcesScenesPathHandle, 
-                           True
-                           );
         
         self.mDataStream.close();
         
@@ -179,9 +163,14 @@ class VersionProcess(MProcess):
         self.mDataStream.close();
 
 
+    Count = 0;
+
     def traverseResourcesPathHandle(self, srcFullPath, srcCurName, destFullPath):
         extName = UtilPath.getFileExt(srcFullPath);
         if(not VerProcessSys.instance().mParams.isIgnoreFileByExt(extName)):
+            VersionProcess.Count = VersionProcess.Count + 1;
+            if(VersionProcess.Count > 1):
+                return;
             resourcePath = UtilStr.replace(srcFullPath, self.mParams.getResourcesPath(), "");
             resourcePath = UtilStr.truncate(resourcePath, 1);
             resUniqueId = UtilPath.getFilePathNoExt(resourcePath);
@@ -200,10 +189,12 @@ class VersionProcess(MProcess):
                                  fileSize
                                  );
 
+            strContent = "aaaaa";
             self.mDataStream.writeLine(strContent);
             
 
     def traverseResourcesScenesPathHandle(self, srcFullPath, srcCurName, destFullPath):
+        return;
         extName = UtilPath.getFileExt(srcFullPath);
         if(not VerProcessSys.instance().mParams.isIgnoreFileByExt(extName)):
             resourcePath = UtilStr.replace(srcFullPath, self.mParams.getAssetPath(), "");

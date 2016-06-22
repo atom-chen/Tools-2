@@ -4,7 +4,7 @@
 @brief: ToolSetSysImpl
 '''
 
-from ToolSet.Common.ToolSetSys import ToolSetSys
+from ToolSet.Common.ToolSetSys import ToolSetSys;
 
 class ToolSetSysImpl(ToolSetSys):
     

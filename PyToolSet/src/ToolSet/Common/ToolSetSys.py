@@ -4,8 +4,8 @@
 @brief: ToolSetSys
 '''
 
-from Libs.Core.GObject import GObject
-from Libs.Tools.UtilError import UtilError
+from Libs.Core.GObject import GObject;
+from Libs.Tools.UtilError import UtilError;
 
 class ToolSetSys(GObject):
                 

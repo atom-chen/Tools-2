@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject
-from Libs.DataStruct.MList import MList
-from Libs.FileSystem.MDataStream import MDataStream
-from Libs.FileSystem.MFileMode import MFileMode
-from Libs.Tools.UtilStr import UtilStr
-from Libs.Tools.UtilPath import UtilPath
-from Libs.DataStruct.MDictionary import MDictionary
-from ToolSet.FileDirDiff.VerProcessSys import VerProcessSys
-from Libs.Tools.UtilApi import UtilApi
-from Libs.Tools.UtilHash import UtilHash
+from Libs.Core.GObject import GObject;
+from Libs.DataStruct.MList import MList;
+from Libs.FileSystem.MDataStream import MDataStream;
+from Libs.FileSystem.MFileMode import MFileMode;
+from Libs.Tools.UtilStr import UtilStr;
+from Libs.Tools.UtilPath import UtilPath;
+from Libs.DataStruct.MDictionary import MDictionary;
+from ToolSet.FileDirDiff.VerProcessSys import VerProcessSys;
+from Libs.Tools.UtilApi import UtilApi;
+from Libs.Tools.UtilHash import UtilHash;
 
 '''
 @brief 打包的进入 AssetBundles 中的资源列表

@@ -4,9 +4,9 @@
 @brief: 测试目录
 '''
 
-from Libs.Tools.UtilPath import UtilPath
-from Libs.Tools.UtilStr import UtilStr
-from Libs.Core.GObject import GObject
+from Libs.Tools.UtilPath import UtilPath;
+from Libs.Tools.UtilStr import UtilStr;
+from Libs.Core.GObject import GObject;
 
 class TestPath(GObject):
     

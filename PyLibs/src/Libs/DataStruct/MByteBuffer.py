@@ -4,10 +4,10 @@
 @brief: 字节缓冲区 
 '''
 
-import struct
+import struct;
 
-from Libs.Core.GObject import GObject
-from Libs.DataStruct.MByteOrder import MByteOrder
+from Libs.Core.GObject import GObject;
+from Libs.DataStruct.MByteOrder import MByteOrder;
 
 class MByteBuffer(GObject):
     

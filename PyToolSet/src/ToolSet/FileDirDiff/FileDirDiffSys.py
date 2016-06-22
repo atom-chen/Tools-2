@@ -4,7 +4,7 @@
 @author: FileDirDiffSys
 '''
 
-from Libs.Core.GObject import GObject
+from Libs.Core.GObject import GObject;
 
 class FileDirDiffSys(GObject):
     

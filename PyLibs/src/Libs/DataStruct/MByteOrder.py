@@ -4,7 +4,7 @@
 @brief 字节序 
 '''
 
-from Libs.Core.GObject import GObject
+from Libs.Core.GObject import GObject;
 
 class MByteOrder(GObject):
     eLittleEndian = 0;

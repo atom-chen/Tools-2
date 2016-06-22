@@ -4,7 +4,7 @@
 @brief: Process 传递的参数
 '''
 
-from Libs.Core.GObject import GObject
+from Libs.Core.GObject import GObject;
 
 class VerParams(GObject):
     def __init__(self):

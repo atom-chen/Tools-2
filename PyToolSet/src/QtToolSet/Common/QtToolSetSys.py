@@ -4,7 +4,7 @@
 @brief: QtToolSetSys
 '''
 
-from ToolSet.Common.ToolSetSys import ToolSetSys
+from ToolSet.Common.ToolSetSys import ToolSetSys;
 
 class QtToolSetSys(ToolSetSys):
     

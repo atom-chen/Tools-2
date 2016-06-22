@@ -4,7 +4,7 @@
 @brief: QtFileDirDiffSysImpl
 '''
 
-from ToolSet.FileDirDiff.FileDirDiffSys import FileDirDiffSys
+from ToolSet.FileDirDiff.FileDirDiffSys import FileDirDiffSys;
 
 class QtFileDirDiffSysImpl(FileDirDiffSys):
     

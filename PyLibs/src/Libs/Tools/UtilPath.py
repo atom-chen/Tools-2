@@ -1,14 +1,14 @@
 #-*- encoding=utf-8 -*-
 
-import os
-import shutil
-import glob
+import os;
+import shutil;
+import glob;
 
-from Libs.Tools.UtilStr import UtilStr
-from Libs.Tools.UtilError import UtilError
-from Libs.DataStruct.MList import MList
-from Libs.Core.GObject import GObject
-from Libs.FileSystem.MFileDirInfo import MFileAndDirList, MFileInfo, MDirInfo
+from Libs.Tools.UtilStr import UtilStr;
+from Libs.Tools.UtilError import UtilError;
+from Libs.DataStruct.MList import MList;
+from Libs.Core.GObject import GObject;
+from Libs.FileSystem.MFileDirInfo import MFileAndDirList, MFileInfo, MDirInfo;
 
 '''
 @brief: 目录处理
@@ -17,6 +17,24 @@ from Libs.FileSystem.MFileDirInfo import MFileAndDirList, MFileInfo, MDirInfo
 class UtilPath(GObject):
     
     DOT = '.';
+    '''
+    "\r\n"
+    Python 
+    Windows 下 Python 写入 "\r\n"， 其实最终写入的是 "\r" 和 "\r\n" ， 把 "\n" 作为 "\r\n" 处理
+    Mac 下  Python 写入 "\r\n"， 没有测试
+    C#
+    Windows 下 C# 写入 "\r\n"， 其实最终写入的是 "\r\n"
+    Mac 下  C# 写入 "\r\n"， 写入的是 "\n"
+    
+    
+    "\n"
+    Python
+    Windows 下 Python 写入 "\n"， 其实最终写入的是 "\r\n"
+    Mac 下  Python 写入 "\n"， 没有测试
+    C#
+    Windows 下 C# 写入 "\n"， 没有测试
+    Mac 下  C# 写入 "\n"， 写入的是 "\n"
+    '''
     CR_LF = "\n";
     LF = "\n";
     SPLIT = "=";

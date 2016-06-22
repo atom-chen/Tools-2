@@ -4,9 +4,9 @@
 @brief 本地文件系统
 '''
 
-from Libs.Core.GObject import GObject
-from Libs.Tools.UtilPath import UtilPath
-from Libs.Tools.UtilStr import UtilStr
+from Libs.Core.GObject import GObject;
+from Libs.Tools.UtilPath import UtilPath;
+from Libs.Tools.UtilStr import UtilStr;
 
 class MDataStream(GObject):
     

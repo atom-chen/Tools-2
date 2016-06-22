@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from Libs.DelayHandle.DelayHandleMgrBase import DelayHandleMgrBase
-from Libs.DataStruct.MList import MList
-from Libs.EventHandle.EventDispatchFunctionObject import EventDispatchFunctionObject
+from Libs.DelayHandle.DelayHandleMgrBase import DelayHandleMgrBase;
+from Libs.DataStruct.MList import MList;
+from Libs.EventHandle.EventDispatchFunctionObject import EventDispatchFunctionObject;
 
 '''
 @brief 事件分发，之分发一类事件，不同类型的事件使用不同的事件分发

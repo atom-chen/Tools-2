@@ -1,6 +1,6 @@
 #-*- encoding=utf-8 -*-
 
-from threading import Thread
+from threading import Thread;
 
 class MThreadExt(Thread):
     

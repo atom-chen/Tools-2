@@ -3,11 +3,11 @@
 '''
 '''
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets;
 
-import QtToolSet.UI.ui_leftfnwin
-from Libs.FrameWork.Ctx import Ctx
-from QtToolSet.Common.QtToolSetSys import QtToolSetSys
+import QtToolSet.UI.ui_leftfnwin;
+from Libs.FrameWork.Ctx import Ctx;
+from QtToolSet.Common.QtToolSetSys import QtToolSetSys;
 
 class LeftFnWin(QtWidgets.QDockWidget):    
     def __init__(self):

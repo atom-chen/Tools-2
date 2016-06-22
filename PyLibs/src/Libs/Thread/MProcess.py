@@ -5,9 +5,9 @@
 @brief 主要代码都在 multiprocessing.process.BaseProcess
 '''
 
-import multiprocessing
-import time
-from Libs.Core.GObject import GObject
+import multiprocessing;
+import time;
+from Libs.Core.GObject import GObject;
 
 class MProcess(GObject):
     '''

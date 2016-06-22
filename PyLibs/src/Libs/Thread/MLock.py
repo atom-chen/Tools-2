@@ -4,8 +4,8 @@
 @brief 锁操作
 '''
 
-from threading import Lock
-from Libs.Core.GObject import GObject
+from threading import Lock;
+from Libs.Core.GObject import GObject;
 
 class MLock(GObject):
     

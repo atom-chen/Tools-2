@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from Libs.DataStruct.MList import MList
-from Libs.Tools.UtilApi import UtilApi
-from Libs.DelayHandle.DelayHandleMgrBase import DelayHandleMgrBase
+from Libs.DataStruct.MList import MList;
+from Libs.Tools.UtilApi import UtilApi;
+from Libs.DelayHandle.DelayHandleMgrBase import DelayHandleMgrBase;
 
 '''
 * @brief 定时器管理器

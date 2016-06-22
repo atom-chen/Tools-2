@@ -4,14 +4,14 @@
 @brief: TestMain
 '''
 
-from Libs.Core.GObject import GObject
-from Test.TestEventDispatch import TestEventDispatch
-from Test.TestDataStruct import TestDataStruct
-from Test.TestUtil import TestUtil
-from Test.TestRef import TestRef
-from Test.TestClassAttr import TestClassAttr
-from Test.TestPath import TestPath
-from Test.TestStr import TestStr
+from Libs.Core.GObject import GObject;
+from Test.TestEventDispatch import TestEventDispatch;
+from Test.TestDataStruct import TestDataStruct;
+from Test.TestUtil import TestUtil;
+from Test.TestRef import TestRef;
+from Test.TestClassAttr import TestClassAttr;
+from Test.TestPath import TestPath;
+from Test.TestStr import TestStr;
 
 class TestMain(GObject):
     

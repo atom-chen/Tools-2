@@ -4,7 +4,7 @@
 @brief: 
 '''
 
-from Libs.Core.GObject import GObject
+from Libs.Core.GObject import GObject;
 
 class VerProcessSys(GObject):
     

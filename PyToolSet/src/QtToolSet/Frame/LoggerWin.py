@@ -3,8 +3,8 @@
 '''
 '''
 
-from PyQt5 import QtWidgets
-import QtToolSet.UI.ui_loggerwin
+from PyQt5 import QtWidgets;
+import QtToolSet.UI.ui_loggerwin;
 
 
 class LoggerWin(QtWidgets.QDockWidget):    

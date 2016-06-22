@@ -3,8 +3,8 @@
 '''
 @brief: LogWinProxy
 '''
-from Libs.Log.LogDeviceBase import LogDeviceBase
-from Libs.Log.LogColor import LogColor
+from Libs.Log.LogDeviceBase import LogDeviceBase;
+from Libs.Log.LogColor import LogColor;
 
 class LogWinProxy(LogDeviceBase):
     

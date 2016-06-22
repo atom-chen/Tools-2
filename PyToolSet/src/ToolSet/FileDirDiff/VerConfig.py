@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from Libs.Core.GObject import GObject
-from Libs.Tools.UtilPath import UtilPath
-from Libs.DataStruct.MList import MList
-from Libs.FileSystem.MDataStream import MDataStream
-from Libs.FileSystem.MFileMode import MFileMode
-from Libs.Tools.UtilStr import UtilStr
+from Libs.Core.GObject import GObject;
+from Libs.Tools.UtilPath import UtilPath;
+from Libs.DataStruct.MList import MList;
+from Libs.FileSystem.MDataStream import MDataStream;
+from Libs.FileSystem.MFileMode import MFileMode;
+from Libs.Tools.UtilStr import UtilStr;
 
 '''
 @brief 生成版本的类型

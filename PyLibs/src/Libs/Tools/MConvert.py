@@ -4,7 +4,7 @@
 @brief: 类型之间相互转换
 '''
 
-from Libs.Core.GObject import GObject
+from Libs.Core.GObject import GObject;
 
 class MConvert(GObject):
 

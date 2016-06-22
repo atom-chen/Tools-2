@@ -4,7 +4,7 @@
 @brief: 
 '''
 
-from ToolSet.FileDirDiff.VerProcessSys import VerProcessSys
+from ToolSet.FileDirDiff.VerProcessSys import VerProcessSys;
 
 class VerProcessSysImpl(VerProcessSys):
 

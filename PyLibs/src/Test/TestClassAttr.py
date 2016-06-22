@@ -4,7 +4,7 @@
 @brief: lvguanghai
 '''
 
-from Libs.Core.GObject import GObject
+from Libs.Core.GObject import GObject;
 
 class A(GObject):
     
