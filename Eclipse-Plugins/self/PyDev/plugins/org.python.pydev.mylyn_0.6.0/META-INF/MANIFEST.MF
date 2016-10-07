@@ -1,0 +1,73 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.python.pydev.mylyn;singleton:=true
+Archiver-Version: Plexus Archiver
+Built-By: fabio
+Require-Bundle: org.eclipse.ui.ide,org.eclipse.core.runtime,org.eclips
+ e.ui,org.eclipse.core.resources,org.eclipse.ui.navigator,org.eclipse.
+ core.runtime,org.eclipse.ui.views,org.eclipse.mylyn.context.core,org.
+ eclipse.mylyn.context.ui,org.eclipse.mylyn.resources.ui,org.python.py
+ dev,org.eclipse.jface.text
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Fabio Zadrozny
+Bundle-Name: Pydev Mylyn Integration Plug-in
+Bundle-Version: 0.6.0
+Bundle-Localization: plugin
+Bundle-Activator: org.python.pydev.mylyn.Activator
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_77
+Eclipse-BundleShape: dir
+
+Name: org/python/pydev/mylyn/Activator.class
+SHA-256-Digest: Uzch73UWPRoKB5KMCdIEgJ6+VKqOdN+eg/E1WIyG+dA=
+
+Name: plugin.xml
+SHA-256-Digest: FUbzQ0wj3sVD+qWvyflwk2RLRUzKugcMvAbKsFPuV1I=
+
+Name: icons/wizban/banner-prefs.gif
+SHA-256-Digest: eUZ6wPQcTPxQue4IGDMTHA5LTlnSPw9+LLNKVcA23vs=
+
+Name: icons/etool16/no-scroll.gif
+SHA-256-Digest: xJCjd77k1eoSGc2KLHrxlxCY1fzo+/Vas6pnKfzbVWc=
+
+Name: icons/eview16/mylar.gif
+SHA-256-Digest: qX8XejR4matJqCE9QI9E8H9HaclMpiZL6GtjdGdp7Ko=
+
+Name: icons/etool16/junit-tab.gif
+SHA-256-Digest: T05QNSIEAJcNoQ4frkDDvuzr0Fai8uj6zDasVzDgUgY=
+
+Name: icons/etool16/wizard-prefs.gif
+SHA-256-Digest: IZlyuVHgunrRHkvRBR1fraqhyz6lk1a6qZ6ByJ6r1eQ=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev.mylyn/pom.prope
+ rties
+SHA-256-Digest: bXd9j9zCp0KFXcml5vIBoZcR27xm8vVhOvT3Kc9mB00=
+
+Name: icons/elcl16/interest-filtering.gif
+SHA-256-Digest: +jm/KVMRn420HXJ3+mkTZOlCN5VebkF26jM0gSvwAGc=
+
+Name: icons/eview16/editor-mylar-class.gif
+SHA-256-Digest: hOsI1fggrkJAi+i2cIusmQuNiJWVcowkFCgBooz+o/k=
+
+Name: icons/etool16/link-with-editor.gif
+SHA-256-Digest: KUAaNL1aqvSVDSCADbGFH/r0xWMz8XNjM1ZwHnTyVZw=
+
+Name: icons/eview16/active-hierarchy.gif
+SHA-256-Digest: oHBACqoHOFsVH9hAy06HPjxD4/tQZLTgfarKcVUCuwU=
+
+Name: icons/etool16/launch-junit.gif
+SHA-256-Digest: CvsuI5BMOijEHyGfpLo3NlwrRiXBfr3DZeR4PymFWNA=
+
+Name: icons/eview16/editor-mylar-java.gif
+SHA-256-Digest: PyvmU6pFlilxjFNZsXki6WnB2TvkMSezZC8TCi8CRCA=
+
+Name: org/python/pydev/mylyn/PyFocusExplorerAction.class
+SHA-256-Digest: Kz+4yvLannsdDmidFz2I+NgMxVcSvhXjajtHbQzq/IE=
+
+Name: icons/etool16/launch-junit-pde.gif
+SHA-256-Digest: gOWzqQJjxUr+jzskVVah87fRVwnRvVikV4QtWTXhbDE=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev.mylyn/pom.xml
+SHA-256-Digest: 1MoK1yGBQSsllvnXx+E9j9fWN1vumnFy1Qe/QBWBEvQ=
+

@@ -1,0 +1,58 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.python.pydev; singleton:=true
+Archiver-Version: Plexus Archiver
+Built-By: fabio
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.eclipse.jf
+ ace.text,org.python.pydev;bundle-version="[5.0.0,5.0.1)",org.python.p
+ ydev.core;bundle-version="[5.0.0,5.0.1)",org.junit;bundle-version="4.
+ 0";resolution:=optional,org.python.pydev.ast;bundle-version="[5.0.0,5
+ .0.1)",org.python.pydev.parser;bundle-version="[5.0.0,5.0.1)",org.ecl
+ ipse.ui.editors,org.eclipse.ui.workbench.texteditor,org.eclipse.core.
+ resources,org.eclipse.core.variables,org.eclipse.debug.core,org.eclip
+ se.debug.ui,org.python.pydev.debug;bundle-version="[5.0.0,5.0.1)",org
+ .eclipse.ui.console,org.python.pydev.jython;bundle-version="[5.0.0,5.
+ 0.1)",org.eclipse.search,org.eclipse.ui.ide,org.python.pydev.shared_i
+ nteractive_console;bundle-version="[5.0.0,5.0.1)",org.python.pydev.sh
+ ared_ui;bundle-version="[5.0.0,5.0.1)"
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Aptana
+Export-Package: com.python.pydev,com.python.pydev.actions,com.python.p
+ ydev.refactoring,com.python.pydev.ui.hierarchy,com.python.pydev.util
+Bundle-Name: Pydev Extensions
+Bundle-Version: 5.0.0.201605051159
+Bundle-Localization: plugin
+Bundle-ClassPath: pydev.jar
+Bundle-Activator: com.python.pydev.PydevPlugin
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_77
+Eclipse-BundleShape: dir
+
+Name: icons/searchm_obj.gif
+SHA-256-Digest: KtCs3/NoOfMMJoHbDoWa8UysYpNiZ6lxDiV3ckMk5VE=
+
+Name: plugin.xml
+SHA-256-Digest: Cwm0t9I1mDA4TS/mkGlOhyP0z3V2s2gRH+M8Ob2yA5E=
+
+Name: pydev.jar
+SHA-256-Digest: /9LJtREnnKMa49GkNZI8Fn/XIUj/E6E6WDskji/74t0=
+
+Name: LICENSE.TXT
+SHA-256-Digest: J75t01G5GT6rkY9hiDNA+yh/SDVMI+VNinfwannMATI=
+
+Name: icons/class_hi.gif
+SHA-256-Digest: 4Fo4Psb2d4W3ZZKmWsBto3GlIa4qdftbShW/RiPk4w4=
+
+Name: META-INF/maven/org.python.pydev/com.python.pydev/pom.xml
+SHA-256-Digest: yjzF58CTOyO3V9av8maHC4mjtv/uSHHqrbc88kMNr5Y=
+
+Name: META-INF/maven/org.python.pydev/com.python.pydev/pom.properties
+SHA-256-Digest: tgvk7pjwpEpNTXl75dmUC8vC0BDn68CRVWkwijj+zw0=
+
+Name: icons/python_file.gif
+SHA-256-Digest: P9VbNQYYqpZTqsSzzncmO2cylcJ/PozlNnS0vccyRoM=
+
+Name: icons/python_16x16.png
+SHA-256-Digest: LOVLs3Qye1Syxa2V4gW/A+2PMEEtxjKOi92MJOuKyOs=
+

@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Built-By: fabio
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_77
+
+Name: LICENSE.txt
+SHA-256-Digest: J75t01G5GT6rkY9hiDNA+yh/SDVMI+VNinfwannMATI=
+
+Name: feature.xml
+SHA-256-Digest: +SblrS7s0DkKvuELgzh6CmUsQBQ0TUJfUuAmlgktK/o=
+

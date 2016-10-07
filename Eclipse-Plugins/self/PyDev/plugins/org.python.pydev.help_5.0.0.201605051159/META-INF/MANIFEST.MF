@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.python.pydev.help; singleton:=true
+Archiver-Version: Plexus Archiver
+Built-By: fabio
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Aptana
+Bundle-Name: Pydev Online Help
+Bundle-Version: 5.0.0.201605051159
+Bundle-Localization: plugin
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_77
+Eclipse-BundleShape: dir
+
+Name: html/index.html
+SHA-256-Digest: gBbFehBsRlb/lkE8/kYByxWQCYcj8cE+DwMfiF+3xX0=
+
+Name: plugin.xml
+SHA-256-Digest: iIxJ4ZU1rl2YCpglT55AUK/H9+8O1gyJ8jmCcoYGtEE=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev.help/pom.xml
+SHA-256-Digest: 8wGzw/GiOHH3GwukyIKTGGbygPJufK6W7yQjCsgiGJc=
+
+Name: LICENSE.txt
+SHA-256-Digest: J75t01G5GT6rkY9hiDNA+yh/SDVMI+VNinfwannMATI=
+
+Name: toc_main.xml
+SHA-256-Digest: TaeeES5xzph5UHYeF+NRJVE2ZdGJhsJT3e5P2CfRgj4=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev.help/pom.proper
+ ties
+SHA-256-Digest: 0SjKjSCoe9mNEsQrX3NnhL+Xv1sWRP8X89znhRQfIO4=
+
+Name: html/links.html
+SHA-256-Digest: MfJOI7IYRxSaaEJqk18dG7QDIYjVKYMOUZhj4AhtnKg=
+

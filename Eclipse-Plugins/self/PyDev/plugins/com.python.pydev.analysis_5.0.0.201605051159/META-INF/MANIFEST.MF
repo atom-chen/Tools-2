@@ -1,0 +1,61 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.python.pydev.analysis; singleton:=true
+Archiver-Version: Plexus Archiver
+Built-By: fabio
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.eclipse.jf
+ ace.text,org.python.pydev;bundle-version="[5.0.0,5.0.1)",com.python.p
+ ydev;bundle-version="[5.0.0,5.0.1)",org.junit;bundle-version="4.0";re
+ solution:=optional,org.python.pydev.core;bundle-version="[5.0.0,5.0.1
+ )",org.python.pydev.ast;bundle-version="[5.0.0,5.0.1)",org.python.pyd
+ ev.parser;bundle-version="[5.0.0,5.0.1)",org.eclipse.core.resources,o
+ rg.eclipse.ui.editors,org.eclipse.ui.workbench.texteditor,org.eclipse
+ .search,org.eclipse.ui.ide,org.python.pydev.jython;bundle-version="[5
+ .0.0,5.0.1)",org.python.pydev.debug;bundle-version="[5.0.0,5.0.1)",or
+ g.python.pydev.shared_ui;bundle-version="[5.0.0,5.0.1)",org.python.py
+ dev.shared_core;bundle-version="[5.0.0,5.0.1)",org.eclipse.ltk.core.r
+ efactoring,org.python.pydev.refactoring,org.eclipse.ltk.ui.refactorin
+ g
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Aptana
+Export-Package: com.python.pydev.analysis,com.python.pydev.analysis.ac
+ tions,com.python.pydev.analysis.additionalinfo,com.python.pydev.analy
+ sis.additionalinfo.builders,com.python.pydev.analysis.additionalinfo.
+ dependencies,com.python.pydev.analysis.builder,com.python.pydev.analy
+ sis.ctrl_1,com.python.pydev.analysis.messages,com.python.pydev.analys
+ is.organizeimports,com.python.pydev.analysis.scopeanalysis,com.python
+ .pydev.analysis.tabnanny,com.python.pydev.analysis.ui,com.python.pyde
+ v.analysis.visitors
+Bundle-Name: Analysis Plug-in
+Bundle-Version: 5.0.0.201605051159
+Bundle-Localization: plugin
+Bundle-ClassPath: analysis.jar
+Bundle-Activator: com.python.pydev.analysis.AnalysisPlugin
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_77
+Eclipse-BundleShape: dir
+
+Name: analysis.jar
+SHA-256-Digest: 1Bz9vMhrPhFMYwgc42O4/dtTNNDV4/4y7DTunNrcgDA=
+
+Name: plugin.xml
+SHA-256-Digest: UwJlIn7wDR6vKkqLeuICrmPxZ3A//SXjvG/5lEDe4TE=
+
+Name: LICENSE.TXT
+SHA-256-Digest: J75t01G5GT6rkY9hiDNA+yh/SDVMI+VNinfwannMATI=
+
+Name: META-INF/maven/org.python.pydev/com.python.pydev.analysis/pom.xm
+ l
+SHA-256-Digest: wtRFeLrbvH9m/eqjNoOCOg6z7Ilvm2c8wcIwPvhI5wM=
+
+Name: icons/python_file.gif
+SHA-256-Digest: P9VbNQYYqpZTqsSzzncmO2cylcJ/PozlNnS0vccyRoM=
+
+Name: icons/opentype.gif
+SHA-256-Digest: If9ZiBB63m6CM91kcr81FolFqzDcbN1vEkIrIAo+Z8I=
+
+Name: META-INF/maven/org.python.pydev/com.python.pydev.analysis/pom.pr
+ operties
+SHA-256-Digest: AEe90tK6M7T57S2Ic1wzEe9cs+ksejIrpbXdOd4rEDQ=
+

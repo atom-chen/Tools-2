@@ -1,0 +1,1319 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: j7iH6MxKsliwkzygJXYvkUffCZowB
+ RcXj/k2ke7RilY=
+SHA-256-Digest-Manifest: n4lW5Dh6t76f8bWWrud8o6roBfGEWi5PwmK1FRLTwWY=
+Created-By: 1.8.0_77 (Oracle Corporation)
+
+Name: icons/home_nav.gif
+SHA-256-Digest: XOLDaWRTDuwqgFBgGFBUOCqL7hXXWSjCUUfbYbW7SeM=
+
+Name: libs/WinRegistry-4.5.jar
+SHA-256-Digest: 7LBKlr6zXnObs+X3ncJx8DV7wU4pZCvoLlT28DRxiOU=
+
+Name: icons/remove_nature.png
+SHA-256-Digest: jqkgm+NWptJt42j2s7nucQpyZfRh78cIFD/zDim9jrg=
+
+Name: pysrc/stubs/_django_manager_body.py
+SHA-256-Digest: kLFIVrTOfjuphrsO1FMv9YRKaafScsLM2qNWlY+Qw2g=
+
+Name: pysrc/LICENSE
+SHA-256-Digest: 7c9yYQzZZCxiUa/hE61S3i2QRioeYgUj+J/Xu/1/a20=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_print.py
+SHA-256-Digest: 4enQhdTG80A8PDA/i0im6zJ27ytmR+gCGvNFzv3DfqU=
+
+Name: pysrc/pydevd_attach_to_process/attach_x86_64.dylib
+SHA-256-Digest: MDBVM4cWn2dtxnWHloehmoletpHR9KDuIVqATAVMsCI=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/context_i386.py
+SHA-256-Digest: 2DeZw+hL9JB8GZsQlSWIcXC4OXFT/E4vxvtQ2DL1p5I=
+
+Name: icons/search.gif
+SHA-256-Digest: cZFm8oKsLmSx+STPneFHyhzeksoh63ZkKRY7BASFD84=
+
+Name: icons/old/method_obj_imp.gif
+SHA-256-Digest: /78BY/BI2+ZV+CCAG7mPBtG7/p3pWrT2RyU/OrSwouk=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/__init__.py
+SHA-256-Digest: FYM96w3vM78DoBV4T93Qk0OjfbhXkNRFsBzev6EUmn4=
+
+Name: pysrc/pydev_ipython/matplotlibtools.py
+SHA-256-Digest: Ub8PYMT7gFZ4exga0BJDy2EAiMQT6D2gkjJ5h9isZ8o=
+
+Name: pysrc/pydevd_attach_to_process/linux/attach_linux.c
+SHA-256-Digest: DJ8+SIvgAiVN4Crx2kIDdzfKhQBELgpZ+39nvp8NFPI=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/pygram.py
+SHA-256-Digest: Ikkl/MZtP0snoObjMl6htGsPeKjjceI/L2pnhpLSKJw=
+
+Name: icons/relaunch.png
+SHA-256-Digest: rp7c1ai6XER6OgYn85tMLsVa2fXpOU2AbS7ie9gio5k=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_operator.py
+SHA-256-Digest: IhlyBS7thDWGzl9L9ORR78TE002SssZSzszhjRSLPdk=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/pgen2/conv.py
+SHA-256-Digest: YGjxWi0gmLMmOlKVVoT588/prMQ12NwF5Y+77E5FFek=
+
+Name: icons/new/imp_obj.gif
+SHA-256-Digest: S2JHxl30oopRv/DwH4L8RxrPWox8mHFnpe5vw1qa1sM=
+
+Name: icons/forward_nav.gif
+SHA-256-Digest: R0rm9FJbP8SmLT15oeUKz3n93Ln7ar4hPkmd5yjI5yM=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_funcattrs.py
+SHA-256-Digest: WPZITopjQocCQJGgPBizZcHBvmPsr4vU9hmqheRTFZU=
+
+Name: pysrc/pydevconsole.py
+SHA-256-Digest: xrZJVvc9r7E/meu7IvLHHG29lt8dAgI14SV7lTOyKL8=
+
+Name: pysrc/_pydev_bundle/pydev_ipython_console.py
+SHA-256-Digest: P7qO01DCzoJFNyJDzE+DHtWSw35r7wdyCdJcuid7h3g=
+
+Name: pysrc/_pydevd_bundle/pydevd_save_locals.py
+SHA-256-Digest: JyhOLNX6RaOy93M6eZ32I0xXTQsEcEgEAOQ9JT/EBI4=
+
+Name: icons/filter.gif
+SHA-256-Digest: mHEedjXOlz0zZswLSedwKXep3i8tnds7zwTdGgIstx8=
+
+Name: icons/alphab_sort_co.gif
+SHA-256-Digest: +9EOxFPlF3ImAa+ZUB0TwnN50dhuOuSPovVGYYQaDdA=
+
+Name: pysrc/third_party/wrapped_for_pydev/ctypes/macholib/dyld.py
+SHA-256-Digest: hYdO/8TXePKwzw/JpiocyWjaaeuDx3PZKqTB1c4lNcg=
+
+Name: schema/pydev_interpreter_provider.exsd
+SHA-256-Digest: RmnKWsC+iblrzIuhYt1cTm4/OX7jd4BsOsoUxmk61tw=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/__main__.py
+SHA-256-Digest: pVILpSsd2FTcFxIgYcDbLHowOm98OAs4gLdggKkRI5w=
+
+Name: pysrc/_pydev_bundle/_pydev_tipper_common.py
+SHA-256-Digest: evwWIYGe2VNG5NvNKzYFxwgzddEBFHLyeNUUBZfCUbc=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/window.py
+SHA-256-Digest: dtEnvULY9Eg7h0JHhgxaOrfYBK8g2394TETJMwCvW7M=
+
+Name: icons/field_public_obj.gif
+SHA-256-Digest: yykaRMFVfLkmaCj8jPgKhakt2aPa0SaJFWjgRtRrOP8=
+
+Name: icons/old/attr_obj_imp.gif
+SHA-256-Digest: KqiqcyLMfgdRsDf165cbJJCCP1d5Sbcb7e+yAXbbbxQ=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_imports2.py
+SHA-256-Digest: Jvx/goUAJRedIZktcudULUFSGuB5LnGF2tiQyg4e1+I=
+
+Name: about.mappings
+SHA-256-Digest: LdgiihvKTZh36tEZLEQo35xrupOxXqXb18V0zRj8rU0=
+
+Name: pysrc/_pydev_bundle/pydev_umd.py
+SHA-256-Digest: /LkHAGLOkCFRTNHTeEnn2bWdPw+4EZApIeY+p1TlHeM=
+
+Name: icons/python_logo.png
+SHA-256-Digest: AzVb0IYUV6az716ycjQtIHlf9wV61r3njyuWppF8/yM=
+
+Name: pysrc/pydevd_attach_to_process/attach_linux_x86.so
+SHA-256-Digest: s9eYhzwXPtAGP5xTmbAh5OpIxQFxA+BbHH8GjZrFT8Y=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_input.py
+SHA-256-Digest: mbKSH5bxWXorF4CgUMMrTM8Oi++MnFz0IfxY6cbGsMg=
+
+Name: icons/python_16x16.png
+SHA-256-Digest: CLUFOgOoOMVtynX0aX/HumFMT2YxBsS6o5PSeGA2WAE=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/__init__.py
+SHA-256-Digest: ZU2FmseWFV4fK2eqhoa07fPe2GGZ9pC85gg5E/krwRM=
+
+Name: pysrc/setup_cython.py
+SHA-256-Digest: wxVuYjTKNsIcG7k1CL7eN2smjohomk/ejIe52xMN/Rk=
+
+Name: icons/terminate_all.gif
+SHA-256-Digest: 4WNvczlKWZ5nWwzbR8kysbC2HCAzsZGj8klZZi9NGRQ=
+
+Name: pysrc/_pydevd_bundle/pydevd_trace_dispatch_regular.py
+SHA-256-Digest: zRYDUQZHHAwfGeH9ygwFml0XMOFRh0+kuhxPJrYmkoE=
+
+Name: schema/pydev_completion.exsd
+SHA-256-Digest: 98vIyzFwAR8nLrZG5/xDG0EnQrd7BkRo3Dl5Ldbu0vQ=
+
+Name: pysrc/pydev_ipython/qt.py
+SHA-256-Digest: CVO75YXkibqplcrLoa59RmczekT2xDy53gYFCnhd7A4=
+
+Name: pysrc/_pydev_runfiles/pydev_runfiles_xml_rpc.py
+SHA-256-Digest: +8v3KYu43kWY5WY4j0fz6YKWTH0sggsvd+kCK/7rE6I=
+
+Name: pysrc/pydev_ipython/inputhookwx.py
+SHA-256-Digest: rofB7YV0cDaUH7k+v5CLmCzDRppI1b/7pdZUCig0q9c=
+
+Name: pysrc/_pydev_bundle/__init__.py
+SHA-256-Digest: FNPC1vXqFqawGV6rMn6FBeVCBccp4dVC3q+UUUKWf+Y=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/pgen2/token.py
+SHA-256-Digest: Fx6ngwyXNehHPbP81ciQiJwNK1JoBPpv8hZbF9+hRDc=
+
+Name: pysrc/pydevd_concurrency_analyser/pydevd_concurrency_logger.py
+SHA-256-Digest: Fzbf7FVymPwU4IQxk/LJWcU4kHBLhvBlr7cWIb2jz5o=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_exec.py
+SHA-256-Digest: xgZJgYqNYaL9RiQOlWpWUSiBR+TTQDIdvjvVFP8nH0c=
+
+Name: pysrc/_pydev_imps/_pydev_saved_modules.py
+SHA-256-Digest: ewVjuhvRmg5PB+WucjH2OLkstXLpvSvrtMiVJ4aA2Lc=
+
+Name: pysrc/_pydev_bundle/pydev_import_hook.py
+SHA-256-Digest: 6wa14wFfSqDiJFKCGjhNutUcKGtZq29kQoS4kCVoB5Q=
+
+Name: pysrc/_pydevd_bundle/pydevd_resolver.py
+SHA-256-Digest: Ix1zm5CqkHskujCKiAViNfDHnIlF3xCUYWjHkKbgLWk=
+
+Name: icons/old/class_obj.gif
+SHA-256-Digest: iVHg48eLZQI1ZwK5RGnE3zzLpCNwR09uolLBYS8sQQs=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_filter.py
+SHA-256-Digest: wA9U4ayYkOZ2Y5WrH96CBQnjym+SJ0XDxnKub5iK8ME=
+
+Name: pysrc/third_party/pep8/autopep8.py
+SHA-256-Digest: +iJpYuHJCnivcjSyFpR3a0mW5/hQAJ6D1Lc+nKHvMWY=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/pgen2/grammar.py
+SHA-256-Digest: QWI909nrZomXr90NOxhxSEStT1qGHRCkI5kxHUAR2A4=
+
+Name: icons/collapseall.gif
+SHA-256-Digest: V0jy6U2wM8KwRmmBohwc7zo0mMx/RP00S2+3gusBPsg=
+
+Name: pysrc/third_party/pep8/pep8.py
+SHA-256-Digest: G86pQC2Jtg2h1TydsSbvu+ERhTgX+7dGGhDmz0y37ms=
+
+Name: icons/cpyqual_menu.gif
+SHA-256-Digest: iTgmo+NQezJm97n3v/knwQVKHfNebTSZwVNLPNIQTu8=
+
+Name: pysrc/pydev_ipython/inputhookglut.py
+SHA-256-Digest: C1dTwXkBu4+cN97hlyBKnLRbO9RhmvTcnNBeImb/+og=
+
+Name: icons/new/class_obj.gif
+SHA-256-Digest: e+YHgLrgia4z4JhK4CitqHlso+T14opV7ZFONR3MvaU=
+
+Name: pysrc/_pydevd_bundle/pydevd_comm.py
+SHA-256-Digest: KeZWqnfafWC7cGboIYxYfQorxv8wl+O/TfuEAvC46gU=
+
+Name: pysrc/_pydev_bundle/fix_getpass.py
+SHA-256-Digest: VY6rlH5YDwYYZYcm+9p0fLUoVYRsJisxxM1n8iij7Ck=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_apply.py
+SHA-256-Digest: QEHMBJo8dOZgYmSueufVt1AdLCoNlvQrqwah5VG6zxA=
+
+Name: icons/search_docs.gif
+SHA-256-Digest: dJcL5XhKO8KSmUnm65igRpZJ3D4MS22mCw33abba3wA=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_nonzero.py
+SHA-256-Digest: qhZJ5AshN3Sauu63AtOIJAq4MyC4Qdo+Q1c2fZVFs/g=
+
+Name: icons/toggle_tabs.png
+SHA-256-Digest: D5nIKxJIfr35x1upnlcJrbFMIoFwyXh1yIoVBoYCEaw=
+
+Name: icons/library_obj.gif
+SHA-256-Digest: 1tsjMYtheGeelU9Qo27R3pKF6m2iK7bZPK+dRsFqIyU=
+
+Name: pysrc/_pydev_imps/_pydev_uuid_old.py
+SHA-256-Digest: O8tyfOBAV7bcprFGiJUiulmMDtS0jSdQj/wUQOfsvtY=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_xreadlines.py
+SHA-256-Digest: qENNyg2lJMfcSUmrXjLsQJd4/tojpzcxKBEENdEKLfg=
+
+Name: pysrc/_pydev_bundle/_pydev_log.py
+SHA-256-Digest: 6BieRMk/a9t1D8A37HjuYw8N8cUY3RUWohJPb/COtsA=
+
+Name: icons/jar_l_obj.gif
+SHA-256-Digest: mh3qFg01J/XkSRADgvXaItm4JoijxEuVHrvkOTcQ4rw=
+
+Name: pysrc/_pydev_bundle/_pydev_getopt.py
+SHA-256-Digest: IFBrvR+nGXAbtFk+gSSE3cOWjInXc3C+eEKk/XxnouA=
+
+Name: pysrc/pydevd_attach_to_process/linux/gdb_threads_settrace.py
+SHA-256-Digest: QBpEMWHtkwbESHzYUfeCM+glj8RlVHpn+qusKtaPqEg=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/plugins/do_example.py
+SHA-256-Digest: OsT5QMZ9KrkfnZHzOPdzI+lIdOwLVMq2ei/a+Ets4G0=
+
+Name: pysrc/_pydevd_bundle/pydevd_io.py
+SHA-256-Digest: JGjIXHj9MrFXyI7gvhMyoceXvLPgudb5UWvtxs3g1lo=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_zip.py
+SHA-256-Digest: SR1a5VUGsK8kmmAfhNk97ivKGuPtGyu6X8Sj6Ya0v94=
+
+Name: pysrc/pydevd_attach_to_process/attach_script.py
+SHA-256-Digest: YpaX7h9lTfljz3HtZbw0d6dcYWdB0ouVPf4z/eE8CMA=
+
+Name: icons/sample.gif
+SHA-256-Digest: nityhfdwDBvBTJAmLEfJHWWF9m4KlBIJ1DoECZjq87w=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/thread.py
+SHA-256-Digest: vJ90HnFHclHdwZ55dXjgiw76M+LCBW59Xoogre9g4Yk=
+
+Name: icons/fields_co.gif
+SHA-256-Digest: 2sEMN5sqYZU5nA+yi89X6oSd86UdxUNtdGBzP31+g2w=
+
+Name: pysrc/pycompletionserver.py
+SHA-256-Digest: xVYKNyuQRaJMk3jqe4h/CGvsFnJoX0NLM5YSdMIuHgY=
+
+Name: pysrc/_pydevd_bundle/pydevd_console.py
+SHA-256-Digest: aPfDSxlAdBBTGIHabay9yV9G7Pqi6NhefX/4hMrfPUI=
+
+Name: pysrc/pydevd_plugins/jinja2_debug.py
+SHA-256-Digest: 3esj5kpfqW+e9JibJuGrQSIZirVSWYb71ktGNxw7By8=
+
+Name: pysrc/pydev_ipython/inputhookgtk.py
+SHA-256-Digest: xl87qELdnAnXuJqKKqOkrGX69dVSi6CkugIpmkLuw18=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/PatternGrammar.txt
+SHA-256-Digest: FrNPpXBj9oe3aanNVFjZWQ/lS20JnU6kHlcDCyctfvg=
+
+Name: pysrc/pydevd_concurrency_analyser/__init__.py
+SHA-256-Digest: tTQgdI9TtJ/UfmIIkiWepot48o37C/ONoIuJIeYZPg8=
+
+Name: icons/new/create_attrpub_obj.png
+SHA-256-Digest: qRiI5UtMNXeqo5VvPEoRmDfklQ25Wzaf8fZ8bqaOpAw=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/registry.py
+SHA-256-Digest: Dp4Z/uoa9YqToJtsIItTEygCnDdUch1CCUrnfmLPQdU=
+
+Name: pysrc/pydev_run_in_console.py
+SHA-256-Digest: vdpdVdNpgfFUi04hWaMmlV56YJ/WDeXUYcHX4f1HC0Q=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_urllib.py
+SHA-256-Digest: JFMlnLGrB5SGNSCbol/dezlZWIfziQltRxefmawZH4c=
+
+Name: pysrc/_pydevd_bundle/pydevd_process_net_command.py
+SHA-256-Digest: +vSCqv9pPrZa5XALCjw8/DYhWMHikRRpJUUEn2+9xEQ=
+
+Name: pysrc/_pydev_bundle/pydev_versioncheck.py
+SHA-256-Digest: iEsetLvl41VafGLZz1brjuO+J1z4fw/xhw/LBmixGTg=
+
+Name: pysrc/interpreterInfo.py
+SHA-256-Digest: eVxNxsBwVkuERWx5WEd/ikrs00bTUh6maCz9TqyNYUg=
+
+Name: icons/old/imp_rel_obj.gif
+SHA-256-Digest: o07GbJSVVdoqKAUhwjKecozU1wEVpt8fAHk3fL8ZD/o=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_import.py
+SHA-256-Digest: Y73H3OqZaFTvPnOXh5MmYgiHJ2Vq/XO+LZs/Zcia3jU=
+
+Name: icons/cython_file.png
+SHA-256-Digest: OuzZsC49T4MeAVfjrQfM3ou2zbojSo5Vc6CeHLacx7Q=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/ntdll.py
+SHA-256-Digest: yOwnlkQeNTXIashKaW3caPEHbj5LBJy4nt9m93/XuWc=
+
+Name: schema/pydev_interpreter_observer.exsd
+SHA-256-Digest: EFGibJgNHbrtkTua5zqmPC9mbNJWRXvuQzrY6dpLo1A=
+
+Name: pysrc/_pydevd_bundle/pydevd_exec.py
+SHA-256-Digest: Wt5yC0PnPjiv2LXCCGYTbTbCwxJ+49s7bJDkbOSP1LU=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/interactive.py
+SHA-256-Digest: O7q//ozuiDcY6qbS2IEs3pnAW+S7S1J631jpeAk//3g=
+
+Name: pysrc/stubs/pycompletion.py
+SHA-256-Digest: 0wVTUTBcvjtqK8U4WlTDAFQkz0VIicbYpIheZFI8pl0=
+
+Name: pysrc/_pydevd_bundle/pydevd_additional_thread_info.py
+SHA-256-Digest: 7v/omtJMe434BA7oP4XeNXRUGr5WCGlo55vQZZb6ows=
+
+Name: icons/relaunch1.png
+SHA-256-Digest: Zc1jAQYpv6yC7a1l4iVz9Xv+1t4/SjJNeYgeDhySAhI=
+
+Name: pysrc/_pydevd_bundle/pydevconsole_code_for_ironpython.py
+SHA-256-Digest: 8gwteJLWyYadvVUp49db1XgfkxmLDFHTW4v7FxxSbic=
+
+Name: icons/add_correction.gif
+SHA-256-Digest: LyWHC+CoKJyQEBJfpeN4OujYepp8eBQrJWaj1ir7RCk=
+
+Name: icons/tabs_inactive.png
+SHA-256-Digest: G2mW85B9CyOf6ZPl114J4Jv0YOP20BzXYp9JeE4U24M=
+
+Name: icons/file.gif
+SHA-256-Digest: AWvmJes2x/o7sSOVQkPAgOeMTU7wznIyos5E+vsnBr8=
+
+Name: icons/jar_obj.gif
+SHA-256-Digest: YKvGK2+6O+fB7TuddQg1UCyqJo8IKVpGftc1SqGQJ5g=
+
+Name: pysrc/pydevd_attach_to_process/attach_amd64.dll
+SHA-256-Digest: QzjQnbLm7wWPYw16WlmjjJlI0z3vewAyH8HNJIRgJ2Q=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/shlwapi.py
+SHA-256-Digest: UQdleZewSibZSEsdaRWdSDy9UppOeW9u4zog2id1lDM=
+
+Name: icons/remove.gif
+SHA-256-Digest: thcdFqoS9dA1/pqir5Jb+F86oXx21pFrpEsHT6IsRFE=
+
+Name: LICENSE.txt
+SHA-256-Digest: kKR//0aU3zBgl9SCeCpwoQ+GrOEHBzEb90XcPTX/6Do=
+
+Name: pysrc/third_party/wrapped_for_pydev/ctypes/macholib/__init__.py
+SHA-256-Digest: 9/qPTCUnFVbpwv6e8biTJ6KZ4meQR2DDszd+7EDaOB0=
+
+Name: pysrc/.pydevproject
+SHA-256-Digest: ewvZjL7zZWirLixKum2aH9WFxRYgEjtyqQeHUuTZOVE=
+
+Name: icons/jar_desc_obj.gif
+SHA-256-Digest: G6tp/Eh/KC2s0pi3OW9XRSzvDf6gzuaiA3FdCmcOLhE=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/gdi32.py
+SHA-256-Digest: 98xEhx6FEDaOLhj7RazVaP+xacqZFhAYDPuQxPuM4Ns=
+
+Name: pysrc/pydev_ipython/README
+SHA-256-Digest: mD87f5ow/JYqeetvoGobwK6L7Nkath+uuPllDUyyLE8=
+
+Name: icons/showerr_tsk.gif
+SHA-256-Digest: VDDdk22lRW5hRufsdlT/r10RGmUFL17HE1LIs2v9uy8=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/process.py
+SHA-256-Digest: OW6A7jwcFYS+KhSmsm8IwaUVJctYQlnifrJ0C+/ZgCo=
+
+Name: pysrc/_pydevd_bundle/pydevd_plugin_utils.py
+SHA-256-Digest: Cyk277vhwXZ7B7DmrIDkQsifBcLIQt1/0FW8EfIhV/0=
+
+Name: pysrc/setup.py
+SHA-256-Digest: QsHBaO3gRvtPLx+277O6h2l5kZPdq6GqJX8Si2AL6AI=
+
+Name: pysrc/pydevd_attach_to_process/dll/compile_dll.bat
+SHA-256-Digest: IrgczOMq7UOVSHtvX7VBAn6MWmhN+0Pg39biaai7KCI=
+
+Name: pysrc/pydev_ipython/qt_loaders.py
+SHA-256-Digest: +g2gM3ZTryN/KUDGKUwwwaqc+87AYYKNJCOqCdu8Vwc=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_throw.py
+SHA-256-Digest: 8nidwjSmC/zIHmEFgpAo4Dcw+y+3ML0eChDGr/i5ISE=
+
+Name: pysrc/_pydevd_bundle/pydevd_referrers.py
+SHA-256-Digest: zVIp7gfHG4YpVkle1FLARodLzFPnvbXCvSnNlxIanIU=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_set_literal.py
+SHA-256-Digest: wwYuAb/hxOU4V3ZUil3ep+KvkzRHM6yzJ8MHD8yWCHg=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_xrange.py
+SHA-256-Digest: Y9RzUceTlP95Ri7xw/34jPjR+d1+CtSFrc3pnw6Bo1A=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/compat.py
+SHA-256-Digest: PLCbaeo2PD1T1te8C8zaWVBHkgXBMPtfBsHZNt6F2s0=
+
+Name: pysrc/_pydevd_bundle/pydevd_breakpoints.py
+SHA-256-Digest: WVpqggFIIDGhF06wri5KGXwH5fmh6vQe8Z+hsg3Mqqc=
+
+Name: pysrc/_pydev_bundle/_pydev_filesystem_encoding.py
+SHA-256-Digest: FKdqsKYJGqN5HtStJQ+le5PGwhFp3sQmbPN+Yo+GJk0=
+
+Name: icons/copy.gif
+SHA-256-Digest: 5z7v/2z9DbpNHrLMdWy/ReTXmY58/98u8IQqFutQtps=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/breakpoint.py
+SHA-256-Digest: xtw9P28BCDPR79joQA+pJKkgqIW0MjAV8dQ55ps4OPc=
+
+Name: pysrc/pydev_ipython/inputhookpyglet.py
+SHA-256-Digest: UpRdpXjx/RtIuqB8Hm4YazxjeempEw65wgPuSUHZr50=
+
+Name: pysrc/_pydevd_bundle/pydevd_tracing.py
+SHA-256-Digest: jqQwFLJGYm4hqKTZa4CC2rO2S1pfl20fZg3E3fAyJzg=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/peb_teb.py
+SHA-256-Digest: xjAn8U7PVH6DL1uloRW4yLEj+ARUCcwG5V6qVrRMSxk=
+
+Name: pysrc/_pydev_imps/_pydev_execfile.py
+SHA-256-Digest: 2zl1BTPXygvX8SdohKR1KDnj+FG+b14LpOLwFLfTbXk=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/defines.py
+SHA-256-Digest: ZDTn50CkrG7Z3L77bYSLz6hd97b8trRKNTDLclALljI=
+
+Name: pysrc/pydevd_attach_to_process/dll/attach.h
+SHA-256-Digest: JX78kdqeNqyoHMuLNwItUvlXOSjO/Pz/9ZMrnStmn50=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/plugins/do_exchain.py
+SHA-256-Digest: 8pcuf/biG+bkyRcXykKmvJh/qMUkBZ0+9J3ZqIHfZ3c=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_dict.py
+SHA-256-Digest: cxtMAfg71pOSkgsxpfV9bwwxEwKwDKS8Q3jcVKISiSM=
+
+Name: schema/pydev_quick_outline.exsd
+SHA-256-Digest: pdWmty0+37EZSGXNQjoMafUBO8KN0yZVmyXoJJ2hFOk=
+
+Name: icons/annotation_obj.gif
+SHA-256-Digest: PRaJf4IQ5RPEmgKgVAJjEHSJ6UqfEFGbcLQnaQtuMhQ=
+
+Name: pysrc/_pydevd_bundle/pydevd_cython.pyx
+SHA-256-Digest: rY0KZOJ16Ub1Kz/LguQzfvI92qVa1fD3vv03QqecoC0=
+
+Name: icons/new/__imp_obj.gif
+SHA-256-Digest: E0VLKz2s7vJ1n8wD11m/a5QcNLYqbPHq8mCv5W0ogwY=
+
+Name: icons/new/create_python_module.png
+SHA-256-Digest: uWA0QDHCQBohNuK8oDcvAperxCes48VYHA1KSO0tRME=
+
+Name: icons/correction_move.gif
+SHA-256-Digest: L0jxbh4ZUJALKANNpB3C/3pVzfsNGqnTd4EVwp1CkPA=
+
+Name: pysrc/_pydevd_bundle/pydevd_reload.py
+SHA-256-Digest: YuuomR0Edj2R4xPwNFWj7nERh9csFO2pys9wYO2ufuE=
+
+Name: pysrc/_pydevd_bundle/pydevd_frame_utils.py
+SHA-256-Digest: /Hk1Y4qucq3vwqBIeOwJpd9OjOrAe26ipb/KN+6LqGg=
+
+Name: pysrc/_pydevd_bundle/pydevd_kill_all_pydevd_threads.py
+SHA-256-Digest: CtCj9HTzyoCD9D0kW73fp+tOEM+bT1eMyME4svc0YCA=
+
+Name: icons/new/imp_obj.png
+SHA-256-Digest: 6TuKN3V34EKRNpRxhYWP2z3hj5dGiHfBmD3dAIAlQ1U=
+
+Name: icons/backward_nav.gif
+SHA-256-Digest: UOc+AfsjdnsznJ1IALDt1ZHPllAo0fVb5GjLvBlIkpc=
+
+Name: pysrc/third_party/wrapped_for_pydev/ctypes/_ctypes.dll
+SHA-256-Digest: NAdlUE31O7tm5aFhGRaqYRdEOnPwsF6tINeUehJdFT4=
+
+Name: icons/python_comment_black.png
+SHA-256-Digest: J2F7WZQx/MDF94ABhxkPzApiRcUW/gOt5gAe3abXfkg=
+
+Name: pysrc/_pydevd_bundle/pydevd_cython.c
+SHA-256-Digest: SkUH8hlcztnAXcgaM6z1CW20zFxRcEUMlwfgiAP3EM0=
+
+Name: pysrc/pydevd_attach_to_process/attach_pydevd.py
+SHA-256-Digest: QGNZSx77jR2ZBQ96F+XboP/g6KL60eIGsg2rzHCsZ7E=
+
+Name: pysrc/_pydevd_bundle/pydevd_vm_type.py
+SHA-256-Digest: wzw7DEbXPQ4X+Rz0botqVYdvb0grp0lYKtZiUF7pMvY=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_itertools.py
+SHA-256-Digest: ewet+kzu+wBYEH+rWVwqOH0GiJLia+TrucAdMuPZG74=
+
+Name: icons/python_run.png
+SHA-256-Digest: x+aZqh66eK689fwzJLjjuv0kX3z22JsIQwH+EgGf87M=
+
+Name: icons/parameters_obj.gif
+SHA-256-Digest: U6RDSQWi7K2gq8uFPvsnE30X/XJODdImQdhm4wn5eYU=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/psapi.py
+SHA-256-Digest: reNCHUgIgFy5OpA2rQJ4ClreiuFlCB22A7AhW9mhJMQ=
+
+Name: pysrc/_pydev_imps/_pydev_xmlrpclib.py
+SHA-256-Digest: DCdA9kbIjQFvgQnvyysK+ObLZ2AvT1DECBgK0XkmtOQ=
+
+Name: pysrc/pydevd_attach_to_process/README.txt
+SHA-256-Digest: 6DYFNZ9Xio34YRr50RphyD9DEvncu+NasIbMz8dYvBM=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_itertools_impor
+ ts.py
+SHA-256-Digest: m4vS8qF2esAOTsMqnVw1kTSuhPAV/2sMWipL6NesqVg=
+
+Name: icons/old/class_obj_imp.gif
+SHA-256-Digest: OKtsIAQbcn+taqv9YHa2hAgPMAeiojlpBL8wqGA5HTA=
+
+Name: pysrc/MANIFEST.in
+SHA-256-Digest: OoAKmZCDkK00vlDcBxoZA+2AQlyVU/2+I45E6lbtOHw=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/patcomp.py
+SHA-256-Digest: xF8+LFFSfa+w8weF3tI9kd2cEAxiJ685Ier9UFsK/nE=
+
+Name: pysrc/pydevd_attach_to_process/linux/python.h
+SHA-256-Digest: HxtK4lLLAxpi2lceNvWeNHpoPfsFKwn+CgjtU4YiIAY=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/util.py
+SHA-256-Digest: nwaBRmZFY1oJlECDpgnvBZ67Q8OAUxBSwsqMP0vB4ak=
+
+Name: pysrc/build.cmd
+SHA-256-Digest: OZ0nE+Ffq9EClCCk4wOsJ6G9HD61L9LvZEvX5GrN6Xc=
+
+Name: pysrc/third_party/wrapped_for_pydev/ctypes/macholib/dylib.py
+SHA-256-Digest: kTKFAg5ptFqgOrW2EjFJZl5DZ804reIzYBmPKVse+fM=
+
+Name: pysrc/_pydev_bundle/pydev_console_utils.py
+SHA-256-Digest: pZXYxckhktr7L6lMAY070xusAkuYseJng+Xuxq0p0zQ=
+
+Name: icons/save.gif
+SHA-256-Digest: CXcFZaJKFqpneSLoS9yAGicb1/7rITBV6kU2GWdxzEM=
+
+Name: pysrc/_pydev_bundle/pydev_localhost.py
+SHA-256-Digest: 1CbtVMGxwHOlePhkV91wF6sL2xUjdXNr31GRCmfS1nM=
+
+Name: pysrc/pydevd_attach_to_process/_check.py
+SHA-256-Digest: ILp+qySOGTF8KNEYozkmbbe94UaHgdxESmVqnzQCrio=
+
+Name: pysrc/pydevd_concurrency_analyser/pydevd_thread_wrappers.py
+SHA-256-Digest: IYYenRvTEJUZQlBqV8509lh8P5H6roywlijHmsa1krw=
+
+Name: pysrc/_pydevd_bundle/pydevd_constants.py
+SHA-256-Digest: VyNYIYkctYlq9gs+OUWcodCScQtCHbytFy3FXSCmjFk=
+
+Name: icons/folder.gif
+SHA-256-Digest: bTYU4a8IloR1fha3BlVmoaGE+Xr0rxtGeu2/yUS0EuU=
+
+Name: schema/pydev_builder.exsd
+SHA-256-Digest: 0SzvmhaKeC7U3f+njVIB8+tflpi9/sK4I+ZUEQI1KBI=
+
+Name: pysrc/pydev_ipython/inputhook.py
+SHA-256-Digest: CeslVMV08QAev5nuLTN77xgcwLUOX+ew8LDrGtJ0qIY=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_renames.py
+SHA-256-Digest: 7DUr9L/JcTnJUBCYbYqjXT437SxzCDuHTRO39ju/gCE=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_callable.py
+SHA-256-Digest: c9gXhNJUQZFclVeD56Q4fxb11m/mLCMnNqbxAvuOtk8=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/__init__.py
+SHA-256-Digest: x60tmnTVZGN/rHjYhV4Y2wmFXDiP1u3GysLdMJw4UKM=
+
+Name: icons/new/imp_rel_obj.gif
+SHA-256-Digest: MRPmU29fgEMKxkoGrTaut4RVFC9V3SGtJlw7i7MtC/s=
+
+Name: icons/sync_ed.gif
+SHA-256-Digest: 3Mm0z+rce8Dg4cK9vrI1LFW/RWQFRPP/LSeulq/U7E4=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_standarderror.p
+ y
+SHA-256-Digest: lJFXXJwnS5TTzEMDKAVDTSwqXabMxu4ywVi1gjfDeBA=
+
+Name: pysrc/_pydev_imps/__init__.py
+SHA-256-Digest: X9p92rLoScoup2g7sTrPYMzGVZQZb7HdXdiHJxr3pkU=
+
+Name: schema/pydev_view_created_observer.exsd
+SHA-256-Digest: glWYbee38iSU9sMZM8ZZIGy9Jdwwf2NCUt7VhkecNqY=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/module.py
+SHA-256-Digest: 9nV4mvvHiZpin8AnnvMlztF6qu0Q0q2Nzt32RV3j/ks=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/event.py
+SHA-256-Digest: nQtrx22jjrkn9/TI5pf6NbVtSAGn3OXTIG7+w/wL90c=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/pytree.py
+SHA-256-Digest: 3BCl2+QRTpv2wRQE6SbZPrWAXBI7aOqLMjILRXnV/lA=
+
+Name: icons/build_var_obj.gif
+SHA-256-Digest: fi6FU+SU64TeeQA6Z5vICQriA72JDRAiJa2HDnon2b8=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_intern.py
+SHA-256-Digest: g7cRygdfMddCImV7MGBFxKAafmlTqCix4yMlgUSH4Gw=
+
+Name: plugin.xml
+SHA-256-Digest: Rkr3eEF9Ov0K8uZ4/8P7HSIMMGTTg4GelcHPelPK0i8=
+
+Name: pysrc/pydevd_attach_to_process/linux/Makefile
+SHA-256-Digest: y1lrCTCRFJYcEyuPvJFB3LkhuSB7QP9UQbR9mDuj50A=
+
+Name: pysrc/_pydev_runfiles/__init__.py
+SHA-256-Digest: 7ibPpy+6xTVARWzbZgK6anPRIhsx3WliF7ZLy0R4qnU=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_idioms.py
+SHA-256-Digest: IwLV0gpsfUCA7Q0g/J42dZZLj8ammcQQeEoC2GGiAC0=
+
+Name: icons/python_coverage.png
+SHA-256-Digest: +VnfrgBEPfcN2BA28nZKEI3nHql6N7NL4CY5BbJcrYA=
+
+Name: pysrc/_pydev_bundle/pydev_ipython_console_011.py
+SHA-256-Digest: UJUVLTKq55moIMOXad8aoU9T8eC9hBMFJSv8POxtHBY=
+
+Name: pysrc/_pydev_runfiles/pydev_runfiles_nose.py
+SHA-256-Digest: bbCja1StyQHXpKz2zF9jBDJZv1hosV8RQb8qz7RFMwg=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixer_base.py
+SHA-256-Digest: mlyILqoPQ6gEKiuKYZvF9C1fRMDPToTqI/e0thZPKwk=
+
+Name: pysrc/_pydevd_bundle/pydevd_cython_win32_27_32.pyd
+SHA-256-Digest: sAx3gKvoL/475XRysdw8x2L1+E6q58cr6USJGV6zhDU=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/btm_utils.py
+SHA-256-Digest: E0yBIZSo9eykSu6ZDFVNI3MPIfie9l3tfFyLsnBPQ3k=
+
+Name: about.ini
+SHA-256-Digest: zZjjdkNy3fYG0jvEXTHxYF3XL/jMKdaNvJJpu84kIs0=
+
+Name: pysrc/stubs/_get_tips.py
+SHA-256-Digest: GFZ+cTRtlBIZvm8QqmYa/ZoE89anZDCAcOrxQulxrcw=
+
+Name: icons/relaunch_errors.png
+SHA-256-Digest: puakqXZdnZ05JJIm3rXc1AJycYhvqpAcNBD2cjLw9uM=
+
+Name: schema/pydev_interpreter_info_builder.exsd
+SHA-256-Digest: b5sw8I8LR+PoUNGbAXGxORpAhQ7hJq1OnEfC+TTRVAM=
+
+Name: pysrc/_pydev_imps/_pydev_SocketServer.py
+SHA-256-Digest: YtVie08l8cOMqUJWK1n5OH2a6Ugl1Cl9ekWjXqljSDY=
+
+Name: icons/jython_run.png
+SHA-256-Digest: f4KDHAMZ9v2I704w4MFeHx+y586N0cH+TQwB+CQH2E8=
+
+Name: icons/python_unit.png
+SHA-256-Digest: K+balEXmFbmuJacGF5BPvR54V9kO7gFvofdkXZlpLXM=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_future.py
+SHA-256-Digest: NsULblQxcaY7d0seaptpEbHjZ7xJ9OLoANr7yYha5Wc=
+
+Name: pysrc/.travis.yml
+SHA-256-Digest: k5UL74XL5DaAtNoJINackL+/cgY+n8vAWLO2f11HId8=
+
+Name: icons/custom_python_file.png
+SHA-256-Digest: Czn5mglNCuVDbrxPdR5vHrlLeCaUK2XDwZtAvAMvNNc=
+
+Name: schema/pydev_pythonpath_contrib.exsd
+SHA-256-Digest: gMWHlPnPkmwFLzwLUIxaluLLc5Iix+giMsyQDxr4B0Y=
+
+Name: pysrc/build_tools/generate_code.py
+SHA-256-Digest: +NwMWZWHKsryaK8o7QmKn6BRhiusdWZBtWfkJfQjYPM=
+
+Name: pysrc/pydevd_attach_to_process/dll/stdafx.cpp
+SHA-256-Digest: NVDuhutcigIWq27Yj5sno75hpiDpY1ZGEL0afSrF2l4=
+
+Name: pysrc/pydev_app_engine_debug_startup.py
+SHA-256-Digest: +B178wUKuggnTBY2/qQnBtHjh7KN0qY7SXc02cD7Wvc=
+
+Name: pysrc/pydev_ipython/version.py
+SHA-256-Digest: bgc318LrAxhRqXUcqBgpxq6ctv6nZ/8Y7aftZufu3Qk=
+
+Name: pysrc/pydevd_attach_to_process/_always_live_program.py
+SHA-256-Digest: MbZ07cVNcWExCRWSljiaJznHbVfSQ4BT2fi9NEMhXDg=
+
+Name: icons/refresh_nav.gif
+SHA-256-Digest: XpdXI/4taaUFPuFFrD+SELbJjjRJqRzdoCvPR2Oyeas=
+
+Name: pysrc/.settings/org.eclipse.core.resources.prefs
+SHA-256-Digest: VKlDtE3OABaDQC7acjh2vYokah0TJ6JzpSR6hANMReE=
+
+Name: pysrc/pydev_ipython/qt_for_kernel.py
+SHA-256-Digest: 8e9JSs+r2ztSXozesfShgCp/3mrT7FuTQG3AlvVe07o=
+
+Name: icons/private_obj.gif
+SHA-256-Digest: IVV1u5i+ht5R1WGsdStvU3KZq/tDsWQqBY/kk9bKe7g=
+
+Name: pysrc/_pydev_runfiles/pydev_runfiles_parallel_client.py
+SHA-256-Digest: 5KYNTrB9jUfMp5eoSkFU2uFXC8NZq33uUkMTmZ5APjY=
+
+Name: icons/close.gif
+SHA-256-Digest: DE9KIQ+K1yJaCx/lQ41g/Fjmnk05qgkZs/kmrDch/Ck=
+
+Name: pysrc/pydevd_attach_to_process/dll/python.h
+SHA-256-Digest: RCKQU0ZaGyxGZ1gzJ2uECnIRVk/7KUEs5gsqhNOi3Zw=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/shell32.py
+SHA-256-Digest: cZmje89r6CSAIWrHDkrBEWZu9+67/d9SCWiWvmzH0W4=
+
+Name: icons/decoration_class_obj.png
+SHA-256-Digest: iOJvYG6bnnTnKogX3p03R4jpT+sZMIwcKsa43fqEbBI=
+
+Name: icons/decoration_static_obj.png
+SHA-256-Digest: FgiYKFjS4kfHt9ZmICijYbysqPbJ5NMyOWLx2SIMqMA=
+
+Name: pysrc/pydevd_attach_to_process/_test_attach_to_process_linux.py
+SHA-256-Digest: jPlqehfXbFW2g/WBMQZAWG+Til+bNkBok86uOFW/HWE=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_raise.py
+SHA-256-Digest: TU65uDeZqOozaEX2FLNcMfdZEuJrRTz+InPdSM0P7PU=
+
+Name: icons/new/old_imp_rel_obj.gif
+SHA-256-Digest: 5t+jvsZI4p3m5ljA3b3tRs5O1KomfQvt683hSLEJSFo=
+
+Name: pysrc/_pydevd_bundle/pydevd_import_class.py
+SHA-256-Digest: LOjvxl/G9wxL+Y8gTERfPoS7nttPFJDulkf4JedeRSA=
+
+Name: pysrc/pydev_ipython/inputhookqt4.py
+SHA-256-Digest: EnsDXVxgWv8ki2UGiKVDAIifR63cmM5RFvBgfRqwOPs=
+
+Name: pysrc/_pydev_runfiles/pydev_runfiles_parallel.py
+SHA-256-Digest: ViYSRURnU5m9Yn+hOya5oN08QYt0ofBhvT3ChzBxKpc=
+
+Name: pysrc/pydev_ipython/__init__.py
+SHA-256-Digest: V1Q9E22hnloL56GviEXtFQUBQCTjOLg+uGjMjaPDBrU=
+
+Name: pysrc/_pydev_imps/_pydev_pkgutil_old.py
+SHA-256-Digest: mHC8175gaLe7KZSEQUcikoVkb+d/+CJEUcKqFWwrHlk=
+
+Name: pysrc/runfiles.py
+SHA-256-Digest: v/su5PmRZ3ubt6cC3UwROM/s5/zf29rdzhGWaSGrpZM=
+
+Name: pysrc/_pydev_bundle/pydev_monkey.py
+SHA-256-Digest: KGBN7UPhsRfvz/HCW80UAT1l9F6tWE3o+MmtZgEnRl4=
+
+Name: pysrc/pydev_pysrc.py
+SHA-256-Digest: om1/x3EtkR0aFdkUvBU87P7UWNIY+ESdpbKMMySUsas=
+
+Name: pysrc/pydevd_attach_to_process/linux/compile_mac.sh
+SHA-256-Digest: 1tGjoMpWVlIFTc0SG3j2xC3sGp3KWlvON26ugoDGwHI=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/version.py
+SHA-256-Digest: JUiEuWbih2dUXNghOPsign496nR03TSI2vKw0uu4aWs=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixer_util.py
+SHA-256-Digest: HRM0OBqZN1m+8P4hLUzXs6C0wH2lsCG7KMnzNIQdrZY=
+
+Name: pysrc/_pydev_runfiles/pydev_runfiles_pytest2.py
+SHA-256-Digest: UHx/H7qngDAY+qMVewRRfSJAWJpWK+E5H+YTBFWyJio=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_sys_exc.py
+SHA-256-Digest: xcvbS1HPHQnLXphWZ+TQdh/pUZTfbqFxHZKNH0k/n5o=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_numliterals.py
+SHA-256-Digest: MGzS+pQy+gtuXDkq8HaQ6cJBO61TPj0ipzn12/ptQqw=
+
+Name: pysrc/_pydevd_bundle/pydevd_custom_frames.py
+SHA-256-Digest: eWRlvGzDH3fBVUqeb8fgJzukY0G7Fq9OnKYyM1DWD6c=
+
+Name: icons/builtin_obj.gif
+SHA-256-Digest: ebqTxoIJAhlB3ns0ERrlT5dVTqQM8wID9s4pxnG2N+k=
+
+Name: icons/gotten_from.txt
+SHA-256-Digest: gNThh45MK4iqHHIntEQiD7l6Cec1op85YFpSI6tOcUU=
+
+Name: pysrc/_pydev_bundle/pydev_log.py
+SHA-256-Digest: nhoKwJtY0DXWa1c/WWTM8sEiaq4/5EUFBWw7TbOKhmY=
+
+Name: pysrc/_pydevd_bundle/pydevd_dont_trace.py
+SHA-256-Digest: mlWFJMjLrf/9x8KfwZaKCs5fOIk/L0Our7y4wY1FfnU=
+
+Name: pysrc/pydevd_plugins/django_debug.py
+SHA-256-Digest: uknGa6DZ3J8P5TrDKfq+4z9x4uNqbvDy7V0tyyZumdQ=
+
+Name: pydev.png
+SHA-256-Digest: /GJ5HlYeQ1FYrQVz+WqaMdogKy1iq/cpFBzMsMWnfYo=
+
+Name: pysrc/build_tools/build_binaries_windows.py
+SHA-256-Digest: eGa505RFi9T4kcy/nez0fwmum9FSA/alKnpvKi1S948=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/system.py
+SHA-256-Digest: fWPkQBQsRhaLn06IHllSmEAHuSQdgdPR6B7TnRm6cG8=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/textio.py
+SHA-256-Digest: +apEY3tZsrHjxZgCaYUDW/zbY6J/7Vh68S6aRu7pJY0=
+
+Name: pysrc/third_party/wrapped_for_pydev/ctypes/_endian.py
+SHA-256-Digest: 7XPFsN85qgyFXEVgv0ABXE4xktgbvqXfTq77uK4r0UU=
+
+Name: icons/terminate.gif
+SHA-256-Digest: 2cctbkl+S8ICn5tDxnDs23OVl8R/4pawRnNWeZPyEPc=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/plugins/do_symfix.py
+SHA-256-Digest: Iv9mr1y/o0Sh2tE9vilriAilv+F5fe4FsThG9MW23y0=
+
+Name: pysrc/README.rst
+SHA-256-Digest: OLLT1QqRJPP4CLrDhXDM90KxsE3YunVW0mSBocruWXI=
+
+Name: icons/magic_co.gif
+SHA-256-Digest: B37PXxbhTX8kd4q16/VhYnp0/ZcmM/eQma+kekm+tlA=
+
+Name: pydev.jar
+SHA-256-Digest: l8dqzpLhs29vlsllCuiQC1QGtJgG6HY62kBF9PEVfQE=
+
+Name: pysrc/_pydev_runfiles/pydev_runfiles_unittest.py
+SHA-256-Digest: 1l/Sz7eIPeh7Nnr7W5/gXTShQZ9bv9BlCwUzqfJHQEY=
+
+Name: pysrc/_pydevd_bundle/pydevd_cython_win32_34_64.pyd
+SHA-256-Digest: oSW4M8PL53m1PXWhwH5INXNuhmQ4m5tQ3M2Rn6rCvrI=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/user32.py
+SHA-256-Digest: ldEGSemqRVeJRr4kuMhSBd8JkdRszDfysrwRE6DaYOE=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_reduce.py
+SHA-256-Digest: fWI+QKG8CJ59PEftPH5N81HtuO1FVu7z+8VoL5tdzQ4=
+
+Name: pysrc/_pydevd_bundle/pydevd_utils.py
+SHA-256-Digest: lkHMazDxLiR5zbX/gD93WcUwpaUmxK44WZ31jfmaI2I=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_types.py
+SHA-256-Digest: pIKkqiVaRrhgGZYMyUxwrNLPs/Ib134b4VJTxmAfta8=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_ws_comma.py
+SHA-256-Digest: KWCnRTq48+NCWacyZAYGPFk8YR6tB8CZjFJt/UFH6Po=
+
+Name: icons/python_comment.png
+SHA-256-Digest: iklUDmNUUooB+32farcIrudSO7HKBdcrXMib9CwZ9rc=
+
+Name: pysrc/pydevd_attach_to_process/add_code_to_python_process.py
+SHA-256-Digest: EJfnSZRC09/vuTzKpZtrJI5ZfFfEVB6525d3L0Fwm8w=
+
+Name: pysrc/_pydevd_bundle/__init__.py
+SHA-256-Digest: V1ws9bDlIxlJu1ygYdnQMGhrRiD/sWKwnS7K/k5o5uw=
+
+Name: icons/python_refactor.png
+SHA-256-Digest: sUHY/HaEu1amCWlophJxmKAbt3rw98odfSJltBtB4Pw=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_methodattrs.py
+SHA-256-Digest: +vCbAYehXAbYijOQd0kMlpHMATba27WUlOd5HaF8cm8=
+
+Name: icons/mainfunction.gif
+SHA-256-Digest: oc5KuSmD8FvRSgTJHddZH4u2BhxLUqBN10341i+pRyY=
+
+Name: pysrc/_pydevd_bundle/pydevd_trace_dispatch.py
+SHA-256-Digest: 1+5dsL2tZyOqJDm0K7k1avZa0jJsGOnSleCIYTFc0sc=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_exitfunc.py
+SHA-256-Digest: uxFQws+rCb8rG4UoI3Vthphb+lc5iCk1tG3c6bcbGNA=
+
+Name: pysrc/_pydevd_bundle/pydevd_cython_win32_34_32.pyd
+SHA-256-Digest: Q2czRMP41beRerFDAOpDOXMlhQRE/6MJQNOqvK3xmIc=
+
+Name: pysrc/third_party/wrapped_for_pydev/not_in_default_pythonpath.tx
+ t
+SHA-256-Digest: tJiXdyZIKicJeJNHlvSGUDor+Je1VsPpfqpW02rQF0s=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_isinstance.py
+SHA-256-Digest: y0HCI8aKW0LW3EEN+vA8VK8zMf1t+mSmWeq3lTAS9Gc=
+
+Name: pysrc/_pydev_bundle/_pydev_imports_tipper.py
+SHA-256-Digest: aY/ymtqHIC9qiFywlH2iVV/afxeZzhmpU2yOp10eV9o=
+
+Name: pysrc/third_party/wrapped_for_pydev/ctypes/util.py
+SHA-256-Digest: 9oApp153QQX88Y4EAYRjt882D5utfkviDrlUzFiGEr0=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_execfile.py
+SHA-256-Digest: 4Bw6uPIxU6BgEG1+qq0/aynSM3IiqyYvL6c9P36HWIk=
+
+Name: pysrc/_pydevd_bundle/pydevd_stackless.py
+SHA-256-Digest: o1A2UVRx+Yqqln+q6cGneAo5xjuRtxU84G/acvfEyRI=
+
+Name: icons/packagefolder_obj.gif
+SHA-256-Digest: RXncmxpNYhuvRqvCx4hehw1+3z6lPGMqivrONu6HncM=
+
+Name: schema/pydev_formatter.exsd
+SHA-256-Digest: cVD9q4rVyGV2ehuOFPPZ8kDkBMAqkOFT2NFa0/kgC70=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/pgen2/literals.py
+SHA-256-Digest: 3zu0RScsFgTZTaB6C3iTKiIC1m4cLyFvwol5VZFoWss=
+
+Name: pysrc/_pydevd_bundle/pydevd_vars.py
+SHA-256-Digest: 3x29R/WSGJMCv6UpIdFZvIEvxhbzdzWqn/MMl8wSYBk=
+
+Name: icons/python_file.gif
+SHA-256-Digest: C0chHUngMwZs5HXGTU9zGI0/OXlMQeVzK9EWK9X2sDE=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/plugins/do_exploitable.
+ py
+SHA-256-Digest: ftev/e91TgZIPRRJH/kRrmlurXZqkbQeQU7oXzQVxYY=
+
+Name: schema/pydev_hover.exsd
+SHA-256-Digest: eyjc/B4IXfrtGsSaK9OMxnyYvzMeI7/jBpA7mnztxVE=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_except.py
+SHA-256-Digest: l7TfPC81Q/pbUAsT0YCRP5mgiNzsZ6cu0vk0GciUWvw=
+
+Name: pysrc/_pydevd_bundle/pydevd_frame.py
+SHA-256-Digest: IzK10lyXMRPJi5fdPJbSyU3pQBbQWFC4YHZn9+GDmn8=
+
+Name: pysrc/third_party/wrapped_for_pydev/ctypes/__init__.py
+SHA-256-Digest: MHCJg7z7Ludm3OO4jJIJdTNcHTli5YQ3WtzCVLieW0A=
+
+Name: icons/field_protected_obj.gif
+SHA-256-Digest: H6P2XROuUm7nBdu9FY54/e3SnJ07Zc4vXLEhrDkY9DE=
+
+Name: pysrc/build_tools/names_to_rename.py
+SHA-256-Digest: c5uWBNWtJvCrKPiUANASBj7im8HED9ZatA5iM8NviJ4=
+
+Name: icons/old/imp_obj.gif
+SHA-256-Digest: kYJgmSCSMFxG51t6fk7wOmn/HdO7oh2At7ihpMYmR+Y=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/pgen2/pgen.py
+SHA-256-Digest: mJedpS7XDALclaH3ak8Hg4nv/0NP1F2qju5EfNFzVaQ=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_long.py
+SHA-256-Digest: 3IHDBUFKubWSA0+vqGqbTcG8h4Px3sqsezXBGyRtkQ8=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/context_amd64.py
+SHA-256-Digest: 0jY4X5VVH6Sg/pUDW5MRzw8YDiigrcBKaTF7/HtKK3k=
+
+Name: icons/error_small.gif
+SHA-256-Digest: /S8D3JTfoFrp2ekP/Gf3e2eUyLOlDJXpganBoQ4Y/78=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_imports.py
+SHA-256-Digest: wH4rPSHAC/RWZSHclKxMz04p+VyqHsioZ3mHuKeRaZE=
+
+Name: icons/packagefolder_obj_remove.gif
+SHA-256-Digest: 2TyBRlNljWolUgf2Fi7YFX0GX+jdKONyYB5NUXtB8E4=
+
+Name: pysrc/pydevd_attach_to_process/dll/attach.cpp
+SHA-256-Digest: PB0d/RUlAeAP2MQjNBV1KNPCUso3VN1bTPbTeKZl6Z8=
+
+Name: icons/python_nature.png
+SHA-256-Digest: PNdHyrKKchF9WfSpKWsYUNkYuuJD2/PPDjuE3jNonnM=
+
+Name: pysrc/pydevd_file_utils.py
+SHA-256-Digest: yrXi05XXTfhso5KTXwBBWPrzYpcfHpvgh+CgHn6Hv0w=
+
+Name: pysrc/pydevd_attach_to_process/dll/stdafx.h
+SHA-256-Digest: qClj5FzxOH1mmtcZ9Dmm79dWQ0LGQleRgEGhB333U4U=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/refactor.py
+SHA-256-Digest: hTAEz6khzkBNJ51mDMBV67zbxrZjNm7DbtIVFWFNmLc=
+
+Name: icons/failures.gif
+SHA-256-Digest: N61XPeIzbJnPR93EIlMnM6FvYDw6OqPq43YBGHECGi4=
+
+Name: icons/warning_decoration.gif
+SHA-256-Digest: 4v5oSJNs1QeueJkQN4uVvlVvoc+HgQs4krmS8D6V6QE=
+
+Name: pysrc/pydev_coverage.py
+SHA-256-Digest: 8rWukjJvveNO6bIYz6yNi+v2PNBvB7OcrAQa2/8sm38=
+
+Name: pysrc/third_party/wrapped_for_pydev/ctypes/macholib/framework.py
+SHA-256-Digest: JZScpRcm1ajzXqXGQqSTIDHrW/OkqzqcVuOj0ENr8Bk=
+
+Name: pysrc/_pydev_imps/_pydev_inspect.py
+SHA-256-Digest: Yn5OLXIAQZNx+fEICURd9LsLuGTooRSOq69IYJlt2cY=
+
+Name: icons/static_co.gif
+SHA-256-Digest: r9E6Ql9GbQFUF8wdCSocdtRvwisfn5ORl+pYmqvXRrw=
+
+Name: icons/pydev_package_explorer.gif
+SHA-256-Digest: e6tEOj8m7TwxcHx8JgE46u4Ir2WRiL5590f9Lfwxx4A=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_paren.py
+SHA-256-Digest: dYros5vjg6CZzHsFIqk2LdiEj8GjTBoQmU4O0vx3ze4=
+
+Name: schema/pydev_organize_imports.exsd
+SHA-256-Digest: 0seaQeCIxsz8EYqlj/QGRJDX3QR6uP6mKJ3i95nNMzI=
+
+Name: schema/pydev_pyedit_listener.exsd
+SHA-256-Digest: VkWsiEP58Q3czhU4DLYprN95dRhJ6GS5A/22AkXOIAE=
+
+Name: pysrc/_pydevd_bundle/pydevd_cython_win32_35_32.cp35-win32.pyd
+SHA-256-Digest: jVcCMu9wFNdx8M7fK09r0oBpZUCKVy9zLqs9XL/m/sA=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/pgen2/parse.py
+SHA-256-Digest: L0Z43p6kQbJuYXo5ILrPu/FMHmoLm/RDDNfFLY5cz1g=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/pgen2/tokenize.py
+SHA-256-Digest: hzV38vAPCQSimtI2wfX7LBUErtENgW1nm2Hhws7x2Ic=
+
+Name: icons/jar_nonexist_obj.gif
+SHA-256-Digest: CQ63lcU7bO1B/3zOcbyAZCoU+/n9oCDpRNPL7VccCvo=
+
+Name: icons/warning.png
+SHA-256-Digest: JDqHtAI2xVWEQpCn3lFdaYD8JInQDbI3XrgkpUQQnrw=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/plugins/README
+SHA-256-Digest: t8UeiFM8XODheQp+HOASsZsPt9RUf4O7H4AEbdJDT2c=
+
+Name: pysrc/_pydev_runfiles/pydev_runfiles_coverage.py
+SHA-256-Digest: HqjknvOwzQbgSB4Ji7X6GnDz0O21Z3q7H5ysWh/2fUA=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/Grammar.txt
+SHA-256-Digest: e1ljBA+shibsg/c6Kdel2o5xb0ktNgWY0TIWb6Q6GLY=
+
+Name: icons/custom_init.png
+SHA-256-Digest: 10QN1K+/oJFwPNPGAkDqQFyv4JWlsf0ZoYunEKDD5VM=
+
+Name: icons/new/imp_dec.gif
+SHA-256-Digest: JgnMVno9LmDZI3mLkTJkxwbEDgk+XFC6z/+PgDjODLE=
+
+Name: icons/pythonNature.gif
+SHA-256-Digest: Qurj0Q7EgjX7/BhVCwruyI7AQ2f7knV8ZjD+5JrONh8=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/debug.py
+SHA-256-Digest: q7HQZFTHnOyVTlZZ6XjydDYFGHthlvvy3/aL/Gqlkbs=
+
+Name: icons/python_module.png
+SHA-256-Digest: kfhD25fEFLORjKMhtc226mUG7r96RbCuUqD4bqb6ZjQ=
+
+Name: pysrc/build_tools/rename_pep8.py
+SHA-256-Digest: oRLybNMqFK+kMmE+lHMfN2BjE7/t6Qi+tzV5i813QTo=
+
+Name: pysrc/_pydev_bundle/pydev_override.py
+SHA-256-Digest: yTXNpXOg1gtViFWZ3H4QXQyrPVfJgYTpdi5lg/s/ocA=
+
+Name: pysrc/pydevd_attach_to_process/dll/targetver.h
+SHA-256-Digest: l9aKGTUU0GZvcnz1AQCRqUFwbxxvvikj8DMen1OjMUI=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/main.py
+SHA-256-Digest: lFBpOMecZ+QTWO9ZDj7RHKGRLHnBI/CTIhnjREJrCFs=
+
+Name: pysrc/_pydev_imps/_pydev_BaseHTTPServer.py
+SHA-256-Digest: nb680NT6TYlVERAHeEI6js9S+Cscf79a6Huh7v7UD4Y=
+
+Name: pysrc/_pydev_runfiles/pydev_runfiles.py
+SHA-256-Digest: yB/6nXwFmw3cLEsnVk0Tiso91PYd57WKcPjLBZQWPQE=
+
+Name: icons/field_private_obj.gif
+SHA-256-Digest: M8JTKTkbrDiGuV2iuULz2oMNTMBEqfQjpuF09bOHBMA=
+
+Name: icons/new/create_class_obj.png
+SHA-256-Digest: K/Wb9XQJyBHPbRUg9nD1G1sVIqOsYpA5QKTxe5gk9k8=
+
+Name: icons/project_source_folder.gif
+SHA-256-Digest: fFJrch8o0VgfQ1id6kJ6s9Jgkf8W+mFwsmdCsEoN7+8=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_getcwdu.py
+SHA-256-Digest: 21QaquMAdKUjUudGqkY1mikOm5y2cWSfqX76HQzu7v0=
+
+Name: schema/pydev_simpleassist.exsd
+SHA-256-Digest: nSkD+LOvoGxUNYBC3Z+KbggUR5/TGBoBZxKAIBYyzFg=
+
+Name: pysrc/_pydev_bundle/pydev_imports.py
+SHA-256-Digest: PCYS0CDDkt/Ib6abCMqsKxCkDZ66L/Cv6H5DMJjanDg=
+
+Name: icons/jar_src_obj.gif
+SHA-256-Digest: JMadh1FXSoUVSP4LYxJ2yoeLuZn5K5GHbuk8CkPpb+Y=
+
+Name: icons/environment_obj.gif
+SHA-256-Digest: I37Vm8KiTvNk9hRDXOWu2rcNKuawkzRBf7VYpebAE00=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/kernel32.py
+SHA-256-Digest: x2d+K+YX81//bPbTO2+UsKFqClW33IR4dpoIc4oYrgk=
+
+Name: schema/pydev_modules_observer.exsd
+SHA-256-Digest: ChmejiCoxkSfzf41F1GXuXHbrlWSc2INTPkCTtm8XdA=
+
+Name: icons/cython.png
+SHA-256-Digest: apZCDLFXGlAocJenmfzwStfEsLbECENdlMOEBqtydAM=
+
+Name: icons/template.gif
+SHA-256-Digest: 5syVtL9AZuyPnmm59zJLMUw805nP5pu/tHuzRPLjqz0=
+
+Name: icons/new/create_method_obj.png
+SHA-256-Digest: ti/px5ZRIqFGPxIMfD/eLhMO7qYb3VIYuf+07CXBJwA=
+
+Name: icons/new/attrpub_obj.gif
+SHA-256-Digest: z+gdxSgECi3Xt3Rm/BkCanOpR7odS4BraQvKy3sMgUs=
+
+Name: pysrc/pydevd.py
+SHA-256-Digest: Xfr/qxNUVCJN9RMdjOxt7ruaMylNS7UeqMK/u6BsmMA=
+
+Name: pysrc/third_party/wrapped_for_pydev/ctypes/wintypes.py
+SHA-256-Digest: UtHIuAn9+0YpVjBZn3bZjy7oHBlO1MtYb+hthnZJWpE=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_next.py
+SHA-256-Digest: CP/YcriLYbe3OgJ0OZnQ7EpK97qSHoPkqR6iKlvyzSk=
+
+Name: pysrc/_pydev_bundle/pydev_is_thread_alive.py
+SHA-256-Digest: yl5gM2XsJp+ndov+z87RaAPruNUsg5PYtchDhRbLgVU=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_ne.py
+SHA-256-Digest: ux08zkujWLxJG5gReSFgWXpadFY3kSPmIxA0DAeAJsw=
+
+Name: schema/pydev_manager_observer.exsd
+SHA-256-Digest: dxa9QpSZb9W24mg/9/fYwcxymvpWUmvDbH9upK9jOD8=
+
+Name: css/dark/e4-pydev-dark_preferencestyle.css
+SHA-256-Digest: 2R8tDrSm6+MIIDGom+FV32LqNVfHsVwPZjaIVVbl0zA=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/wtsapi32.py
+SHA-256-Digest: aef01oQvkWqLpE/Yf5Yfjm6/qDfPsjuNw7dh0YoM03k=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/advapi32.py
+SHA-256-Digest: cOtFvN+cCUGQ5Pyvqqo1bzUWrlMARweym1pb5k6sut0=
+
+Name: pysrc/_pydevd_bundle/pydevd_dont_trace_files.py
+SHA-256-Digest: AIIIAqxt9DL6HZdXYsugbymMJo5LIPLQLHivGBacv1g=
+
+Name: pysrc/pydevd_plugins/__init__.py
+SHA-256-Digest: ZLD8pcapQRrW7BsOul0uvpAbXA3P1s+9DwBSCiO7Zcs=
+
+Name: icons/protected_obj.gif
+SHA-256-Digest: Ern2M/VodQrbhjzMMszVBcrgZ7gZIa04KW6WaMpBRg4=
+
+Name: pysrc/appveyor.yml
+SHA-256-Digest: EISyWE5h0chgyvBORz05gtlQHnuNF/MQdetpk8nlVJs=
+
+Name: icons/history_list.gif
+SHA-256-Digest: JJh7WlmObXAOO7s8SBYR83K1sJGFoN/8uCmBloceCIs=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/sql.py
+SHA-256-Digest: ltqag5iZf4/LRYa+179xRux5LH27EDSRRlGRt8Y8rxI=
+
+Name: pysrc/pydev_ipython/inputhooktk.py
+SHA-256-Digest: 2REwFVAKMCfmROF4hiioudj6QYn5N+FyLepTVnoSiU0=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/pgen2/__init__.py
+SHA-256-Digest: sq0X6ITTzECX5TsYfWVLAwIeI2K+NqNSadKuhNS7k5M=
+
+Name: pysrc/_pydevd_bundle/pydevd_signature.py
+SHA-256-Digest: HxdZUnjNDOXit6YEJeLCyFb7TK3cFGtX822n27djPW8=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_basestring.py
+SHA-256-Digest: 4G78WeO6t1uJS5mi48es2FnPNQWSsGN7ogDGMJDeG4k=
+
+Name: pysrc/_pydevd_bundle/pydevd_trace_api.py
+SHA-256-Digest: yvMtC1GfxwVDxvp6GwHjhitpgIhcGweGt5cFb1CAjeQ=
+
+Name: pysrc/third_party/wrapped_for_pydev/ctypes/ctypes-README.txt
+SHA-256-Digest: +g3yezc+D3z65w+tw2FyxzcXOZFmZBQy2akJKh9GnG4=
+
+Name: pysrc/pydevd_attach_to_process/attach_x86.dylib
+SHA-256-Digest: d4UKSvBIDd5rZpj9AWIeBaHZUWRDT72gNBKepki6a3k=
+
+Name: schema/pydev_ctrl_1.exsd
+SHA-256-Digest: mpJTK8syAAmb1elGZzMzb7jypcqbMhGRw51oZAeCu2M=
+
+Name: pysrc/_pydev_bundle/pydev_monkey_qt.py
+SHA-256-Digest: L2qUhHKFKR2FQX0lflomO95DojTuwwNfe0rSZgH1Eq4=
+
+Name: pysrc/pydev_sitecustomize/__not_in_default_pythonpath.txt
+SHA-256-Digest: EjVxejxifnMVz+9psP9v6d9ZcQW9aNkyQe9+kaoTp5k=
+
+Name: icons/expand.gif
+SHA-256-Digest: dkHfjAvN1vEWjz1KwMGC4TbUVbm+vM054sMjPnPw9Q8=
+
+Name: pysrc/_pydevd_bundle/pydevd_exec2.py
+SHA-256-Digest: zK23cySGu2HH1udDX4CpyhHgf/qe59eEJ8fpUEDCN8A=
+
+Name: schema/pydev_refactoring.exsd
+SHA-256-Digest: zHKf0n2neOIN6ZZ1NJMBpZQJs0YAAKa+MepdUvi1Xwk=
+
+Name: icons/relaunch_background_enabled.png
+SHA-256-Digest: sUTjSyv0xqBuesDF3QG8aLM6LJHEANGkLlH1C+CvpO8=
+
+Name: icons/jar_lsrc_obj.gif
+SHA-256-Digest: 8hZaENTq3y0pWJYdGvlNcNXSOWrIvf6YC9wTzSUskP0=
+
+Name: pysrc/_pydevd_bundle/pydevd_additional_thread_info_regular.py
+SHA-256-Digest: sIlvhl6xxZhS8M9AaEUMY3nnBWwvuhi4M/7+lTtV/XY=
+
+Name: plugin.properties
+SHA-256-Digest: /0S++w6f9be69hdxK/IawBkhrEHhD0O3QSaDb/wnAZk=
+
+Name: pysrc/pydevd_attach_to_process/linux/lldb_prepare.py
+SHA-256-Digest: xqmOQtE2KdcjBdl4fqY8urw88W9sD9VB1jYgmLQpN8g=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_metaclass.py
+SHA-256-Digest: bGE/pzXhzDfovKMo5WbsNo7sm1ib5i9DNBjxyTvRvnM=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/__init__.py
+SHA-256-Digest: Ahxh3lC+bHFzG4hqV+RB6EA/uPQNx2SWwLnwSOTyllM=
+
+Name: pysrc/_pydev_imps/_pydev_sys_patch.py
+SHA-256-Digest: IZ8EGofwNwKtBshj7pqwBLfUckbU6b4JIDks3NxIzRA=
+
+Name: icons/relaunch_background_disabled.png
+SHA-256-Digest: pbteJFz5iNyA4frzgeuSotobH3R1Kg6X06FYXz55rgE=
+
+Name: pysrc/_pydev_bundle/_pydev_jy_imports_tipper.py
+SHA-256-Digest: OKvW01tkMeKBO9Kowz+gC7giEmOobLIVdO3xjD/NSJ0=
+
+Name: icons/python_perspective.png
+SHA-256-Digest: AcUuv0oc4GbA0clKd18II4g2leuLHPOe85SYQyFGT/c=
+
+Name: pysrc/pydev_ipython/inputhookgtk3.py
+SHA-256-Digest: drLs19QIEg1phlsbOlPH3a9YjkcHA3Nfpbw9icbCPz8=
+
+Name: schema/pydev_debug_preferences_page.exsd
+SHA-256-Digest: ss+MIRYF9Od5dZfWT5CIQs0blU8Kb/Opwt9PbKhVWiI=
+
+Name: icons/new/method_obj.gif
+SHA-256-Digest: 4FPtTbsjr05/72QcJ8vdZbHw3L3kIFxiuyG7SooId7M=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/disasm.py
+SHA-256-Digest: 6AKOz+nO0xY6w8I0jWV0yGLPPn3/RHsU09WJCr+o0UY=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_map.py
+SHA-256-Digest: 8huDaAU6jA1OgP615jJhjTqhPWyusta2oKvnEwlGHTU=
+
+Name: icons/tabs_active.png
+SHA-256-Digest: C4EbLglIZUzCDnAxP6GDJDOeZXRHX6pvQMD4Dvp76Lo=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/win32/dbghelp.py
+SHA-256-Digest: bHOZzTvkBTlNOoo1I7mT44ATuGfgxHAkeX1HhcgYflk=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/search.py
+SHA-256-Digest: 4ZfAl1Ah51OiobWoNCp0NRUqFBNjwto95Ix0v6onxtM=
+
+Name: pysrc/_pydevd_bundle/pydevd_cython_win32_27_64.pyd
+SHA-256-Digest: XI4HpWN+twsHHbfTsKepGNlfmKs8SoyqZISaFyPbYd8=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_buffer.py
+SHA-256-Digest: lQ1Ft27u3CHnlg/nXK1iUb5fRtGWP2VkDi9IdoHTli4=
+
+Name: icons/old/method_obj.gif
+SHA-256-Digest: nz68m6xCDT2axD43OGUCYTEYHvC6vh4yM8OkVcWHPKE=
+
+Name: schema/pydev_preferences_provider.exsd
+SHA-256-Digest: QSb+F9ZAxJqIOcNya1bM09ruDG/d66gA+t0Bef46Um8=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_has_key.py
+SHA-256-Digest: QMmGDhK3mImC8b44/sKwR9YsTawgKVZVzKbjX6YCd/U=
+
+Name: pysrc/_pydevd_bundle/pydevd_cython_wrapper.py
+SHA-256-Digest: NpcFT69PvQsjy160jYg8mwfdVmZp4ce3gi21JAJSJxw=
+
+Name: pysrc/pydevd_attach_to_process/_test_attach_to_process.py
+SHA-256-Digest: hfmMKrp/6l+LtuuR2z03IGwK6Aip4Uwt3MyE2dq9Ie4=
+
+Name: pysrc/_pydevd_bundle/pydevd_traceproperty.py
+SHA-256-Digest: 8eozyy3YFEgY7meQS6nHUZpG4U3Psjae5ecnqREFpMM=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev/pom.xml
+SHA-256-Digest: x92e7tQtMq7CjMMNY2iGwUxUisnwWxHwkIzt5UgV/x0=
+
+Name: schema/pydev_python_module_resolver.exsd
+SHA-256-Digest: HWA569AJgQFxacq7MMdgJqCKxrDVgoaEvylJMhq17P8=
+
+Name: icons/old/attrpub_obj.gif
+SHA-256-Digest: ao+LubvE/wBYzpQU9E7/zwddbY9a7zGwWELerBSR51Y=
+
+Name: schema/pydev_interpreter_new_custom_entries.exsd
+SHA-256-Digest: ydWxl3kr4RxhiBKrDnD4ZPj/gHlXb7JoyO1x1wqA7Jo=
+
+Name: pysrc/build_tools/build.py
+SHA-256-Digest: J6jIyfH+7b1gpd90faF1H227cj3m8iG/n8aGQUEAZsw=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_tuple_params.py
+SHA-256-Digest: uxmo6YCc/nYSrU2Xe+b2Fwb4qAO6kOo7xXrjtgQcA68=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_repr.py
+SHA-256-Digest: FDBKXeNmgIZtGjkYOAe9NJ7j3zwHcDXQCXpWw9/EtIY=
+
+Name: icons/pylint.png
+SHA-256-Digest: SIKSV397BDTgMiI+w+syTFfuoxCRpcBiY7ldKzfwzHA=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/plugins/__init__.py
+SHA-256-Digest: PNfbeoa+Z+ntRMPlpP1saM970MXC7JrSot0hj5qwwXs=
+
+Name: pysrc/pydevd_attach_to_process/attach_linux_amd64.so
+SHA-256-Digest: AzN/Or3u7ES0qHt37nB2ltdLN28VOvmHDxiYw6Y1odw=
+
+Name: pysrc/pydevd_attach_to_process/attach_x86.dll
+SHA-256-Digest: t8OD69nQf3CJZOSNkCOy6fScvUEPozzn1gymb0j3WUc=
+
+Name: pysrc/pydevd_attach_to_process/winappdbg/crash.py
+SHA-256-Digest: PIr39Q/weqz25iv58fxzw0UYGUHSbfZyweV1srNDkak=
+
+Name: pysrc/pydevd_attach_to_process/linux/compile_so.sh
+SHA-256-Digest: 98qouG/hL+3kRy4bMT1pb1deleQFsM61D9kdEVEfGso=
+
+Name: pysrc/.project
+SHA-256-Digest: Xy1OWE38G+HY1Be84Zxcn9NLPxORcCByVF5hCkr8F2Y=
+
+Name: pysrc/_pydev_bundle/_pydev_completer.py
+SHA-256-Digest: RqfY8IybzjQpl9K/T2ZxBND4YmKo+QDuzvQa8oe/pmo=
+
+Name: pysrc/_pydev_imps/_pydev_SimpleXMLRPCServer.py
+SHA-256-Digest: e47YhJVRoqSCBF1R9cYJZAaegQXJITd3svBkO5Nl3T0=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev/pom.properties
+SHA-256-Digest: qogTmgsolBm5/b1+yCxTpdAddYBbAK9hZzF7eJvju1A=
+
+Name: schema/pydev_globals_browser.exsd
+SHA-256-Digest: Tr6BxQy8Y9XeXIOhzvDClCE2tsGr7uilepIWBFLSeRw=
+
+Name: icons/error_decoration.gif
+SHA-256-Digest: 7YJQzcjH7aeigtTNjXete+xO/vVerqFC2XqlsMXk3yo=
+
+Name: icons/package_obj.gif
+SHA-256-Digest: 2yspehXW/OK0E3/OyP8D9Ow3EyRsXYAbXQ73cF4/fNQ=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/pgen2/driver.py
+SHA-256-Digest: jA+PqUwgeS6qTDM9P8mSOCcXQqOJGYUaPAHDHv1wMkA=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_unicode.py
+SHA-256-Digest: 4zgJwmMpjQtYeo0bukWWpvl8A/bsfwGoQ8p5mCR6pQc=
+
+Name: pysrc/pydev_sitecustomize/sitecustomize.py
+SHA-256-Digest: vtXWCpzEMvT4cVMSWHWEQrzj7VFNffrqSMkA1wiBudc=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/fixes/fix_raw_input.py
+SHA-256-Digest: AgOVSPQE4QWLSsZ+DWbW99yDsZlXSfiTZFbseVj9NpI=
+
+Name: pysrc/_pydevd_bundle/pydevd_xml.py
+SHA-256-Digest: 3mxyc1K0Fn8E/pbcXrNjGoRBtbHIScFTxJ8tCwe62Jk=
+
+Name: pysrc/_pydevd_bundle/pydevd_cython_win32_35_64.cp35-win_amd64.py
+ d
+SHA-256-Digest: mkjArS3+u3C3MqVB0TqDDtSBovgw4a+/2MbiJ4cQKgU=
+
+Name: pysrc/third_party/pep8/lib2to3/lib2to3/btm_matcher.py
+SHA-256-Digest: 9NXro6S/dMgWzh6Cj0VoOMMCMqoZ+FxElBfO6r4ix60=
+
+Name: pysrc/pydevd_attach_to_process/linux/lldb_threads_settrace.py
+SHA-256-Digest: fDgMC0LfVjCVM7unm+CELHxODttW60PWPeuUy1SQvWs=
+

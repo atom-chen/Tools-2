@@ -1,0 +1,49 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.python.pydev.parser; singleton:=true
+Archiver-Version: Plexus Archiver
+Built-By: fabio
+Require-Bundle: org.junit;bundle-version="4.0.0";resolution:=optional,
+ org.eclipse.ui,org.eclipse.ui.ide,org.eclipse.core.runtime,org.eclips
+ e.core.resources,org.eclipse.jface.text,org.python.pydev.core;bundle-
+ version="[5.0.0,5.0.1)",org.eclipse.ui.editors,org.eclipse.ui.workben
+ ch.texteditor
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.python.pydev.parser,org.python.pydev.parser.fastpa
+ rser,org.python.pydev.parser.grammar24,org.python.pydev.parser.gramma
+ r25,org.python.pydev.parser.grammar26,org.python.pydev.parser.grammar
+ 27,org.python.pydev.parser.grammar30,org.python.pydev.parser.grammarc
+ ommon,org.python.pydev.parser.jython,org.python.pydev.parser.jython.a
+ st,org.python.pydev.parser.jython.ast.factory,org.python.pydev.parser
+ .prettyprinter,org.python.pydev.parser.prettyprinterv2,org.python.pyd
+ ev.parser.profile,org.python.pydev.parser.visitors,org.python.pydev.p
+ arser.visitors.comparator,org.python.pydev.parser.visitors.scope
+Bundle-Name: Parser Plug-in
+Bundle-Version: 5.0.0.201605051159
+Bundle-ClassPath: parser.jar
+Bundle-Localization: plugin
+Bundle-Activator: org.python.pydev.parser.ParserPlugin
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_77
+Eclipse-BundleShape: dir
+
+Name: schema/pydev_parser_observer.exsd
+SHA-256-Digest: udN0FNzmbxEpmwmTJjpVGwFEXbjSpoqrUOQK36WrpDM=
+
+Name: plugin.xml
+SHA-256-Digest: aOqkeA/EdSN/O8ZxIqGUbXBztq04CzDCT7xwG7QK5Yg=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev.parser/pom.xml
+SHA-256-Digest: Kf+3UnCwDvplRzCPFVlrlFMl0RkD/iZo/jgAPX9NvY4=
+
+Name: parser.jar
+SHA-256-Digest: usLxlGNGBhRSXj7VpeQtfWoB8QMRg1y15/+wWER4SnI=
+
+Name: LICENSE.txt
+SHA-256-Digest: J75t01G5GT6rkY9hiDNA+yh/SDVMI+VNinfwannMATI=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev.parser/pom.prop
+ erties
+SHA-256-Digest: kBiLRU78VREmfq0f66QnhM8c0f1OliJBM/nl1Eaa9/A=
+
