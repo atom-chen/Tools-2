@@ -17,23 +17,23 @@ class MThread(GObject):
         self.mTypeId = "MThread";
         
         self.mThread = None;
-        self.m_curThreadID = 0;     # 当前线程的 id
-        self.m_cb = func;
-        self.m_param = param;
+        self.mCurThreadID = 0;     # 当前线程的 id
+        self.mCb = func;
+        self.mParam = param;
         self.mName = name;
-        self.m_ExitFlag = False;
+        self.mIsExitFlag = False;
 
 
     def setExitFlag(self, value):
-        self.m_ExitFlag = value;
+        self.mIsExitFlag = value;
 
 
     def setCb(self, value):
-        self.m_cb = value;
+        self.mCb = value;
 
 
     def setParam(self, value):
-        self.m_param = value;
+        self.mParam = value;
         
 
     '''
@@ -82,17 +82,17 @@ class MThread(GObject):
     def threadHandle(self):
         self.getCurThreadID();
 
-        if(self.m_cb != None):
-            self.m_cb(self.m_param);
+        if(self.mCb != None):
+            self.mCb(self.mParam);
 
 
 
     def getCurThreadID(self):
-        self.m_curThreadID = threading.current_thread().ident;       # 当前线程的 ID
+        self.mCurThreadID = threading.current_thread().ident;       # 当前线程的 ID
 
 
     def isCurThread(self, threadID):
-        return (self.m_curThreadID == threadID);
+        return (self.mCurThreadID == threadID);
 
 
     @staticmethod

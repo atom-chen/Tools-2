@@ -14,18 +14,18 @@ class MEvent(GObject):
         
         self.mTypeId = "MEvent";
 
-        self.m_event = Event(initialState);
+        self.mEvent = Event(initialState);
 
 
     def WaitOne(self):
-        self.m_event.wait();
+        self.mEvent.wait();
 
 
     def Reset(self):
-        return self.m_event.clear();
+        return self.mEvent.clear();
 
 
     def Set(self):
-        return self.m_event.set();
+        return self.mEvent.set();
 
 

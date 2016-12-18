@@ -30,20 +30,20 @@ class CtxImpl(Ctx):
 
     def preInit(self):
         MThread.getMainThreadID();  # 获取主线程 ID
-        self.m_msgRouteNotify = MsgRouteNotify();
+        self.mMsgRouteNotify = MsgRouteNotify();
         
-        self.m_TaskQueue = TaskQueue("TaskQueue");
-        self.m_TaskThreadPool = TaskThreadPool();
-        self.m_systemFrameData = SystemFrameData();
-        self.m_systemTimeData = SystemTimeData();
-        self.m_processSys = ProcessSys();
-        self.m_tickMgr = TickMgr();
-        self.m_timerMgr = TimerMgr();
-        self.m_frameTimerMgr = FrameTimerMgr();
-        self.m_engineLoop = EngineLoop();
-        self.m_resizeMgr = ResizeMgr();
-        self.m_sysMsgRoute = SysMsgRoute("SysMsgRoute");
-        self.m_logSys = LogSys();
+        self.mTaskQueue = TaskQueue("TaskQueue");
+        self.mTaskThreadPool = TaskThreadPool();
+        self.mSystemFrameData = SystemFrameData();
+        self.mSystemTimeData = SystemTimeData();
+        self.mProcessSys = ProcessSys();
+        self.mTickMgr = TickMgr();
+        self.mTimerMgr = TimerMgr();
+        self.mFrameTimerMgr = FrameTimerMgr();
+        self.mEngineLoop = EngineLoop();
+        self.mResizeMgr = ResizeMgr();
+        self.mSysMsgRoute = SysMsgRoute("SysMsgRoute");
+        self.mLogSys = LogSys();
 
 
     def interInit(self):
@@ -51,8 +51,8 @@ class CtxImpl(Ctx):
 
 
     def postInit(self):
-        self.m_TaskQueue.m_pTaskThreadPool = self.m_TaskThreadPool;
-        self.m_TaskThreadPool.initThreadPool(2, self.m_TaskQueue);
+        self.mTaskQueue.mTaskThreadPool = self.mTaskThreadPool;
+        self.mTaskThreadPool.initThreadPool(2, self.mTaskQueue);
 
 
     def init(self):

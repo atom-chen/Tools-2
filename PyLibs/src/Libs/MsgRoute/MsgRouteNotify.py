@@ -10,22 +10,22 @@ class MsgRouteNotify(GObject):
 
         self.mTypeId = "MsgRouteNotify";
         
-        self.m_dispList = MList();
+        self.mDispList = MList();
  
 
     def addOneDisp(self, disp):   
-        if(self.m_dispList.IndexOf(disp) == -1):
-            self.m_dispList.Add(disp);
+        if(self.mDispList.IndexOf(disp) == -1):
+            self.mDispList.Add(disp);
 
 
 
     def emoveOneDisp(self, disp):
-        if(self.m_dispList.IndexOf(disp) != -1):
-            self.m_dispList.Remove(disp);
+        if(self.mDispList.IndexOf(disp) != -1):
+            self.mDispList.Remove(disp);
 
 
     def handleMsg(self, msg):
-        for item in self.m_dispList:
+        for item in self.mDispList:
             item.handleMsg(msg);
 
 

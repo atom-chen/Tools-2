@@ -18,6 +18,6 @@ class EngineLoop(GObject):
     
     def mainLoop(self):
         # 游戏循环处理
-        Ctx.instance().m_processSys.ProcessNextFrame();
-        Ctx.instance().m_logSys.updateLog();
+        Ctx.instance().mProcessSys.ProcessNextFrame();
+        Ctx.instance().mLogSys.updateLog();
 

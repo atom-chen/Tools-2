@@ -6,10 +6,10 @@ class MThreadExt(Thread):
     
     def __init__(self, threadName, func):
         super(MThreadExt, self).__init__(name = threadName);  # must add
-        self.m_runF = func;
+        self.mRunF = func;
 
     def run(self):
-        if self.m_runF is not None:
-            self.m_runF();
+        if self.mRunF is not None:
+            self.mRunF();
 
 

@@ -10,24 +10,24 @@ class MsgRouteHandleBase(GObject):
         
         self.mTypeId = "MsgRouteHandleBase";
         
-        self.m_id2HandleDic = MDictionary();
+        self.mId2HandleDic = MDictionary();
         
         
     def addMsgRouteHandle(self, msgRouteID, handle):
-        if(not self.m_id2HandleDic.ContainsKey(msgRouteID)):
-            self.m_id2HandleDic[msgRouteID] = AddOnceEventDispatch();
+        if(not self.mId2HandleDic.ContainsKey(msgRouteID)):
+            self.mId2HandleDic[msgRouteID] = AddOnceEventDispatch();
 
-        self.m_id2HandleDic.value(msgRouteID).addEventHandle(None, handle);
+        self.mId2HandleDic.value(msgRouteID).addEventHandle(None, handle);
 
 
     def removeMsgRouteHandle(self, msgRouteID, handle):
-        if (self.m_id2HandleDic.ContainsKey(msgRouteID)):
-            self.m_id2HandleDic.value(msgRouteID).removeEventHandle(None, handle);
+        if (self.mId2HandleDic.ContainsKey(msgRouteID)):
+            self.mId2HandleDic.value(msgRouteID).removeEventHandle(None, handle);
           
 
     def handleMsg(self, msg):
-        if (self.m_id2HandleDic.ContainsKey(msg.m_msgID)):
-            self.m_id2HandleDic[msg.m_msgID].dispatchEvent(msg);
+        if (self.mId2HandleDic.ContainsKey(msg.m_msgID)):
+            self.mId2HandleDic[msg.m_msgID].dispatchEvent(msg);
         else:
             # 输出日志
             pass;
