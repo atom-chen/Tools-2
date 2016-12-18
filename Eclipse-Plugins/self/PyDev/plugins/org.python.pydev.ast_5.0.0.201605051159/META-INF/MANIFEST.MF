@@ -1,0 +1,32 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.python.pydev.ast; singleton:=true
+Archiver-Version: Plexus Archiver
+Built-By: fabio
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Aptana
+Export-Package: org.python.pydev.ast,org.python.pydev.ast.management
+Bundle-Name: Ast Plug-in
+Bundle-Version: 5.0.0.201605051159
+Bundle-ClassPath: ast.jar
+Bundle-Localization: plugin
+Bundle-Activator: org.python.pydev.ast.AstPlugin
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_77
+Eclipse-BundleShape: dir
+
+Name: LICENSE.txt
+SHA-256-Digest: J75t01G5GT6rkY9hiDNA+yh/SDVMI+VNinfwannMATI=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev.ast/pom.xml
+SHA-256-Digest: tnyoErH/bBQYBlA7u7bhW5Z0HTlBXZ9AbuVAoQm4mR8=
+
+Name: ast.jar
+SHA-256-Digest: ni5QRBPdteZ906bStaGLSCAhLQUWwft1Ps23nGRNOT8=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev.ast/pom.propert
+ ies
+SHA-256-Digest: Okc7qnkwzG2EZc4mS5VJT8LxbNJFNfWxTv0apzdMxLo=
+

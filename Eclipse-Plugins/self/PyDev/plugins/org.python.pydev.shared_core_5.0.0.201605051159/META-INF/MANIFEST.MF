@@ -1,0 +1,63 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.python.pydev.shared_core;singleton:=true
+Archiver-Version: Plexus Archiver
+Built-By: fabio
+Require-Bundle: org.eclipse.core.runtime,org.eclipse.jface.text,org.ju
+ nit;bundle-version="4.0";resolution:=optional,org.eclipse.jface,org.e
+ clipse.core.resources,org.eclipse.core.filebuffers,org.eclipse.ui.wor
+ kbench
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Appcelerator
+Export-Package: org.python.pydev.shared_core,org.python.pydev.shared_c
+ ore.actions,org.python.pydev.shared_core.auto_edit,org.python.pydev.s
+ hared_core.bundle,org.python.pydev.shared_core.cache,org.python.pydev
+ .shared_core.callbacks,org.python.pydev.shared_core.document,org.pyth
+ on.pydev.shared_core.editor,org.python.pydev.shared_core.index,org.py
+ thon.pydev.shared_core.io,org.python.pydev.shared_core.locator,org.py
+ thon.pydev.shared_core.log,org.python.pydev.shared_core.model,org.pyt
+ hon.pydev.shared_core.net,org.python.pydev.shared_core.out_of_memory,
+ org.python.pydev.shared_core.parsing,org.python.pydev.shared_core.par
+ titioner,org.python.pydev.shared_core.path_watch,org.python.pydev.sha
+ red_core.preferences,org.python.pydev.shared_core.process,org.python.
+ pydev.shared_core.resource_stubs,org.python.pydev.shared_core.string,
+ org.python.pydev.shared_core.structure,org.python.pydev.shared_core.t
+ estutils,org.python.pydev.shared_core.threaded_objects_pool,org.pytho
+ n.pydev.shared_core.utils,org.yaml.snakeyaml,org.yaml.snakeyaml.error
+ ,org.yaml.snakeyaml.events,org.yaml.snakeyaml.nodes,org.yaml.snakeyam
+ l.parser,org.yaml.snakeyaml.reader,org.yaml.snakeyaml.scanner,org.yam
+ l.snakeyaml.tokens
+Bundle-Name: Shared Core Plug-in
+Bundle-Version: 5.0.0.201605051159
+Bundle-ClassPath: shared_core.jar,libs/snakeyaml-1.11.jar,libs/lucene-
+ analyzers-common-5.2.1.jar,libs/lucene-core-5.2.1.jar
+Bundle-Localization: plugin
+Bundle-Activator: org.python.pydev.shared_core.SharedCorePlugin
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_77
+Eclipse-BundleShape: dir
+
+Name: libs/snakeyaml-1.11.jar
+SHA-256-Digest: 93icFBQHMJOQJ+YAA46x4dfIEURdYhUqLNpgbGtMH8c=
+
+Name: libs/lucene-analyzers-common-5.2.1.jar
+SHA-256-Digest: DexkH2nj2OHR7aND7RkqHP97ssvOSycsC9wTidWWs/8=
+
+Name: shared_core.jar
+SHA-256-Digest: fPXvzOkkT0ioZOtcpzUhQCV2Wnb3LPw12xzST/2u0TM=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev.shared_core/pom
+ .xml
+SHA-256-Digest: aIB+mrSJ2ICyZLgRXiuCEGrS2ffB+cf8Ha4gtrRIjhE=
+
+Name: libs/lucene-core-5.2.1.jar
+SHA-256-Digest: 74Qdm58mVOS9QVL8eN4Tm8/WO9uimxaeSc7MP3I0Ygc=
+
+Name: LICENSE.txt
+SHA-256-Digest: J75t01G5GT6rkY9hiDNA+yh/SDVMI+VNinfwannMATI=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev.shared_core/pom
+ .properties
+SHA-256-Digest: /iRFYcm+iNwFpuhOX+c+3WdGQgAPc2dW6TLdu61aXzY=
+
