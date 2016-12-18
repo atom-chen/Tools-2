@@ -13,31 +13,31 @@ class FrameTimerMgr(DelayHandleMgrBase):
     def __init__(self):
         super(FrameTimerMgr, self).__init__();
         
-        self.mmTypeId = "FrameTimerMgr";
+        self.mTypeId = "FrameTimerMgr";
         
-        self.m_timerLists = MList();      # 当前所有的定时器列表
+        self.mTimerList = MList();      # 当前所有的定时器列表
 
 
     def addObject(self, delayObject, priority = 0.0):
         # 检查当前是否已经在队列中
-        if (self.m_timerLists.IndexOf(delayObject) == -1):
+        if (self.mTimerList.IndexOf(delayObject) == -1):
             if (self.bInDepth()):
                 super(FrameTimerMgr, self).addObject(delayObject, priority);
             else:
-                self.m_timerLists.Add(delayObject);
+                self.mTimerList.Add(delayObject);
 
 
 
     def removeObject(self, delayObject):
         # 检查当前是否在队列中
-        if (self.m_timerLists.IndexOf(delayObject) != -1):
-            delayObject.m_disposed = True;
+        if (self.mTimerList.IndexOf(delayObject) != -1):
+            delayObject.mIsDisposed = True;
             if (self.bInDepth()):
                 super(FrameTimerMgr,self).addObject(delayObject);
             else:
-                for item in self.m_timerLists.getList():
+                for item in self.mTimerList.getList():
                     if (UtilApi.isAddressEqual(item, delayObject)):
-                        self.m_timerLists.Remove(item);
+                        self.mTimerList.Remove(item);
                         break;
 
 
@@ -52,10 +52,10 @@ class FrameTimerMgr(DelayHandleMgrBase):
     def Advance(self, delta):
         self.incDepth();
 
-        for timerItem in self.m_timerLists.getList():
-            if (not timerItem.getClientDispose()):
+        for timerItem in self.mTimerList.getList():
+            if (not timerItem.IsClientDispose()):
                 timerItem.OnFrameTimer();
-            if (timerItem.m_disposed):
+            if (timerItem.mIsDisposed):
                 self.removeObject(timerItem);
 
         self.decDepth();

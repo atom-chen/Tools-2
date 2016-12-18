@@ -9,5 +9,5 @@ class DelayAddParam(DelayHandleParamBase):
         
         self.mTypeId = "DelayAddParam";
         
-        self.m_priority = 0;
+        self.mPriority = 0;
 

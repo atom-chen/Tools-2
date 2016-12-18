@@ -10,33 +10,33 @@ class SystemTimeData(GObject):
         
         self.mTypeId = "SystemTimeData";
         
-        self.m_preTime = 0;         # 上一次更新时的秒数
-        self.m_curTime = 0;         # 正在获取的时间
-        self.m_deltaSec = 0.0;     # 两帧之间的间隔
+        self.mPreTime = 0;         # 上一次更新时的秒数
+        self.mCurTime = 0;         # 正在获取的时间
+        self.mDeltaSec = 0.0;     # 两帧之间的间隔
 
 
     def getDeltaSec(self):
-        return self.m_deltaSec;
+        return self.mDeltaSec;
     
 
     def setDeltaSec(self, value):
-        self.m_deltaSec = value;
+        self.mDeltaSec = value;
 
 
     def getCurTime(self):
-        return self.m_curTime;
+        return self.mCurTime;
 
 
     def setCurTime(self, value):
-        self.m_curTime = value;
+        self.mCurTime = value;
 
 
     def nextFrame(self):
-        self.m_curTime = UtilApi.getTotalSeconds();
-        if (self.m_preTime != 0):     # 第一帧跳过，因为这一帧不好计算间隔
-            self.m_deltaSec = self.m_curTime - self.m_preTime;
+        self.mCurTime = UtilApi.getTotalSeconds();
+        if (self.mPreTime != 0):     # 第一帧跳过，因为这一帧不好计算间隔
+            self.mDeltaSec = self.mCurTime - self.mPreTime;
         else:
-            self.m_deltaSec = 1 / 24;        # 每秒 24 帧
+            self.mDeltaSec = 1 / 24;        # 每秒 24 帧
 
-        self.m_preTime = self.m_curTime;
+        self.mPreTime = self.mCurTime;
 

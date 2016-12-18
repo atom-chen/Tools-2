@@ -13,22 +13,22 @@ class MDictionary(GObject):
         
         self.mTypeId = "MDictionary";
          
-        self.m_data = {};
+        self.mData = {};
 
 
     def getData(self):
-        return self.m_data;
+        return self.mData;
 
 
     def getCount(self):
-        return len(self.m_data.keys())
+        return len(self.mData.keys())
     
 
     def value(self, key):
         # Python3以后删除了has_key()方法
-        #if(self.m_data.has_key(key)):
-        if(key in self.m_data):
-            return self.m_data[key];
+        #if(self.mData.has_key(key)):
+        if(key in self.mData):
+            return self.mData[key];
         
         return None;
 
@@ -42,25 +42,25 @@ class MDictionary(GObject):
 
 
     def Add(self, key, value):
-        self.m_data[key] = value;
+        self.mData[key] = value;
 
 
     def Remove(self, key):
-        if(self.m_data.has_key(key)):
-            del self.m_data[key];
+        if(self.mData.has_key(key)):
+            del self.mData[key];
 
     def Clear(self):
-        #self.m_data = {};
-        #del self.m_data;
-        self.m_data.clear();
+        #self.mData = {};
+        #del self.mData;
+        self.mData.clear();
 
 
     def ContainsKey(self, key):
-        return self.m_data.has_key(key);
+        return self.mData.has_key(key);
 
 
     def ContainsValue(self, value):
-        for (key_, value_) in self.m_data.items():
+        for (key_, value_) in self.mData.items():
             if(value_ == value):
                 return True;
         
@@ -68,17 +68,17 @@ class MDictionary(GObject):
         
         
     def keys(self):
-        return self.m_data.keys();
+        return self.mData.keys();
     
     
     def values(self):
-        return self.m_data.values();
+        return self.mData.values();
     
     def items(self):
-        return self.m_data.items();
+        return self.mData.items();
     
     def copy(self):
-        return self.m_data.copy();
+        return self.mData.copy();
 
 
 

@@ -14,39 +14,39 @@ class TimerItemBase(GObject):
         
         self.mTypeId = "TimerItemBase";
         
-        self.m_internal = 1;             # 定时器间隔
-        self.m_totalTime = 1;            # 总共定时器时间
-        self.m_curRunTime = 0;           # 当前定时器运行的时间
-        self.m_curCallTime = 0;          # 当前定时器已经调用的时间
-        self.m_bInfineLoop = False;      # 是否是无限循环
-        self.m_intervalLeftTime = 0;     # 定时器调用间隔剩余时间
-        self.m_timerDisp = TimerFunctionObject();    # 定时器分发
-        self.m_disposed = False;         # 是否已经被释放
-        self.m_bContinuous = False;      # 是否是连续的定时器
+        self.mInternal = 1;             # 定时器间隔
+        self.mTotalTime = 1;            # 总共定时器时间
+        self.mCurRunTime = 0;           # 当前定时器运行的时间
+        self.mCurCallTime = 0;          # 当前定时器已经调用的时间
+        self.mIsInfineLoop = False;      # 是否是无限循环
+        self.mIntervalLeftTime = 0;     # 定时器调用间隔剩余时间
+        self.mTimerDisp = TimerFunctionObject();    # 定时器分发
+        self.mIsDisposed = False;         # 是否已经被释放
+        self.mIsContinuous = False;      # 是否是连续的定时器
 
 
     def setFuncObject(self, handle):
-        self.m_timerDisp.setFuncObject(handle);
+        self.mTimerDisp.setFuncObject(handle);
 
 
     def setTotalTime(self, value):
-        self.m_totalTime = value;
+        self.mTotalTime = value;
 
 
     def getRunTime(self):
-        return self.m_curRunTime;
+        return self.mCurRunTime;
 
 
     def getCallTime(self):
-        return self.m_curCallTime;
+        return self.mCurCallTime;
 
 
     def getLeftRunTime(self):
-        return self.m_totalTime - self.m_curRunTime;
+        return self.mTotalTime - self.mCurRunTime;
 
 
     def getLeftCallTime(self):
-        return self.m_totalTime - self.m_curCallTime;
+        return self.mTotalTime - self.mCurCallTime;
 
 
     # 在调用回调函数之前处理
@@ -55,94 +55,94 @@ class TimerItemBase(GObject):
 
 
     def OnTimer(self, delta):
-        if (self.m_disposed):
+        if (self.mIsDisposed):
             return;
 
-        self.m_curRunTime += delta;
-        if (self.m_curRunTime > self.m_totalTime):
-            self.m_curRunTime = self.m_totalTime;
+        self.mCurRunTime += delta;
+        if (self.mCurRunTime > self.mTotalTime):
+            self.mCurRunTime = self.mTotalTime;
 
-        self.m_intervalLeftTime += delta;
+        self.mIntervalLeftTime += delta;
 
-        if (self.m_bInfineLoop):
+        if (self.mIsInfineLoop):
             self.checkAndDisp();
         else:
-            if (self.m_curRunTime >= self.m_totalTime):
+            if (self.mCurRunTime >= self.mTotalTime):
                 self.disposeAndDisp();
             else:
                 self.checkAndDisp();
 
 
     def disposeAndDisp(self):
-        if (self.m_bContinuous):
+        if (self.mIsContinuous):
             self.continueDisposeAndDisp();
         else:
             self.discontinueDisposeAndDisp();
 
 
     def continueDisposeAndDisp(self):
-        self.m_disposed = True;
+        self.mIsDisposed = True;
 
-        while (self.m_intervalLeftTime >= self.m_internal and self.m_curCallTime < self.m_totalTime):
-            self.m_curCallTime = self.m_curCallTime + self.m_internal;
-            self.m_intervalLeftTime = self.m_intervalLeftTime - self.m_internal;
+        while (self.mIntervalLeftTime >= self.mInternal and self.mCurCallTime < self.mTotalTime):
+            self.mCurCallTime = self.mCurCallTime + self.mInternal;
+            self.mIntervalLeftTime = self.mIntervalLeftTime - self.mInternal;
             self.onPreCallBack();
 
-            if (self.m_timerDisp.isValid()):
-                self.m_timerDisp.call(self);
+            if (self.mTimerDisp.isValid()):
+                self.mTimerDisp.call(self);
 
 
     def discontinueDisposeAndDisp(self):
-        self.m_disposed = True;
-        self.m_curCallTime = self.m_totalTime;
+        self.mIsDisposed = True;
+        self.mCurCallTime = self.mTotalTime;
         self.onPreCallBack();
 
-        if (self.m_timerDisp.isValid()):
-            self.m_timerDisp.call(self);
+        if (self.mTimerDisp.isValid()):
+            self.mTimerDisp.call(self);
 
 
     def checkAndDisp(self):
-        if(self.m_bContinuous):
+        if(self.mIsContinuous):
             self.continueCheckAndDisp();
         else:
             self.discontinueCheckAndDisp();
 
     # 连续的定时器
     def continueCheckAndDisp(self):
-        while (self.m_intervalLeftTime >= self.m_internal):
-            # 这个地方 m_curCallTime 肯定会小于 m_totalTime，因为在调用这个函数的外部已经进行了判断
-            self.m_curCallTime = self.m_curCallTime + self.m_internal;
-            self.m_intervalLeftTime = self.m_intervalLeftTime - self.m_internal;
+        while (self.mIntervalLeftTime >= self.mInternal):
+            # 这个地方 mCurCallTime 肯定会小于 mTotalTime，因为在调用这个函数的外部已经进行了判断
+            self.mCurCallTime = self.mCurCallTime + self.mInternal;
+            self.mIntervalLeftTime = self.mIntervalLeftTime - self.mInternal;
             self.onPreCallBack();
 
-            if (self.m_timerDisp.isValid()):
-                self.m_timerDisp.call(self);
+            if (self.mTimerDisp.isValid()):
+                self.mTimerDisp.call(self);
 
 
 
     # 不连续的定时器
     def discontinueCheckAndDisp(self):
-        if (self.m_intervalLeftTime >= self.m_internal):
-            # 这个地方 m_curCallTime 肯定会小于 m_totalTime，因为在调用这个函数的外部已经进行了判断
-            self.m_curCallTime = self.m_curCallTime + (((int)(self.m_intervalLeftTime / self.m_internal)) * self.m_internal);
-            self.m_intervalLeftTime = self.m_intervalLeftTime % self.m_internal;   # 只保留余数
+        if (self.mIntervalLeftTime >= self.mInternal):
+            # 这个地方 mCurCallTime 肯定会小于 mTotalTime，因为在调用这个函数的外部已经进行了判断
+            self.mCurCallTime = self.mCurCallTime + (((int)(self.mIntervalLeftTime / self.mInternal)) * self.mInternal);
+            self.mIntervalLeftTime = self.mIntervalLeftTime % self.mInternal;   # 只保留余数
             self.onPreCallBack();
 
-            if (self.m_timerDisp.isValid()):
-                self.m_timerDisp.call(self);
+            if (self.mTimerDisp.isValid()):
+                self.mTimerDisp.call(self);
 
 
     def reset(self):
-        self.m_curRunTime = 0;
-        self.m_curCallTime = 0;
-        self.m_intervalLeftTime = 0;
-        self.m_disposed = False;
+        self.mCurRunTime = 0;
+        self.mCurCallTime = 0;
+        self.mIntervalLeftTime = 0;
+        self.mIsDisposed = False;
 
 
     def setClientDispose(self):
         pass;
 
 
-    def getClientDispose(self):
+    def IsClientDispose(self):
         return False;
 

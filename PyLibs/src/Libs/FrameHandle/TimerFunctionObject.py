@@ -10,21 +10,21 @@ class TimerFunctionObject(GObject):
         
         self.mTypeId = "TimerFunctionObject";
         
-        self.m_handle = None;
+        self.mHandle = None;
 
 
     def setFuncObject(self, handle):    
-        self.m_handle = handle;
+        self.mHandle = handle;
 
 
     def isValid(self):
-        return self.m_handle != None;
+        return self.mHandle != None;
 
 
     def isEqual(self, handle):
         ret = False;
         if(handle != None):
-            ret = UtilApi.isAddressEqual(self.m_handle, handle);
+            ret = UtilApi.isAddressEqual(self.mHandle, handle);
             if(not ret):
                 return ret;
         
@@ -32,6 +32,6 @@ class TimerFunctionObject(GObject):
 
 
     def call(self, dispObj):
-        if (None != self.m_handle):
-            self.m_handle(dispObj);
+        if (None != self.mHandle):
+            self.mHandle(dispObj);
 

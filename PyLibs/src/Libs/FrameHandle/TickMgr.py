@@ -16,7 +16,7 @@ class TickMgr(DelayHandleMgrBase):
         
         self.mTypeId = "TickMgr";
         
-        self.m_tickLst = MList();
+        self.mTickList = MList();
 
 
     def addTick(self, tickObj, priority = 0.0):
@@ -29,28 +29,28 @@ class TickMgr(DelayHandleMgrBase):
         else:
             position = -1;
             idx = 0;
-            elemLen = self.m_tickLst.Count();
+            elemLen = self.mTickList.Count();
             while(idx < elemLen):
-                if (self.m_tickLst[idx] == None):
+                if (self.mTickList[idx] == None):
                     continue;
 
-                if (self.m_tickLst[idx].m_tickObject == delayObject):
+                if (self.mTickList[idx].mTickObject == delayObject):
                     return;
 
-                if (self.m_tickLst[idx].m_priority < priority):
+                if (self.mTickList[idx].mPriority < priority):
                     position = idx;
                     break;
                 
                 idx = idx + 1;
 
             processObject = TickProcessObject();
-            processObject.m_tickObject = delayObject;
-            processObject.m_priority = priority;
+            processObject.mTickObject = delayObject;
+            processObject.mPriority = priority;
 
-            if (position < 0 or position >= self.m_tickLst.Count()):
-                self.m_tickLst.Add(processObject);
+            if (position < 0 or position >= self.mTickList.Count()):
+                self.mTickList.Add(processObject);
             else:
-                self.m_tickLst.Insert(position, processObject);
+                self.mTickList.Insert(position, processObject);
 
 
 
@@ -62,18 +62,18 @@ class TickMgr(DelayHandleMgrBase):
         if (self.bInDepth()):
             super(TickMgr, self).removeObject(delayObject);
         else:
-            for item in self.m_tickLst.getList():
-                if (UtilApi.isAddressEqual(item.m_tickObject, delayObject)):
-                    self.m_tickLst.Remove(item);
+            for item in self.mTickList.getList():
+                if (UtilApi.isAddressEqual(item.mTickObject, delayObject)):
+                    self.mTickList.Remove(item);
                     break;
 
 
     def Advance(self, delta):
         self.incDepth();
 
-        for tk in self.m_tickLst.getList():
-            if (not tk.m_tickObject.getClientDispose()):
-                tk.m_tickObject.onTick(delta);
+        for tk in self.mTickList.getList():
+            if (not tk.mTickObject.IsClientDispose()):
+                tk.mTickObject.onTick(delta);
 
         self.decDepth();
 
