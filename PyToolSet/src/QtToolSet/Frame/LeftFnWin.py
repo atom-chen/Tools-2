@@ -23,7 +23,7 @@ class LeftFnWin(QtWidgets.QDockWidget):
 
     # 生成当前版版本的 md5 文件
     def onBtnClkCheck(self):
-        Ctx.instance().m_logSys.log('test button')
+        Ctx.instance().mLogSys.log('test button')
     
     # 生成版本文件，用于更新资源使用
     # 拷贝文件
@@ -36,5 +36,5 @@ class LeftFnWin(QtWidgets.QDockWidget):
         if QtToolSetSys.instance().mFileDirDiffSys.isVersionOver():
             QtToolSetSys.instance().mFileDirDiffSys.startVerProcess();
         else:
-            Ctx.instance().m_logSys.log('Verthread is runing')
+            Ctx.instance().mLogSys.log('Verthread is runing')
 

@@ -23,6 +23,6 @@ class QtToolSetSysImpl(QtToolSetSys):
         self.mFileDirDiffSys = FileDirDiffSysImpl();
         
         self.mWinLogDeviceProxy = LogWinProxy();
-        Ctx.instance().m_logSys.addLogDevice(self.mWinLogDeviceProxy);
+        Ctx.instance().mLogSys.addLogDevice(self.mWinLogDeviceProxy);
 
     
