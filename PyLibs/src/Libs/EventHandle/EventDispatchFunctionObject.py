@@ -10,18 +10,18 @@ class EventDispatchFunctionObject(IDelayHandleItem):
         
         self.mTypeId = "EventDispatchFunctionObject";
         
-        self.m_bClientDispose = False;      # 是否释放了资源
+        self.mIsClientDispose = False;      # 是否释放了资源
         self.mThis = None;
-        self.m_handle = None;
+        self.mHandle = None;
 
 
     def setFuncObject(self, pThis, func):
         self.mThis = pThis;
-        self.m_handle = func;
+        self.mHandle = func;
 
 
     def isValid(self):
-        return self.mThis != None or self.m_handle != None;
+        return self.mThis != None or self.mHandle != None;
 
 
     def isEqual(self, pThis, handle):
@@ -32,7 +32,7 @@ class EventDispatchFunctionObject(IDelayHandleItem):
                 return ret;
 
         if (handle != None):
-            ret = UtilApi.isAddressEqual(self.m_handle, handle);
+            ret = UtilApi.isAddressEqual(self.mHandle, handle);
             if(not ret):
                 return ret;
 
@@ -45,14 +45,14 @@ class EventDispatchFunctionObject(IDelayHandleItem):
         #    self.mThis.call(dispObj);
         #}
 
-        if(None != self.m_handle):
-            self.m_handle(dispObj);
+        if(None != self.mHandle):
+            self.mHandle(dispObj);
 
 
     def setClientDispose(self):
-        self.m_bClientDispose = True;
+        self.mIsClientDispose = True;
 
 
-    def getClientDispose(self):
-        return self.m_bClientDispose;
+    def IsClientDispose(self):
+        return self.mIsClientDispose;
 

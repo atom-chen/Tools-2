@@ -12,11 +12,11 @@ class LogSys(GObject):
 
     def __init__(self):
         super(LogSys, self).__init__();
-        self.m_asyncLogList = LockList();               # 这个是多线程访问的
-        self.m_asyncWarnList = LockList();              # 这个是多线程访问的
-        self.m_asyncErrorList = LockList();             # 这个是多线程访问的
+        self.mAsyncLogList = LockList();               # 这个是多线程访问的
+        self.mAsyncWarnList = LockList();              # 这个是多线程访问的
+        self.mAsyncErrorList = LockList();             # 这个是多线程访问的
 
-        self.m_logDeviceList = MList();
+        self.mLogDeviceList = MList();
         self.mEnableLog = True;         #  这个是总的开关
         self.registerDevice();
 
@@ -28,7 +28,7 @@ class LogSys(GObject):
 
     def addLogDevice(self, logDevice):
         logDevice.initDevice();
-        self.m_logDeviceList.Add(logDevice);
+        self.mLogDeviceList.Add(logDevice);
 
 
     def registerDevice(self):
@@ -73,45 +73,45 @@ class LogSys(GObject):
 
     # 多线程日志
     def asyncLog(self, message):
-        self.m_asyncLogList.Add(message);
+        self.mAsyncLogList.Add(message);
 
 
     # 多线程日志
     def asyncWarn(self, message):
-        self.m_asyncWarnList.Add(message);
+        self.mAsyncWarnList.Add(message);
 
 
     # 多线程日志
     def asyncError(self, message):
-        self.m_asyncErrorList.Add(message);
+        self.mAsyncErrorList.Add(message);
 
     
     def logout(self, message, logTypeId = LogColor.LOG):
         MThread.needMainThread();
 
         if (self.m_bOutLog):
-            for logDevice in self.m_logDeviceList.getList():
+            for logDevice in self.mLogDeviceList.getList():
                 logDevice.logout(message, logTypeId);
 
 
     def updateLog(self):
         MThread.needMainThread();
 
-        while (self.m_asyncLogList.Count() > 0):
-            tmpStr = self.m_asyncLogList.RemoveAt(0);
+        while (self.mAsyncLogList.Count() > 0):
+            tmpStr = self.mAsyncLogList.RemoveAt(0);
             self.logout(tmpStr, LogColor.LOG);
 
-        while (self.m_asyncWarnList.Count() > 0):
-            tmpStr = self.m_asyncWarnList.RemoveAt(0);
+        while (self.mAsyncWarnList.Count() > 0):
+            tmpStr = self.mAsyncWarnList.RemoveAt(0);
             self.logout(tmpStr, LogColor.LOG);
 
-        while (self.m_asyncErrorList.Count() > 0):
-            tmpStr = self.m_asyncErrorList.RemoveAt(0);
+        while (self.mAsyncErrorList.Count() > 0):
+            tmpStr = self.mAsyncErrorList.RemoveAt(0);
             self.logout(tmpStr, LogColor.LOG);
 
 
     def closeDevice(self):
-        for logDevice in self.m_logDeviceList.getList():
+        for logDevice in self.mLogDeviceList.getList():
             logDevice.closeDevice();
 
 

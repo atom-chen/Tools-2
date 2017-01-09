@@ -16,32 +16,32 @@ class DaoJiShiTimer(TimerItemBase):
     
     def setTotalTime(self, value):
         super(DaoJiShiTimer, self).setTotalTime(value);
-        self.m_curRunTime = value;
+        self.mCurRunTime = value;
 
 
     def getRunTime(self):
-        return self.m_totalTime - self.m_curRunTime;
+        return self.mTotalTime - self.mCurRunTime;
 
 
     # 如果要获取剩余的倒计时时间，使用 getLeftCallTime
     def getLeftRunTime(self):
-        return self.m_curRunTime;
+        return self.mCurRunTime;
 
 
     def OnTimer(self, delta):
-        if (self.m_disposed):
+        if (self.mIsDisposed):
             return;
 
-        self.m_curRunTime -= delta;
-        if(self.m_curRunTime < 0):
-            self.m_curRunTime = 0;
+        self.mCurRunTime -= delta;
+        if(self.mCurRunTime < 0):
+            self.mCurRunTime = 0;
 
-        self.m_intervalLeftTime += delta;
+        self.mIntervalLeftTime += delta;
 
-        if (self.m_bInfineLoop):
+        if (self.mIsInfineLoop):
             self.checkAndDisp();
         else:
-            if (self.m_curRunTime <= 0):
+            if (self.mCurRunTime <= 0):
                 self.disposeAndDisp();
             else:
                 self.checkAndDisp();
@@ -49,8 +49,8 @@ class DaoJiShiTimer(TimerItemBase):
 
 
     def reset(self):
-        self.m_curRunTime = self.m_totalTime;
-        self.m_curCallTime = 0;
-        self.m_intervalLeftTime = 0;
-        self.m_disposed = False;
+        self.mCurRunTime = self.mTotalTime;
+        self.mCurCallTime = 0;
+        self.mIntervalLeftTime = 0;
+        self.mIsDisposed = False;
 

@@ -12,50 +12,50 @@ class FrameTimerItem(IDelayHandleItem):
         
         self.mTypeId = "FrameTimerItem";
         
-        self.m_internal = 1;            # 帧数间隔
-        self.m_totalFrameCount = 1;     # 当前已经调用的定时器的时间
-        self.m_curFrame = 0;            # 剩余帧数
-        self.m_bInfineLoop = False;     # 是否是无限循环
-        self.m_curLeftFrame = 0;        
-        self.m_timerDisp = None;        # 定时器分发
-        self.m_disposed = False;        # 是否已经被释放
+        self.mInternal = 1;            # 帧数间隔
+        self.mTotalFrameCount = 1;     # 当前已经调用的定时器的时间
+        self.mCurFrame = 0;            # 剩余帧数
+        self.mIsInfineLoop = False;     # 是否是无限循环
+        self.mCurLeftFrame = 0;        
+        self.mTimerDisp = None;        # 定时器分发
+        self.mIsDisposed = False;        # 是否已经被释放
 
 
     def OnFrameTimer(self):
-        if (self.m_disposed):
+        if (self.mIsDisposed):
             return;
 
-        self.m_curFrame = self.m_curFrame + 1;
-        self.m_curLeftFrame = self.m_curLeftFrame + 1;
+        self.mCurFrame = self.mCurFrame + 1;
+        self.mCurLeftFrame = self.mCurLeftFrame + 1;
 
-        if (self.m_bInfineLoop):
-            if (self.m_curLeftFrame == self.m_internal):
-                self.m_curLeftFrame = 0;
+        if (self.mIsInfineLoop):
+            if (self.mCurLeftFrame == self.mInternal):
+                self.mCurLeftFrame = 0;
 
-                if (self.m_timerDisp != None):
-                    self.m_timerDisp(self);
+                if (self.mTimerDisp != None):
+                    self.mTimerDisp(self);
         else:
-            if (self.m_curFrame == self.m_totalFrameCount):
-                self.m_disposed = True;
-                if (self.m_timerDisp != None):
-                    self.m_timerDisp(self);
+            if (self.mCurFrame == self.mTotalFrameCount):
+                self.mIsDisposed = True;
+                if (self.mTimerDisp != None):
+                    self.mTimerDisp(self);
             else:
-                if (self.m_curLeftFrame == self.m_internal):
-                    self.m_curLeftFrame = 0;
-                    if (self.m_timerDisp != None):
-                        self.m_timerDisp(self);
+                if (self.mCurLeftFrame == self.mInternal):
+                    self.mCurLeftFrame = 0;
+                    if (self.mTimerDisp != None):
+                        self.mTimerDisp(self);
 
 
     def reset(self):
-        self.m_curFrame = 0;
-        self.m_curLeftFrame = 0;
-        self.m_disposed = False;
+        self.mCurFrame = 0;
+        self.mCurLeftFrame = 0;
+        self.mIsDisposed = False;
 
 
     def setClientDispose(self):
         pass;
 
 
-    def getClientDispose(self):
+    def IsClientDispose(self):
         return False;
 

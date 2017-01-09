@@ -12,8 +12,8 @@ class TaskThread(MThread):
 
     def __init__(self, name, taskQueue):
         super(TaskThread, self).__init__(None, None, name);
-        self.m_taskQueue = taskQueue;
-        self.m_condition = MCondition(name);
+        self.mTaskQueue = taskQueue;
+        self.mCondition = MCondition(name);
 
 
     '''
@@ -21,23 +21,23 @@ class TaskThread(MThread):
     '''
     #def threadHandle(self, intParam, strParam):
     def threadHandle(self):
-        while (not self.m_ExitFlag):
-            if(self.m_condition.acquire()):
-                self.m_curTask = self.m_taskQueue.pop();
+        while (not self.mIsExitFlag):
+            if(self.mCondition.acquire()):
+                self.m_curTask = self.mTaskQueue.pop();
                 if(self.m_curTask != None):
                     self.m_curTask.runTask();
                 else:
-                    self.m_condition.wait();
+                    self.mCondition.wait();
                     
-                self.m_condition.release();
+                self.mCondition.release();
                 
                 time.sleep(2);
             
 
     def notifySelf(self):
-        if(self.m_condition.acquire()):
-            self.m_condition.notifyAll();
-            self.m_condition.release();
+        if(self.mCondition.acquire()):
+            self.mCondition.notifyAll();
+            self.mCondition.release();
             return True;
 
         return False;

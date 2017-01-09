@@ -28,8 +28,8 @@ class MProcess(GObject):
         
         self.mParams = params;
         self.mProcessName = processName;
-        self.m_runF = func;
-        self.m_pid = 0;
+        self.mRunF = func;
+        self.mPid = 0;
         self.mProcessHandle = None;
         
     
@@ -50,7 +50,7 @@ class MProcess(GObject):
                                                           );
 
             self.mProcessHandle.start();
-            self.m_pid = self.getIdent();
+            self.mPid = self.getIdent();
             
             
     def terminate(self):
@@ -90,8 +90,8 @@ class MProcess(GObject):
 
         
     def run(self, params):
-        if self.m_runF is not None:
-            self.m_runF();
+        if self.mRunF is not None:
+            self.mRunF();
             time.sleep(10);
 
 

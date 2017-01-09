@@ -14,13 +14,13 @@ class MMutex(GObject):
         
         self.mTypeId = "MLock";
         
-        self.m_mmutex = Lock();
+        self.mMutex = Lock();
 
 
     def lock(self, timeout = 0):
-        self.m_mmutex.acquire(timeout);
+        self.mMutex.acquire(timeout);
 
 
     def unlock(self):
-        self.m_mmutex.release();
+        self.mMutex.release();
 

@@ -9,14 +9,16 @@ class TaskQueue(LockQueue):
 
         self.mTypeId = "TaskQueue";
         
+        self.mTaskThreadPool = None;
+        
     
     def setTaskThreadPool(self, value):
-        self.m_pTaskThreadPool = value;
+        self.mTaskThreadPool = value;
 
 
     def push(self, item):
         super(TaskQueue, self).push(item);
 
         # 检查是否有线程空闲，如果有就唤醒
-        self.m_pTaskThreadPool.notifyIdleThread();
+        self.mTaskThreadPool.notifyIdleThread();
 

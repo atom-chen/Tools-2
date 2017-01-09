@@ -18,7 +18,7 @@ class IDelayHandleItem(GObject):
         pass;
 
 
-    def getClientDispose(self):
+    def IsClientDispose(self):
         pass;
 
 

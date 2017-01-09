@@ -10,11 +10,11 @@ class ResizeMgr(DelayHandleMgrBase):
         
         self.mTypeId = "ResizeMgr";
         
-        self.m_preWidth = 0;
-        self.m_preHeight = 0;
-        self.m_curWidth = 0;
-        self.m_curHeight = 0;
-        self.m_ResizeLst = MList();
+        self.mPreWidth = 0;
+        self.mPreHeight = 0;
+        self.mCurWidth = 0;
+        self.mCurHeight = 0;
+        self.mResizeList = MList();
 
 
     def addObject(self, delayObject, priority = 0.0):
@@ -31,27 +31,27 @@ class ResizeMgr(DelayHandleMgrBase):
             self.removeResizeObject(delayObject);
 
     def addResizeObject(self, obj, priority = 0):
-        if (self.m_ResizeLst.IndexOf(obj) == -1):
-            self.m_ResizeLst.Add(obj);
+        if (self.mResizeList.IndexOf(obj) == -1):
+            self.mResizeList.Add(obj);
 
 
     def removeResizeObject(self, obj):
-        if (self.m_ResizeLst.IndexOf(obj) != -1):
-            self.m_ResizeLst.Remove(obj);
+        if (self.mResizeList.IndexOf(obj) != -1):
+            self.mResizeList.Remove(obj);
 
 
     def onTick(self, delta):
-        self.m_preWidth = self.m_curWidth;
-        self.m_curWidth = 0;
-        self.m_preHeight = self.m_curHeight;
-        self.m_curHeight = 0;
+        self.mPreWidth = self.mCurWidth;
+        self.mCurWidth = 0;
+        self.mPreHeight = self.mCurHeight;
+        self.mCurHeight = 0;
 
-        if(self.m_preWidth != self.m_curWidth or self.m_preHeight != self.m_curHeight):
-            self.onResize(self.m_curWidth, self.m_curHeight);
+        if(self.mPreWidth != self.mCurWidth or self.mPreHeight != self.mCurHeight):
+            self.onResize(self.mCurWidth, self.mCurHeight);
 
 
     def onResize(self, viewWidth, viewHeight):
-        for resizeObj in self.m_ResizeLst.getList():
+        for resizeObj in self.mResizeList.getList():
             resizeObj.onResize(viewWidth, viewHeight);
 
 

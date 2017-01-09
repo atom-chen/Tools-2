@@ -46,5 +46,5 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def onTimer(self):
-        Ctx.instance().m_engineLoop.mainLoop();
+        Ctx.instance().mEngineLoop.mainLoop();
 

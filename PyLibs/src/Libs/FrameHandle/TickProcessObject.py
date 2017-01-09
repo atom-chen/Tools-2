@@ -9,7 +9,7 @@ class TickProcessObject(GObject):
         
         self.mTypeId = "TickProcessObject";
         
-        self.m_tickObject = None;
-        self.m_priority = 0.0;
+        self.mTickObject = None;
+        self.mPriority = 0.0;
 
 

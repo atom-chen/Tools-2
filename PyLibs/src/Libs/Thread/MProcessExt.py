@@ -13,12 +13,12 @@ class MProcessExt(multiprocessing.process):
         Constructor
         '''
         super(MProcessExt, self).__init__(name=processName, target = self.run);
-        self.m_runF = func;
-        self.m_pid = self.pid;
+        self.mRunF = func;
+        self.mPid = self.pid;
         
     def run(self):
-        if self.m_runF is not None:
-            self.m_runF();
+        if self.mRunF is not None:
+            self.mRunF();
             time.sleep(10);
 
 

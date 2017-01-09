@@ -16,14 +16,14 @@ class ProcessSys(GObject):
 
 
     def ProcessNextFrame(self):
-        Ctx.instance().m_systemTimeData.nextFrame();
-        self.Advance(Ctx.instance().m_systemTimeData.getDeltaSec());
+        Ctx.instance().mSystemTimeData.nextFrame();
+        self.Advance(Ctx.instance().mSystemTimeData.getDeltaSec());
 
 
     def Advance(self, delta):
-        Ctx.instance().m_systemFrameData.nextFrame(delta);
-        Ctx.instance().m_tickMgr.Advance(delta);                # 心跳
-        Ctx.instance().m_timerMgr.Advance(delta);               # 定时器
-        Ctx.instance().m_frameTimerMgr.Advance(delta);          # 帧定时器
+        Ctx.instance().mSystemFrameData.nextFrame(delta);
+        Ctx.instance().mTickMgr.Advance(delta);                # 心跳
+        Ctx.instance().mTimerMgr.Advance(delta);               # 定时器
+        Ctx.instance().mFrameTimerMgr.Advance(delta);          # 帧定时器
 
 

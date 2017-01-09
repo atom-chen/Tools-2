@@ -16,12 +16,12 @@ class EventDispatch(DelayHandleMgrBase):
         
         self.mTypeId = "EventDispatch";
         
-        self.m_eventId = eventId_;
-        self.m_handleList = MList();
+        self.mEventId = eventId_;
+        self.mHandleList = MList();
 
 
     def getHandleList(self):
-        return self.m_handleList;
+        return self.mHandleList;
 
     # 相同的函数只能增加一次，Lua ，Python 这些语言不支持同时存在几个相同名字的函数，只支持参数可以赋值，因此不单独提供同一个名字不同参数的接口了
     def addEventHandle(self, pThis, handle):
@@ -39,15 +39,15 @@ class EventDispatch(DelayHandleMgrBase):
     def removeEventHandle(self, pThis, handle):
         idx = 0;
         elemLen = 0;
-        elemLen = self.m_handleList.Count();
+        elemLen = self.mHandleList.Count();
         while(idx < elemLen):
-            if (self.m_handleList[idx].isEqual(pThis, handle)):
+            if (self.mHandleList[idx].isEqual(pThis, handle)):
                 break;
             
             idx = idx + 1;
 
-        if(idx < self.m_handleList.Count()):
-            self.removeObject(self.m_handleList[idx]);
+        if(idx < self.mHandleList.Count()):
+            self.removeObject(self.mHandleList[idx]);
         else:
             # 输出日志
             pass;
@@ -58,14 +58,14 @@ class EventDispatch(DelayHandleMgrBase):
             super(EventDispatch, self).addObject(delayObject, priority);
         else:
             # 这个判断说明相同的函数只能加一次，但是如果不同资源使用相同的回调函数就会有问题，但是这个判断可以保证只添加一次函数，值得，因此不同资源需要不同回调函数
-            self.m_handleList.Add(delayObject);
+            self.mHandleList.Add(delayObject);
 
 
     def removeObject(self, delayObject):
         if (self.bInDepth()):
             super(EventDispatch, self).removeObject(delayObject);
         else:
-            if (not self.m_handleList.Remove(delayObject)):
+            if (not self.mHandleList.Remove(delayObject)):
                 # 输出日志
                 pass;
 
@@ -74,8 +74,8 @@ class EventDispatch(DelayHandleMgrBase):
         #try:
             self.incDepth();
 
-            for handle in self.m_handleList.getList():
-                if (not handle.m_bClientDispose):
+            for handle in self.mHandleList.getList():
+                if (not handle.mIsClientDispose):
                     handle.call(dispatchObject);
 
             self.decDepth();
@@ -86,16 +86,16 @@ class EventDispatch(DelayHandleMgrBase):
 
     def clearEventHandle(self):
         if (self.bInDepth()):
-            for item in self.m_handleList.getList():
+            for item in self.mHandleList.getList():
                 self.removeObject(item);
         else:
-            self.m_handleList.Clear();
+            self.mHandleList.Clear();
 
 
     # 这个判断说明相同的函数只能加一次，但是如果不同资源使用相同的回调函数就会有问题，但是这个判断可以保证只添加一次函数，值得，因此不同资源需要不同回调函数
     def existEventHandle(self, pThis, handle):
         bFinded = False;
-        for item in self.m_handleList.getList():
+        for item in self.mHandleList.getList():
             if (item.isEqual(pThis, handle)):
                 bFinded = True;
                 break;
@@ -105,10 +105,10 @@ class EventDispatch(DelayHandleMgrBase):
 
     def copyFrom(self, rhv):
         for handle in rhv.handleList.getList():
-            self.m_handleList.Add(handle);
+            self.mHandleList.Add(handle);
 
 
     def getHandleCount(self):
-        return self.m_handleList.Count();
+        return self.mHandleList.Count();
 
 

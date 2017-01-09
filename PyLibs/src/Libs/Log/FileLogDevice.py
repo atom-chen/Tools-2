@@ -19,7 +19,7 @@ class FileLogDevice(LogDeviceBase):
         
         self.mTypeId = "FileLogDevice";
         
-        self.m_filePrefix = "log";
+        self.mFilePrefix = "log";
 
 
     def getFileSuffix(self):
@@ -30,11 +30,11 @@ class FileLogDevice(LogDeviceBase):
 
 
     def getFilePrefix(self):
-        return self.m_filePrefix; 
+        return self.mFilePrefix; 
 
 
     def setFilePrefix(self, value):
-        self.m_filePrefix = value;
+        self.mFilePrefix = value;
 
 
     def initDevice(self):
@@ -78,7 +78,7 @@ class FileLogDevice(LogDeviceBase):
                     try:
                         UtilPath.deleteFile(file.mFullPath);
                     except:
-                        Ctx.instance().m_logSys.log(UtilStr.format("删除文件 {0} 出错", file.mFullPath));
+                        Ctx.instance().mLogSys.log(UtilStr.format("删除文件 {0} 出错", file.mFullPath));
 
 
 

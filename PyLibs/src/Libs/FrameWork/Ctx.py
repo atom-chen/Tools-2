@@ -34,19 +34,19 @@ class Ctx(GObject):
         self.mTypeId = "CtxImpl";
         
         # 声明需要的变量，当然也可以不必在这里声明，直接赋值就行了
-        self.m_msgRouteNotify = None;
-        self.m_TaskQueue = None;
-        self.m_TaskThreadPool = None;
-        self.m_systemFrameData = None;
-        self.m_systemTimeData = None;
-        self.m_processSys = None;
-        self.m_tickMgr = None;
-        self.m_timerMgr = None;
-        self.m_frameTimerMgr = None;
-        self.m_engineLoop = None;
-        self.m_resizeMgr = None;
-        self.m_sysMsgRoute = None;
-        self.m_logSys = None;
+        self.mMsgRouteNotify = None;
+        self.mTaskQueue = None;
+        self.mTaskThreadPool = None;
+        self.mSystemFrameData = None;
+        self.mSystemTimeData = None;
+        self.mProcessSys = None;
+        self.mTickMgr = None;
+        self.mTimerMgr = None;
+        self.mFrameTimerMgr = None;
+        self.mEngineLoop = None;
+        self.mResizeMgr = None;
+        self.mSysMsgRoute = None;
+        self.mLogSys = None;
 
 
     def init(self):

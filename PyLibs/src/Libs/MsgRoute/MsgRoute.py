@@ -37,5 +37,5 @@ class ThreadLogMR(MsgRouteBase):
 
         self.mTypeId = "ThreadLogMR";
         
-        self.m_logSys = "";
+        self.mLogSys = "";
 

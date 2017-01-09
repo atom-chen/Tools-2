@@ -15,36 +15,36 @@ class LockList(GObject):
         
         self.mTypeId = "LockList";
         
-        self.m_visitMutex = MMutex();
+        self.mVisitMutex = MMutex();
         self.mList = MList();
 
 
     def Count(self): 
-        self.m_visitMutex.lock();
+        self.mVisitMutex.lock();
         return self.mList.length();
-        self.m_visitMutex.unlock();
+        self.mVisitMutex.unlock();
 
 
     def Add(self, item):
-        self.m_visitMutex.lock();
+        self.mVisitMutex.lock();
         self.mList.Add(item);
-        self.m_visitMutex.unlock();
+        self.mVisitMutex.unlock();
 
     def Remove(self, item):
-        self.m_visitMutex.lock();
+        self.mVisitMutex.lock();
         self.mList.Remove(item);
-        self.m_visitMutex.unlock();
+        self.mVisitMutex.unlock();
 
 
     def RemoveAt(self, index):
-        self.m_visitMutex.lock();
+        self.mVisitMutex.lock();
         self.mList.RemoveAt(index);
-        self.m_visitMutex.unlock();
+        self.mVisitMutex.unlock();
 
 
     def IndexOf(self, item):
-        self.m_visitMutex.lock();
+        self.mVisitMutex.lock();
         self.mList.IndexOf(item);
-        self.m_visitMutex.unlock();
+        self.mVisitMutex.unlock();
 
 

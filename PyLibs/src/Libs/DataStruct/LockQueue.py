@@ -8,16 +8,16 @@ class LockQueue(GObject):
     def __init__(self, name = ""):
         super(LockQueue, self).__init__();
         
-        self.m_list = LockList();
+        self.mList = LockList();
         
         self.mName = name;
         
 
     def push(self, item):
-        self.m_list.Add(item);
+        self.mList.Add(item);
 
 
     def pop(self):
-        return self.m_list.RemoveAt(0);
+        return self.mList.RemoveAt(0);
 
 

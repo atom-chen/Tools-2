@@ -15,28 +15,28 @@ class TimerMgr(DelayHandleMgrBase):
         
         self.mTypeId = "TimerMgr";
         
-        self.m_timerList = MList();     # 当前所有的定时器列表
+        self.mTimerList = MList();     # 当前所有的定时器列表
 
 
     def addObject(self, delayObject, priority = 0.0):
         # 检查当前是否已经在队列中
-        if (self.m_timerList.IndexOf(delayObject) == -1):
+        if (self.mTimerList.IndexOf(delayObject) == -1):
             if (self.bInDepth()):
                 super(TimerMgr, self).addObject(delayObject, priority);
             else:
-                self.m_timerList.Add(delayObject);
+                self.mTimerList.Add(delayObject);
 
 
     def removeObject(self, delayObject):
         # 检查当前是否在队列中
-        if (self.m_timerList.IndexOf(delayObject) != -1):
-            delayObject.m_disposed = True;
+        if (self.mTimerList.IndexOf(delayObject) != -1):
+            delayObject.mIsDisposed = True;
             if (self.bInDepth()):
                 super(TimerMgr, self).removeObject(delayObject);
             else:
-                for item in self.m_timerList.getList():
+                for item in self.mTimerList.getList():
                     if (UtilApi.isAddressEqual(item, delayObject)):
-                        self.m_timerList.Remove(item);
+                        self.mTimerList.Remove(item);
                         break;
 
 
@@ -52,11 +52,11 @@ class TimerMgr(DelayHandleMgrBase):
     def Advance(self, delta):
         self.incDepth();
 
-        for timerItem in self.m_timerList.getList():
-            if (not timerItem.getClientDispose()):
+        for timerItem in self.mTimerList.getList():
+            if (not timerItem.IsClientDispose()):
                 timerItem.OnTimer(delta);
 
-            if (timerItem.m_disposed):        # 如果已经结束
+            if (timerItem.mIsDisposed):        # 如果已经结束
                 self.removeObject(timerItem);
 
         self.decDepth();
