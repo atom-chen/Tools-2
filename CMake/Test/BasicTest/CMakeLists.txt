@@ -2,6 +2,12 @@ project(BasicTest)
 
 cmake_minimum_required(VERSION 2.8.10)
 
+set(CurFilePath ${CMAKE_CURRENT_SOURCE_DIR})
+set(MY_LIBS_PATH ${CurFilePath}/../../MyCMake)
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${MY_LIBS_PATH})
+
+include("InitLibs")
+
 file(GLOB SRCS_App_FILES Src/App/*.h Src/App/*.cpp)
 source_group("Src\\App" FILES ${SRCS_App_FILES})
 
