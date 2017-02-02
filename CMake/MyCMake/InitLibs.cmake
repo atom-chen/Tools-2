@@ -13,4 +13,4 @@ message(status, "#####################################")
 
 include(ModuleLoad)
 
-LoadModule("PlatformSys")
+LoadModule("InitLibs")

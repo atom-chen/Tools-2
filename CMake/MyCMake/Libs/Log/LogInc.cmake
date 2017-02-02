@@ -1,0 +1,2 @@
+LoadModule("LogColor")
+LoadModule("LogTypeId")
