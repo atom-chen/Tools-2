@@ -1,0 +1,52 @@
+@defmixin spritemap_mixin_spritemap_ulua-1() {
+	background:url('./media/graphics/maps/spritemap.png');
+	width:549px;
+	height:86px;
+	background-clip: content-box;
+	background-origin: content-box;
+	transform: none;
+	-ms-transform: none;
+	-moz-transform: none;
+	-webkit-transform: none;
+	-o-transform: none;
+}
+.spritemap_spritemap_ulua-1 {
+	@mixin spritemap_mixin_spritemap_ulua-1();
+}
+@defmixin spritemap_mixin_spritemap_ulua-1_size() {
+	width:549px;
+	height:86px;
+}
+.spritemap_spritemap_ulua-1_size {
+	@mixin spritemap_mixin_spritemap_ulua-1_size();
+}
+
+@def SPRITEMAP_MIXIN_SPRITEMAP_ULUA-1_WIDTH 549px;
+@def SPRITEMAP_MIXIN_SPRITEMAP_ULUA-1_HEIGHT 86px;
+
+@defmixin spritemap_mixin_spritemap_ulua() {
+	background:url('./media/graphics/maps/spritemap.png') -0px -86px;
+	width:804px;
+	height:53px;
+	background-clip: content-box;
+	background-origin: content-box;
+	transform: none;
+	-ms-transform: none;
+	-moz-transform: none;
+	-webkit-transform: none;
+	-o-transform: none;
+}
+.spritemap_spritemap_ulua {
+	@mixin spritemap_mixin_spritemap_ulua();
+}
+@defmixin spritemap_mixin_spritemap_ulua_size() {
+	width:804px;
+	height:53px;
+}
+.spritemap_spritemap_ulua_size {
+	@mixin spritemap_mixin_spritemap_ulua_size();
+}
+
+@def SPRITEMAP_MIXIN_SPRITEMAP_ULUA_WIDTH 804px;
+@def SPRITEMAP_MIXIN_SPRITEMAP_ULUA_HEIGHT 53px;
+

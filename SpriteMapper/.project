@@ -14,4 +14,17 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>ANT_LOC</name>
+			<type>2</type>
+			<locationURI>ANT_LOC</locationURI>
+		</link>
+	</linkedResources>
+	<variableList>
+		<variable>
+			<name>ANT_LOC</name>
+			<value>file:/F:/File/opensource/unity-game-git/unitygame/Tools/apache-ant-1.9.7/src</value>
+		</variable>
+	</variableList>
 </projectDescription>

@@ -2,5 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="F:/File/opensource/unity-game-git/unitygame/Tools/apache-ant-1.9.7-bin/lib/ant.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
