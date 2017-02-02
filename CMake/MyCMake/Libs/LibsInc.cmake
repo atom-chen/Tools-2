@@ -1,4 +1,5 @@
 LoadModule("LogInc")
+LoadModule("DataStructInc")
 LoadModule("ToolsInc")
 LoadModule("CoreInc")
 LoadModule("PlatformInc")

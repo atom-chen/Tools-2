@@ -6,7 +6,7 @@ set(CurFilePath ${CMAKE_CURRENT_SOURCE_DIR})
 set(MY_LIBS_PATH ${CurFilePath}/../../MyCMake)
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${MY_LIBS_PATH})
 
-include("InitLibs")
+include("InitEntry")
 
 file(GLOB SRCS_App_FILES Src/App/*.h Src/App/*.cpp)
 source_group("Src\\App" FILES ${SRCS_App_FILES})

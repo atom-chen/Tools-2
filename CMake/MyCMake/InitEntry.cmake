@@ -3,7 +3,15 @@ set(CurCMakeFilePath ${CMAKE_CURRENT_SOURCE_DIR})
 set(CurFilePath ${MY_LIBS_PATH})
 set(CurModulePath ${CMAKE_MODULE_PATH})
 
-SET(CMAKE_MODULE_PATH ${CurModulePath} ${CurFilePath} ${CurFilePath}/Libs ${CurFilePath}/Libs/Core ${CurFilePath}/Libs/Log ${CurFilePath}/Libs/Platform ${CurFilePath}/Libs/Tools ${CurFilePath}/Libs/ProjectBuild)
+SET(CMAKE_MODULE_PATH 
+	${CurModulePath} 
+	${CurFilePath} 
+	${CurFilePath}/Libs 
+	${CurFilePath}/Libs/Core 
+	${CurFilePath}/Libs/Log 
+	${CurFilePath}/Libs/Platform 
+	${CurFilePath}/Libs/Tools 
+	${CurFilePath}/Libs/ProjectBuild)
 
 message(status, "#####################################")
 message(status, "CurModulePath is ${CurModulePath}")
