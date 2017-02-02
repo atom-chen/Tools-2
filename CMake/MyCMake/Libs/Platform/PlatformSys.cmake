@@ -31,22 +31,23 @@ IF(DEBUG_mode)
     SET(MY_DEBUG_mode True)
 ENDIF()
 
-function(IsWin32 arg)
-	return MY_WIN32
-endfunction()
+FUNCTION(IsWin32 arg)
+	# return ${MY_WIN32}
+	return(${MY_WIN32})
+ENDFUNCTION()
 
-function(IsApple arg)
-	return MY_APPLE
-endfunction() 
+FUNCTION(IsApple arg)
+	return(${MY_APPLE})
+ENDFUNCTION() 
 
-function(IsUnix arg)
-	return MY_UNIX
-endfunction() 
+FUNCTION(IsUnix arg)
+	return(${MY_UNIX})
+ENDFUNCTION() 
 
-function(IsLinux arg)
-	return MY_LINUX
-endfunction() 
+FUNCTION(IsLinux arg)
+	return(${MY_LINUX})
+ENDFUNCTION() 
 
-function(IsAndroid arg)
-	return MY_ANDROID
-endfunction() 
+FUNCTION(IsAndroid arg)
+	return(${MY_ANDROID})
+ENDFUNCTION() 
